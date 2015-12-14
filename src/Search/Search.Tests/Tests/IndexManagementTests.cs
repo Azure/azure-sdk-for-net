@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Search.Tests
                 Index index = 
                     new Index() 
                     { 
-                        Name = TestUtilities.GenerateName(),
+                        Name = SearchTestUtilities.GenerateName(),
                         Fields = new[] { new Field("id", DataType.String) { IsKey = true } }.ToList()
                     };
 
@@ -390,7 +390,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static Index CreateTestIndex()
         {
-            string indexName = TestUtilities.GenerateName();
+            string indexName = SearchTestUtilities.GenerateName();
 
             var index = new Index()
             {

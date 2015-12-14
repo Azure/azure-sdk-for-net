@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='deploymentName'>
         /// The name of the deployment.
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='top'>
         /// Query parameters.
         /// </param>
         /// <param name='customHeaders'>
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<DeploymentOperation>>> ListWithHttpMessagesAsync(string resourceGroupName, string deploymentName, ODataQuery<int?> odataQuery = default(ODataQuery<int?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DeploymentOperation>>> ListWithHttpMessagesAsync(string resourceGroupName, string deploymentName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Resources
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("deploymentName", deploymentName);
-                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
@@ -286,13 +286,9 @@ namespace Microsoft.Azure.Management.Resources
             url = url.Replace("{deploymentName}", Uri.EscapeDataString(deploymentName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (odataQuery != null)
+            if (top != null)
             {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
-                {
-                    queryParameters.Add(_odataFilter);
-                }
+                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
             }
             if (this.Client.ApiVersion != null)
             {

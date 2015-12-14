@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='resourceName'>
         /// The resource name.
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Resources
                 tracingParameters.Add("parentResourcePath", parentResourcePath);
                 tracingParameters.Add("resourceType", resourceType);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListForResource", tracingParameters);
             }
@@ -132,13 +132,9 @@ namespace Microsoft.Azure.Management.Resources
             url = url.Replace("{resourceName}", Uri.EscapeDataString(resourceName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (odataQuery != null)
+            if (filter != null)
             {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
-                {
-                    queryParameters.Add(_odataFilter);
-                }
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -252,7 +248,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='resourceGroupName'>
         /// Resource group name.
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -261,7 +257,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -283,7 +279,7 @@ namespace Microsoft.Azure.Management.Resources
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListForResourceGroup", tracingParameters);
             }
@@ -293,13 +289,9 @@ namespace Microsoft.Azure.Management.Resources
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (odataQuery != null)
+            if (filter != null)
             {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
-                {
-                    queryParameters.Add(_odataFilter);
-                }
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1355,7 +1347,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <summary>
         /// Gets policy assignments of the subscription.
         /// </summary>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -1364,7 +1356,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListWithHttpMessagesAsync(ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -1381,7 +1373,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "List", tracingParameters);
             }
@@ -1390,13 +1382,9 @@ namespace Microsoft.Azure.Management.Resources
             var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyAssignments").ToString();
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (odataQuery != null)
+            if (filter != null)
             {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
-                {
-                    queryParameters.Add(_odataFilter);
-                }
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -1510,7 +1498,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='scope'>
         /// Scope.
         /// </param>
-        /// <param name='odataQuery'>
+        /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -1519,7 +1507,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, ODataQuery<string> odataQuery = default(ODataQuery<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -1541,7 +1529,7 @@ namespace Microsoft.Azure.Management.Resources
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
-                tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListForScope", tracingParameters);
             }
@@ -1551,13 +1539,9 @@ namespace Microsoft.Azure.Management.Resources
             url = url.Replace("{scope}", scope);
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (odataQuery != null)
+            if (filter != null)
             {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter)) 
-                {
-                    queryParameters.Add(_odataFilter);
-                }
+                queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (this.Client.ApiVersion != null)
             {

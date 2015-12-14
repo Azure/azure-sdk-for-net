@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Search.Tests
 
             return
                 new DataSource(
-                    TestUtilities.GenerateName(),
+                    SearchTestUtilities.GenerateName(),
                     DataSourceType.AzureSql,
                     new DataSourceCredentials(FakeConnectionString),
                     new DataContainer("faketable"))
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             return
                 new DataSource(
-                    TestUtilities.GenerateName(),
+                    SearchTestUtilities.GenerateName(),
                     DataSourceType.DocumentDb,
                     new DataSourceCredentials(connectionString: "fake"),
                     new DataContainer("faketable"))

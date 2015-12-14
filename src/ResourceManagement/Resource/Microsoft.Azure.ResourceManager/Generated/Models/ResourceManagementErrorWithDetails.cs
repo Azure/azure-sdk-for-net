@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Resources.Models
 
     /// <summary>
     /// </summary>
-    public partial class ResourceManagementErrorWithDetails
+    public partial class ResourceManagementErrorWithDetails : ResourceManagementError
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -30,12 +30,10 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Initializes a new instance of the
         /// ResourceManagementErrorWithDetails class.
         /// </summary>
-        public ResourceManagementErrorWithDetails(string code, string message, IList<ResourceManagementError> details = default(IList<ResourceManagementError>), string target = default(string))
+        public ResourceManagementErrorWithDetails(string code, string message, string target = default(string), IList<ResourceManagementError> details = default(IList<ResourceManagementError>))
+            : base(code, message, target)
         {
             Details = details;
-            Code = code;
-            Message = message;
-            Target = target;
         }
 
         /// <summary>
@@ -45,36 +43,11 @@ namespace Microsoft.Azure.Management.Resources.Models
         public IList<ResourceManagementError> Details { get; set; }
 
         /// <summary>
-        /// Gets or sets the error code returned from the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets the error message returned from the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
-
-        /// <summary>
-        /// Gets or sets the target of the error.
-        /// </summary>
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
-
-        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (Code == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
-            }
-            if (Message == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Message");
-            }
+            base.Validate();
             if (this.Details != null)
             {
                 foreach (var element in this.Details)

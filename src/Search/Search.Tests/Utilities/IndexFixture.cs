@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             SearchServiceClient searchClient = this.GetSearchServiceClient();
 
-            IndexName = TestUtilities.GenerateName();
+            IndexName = SearchTestUtilities.GenerateName();
 
             // This is intentionally a different index definition than the one returned by IndexTests.CreateTestIndex().
             // That index is meant to exercise serialization of the index definition itself, while this one is tuned

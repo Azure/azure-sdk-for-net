@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
@@ -146,9 +147,9 @@ namespace Microsoft.Azure.Search.Tests
 
             AssertKeySequenceEqual(response, "1");
 
-            // Note: Highlighting is not perfect due to the way Azure Search builds edge n-grams for suggestions.
             Assert.True(
-                response.Results[0].Text.StartsWith("Best <b>hotel in</b> town", StringComparison.Ordinal));
+                response.Results[0].Text.StartsWith("Best <b>hotel</b> in town", StringComparison.Ordinal),
+                String.Format(CultureInfo.InvariantCulture, "Actual text: {0}", response.Results[0].Text));
         }
 
         protected void TestOrderByProgressivelyBreaksTies()
@@ -243,7 +244,7 @@ namespace Microsoft.Azure.Search.Tests
             Index index =
                 new Index()
                 {
-                    Name = TestUtilities.GenerateName(),
+                    Name = SearchTestUtilities.GenerateName(),
                     Fields = new[]
                     {
                         new Field("ISBN", DataType.String) { IsKey = true },
@@ -259,7 +260,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
-            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+            var batch = IndexBatch.Upload(new[] { doc1, doc2 });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();

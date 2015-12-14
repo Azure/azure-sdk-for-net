@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<Location>> ListLocationsAsync( this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Location>> result = await operations.ListLocationsWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListLocationsWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<Subscription> GetAsync( this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Subscription> result = await operations.GetWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<Subscription>> ListAsync( this ISubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Subscription>> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<Location>> ListLocationsNextAsync( this ISubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Location>> result = await operations.ListLocationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListLocationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<Subscription>> ListNextAsync( this ISubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Subscription>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

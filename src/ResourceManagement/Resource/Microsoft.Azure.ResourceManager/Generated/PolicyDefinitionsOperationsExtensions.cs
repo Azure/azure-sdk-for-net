@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyDefinition> CreateOrUpdateAsync( this IPolicyDefinitionsOperations operations, string policyDefinitionName, PolicyDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyDefinition> result = await operations.CreateOrUpdateWithHttpMessagesAsync(policyDefinitionName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateWithHttpMessagesAsync(policyDefinitionName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyDefinition> GetAsync( this IPolicyDefinitionsOperations operations, string policyDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyDefinition> result = await operations.GetWithHttpMessagesAsync(policyDefinitionName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(policyDefinitionName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

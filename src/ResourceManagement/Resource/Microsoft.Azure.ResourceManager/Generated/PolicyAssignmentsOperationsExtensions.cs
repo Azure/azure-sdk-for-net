@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -41,12 +40,12 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='resourceName'>
             /// The resource name.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<PolicyAssignment> ListForResource(this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<string> odataQuery = default(ODataQuery<string>))
+            public static IPage<PolicyAssignment> ListForResource(this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -70,15 +69,15 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='resourceName'>
             /// The resource name.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListForResourceAsync( this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<string> odataQuery = default(ODataQuery<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyAssignment>> ListForResourceAsync( this IPolicyAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -91,12 +90,12 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='resourceGroupName'>
             /// Resource group name.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<PolicyAssignment> ListForResourceGroup(this IPolicyAssignmentsOperations operations, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>))
+            public static IPage<PolicyAssignment> ListForResourceGroup(this IPolicyAssignmentsOperations operations, string resourceGroupName, string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceGroupAsync(resourceGroupName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForResourceGroupAsync(resourceGroupName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -108,15 +107,15 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='resourceGroupName'>
             /// Resource group name.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListForResourceGroupAsync( this IPolicyAssignmentsOperations operations, string resourceGroupName, ODataQuery<string> odataQuery = default(ODataQuery<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyAssignment>> ListForResourceGroupAsync( this IPolicyAssignmentsOperations operations, string resourceGroupName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -154,7 +153,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyAssignment> DeleteAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyAssignment> result = await operations.DeleteWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.DeleteWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -198,7 +197,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyAssignment> CreateAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, PolicyAssignment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyAssignment> result = await operations.CreateWithHttpMessagesAsync(scope, policyAssignmentName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateWithHttpMessagesAsync(scope, policyAssignmentName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -236,7 +235,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyAssignment> GetAsync( this IPolicyAssignmentsOperations operations, string scope, string policyAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyAssignment> result = await operations.GetWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(scope, policyAssignmentName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -268,7 +267,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyAssignment> DeleteByIdAsync( this IPolicyAssignmentsOperations operations, string policyAssignmentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyAssignment> result = await operations.DeleteByIdWithHttpMessagesAsync(policyAssignmentId, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.DeleteByIdWithHttpMessagesAsync(policyAssignmentId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -306,7 +305,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyAssignment> CreateByIdAsync( this IPolicyAssignmentsOperations operations, string policyAssignmentId, PolicyAssignment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyAssignment> result = await operations.CreateByIdWithHttpMessagesAsync(policyAssignmentId, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateByIdWithHttpMessagesAsync(policyAssignmentId, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -338,7 +337,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<PolicyAssignment> GetByIdAsync( this IPolicyAssignmentsOperations operations, string policyAssignmentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PolicyAssignment> result = await operations.GetByIdWithHttpMessagesAsync(policyAssignmentId, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetByIdWithHttpMessagesAsync(policyAssignmentId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -348,12 +347,12 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<PolicyAssignment> List(this IPolicyAssignmentsOperations operations, ODataQuery<string> odataQuery = default(ODataQuery<string>))
+            public static IPage<PolicyAssignment> List(this IPolicyAssignmentsOperations operations, string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListAsync(filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -362,15 +361,15 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListAsync( this IPolicyAssignmentsOperations operations, ODataQuery<string> odataQuery = default(ODataQuery<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyAssignment>> ListAsync( this IPolicyAssignmentsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -383,12 +382,12 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='scope'>
             /// Scope.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<PolicyAssignment> ListForScope(this IPolicyAssignmentsOperations operations, string scope, ODataQuery<string> odataQuery = default(ODataQuery<string>))
+            public static IPage<PolicyAssignment> ListForScope(this IPolicyAssignmentsOperations operations, string scope, string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForScopeAsync(scope, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IPolicyAssignmentsOperations)s).ListForScopeAsync(scope, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -400,15 +399,15 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='scope'>
             /// Scope.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyAssignment>> ListForScopeAsync( this IPolicyAssignmentsOperations operations, string scope, ODataQuery<string> odataQuery = default(ODataQuery<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyAssignment>> ListForScopeAsync( this IPolicyAssignmentsOperations operations, string scope, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListForScopeWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -440,7 +439,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<PolicyAssignment>> ListForResourceNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListForResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListForResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -472,7 +471,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<PolicyAssignment>> ListForResourceGroupNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -504,7 +503,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<PolicyAssignment>> ListNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -536,7 +535,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<PolicyAssignment>> ListForScopeNextAsync( this IPolicyAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<PolicyAssignment>> result = await operations.ListForScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListForScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

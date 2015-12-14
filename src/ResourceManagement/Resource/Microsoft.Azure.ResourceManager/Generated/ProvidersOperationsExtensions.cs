@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<Provider> UnregisterAsync( this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Provider> result = await operations.UnregisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.UnregisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -80,7 +79,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<Provider> RegisterAsync( this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Provider> result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -90,12 +89,12 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='top'>
             /// Query parameters. If null is passed returns all deployments.
             /// </param>
-            public static IPage<Provider> List(this IProvidersOperations operations, ODataQuery<int?> odataQuery = default(ODataQuery<int?>))
+            public static IPage<Provider> List(this IProvidersOperations operations, int? top = default(int?))
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).ListAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IProvidersOperations)s).ListAsync(top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,15 +103,15 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
+            /// <param name='top'>
             /// Query parameters. If null is passed returns all deployments.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Provider>> ListAsync( this IProvidersOperations operations, ODataQuery<int?> odataQuery = default(ODataQuery<int?>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Provider>> ListAsync( this IProvidersOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Provider>> result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -144,7 +143,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<Provider> GetAsync( this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Provider> result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -176,7 +175,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<Provider>> ListNextAsync( this IProvidersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<Provider>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

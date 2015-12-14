@@ -67,8 +67,6 @@ namespace Microsoft.Azure.Management.WebSites
         int? LongRunningOperationRetryTimeout { get; set; }
 
 
-        ICertificateOrdersOperations CertificateOrders { get; }
-
         ICertificatesOperations Certificates { get; }
 
         IClassicMobileServicesOperations ClassicMobileServices { get; }
@@ -76,8 +74,6 @@ namespace Microsoft.Azure.Management.WebSites
         IDomainsOperations Domains { get; }
 
         IGlobalModelOperations GlobalModel { get; }
-
-        IGlobalCertificateOrderOperations GlobalCertificateOrder { get; }
 
         IGlobalDomainRegistrationOperations GlobalDomainRegistration { get; }
 

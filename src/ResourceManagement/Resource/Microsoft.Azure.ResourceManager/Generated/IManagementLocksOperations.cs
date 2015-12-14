@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Resource group name.
         /// </param>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Resource identity.
         /// </param>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Gets all the management locks of a subscription.
         /// </summary>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

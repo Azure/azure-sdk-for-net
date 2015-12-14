@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Site class.
         /// </summary>
-        public Site(string siteName = default(string), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), DateTime? lastModifiedTimeUtc = default(DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? premiumAppDeployed = default(bool?), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string microService = default(string), string gatewaySiteName = default(string), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), string outboundIpAddresses = default(string), CloningInfo cloningInfo = default(CloningInfo))
+        public Site(string siteName = default(string), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), DateTime? lastModifiedTimeUtc = default(DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? premiumAppDeployed = default(bool?), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string microService = default(string), string gatewaySiteName = default(string), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), CloningInfo cloningInfo = default(CloningInfo))
         {
             SiteName = siteName;
             State = state;
@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             GatewaySiteName = gatewaySiteName;
             ClientAffinityEnabled = clientAffinityEnabled;
             ClientCertEnabled = clientCertEnabled;
+            HostNamesDisabled = hostNamesDisabled;
             OutboundIpAddresses = outboundIpAddresses;
             CloningInfo = cloningInfo;
         }
@@ -117,7 +118,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// site's hostnames.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostNameSslStates")]
-        public IList<HostNameSslState> HostNameSslStates { get; private set; }
+        public IList<HostNameSslState> HostNameSslStates { get; set; }
 
         /// <summary>
         /// </summary>
@@ -193,6 +194,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientCertEnabled")]
         public bool? ClientCertEnabled { get; set; }
+
+        /// <summary>
+        /// Specifies if the public hostnames are disabled the web app.
+        /// If set to true the app is only accessible via API
+        /// Management process
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostNamesDisabled")]
+        public bool? HostNamesDisabled { get; set; }
 
         /// <summary>
         /// List of comma separated IP addresses that this web app uses for

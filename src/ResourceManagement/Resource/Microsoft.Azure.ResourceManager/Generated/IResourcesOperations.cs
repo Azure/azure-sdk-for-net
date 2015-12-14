@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Get all of the resources under a subscription.
         /// </summary>
         /// <param name='odataQuery'>
-        /// The filter to apply on the operation.
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

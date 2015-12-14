@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Search
         {
             IEnumerable<IndexAction<T>> failedActions = 
                 this.DoFindFailedActionsToRetry<IndexBatch<T>, IndexAction<T>, T>(originalBatch, keySelector);
-            return IndexBatch.Create(failedActions);
+            return IndexBatch.New(failedActions);
         }
 
         private IEnumerable<TAction> DoFindFailedActionsToRetry<TBatch, TAction, TDoc>(
