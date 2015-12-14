@@ -5,16 +5,16 @@
 namespace Microsoft.Azure.Search
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Threading;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
     internal class ValueTypePreservingContractResolver : IContractResolver
     {
         private IContractResolver _innerResolver;
-        private ConcurrentDictionary<Type, JsonObjectContract> _contractCache;
+        private ConcurrentCache<Type, JsonObjectContract> _contractCache;
 
         public ValueTypePreservingContractResolver(IContractResolver innerResolver)
         {
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search
             }
 
             this._innerResolver = innerResolver;
-            this._contractCache = new ConcurrentDictionary<Type, JsonObjectContract>();
+            this._contractCache = new ConcurrentCache<Type, JsonObjectContract>();
         }
 
         public JsonContract ResolveContract(Type type)
@@ -44,8 +44,7 @@ namespace Microsoft.Azure.Search
         {
             // Prepare to create a copy of the contract if necessary. We need to copy it if we're going to mutate
             // it, because JSON.NET caches it and we don't want to alter the shared cached state.
-            Lazy<JsonObjectContract> newContract =
-                new Lazy<JsonObjectContract>(() => CopyContract(objectContract, type));
+            var newContract = new Lazy<JsonObjectContract>(() => CopyContract(objectContract, type));
 
             foreach (JsonProperty property in objectContract.Properties)
             {
@@ -98,6 +97,53 @@ namespace Microsoft.Azure.Search
         private static bool IsNullable(Type type)
         {
             return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        // Workaround for the lack of ConcurrentDictionary in .NET Core.
+        private class ConcurrentCache<TKey, TValue>
+        {
+            private Dictionary<TKey, TValue> _dictionary;
+
+            public ConcurrentCache()
+            {
+                this._dictionary = new Dictionary<TKey, TValue>();
+            }
+
+            public TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
+            {
+                // Only call valueFactory once.
+                var lazyValue = new Lazy<TValue>(() => valueFactory(key));
+
+                while (true)
+                {
+                    // Reference may change, so take a snapshot.
+                    Dictionary<TKey, TValue> localDictionaryRef = this._dictionary;
+
+                    TValue value;
+                    if (localDictionaryRef.TryGetValue(key, out value))
+                    {
+                        return value;
+                    }
+
+                    value = lazyValue.Value;
+
+                    // Reads will be frequent, but writes will be infrequent, so copying the dictionary seems a
+                    // reasonable tradeoff to get O(1) lookup performance. The alternative would be O(log n)
+                    // for a binary search tree, which we'd have to write ourselves since ImmutableDictionary isn't
+                    // supported for PCLs (only .NET 4.5 and .NET Core).
+                    var newDictionary = new Dictionary<TKey, TValue>(localDictionaryRef);
+                    newDictionary.Add(key, value);
+
+                    Dictionary<TKey, TValue> newLocalRef =
+                        Interlocked.CompareExchange(ref this._dictionary, newDictionary, localDictionaryRef);
+
+                    if (newLocalRef == localDictionaryRef)
+                    {
+                        // Replacement made; Return the value.
+                        return value;
+                    }
+                }
+            }
         }
     }
 }
