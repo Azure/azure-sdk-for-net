@@ -31,6 +31,6 @@ call "%repoRoot%\tools\autorest.gen.cmd" %filesystemSpecFile% Microsoft.Azure.Ma
 ::  Fix return values to be byte arrays (not read as string byte arrays) for READ filesystem
 ::  Fix body request values to be octect streams and byte arrays for create, append and msconcat
 ::  Fix redirect URIs to be full paths (Create, Open and Append)
-call "powershell.exe -Command "&%repoRoot%\tools\Fix-ADLGeneratedCode.ps1 -DataLakeStore"
+call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeStore"
 
 endlocal
