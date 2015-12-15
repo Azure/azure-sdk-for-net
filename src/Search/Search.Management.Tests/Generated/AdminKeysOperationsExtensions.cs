@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static async Task<AdminKeyResult> ListAsync( this IAdminKeysOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AdminKeyResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
     }

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Search
     /// Client that can be used to manage and query indexes and documents, as
     /// well as manage other resources, on an Azure Search service.
     /// </summary>
-    public partial interface ISearchServiceClient
+    public partial interface ISearchServiceClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
