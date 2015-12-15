@@ -21,10 +21,20 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupManagementClientExtensions
+    /// <summary>
+    /// The definition of a ProtectionPolicyResource.
+    /// </summary>
+    public partial class PotectedItemRequestObject : ProtectedItemResource
     {
+        /// <summary>
+        /// Initializes a new instance of the PotectedItemRequestObject class.
+        /// </summary>
+        public PotectedItemRequestObject()
+        {
+        }
     }
 }

@@ -22,9 +22,23 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupManagementClientExtensions
+    public enum JobSupportedAction
     {
+        /// <summary>
+        /// Invalid JobSupportedAction of Job.
+        /// </summary>
+        Invalid = 0,
+        
+        /// <summary>
+        /// Cancellable JobSupportedAction of Job.
+        /// </summary>
+        Cancellable = 1,
+        
+        /// <summary>
+        /// Retriable JobSupportedAction of Job.
+        /// </summary>
+        Retriable = 2,
     }
 }

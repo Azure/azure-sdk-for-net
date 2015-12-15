@@ -22,9 +22,10 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupManagementClientExtensions
+    public enum ProviderType
     {
+        AzureIaasVM = 0,
     }
 }

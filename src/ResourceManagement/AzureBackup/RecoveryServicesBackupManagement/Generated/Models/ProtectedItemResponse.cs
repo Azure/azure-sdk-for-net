@@ -21,10 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupManagementClientExtensions
+    /// <summary>
+    /// The definition of a ProtectedItemResponse.
+    /// </summary>
+    public partial class ProtectedItemResponse : BaseRecoveryServicesJobResponse
     {
+        private ProtectedItemResource _item;
+        
+        /// <summary>
+        /// Optional. Protected item details Response.
+        /// </summary>
+        public ProtectedItemResource Item
+        {
+            get { return this._item; }
+            set { this._item = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProtectedItemResponse class.
+        /// </summary>
+        public ProtectedItemResponse()
+        {
+        }
     }
 }

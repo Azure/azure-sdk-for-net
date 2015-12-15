@@ -21,10 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupManagementClientExtensions
+    /// <summary>
+    /// The definition of a JobDetailsResponse.
+    /// </summary>
+    public partial class JobDetailsResponse : AzureOperationResponse
     {
+        private JobDetailsResource _item;
+        
+        /// <summary>
+        /// Optional. JobDetailsResource.
+        /// </summary>
+        public JobDetailsResource Item
+        {
+            get { return this._item; }
+            set { this._item = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobDetailsResponse class.
+        /// </summary>
+        public JobDetailsResponse()
+        {
+        }
     }
 }

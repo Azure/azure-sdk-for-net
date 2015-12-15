@@ -21,10 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupManagementClientExtensions
+    /// <summary>
+    /// The definition of a ProtectionContainerResource.
+    /// </summary>
+    public partial class ProtectionContainerResource : Resource
     {
+        private ProtectionContainerBase _properties;
+        
+        /// <summary>
+        /// Optional. Properties
+        /// </summary>
+        public ProtectionContainerBase Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProtectionContainerResource class.
+        /// </summary>
+        public ProtectionContainerResource()
+        {
+        }
     }
 }
