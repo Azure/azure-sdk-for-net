@@ -67,6 +67,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._agentVersion = value; }
         }
         
+        private string _discoveryType;
+        
+        /// <summary>
+        /// Optional. The discovery type of the machine.
+        /// </summary>
+        public string DiscoveryType
+        {
+            get { return this._discoveryType; }
+            set { this._discoveryType = value; }
+        }
+        
         private IList<DiskDiscoveryDetails> _diskDetails;
         
         /// <summary>

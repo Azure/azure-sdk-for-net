@@ -467,6 +467,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
+                                        JToken discoveryTypeValue = customDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareVirtualMachineDetailsInstance.DiscoveryType = discoveryTypeInstance;
+                                        }
+                                        
                                         JToken instanceTypeValue2 = customDetailsValue["instanceType"];
                                         if (instanceTypeValue2 != null && instanceTypeValue2.Type != JTokenType.Null)
                                         {
@@ -1032,6 +1039,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
+                                                JToken discoveryTypeValue = customDetailsValue["discoveryType"];
+                                                if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                                    vMwareVirtualMachineDetailsInstance.DiscoveryType = discoveryTypeInstance;
+                                                }
+                                                
                                                 JToken instanceTypeValue2 = customDetailsValue["instanceType"];
                                                 if (instanceTypeValue2 != null && instanceTypeValue2.Type != JTokenType.Null)
                                                 {
@@ -1536,6 +1550,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             diskDiscoveryDetailsInstance.Capacity = capacityInstance;
                                                         }
                                                     }
+                                                }
+                                                
+                                                JToken discoveryTypeValue = customDetailsValue["discoveryType"];
+                                                if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                                    vMwareVirtualMachineDetailsInstance.DiscoveryType = discoveryTypeInstance;
                                                 }
                                                 
                                                 JToken instanceTypeValue2 = customDetailsValue["instanceType"];

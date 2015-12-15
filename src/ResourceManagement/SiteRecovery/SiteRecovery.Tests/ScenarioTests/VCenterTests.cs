@@ -13,13 +13,13 @@ namespace SiteRecovery.Tests
 {
     public class VCenterTests : SiteRecoveryTestsBase
     {
-        private string vCenterName = "inmtest222";
+        private string vCenterName = "inmtest62";
         //"bcdr-vcenter";
         private string newVCenterName = "inmtest222-updated";
         //"bcdr-vcenter-updated";
-        private string ipAddress = "10.150.209.112";
+        private string ipAddress = "10.150.209.9";
         //"10.150.208.184";
-        private string runAsAccountName = "inmtest108";
+        private string runAsAccountName = "vcenter";
         //"bcdrvcenter";
         private string port = "443";
 
@@ -218,7 +218,7 @@ namespace SiteRecovery.Tests
                 Assert.NotEmpty(vmWareDetails.ProcessServers);
                 var processServer = vmWareDetails.ProcessServers[0];
 
-                var runAsAccount = vmWareDetails.RunAsAccounts.First(
+                var runAsAccount = vmWareDetails.RunAsAccounts.FirstOrDefault(
                     account => account.AccountName.Equals(
                         this.runAsAccountName,
                         StringComparison.InvariantCultureIgnoreCase));

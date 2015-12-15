@@ -64,5 +64,38 @@ namespace SiteRecovery.Tests
                 Assert.NotEmpty(configureResponse.Alert.Properties.CustomEmailAddresses);
             }
         }
+
+        [Fact]
+        public void UnconfigureAlertSettingsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var getAlertsResponse = client.AlertSettings.List(RequestHeaders);
+                Assert.NotNull(getAlertsResponse);
+                Assert.NotEmpty(getAlertsResponse.Alerts);
+
+                var configureResponse = client.AlertSettings.Configure(
+                    getAlertsResponse.Alerts[0].Name,
+                    new ConfigureAlertSettingsRequest
+                    {
+                        Properties = new ConfigureAlertSettingsRequestProperties
+                        {
+                            CustomEmailAddresses = new List<string>(),
+                            Locale = string.Empty,
+                            SendToOwners = "DoNotSend"
+                        }
+                    },
+                    RequestHeaders);
+                Assert.NotNull(configureResponse);
+                Assert.NotNull(configureResponse.Alert);
+                Assert.Equal(HttpStatusCode.OK, configureResponse.StatusCode);
+                Assert.Equal("DoNotSend", configureResponse.Alert.Properties.SendToOwners);
+                Assert.Equal(string.Empty, configureResponse.Alert.Properties.Locale);
+                Assert.Empty(configureResponse.Alert.Properties.CustomEmailAddresses);
+            }
+        }
     }
 }
