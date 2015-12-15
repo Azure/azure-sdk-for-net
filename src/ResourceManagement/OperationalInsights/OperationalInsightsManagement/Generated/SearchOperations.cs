@@ -424,12 +424,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <summary>
         /// Gets the specified saved search for a given workspace.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// Required. A unique workspace instance name.
-        /// </param>
         /// <param name='savedSearchId'>
         /// Required. The id of the saved search.
         /// </param>
@@ -439,17 +433,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// Value object for saved search results.
         /// </returns>
-        public async Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken)
+        public async Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string savedSearchId, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException("workspaceName");
-            }
             if (savedSearchId == null)
             {
                 throw new ArgumentNullException("savedSearchId");
@@ -462,24 +448,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("savedSearchId", savedSearchId);
                 TracingAdapter.Enter(invocationId, this, "GetSavedSearchAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.OperationalInsights/workspaces/";
-            url = url + Uri.EscapeDataString(workspaceName);
-            url = url + "/savedSearches/";
+            url = url + "/";
             url = url + Uri.EscapeDataString(savedSearchId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-20");
@@ -640,12 +615,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <summary>
         /// Gets the results from a saved search for a given workspace.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// Required. A unique workspace instance name.
-        /// </param>
         /// <param name='savedSearchId'>
         /// Required. The id of the saved search.
         /// </param>
@@ -655,17 +624,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// The get search result operation response.
         /// </returns>
-        public async Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken)
+        public async Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(string savedSearchId, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException("workspaceName");
-            }
             if (savedSearchId == null)
             {
                 throw new ArgumentNullException("savedSearchId");
@@ -678,24 +639,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("savedSearchId", savedSearchId);
                 TracingAdapter.Enter(invocationId, this, "GetSavedSearchResultsAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.OperationalInsights/workspaces/";
-            url = url + Uri.EscapeDataString(workspaceName);
-            url = url + "/savedSearches/";
+            url = url + "/";
             url = url + Uri.EscapeDataString(savedSearchId);
             url = url + "/results";
             List<string> queryParameters = new List<string>();
@@ -1810,377 +1760,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets updated search results for a given search query.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// Required. A unique workspace instance name.
-        /// </param>
-        /// <param name='id'>
-        /// Required. The id of the search that will have results updated.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The get search result operation response.
-        /// </returns>
-        public async Task<SearchGetSearchResultsResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException("workspaceName");
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException("id");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("workspaceName", workspaceName);
-                tracingParameters.Add("id", id);
-                TracingAdapter.Enter(invocationId, this, "GetSearchResultUpdateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.OperationalInsights/workspaces/";
-            url = url + Uri.EscapeDataString(workspaceName);
-            url = url + "/search/";
-            url = url + Uri.EscapeDataString(id);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-20");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    SearchGetSearchResultsResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new SearchGetSearchResultsResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                result.Id = idInstance;
-                            }
-                            
-                            JToken metadataValue = responseDoc["__metadata"];
-                            if (metadataValue != null && metadataValue.Type != JTokenType.Null)
-                            {
-                                SearchMetadata metadataInstance = new SearchMetadata();
-                                result.Metadata = metadataInstance;
-                                
-                                JToken resultTypeValue = metadataValue["resultType"];
-                                if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
-                                {
-                                    string resultTypeInstance = ((string)resultTypeValue);
-                                    metadataInstance.ResultType = resultTypeInstance;
-                                }
-                                
-                                JToken totalValue = metadataValue["total"];
-                                if (totalValue != null && totalValue.Type != JTokenType.Null)
-                                {
-                                    int totalInstance = ((int)totalValue);
-                                    metadataInstance.Total = totalInstance;
-                                }
-                                
-                                JToken topValue = metadataValue["top"];
-                                if (topValue != null && topValue.Type != JTokenType.Null)
-                                {
-                                    int topInstance = ((int)topValue);
-                                    metadataInstance.Top = topInstance;
-                                }
-                                
-                                JToken idValue2 = metadataValue["id"];
-                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                                {
-                                    Guid idInstance2 = Guid.Parse(((string)idValue2));
-                                    metadataInstance.Id = idInstance2;
-                                }
-                                
-                                JToken coreSummariesArray = metadataValue["CoreSummaries"];
-                                if (coreSummariesArray != null && coreSummariesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken coreSummariesValue in ((JArray)coreSummariesArray))
-                                    {
-                                        CoreSummary coreSummaryInstance = new CoreSummary();
-                                        metadataInstance.CoreSummaries.Add(coreSummaryInstance);
-                                        
-                                        JToken statusValue = coreSummariesValue["Status"];
-                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                        {
-                                            string statusInstance = ((string)statusValue);
-                                            coreSummaryInstance.Status = statusInstance;
-                                        }
-                                        
-                                        JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
-                                        if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
-                                        {
-                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
-                                            coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken statusValue2 = metadataValue["Status"];
-                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
-                                {
-                                    string statusInstance2 = ((string)statusValue2);
-                                    metadataInstance.Status = statusInstance2;
-                                }
-                                
-                                JToken startTimeValue = metadataValue["StartTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    metadataInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken lastUpdatedValue = metadataValue["LastUpdated"];
-                                if (lastUpdatedValue != null && lastUpdatedValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastUpdatedInstance = ((DateTime)lastUpdatedValue);
-                                    metadataInstance.LastUpdated = lastUpdatedInstance;
-                                }
-                                
-                                JToken eTagValue = metadataValue["ETag"];
-                                if (eTagValue != null && eTagValue.Type != JTokenType.Null)
-                                {
-                                    string eTagInstance = ((string)eTagValue);
-                                    metadataInstance.ETag = eTagInstance;
-                                }
-                                
-                                JToken sortArray = metadataValue["sort"];
-                                if (sortArray != null && sortArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken sortValue in ((JArray)sortArray))
-                                    {
-                                        SearchSort searchSortInstance = new SearchSort();
-                                        metadataInstance.Sort.Add(searchSortInstance);
-                                        
-                                        JToken nameValue = sortValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            searchSortInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken orderValue = sortValue["order"];
-                                        if (orderValue != null && orderValue.Type != JTokenType.Null)
-                                        {
-                                            string orderInstance = ((string)orderValue);
-                                            searchSortInstance.Order = orderInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken requestTimeValue = metadataValue["requestTime"];
-                                if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
-                                {
-                                    int requestTimeInstance = ((int)requestTimeValue);
-                                    metadataInstance.RequestTime = requestTimeInstance;
-                                }
-                                
-                                JToken aggregatedValueFieldValue = metadataValue["aggregatedValueField"];
-                                if (aggregatedValueFieldValue != null && aggregatedValueFieldValue.Type != JTokenType.Null)
-                                {
-                                    string aggregatedValueFieldInstance = ((string)aggregatedValueFieldValue);
-                                    metadataInstance.AggregatedValueField = aggregatedValueFieldInstance;
-                                }
-                                
-                                JToken aggregatedGroupingFieldsValue = metadataValue["aggregatedGroupingFields"];
-                                if (aggregatedGroupingFieldsValue != null && aggregatedGroupingFieldsValue.Type != JTokenType.Null)
-                                {
-                                    string aggregatedGroupingFieldsInstance = ((string)aggregatedGroupingFieldsValue);
-                                    metadataInstance.AggregatedGroupingFields = aggregatedGroupingFieldsInstance;
-                                }
-                                
-                                JToken sumValue = metadataValue["sum"];
-                                if (sumValue != null && sumValue.Type != JTokenType.Null)
-                                {
-                                    int sumInstance = ((int)sumValue);
-                                    metadataInstance.Sum = sumInstance;
-                                }
-                                
-                                JToken maxValue = metadataValue["max"];
-                                if (maxValue != null && maxValue.Type != JTokenType.Null)
-                                {
-                                    int maxInstance = ((int)maxValue);
-                                    metadataInstance.Max = maxInstance;
-                                }
-                                
-                                JToken schemaValue = metadataValue["schema"];
-                                if (schemaValue != null && schemaValue.Type != JTokenType.Null)
-                                {
-                                    MetadataSchema schemaInstance = new MetadataSchema();
-                                    metadataInstance.Schema = schemaInstance;
-                                    
-                                    JToken nameValue2 = schemaValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        schemaInstance.Name = nameInstance2;
-                                    }
-                                    
-                                    JToken versionValue = schemaValue["version"];
-                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                    {
-                                        int versionInstance = ((int)versionValue);
-                                        schemaInstance.Version = versionInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    result.Value.Add(valueValue.ToString(Newtonsoft.Json.Formatting.Indented));
-                                }
-                            }
-                            
-                            JToken errorValue = responseDoc["error"];
-                            if (errorValue != null && errorValue.Type != JTokenType.Null)
-                            {
-                                SearchError errorInstance = new SearchError();
-                                result.Error = errorInstance;
-                                
-                                JToken typeValue = errorValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    errorInstance.Type = typeInstance;
-                                }
-                                
-                                JToken messageValue = errorValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    errorInstance.Message = messageInstance;
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
         /// Gets the saved searches for a given workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -2530,6 +2109,352 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                             propertiesInstance.Version = versionInstance2;
                                         }
                                     }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets updated search results for a given search query.
+        /// </summary>
+        /// <param name='id'>
+        /// Required. The id of the search that will have results updated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get search result operation response.
+        /// </returns>
+        public async Task<SearchGetSearchResultsResponse> UpdateSearchResultsAsync(string id, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("id", id);
+                TracingAdapter.Enter(invocationId, this, "UpdateSearchResultsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(id);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-20");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SearchGetSearchResultsResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SearchGetSearchResultsResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                result.Id = idInstance;
+                            }
+                            
+                            JToken metadataValue = responseDoc["__metadata"];
+                            if (metadataValue != null && metadataValue.Type != JTokenType.Null)
+                            {
+                                SearchMetadata metadataInstance = new SearchMetadata();
+                                result.Metadata = metadataInstance;
+                                
+                                JToken resultTypeValue = metadataValue["resultType"];
+                                if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
+                                {
+                                    string resultTypeInstance = ((string)resultTypeValue);
+                                    metadataInstance.ResultType = resultTypeInstance;
+                                }
+                                
+                                JToken totalValue = metadataValue["total"];
+                                if (totalValue != null && totalValue.Type != JTokenType.Null)
+                                {
+                                    int totalInstance = ((int)totalValue);
+                                    metadataInstance.Total = totalInstance;
+                                }
+                                
+                                JToken topValue = metadataValue["top"];
+                                if (topValue != null && topValue.Type != JTokenType.Null)
+                                {
+                                    int topInstance = ((int)topValue);
+                                    metadataInstance.Top = topInstance;
+                                }
+                                
+                                JToken idValue2 = metadataValue["id"];
+                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                {
+                                    Guid idInstance2 = Guid.Parse(((string)idValue2));
+                                    metadataInstance.Id = idInstance2;
+                                }
+                                
+                                JToken coreSummariesArray = metadataValue["CoreSummaries"];
+                                if (coreSummariesArray != null && coreSummariesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken coreSummariesValue in ((JArray)coreSummariesArray))
+                                    {
+                                        CoreSummary coreSummaryInstance = new CoreSummary();
+                                        metadataInstance.CoreSummaries.Add(coreSummaryInstance);
+                                        
+                                        JToken statusValue = coreSummariesValue["Status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            coreSummaryInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken numberOfDocumentsValue = coreSummariesValue["NumberOfDocuments"];
+                                        if (numberOfDocumentsValue != null && numberOfDocumentsValue.Type != JTokenType.Null)
+                                        {
+                                            int numberOfDocumentsInstance = ((int)numberOfDocumentsValue);
+                                            coreSummaryInstance.NumberOfDocuments = numberOfDocumentsInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken statusValue2 = metadataValue["Status"];
+                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                {
+                                    string statusInstance2 = ((string)statusValue2);
+                                    metadataInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken startTimeValue = metadataValue["StartTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                    metadataInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken lastUpdatedValue = metadataValue["LastUpdated"];
+                                if (lastUpdatedValue != null && lastUpdatedValue.Type != JTokenType.Null)
+                                {
+                                    DateTime lastUpdatedInstance = ((DateTime)lastUpdatedValue);
+                                    metadataInstance.LastUpdated = lastUpdatedInstance;
+                                }
+                                
+                                JToken eTagValue = metadataValue["ETag"];
+                                if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                {
+                                    string eTagInstance = ((string)eTagValue);
+                                    metadataInstance.ETag = eTagInstance;
+                                }
+                                
+                                JToken sortArray = metadataValue["sort"];
+                                if (sortArray != null && sortArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken sortValue in ((JArray)sortArray))
+                                    {
+                                        SearchSort searchSortInstance = new SearchSort();
+                                        metadataInstance.Sort.Add(searchSortInstance);
+                                        
+                                        JToken nameValue = sortValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            searchSortInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken orderValue = sortValue["order"];
+                                        if (orderValue != null && orderValue.Type != JTokenType.Null)
+                                        {
+                                            string orderInstance = ((string)orderValue);
+                                            searchSortInstance.Order = orderInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken requestTimeValue = metadataValue["requestTime"];
+                                if (requestTimeValue != null && requestTimeValue.Type != JTokenType.Null)
+                                {
+                                    int requestTimeInstance = ((int)requestTimeValue);
+                                    metadataInstance.RequestTime = requestTimeInstance;
+                                }
+                                
+                                JToken aggregatedValueFieldValue = metadataValue["aggregatedValueField"];
+                                if (aggregatedValueFieldValue != null && aggregatedValueFieldValue.Type != JTokenType.Null)
+                                {
+                                    string aggregatedValueFieldInstance = ((string)aggregatedValueFieldValue);
+                                    metadataInstance.AggregatedValueField = aggregatedValueFieldInstance;
+                                }
+                                
+                                JToken aggregatedGroupingFieldsValue = metadataValue["aggregatedGroupingFields"];
+                                if (aggregatedGroupingFieldsValue != null && aggregatedGroupingFieldsValue.Type != JTokenType.Null)
+                                {
+                                    string aggregatedGroupingFieldsInstance = ((string)aggregatedGroupingFieldsValue);
+                                    metadataInstance.AggregatedGroupingFields = aggregatedGroupingFieldsInstance;
+                                }
+                                
+                                JToken sumValue = metadataValue["sum"];
+                                if (sumValue != null && sumValue.Type != JTokenType.Null)
+                                {
+                                    int sumInstance = ((int)sumValue);
+                                    metadataInstance.Sum = sumInstance;
+                                }
+                                
+                                JToken maxValue = metadataValue["max"];
+                                if (maxValue != null && maxValue.Type != JTokenType.Null)
+                                {
+                                    int maxInstance = ((int)maxValue);
+                                    metadataInstance.Max = maxInstance;
+                                }
+                                
+                                JToken schemaValue = metadataValue["schema"];
+                                if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                {
+                                    MetadataSchema schemaInstance = new MetadataSchema();
+                                    metadataInstance.Schema = schemaInstance;
+                                    
+                                    JToken nameValue2 = schemaValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        schemaInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken versionValue = schemaValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        int versionInstance = ((int)versionValue);
+                                        schemaInstance.Version = versionInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    result.Value.Add(valueValue.ToString(Newtonsoft.Json.Formatting.Indented));
+                                }
+                            }
+                            
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                            {
+                                SearchError errorInstance = new SearchError();
+                                result.Error = errorInstance;
+                                
+                                JToken typeValue = errorValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    errorInstance.Type = typeInstance;
+                                }
+                                
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                {
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
                                 }
                             }
                         }

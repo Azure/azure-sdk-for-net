@@ -52,11 +52,8 @@ namespace OperationalInsights.Tests.OperationTests
                 Assert.NotNull(searchResult.Value);
                 Assert.Equal(searchResult.Value.Count, topCount);
 
-                String[] idStrings = searchResult.Id.Split('/');
-                var updatedSearchResult = client.Search.GetSearchResultUpdate(
-                    resourceGroupName,
-                    workspaceName,
-                    idStrings[idStrings.Length - 1]);
+                var updatedSearchResult = client.Search.UpdateSearchResults(
+                    searchResult.Id);
                 Assert.NotNull(updatedSearchResult);
                 Assert.NotNull(searchResult.Metadata);
                 Assert.NotNull(searchResult.Value);
@@ -107,12 +104,9 @@ namespace OperationalInsights.Tests.OperationTests
                 Assert.NotNull(savedSearchesResult.Value);
                 Assert.NotEqual(savedSearchesResult.Value.Count, 0);
 
-                String[] idStrings = savedSearchesResult.Value[0].Id.Split('/');
-                string id = idStrings[idStrings.Length - 1];
+                string id = savedSearchesResult.Value[0].Id;
 
                 var savedSearchResult = client.Search.GetSavedSearch(
-                    resourceGroupName,
-                    workspaceName,
                     id);
                 Assert.NotNull(savedSearchResult);
                 Assert.NotNull(savedSearchResult.ETag);
@@ -123,7 +117,7 @@ namespace OperationalInsights.Tests.OperationTests
                 Assert.NotNull(savedSearchResult.Properties.Query);
                 Assert.NotEqual(savedSearchResult.Properties.Query, "");
 
-                var savedSearchResults = client.Search.GetSavedSearchResults(resourceGroupName, workspaceName, id);
+                var savedSearchResults = client.Search.GetSavedSearchResults(id);
                 Assert.NotNull(savedSearchResults);
                 Assert.NotNull(savedSearchResults.Metadata);
                 Assert.NotNull(savedSearchResults.Value);

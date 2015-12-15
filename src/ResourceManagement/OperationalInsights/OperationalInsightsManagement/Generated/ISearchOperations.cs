@@ -81,12 +81,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <summary>
         /// Gets the specified saved search for a given workspace.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
         /// <param name='savedSearchId'>
         /// The id of the saved search.
         /// </param>
@@ -96,17 +90,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// Value object for saved search results.
         /// </returns>
-        Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
+        Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string savedSearchId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the results from a saved search for a given workspace.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
         /// <param name='savedSearchId'>
         /// The id of the saved search.
         /// </param>
@@ -116,7 +104,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// The get search result operation response.
         /// </returns>
-        Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
+        Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(string savedSearchId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the schema for a given workspace.
@@ -156,26 +144,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         Task<SearchGetSearchResultsResponse> GetSearchResultsAsync(string resourceGroupName, string workspaceName, SearchGetSearchResultsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets updated search results for a given search query.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='id'>
-        /// The id of the search that will have results updated.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The get search result operation response.
-        /// </returns>
-        Task<SearchGetSearchResultsResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Gets the saved searches for a given workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -191,5 +159,19 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// The saved search operation response.
         /// </returns>
         Task<SearchListSavedSearchResponse> ListSavedSearchesAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets updated search results for a given search query.
+        /// </summary>
+        /// <param name='id'>
+        /// The id of the search that will have results updated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get search result operation response.
+        /// </returns>
+        Task<SearchGetSearchResultsResponse> UpdateSearchResultsAsync(string id, CancellationToken cancellationToken);
     }
 }
