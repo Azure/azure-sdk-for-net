@@ -20,47 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.OperationalInsights.Models;
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The list workspaces operation response.
+    /// Details for a search error.
     /// </summary>
-    public partial class SearchSavedSearchResponse : AzureOperationResponse
+    public partial class SearchError
     {
-        private Metadata _metadata;
+        private string _message;
         
         /// <summary>
-        /// Optional. Gets or sets the metadata from search results.
+        /// Optional. Gets or sets the error message.
         /// </summary>
-        public Metadata Metadata
+        public string Message
         {
-            get { return this._metadata; }
-            set { this._metadata = value; }
+            get { return this._message; }
+            set { this._message = value; }
         }
         
-        private IList<SavedSearchValue> _value;
+        private string _type;
         
         /// <summary>
-        /// Optional. Gets or sets the array of result values.
+        /// Optional. Gets or sets the error type.
         /// </summary>
-        public IList<SavedSearchValue> Value
+        public string Type
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SearchSavedSearchResponse class.
+        /// Initializes a new instance of the SearchError class.
         /// </summary>
-        public SearchSavedSearchResponse()
+        public SearchError()
         {
-            this.Value = new LazyList<SavedSearchValue>();
         }
     }
 }

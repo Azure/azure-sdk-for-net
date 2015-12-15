@@ -34,141 +34,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
     public partial interface ISearchOperations
     {
         /// <summary>
-        /// Gets the schema for a given workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='savedSearchId'>
-        /// The id of the saved search.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        Task<SearchSavedSearchResponse> DeleteSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the schema for a given workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='savedSearchId'>
-        /// The id of the saved search.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Value object for saved search results.
-        /// </returns>
-        Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the saved searches for a given workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        Task<SearchSavedSearchResponse> GetSavedSearchesAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the results from a saved search for a given workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='savedSearchId'>
-        /// The id of the saved search.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        Task<SearchGetSearchResultResponse> GetSavedSearchResultsAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the schema for a given workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        Task<SearchGetSchemaResponse> GetSchemaAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the search results for a given workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters required to execute a search query.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        Task<SearchGetSearchResultResponse> GetSearchResultAsync(string resourceGroupName, string workspaceName, SearchGetSearchResultParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets updated search results for a given workspace.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// A unique workspace instance name.
-        /// </param>
-        /// <param name='id'>
-        /// The id of the search to be updated.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the schema for a given workspace.
+        /// Creates or updates a saved search for a given workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the workspace.
@@ -189,6 +55,141 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> PutSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, SearchPutSavedSearchParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, SearchCreateOrUpdateSavedSearchParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes the specified saved search in a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='savedSearchId'>
+        /// The id of the saved search.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the specified saved search for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='savedSearchId'>
+        /// The id of the saved search.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Value object for saved search results.
+        /// </returns>
+        Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the results from a saved search for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='savedSearchId'>
+        /// The id of the saved search.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get search result operation response.
+        /// </returns>
+        Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the schema for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get schema operation response.
+        /// </returns>
+        Task<SearchGetSchemaResponse> GetSchemaAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the search results for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to execute a search query.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get search result operation response.
+        /// </returns>
+        Task<SearchGetSearchResultsResponse> GetSearchResultsAsync(string resourceGroupName, string workspaceName, SearchGetSearchResultsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets updated search results for a given search query.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='id'>
+        /// The id of the search that will have results updated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get search result operation response.
+        /// </returns>
+        Task<SearchGetSearchResultsResponse> GetSearchResultUpdateAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the saved searches for a given workspace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// A unique workspace instance name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The saved search operation response.
+        /// </returns>
+        Task<SearchListSavedSearchResponse> ListSavedSearchesAsync(string resourceGroupName, string workspaceName, CancellationToken cancellationToken);
     }
 }

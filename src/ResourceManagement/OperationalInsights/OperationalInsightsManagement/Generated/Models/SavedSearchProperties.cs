@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Gets or sets the total search results.
+        /// Optional. Gets or sets the display name.
         /// </summary>
         public string DisplayName
         {

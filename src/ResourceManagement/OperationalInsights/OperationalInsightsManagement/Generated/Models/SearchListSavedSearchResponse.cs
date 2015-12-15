@@ -20,44 +20,48 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.OperationalInsights.Models;
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// Parameters for putting a saved search.
+    /// The saved search operation response.
     /// </summary>
-    public partial class SearchPutSavedSearchParameters
+    public partial class SearchListSavedSearchResponse : AzureOperationResponse
     {
-        private string _eTag;
+        private SearchMetadata _metadata;
         
         /// <summary>
-        /// Optional. Gets or sets the etag of the saved search.
+        /// Optional. Gets or sets the metadata from search results.
         /// </summary>
-        public string ETag
+        public SearchMetadata Metadata
         {
-            get { return this._eTag; }
-            set { this._eTag = value; }
+            get { return this._metadata; }
+            set { this._metadata = value; }
         }
         
-        private SavedSearchProperties _properties;
+        private IList<SavedSearchValue> _value;
         
         /// <summary>
-        /// Optional. Gets or sets properties of the saved search.
+        /// Optional. Gets or sets the array of result values.
         /// </summary>
-        public SavedSearchProperties Properties
+        public IList<SavedSearchValue> Value
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SearchPutSavedSearchParameters
+        /// Initializes a new instance of the SearchListSavedSearchResponse
         /// class.
         /// </summary>
-        public SearchPutSavedSearchParameters()
+        public SearchListSavedSearchResponse()
         {
+            this.Value = new LazyList<SavedSearchValue>();
         }
     }
 }

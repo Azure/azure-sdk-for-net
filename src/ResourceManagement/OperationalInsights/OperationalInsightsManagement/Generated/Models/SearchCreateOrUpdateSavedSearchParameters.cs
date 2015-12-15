@@ -20,68 +20,44 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.OperationalInsights.Models;
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// Facet details for a search.
+    /// Parameters for putting a saved search.
     /// </summary>
-    public partial class Facet
+    public partial class SearchCreateOrUpdateSavedSearchParameters
     {
-        private IList<string> _field;
+        private string _eTag;
         
         /// <summary>
-        /// Optional. Gets or sets the field.
+        /// Optional. Gets or sets the etag of the saved search.
         /// </summary>
-        public IList<string> Field
+        public string ETag
         {
-            get { return this._field; }
-            set { this._field = value; }
+            get { return this._eTag; }
+            set { this._eTag = value; }
         }
         
-        private int _limit;
+        private SavedSearchProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the limit.
+        /// Optional. Gets or sets properties of the saved search.
         /// </summary>
-        public int Limit
+        public SavedSearchProperties Properties
         {
-            get { return this._limit; }
-            set { this._limit = value; }
-        }
-        
-        private int _mincount;
-        
-        /// <summary>
-        /// Optional. Gets or sets the mincount.
-        /// </summary>
-        public int Mincount
-        {
-            get { return this._mincount; }
-            set { this._mincount = value; }
-        }
-        
-        private Range _range;
-        
-        /// <summary>
-        /// Optional. Gets or sets the range.
-        /// </summary>
-        public Range Range
-        {
-            get { return this._range; }
-            set { this._range = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Facet class.
+        /// Initializes a new instance of the
+        /// SearchCreateOrUpdateSavedSearchParameters class.
         /// </summary>
-        public Facet()
+        public SearchCreateOrUpdateSavedSearchParameters()
         {
-            this.Field = new LazyList<string>();
         }
     }
 }

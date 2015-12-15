@@ -25,36 +25,37 @@ using System.Linq;
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// Details for an error.
+    /// The sort parameters for search.
     /// </summary>
-    public partial class Error
+    public partial class SearchSort
     {
-        private string _message;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the error message.
+        /// Optional. Gets or sets the name of the field the search query is
+        /// sorted on.
         /// </summary>
-        public string Message
+        public string Name
         {
-            get { return this._message; }
-            set { this._message = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private string _type;
+        private string _order;
         
         /// <summary>
-        /// Optional. Gets or sets the error type.
+        /// Optional. Gets or sets the sort order of the search.
         /// </summary>
-        public string Type
+        public string Order
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._order; }
+            set { this._order = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the SearchSort class.
         /// </summary>
-        public Error()
+        public SearchSort()
         {
         }
     }

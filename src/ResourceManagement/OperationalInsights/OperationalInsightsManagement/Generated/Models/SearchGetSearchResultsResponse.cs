@@ -23,64 +23,67 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.OperationalInsights.Models;
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// Range details for a facet.
+    /// The get search result operation response.
     /// </summary>
-    public partial class Range
+    public partial class SearchGetSearchResultsResponse : AzureOperationResponse
     {
-        private System.DateTime? _end;
+        private SearchError _error;
         
         /// <summary>
-        /// Optional. Gets or sets the end date.
+        /// Optional. Gets or sets the error.
         /// </summary>
-        public System.DateTime? End
+        public SearchError Error
         {
-            get { return this._end; }
-            set { this._end = value; }
+            get { return this._error; }
+            set { this._error = value; }
         }
         
-        private IList<string> _field;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the field.
+        /// Optional. Gets or sets the id of the search.
         /// </summary>
-        public IList<string> Field
+        public string Id
         {
-            get { return this._field; }
-            set { this._field = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private string _gap;
+        private SearchMetadata _metadata;
         
         /// <summary>
-        /// Optional. Gets or sets the gap.
+        /// Optional. Gets or sets the metadata from search results.
         /// </summary>
-        public string Gap
+        public SearchMetadata Metadata
         {
-            get { return this._gap; }
-            set { this._gap = value; }
+            get { return this._metadata; }
+            set { this._metadata = value; }
         }
         
-        private System.DateTime? _start;
+        private IList<object> _value;
         
         /// <summary>
-        /// Optional. Gets or sets the start date.
+        /// Optional. Gets or sets the array of result values.
         /// </summary>
-        public System.DateTime? Start
+        public IList<object> Value
         {
-            get { return this._start; }
-            set { this._start = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Range class.
+        /// Initializes a new instance of the SearchGetSearchResultsResponse
+        /// class.
         /// </summary>
-        public Range()
+        public SearchGetSearchResultsResponse()
         {
-            this.Field = new LazyList<string>();
+            this.Value = new LazyList<object>();
         }
     }
 }

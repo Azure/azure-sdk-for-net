@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _post;
         
         /// <summary>
-        /// Optional. Gets or sets the post string.
+        /// Optional. Gets or sets the string that is put after a matched
+        /// result.
         /// </summary>
         public string Post
         {
@@ -43,7 +44,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _pre;
         
         /// <summary>
-        /// Optional. Gets or sets the pre string.
+        /// Optional. Gets or sets the string that is put before a matched
+        /// result.
         /// </summary>
         public string Pre
         {

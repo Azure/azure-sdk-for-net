@@ -29,16 +29,16 @@ using Microsoft.Azure.Management.OperationalInsights.Models;
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// The list workspaces operation response.
+    /// The get schema operation response.
     /// </summary>
     public partial class SearchGetSchemaResponse : AzureOperationResponse
     {
-        private Metadata _metadata;
+        private SearchMetadata _metadata;
         
         /// <summary>
         /// Optional. Gets or sets the metadata from search results.
         /// </summary>
-        public Metadata Metadata
+        public SearchMetadata Metadata
         {
             get { return this._metadata; }
             set { this._metadata = value; }

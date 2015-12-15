@@ -28,12 +28,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// <summary>
     /// Parameters specifying the search query and range.
     /// </summary>
-    public partial class SearchGetSearchResultParameters
+    public partial class SearchGetSearchResultsParameters
     {
         private System.DateTime? _end;
         
         /// <summary>
-        /// Optional. Gets or sets the end date.
+        /// Optional. Gets or sets the end date filter, so the only query
+        /// results returned are before this date.
         /// </summary>
         public System.DateTime? End
         {
@@ -41,37 +42,16 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._end = value; }
         }
         
-        private Facet _facet;
-        
-        /// <summary>
-        /// Optional. Gets or sets the facet details.
-        /// </summary>
-        public Facet Facet
-        {
-            get { return this._facet; }
-            set { this._facet = value; }
-        }
-        
         private Highlight _highlight;
         
         /// <summary>
-        /// Optional. Gets or sets the highlight.
+        /// Optional. Gets or sets the highlight that looks for all occurences
+        /// of a string.
         /// </summary>
         public Highlight Highlight
         {
             get { return this._highlight; }
             set { this._highlight = value; }
-        }
-        
-        private bool _includeArchive;
-        
-        /// <summary>
-        /// Optional. Gets or sets the include archive boolean.
-        /// </summary>
-        public bool IncludeArchive
-        {
-            get { return this._includeArchive; }
-            set { this._includeArchive = value; }
         }
         
         private string _query;
@@ -85,21 +65,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._query = value; }
         }
         
-        private int _skip;
-        
-        /// <summary>
-        /// Optional. Gets or sets the number to skip.
-        /// </summary>
-        public int Skip
-        {
-            get { return this._skip; }
-            set { this._skip = value; }
-        }
-        
         private System.DateTime? _start;
         
         /// <summary>
-        /// Optional. Gets or sets the start date.
+        /// Optional. Gets or sets the start date filter, so the only query
+        /// results returned are after this date.
         /// </summary>
         public System.DateTime? Start
         {
@@ -119,10 +89,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the SearchGetSearchResultParameters
+        /// Initializes a new instance of the SearchGetSearchResultsParameters
         /// class.
         /// </summary>
-        public SearchGetSearchResultParameters()
+        public SearchGetSearchResultsParameters()
         {
         }
     }

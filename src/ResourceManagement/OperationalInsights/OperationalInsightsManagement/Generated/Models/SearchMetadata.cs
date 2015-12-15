@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// <summary>
     /// Metadata for search results.
     /// </summary>
-    public partial class Metadata
+    public partial class SearchMetadata
     {
         private string _aggregatedGroupingFields;
         
@@ -52,17 +52,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         {
             get { return this._aggregatedValueField; }
             set { this._aggregatedValueField = value; }
-        }
-        
-        private IList<object> _coreResponses;
-        
-        /// <summary>
-        /// Optional. Gets or sets the core responses.
-        /// </summary>
-        public IList<object> CoreResponses
-        {
-            get { return this._coreResponses; }
-            set { this._coreResponses = value; }
         }
         
         private IList<CoreSummary> _coreSummaries;
@@ -153,23 +142,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._schema = value; }
         }
         
-        private int? _skip;
+        private IList<SearchSort> _sort;
         
         /// <summary>
-        /// Optional. Gets or sets the number of skipped search results.
+        /// Optional. Gets or sets sort.
         /// </summary>
-        public int? Skip
-        {
-            get { return this._skip; }
-            set { this._skip = value; }
-        }
-        
-        private IList<Sort> _sort;
-        
-        /// <summary>
-        /// Optional. Gets or sets the request time.
-        /// </summary>
-        public IList<Sort> Sort
+        public IList<SearchSort> Sort
         {
             get { return this._sort; }
             set { this._sort = value; }
@@ -231,13 +209,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the Metadata class.
+        /// Initializes a new instance of the SearchMetadata class.
         /// </summary>
-        public Metadata()
+        public SearchMetadata()
         {
-            this.CoreResponses = new LazyList<object>();
             this.CoreSummaries = new LazyList<CoreSummary>();
-            this.Sort = new LazyList<Sort>();
+            this.Sort = new LazyList<SearchSort>();
         }
     }
 }

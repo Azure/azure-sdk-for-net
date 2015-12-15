@@ -43,10 +43,10 @@ namespace OperationalInsights.Tests.OperationTests
                 string workspaceName = "rasha";
                 int topCount = 25;
 
-                SearchGetSearchResultParameters parameters = new SearchGetSearchResultParameters();
+                SearchGetSearchResultsParameters parameters = new SearchGetSearchResultsParameters();
                 parameters.Query = "*";
                 parameters.Top = topCount;
-                var searchResult = client.Search.GetSearchResult(resourceGroupName, workspaceName, parameters);
+                var searchResult = client.Search.GetSearchResults(resourceGroupName, workspaceName, parameters);
                 Assert.NotNull(searchResult);
                 Assert.NotNull(searchResult.Metadata);
                 Assert.NotNull(searchResult.Value);
@@ -101,7 +101,7 @@ namespace OperationalInsights.Tests.OperationTests
                 string resourceGroupName = "mms-eus";
                 string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
 
-                var savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
+                var savedSearchesResult = client.Search.ListSavedSearches(resourceGroupName, workspaceName);
 
                 Assert.NotNull(savedSearchesResult);
                 Assert.NotNull(savedSearchesResult.Value);
@@ -132,7 +132,7 @@ namespace OperationalInsights.Tests.OperationTests
         }
 
         [Fact]
-        public void CanPutAndDeleteSavedSearches()
+        public void CanCreateOrUpdateAndDeleteSavedSearches()
         {
             BasicDelegatingHandler handler = new BasicDelegatingHandler();
 
@@ -146,25 +146,60 @@ namespace OperationalInsights.Tests.OperationTests
                 string workspaceName = "workspace-861bd466-5400-44be-9552-5ba40823c3aa";
                 string newSavedSearchId = "test-new-saved-search-id-2015";
 
-                SearchPutSavedSearchParameters parameters = new SearchPutSavedSearchParameters();
+                SearchCreateOrUpdateSavedSearchParameters parameters = new SearchCreateOrUpdateSavedSearchParameters();
                 parameters.Properties = new SavedSearchProperties();
                 parameters.Properties.Version = 1;
                 parameters.Properties.Query = "* | measure Count() by Type";
-                parameters.Properties.DisplayName = "Put Saved Search Test";
-                parameters.Properties.Category = "Put Saved Search Test Category";
+                parameters.Properties.DisplayName = "Create or Update Saved Search Test";
+                parameters.Properties.Category = " Saved Search Test Category";
 
-                var putSavedSearchResults = client.Search.PutSavedSearch(
+                var result = client.Search.ListSavedSearches(resourceGroupName, workspaceName);
+
+                var createSavedSearchResults = client.Search.CreateOrUpdateSavedSearch(
                     resourceGroupName,
                     workspaceName,
                     newSavedSearchId,
                     parameters);
-                Assert.NotNull(putSavedSearchResults);
+                Assert.NotNull(createSavedSearchResults);
 
                 // Verify that the saved search was saved
-                var savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
+                var savedSearchesResult = client.Search.ListSavedSearches(resourceGroupName, workspaceName);
                 Assert.NotNull(savedSearchesResult);
-
+                Assert.NotNull(savedSearchesResult.Value);
+                Assert.NotEqual(savedSearchesResult.Value.Count, 0);
+                Assert.NotNull(savedSearchesResult.Value[0].Id);
+                Assert.NotNull(savedSearchesResult.Value[0].Properties);
                 bool foundSavedSearch = false;
+                for (int i = 0; i < savedSearchesResult.Value.Count; i++)
+                {
+                    SavedSearchProperties properties = savedSearchesResult.Value[i].Properties;
+                    if (properties.Category.Equals(parameters.Properties.Category)
+                        && properties.Version == parameters.Properties.Version
+                        && properties.Query.Equals(parameters.Properties.Query)
+                        && properties.DisplayName.Equals(parameters.Properties.DisplayName))
+                    {
+                        foundSavedSearch = true;
+                        parameters.ETag = savedSearchesResult.Value[i].ETag;
+                    }
+                }
+                Assert.True(foundSavedSearch);
+
+                // Test updating a saved search
+                parameters.Properties.Query = "*";
+                var updateSavedSearchResults = client.Search.CreateOrUpdateSavedSearch(
+                    resourceGroupName,
+                    workspaceName,
+                    newSavedSearchId,
+                    parameters);
+                Assert.NotNull(updateSavedSearchResults);
+                // Verify that the saved search was saved
+                savedSearchesResult = client.Search.ListSavedSearches(resourceGroupName, workspaceName);
+                Assert.NotNull(savedSearchesResult);
+                Assert.NotNull(savedSearchesResult.Value);
+                Assert.NotEqual(savedSearchesResult.Value.Count, 0);
+                Assert.NotNull(savedSearchesResult.Value[0].Id);
+                Assert.NotNull(savedSearchesResult.Value[0].Properties);
+                foundSavedSearch = false;
                 for (int i = 0; i < savedSearchesResult.Value.Count; i++)
                 {
                     SavedSearchProperties properties = savedSearchesResult.Value[i].Properties;
@@ -178,8 +213,11 @@ namespace OperationalInsights.Tests.OperationTests
                 }
                 Assert.True(foundSavedSearch);
 
+
+
+                // Test the function to delete a saved search
                 client.Search.DeleteSavedSearch(resourceGroupName, workspaceName, newSavedSearchId);
-                savedSearchesResult = client.Search.GetSavedSearches(resourceGroupName, workspaceName);
+                savedSearchesResult = client.Search.ListSavedSearches(resourceGroupName, workspaceName);
 
                 foundSavedSearch = false;
                 for (int i = 0; i < savedSearchesResult.Value.Count; i++)

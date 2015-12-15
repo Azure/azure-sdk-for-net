@@ -23,26 +23,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.OperationalInsights.Models;
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     /// <summary>
-    /// Value object for saved search results.
+    /// Value object for schema results.
     /// </summary>
     public partial class SchemaValue
     {
-        private bool _display;
-        
-        /// <summary>
-        /// Optional. Gets or sets the display boolean.
-        /// </summary>
-        public bool Display
-        {
-            get { return this._display; }
-            set { this._display = value; }
-        }
-        
         private string _displayName;
         
         /// <summary>
@@ -54,21 +42,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._displayName = value; }
         }
         
-        private Extraction _extraction;
-        
-        /// <summary>
-        /// Optional. Gets or sets extraction.
-        /// </summary>
-        public Extraction Extraction
-        {
-            get { return this._extraction; }
-            set { this._extraction = value; }
-        }
-        
         private bool _facet;
         
         /// <summary>
-        /// Optional. Gets or sets the facet boolean.
+        /// Optional. Gets or sets the boolean that indicates whether or not
+        /// the field is a facet.
         /// </summary>
         public bool Facet
         {
@@ -76,21 +54,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._facet = value; }
         }
         
-        private bool _hidden;
-        
-        /// <summary>
-        /// Optional. Gets or sets the hidden boolean.
-        /// </summary>
-        public bool Hidden
-        {
-            get { return this._hidden; }
-            set { this._hidden = value; }
-        }
-        
         private bool _indexed;
         
         /// <summary>
-        /// Optional. Gets or sets the indexed boolean.
+        /// Optional. Gets or sets the boolean that indicates the field is
+        /// searchable as free text.
         /// </summary>
         public bool Indexed
         {
@@ -112,7 +80,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private IList<string> _ownerType;
         
         /// <summary>
-        /// Optional. Gets or sets the owner type array of strings.
+        /// Optional. Gets or sets the array of workflows containing the field.
         /// </summary>
         public IList<string> OwnerType
         {
@@ -123,7 +91,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private bool _stored;
         
         /// <summary>
-        /// Optional. Gets or sets the stored boolean.
+        /// Optional. Gets or sets the boolean that indicates whether or not
+        /// the field is stored.
         /// </summary>
         public bool Stored
         {

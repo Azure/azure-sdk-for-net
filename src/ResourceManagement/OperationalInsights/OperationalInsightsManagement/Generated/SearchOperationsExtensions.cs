@@ -35,7 +35,67 @@ namespace Microsoft.Azure.Management.OperationalInsights
     public static partial class SearchOperationsExtensions
     {
         /// <summary>
-        /// Gets the schema for a given workspace.
+        /// Creates or updates a saved search for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.ISearchOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <param name='savedSearchId'>
+        /// Required. The id of the saved search.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to save a search.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse CreateOrUpdateSavedSearch(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, SearchCreateOrUpdateSavedSearchParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISearchOperations)s).CreateOrUpdateSavedSearchAsync(resourceGroupName, workspaceName, savedSearchId, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates or updates a saved search for a given workspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.OperationalInsights.ISearchOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
+        /// <param name='savedSearchId'>
+        /// Required. The id of the saved search.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to save a search.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> CreateOrUpdateSavedSearchAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, SearchCreateOrUpdateSavedSearchParameters parameters)
+        {
+            return operations.CreateOrUpdateSavedSearchAsync(resourceGroupName, workspaceName, savedSearchId, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Deletes the specified saved search in a given workspace.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -51,9 +111,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. The id of the saved search.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static SearchSavedSearchResponse DeleteSavedSearch(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
+        public static AzureOperationResponse DeleteSavedSearch(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -63,7 +124,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets the schema for a given workspace.
+        /// Deletes the specified saved search in a given workspace.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -79,15 +140,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. The id of the saved search.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<SearchSavedSearchResponse> DeleteSavedSearchAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
+        public static Task<AzureOperationResponse> DeleteSavedSearchAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
         {
             return operations.DeleteSavedSearchAsync(resourceGroupName, workspaceName, savedSearchId, CancellationToken.None);
         }
         
         /// <summary>
-        /// Gets the schema for a given workspace.
+        /// Gets the specified saved search for a given workspace.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -115,7 +177,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets the schema for a given workspace.
+        /// Gets the specified saved search for a given workspace.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -139,52 +201,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets the saved searches for a given workspace.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.OperationalInsights.ISearchOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// Required. A unique workspace instance name.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        public static SearchSavedSearchResponse GetSavedSearches(this ISearchOperations operations, string resourceGroupName, string workspaceName)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((ISearchOperations)s).GetSavedSearchesAsync(resourceGroupName, workspaceName);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets the saved searches for a given workspace.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.OperationalInsights.ISearchOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the workspace.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// Required. A unique workspace instance name.
-        /// </param>
-        /// <returns>
-        /// The list workspaces operation response.
-        /// </returns>
-        public static Task<SearchSavedSearchResponse> GetSavedSearchesAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName)
-        {
-            return operations.GetSavedSearchesAsync(resourceGroupName, workspaceName, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Gets the results from a saved search for a given workspace.
         /// </summary>
         /// <param name='operations'>
@@ -201,9 +217,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. The id of the saved search.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get search result operation response.
         /// </returns>
-        public static SearchGetSearchResultResponse GetSavedSearchResults(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
+        public static SearchGetSearchResultsResponse GetSavedSearchResults(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -229,9 +245,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. The id of the saved search.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get search result operation response.
         /// </returns>
-        public static Task<SearchGetSearchResultResponse> GetSavedSearchResultsAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
+        public static Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
         {
             return operations.GetSavedSearchResultsAsync(resourceGroupName, workspaceName, savedSearchId, CancellationToken.None);
         }
@@ -250,7 +266,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. A unique workspace instance name.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get schema operation response.
         /// </returns>
         public static SearchGetSchemaResponse GetSchema(this ISearchOperations operations, string resourceGroupName, string workspaceName)
         {
@@ -275,7 +291,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. A unique workspace instance name.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get schema operation response.
         /// </returns>
         public static Task<SearchGetSchemaResponse> GetSchemaAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName)
         {
@@ -299,13 +315,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. The parameters required to execute a search query.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get search result operation response.
         /// </returns>
-        public static SearchGetSearchResultResponse GetSearchResult(this ISearchOperations operations, string resourceGroupName, string workspaceName, SearchGetSearchResultParameters parameters)
+        public static SearchGetSearchResultsResponse GetSearchResults(this ISearchOperations operations, string resourceGroupName, string workspaceName, SearchGetSearchResultsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ISearchOperations)s).GetSearchResultAsync(resourceGroupName, workspaceName, parameters);
+                return ((ISearchOperations)s).GetSearchResultsAsync(resourceGroupName, workspaceName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -327,15 +343,15 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. The parameters required to execute a search query.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get search result operation response.
         /// </returns>
-        public static Task<SearchGetSearchResultResponse> GetSearchResultAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, SearchGetSearchResultParameters parameters)
+        public static Task<SearchGetSearchResultsResponse> GetSearchResultsAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, SearchGetSearchResultsParameters parameters)
         {
-            return operations.GetSearchResultAsync(resourceGroupName, workspaceName, parameters, CancellationToken.None);
+            return operations.GetSearchResultsAsync(resourceGroupName, workspaceName, parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Gets updated search results for a given workspace.
+        /// Gets updated search results for a given search query.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -348,12 +364,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. A unique workspace instance name.
         /// </param>
         /// <param name='id'>
-        /// Required. The id of the search to be updated.
+        /// Required. The id of the search that will have results updated.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get search result operation response.
         /// </returns>
-        public static SearchGetSearchResultResponse GetSearchResultUpdate(this ISearchOperations operations, string resourceGroupName, string workspaceName, string id)
+        public static SearchGetSearchResultsResponse GetSearchResultUpdate(this ISearchOperations operations, string resourceGroupName, string workspaceName, string id)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -363,7 +379,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
-        /// Gets updated search results for a given workspace.
+        /// Gets updated search results for a given search query.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -376,18 +392,18 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. A unique workspace instance name.
         /// </param>
         /// <param name='id'>
-        /// Required. The id of the search to be updated.
+        /// Required. The id of the search that will have results updated.
         /// </param>
         /// <returns>
-        /// The list workspaces operation response.
+        /// The get search result operation response.
         /// </returns>
-        public static Task<SearchGetSearchResultResponse> GetSearchResultUpdateAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string id)
+        public static Task<SearchGetSearchResultsResponse> GetSearchResultUpdateAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string id)
         {
             return operations.GetSearchResultUpdateAsync(resourceGroupName, workspaceName, id, CancellationToken.None);
         }
         
         /// <summary>
-        /// Gets the schema for a given workspace.
+        /// Gets the saved searches for a given workspace.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -399,27 +415,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// Required. A unique workspace instance name.
         /// </param>
-        /// <param name='savedSearchId'>
-        /// Required. The id of the saved search.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to save a search.
-        /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The saved search operation response.
         /// </returns>
-        public static AzureOperationResponse PutSavedSearch(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, SearchPutSavedSearchParameters parameters)
+        public static SearchListSavedSearchResponse ListSavedSearches(this ISearchOperations operations, string resourceGroupName, string workspaceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ISearchOperations)s).PutSavedSearchAsync(resourceGroupName, workspaceName, savedSearchId, parameters);
+                return ((ISearchOperations)s).ListSavedSearchesAsync(resourceGroupName, workspaceName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Gets the schema for a given workspace.
+        /// Gets the saved searches for a given workspace.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -431,19 +440,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='workspaceName'>
         /// Required. A unique workspace instance name.
         /// </param>
-        /// <param name='savedSearchId'>
-        /// Required. The id of the saved search.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to save a search.
-        /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The saved search operation response.
         /// </returns>
-        public static Task<AzureOperationResponse> PutSavedSearchAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, SearchPutSavedSearchParameters parameters)
+        public static Task<SearchListSavedSearchResponse> ListSavedSearchesAsync(this ISearchOperations operations, string resourceGroupName, string workspaceName)
         {
-            return operations.PutSavedSearchAsync(resourceGroupName, workspaceName, savedSearchId, parameters, CancellationToken.None);
+            return operations.ListSavedSearchesAsync(resourceGroupName, workspaceName, CancellationToken.None);
         }
     }
 }
