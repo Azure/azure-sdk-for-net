@@ -178,15 +178,18 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='policyStream'>
         /// Required. Policy stream.
         /// </param>
+        /// <param name='etag'>
+        /// Optional. ETag.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Set(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string aid, string format, Stream policyStream)
+        public static AzureOperationResponse Set(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, string etag)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApiPolicyOperations)s).SetAsync(resourceGroupName, serviceName, aid, format, policyStream);
+                return ((IApiPolicyOperations)s).SetAsync(resourceGroupName, serviceName, aid, format, policyStream, etag);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -214,13 +217,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='policyStream'>
         /// Required. Policy stream.
         /// </param>
+        /// <param name='etag'>
+        /// Optional. ETag.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> SetAsync(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string aid, string format, Stream policyStream)
+        public static Task<AzureOperationResponse> SetAsync(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string aid, string format, Stream policyStream, string etag)
         {
-            return operations.SetAsync(resourceGroupName, serviceName, aid, format, policyStream, CancellationToken.None);
+            return operations.SetAsync(resourceGroupName, serviceName, aid, format, policyStream, etag, CancellationToken.None);
         }
     }
 }

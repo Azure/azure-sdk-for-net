@@ -13,10 +13,10 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
@@ -73,11 +73,10 @@ namespace StreamAnalytics.Tests.OperationTests
                     };
                     InputProperties inputProperties = new StreamInputProperties()
                     {
-                        Serialization = new CsvSerialization()
+                        Serialization = new JsonSerialization()
                         {
-                            Properties = new CsvSerializationProperties()
+                            Properties = new JsonSerializationProperties()
                             {
-                                FieldDelimiter = ",",
                                 Encoding = "UTF8"
                             }
                         },
@@ -150,7 +149,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     StreamInputProperties streamInputProperties = jobGetResponse.Job.Properties.Inputs[0].Properties as StreamInputProperties;
                     Assert.Equal("Stream", jobGetResponse.Job.Properties.Inputs[0].Properties.Type);
                     Assert.Equal("Microsoft.Storage/Blob", streamInputProperties.DataSource.Type);
-                    Assert.Equal("Csv", streamInputProperties.Serialization.Type);
+                    Assert.Equal("Json", streamInputProperties.Serialization.Type);
                     Assert.Equal(EventsOutOfOrderPolicy.Drop, jobGetResponse.Job.Properties.EventsOutOfOrderPolicy);
                     Assert.NotNull(jobGetResponse.Job.Properties.Etag);
                     Assert.Equal(jobCreateOrUpdateResponse.Job.Properties.Etag, jobGetResponse.Job.Properties.Etag);
@@ -186,7 +185,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal("LastOutputEventTime must be available when OutputStartMode is set to LastOutputEventTime. Please make sure at least one output event has been processed. ", cloudException.Error.Message);
 
                     jobStartParameters.OutputStartMode = OutputStartMode.CustomTime;
-                    jobStartParameters.OutputStartTime = DateTime.Now;
+                    jobStartParameters.OutputStartTime = new DateTime(2012, 12, 12, 12, 12, 12, DateTimeKind.Utc);
                     AzureOperationResponse jobStartOperationResponse = client.StreamingJobs.Start(resourceGroupName, resourceName, jobStartParameters);
                     Assert.Equal(HttpStatusCode.OK, jobStartOperationResponse.StatusCode);
 

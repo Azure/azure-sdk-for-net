@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             }
             url = url + "/BuildJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -162,8 +162,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -193,7 +193,81 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                     
                     if (parameters.Job.ErrorMessage != null)
                     {
-                        jobInfoBuildOrCreateParametersValue["errorMessage"] = parameters.Job.ErrorMessage;
+                        if (parameters.Job.ErrorMessage is ILazyCollection == false || ((ILazyCollection)parameters.Job.ErrorMessage).IsInitialized)
+                        {
+                            JArray errorMessageArray = new JArray();
+                            foreach (JobErrorDetails errorMessageItem in parameters.Job.ErrorMessage)
+                            {
+                                JObject errorMessageValue = new JObject();
+                                errorMessageArray.Add(errorMessageValue);
+                                
+                                if (errorMessageItem.Description != null)
+                                {
+                                    errorMessageValue["description"] = errorMessageItem.Description;
+                                }
+                                
+                                if (errorMessageItem.Details != null)
+                                {
+                                    errorMessageValue["details"] = errorMessageItem.Details;
+                                }
+                                
+                                if (errorMessageItem.EndOffset != null)
+                                {
+                                    errorMessageValue["endOffset"] = errorMessageItem.EndOffset.Value;
+                                }
+                                
+                                if (errorMessageItem.ErrorId != null)
+                                {
+                                    errorMessageValue["errorId"] = errorMessageItem.ErrorId;
+                                }
+                                
+                                if (errorMessageItem.FilePath != null)
+                                {
+                                    errorMessageValue["filePath"] = errorMessageItem.FilePath;
+                                }
+                                
+                                if (errorMessageItem.HelpLink != null)
+                                {
+                                    errorMessageValue["helpLink"] = errorMessageItem.HelpLink;
+                                }
+                                
+                                if (errorMessageItem.InternalDiagnostics != null)
+                                {
+                                    errorMessageValue["internalDiagnostics"] = errorMessageItem.InternalDiagnostics;
+                                }
+                                
+                                if (errorMessageItem.LineNumber != null)
+                                {
+                                    errorMessageValue["lineNumber"] = errorMessageItem.LineNumber.Value;
+                                }
+                                
+                                if (errorMessageItem.Message != null)
+                                {
+                                    errorMessageValue["message"] = errorMessageItem.Message;
+                                }
+                                
+                                if (errorMessageItem.Resolution != null)
+                                {
+                                    errorMessageValue["resolution"] = errorMessageItem.Resolution;
+                                }
+                                
+                                if (errorMessageItem.Severity != null)
+                                {
+                                    errorMessageValue["severity"] = errorMessageItem.Severity;
+                                }
+                                
+                                if (errorMessageItem.Source != null)
+                                {
+                                    errorMessageValue["source"] = errorMessageItem.Source;
+                                }
+                                
+                                if (errorMessageItem.StartOffset != null)
+                                {
+                                    errorMessageValue["startOffset"] = errorMessageItem.StartOffset;
+                                }
+                            }
+                            jobInfoBuildOrCreateParametersValue["errorMessage"] = errorMessageArray;
+                        }
                     }
                     
                     if (parameters.Job.DegreeOfParallelism != null)
@@ -537,11 +611,105 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                 jobInstance.Submitter = submitterInstance;
                             }
                             
-                            JToken errorMessageValue = responseDoc["errorMessage"];
-                            if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                            JToken errorMessageArray2 = responseDoc["errorMessage"];
+                            if (errorMessageArray2 != null && errorMessageArray2.Type != JTokenType.Null)
                             {
-                                string errorMessageInstance = ((string)errorMessageValue);
-                                jobInstance.ErrorMessage = errorMessageInstance;
+                                foreach (JToken errorMessageValue2 in ((JArray)errorMessageArray2))
+                                {
+                                    JobErrorDetails errorMessageInstance = new JobErrorDetails();
+                                    jobInstance.ErrorMessage.Add(errorMessageInstance);
+                                    
+                                    JToken descriptionValue = errorMessageValue2["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        errorMessageInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken detailsValue = errorMessageValue2["details"];
+                                    if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                    {
+                                        string detailsInstance = ((string)detailsValue);
+                                        errorMessageInstance.Details = detailsInstance;
+                                    }
+                                    
+                                    JToken endOffsetValue = errorMessageValue2["endOffset"];
+                                    if (endOffsetValue != null && endOffsetValue.Type != JTokenType.Null)
+                                    {
+                                        int endOffsetInstance = ((int)endOffsetValue);
+                                        errorMessageInstance.EndOffset = endOffsetInstance;
+                                    }
+                                    
+                                    JToken errorIdValue = errorMessageValue2["errorId"];
+                                    if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
+                                    {
+                                        string errorIdInstance = ((string)errorIdValue);
+                                        errorMessageInstance.ErrorId = errorIdInstance;
+                                    }
+                                    
+                                    JToken filePathValue = errorMessageValue2["filePath"];
+                                    if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                    {
+                                        string filePathInstance = ((string)filePathValue);
+                                        errorMessageInstance.FilePath = filePathInstance;
+                                    }
+                                    
+                                    JToken helpLinkValue = errorMessageValue2["helpLink"];
+                                    if (helpLinkValue != null && helpLinkValue.Type != JTokenType.Null)
+                                    {
+                                        string helpLinkInstance = ((string)helpLinkValue);
+                                        errorMessageInstance.HelpLink = helpLinkInstance;
+                                    }
+                                    
+                                    JToken internalDiagnosticsValue = errorMessageValue2["internalDiagnostics"];
+                                    if (internalDiagnosticsValue != null && internalDiagnosticsValue.Type != JTokenType.Null)
+                                    {
+                                        string internalDiagnosticsInstance = ((string)internalDiagnosticsValue);
+                                        errorMessageInstance.InternalDiagnostics = internalDiagnosticsInstance;
+                                    }
+                                    
+                                    JToken lineNumberValue = errorMessageValue2["lineNumber"];
+                                    if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                    {
+                                        int lineNumberInstance = ((int)lineNumberValue);
+                                        errorMessageInstance.LineNumber = lineNumberInstance;
+                                    }
+                                    
+                                    JToken messageValue = errorMessageValue2["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        errorMessageInstance.Message = messageInstance;
+                                    }
+                                    
+                                    JToken resolutionValue = errorMessageValue2["resolution"];
+                                    if (resolutionValue != null && resolutionValue.Type != JTokenType.Null)
+                                    {
+                                        string resolutionInstance = ((string)resolutionValue);
+                                        errorMessageInstance.Resolution = resolutionInstance;
+                                    }
+                                    
+                                    JToken severityValue = errorMessageValue2["severity"];
+                                    if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                    {
+                                        string severityInstance = ((string)severityValue);
+                                        errorMessageInstance.Severity = severityInstance;
+                                    }
+                                    
+                                    JToken sourceValue = errorMessageValue2["source"];
+                                    if (sourceValue != null && sourceValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceInstance = ((string)sourceValue);
+                                        errorMessageInstance.Source = sourceInstance;
+                                    }
+                                    
+                                    JToken startOffsetValue = errorMessageValue2["startOffset"];
+                                    if (startOffsetValue != null && startOffsetValue.Type != JTokenType.Null)
+                                    {
+                                        string startOffsetInstance = ((string)startOffsetValue);
+                                        errorMessageInstance.StartOffset = startOffsetInstance;
+                                    }
+                                }
                             }
                             
                             JToken degreeOfParallelismValue = responseDoc["degreeOfParallelism"];
@@ -622,11 +790,11 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                         jobStateAuditRecordInstance.RequestedByUser = requestedByUserInstance;
                                     }
                                     
-                                    JToken detailsValue = stateAuditRecordsValue["details"];
-                                    if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                    JToken detailsValue2 = stateAuditRecordsValue["details"];
+                                    if (detailsValue2 != null && detailsValue2.Type != JTokenType.Null)
                                     {
-                                        string detailsInstance = ((string)detailsValue);
-                                        jobStateAuditRecordInstance.Details = detailsInstance;
+                                        string detailsInstance2 = ((string)detailsValue2);
+                                        jobStateAuditRecordInstance.Details = detailsInstance2;
                                     }
                                 }
                             }
@@ -689,10 +857,10 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 hiveJobStatementInfoInstance.ResultLocation = resultLocationInstance;
                                             }
                                             
-                                            JToken errorMessageValue2 = statementInfoValue["errorMessage"];
-                                            if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                            JToken errorMessageValue3 = statementInfoValue["errorMessage"];
+                                            if (errorMessageValue3 != null && errorMessageValue3.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                string errorMessageInstance2 = ((string)errorMessageValue3);
                                                 hiveJobStatementInfoInstance.ErrorMessage = errorMessageInstance2;
                                             }
                                         }
@@ -847,25 +1015,25 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 diagnosticsInstance.End = endInstance;
                                             }
                                             
-                                            JToken lineNumberValue = diagnosticsValue2["lineNumber"];
-                                            if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                            JToken lineNumberValue2 = diagnosticsValue2["lineNumber"];
+                                            if (lineNumberValue2 != null && lineNumberValue2.Type != JTokenType.Null)
                                             {
-                                                int lineNumberInstance = ((int)lineNumberValue);
-                                                diagnosticsInstance.LineNumber = lineNumberInstance;
+                                                int lineNumberInstance2 = ((int)lineNumberValue2);
+                                                diagnosticsInstance.LineNumber = lineNumberInstance2;
                                             }
                                             
-                                            JToken messageValue = diagnosticsValue2["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            JToken messageValue2 = diagnosticsValue2["message"];
+                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
                                             {
-                                                string messageInstance = ((string)messageValue);
-                                                diagnosticsInstance.Message = messageInstance;
+                                                string messageInstance2 = ((string)messageValue2);
+                                                diagnosticsInstance.Message = messageInstance2;
                                             }
                                             
-                                            JToken severityValue = diagnosticsValue2["severity"];
-                                            if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                            JToken severityValue2 = diagnosticsValue2["severity"];
+                                            if (severityValue2 != null && severityValue2.Type != JTokenType.Null)
                                             {
-                                                string severityInstance = ((string)severityValue);
-                                                diagnosticsInstance.Severity = severityInstance;
+                                                string severityInstance2 = ((string)severityValue2);
+                                                diagnosticsInstance.Severity = severityInstance2;
                                             }
                                             
                                             JToken startValue = diagnosticsValue2["start"];
@@ -990,7 +1158,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             url = url + "/CancelJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1006,8 +1174,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1158,7 +1326,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 url = url + Uri.EscapeDataString(parameters.Job.JobId.ToString());
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1174,8 +1342,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -1205,7 +1373,81 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                     
                     if (parameters.Job.ErrorMessage != null)
                     {
-                        jobInfoBuildOrCreateParametersValue["errorMessage"] = parameters.Job.ErrorMessage;
+                        if (parameters.Job.ErrorMessage is ILazyCollection == false || ((ILazyCollection)parameters.Job.ErrorMessage).IsInitialized)
+                        {
+                            JArray errorMessageArray = new JArray();
+                            foreach (JobErrorDetails errorMessageItem in parameters.Job.ErrorMessage)
+                            {
+                                JObject errorMessageValue = new JObject();
+                                errorMessageArray.Add(errorMessageValue);
+                                
+                                if (errorMessageItem.Description != null)
+                                {
+                                    errorMessageValue["description"] = errorMessageItem.Description;
+                                }
+                                
+                                if (errorMessageItem.Details != null)
+                                {
+                                    errorMessageValue["details"] = errorMessageItem.Details;
+                                }
+                                
+                                if (errorMessageItem.EndOffset != null)
+                                {
+                                    errorMessageValue["endOffset"] = errorMessageItem.EndOffset.Value;
+                                }
+                                
+                                if (errorMessageItem.ErrorId != null)
+                                {
+                                    errorMessageValue["errorId"] = errorMessageItem.ErrorId;
+                                }
+                                
+                                if (errorMessageItem.FilePath != null)
+                                {
+                                    errorMessageValue["filePath"] = errorMessageItem.FilePath;
+                                }
+                                
+                                if (errorMessageItem.HelpLink != null)
+                                {
+                                    errorMessageValue["helpLink"] = errorMessageItem.HelpLink;
+                                }
+                                
+                                if (errorMessageItem.InternalDiagnostics != null)
+                                {
+                                    errorMessageValue["internalDiagnostics"] = errorMessageItem.InternalDiagnostics;
+                                }
+                                
+                                if (errorMessageItem.LineNumber != null)
+                                {
+                                    errorMessageValue["lineNumber"] = errorMessageItem.LineNumber.Value;
+                                }
+                                
+                                if (errorMessageItem.Message != null)
+                                {
+                                    errorMessageValue["message"] = errorMessageItem.Message;
+                                }
+                                
+                                if (errorMessageItem.Resolution != null)
+                                {
+                                    errorMessageValue["resolution"] = errorMessageItem.Resolution;
+                                }
+                                
+                                if (errorMessageItem.Severity != null)
+                                {
+                                    errorMessageValue["severity"] = errorMessageItem.Severity;
+                                }
+                                
+                                if (errorMessageItem.Source != null)
+                                {
+                                    errorMessageValue["source"] = errorMessageItem.Source;
+                                }
+                                
+                                if (errorMessageItem.StartOffset != null)
+                                {
+                                    errorMessageValue["startOffset"] = errorMessageItem.StartOffset;
+                                }
+                            }
+                            jobInfoBuildOrCreateParametersValue["errorMessage"] = errorMessageArray;
+                        }
                     }
                     
                     if (parameters.Job.DegreeOfParallelism != null)
@@ -1549,11 +1791,105 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                 jobInstance.Submitter = submitterInstance;
                             }
                             
-                            JToken errorMessageValue = responseDoc["errorMessage"];
-                            if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                            JToken errorMessageArray2 = responseDoc["errorMessage"];
+                            if (errorMessageArray2 != null && errorMessageArray2.Type != JTokenType.Null)
                             {
-                                string errorMessageInstance = ((string)errorMessageValue);
-                                jobInstance.ErrorMessage = errorMessageInstance;
+                                foreach (JToken errorMessageValue2 in ((JArray)errorMessageArray2))
+                                {
+                                    JobErrorDetails errorMessageInstance = new JobErrorDetails();
+                                    jobInstance.ErrorMessage.Add(errorMessageInstance);
+                                    
+                                    JToken descriptionValue = errorMessageValue2["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        errorMessageInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken detailsValue = errorMessageValue2["details"];
+                                    if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                    {
+                                        string detailsInstance = ((string)detailsValue);
+                                        errorMessageInstance.Details = detailsInstance;
+                                    }
+                                    
+                                    JToken endOffsetValue = errorMessageValue2["endOffset"];
+                                    if (endOffsetValue != null && endOffsetValue.Type != JTokenType.Null)
+                                    {
+                                        int endOffsetInstance = ((int)endOffsetValue);
+                                        errorMessageInstance.EndOffset = endOffsetInstance;
+                                    }
+                                    
+                                    JToken errorIdValue = errorMessageValue2["errorId"];
+                                    if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
+                                    {
+                                        string errorIdInstance = ((string)errorIdValue);
+                                        errorMessageInstance.ErrorId = errorIdInstance;
+                                    }
+                                    
+                                    JToken filePathValue = errorMessageValue2["filePath"];
+                                    if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                    {
+                                        string filePathInstance = ((string)filePathValue);
+                                        errorMessageInstance.FilePath = filePathInstance;
+                                    }
+                                    
+                                    JToken helpLinkValue = errorMessageValue2["helpLink"];
+                                    if (helpLinkValue != null && helpLinkValue.Type != JTokenType.Null)
+                                    {
+                                        string helpLinkInstance = ((string)helpLinkValue);
+                                        errorMessageInstance.HelpLink = helpLinkInstance;
+                                    }
+                                    
+                                    JToken internalDiagnosticsValue = errorMessageValue2["internalDiagnostics"];
+                                    if (internalDiagnosticsValue != null && internalDiagnosticsValue.Type != JTokenType.Null)
+                                    {
+                                        string internalDiagnosticsInstance = ((string)internalDiagnosticsValue);
+                                        errorMessageInstance.InternalDiagnostics = internalDiagnosticsInstance;
+                                    }
+                                    
+                                    JToken lineNumberValue = errorMessageValue2["lineNumber"];
+                                    if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                    {
+                                        int lineNumberInstance = ((int)lineNumberValue);
+                                        errorMessageInstance.LineNumber = lineNumberInstance;
+                                    }
+                                    
+                                    JToken messageValue = errorMessageValue2["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        errorMessageInstance.Message = messageInstance;
+                                    }
+                                    
+                                    JToken resolutionValue = errorMessageValue2["resolution"];
+                                    if (resolutionValue != null && resolutionValue.Type != JTokenType.Null)
+                                    {
+                                        string resolutionInstance = ((string)resolutionValue);
+                                        errorMessageInstance.Resolution = resolutionInstance;
+                                    }
+                                    
+                                    JToken severityValue = errorMessageValue2["severity"];
+                                    if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                    {
+                                        string severityInstance = ((string)severityValue);
+                                        errorMessageInstance.Severity = severityInstance;
+                                    }
+                                    
+                                    JToken sourceValue = errorMessageValue2["source"];
+                                    if (sourceValue != null && sourceValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceInstance = ((string)sourceValue);
+                                        errorMessageInstance.Source = sourceInstance;
+                                    }
+                                    
+                                    JToken startOffsetValue = errorMessageValue2["startOffset"];
+                                    if (startOffsetValue != null && startOffsetValue.Type != JTokenType.Null)
+                                    {
+                                        string startOffsetInstance = ((string)startOffsetValue);
+                                        errorMessageInstance.StartOffset = startOffsetInstance;
+                                    }
+                                }
                             }
                             
                             JToken degreeOfParallelismValue = responseDoc["degreeOfParallelism"];
@@ -1634,11 +1970,11 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                         jobStateAuditRecordInstance.RequestedByUser = requestedByUserInstance;
                                     }
                                     
-                                    JToken detailsValue = stateAuditRecordsValue["details"];
-                                    if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                    JToken detailsValue2 = stateAuditRecordsValue["details"];
+                                    if (detailsValue2 != null && detailsValue2.Type != JTokenType.Null)
                                     {
-                                        string detailsInstance = ((string)detailsValue);
-                                        jobStateAuditRecordInstance.Details = detailsInstance;
+                                        string detailsInstance2 = ((string)detailsValue2);
+                                        jobStateAuditRecordInstance.Details = detailsInstance2;
                                     }
                                 }
                             }
@@ -1701,10 +2037,10 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 hiveJobStatementInfoInstance.ResultLocation = resultLocationInstance;
                                             }
                                             
-                                            JToken errorMessageValue2 = statementInfoValue["errorMessage"];
-                                            if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                            JToken errorMessageValue3 = statementInfoValue["errorMessage"];
+                                            if (errorMessageValue3 != null && errorMessageValue3.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                string errorMessageInstance2 = ((string)errorMessageValue3);
                                                 hiveJobStatementInfoInstance.ErrorMessage = errorMessageInstance2;
                                             }
                                         }
@@ -1859,25 +2195,25 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 diagnosticsInstance.End = endInstance;
                                             }
                                             
-                                            JToken lineNumberValue = diagnosticsValue2["lineNumber"];
-                                            if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                            JToken lineNumberValue2 = diagnosticsValue2["lineNumber"];
+                                            if (lineNumberValue2 != null && lineNumberValue2.Type != JTokenType.Null)
                                             {
-                                                int lineNumberInstance = ((int)lineNumberValue);
-                                                diagnosticsInstance.LineNumber = lineNumberInstance;
+                                                int lineNumberInstance2 = ((int)lineNumberValue2);
+                                                diagnosticsInstance.LineNumber = lineNumberInstance2;
                                             }
                                             
-                                            JToken messageValue = diagnosticsValue2["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            JToken messageValue2 = diagnosticsValue2["message"];
+                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
                                             {
-                                                string messageInstance = ((string)messageValue);
-                                                diagnosticsInstance.Message = messageInstance;
+                                                string messageInstance2 = ((string)messageValue2);
+                                                diagnosticsInstance.Message = messageInstance2;
                                             }
                                             
-                                            JToken severityValue = diagnosticsValue2["severity"];
-                                            if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                            JToken severityValue2 = diagnosticsValue2["severity"];
+                                            if (severityValue2 != null && severityValue2.Type != JTokenType.Null)
                                             {
-                                                string severityInstance = ((string)severityValue);
-                                                diagnosticsInstance.Severity = severityInstance;
+                                                string severityInstance2 = ((string)severityValue2);
+                                                diagnosticsInstance.Severity = severityInstance2;
                                             }
                                             
                                             JToken startValue = diagnosticsValue2["start"];
@@ -2000,7 +2336,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + "/Jobs/";
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2016,8 +2352,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2098,11 +2434,105 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                 jobInstance.Submitter = submitterInstance;
                             }
                             
-                            JToken errorMessageValue = responseDoc["errorMessage"];
-                            if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                            JToken errorMessageArray = responseDoc["errorMessage"];
+                            if (errorMessageArray != null && errorMessageArray.Type != JTokenType.Null)
                             {
-                                string errorMessageInstance = ((string)errorMessageValue);
-                                jobInstance.ErrorMessage = errorMessageInstance;
+                                foreach (JToken errorMessageValue in ((JArray)errorMessageArray))
+                                {
+                                    JobErrorDetails errorMessageInstance = new JobErrorDetails();
+                                    jobInstance.ErrorMessage.Add(errorMessageInstance);
+                                    
+                                    JToken descriptionValue = errorMessageValue["description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        errorMessageInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken detailsValue = errorMessageValue["details"];
+                                    if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                    {
+                                        string detailsInstance = ((string)detailsValue);
+                                        errorMessageInstance.Details = detailsInstance;
+                                    }
+                                    
+                                    JToken endOffsetValue = errorMessageValue["endOffset"];
+                                    if (endOffsetValue != null && endOffsetValue.Type != JTokenType.Null)
+                                    {
+                                        int endOffsetInstance = ((int)endOffsetValue);
+                                        errorMessageInstance.EndOffset = endOffsetInstance;
+                                    }
+                                    
+                                    JToken errorIdValue = errorMessageValue["errorId"];
+                                    if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
+                                    {
+                                        string errorIdInstance = ((string)errorIdValue);
+                                        errorMessageInstance.ErrorId = errorIdInstance;
+                                    }
+                                    
+                                    JToken filePathValue = errorMessageValue["filePath"];
+                                    if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                    {
+                                        string filePathInstance = ((string)filePathValue);
+                                        errorMessageInstance.FilePath = filePathInstance;
+                                    }
+                                    
+                                    JToken helpLinkValue = errorMessageValue["helpLink"];
+                                    if (helpLinkValue != null && helpLinkValue.Type != JTokenType.Null)
+                                    {
+                                        string helpLinkInstance = ((string)helpLinkValue);
+                                        errorMessageInstance.HelpLink = helpLinkInstance;
+                                    }
+                                    
+                                    JToken internalDiagnosticsValue = errorMessageValue["internalDiagnostics"];
+                                    if (internalDiagnosticsValue != null && internalDiagnosticsValue.Type != JTokenType.Null)
+                                    {
+                                        string internalDiagnosticsInstance = ((string)internalDiagnosticsValue);
+                                        errorMessageInstance.InternalDiagnostics = internalDiagnosticsInstance;
+                                    }
+                                    
+                                    JToken lineNumberValue = errorMessageValue["lineNumber"];
+                                    if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                    {
+                                        int lineNumberInstance = ((int)lineNumberValue);
+                                        errorMessageInstance.LineNumber = lineNumberInstance;
+                                    }
+                                    
+                                    JToken messageValue = errorMessageValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        errorMessageInstance.Message = messageInstance;
+                                    }
+                                    
+                                    JToken resolutionValue = errorMessageValue["resolution"];
+                                    if (resolutionValue != null && resolutionValue.Type != JTokenType.Null)
+                                    {
+                                        string resolutionInstance = ((string)resolutionValue);
+                                        errorMessageInstance.Resolution = resolutionInstance;
+                                    }
+                                    
+                                    JToken severityValue = errorMessageValue["severity"];
+                                    if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                    {
+                                        string severityInstance = ((string)severityValue);
+                                        errorMessageInstance.Severity = severityInstance;
+                                    }
+                                    
+                                    JToken sourceValue = errorMessageValue["source"];
+                                    if (sourceValue != null && sourceValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceInstance = ((string)sourceValue);
+                                        errorMessageInstance.Source = sourceInstance;
+                                    }
+                                    
+                                    JToken startOffsetValue = errorMessageValue["startOffset"];
+                                    if (startOffsetValue != null && startOffsetValue.Type != JTokenType.Null)
+                                    {
+                                        string startOffsetInstance = ((string)startOffsetValue);
+                                        errorMessageInstance.StartOffset = startOffsetInstance;
+                                    }
+                                }
                             }
                             
                             JToken degreeOfParallelismValue = responseDoc["degreeOfParallelism"];
@@ -2183,11 +2613,11 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                         jobStateAuditRecordInstance.RequestedByUser = requestedByUserInstance;
                                     }
                                     
-                                    JToken detailsValue = stateAuditRecordsValue["details"];
-                                    if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                    JToken detailsValue2 = stateAuditRecordsValue["details"];
+                                    if (detailsValue2 != null && detailsValue2.Type != JTokenType.Null)
                                     {
-                                        string detailsInstance = ((string)detailsValue);
-                                        jobStateAuditRecordInstance.Details = detailsInstance;
+                                        string detailsInstance2 = ((string)detailsValue2);
+                                        jobStateAuditRecordInstance.Details = detailsInstance2;
                                     }
                                 }
                             }
@@ -2408,25 +2838,25 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 diagnosticsInstance.End = endInstance;
                                             }
                                             
-                                            JToken lineNumberValue = diagnosticsValue["lineNumber"];
-                                            if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                            JToken lineNumberValue2 = diagnosticsValue["lineNumber"];
+                                            if (lineNumberValue2 != null && lineNumberValue2.Type != JTokenType.Null)
                                             {
-                                                int lineNumberInstance = ((int)lineNumberValue);
-                                                diagnosticsInstance.LineNumber = lineNumberInstance;
+                                                int lineNumberInstance2 = ((int)lineNumberValue2);
+                                                diagnosticsInstance.LineNumber = lineNumberInstance2;
                                             }
                                             
-                                            JToken messageValue = diagnosticsValue["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            JToken messageValue2 = diagnosticsValue["message"];
+                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
                                             {
-                                                string messageInstance = ((string)messageValue);
-                                                diagnosticsInstance.Message = messageInstance;
+                                                string messageInstance2 = ((string)messageValue2);
+                                                diagnosticsInstance.Message = messageInstance2;
                                             }
                                             
-                                            JToken severityValue = diagnosticsValue["severity"];
-                                            if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                            JToken severityValue2 = diagnosticsValue["severity"];
+                                            if (severityValue2 != null && severityValue2.Type != JTokenType.Null)
                                             {
-                                                string severityInstance = ((string)severityValue);
-                                                diagnosticsInstance.Severity = severityInstance;
+                                                string severityInstance2 = ((string)severityValue2);
+                                                diagnosticsInstance.Severity = severityInstance2;
                                             }
                                             
                                             JToken startValue = diagnosticsValue["start"];
@@ -2550,7 +2980,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             url = url + "/GetDebugDataPath";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2566,8 +2996,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -2731,7 +3161,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             url = url + Uri.EscapeDataString(jobIdentity.ToString());
             url = url + "/GetStatistics";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2747,8 +3177,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3067,7 +3497,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             {
                 queryParameters.Add("$select=" + Uri.EscapeDataString(parameters.Select));
             }
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3083,8 +3513,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3170,11 +3600,105 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                         jobInformationInstance.Submitter = submitterInstance;
                                     }
                                     
-                                    JToken errorMessageValue = valueValue["errorMessage"];
-                                    if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                    JToken errorMessageArray = valueValue["errorMessage"];
+                                    if (errorMessageArray != null && errorMessageArray.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance = ((string)errorMessageValue);
-                                        jobInformationInstance.ErrorMessage = errorMessageInstance;
+                                        foreach (JToken errorMessageValue in ((JArray)errorMessageArray))
+                                        {
+                                            JobErrorDetails errorMessageInstance = new JobErrorDetails();
+                                            jobInformationInstance.ErrorMessage.Add(errorMessageInstance);
+                                            
+                                            JToken descriptionValue = errorMessageValue["description"];
+                                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance = ((string)descriptionValue);
+                                                errorMessageInstance.Description = descriptionInstance;
+                                            }
+                                            
+                                            JToken detailsValue = errorMessageValue["details"];
+                                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                            {
+                                                string detailsInstance = ((string)detailsValue);
+                                                errorMessageInstance.Details = detailsInstance;
+                                            }
+                                            
+                                            JToken endOffsetValue = errorMessageValue["endOffset"];
+                                            if (endOffsetValue != null && endOffsetValue.Type != JTokenType.Null)
+                                            {
+                                                int endOffsetInstance = ((int)endOffsetValue);
+                                                errorMessageInstance.EndOffset = endOffsetInstance;
+                                            }
+                                            
+                                            JToken errorIdValue = errorMessageValue["errorId"];
+                                            if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
+                                            {
+                                                string errorIdInstance = ((string)errorIdValue);
+                                                errorMessageInstance.ErrorId = errorIdInstance;
+                                            }
+                                            
+                                            JToken filePathValue = errorMessageValue["filePath"];
+                                            if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                            {
+                                                string filePathInstance = ((string)filePathValue);
+                                                errorMessageInstance.FilePath = filePathInstance;
+                                            }
+                                            
+                                            JToken helpLinkValue = errorMessageValue["helpLink"];
+                                            if (helpLinkValue != null && helpLinkValue.Type != JTokenType.Null)
+                                            {
+                                                string helpLinkInstance = ((string)helpLinkValue);
+                                                errorMessageInstance.HelpLink = helpLinkInstance;
+                                            }
+                                            
+                                            JToken internalDiagnosticsValue = errorMessageValue["internalDiagnostics"];
+                                            if (internalDiagnosticsValue != null && internalDiagnosticsValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDiagnosticsInstance = ((string)internalDiagnosticsValue);
+                                                errorMessageInstance.InternalDiagnostics = internalDiagnosticsInstance;
+                                            }
+                                            
+                                            JToken lineNumberValue = errorMessageValue["lineNumber"];
+                                            if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                            {
+                                                int lineNumberInstance = ((int)lineNumberValue);
+                                                errorMessageInstance.LineNumber = lineNumberInstance;
+                                            }
+                                            
+                                            JToken messageValue = errorMessageValue["message"];
+                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance = ((string)messageValue);
+                                                errorMessageInstance.Message = messageInstance;
+                                            }
+                                            
+                                            JToken resolutionValue = errorMessageValue["resolution"];
+                                            if (resolutionValue != null && resolutionValue.Type != JTokenType.Null)
+                                            {
+                                                string resolutionInstance = ((string)resolutionValue);
+                                                errorMessageInstance.Resolution = resolutionInstance;
+                                            }
+                                            
+                                            JToken severityValue = errorMessageValue["severity"];
+                                            if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                            {
+                                                string severityInstance = ((string)severityValue);
+                                                errorMessageInstance.Severity = severityInstance;
+                                            }
+                                            
+                                            JToken sourceValue = errorMessageValue["source"];
+                                            if (sourceValue != null && sourceValue.Type != JTokenType.Null)
+                                            {
+                                                string sourceInstance = ((string)sourceValue);
+                                                errorMessageInstance.Source = sourceInstance;
+                                            }
+                                            
+                                            JToken startOffsetValue = errorMessageValue["startOffset"];
+                                            if (startOffsetValue != null && startOffsetValue.Type != JTokenType.Null)
+                                            {
+                                                string startOffsetInstance = ((string)startOffsetValue);
+                                                errorMessageInstance.StartOffset = startOffsetInstance;
+                                            }
+                                        }
                                     }
                                     
                                     JToken degreeOfParallelismValue = valueValue["degreeOfParallelism"];
@@ -3255,11 +3779,11 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 jobStateAuditRecordInstance.RequestedByUser = requestedByUserInstance;
                                             }
                                             
-                                            JToken detailsValue = stateAuditRecordsValue["details"];
-                                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                            JToken detailsValue2 = stateAuditRecordsValue["details"];
+                                            if (detailsValue2 != null && detailsValue2.Type != JTokenType.Null)
                                             {
-                                                string detailsInstance = ((string)detailsValue);
-                                                jobStateAuditRecordInstance.Details = detailsInstance;
+                                                string detailsInstance2 = ((string)detailsValue2);
+                                                jobStateAuditRecordInstance.Details = detailsInstance2;
                                             }
                                         }
                                     }
@@ -3480,25 +4004,25 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                         diagnosticsInstance.End = endInstance;
                                                     }
                                                     
-                                                    JToken lineNumberValue = diagnosticsValue["lineNumber"];
-                                                    if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                                    JToken lineNumberValue2 = diagnosticsValue["lineNumber"];
+                                                    if (lineNumberValue2 != null && lineNumberValue2.Type != JTokenType.Null)
                                                     {
-                                                        int lineNumberInstance = ((int)lineNumberValue);
-                                                        diagnosticsInstance.LineNumber = lineNumberInstance;
+                                                        int lineNumberInstance2 = ((int)lineNumberValue2);
+                                                        diagnosticsInstance.LineNumber = lineNumberInstance2;
                                                     }
                                                     
-                                                    JToken messageValue = diagnosticsValue["message"];
-                                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                    JToken messageValue2 = diagnosticsValue["message"];
+                                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
                                                     {
-                                                        string messageInstance = ((string)messageValue);
-                                                        diagnosticsInstance.Message = messageInstance;
+                                                        string messageInstance2 = ((string)messageValue2);
+                                                        diagnosticsInstance.Message = messageInstance2;
                                                     }
                                                     
-                                                    JToken severityValue = diagnosticsValue["severity"];
-                                                    if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                                    JToken severityValue2 = diagnosticsValue["severity"];
+                                                    if (severityValue2 != null && severityValue2.Type != JTokenType.Null)
                                                     {
-                                                        string severityInstance = ((string)severityValue);
-                                                        diagnosticsInstance.Severity = severityInstance;
+                                                        string severityInstance2 = ((string)severityValue2);
+                                                        diagnosticsInstance.Severity = severityInstance2;
                                                     }
                                                     
                                                     JToken startValue = diagnosticsValue["start"];
@@ -3636,8 +4160,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -3723,11 +4247,105 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                         jobInformationInstance.Submitter = submitterInstance;
                                     }
                                     
-                                    JToken errorMessageValue = valueValue["errorMessage"];
-                                    if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                    JToken errorMessageArray = valueValue["errorMessage"];
+                                    if (errorMessageArray != null && errorMessageArray.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance = ((string)errorMessageValue);
-                                        jobInformationInstance.ErrorMessage = errorMessageInstance;
+                                        foreach (JToken errorMessageValue in ((JArray)errorMessageArray))
+                                        {
+                                            JobErrorDetails errorMessageInstance = new JobErrorDetails();
+                                            jobInformationInstance.ErrorMessage.Add(errorMessageInstance);
+                                            
+                                            JToken descriptionValue = errorMessageValue["description"];
+                                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance = ((string)descriptionValue);
+                                                errorMessageInstance.Description = descriptionInstance;
+                                            }
+                                            
+                                            JToken detailsValue = errorMessageValue["details"];
+                                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                            {
+                                                string detailsInstance = ((string)detailsValue);
+                                                errorMessageInstance.Details = detailsInstance;
+                                            }
+                                            
+                                            JToken endOffsetValue = errorMessageValue["endOffset"];
+                                            if (endOffsetValue != null && endOffsetValue.Type != JTokenType.Null)
+                                            {
+                                                int endOffsetInstance = ((int)endOffsetValue);
+                                                errorMessageInstance.EndOffset = endOffsetInstance;
+                                            }
+                                            
+                                            JToken errorIdValue = errorMessageValue["errorId"];
+                                            if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
+                                            {
+                                                string errorIdInstance = ((string)errorIdValue);
+                                                errorMessageInstance.ErrorId = errorIdInstance;
+                                            }
+                                            
+                                            JToken filePathValue = errorMessageValue["filePath"];
+                                            if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                            {
+                                                string filePathInstance = ((string)filePathValue);
+                                                errorMessageInstance.FilePath = filePathInstance;
+                                            }
+                                            
+                                            JToken helpLinkValue = errorMessageValue["helpLink"];
+                                            if (helpLinkValue != null && helpLinkValue.Type != JTokenType.Null)
+                                            {
+                                                string helpLinkInstance = ((string)helpLinkValue);
+                                                errorMessageInstance.HelpLink = helpLinkInstance;
+                                            }
+                                            
+                                            JToken internalDiagnosticsValue = errorMessageValue["internalDiagnostics"];
+                                            if (internalDiagnosticsValue != null && internalDiagnosticsValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDiagnosticsInstance = ((string)internalDiagnosticsValue);
+                                                errorMessageInstance.InternalDiagnostics = internalDiagnosticsInstance;
+                                            }
+                                            
+                                            JToken lineNumberValue = errorMessageValue["lineNumber"];
+                                            if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                            {
+                                                int lineNumberInstance = ((int)lineNumberValue);
+                                                errorMessageInstance.LineNumber = lineNumberInstance;
+                                            }
+                                            
+                                            JToken messageValue = errorMessageValue["message"];
+                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance = ((string)messageValue);
+                                                errorMessageInstance.Message = messageInstance;
+                                            }
+                                            
+                                            JToken resolutionValue = errorMessageValue["resolution"];
+                                            if (resolutionValue != null && resolutionValue.Type != JTokenType.Null)
+                                            {
+                                                string resolutionInstance = ((string)resolutionValue);
+                                                errorMessageInstance.Resolution = resolutionInstance;
+                                            }
+                                            
+                                            JToken severityValue = errorMessageValue["severity"];
+                                            if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                            {
+                                                string severityInstance = ((string)severityValue);
+                                                errorMessageInstance.Severity = severityInstance;
+                                            }
+                                            
+                                            JToken sourceValue = errorMessageValue["source"];
+                                            if (sourceValue != null && sourceValue.Type != JTokenType.Null)
+                                            {
+                                                string sourceInstance = ((string)sourceValue);
+                                                errorMessageInstance.Source = sourceInstance;
+                                            }
+                                            
+                                            JToken startOffsetValue = errorMessageValue["startOffset"];
+                                            if (startOffsetValue != null && startOffsetValue.Type != JTokenType.Null)
+                                            {
+                                                string startOffsetInstance = ((string)startOffsetValue);
+                                                errorMessageInstance.StartOffset = startOffsetInstance;
+                                            }
+                                        }
                                     }
                                     
                                     JToken degreeOfParallelismValue = valueValue["degreeOfParallelism"];
@@ -3808,11 +4426,11 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 jobStateAuditRecordInstance.RequestedByUser = requestedByUserInstance;
                                             }
                                             
-                                            JToken detailsValue = stateAuditRecordsValue["details"];
-                                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                            JToken detailsValue2 = stateAuditRecordsValue["details"];
+                                            if (detailsValue2 != null && detailsValue2.Type != JTokenType.Null)
                                             {
-                                                string detailsInstance = ((string)detailsValue);
-                                                jobStateAuditRecordInstance.Details = detailsInstance;
+                                                string detailsInstance2 = ((string)detailsValue2);
+                                                jobStateAuditRecordInstance.Details = detailsInstance2;
                                             }
                                         }
                                     }
@@ -4033,25 +4651,25 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                         diagnosticsInstance.End = endInstance;
                                                     }
                                                     
-                                                    JToken lineNumberValue = diagnosticsValue["lineNumber"];
-                                                    if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                                    JToken lineNumberValue2 = diagnosticsValue["lineNumber"];
+                                                    if (lineNumberValue2 != null && lineNumberValue2.Type != JTokenType.Null)
                                                     {
-                                                        int lineNumberInstance = ((int)lineNumberValue);
-                                                        diagnosticsInstance.LineNumber = lineNumberInstance;
+                                                        int lineNumberInstance2 = ((int)lineNumberValue2);
+                                                        diagnosticsInstance.LineNumber = lineNumberInstance2;
                                                     }
                                                     
-                                                    JToken messageValue = diagnosticsValue["message"];
-                                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                    JToken messageValue2 = diagnosticsValue["message"];
+                                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
                                                     {
-                                                        string messageInstance = ((string)messageValue);
-                                                        diagnosticsInstance.Message = messageInstance;
+                                                        string messageInstance2 = ((string)messageValue2);
+                                                        diagnosticsInstance.Message = messageInstance2;
                                                     }
                                                     
-                                                    JToken severityValue = diagnosticsValue["severity"];
-                                                    if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                                    JToken severityValue2 = diagnosticsValue["severity"];
+                                                    if (severityValue2 != null && severityValue2.Type != JTokenType.Null)
                                                     {
-                                                        string severityInstance = ((string)severityValue);
-                                                        diagnosticsInstance.Severity = severityInstance;
+                                                        string severityInstance2 = ((string)severityValue2);
+                                                        diagnosticsInstance.Severity = severityInstance2;
                                                     }
                                                     
                                                     JToken startValue = diagnosticsValue["start"];
@@ -4197,7 +4815,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
             {
                 queryParameters.Add(queryString);
             }
-            queryParameters.Add("api-version=2015-10-01-preview");
+            queryParameters.Add("api-version=2015-11-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -4213,8 +4831,8 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.5-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsJob 0.9.6-preview" + this.Client.UserAgentSuffix);
                 httpRequest.Headers.Add("x-ms-client-resource-group-name", resourceGroupName);
                 httpRequest.Headers.Add("x-ms-client-subscription-id", this.Client.Credentials.SubscriptionId);
                 
@@ -4300,11 +4918,105 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                         jobInformationInstance.Submitter = submitterInstance;
                                     }
                                     
-                                    JToken errorMessageValue = valueValue["errorMessage"];
-                                    if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                    JToken errorMessageArray = valueValue["errorMessage"];
+                                    if (errorMessageArray != null && errorMessageArray.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance = ((string)errorMessageValue);
-                                        jobInformationInstance.ErrorMessage = errorMessageInstance;
+                                        foreach (JToken errorMessageValue in ((JArray)errorMessageArray))
+                                        {
+                                            JobErrorDetails errorMessageInstance = new JobErrorDetails();
+                                            jobInformationInstance.ErrorMessage.Add(errorMessageInstance);
+                                            
+                                            JToken descriptionValue = errorMessageValue["description"];
+                                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance = ((string)descriptionValue);
+                                                errorMessageInstance.Description = descriptionInstance;
+                                            }
+                                            
+                                            JToken detailsValue = errorMessageValue["details"];
+                                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                            {
+                                                string detailsInstance = ((string)detailsValue);
+                                                errorMessageInstance.Details = detailsInstance;
+                                            }
+                                            
+                                            JToken endOffsetValue = errorMessageValue["endOffset"];
+                                            if (endOffsetValue != null && endOffsetValue.Type != JTokenType.Null)
+                                            {
+                                                int endOffsetInstance = ((int)endOffsetValue);
+                                                errorMessageInstance.EndOffset = endOffsetInstance;
+                                            }
+                                            
+                                            JToken errorIdValue = errorMessageValue["errorId"];
+                                            if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
+                                            {
+                                                string errorIdInstance = ((string)errorIdValue);
+                                                errorMessageInstance.ErrorId = errorIdInstance;
+                                            }
+                                            
+                                            JToken filePathValue = errorMessageValue["filePath"];
+                                            if (filePathValue != null && filePathValue.Type != JTokenType.Null)
+                                            {
+                                                string filePathInstance = ((string)filePathValue);
+                                                errorMessageInstance.FilePath = filePathInstance;
+                                            }
+                                            
+                                            JToken helpLinkValue = errorMessageValue["helpLink"];
+                                            if (helpLinkValue != null && helpLinkValue.Type != JTokenType.Null)
+                                            {
+                                                string helpLinkInstance = ((string)helpLinkValue);
+                                                errorMessageInstance.HelpLink = helpLinkInstance;
+                                            }
+                                            
+                                            JToken internalDiagnosticsValue = errorMessageValue["internalDiagnostics"];
+                                            if (internalDiagnosticsValue != null && internalDiagnosticsValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDiagnosticsInstance = ((string)internalDiagnosticsValue);
+                                                errorMessageInstance.InternalDiagnostics = internalDiagnosticsInstance;
+                                            }
+                                            
+                                            JToken lineNumberValue = errorMessageValue["lineNumber"];
+                                            if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                            {
+                                                int lineNumberInstance = ((int)lineNumberValue);
+                                                errorMessageInstance.LineNumber = lineNumberInstance;
+                                            }
+                                            
+                                            JToken messageValue = errorMessageValue["message"];
+                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance = ((string)messageValue);
+                                                errorMessageInstance.Message = messageInstance;
+                                            }
+                                            
+                                            JToken resolutionValue = errorMessageValue["resolution"];
+                                            if (resolutionValue != null && resolutionValue.Type != JTokenType.Null)
+                                            {
+                                                string resolutionInstance = ((string)resolutionValue);
+                                                errorMessageInstance.Resolution = resolutionInstance;
+                                            }
+                                            
+                                            JToken severityValue = errorMessageValue["severity"];
+                                            if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                            {
+                                                string severityInstance = ((string)severityValue);
+                                                errorMessageInstance.Severity = severityInstance;
+                                            }
+                                            
+                                            JToken sourceValue = errorMessageValue["source"];
+                                            if (sourceValue != null && sourceValue.Type != JTokenType.Null)
+                                            {
+                                                string sourceInstance = ((string)sourceValue);
+                                                errorMessageInstance.Source = sourceInstance;
+                                            }
+                                            
+                                            JToken startOffsetValue = errorMessageValue["startOffset"];
+                                            if (startOffsetValue != null && startOffsetValue.Type != JTokenType.Null)
+                                            {
+                                                string startOffsetInstance = ((string)startOffsetValue);
+                                                errorMessageInstance.StartOffset = startOffsetInstance;
+                                            }
+                                        }
                                     }
                                     
                                     JToken degreeOfParallelismValue = valueValue["degreeOfParallelism"];
@@ -4385,11 +5097,11 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                 jobStateAuditRecordInstance.RequestedByUser = requestedByUserInstance;
                                             }
                                             
-                                            JToken detailsValue = stateAuditRecordsValue["details"];
-                                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                                            JToken detailsValue2 = stateAuditRecordsValue["details"];
+                                            if (detailsValue2 != null && detailsValue2.Type != JTokenType.Null)
                                             {
-                                                string detailsInstance = ((string)detailsValue);
-                                                jobStateAuditRecordInstance.Details = detailsInstance;
+                                                string detailsInstance2 = ((string)detailsValue2);
+                                                jobStateAuditRecordInstance.Details = detailsInstance2;
                                             }
                                         }
                                     }
@@ -4610,25 +5322,25 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob
                                                         diagnosticsInstance.End = endInstance;
                                                     }
                                                     
-                                                    JToken lineNumberValue = diagnosticsValue["lineNumber"];
-                                                    if (lineNumberValue != null && lineNumberValue.Type != JTokenType.Null)
+                                                    JToken lineNumberValue2 = diagnosticsValue["lineNumber"];
+                                                    if (lineNumberValue2 != null && lineNumberValue2.Type != JTokenType.Null)
                                                     {
-                                                        int lineNumberInstance = ((int)lineNumberValue);
-                                                        diagnosticsInstance.LineNumber = lineNumberInstance;
+                                                        int lineNumberInstance2 = ((int)lineNumberValue2);
+                                                        diagnosticsInstance.LineNumber = lineNumberInstance2;
                                                     }
                                                     
-                                                    JToken messageValue = diagnosticsValue["message"];
-                                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                                    JToken messageValue2 = diagnosticsValue["message"];
+                                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
                                                     {
-                                                        string messageInstance = ((string)messageValue);
-                                                        diagnosticsInstance.Message = messageInstance;
+                                                        string messageInstance2 = ((string)messageValue2);
+                                                        diagnosticsInstance.Message = messageInstance2;
                                                     }
                                                     
-                                                    JToken severityValue = diagnosticsValue["severity"];
-                                                    if (severityValue != null && severityValue.Type != JTokenType.Null)
+                                                    JToken severityValue2 = diagnosticsValue["severity"];
+                                                    if (severityValue2 != null && severityValue2.Type != JTokenType.Null)
                                                     {
-                                                        string severityInstance = ((string)severityValue);
-                                                        diagnosticsInstance.Severity = severityInstance;
+                                                        string severityInstance2 = ((string)severityValue2);
+                                                        diagnosticsInstance.Severity = severityInstance2;
                                                     }
                                                     
                                                     JToken startValue = diagnosticsValue["start"];

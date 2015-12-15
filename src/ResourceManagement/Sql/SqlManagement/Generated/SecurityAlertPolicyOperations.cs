@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> CreateOrUpdateDatebaseSecurityAlertPolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateDatabaseSecurityAlertPolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateDatebaseSecurityAlertPolicyAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateDatabaseSecurityAlertPolicyAsync", tracingParameters);
             }
             
             // Construct URL

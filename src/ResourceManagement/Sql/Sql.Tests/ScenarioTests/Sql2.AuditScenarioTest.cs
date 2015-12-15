@@ -46,7 +46,7 @@ namespace Sql2.Tests.ScenarioTests
             DatabaseAuditingPolicyCreateOrUpdateParameters updateParams =
                 new DatabaseAuditingPolicyCreateOrUpdateParameters {Properties = properties};
 
-            var updateResponse = sqlClient.AuditingPolicy.CreateOrUpdateDatebasePolicy(resourceGroupName, server.Name, database.Name, updateParams);
+            var updateResponse = sqlClient.AuditingPolicy.CreateOrUpdateDatabasePolicy(resourceGroupName, server.Name, database.Name, updateParams);
 
             // Verify that the initial Get request contains the default policy.
             TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.OK);

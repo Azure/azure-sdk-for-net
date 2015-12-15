@@ -53,7 +53,7 @@ namespace Sql2.Tests.ScenarioTests
             DatabaseSecurityAlertPolicyCreateOrUpdateParameters updateParams =
                 new DatabaseSecurityAlertPolicyCreateOrUpdateParameters { Properties = properties };
 
-            var updateResponse = sqlClient.SecurityAlertPolicy.CreateOrUpdateDatebaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name, updateParams);
+            var updateResponse = sqlClient.SecurityAlertPolicy.CreateOrUpdateDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name, updateParams);
 
             // Verify that the initial Get request contains the default policy.
             TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.OK);
