@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "Microsoft.Azure.Management.DataLake.Analytics": "",
-    "Microsoft.Azure.Management.DataLake.Store": "",
+    "Microsoft.Azure.Management.DataLake.Store": "[0.9.3-preview, 4.0)",
     "Microsoft.Azure.Management.Resources": "3.1.1-preview",
     "Microsoft.Azure.Management.Storage": "4.0.0-preview",
     "Microsoft.Azure.Test.HttpRecorder": "",
