@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         }
         
         /// <summary>
-        /// Gets the sequence of value.
+        /// Gets the sequence of Value.
         /// </summary>
         public IEnumerator<Usage> GetEnumerator()
         {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         }
         
         /// <summary>
-        /// Gets the sequence of value.
+        /// Gets the sequence of Value.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
