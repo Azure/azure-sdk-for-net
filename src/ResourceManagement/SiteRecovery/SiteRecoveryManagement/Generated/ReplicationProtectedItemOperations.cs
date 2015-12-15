@@ -4572,6 +4572,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
                                         }
                                         
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
+                                        }
+                                        
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
                                         {
@@ -6032,6 +6039,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
@@ -7553,6 +7567,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
@@ -9307,6 +9328,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
                                         }
                                         
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
+                                        }
+                                        
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
                                         {
@@ -10826,6 +10854,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
@@ -12580,6 +12615,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
                                         }
                                         
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
+                                        }
+                                        
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
                                         {
@@ -14099,6 +14141,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
@@ -15622,6 +15671,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
                                         }
                                         
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
+                                        }
+                                        
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
                                         {
@@ -17141,6 +17197,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
@@ -18664,6 +18727,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
                                         }
                                         
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
+                                        }
+                                        
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
                                         {
@@ -20183,6 +20253,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
                                             vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                        if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                            vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
                                         JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
@@ -21755,6 +21832,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
                                                 }
                                                 
+                                                JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                                if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
+                                                }
+                                                
                                                 JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
                                                 if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
                                                 {
@@ -23276,6 +23360,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
                                                 }
                                                 
+                                                JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                                if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
+                                                }
+                                                
                                                 JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];
                                                 if (instanceTypeValue3 != null && instanceTypeValue3.Type != JTokenType.Null)
                                                 {
@@ -24753,6 +24844,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
                                                     vMwareAzureV2ProviderSpecificSettingsInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                }
+                                                
+                                                JToken discoveryTypeValue = providerSpecificDetailsValue["discoveryType"];
+                                                if (discoveryTypeValue != null && discoveryTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string discoveryTypeInstance = ((string)discoveryTypeValue);
+                                                    vMwareAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                                 }
                                                 
                                                 JToken instanceTypeValue3 = providerSpecificDetailsValue["instanceType"];

@@ -301,9 +301,10 @@ namespace SiteRecovery.Tests
                     containersResponse.ProtectionContainers.Count > 0,
                     "Containers count can't be less than 1.");
 
-                var containersMappingResponse = client.ProtectionContainerMapping.List(
+                var containersMappingResponse = client.ProtectionContainerMapping.Get(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
+                    "Hitesh-VMwareAzureV2-Mapping",
                     RequestHeaders);
                 Assert.NotNull(containersMappingResponse);
             }

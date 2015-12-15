@@ -270,7 +270,7 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-                string policyName = "chpadh-VMwareAzureV2-Profile";
+                string policyName = "Hitesh-VMwareAzureV2-Profile";
                 VMwareAzureV2PolicyInput input = new VMwareAzureV2PolicyInput
                 {
                     AppConsistentFrequencyInMinutes = 15,
@@ -429,7 +429,7 @@ namespace SiteRecovery.Tests
                 var response = client.ProtectionContainerMapping.ConfigureProtection(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
-                    "chpadh-VMwareAzureV2-Mapping",
+                    "Hitesh-VMwareAzureV2-Mapping",
                     new CreateProtectionContainerMappingInput
                     {
                         Properties = new CreateProtectionContainerMappingInputProperties

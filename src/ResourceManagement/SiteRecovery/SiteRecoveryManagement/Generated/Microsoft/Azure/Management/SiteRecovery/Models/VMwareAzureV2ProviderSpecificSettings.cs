@@ -65,6 +65,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._compressedDataRateInMB = value; }
         }
         
+        private string _discoveryType;
+        
+        /// <summary>
+        /// Optional. Gets or sets a value inidicating the discovery type of
+        /// the machine.Value can be vCenter or physical.
+        /// </summary>
+        public string DiscoveryType
+        {
+            get { return this._discoveryType; }
+            set { this._discoveryType = value; }
+        }
+        
         private string _healthErrorCode;
         
         /// <summary>
