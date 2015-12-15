@@ -52,6 +52,9 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.VaultTests\RetrieveVault.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>  
+    <None Include="SessionRecords\RecoveryServices.Tests.VaultUsageTests\RetrieveVaultUsage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>
