@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ManagementLockObject> CreateOrUpdateAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.CreateOrUpdateAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ManagementLockObject> CreateOrUpdateAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.CreateOrUpdateAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ManagementLockObject> CreateOrUpdateAtSubscriptionLevelAsync( this IManagementLocksOperations operations, string lockName, ManagementLockObject parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.CreateOrUpdateAtSubscriptionLevelWithHttpMessagesAsync(lockName, parameters, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.CreateOrUpdateAtSubscriptionLevelWithHttpMessagesAsync(lockName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ManagementLockObject> GetAsync( this IManagementLocksOperations operations, string lockName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.GetWithHttpMessagesAsync(lockName, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.GetWithHttpMessagesAsync(lockName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Resource group name.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             public static IPage<ManagementLockObject> ListAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>))
             {
@@ -360,14 +360,14 @@ namespace Microsoft.Azure.Management.Resources
             /// Resource group name.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Resource identity.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             public static IPage<ManagementLockObject> ListAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>))
             {
@@ -422,14 +422,14 @@ namespace Microsoft.Azure.Management.Resources
             /// Resource identity.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -472,7 +472,7 @@ namespace Microsoft.Azure.Management.Resources
             /// The operations group for this extension method.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             public static IPage<ManagementLockObject> ListAtSubscriptionLevel(this IManagementLocksOperations operations, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>))
             {
@@ -486,14 +486,14 @@ namespace Microsoft.Azure.Management.Resources
             /// The operations group for this extension method.
             /// </param>
             /// <param name='odataQuery'>
-            /// The filter to apply on the operation.
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListAtSubscriptionLevelAsync( this IManagementLocksOperations operations, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListAtSubscriptionLevelWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListAtSubscriptionLevelWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -525,7 +525,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListAtResourceGroupLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListAtResourceGroupLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListAtResourceGroupLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListAtResourceLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListAtResourceLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListAtResourceLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -589,7 +589,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListNextNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ManagementLockObject>> ListAtSubscriptionLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<ManagementLockObject>> result = await operations.ListAtSubscriptionLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListAtSubscriptionLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

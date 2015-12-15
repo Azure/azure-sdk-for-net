@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
+    using System.Runtime.CompilerServices;
     using Microsoft.Azure.Management.Search;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;
@@ -28,10 +29,12 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             return _currentContext.GetServiceClient<SearchManagementClient>();
         }
         
-        protected void Run(Action testBody)
+        protected void Run(
+            Action testBody, 
+            [CallerMemberName]
+            string methodName = "unknown_caller")
         {
-            const int TestNameStackFrameDepth = 3;
-            using (var mockContext = MockContext.Start(TestNameStackFrameDepth))
+            using (var mockContext = MockContext.Start(this.GetType().FullName, methodName))
             {
                 _currentContext = mockContext;
                 Data = new TTestFixture();

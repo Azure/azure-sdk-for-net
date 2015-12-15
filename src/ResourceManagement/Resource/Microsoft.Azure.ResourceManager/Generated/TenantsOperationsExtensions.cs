@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<TenantIdDescription>> ListAsync( this ITenantsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<TenantIdDescription>> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<TenantIdDescription>> ListNextAsync( this ITenantsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<TenantIdDescription>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

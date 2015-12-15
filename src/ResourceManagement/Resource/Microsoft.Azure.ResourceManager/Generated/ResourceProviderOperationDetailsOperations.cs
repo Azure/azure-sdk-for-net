@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using Microsoft.Rest.Azure;
     using Models;

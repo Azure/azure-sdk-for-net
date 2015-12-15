@@ -26,10 +26,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the AutoHealActions class.
         /// </summary>
-        public AutoHealActions(AutoHealActionType? actionType, AutoHealCustomAction customAction = default(AutoHealCustomAction))
+        public AutoHealActions(AutoHealActionType? actionType, AutoHealCustomAction customAction = default(AutoHealCustomAction), string minProcessExecutionTime = default(string))
         {
             ActionType = actionType;
             CustomAction = customAction;
+            MinProcessExecutionTime = minProcessExecutionTime;
         }
 
         /// <summary>
@@ -44,6 +45,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "customAction")]
         public AutoHealCustomAction CustomAction { get; set; }
+
+        /// <summary>
+        /// MinProcessExecutionTime - minimum time the process must execute
+        /// before taking the action
+        /// </summary>
+        [JsonProperty(PropertyName = "minProcessExecutionTime")]
+        public string MinProcessExecutionTime { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

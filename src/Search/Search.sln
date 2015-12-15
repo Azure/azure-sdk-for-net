@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search.Management.Tests", "Search.Management.Tests\Search.Management.Tests.csproj", "{B89334CA-F73C-4B04-9B38-D61FEE4D9DE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search", "Search\Search.csproj", "{2C21CBE7-5D68-434A-BB20-463886BE5551}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Search", "Microsoft.Azure.Search\Microsoft.Azure.Search.csproj", "{2C21CBE7-5D68-434A-BB20-463886BE5551}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search.Tests", "Search.Tests\Search.Tests.csproj", "{3B082B9B-96DD-4112-88E3-BE89BAE124C1}"
 EndProject

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Certificate class.
         /// </summary>
-        public Certificate(string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), string pfxBlob = default(string), string siteName = default(string), string selfLink = default(string), string issuer = default(string), DateTime? issueDate = default(DateTime?), DateTime? expirationDate = default(DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), string cerBlob = default(string), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultCsmId = default(string), string keyVaultSecretName = default(string))
+        public Certificate(string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), string pfxBlob = default(string), string siteName = default(string), string selfLink = default(string), string issuer = default(string), DateTime? issueDate = default(DateTime?), DateTime? expirationDate = default(DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), string cerBlob = default(string), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile))
         {
             FriendlyName = friendlyName;
             SubjectName = subjectName;
@@ -42,8 +42,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             CerBlob = cerBlob;
             PublicKeyHash = publicKeyHash;
             HostingEnvironmentProfile = hostingEnvironmentProfile;
-            KeyVaultCsmId = keyVaultCsmId;
-            KeyVaultSecretName = keyVaultSecretName;
         }
 
         /// <summary>
@@ -136,18 +134,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
-
-        /// <summary>
-        /// Key Vault Csm resource Id
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.keyVaultCsmId")]
-        public string KeyVaultCsmId { get; set; }
-
-        /// <summary>
-        /// Key Vault secret name
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.keyVaultSecretName")]
-        public string KeyVaultSecretName { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

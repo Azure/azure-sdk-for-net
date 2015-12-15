@@ -13,19 +13,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Collection of ceritificate orders
+    /// Collection of app deployments
     /// </summary>
-    public partial class CertificateOrderCollection
+    public partial class DeploymentCollection
     {
         /// <summary>
-        /// Initializes a new instance of the CertificateOrderCollection class.
+        /// Initializes a new instance of the DeploymentCollection class.
         /// </summary>
-        public CertificateOrderCollection() { }
+        public DeploymentCollection() { }
 
         /// <summary>
-        /// Initializes a new instance of the CertificateOrderCollection class.
+        /// Initializes a new instance of the DeploymentCollection class.
         /// </summary>
-        public CertificateOrderCollection(IList<CertificateOrder> value = default(IList<CertificateOrder>), string nextLink = default(string))
+        public DeploymentCollection(IList<Deployment> value = default(IList<Deployment>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Collection of resources
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<CertificateOrder> Value { get; set; }
+        public IList<Deployment> Value { get; set; }
 
         /// <summary>
         /// Link to next page of resources

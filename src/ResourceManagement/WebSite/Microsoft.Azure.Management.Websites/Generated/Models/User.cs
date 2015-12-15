@@ -25,15 +25,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the User class.
         /// </summary>
-        public User(string userName = default(string), string publishingUserName = default(string), string publishingPassword = default(string), DateTime? lastUpdatedTime = default(DateTime?), string metadata = default(string), bool? isDeleted = default(bool?), string scmUri = default(string))
+        public User(string userName = default(string), string publishingUserName = default(string), string publishingPassword = default(string))
         {
             UserName = userName;
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
-            LastUpdatedTime = lastUpdatedTime;
-            Metadata = metadata;
-            IsDeleted = isDeleted;
-            ScmUri = scmUri;
         }
 
         /// <summary>
@@ -53,30 +49,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publishingPassword")]
         public string PublishingPassword { get; set; }
-
-        /// <summary>
-        /// Timestamp when publishing credentials were last modified (internal)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastUpdatedTime")]
-        public DateTime? LastUpdatedTime { get; set; }
-
-        /// <summary>
-        /// User metadata (internal)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.metadata")]
-        public string Metadata { get; set; }
-
-        /// <summary>
-        /// Indicates if user has been marked for deletion (internal)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isDeleted")]
-        public bool? IsDeleted { get; set; }
-
-        /// <summary>
-        /// Url of SCM site (internal)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.scmUri")]
-        public string ScmUri { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
