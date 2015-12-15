@@ -22,9 +22,18 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public static partial class RecoveryServicesBackupVaultManagementClientExtensions
+    /// <summary>
+    /// The definition of JobExtendedInfo object.
+    /// </summary>
+    public partial class JobExtendedInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the JobExtendedInfo class.
+        /// </summary>
+        public JobExtendedInfo()
+        {
+        }
     }
 }

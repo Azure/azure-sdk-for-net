@@ -28,14 +28,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaaSVMJobProperties object.
+    /// The definition of IaaSVMJobExtendedInfo object.
     /// </summary>
-    public partial class IaaSVMJobProperties : JobProperties
+    public partial class IaaSVMJobExtendedInfo : JobExtendedInfo
     {
         private string _dynamicErrorMessage;
         
         /// <summary>
-        /// Optional. Job DynamicErrorMessage
+        /// Optional. Field to hold error message added by owner. This message
+        /// is specific to this job. Non localized.
         /// </summary>
         public string DynamicErrorMessage
         {
@@ -43,21 +44,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._dynamicErrorMessage = value; }
         }
         
-        private IaaSVMJob _iaaSVMJob;
-        
-        /// <summary>
-        /// Optional. Job iaaSVMJobs
-        /// </summary>
-        public IaaSVMJob IaaSVMJob
-        {
-            get { return this._iaaSVMJob; }
-            set { this._iaaSVMJob = value; }
-        }
-        
         private double? _progressPercentage;
         
         /// <summary>
-        /// Optional. Job ProgressPercentage
+        /// Optional. Indicates progress of the job. Null if it hasn't started
+        /// or completed.
         /// </summary>
         public double? ProgressPercentage
         {
@@ -68,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IDictionary<string, string> _propertyBag;
         
         /// <summary>
-        /// Optional. Job PropertyBag
+        /// Optional. Gets or sets the job properties to show in properties tab
         /// </summary>
         public IDictionary<string, string> PropertyBag
         {
@@ -79,7 +70,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<IaaSVMJobTaskDetails> _tasksList;
         
         /// <summary>
-        /// Optional. Job TasksList
+        /// Optional. TasksList for the Job
         /// </summary>
         public IList<IaaSVMJobTaskDetails> TasksList
         {
@@ -88,9 +79,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMJobProperties class.
+        /// Initializes a new instance of the IaaSVMJobExtendedInfo class.
         /// </summary>
-        public IaaSVMJobProperties()
+        public IaaSVMJobExtendedInfo()
         {
             this.PropertyBag = new LazyDictionary<string, string>();
             this.TasksList = new LazyList<IaaSVMJobTaskDetails>();

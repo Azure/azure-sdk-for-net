@@ -26,27 +26,40 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// The definition of a TriggerRestoreRequest Object.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest
+    public partial class TriggerRestoreRequest
     {
-        private ProtectedItemResource _item;
+        private RestoreRequest _properties;
         
         /// <summary>
-        /// Optional. Item
+        /// Required. properties for RestoreRequest.
         /// </summary>
-        public ProtectedItemResource Item
+        public RestoreRequest Properties
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectedItemCreateOrUpdateRequest class.
+        /// Initializes a new instance of the TriggerRestoreRequest class.
         /// </summary>
-        public ProtectedItemCreateOrUpdateRequest()
+        public TriggerRestoreRequest()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the TriggerRestoreRequest class with
+        /// required arguments.
+        /// </summary>
+        public TriggerRestoreRequest(RestoreRequest properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

@@ -40,17 +40,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._providerType = value; }
         }
         
-        private string _workloadType;
-        
-        /// <summary>
-        /// Optional. Workload Type
-        /// </summary>
-        public string WorkloadType
-        {
-            get { return this._workloadType; }
-            set { this._workloadType = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the ProtectableObjectBase class.
         /// </summary>

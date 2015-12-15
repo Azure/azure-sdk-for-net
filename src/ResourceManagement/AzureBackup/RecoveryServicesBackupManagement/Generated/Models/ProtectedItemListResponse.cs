@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private ProtectedItemResourceList _itemList;
         
         /// <summary>
-        /// Optional. Protected item List Response.
+        /// Optional. ItemList
         /// </summary>
         public ProtectedItemResourceList ItemList
         {

@@ -26,58 +26,36 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The common class for Job.
+    /// The definition of a CommonJobQueryFilter object.
     /// </summary>
-    public partial class Job : JobBase
+    public partial class CommonJobQueryFilters : JobQueryFilters
     {
-        private string _backupManagementType;
+        private string _endTime;
         
         /// <summary>
-        /// Optional. Job Type
+        /// Optional. EndTime query parameter
         /// </summary>
-        public string BackupManagementType
-        {
-            get { return this._backupManagementType; }
-            set { this._backupManagementType = value; }
-        }
-        
-        private DateTime _endTime;
-        
-        /// <summary>
-        /// Optional. Job EndTimestamp
-        /// </summary>
-        public DateTime EndTime
+        public string EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }
         }
         
-        private string _entityFriendlyName;
+        private string _jobId;
         
         /// <summary>
-        /// Optional. Job EntityFriendlyName
+        /// Optional. JobId query parameter
         /// </summary>
-        public string EntityFriendlyName
+        public string JobId
         {
-            get { return this._entityFriendlyName; }
-            set { this._entityFriendlyName = value; }
-        }
-        
-        private JobExtendedInfo _extendedInfo;
-        
-        /// <summary>
-        /// Optional. Job ExtendedInfo
-        /// </summary>
-        public JobExtendedInfo ExtendedInfo
-        {
-            get { return this._extendedInfo; }
-            set { this._extendedInfo = value; }
+            get { return this._jobId; }
+            set { this._jobId = value; }
         }
         
         private string _operation;
         
         /// <summary>
-        /// Optional. Job Operation
+        /// Optional. Operation query parameter
         /// </summary>
         public string Operation
         {
@@ -85,12 +63,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._operation = value; }
         }
         
-        private DateTime _startTime;
+        private string _startTime;
         
         /// <summary>
-        /// Optional. Job StartTimestamp
+        /// Optional. StartTime query parameter
         /// </summary>
-        public DateTime StartTime
+        public string StartTime
         {
             get { return this._startTime; }
             set { this._startTime = value; }
@@ -99,7 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Job Status
+        /// Optional. Status query parameter
         /// </summary>
         public string Status
         {
@@ -107,10 +85,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._status = value; }
         }
         
+        private string _type;
+        
         /// <summary>
-        /// Initializes a new instance of the Job class.
+        /// Optional. Type query parameter
         /// </summary>
-        public Job()
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CommonJobQueryFilters class.
+        /// </summary>
+        public CommonJobQueryFilters()
         {
         }
     }

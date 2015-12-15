@@ -21,31 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// The definition of a OperationStatusExtendedInfo object.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest
+    public partial class OperationStatusError
     {
-        private ProtectedItemResource _item;
+        private string _code;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Code for OperationStatusError
         /// </summary>
-        public ProtectedItemResource Item
+        public string Code
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._code; }
+            set { this._code = value; }
+        }
+        
+        private string _message;
+        
+        /// <summary>
+        /// Optional. Message for OperationStatusError
+        /// </summary>
+        public string Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectedItemCreateOrUpdateRequest class.
+        /// Initializes a new instance of the OperationStatusError class.
         /// </summary>
-        public ProtectedItemCreateOrUpdateRequest()
+        public OperationStatusError()
         {
         }
     }

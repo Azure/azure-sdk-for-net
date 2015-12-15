@@ -21,31 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// The definition of a GetOperationResultResponse.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest
+    public partial class PaginationRequest
     {
-        private ProtectedItemResource _item;
+        private string _skipToken;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. It will work as continuation token
         /// </summary>
-        public ProtectedItemResource Item
+        public string SkipToken
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._skipToken; }
+            set { this._skipToken = value; }
+        }
+        
+        private string _top;
+        
+        /// <summary>
+        /// Optional. It will decide result count
+        /// </summary>
+        public string Top
+        {
+            get { return this._top; }
+            set { this._top = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectedItemCreateOrUpdateRequest class.
+        /// Initializes a new instance of the PaginationRequest class.
         /// </summary>
-        public ProtectedItemCreateOrUpdateRequest()
+        public PaginationRequest()
         {
         }
     }

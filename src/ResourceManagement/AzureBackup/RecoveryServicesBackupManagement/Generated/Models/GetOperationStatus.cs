@@ -26,49 +26,71 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaaSVMJobQueryFilters object.
+    /// The definition for OperationStatus class.
     /// </summary>
-    public partial class IaaSVMJobQueryFilters : JobQueryFilters
+    public partial class GetOperationStatus : OperationStatusBase
     {
-        private DateTime _endTime;
+        private string _endTime;
         
         /// <summary>
-        /// Optional. EndTime query parameter
+        /// Optional. EndTime for OperationStatus
         /// </summary>
-        public DateTime EndTime
+        public string EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }
         }
         
-        private string _jobId;
+        private string _id;
         
         /// <summary>
-        /// Optional. JobId query parameter
+        /// Optional. OperationStatus Id
         /// </summary>
-        public string JobId
+        public string Id
         {
-            get { return this._jobId; }
-            set { this._jobId = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private string _operation;
+        private string _name;
         
         /// <summary>
-        /// Optional. Operation query parameter
+        /// Optional. Name for OperationStatus
         /// </summary>
-        public string Operation
+        public string Name
         {
-            get { return this._operation; }
-            set { this._operation = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private DateTime _startTime;
+        private OperationStatusError _operationStatusError;
         
         /// <summary>
-        /// Optional. StartTime query parameter
+        /// Optional. OperationStatusError for OperationStatus
         /// </summary>
-        public DateTime StartTime
+        public OperationStatusError OperationStatusError
+        {
+            get { return this._operationStatusError; }
+            set { this._operationStatusError = value; }
+        }
+        
+        private OperationStatusExtendedInfo _properties;
+        
+        /// <summary>
+        /// Optional. Properties for the OperationStatus
+        /// </summary>
+        public OperationStatusExtendedInfo Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _startTime;
+        
+        /// <summary>
+        /// Optional. StartTime for OperationStatus
+        /// </summary>
+        public string StartTime
         {
             get { return this._startTime; }
             set { this._startTime = value; }
@@ -77,7 +99,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Status query parameter
+        /// Optional. Status for OperationStatus
         /// </summary>
         public string Status
         {
@@ -86,9 +108,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMJobQueryFilters class.
+        /// Initializes a new instance of the GetOperationStatus class.
         /// </summary>
-        public IaaSVMJobQueryFilters()
+        public GetOperationStatus()
         {
         }
     }

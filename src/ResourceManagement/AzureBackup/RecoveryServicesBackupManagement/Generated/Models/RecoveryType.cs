@@ -21,32 +21,32 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobDetailsResponse.
+    /// The enum for all supported versions type pf Recovery
     /// </summary>
-    public partial class JobDetailsResponse : AzureOperationResponse
+    public static partial class RecoveryType
     {
-        private JobDetailsResource _item;
+        /// <summary>
+        /// Invalid RecoveryType of RestoreRequest.
+        /// </summary>
+        public const string Invalid = "Invalid";
         
         /// <summary>
-        /// Optional. JobDetailsResource.
+        /// OriginalLocation RecoveryType of RestoreRequest.
         /// </summary>
-        public JobDetailsResource Item
-        {
-            get { return this._item; }
-            set { this._item = value; }
-        }
+        public const string OriginalLocation = "OriginalLocation";
         
         /// <summary>
-        /// Initializes a new instance of the JobDetailsResponse class.
+        /// AlternateLocation RecoveryType of RestoreRequest.
         /// </summary>
-        public JobDetailsResponse()
-        {
-        }
+        public const string AlternateLocation = "AlternateLocation";
+        
+        /// <summary>
+        /// RestoreDisks RecoveryType of RestoreRequest.
+        /// </summary>
+        public const string RestoreDisks = "RestoreDisks";
     }
 }

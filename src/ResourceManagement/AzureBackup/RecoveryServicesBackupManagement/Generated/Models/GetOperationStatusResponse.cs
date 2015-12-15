@@ -21,18 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobProperties object.
+    /// The definition of a OperationStatusResponse.
     /// </summary>
-    public partial class JobProperties
+    public partial class GetOperationStatusResponse : AzureOperationResponse
     {
+        private OperationStatusBase _operationStatus;
+        
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Optional. operationStatus
         /// </summary>
-        public JobProperties()
+        public OperationStatusBase OperationStatus
+        {
+            get { return this._operationStatus; }
+            set { this._operationStatus = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GetOperationStatusResponse class.
+        /// </summary>
+        public GetOperationStatusResponse()
         {
         }
     }

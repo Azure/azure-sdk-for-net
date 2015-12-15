@@ -26,21 +26,10 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectableObject object.
+    /// The definition of a IaaSVMProtectableObject object.
     /// </summary>
     public partial class ProtectableObject : ProtectableObjectBase
     {
-        private string _containerId;
-        
-        /// <summary>
-        /// Optional. Container ID
-        /// </summary>
-        public string ContainerId
-        {
-            get { return this._containerId; }
-            set { this._containerId = value; }
-        }
-        
         private string _friendlyName;
         
         /// <summary>
@@ -63,17 +52,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._protectionStatus = value; }
         }
         
-        private string _registrationStatus;
-        
-        /// <summary>
-        /// Optional. Registration Status
-        /// </summary>
-        public string RegistrationStatus
-        {
-            get { return this._registrationStatus; }
-            set { this._registrationStatus = value; }
-        }
-        
         private string _resourceGroup;
         
         /// <summary>
@@ -83,17 +61,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._resourceGroup; }
             set { this._resourceGroup = value; }
-        }
-        
-        private string _vmVersion;
-        
-        /// <summary>
-        /// Optional. VM Version
-        /// </summary>
-        public string VmVersion
-        {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
         }
         
         /// <summary>

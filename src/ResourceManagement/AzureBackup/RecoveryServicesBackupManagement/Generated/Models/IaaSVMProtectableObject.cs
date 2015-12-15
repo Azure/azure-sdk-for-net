@@ -21,49 +21,52 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectQueryParameters
+    /// <summary>
+    /// The definition of a IaasVM ProtectableObject object.
+    /// </summary>
+    public partial class IaaSVMProtectableObject : ProtectableObject
     {
-        private string _providerType;
+        private string _containerUri;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Container Uri
         /// </summary>
-        public string ProviderType
+        public string ContainerUri
         {
-            get { return this._providerType; }
-            set { this._providerType = value; }
+            get { return this._containerUri; }
+            set { this._containerUri = value; }
         }
         
-        private string _status;
+        private string _protectableObjectUri;
         
         /// <summary>
-        /// Optional.
+        /// Optional. ProtectableObject Uri
         /// </summary>
-        public string Status
+        public string ProtectableObjectUri
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._protectableObjectUri; }
+            set { this._protectableObjectUri = value; }
         }
         
-        private string _type;
+        private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Classic or Classic VM
         /// </summary>
-        public string Type
+        public string VirtualMachineVersion
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectQueryParameters
-        /// class.
+        /// Initializes a new instance of the IaaSVMProtectableObject class.
         /// </summary>
-        public ProtectableObjectQueryParameters()
+        public IaaSVMProtectableObject()
         {
         }
     }

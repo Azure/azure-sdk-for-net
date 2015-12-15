@@ -27,7 +27,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Newtonsoft.Json.Linq;
@@ -84,10 +83,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        public async Task<AzureOperationResponse> GetRefreshOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -128,9 +127,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupFabrics/";
@@ -141,7 +140,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -202,9 +201,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    BaseRecoveryServicesJobResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    result = new BaseRecoveryServicesJobResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
@@ -303,9 +302,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupFabrics/";
@@ -315,7 +314,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
             url = url + "/protectionContainers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -344,7 +343,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -611,9 +609,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.RecoveryServices";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupFabrics/";
@@ -623,7 +621,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
             url = url + "/refreshContainers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -652,7 +650,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

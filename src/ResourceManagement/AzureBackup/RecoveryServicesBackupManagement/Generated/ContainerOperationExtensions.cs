@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
@@ -54,10 +53,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        public static AzureOperationResponse GetRefreshOperationResult(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static BaseRecoveryServicesJobResponse GetRefreshOperationResult(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -89,10 +88,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        public static Task<AzureOperationResponse> GetRefreshOperationResultAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetRefreshOperationResultAsync(resourceGroupName, resourceName, fabricName, operationId, customRequestHeaders, CancellationToken.None);
         }

@@ -21,52 +21,37 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Backup
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial interface IRecoveryServicesBackupVaultManagementClient : IDisposable
+    /// <summary>
+    /// The enum for all supported type of OperationStatus
+    /// </summary>
+    public static partial class OperationStatusValues
     {
         /// <summary>
-        /// Gets the API version.
+        /// Invalid Status of OperationStatus.
         /// </summary>
-        string ApiVersion
-        {
-            get; 
-        }
+        public const string Invalid = "Invalid";
         
         /// <summary>
-        /// Gets the URI used as the base for all cloud service requests.
+        /// InProgress Status of OperationStatus.
         /// </summary>
-        Uri BaseUri
-        {
-            get; 
-        }
+        public const string InProgress = "InProgress";
         
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// Succeeded Status of OperationStatus.
         /// </summary>
-        SubscriptionCloudCredentials Credentials
-        {
-            get; 
-        }
+        public const string Succeeded = "Succeeded";
         
         /// <summary>
-        /// Gets or sets the initial timeout for Long Running Operations.
+        /// Failed Status of OperationStatus.
         /// </summary>
-        int LongRunningOperationInitialTimeout
-        {
-            get; set; 
-        }
+        public const string Failed = "Failed";
         
         /// <summary>
-        /// Gets or sets the retry timeout for Long Running Operations.
+        /// Canceled Status of OperationStatus.
         /// </summary>
-        int LongRunningOperationRetryTimeout
-        {
-            get; set; 
-        }
+        public const string Canceled = "Canceled";
     }
 }

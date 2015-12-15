@@ -26,26 +26,37 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemCreateOrUpdateRequest.
+    /// The definition of a IaasVmProtectedItemExtendedInfo object.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest
+    public partial class IaasVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
-        private ProtectedItemResource _item;
+        private string _oldestRecoveryPoint;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. OldestRecoveryPoint for the protected item
         /// </summary>
-        public ProtectedItemResource Item
+        public string OldestRecoveryPoint
         {
-            get { return this._item; }
-            set { this._item = value; }
+            get { return this._oldestRecoveryPoint; }
+            set { this._oldestRecoveryPoint = value; }
+        }
+        
+        private int _recoveryPointCount;
+        
+        /// <summary>
+        /// Optional. RecoveryPointCount for the protected item
+        /// </summary>
+        public int RecoveryPointCount
+        {
+            get { return this._recoveryPointCount; }
+            set { this._recoveryPointCount = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectedItemCreateOrUpdateRequest class.
+        /// Initializes a new instance of the IaasVmProtectedItemExtendedInfo
+        /// class.
         /// </summary>
-        public ProtectedItemCreateOrUpdateRequest()
+        public IaasVmProtectedItemExtendedInfo()
         {
         }
     }

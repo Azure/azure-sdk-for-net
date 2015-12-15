@@ -51,6 +51,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectableObjectListResponse.
         /// </returns>
-        Task<ProtectableObjectListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectableObjectQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ProtectableObjectListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
