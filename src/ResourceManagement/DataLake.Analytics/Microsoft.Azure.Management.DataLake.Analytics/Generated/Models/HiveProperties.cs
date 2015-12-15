@@ -18,17 +18,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
     /// <summary>
     /// </summary>
-    public partial class Hive : JobProperties
+    [JsonObject("Hive")]
+    public partial class HiveProperties : JobProperties
     {
         /// <summary>
-        /// Initializes a new instance of the Hive class.
+        /// Initializes a new instance of the HiveProperties class.
         /// </summary>
-        public Hive() { }
+        public HiveProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the Hive class.
+        /// Initializes a new instance of the HiveProperties class.
         /// </summary>
-        public Hive(string script, string runtimeVersion = default(string), IList<HiveJobStatementInfo> statementInfo = default(IList<HiveJobStatementInfo>), string logsLocation = default(string), string warehouseLocation = default(string), int? statementCount = default(int?), int? executedStatementCount = default(int?))
+        public HiveProperties(string script, string runtimeVersion = default(string), IList<HiveJobStatementInfo> statementInfo = default(IList<HiveJobStatementInfo>), string logsLocation = default(string), string warehouseLocation = default(string), int? statementCount = default(int?), int? executedStatementCount = default(int?))
             : base(script, runtimeVersion)
         {
             StatementInfo = statementInfo;

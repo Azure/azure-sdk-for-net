@@ -342,7 +342,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 JobId = jobIdToUse.ToString(),
                 Type = JobType.USql,
                 DegreeOfParallelism = 2,
-                Properties = new USql
+                Properties = new USqlProperties
                 {
                     // Type = JobType.USql,
                     Script = scriptToRun

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     /// <summary>
     /// Creates an Azure Data Lake Analytics account management client.
     /// </summary>
-    public partial interface IDataLakeAnalyticsManagementClient
+    public partial interface IDataLakeAnalyticsManagementClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.

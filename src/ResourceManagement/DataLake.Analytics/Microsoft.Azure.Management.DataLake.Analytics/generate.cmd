@@ -5,7 +5,7 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.13.0-Nightly20151209
+set autoRestVersion=0.13.0-Nightly20151212
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 :: TODO: Uncomment these and remove the local ones once they are checked in.
@@ -26,4 +26,8 @@ call "%repoRoot%\tools\autorest.gen.cmd" %accountSpecFile% Microsoft.Azure.Manag
 call "%repoRoot%\tools\autorest.gen.cmd" %jobSpecFile% Microsoft.Azure.Management.DataLake.Analytics %autoRestVersion% %generateFolder% 
 call "%repoRoot%\tools\autorest.gen.cmd" %catalogSpecFile% Microsoft.Azure.Management.DataLake.Analytics %autoRestVersion% %generateFolder% 
 
+:: TODO: This should be removed once all the manual fixes are part of the generation functionality.
+:: Current manual fix up list:
+::  Fix the dynamic host parameters (accountname and datalakejob and catalog service uri)
+call "powershell.exe -Command "&%repoRoot%\tools\Fix-ADLGeneratedCode.ps1 -DataLakeAnalytics"
 endlocal

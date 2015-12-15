@@ -32,7 +32,7 @@ namespace DataLakeAnalytics.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                commonData = new CommonTestFixture(context);
+                commonData = new CommonTestFixture(context, true);
                 var clientToUse = this.GetDataLakeAnalyticsManagementClient(context);
 
                 // Create a test account

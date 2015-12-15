@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     /// <summary>
     /// Creates an Azure Data Lake Analytics job management client.
     /// </summary>
-    public partial interface IDataLakeAnalyticsJobManagementClient
+    public partial interface IDataLakeAnalyticsJobManagementClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.

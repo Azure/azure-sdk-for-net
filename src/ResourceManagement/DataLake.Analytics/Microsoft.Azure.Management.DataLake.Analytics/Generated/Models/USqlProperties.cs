@@ -18,17 +18,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
     /// <summary>
     /// </summary>
-    public partial class USql : JobProperties
+    [JsonObject("USql")]
+    public partial class USqlProperties : JobProperties
     {
         /// <summary>
-        /// Initializes a new instance of the USql class.
+        /// Initializes a new instance of the USqlProperties class.
         /// </summary>
-        public USql() { }
+        public USqlProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the USql class.
+        /// Initializes a new instance of the USqlProperties class.
         /// </summary>
-        public USql(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), string algebraFilePath = default(string), string totalCompilationTime = default(string), string totalPauseTime = default(string), string totalQueuedTime = default(string), string totalRunningTime = default(string), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), string compileMode = default(string))
+        public USqlProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), string algebraFilePath = default(string), string totalCompilationTime = default(string), string totalPauseTime = default(string), string totalQueuedTime = default(string), string totalRunningTime = default(string), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), string compileMode = default(string))
             : base(script, runtimeVersion)
         {
             Resources = resources;

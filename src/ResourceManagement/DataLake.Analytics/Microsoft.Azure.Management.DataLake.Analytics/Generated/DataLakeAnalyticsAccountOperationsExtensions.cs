@@ -62,8 +62,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<StorageAccount> GetStorageAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.GetStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.GetStorageAccountWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -267,8 +267,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<BlobContainer> GetStorageContainerAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.GetStorageContainerWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.GetStorageContainerWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -313,8 +313,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> ListStorageContainersAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListStorageContainersWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListStorageContainersWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -347,8 +347,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> StorageContainersListNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.StorageContainersListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.StorageContainersListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -381,8 +381,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> SasTokensListNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.SasTokensListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.SasTokensListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -433,8 +433,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> ListSasTokensAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListSasTokensWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListSasTokensWithHttpMessagesAsync(resourceGroupName, accountName, storageAccountName, containerName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -481,8 +481,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeStoreAccount> GetDataLakeStoreAccountAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, string dataLakeStoreAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.GetDataLakeStoreAccountWithHttpMessagesAsync(resourceGroupName, accountName, dataLakeStoreAccountName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.GetDataLakeStoreAccountWithHttpMessagesAsync(resourceGroupName, accountName, dataLakeStoreAccountName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -669,8 +669,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<StorageAccount>> ListStorageAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<StorageAccount> odataQuery = default(ODataQuery<StorageAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListStorageAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListStorageAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -759,8 +759,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeStoreAccount>> ListDataLakeStoreAccountsAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListDataLakeStoreAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListDataLakeStoreAccountsWithHttpMessagesAsync(resourceGroupName, accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -841,8 +841,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeAnalyticsAccount>> ListAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -879,8 +879,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeAnalyticsAccount> GetAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1005,8 +1005,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeAnalyticsAccount> CreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1053,8 +1053,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeAnalyticsAccount> BeginCreateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1099,8 +1099,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeAnalyticsAccount> UpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1145,8 +1145,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<DataLakeAnalyticsAccount> BeginUpdateAsync( this IDataLakeAnalyticsAccountOperations operations, string resourceGroupName, string name, DataLakeAnalyticsAccount parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1179,8 +1179,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> ListStorageContainersNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListStorageContainersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListStorageContainersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1213,8 +1213,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<BlobContainer>> StorageContainersListNextNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.StorageContainersListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.StorageContainersListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1247,8 +1247,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> SasTokensListNextNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.SasTokensListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.SasTokensListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1281,8 +1281,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<SasTokenInfo>> ListSasTokensNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListSasTokensNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListSasTokensNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1317,8 +1317,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<StorageAccount>> ListStorageAccountsNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListStorageAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListStorageAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1353,8 +1353,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeStoreAccount>> ListDataLakeStoreAccountsNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListDataLakeStoreAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListDataLakeStoreAccountsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -1389,8 +1389,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<DataLakeAnalyticsAccount>> ListNextAsync( this IDataLakeAnalyticsAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
     }

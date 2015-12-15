@@ -42,7 +42,7 @@ namespace DataLakeAnalytics.Tests
         public string Location = "East US 2";
         public DataLakeAnalyticsManagementHelper DataLakeAnalyticsManagementHelper { get; set; }
         private MockContext context;
-        public CommonTestFixture(MockContext contextToUse)
+        public CommonTestFixture(MockContext contextToUse, bool createWasbAccount = false)
         {
             try 
             {
@@ -67,10 +67,12 @@ namespace DataLakeAnalytics.Tests
                 SecretName = TestUtilities.GenerateName("testsecret1");
                 SecretPwd = TestUtilities.GenerateName("testsecretpwd1");
                 DataLakeAnalyticsManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
-
-                string storageSuffix;
-                this.StorageAccountAccessKey = DataLakeAnalyticsManagementHelper.TryCreateStorageAccount(this.ResourceGroupName, this.StorageAccountName, "DataLakeAnalyticsTestStorage", "DataLakeAnalyticsTestStorageDescription", this.Location, out storageSuffix);
-                this.StorageAccountSuffix = storageSuffix;
+                if (createWasbAccount)
+                {
+                    string storageSuffix;
+                    this.StorageAccountAccessKey = DataLakeAnalyticsManagementHelper.TryCreateStorageAccount(this.ResourceGroupName, this.StorageAccountName, "DataLakeAnalyticsTestStorage", "DataLakeAnalyticsTestStorageDescription", this.Location, out storageSuffix);
+                    this.StorageAccountSuffix = storageSuffix;
+                }
 
                 this.DataLakeStoreAccountSuffix = DataLakeAnalyticsManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.DataLakeStoreAccountName);
                 this.SecondDataLakeStoreAccountSuffix = DataLakeAnalyticsManagementHelper.TryCreateDataLakeStoreAccount(this.ResourceGroupName, this.Location, this.SecondDataLakeStoreAccountName);
