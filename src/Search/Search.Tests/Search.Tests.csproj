@@ -26,6 +26,7 @@
     <Compile Include="Tests\LookupTests.cs" />
     <Compile Include="Tests\Models\Book.cs" />
     <Compile Include="Tests\Models\Hotel.cs" />
+    <Compile Include="Tests\Models\LoudHotel.cs" />
     <Compile Include="Tests\Models\ModelWithInt.cs" />
     <Compile Include="Tests\Models\ModelWithNullableInt.cs" />
     <Compile Include="Tests\PostSearchTests.cs" />
@@ -113,6 +114,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanSearchWithMinimumCoverage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanSearchWithMismatchedPropertyCase.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanSearchWithRangeFacets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -165,6 +169,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSuggestTests\CanSuggestWithMinimumCoverage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSuggestTests\CanSuggestWithMismatchedPropertyCase.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSuggestTests\CanSuggestWithSelectedFields.json">
@@ -359,6 +366,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanSearchWithMinimumCoverage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanSearchWithMismatchedPropertyCase.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanSearchWithRangeFacets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -411,6 +421,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSuggestTests\CanSuggestWithMinimumCoverage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSuggestTests\CanSuggestWithMismatchedPropertyCase.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSuggestTests\CanSuggestWithSelectedFields.json">

@@ -271,6 +271,17 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(doc2, response.Results[0].Document);
         }
 
+        protected void TestCanSuggestWithMismatchedPropertyCase()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var parameters = new SuggestParameters() { Select = new[] { "*" } };
+            DocumentSuggestResult<LoudHotel> response = client.Documents.Suggest<LoudHotel>("Best", "sg", parameters);
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(Data.TestDocuments[0], response.Results[0].Document.ToHotel());
+        }
+
         private void AssertKeySequenceEqual(DocumentSuggestResult<Hotel> response, params string[] expectedKeys)
         {
             Assert.NotNull(response.Results);

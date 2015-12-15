@@ -5,7 +5,6 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
-    using System.Linq;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
