@@ -109,9 +109,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
             if (request != null)
             {
-                if (request.Properties == null)
+                if (request.Item != null)
                 {
-                    throw new ArgumentNullException("request.Properties");
+                    if (request.Item.Properties == null)
+                    {
+                        throw new ArgumentNullException("request.Item.Properties");
+                    }
                 }
             }
             
@@ -210,58 +213,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 
                 if (request != null)
                 {
-                    JObject propertiesValue = new JObject();
-                    requestDoc = propertiesValue;
-                    if (request.Properties is IaasVMRestoreRequest)
+                    if (request.Item != null)
                     {
-                        propertiesValue["objectType"] = "IaasVMRestoreRequest";
-                        IaasVMRestoreRequest derived = ((IaasVMRestoreRequest)request.Properties);
+                        JObject itemValue = new JObject();
+                        requestDoc = itemValue;
                         
-                        if (derived.RecoveryPointId != null)
+                        JObject propertiesValue = new JObject();
+                        itemValue["properties"] = propertiesValue;
+                        if (request.Item.Properties is IaasVMRestoreRequest)
                         {
-                            propertiesValue["recoveryPointId"] = derived.RecoveryPointId;
-                        }
-                        
-                        if (derived.RecoveryType != null)
-                        {
-                            propertiesValue["recoveryType"] = derived.RecoveryType;
-                        }
-                        
-                        if (derived.StorageAccountName != null)
-                        {
-                            propertiesValue["storageAccountName"] = derived.StorageAccountName;
-                        }
-                        
-                        if (derived.VirtualMachineName != null)
-                        {
-                            propertiesValue["virtualMachineName"] = derived.VirtualMachineName;
-                        }
-                        
-                        propertiesValue["createNewCloudService"] = derived.CreateNewCloudService;
-                        
-                        if (derived.CloudServiceOrResourceGroup != null)
-                        {
-                            propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
-                        }
-                        
-                        if (derived.VirtualNetworkName != null)
-                        {
-                            propertiesValue["virtualNetworkName"] = derived.VirtualNetworkName;
-                        }
-                        
-                        if (derived.Region != null)
-                        {
-                            propertiesValue["region"] = derived.Region;
-                        }
-                        
-                        if (derived.AffinityGroup != null)
-                        {
-                            propertiesValue["affinityGroup"] = derived.AffinityGroup;
-                        }
-                        
-                        if (derived.SubnetName != null)
-                        {
-                            propertiesValue["subnetName"] = derived.SubnetName;
+                            propertiesValue["objectType"] = "IaasVMRestoreRequest";
+                            IaasVMRestoreRequest derived = ((IaasVMRestoreRequest)request.Item.Properties);
+                            
+                            if (derived.RecoveryPointId != null)
+                            {
+                                propertiesValue["recoveryPointId"] = derived.RecoveryPointId;
+                            }
+                            
+                            if (derived.RecoveryType != null)
+                            {
+                                propertiesValue["recoveryType"] = derived.RecoveryType;
+                            }
+                            
+                            if (derived.StorageAccountName != null)
+                            {
+                                propertiesValue["storageAccountName"] = derived.StorageAccountName;
+                            }
+                            
+                            if (derived.VirtualMachineName != null)
+                            {
+                                propertiesValue["virtualMachineName"] = derived.VirtualMachineName;
+                            }
+                            
+                            propertiesValue["createNewCloudService"] = derived.CreateNewCloudService;
+                            
+                            if (derived.CloudServiceOrResourceGroup != null)
+                            {
+                                propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
+                            }
+                            
+                            if (derived.VirtualNetworkName != null)
+                            {
+                                propertiesValue["virtualNetworkName"] = derived.VirtualNetworkName;
+                            }
+                            
+                            if (derived.Region != null)
+                            {
+                                propertiesValue["region"] = derived.Region;
+                            }
+                            
+                            if (derived.AffinityGroup != null)
+                            {
+                                propertiesValue["affinityGroup"] = derived.AffinityGroup;
+                            }
+                            
+                            if (derived.SubnetName != null)
+                            {
+                                propertiesValue["subnetName"] = derived.SubnetName;
+                            }
                         }
                     }
                 }
