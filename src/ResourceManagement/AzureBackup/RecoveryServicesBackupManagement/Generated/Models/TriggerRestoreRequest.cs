@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class TriggerRestoreRequest
     {
-        private RestoreRequest _properties;
+        private RestoreRequestResource _item;
         
         /// <summary>
-        /// Required. properties for RestoreRequest.
+        /// Optional. Item
         /// </summary>
-        public RestoreRequest Properties
+        public RestoreRequestResource Item
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._item; }
+            set { this._item = value; }
         }
         
         /// <summary>
@@ -46,20 +46,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         public TriggerRestoreRequest()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the TriggerRestoreRequest class with
-        /// required arguments.
-        /// </summary>
-        public TriggerRestoreRequest(RestoreRequest properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }
