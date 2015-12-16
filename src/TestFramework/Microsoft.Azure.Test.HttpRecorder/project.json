@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.4.0-preview",
+  "version": "1.5.0-preview",
   "description": "Microsoft.Azure.Test.HttpRecorder",
   "authors": [ "Microsoft Corporation" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
