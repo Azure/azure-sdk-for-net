@@ -24,7 +24,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="2.5.1" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="2.5.2" />
       <dependency id="Microsoft.Spatial" version="6.13.0" />
     </dependencies>
   </metadata>
