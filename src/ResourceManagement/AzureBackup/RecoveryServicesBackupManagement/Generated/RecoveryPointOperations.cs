@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
                                 string typeName = ((string)propertiesValue["ObjectType"]);
-                                if (typeName == "RecoveryPoint")
+                                if (typeName == "IaasVMRecoveryPoint")
                                 {
                                     RecoveryPoint recoveryPointInstance = new RecoveryPoint();
                                     
@@ -555,7 +555,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
                                         string typeName = ((string)propertiesValue["ObjectType"]);
-                                        if (typeName == "RecoveryPoint")
+                                        if (typeName == "IaasVMRecoveryPoint")
                                         {
                                             RecoveryPoint recoveryPointInstance = new RecoveryPoint();
                                             
