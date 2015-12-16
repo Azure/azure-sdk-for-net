@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "IaasVMRecoveryPoint")
                                 {
                                     RecoveryPoint recoveryPointInstance = new RecoveryPoint();
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)propertiesValue["ObjectType"]);
+                                        string typeName = ((string)propertiesValue["objectType"]);
                                         if (typeName == "IaasVMRecoveryPoint")
                                         {
                                             RecoveryPoint recoveryPointInstance = new RecoveryPoint();
