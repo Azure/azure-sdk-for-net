@@ -1913,89 +1913,85 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken operationStatusValue = responseDoc["OperationStatus"];
-                            if (operationStatusValue != null && operationStatusValue.Type != JTokenType.Null)
+                            string typeName = ((string)responseDoc["objectType"]);
+                            if (typeName == "OperationStatus")
                             {
-                                string typeName = ((string)operationStatusValue["objectType"]);
-                                if (typeName == "GetOperationStatus")
+                                GetOperationStatus getOperationStatusInstance = new GetOperationStatus();
+                                
+                                JToken idValue = responseDoc["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    GetOperationStatus getOperationStatusInstance = new GetOperationStatus();
-                                    
-                                    JToken idValue = operationStatusValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        getOperationStatusInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = operationStatusValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        getOperationStatusInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken statusValue = operationStatusValue["status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                    {
-                                        string statusInstance = ((string)statusValue);
-                                        getOperationStatusInstance.Status = statusInstance;
-                                    }
-                                    
-                                    JToken startTimeValue = operationStatusValue["startTime"];
-                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                    {
-                                        string startTimeInstance = ((string)startTimeValue);
-                                        getOperationStatusInstance.StartTime = startTimeInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = operationStatusValue["endTime"];
-                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                    {
-                                        string endTimeInstance = ((string)endTimeValue);
-                                        getOperationStatusInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken errorValue = operationStatusValue["error"];
-                                    if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                    {
-                                        OperationStatusError errorInstance = new OperationStatusError();
-                                        getOperationStatusInstance.OperationStatusError = errorInstance;
-                                        
-                                        JToken codeValue = errorValue["code"];
-                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                        {
-                                            string codeInstance = ((string)codeValue);
-                                            errorInstance.Code = codeInstance;
-                                        }
-                                        
-                                        JToken messageValue = errorValue["message"];
-                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                        {
-                                            string messageInstance = ((string)messageValue);
-                                            errorInstance.Message = messageInstance;
-                                        }
-                                    }
-                                    
-                                    JToken propertiesValue = operationStatusValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        string typeName2 = ((string)propertiesValue["ObjectType"]);
-                                        if (typeName2 == "OperationStatusJobExtendedInfo")
-                                        {
-                                            OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
-                                            
-                                            JToken jobIdValue = propertiesValue["jobId"];
-                                            if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
-                                            {
-                                                string jobIdInstance = ((string)jobIdValue);
-                                                operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
-                                            }
-                                            getOperationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
-                                        }
-                                    }
-                                    result.OperationStatus = getOperationStatusInstance;
+                                    string idInstance = ((string)idValue);
+                                    getOperationStatusInstance.Id = idInstance;
                                 }
+                                
+                                JToken nameValue = responseDoc["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = ((string)nameValue);
+                                    getOperationStatusInstance.Name = nameInstance;
+                                }
+                                
+                                JToken statusValue = responseDoc["status"];
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                {
+                                    string statusInstance = ((string)statusValue);
+                                    getOperationStatusInstance.Status = statusInstance;
+                                }
+                                
+                                JToken startTimeValue = responseDoc["startTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                {
+                                    string startTimeInstance = ((string)startTimeValue);
+                                    getOperationStatusInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken endTimeValue = responseDoc["endTime"];
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                {
+                                    string endTimeInstance = ((string)endTimeValue);
+                                    getOperationStatusInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken errorValue = responseDoc["error"];
+                                if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                {
+                                    OperationStatusError errorInstance = new OperationStatusError();
+                                    getOperationStatusInstance.OperationStatusError = errorInstance;
+                                    
+                                    JToken codeValue = errorValue["code"];
+                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                    {
+                                        string codeInstance = ((string)codeValue);
+                                        errorInstance.Code = codeInstance;
+                                    }
+                                    
+                                    JToken messageValue = errorValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        errorInstance.Message = messageInstance;
+                                    }
+                                }
+                                
+                                JToken propertiesValue = responseDoc["properties"];
+                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                {
+                                    string typeName2 = ((string)propertiesValue["ObjectType"]);
+                                    if (typeName2 == "OperationStatusJobExtendedInfo")
+                                    {
+                                        OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
+                                        
+                                        JToken jobIdValue = propertiesValue["jobId"];
+                                        if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                        {
+                                            string jobIdInstance = ((string)jobIdValue);
+                                            operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
+                                        }
+                                        getOperationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
+                                    }
+                                }
+                                result.OperationStatus = getOperationStatusInstance;
                             }
                         }
                         
