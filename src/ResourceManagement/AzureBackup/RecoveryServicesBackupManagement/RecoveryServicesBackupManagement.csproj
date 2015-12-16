@@ -145,6 +145,7 @@
     <Compile Include="Generated\Models\RecoveryType.cs" />
     <Compile Include="Generated\Models\Resource.cs" />
     <Compile Include="Generated\Models\RestoreRequest.cs" />
+    <Compile Include="Generated\Models\RestoreRequestResource.cs" />
     <Compile Include="Generated\Models\RetentionDuration.cs" />
     <Compile Include="Generated\Models\RetentionDurationType.cs" />
     <Compile Include="Generated\Models\RetentionPolicy.cs" />
