@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<DataSource> CreateOrUpdateAsync( this IDataSourcesOperations operations, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataSource> result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -130,8 +130,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<DataSource> GetAsync( this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataSource> result = await operations.GetWithHttpMessagesAsync(dataSourceName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.GetWithHttpMessagesAsync(dataSourceName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -162,8 +162,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<DataSourceListResult> ListAsync( this IDataSourcesOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataSourceListResult> result = await operations.ListWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -200,8 +200,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<DataSource> CreateAsync( this IDataSourcesOperations operations, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DataSource> result = await operations.CreateWithHttpMessagesAsync(dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.CreateWithHttpMessagesAsync(dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
     }

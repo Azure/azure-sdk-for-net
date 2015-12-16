@@ -150,5 +150,11 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(TestCanFilterNonNullableType);
         }
+
+        [Fact]
+        public void CanSearchWithMismatchedPropertyCase()
+        {
+            Run(TestCanSearchWithMismatchedPropertyCase);
+        }
     }
 }

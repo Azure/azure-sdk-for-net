@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
     using Xunit;
 
@@ -482,19 +481,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index =
-                new Index()
-                {
-                    Name = SearchTestUtilities.GenerateName(),
-                    Fields = new[]
-                    {
-                        new Field("ISBN", DataType.String) { IsKey = true },
-                        new Field("Title", DataType.String) { IsSearchable = true },
-                        new Field("Author", DataType.String),
-                        new Field("PublishDate", DataType.DateTimeOffset)
-                    }
-                };
-
+            Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
@@ -629,6 +616,16 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc.IntValue, response.Results[0].Document.IntValue);
+        }
+
+        protected void TestCanSearchWithMismatchedPropertyCase()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            DocumentSearchResult<LoudHotel> response = client.Documents.Search<LoudHotel>("Best");
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(Data.TestDocuments[0], response.Results[0].Document.ToHotel());
         }
 
         private IEnumerable<string> IndexDocuments(SearchIndexClient client, int totalDocCount)

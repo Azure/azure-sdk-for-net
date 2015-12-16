@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Search
     /// Client that can be used to query an Azure Search index and upload,
     /// merge, or delete documents.
     /// </summary>
-    public partial interface ISearchIndexClient
+    public partial interface ISearchIndexClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
