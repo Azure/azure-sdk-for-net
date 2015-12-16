@@ -44,10 +44,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public Uri IbizaPortalUri { get; set; }
 
         // the DNS suffix for the DataLake Filesystem service
-        public Uri DataLakeServiceUri { get; set; }
+        public Uri DataLakeStoreServiceUri { get; set; }
 
         // the Kona catalog front end url
-        public Uri KonaJobAndCatalogServiceUri { get; set; }
+        public Uri DataLakeAnalyticsJobAndCatalogServiceUri { get; set; }
 
         // AAD Token Audience 
         public Uri AADTokenAudienceUri { get; set; }

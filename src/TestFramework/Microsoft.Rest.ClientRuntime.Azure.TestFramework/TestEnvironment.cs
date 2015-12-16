@@ -90,8 +90,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://management.azure.com/"),
                 ServiceManagementUri = new Uri("https://management.core.windows.net"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
-                DataLakeServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "prod" environment is published
-                KonaJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "prod" environment is published
+                DataLakeStoreServiceUri = new Uri("https://azuredatalakestore.net"),
+                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://azuredatalakeanalytics.net")
             });
             EnvEndpoints.Add(EnvironmentNames.Dogfood, new TestEndpoints
             {
@@ -104,8 +104,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://api-dogfood.resources.windows-int.net/"),
                 ServiceManagementUri = new Uri("https://management-preview.core.windows-int.net"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
-                DataLakeServiceUri = new Uri("https://caboaccountdogfood.net"),
-                KonaJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net")
+                DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"),
+                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net")
             });
             EnvEndpoints.Add(EnvironmentNames.Next, new TestEndpoints
             {
@@ -118,8 +118,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://api-next.resources.windows-int.net/"),
                 ServiceManagementUri = new Uri("https://managementnext.rdfetest.dnsdemo4.com"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
-                DataLakeServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "next" environment is published
-                KonaJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "next" environment is published
+                DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "next" environment is published
+                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "next" environment is published
             });
             EnvEndpoints.Add(EnvironmentNames.Current, new TestEndpoints
             {
@@ -132,8 +132,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ResourceManagementUri = new Uri("https://api-current.resources.windows-int.net/"),
                 ServiceManagementUri = new Uri("https://management.rdfetest.dnsdemo4.com"),
                 AADTokenAudienceUri = new Uri("https://management.core.windows.net"),
-                DataLakeServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "Current" environment is published
-                KonaJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "Current" environment is published
+                DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"), // TODO: change once a "Current" environment is published
+                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "Current" environment is published
             });
         }
 
@@ -231,13 +231,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 {
                     this.Endpoints.RdfePortalUri = new Uri(connection[ConnectionStringFields.RdfePortalUri]);
                 }
-                if (connection.ContainsKey(ConnectionStringFields.DataLakeServiceUri))
+                if (connection.ContainsKey(ConnectionStringFields.DataLakeStoreServiceUri))
                 {
-                    this.Endpoints.DataLakeServiceUri = new Uri(connection[ConnectionStringFields.DataLakeServiceUri]);
+                    this.Endpoints.DataLakeStoreServiceUri = new Uri(connection[ConnectionStringFields.DataLakeStoreServiceUri]);
                 }
-                if (connection.ContainsKey(ConnectionStringFields.KonaCatalogServiceUri))
+                if (connection.ContainsKey(ConnectionStringFields.DataLakeAnalyticsJobAndCatalogServiceUri))
                 {
-                    this.Endpoints.KonaJobAndCatalogServiceUri = new Uri(connection[ConnectionStringFields.KonaCatalogServiceUri]);
+                    this.Endpoints.DataLakeAnalyticsJobAndCatalogServiceUri = new Uri(connection[ConnectionStringFields.DataLakeAnalyticsJobAndCatalogServiceUri]);
                 }
                 RawParameters = connection;
             }
@@ -254,8 +254,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 ConnectionStringFields.AADAuthenticationEndpoint,
                 ConnectionStringFields.IbizaPortalUri,
                 ConnectionStringFields.RdfePortalUri,
-                ConnectionStringFields.DataLakeServiceUri,
-                ConnectionStringFields.KonaCatalogServiceUri,
+                ConnectionStringFields.DataLakeStoreServiceUri,
+                ConnectionStringFields.DataLakeAnalyticsJobAndCatalogServiceUri,
                 ConnectionStringFields.AADTokenAudienceUri
             }.Any(connection.ContainsKey);
         }
