@@ -5,6 +5,8 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using Models;
+    using Utilities;
 
     internal class Book
     {
@@ -15,6 +17,22 @@ namespace Microsoft.Azure.Search.Tests
         public string Author { get; set; }
 
         public DateTime? PublishDate { get; set; }
+
+        public static Index DefineIndex()
+        {
+            return new Index()
+            {
+                Name = SearchTestUtilities.GenerateName(),
+                Fields = new[]
+                {
+                    new Field("ISBN", DataType.String) { IsKey = true },
+                    new Field("Title", DataType.String) { IsSearchable = true },
+                    new Field("Author", DataType.String),
+                    new Field("PublishDate", DataType.DateTimeOffset)
+                },
+                Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
+            };
+        }
 
         public override bool Equals(object obj)
         {

@@ -481,19 +481,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index =
-                new Index()
-                {
-                    Name = SearchTestUtilities.GenerateName(),
-                    Fields = new[]
-                    {
-                        new Field("ISBN", DataType.String) { IsKey = true },
-                        new Field("Title", DataType.String) { IsSearchable = true },
-                        new Field("Author", DataType.String),
-                        new Field("PublishDate", DataType.DateTimeOffset)
-                    }
-                };
-
+            Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
