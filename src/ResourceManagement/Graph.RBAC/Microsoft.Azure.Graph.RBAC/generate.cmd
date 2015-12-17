@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.13.0-Nightly20151115
+set autoRestVersion=0.14.0-Nightly20151216
 if  "%1" == "" (
     set specFile="https://raw.githubusercontent.com/stankovski/azure-rest-api-specs/master/arm-graphrbac/1.42-previewInternal/swagger/graphrbac.json"
 ) else (
