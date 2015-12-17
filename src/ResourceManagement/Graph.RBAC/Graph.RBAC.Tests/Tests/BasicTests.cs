@@ -19,6 +19,7 @@ using System.Net;
 using Microsoft.Azure.Graph.RBAC.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using Microsoft.Rest.Azure.OData;
 
 namespace Microsoft.Azure.Graph.RBAC.Tests
 {
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 Assert.NotNull(usersNoFilter);
                 Assert.NotEmpty(usersNoFilter);
 
-                var usersByName = client.User.List(f => f.DisplayName.StartsWith(usersNoFilter.ElementAt(1).DisplayName));
+                var usersByName = client.User.List(new ODataQuery<User>(f => f.DisplayName.StartsWith(usersNoFilter.ElementAt(1).DisplayName)));
                 Assert.NotNull(usersByName);
                 Assert.NotEmpty(usersByName);
                 Assert.Equal(1, usersByName.Count());
@@ -87,12 +88,12 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
                 // Add this user through management portal before recording mocks
                 string testLiveId  = "auxtm596@live.com";
-                var usersByLiveId = client.User.List(f=>f.SignInName == testLiveId);
+                var usersByLiveId = client.User.List(new ODataQuery<User>(f=>f.SignInName == testLiveId));
                 Assert.NotNull(usersByLiveId);
                 Assert.Equal(1, usersByLiveId.Count());
 
                 string testOrgId = "test2@" + GetTenantAndDomain().Domain;
-                var usersByOrgId = client.User.List(f => f.SignInName == testOrgId);
+                var usersByOrgId = client.User.List(new ODataQuery<User>(f => f.SignInName == testOrgId));
                 Assert.NotNull(usersByOrgId);
                 Assert.Equal(1, usersByOrgId.Count());
             }
@@ -193,7 +194,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 Assert.NotNull(groupsNoFilter);
                 Assert.NotEmpty(groupsNoFilter);
 
-                var groupsByName = client.Group.List(f => f.DisplayName.StartsWith(groupsNoFilter.ElementAt(1).DisplayName));
+                var groupsByName = client.Group.List(new ODataQuery<ADGroup>(f => f.DisplayName.StartsWith(groupsNoFilter.ElementAt(1).DisplayName)));
                 Assert.NotNull(groupsByName);
                 Assert.Equal(1, groupsByName.Count());
                 
@@ -317,7 +318,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 string testObjcetId = servicePrincipals.ElementAt(0).ObjectId;
 
                 //test query by 'service principal name'
-                var listResult = client.ServicePrincipal.List(f=> f.DisplayName == testServicePrincipalName);
+                var listResult = client.ServicePrincipal.List(new ODataQuery<ServicePrincipal>(f=> f.DisplayName == testServicePrincipalName));
                 ServicePrincipal servicePrincipal = listResult.First();
 
                 Assert.Equal(1, listResult.Count());
@@ -339,7 +340,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 Assert.True(servicePrincipal.ServicePrincipalNames.Contains(testServicePrincipalName));
 
                 //test query by 'displayName'
-                listResult = client.ServicePrincipal.List(f=> f.DisplayName == servicePrincipal.DisplayName);
+                listResult = client.ServicePrincipal.List(new ODataQuery<ServicePrincipal>(f => f.DisplayName == servicePrincipal.DisplayName));
                 servicePrincipal = listResult.First();
 
                 Assert.NotNull(listResult);
