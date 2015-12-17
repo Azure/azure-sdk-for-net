@@ -1977,7 +1977,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 JToken propertiesValue = responseDoc["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
-                                    string typeName2 = ((string)propertiesValue["ObjectType"]);
+                                    string typeName2 = ((string)propertiesValue["objectType"]);
                                     if (typeName2 == "OperationStatusJobExtendedInfo")
                                     {
                                         OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
