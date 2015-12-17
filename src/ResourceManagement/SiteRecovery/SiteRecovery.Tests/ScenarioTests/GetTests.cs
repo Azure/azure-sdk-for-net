@@ -359,6 +359,38 @@ namespace SiteRecovery.Tests
         }
 
         [Fact]
+        public void GetEventNegativeTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                EventResponse eventResponse = null;
+
+                try
+                {
+                    client.Events.Get(
+                        "UnrealisticEventName42", // Because 42 is the answer to life, the universe and everything.
+                        RequestHeaders);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.ToUpper().Contains("NOTFOUND"))
+                    {
+                        eventResponse = new EventResponse();
+                        eventResponse.Event = null;
+                        eventResponse.StatusCode = HttpStatusCode.NotFound;
+                    }
+                }
+
+                Assert.NotNull(eventResponse);
+                Assert.Null(eventResponse.Event);
+                Assert.Equal(HttpStatusCode.NotFound, eventResponse.StatusCode);
+            }
+        }
+
+        [Fact]
         public void GetAlertSettingsTest()
         {
             using (UndoContext context = UndoContext.Current)

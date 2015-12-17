@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.SiteRecovery;
 using Xunit;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 using Microsoft.Azure;
+using System.Net;
 
 namespace SiteRecovery.Tests
 {
@@ -102,6 +103,48 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(vCenterResponse.VCenter.Properties.Port);
                 Assert.NotNull(vCenterResponse.VCenter.Properties.ProcessServerId);
                 Assert.NotNull(vCenterResponse.VCenter.Properties.FabricArmResourceName);
+            }
+        }
+
+        [Fact]
+        public void GetVCenterNegativeTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics.First(
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                Assert.NotNull(vmWareFabric);
+
+                VCenterResponse vCenterResponse = null;
+                try
+                {
+                    vCenterResponse = client.VCenters.Get(
+                        vmWareFabric.Name,
+                        "UnrealisticVCenterName007",
+                        RequestHeaders);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.ToUpper().Contains("NOTFOUND"))
+                    {
+                        vCenterResponse = new VCenterResponse();
+                        vCenterResponse.VCenter = null;
+                        vCenterResponse.StatusCode = HttpStatusCode.NotFound;
+                    }
+                }
+
+                Assert.NotNull(vCenterResponse);
+                Assert.Equal(HttpStatusCode.NotFound, vCenterResponse.StatusCode);
+                Assert.Null(vCenterResponse.VCenter);
             }
         }
 
