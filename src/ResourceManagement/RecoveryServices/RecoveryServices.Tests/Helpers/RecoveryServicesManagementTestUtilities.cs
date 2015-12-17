@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Test
             }
 
             return new RecoveryServicesManagementClient(
-                "Microsoft.RecoveryServicesBVTD2",
+                "Microsoft.RecoveryServicesseadev01",
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }
