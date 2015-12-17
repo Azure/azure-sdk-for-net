@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.HDInsight
             createParamsExtended.Properties.ClusterDefinition.Configurations = serializedConfig;
 
             var roles = GetRoleCollection(clusterCreateParameters);
-            
+
             createParamsExtended.Properties.ComputeProfile = new ComputeProfile();
             foreach (var role in roles)
             {
@@ -159,25 +159,25 @@ namespace Microsoft.Azure.Management.HDInsight
             return createParamsExtended;
         }
 
-        private static Dictionary<string, Dictionary<string, string>> GetMetastoreConfig(Metastore metastore, OSType osType, string metastoreType)
+        internal static Dictionary<string, Dictionary<string, string>> GetMetastoreConfig(Metastore metastore,
+            OSType osType, string metastoreType)
         {
-            if (osType == OSType.Windows)
+            var server = "";
+            if (metastore.Server != null)
             {
-                return GetMetastoreConfigPaas(metastore, metastoreType);
+                server = metastore.Server;
             }
-            else
-            {
-                return GetMetastoreConfigIaas(metastore, metastoreType);
-            }
-        }
 
-        private static Dictionary<string, Dictionary<string, string>> GetMetastoreConfigIaas(Metastore metastore,
-            string metastoreType)
-        {
+            var index = server.LastIndexOf(".database.windows.net", StringComparison.OrdinalIgnoreCase);
+            if (index > 0)
+            {
+                server = server.Substring(0, index);
+            }
+
             var connectionUrl =
                 string.Format(
                     "jdbc:sqlserver://{0}.database.windows.net;database={1};encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300;sendStringParametersAsUnicode=true;prepareSQL=0",
-                    metastore.Server, metastore.Database);
+                    server, metastore.Database);
             var configurations = new Dictionary<string, Dictionary<string, string>>();
             if (metastoreType.Equals("hive", StringComparison.OrdinalIgnoreCase))
             {
@@ -188,16 +188,21 @@ namespace Microsoft.Azure.Management.HDInsight
                     {"javax.jdo.option.ConnectionPassword", metastore.Password},
                     {"javax.jdo.option.ConnectionDriverName", "com.microsoft.sqlserver.jdbc.SQLServerDriver"}
                 });
-                configurations.Add(ConfigurationKey.HiveEnv, new Dictionary<string, string>
+
+                if (osType == OSType.Windows)
                 {
-                    {"hive_database", "Existing MSSQL Server database with SQL authentication"},
-                    {"hive_database_name", metastore.Database},
-                    {"hive_database_type", "mssql"},
-                    {"hive_existing_mssql_server_database", metastore.Database},
-                    {"hive_existing_mssql_server_host", string.Format("{0}.database.windows.net)", metastore.Server)},
-                    {"hive_hostname", string.Format("{0}.database.windows.net)", metastore.Server)}
-                });
-                return configurations;
+                    return configurations;
+                }
+
+                configurations.Add(ConfigurationKey.HiveEnv, new Dictionary<string, string>
+                    {
+                        {"hive_database", "Existing MSSQL Server database with SQL authentication"},
+                        {"hive_database_name", metastore.Database},
+                        {"hive_database_type", "mssql"},
+                        {"hive_existing_mssql_server_database", metastore.Database},
+                        {"hive_existing_mssql_server_host", string.Format("{0}.database.windows.net", server)},
+                        {"hive_hostname", string.Format("{0}.database.windows.net", server)}
+                    });
             }
             else
             {
@@ -206,47 +211,26 @@ namespace Microsoft.Azure.Management.HDInsight
                     {"oozie.service.JPAService.jdbc.url", connectionUrl},
                     {"oozie.service.JPAService.jdbc.username", metastore.User},
                     {"oozie.service.JPAService.jdbc.password", metastore.Password},
-                    {"oozie.service.JPAService.jdbc.driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver"},
-                    {"oozie.db.schema.name", "oozie"}
+                    {"oozie.service.JPAService.jdbc.driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver"}
                 });
 
+                if (osType == OSType.Windows)
+                {
+                    return configurations;
+                }
+
+                configurations[ConfigurationKey.OozieSite].Add("oozie.db.schema.name", "oozie");
                 configurations.Add(ConfigurationKey.OozieEnv, new Dictionary<string, string>
                 {
                     {"oozie_database", "Existing MSSQL Server database with SQL authentication"},
+                    {"oozie_database_name", metastore.Database},
                     {"oozie_database_type", "mssql"},
                     {"oozie_existing_mssql_server_database", metastore.Database},
-                    {"oozie_existing_mssql_server_host", string.Format("{0}.database.windows.net)", metastore.Server)},
-                    {"oozie_hostname", string.Format("{0}.database.windows.net)", metastore.Server)}
+                    {"oozie_existing_mssql_server_host", string.Format("{0}.database.windows.net", server)},
+                    {"oozie_hostname", string.Format("{0}.database.windows.net", server)}
                 });
-                return configurations;
             }
-        }
-
-        private static Dictionary<string, Dictionary<string, string>> GetMetastoreConfigPaas(Metastore metastore,
-            string metastoreType)
-        {
-            var connectionUrl =
-                string.Format(
-                    "jdbc:sqlserver://{0}.database.windows.net;database={1};encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300",
-                    metastore.Server, metastore.Database);
-            var username = string.Format("{0}@{1}", metastore.User, metastore.Server);
-            var config = new Dictionary<string, string>
-            {
-                {"javax.jdo.option.ConnectionURL", connectionUrl},
-                {"javax.jdo.option.ConnectionUserName", username},
-                {"javax.jdo.option.ConnectionPassword", metastore.Password}
-            };
-            var configKey = "";
-            if (metastoreType.Equals("hive", StringComparison.OrdinalIgnoreCase))
-            {
-                configKey = ConfigurationKey.HiveSite;
-            }
-            else if (metastoreType.Equals("oozie", StringComparison.OrdinalIgnoreCase))
-            {
-                configKey = ConfigurationKey.OozieSite;
-            }
-
-            return new Dictionary<string, Dictionary<string, string>> { { configKey, config } };
+            return configurations;
         }
 
         private static Dictionary<string, Dictionary<string, string>> GetConfigurations(string clusterName,
@@ -325,7 +309,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
-            
+
             //datalake configs
             var datalakeConfigExists = true;
             Dictionary<string, string> datalakeConfig;
@@ -495,7 +479,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
                 {
                     return roles;
-                }                
+                }
             }
 
             if (clusterCreateParameters.OSType == OSType.Linux)
@@ -519,7 +503,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     VmSize = zookeeperNodeSize
                 }
             };
-            
+
             roles.Add(zookeepernode);
 
             return roles;

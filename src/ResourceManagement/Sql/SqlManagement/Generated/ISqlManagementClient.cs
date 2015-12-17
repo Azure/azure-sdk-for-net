@@ -262,5 +262,14 @@ namespace Microsoft.Azure.Management.Sql
         {
             get; 
         }
+
+        /// <summary>
+        /// Represents all the operations of Azure SQL Database Server
+        /// Communication links.  Contains operations to: Create, Retrieve, and Delete.
+        /// </summary>
+        IServerCommunicationLinkOperations CommunicationLinks
+        {
+            get;
+        }
     }
 }
