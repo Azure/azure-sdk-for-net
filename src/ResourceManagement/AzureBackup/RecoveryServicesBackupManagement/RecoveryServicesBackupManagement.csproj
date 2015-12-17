@@ -68,7 +68,9 @@
     <Compile Include="Generated\Models\DailyRetentionFormat.cs" />
     <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\Day.cs" />
+    <Compile Include="Generated\Models\DpmProtectionContainer.cs" />
     <Compile Include="Generated\Models\ErrorInfo.cs" />
+    <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\GetOperationStatus.cs" />
     <Compile Include="Generated\Models\GetOperationStatusResponse.cs" />
@@ -76,7 +78,7 @@
     <Compile Include="Generated\Models\IaaSVMJob.cs" />
     <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectableObject.cs" />
+    <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
     <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Generated\Models\JobTaskDetails.cs" />
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
     <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
+    <Compile Include="Generated\Models\MabProtectionContainer.cs" />
     <Compile Include="Generated\Models\Month.cs" />
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\OperationResultInfo.cs" />
@@ -105,7 +108,7 @@
     <Compile Include="Generated\Models\OperationStatusValues.cs" />
     <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />
-    <Compile Include="Generated\Models\ProtectableObject.cs" />
+    <Compile Include="Generated\Models\ProtectableItem.cs" />
     <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListQueryParameters.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
@@ -121,7 +124,9 @@
     <Compile Include="Generated\Models\ProtectedItemResource.cs" />
     <Compile Include="Generated\Models\ProtectedItemResourceList.cs" />
     <Compile Include="Generated\Models\ProtectedItemResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionContainer.cs" />
     <Compile Include="Generated\Models\ProtectionContainerBase.cs" />
+    <Compile Include="Generated\Models\ProtectionContainerListQueryParams.cs" />
     <Compile Include="Generated\Models\ProtectionContainerListResponse.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResource.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResourceList.cs" />

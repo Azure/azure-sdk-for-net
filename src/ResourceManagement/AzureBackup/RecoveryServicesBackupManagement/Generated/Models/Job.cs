@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class Job : JobBase
     {
+        private string _activityId;
+        
+        /// <summary>
+        /// Optional. Job ActivityId
+        /// </summary>
+        public string ActivityId
+        {
+            get { return this._activityId; }
+            set { this._activityId = value; }
+        }
+        
         private string _backupManagementType;
         
         /// <summary>

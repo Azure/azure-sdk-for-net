@@ -26,25 +26,37 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectionContainer object.
+    /// The definition for ExportJobsOperationResultInfo class.
     /// </summary>
-    public partial class IaasVmProtectionContainer : ProtectionContainer
+    public partial class ExportJobsOperationResultInfo : OperationResultInfoBase
     {
-        private string _vmVersion;
+        private string _blobSasKey;
         
         /// <summary>
-        /// Optional. VM Version
+        /// Optional. Blob SAS key for export job
         /// </summary>
-        public string VmVersion
+        public string BlobSasKey
         {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
+            get { return this._blobSasKey; }
+            set { this._blobSasKey = value; }
+        }
+        
+        private string _blobUrl;
+        
+        /// <summary>
+        /// Optional. BlobUrl for export job
+        /// </summary>
+        public string BlobUrl
+        {
+            get { return this._blobUrl; }
+            set { this._blobUrl = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectionContainer class.
+        /// Initializes a new instance of the ExportJobsOperationResultInfo
+        /// class.
         /// </summary>
-        public IaasVmProtectionContainer()
+        public ExportJobsOperationResultInfo()
         {
         }
     }

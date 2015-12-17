@@ -21,30 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectionContainer object.
+    /// The definition of a ProtectionContainerListQueryParams object.
     /// </summary>
-    public partial class IaasVmProtectionContainer : ProtectionContainer
+    public partial class ProtectionContainerListQueryParams
     {
-        private string _vmVersion;
+        private string _providerType;
         
         /// <summary>
-        /// Optional. VM Version
+        /// Optional. provider type query parameter
         /// </summary>
-        public string VmVersion
+        public string ProviderType
         {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
+            get { return this._providerType; }
+            set { this._providerType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectionContainer class.
+        /// Initializes a new instance of the
+        /// ProtectionContainerListQueryParams class.
         /// </summary>
-        public IaasVmProtectionContainer()
+        public ProtectionContainerListQueryParams()
         {
         }
     }

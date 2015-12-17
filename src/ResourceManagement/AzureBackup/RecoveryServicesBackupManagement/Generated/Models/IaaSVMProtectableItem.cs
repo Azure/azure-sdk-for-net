@@ -26,47 +26,47 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaaSVMProtectableObject object.
+    /// The definition of a IaasVM ProtectableItem object.
     /// </summary>
-    public partial class ProtectableObject : ProtectableObjectBase
+    public partial class IaaSVMProtectableItem : ProtectableItem
     {
-        private string _friendlyName;
+        private string _containerUri;
         
         /// <summary>
-        /// Optional. Friendly Name
+        /// Optional. Container Uri
         /// </summary>
-        public string FriendlyName
+        public string ContainerUri
         {
-            get { return this._friendlyName; }
-            set { this._friendlyName = value; }
+            get { return this._containerUri; }
+            set { this._containerUri = value; }
         }
         
-        private string _protectionStatus;
+        private string _protectableObjectUri;
         
         /// <summary>
-        /// Optional. Protection Status
+        /// Optional. ProtectableObject Uri
         /// </summary>
-        public string ProtectionStatus
+        public string ProtectableObjectUri
         {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
+            get { return this._protectableObjectUri; }
+            set { this._protectableObjectUri = value; }
         }
         
-        private string _resourceGroup;
+        private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. Resource Group
+        /// Optional. Classic or Classic VM
         /// </summary>
-        public string ResourceGroup
+        public string VirtualMachineVersion
         {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectableObject class.
+        /// Initializes a new instance of the IaaSVMProtectableItem class.
         /// </summary>
-        public ProtectableObject()
+        public IaaSVMProtectableItem()
         {
         }
     }

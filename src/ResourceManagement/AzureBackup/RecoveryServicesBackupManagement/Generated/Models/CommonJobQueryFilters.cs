@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class CommonJobQueryFilters : JobQueryFilters
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. Type query parameter
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
         private string _endTime;
         
         /// <summary>
@@ -83,17 +94,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._status; }
             set { this._status = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Type query parameter
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>
