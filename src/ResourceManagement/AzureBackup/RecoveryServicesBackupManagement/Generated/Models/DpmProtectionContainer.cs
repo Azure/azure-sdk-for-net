@@ -26,47 +26,36 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectableObject object.
+    /// The definition of a DpmProtectionContainer object.
     /// </summary>
-    public partial class IaaSVMProtectableObject : ProtectableObject
+    public partial class DpmProtectionContainer : ProtectionContainer
     {
-        private string _containerUri;
+        private bool _canReRegister;
         
         /// <summary>
-        /// Optional. Container Uri
+        /// Optional. Specifies whether the container is re-registrable
         /// </summary>
-        public string ContainerUri
+        public bool CanReRegister
         {
-            get { return this._containerUri; }
-            set { this._containerUri = value; }
+            get { return this._canReRegister; }
+            set { this._canReRegister = value; }
         }
         
-        private string _protectableObjectUri;
+        private long _containerId;
         
         /// <summary>
-        /// Optional. ProtectableObject Uri
+        /// Optional. ID of container
         /// </summary>
-        public string ProtectableObjectUri
+        public long ContainerId
         {
-            get { return this._protectableObjectUri; }
-            set { this._protectableObjectUri = value; }
-        }
-        
-        private string _virtualMachineVersion;
-        
-        /// <summary>
-        /// Optional. Classic or Classic VM
-        /// </summary>
-        public string VirtualMachineVersion
-        {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
+            get { return this._containerId; }
+            set { this._containerId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMProtectableObject class.
+        /// Initializes a new instance of the DpmProtectionContainer class.
         /// </summary>
-        public IaaSVMProtectableObject()
+        public DpmProtectionContainer()
         {
         }
     }

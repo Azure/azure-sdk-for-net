@@ -218,167 +218,163 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken itemListValue = responseDoc["itemList"];
-                            if (itemListValue != null && itemListValue.Type != JTokenType.Null)
+                            ProtectableObjectResourceList itemListInstance = new ProtectableObjectResourceList();
+                            result.ItemList = itemListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                ProtectableObjectResourceList itemListInstance = new ProtectableObjectResourceList();
-                                result.ItemList = itemListInstance;
-                                
-                                JToken valueArray = itemListValue["value"];
-                                if (valueArray != null && valueArray.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    foreach (JToken valueValue in ((JArray)valueArray))
+                                    ProtectableObjectResource protectableObjectResourceInstance = new ProtectableObjectResource();
+                                    itemListInstance.ProtectableObjects.Add(protectableObjectResourceInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ProtectableObjectResource protectableObjectResourceInstance = new ProtectableObjectResource();
-                                        itemListInstance.ProtectableObjects.Add(protectableObjectResourceInstance);
-                                        
-                                        JToken propertiesValue = valueValue["properties"];
-                                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                        string typeName = ((string)propertiesValue["objectType"]);
+                                        if (typeName == "ProtectableItem")
                                         {
-                                            string typeName = ((string)propertiesValue["objectType"]);
-                                            if (typeName == "IaaSVMProtectableObject")
+                                            ProtectableItem protectableItemInstance = new ProtectableItem();
+                                            
+                                            JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
                                             {
-                                                ProtectableObject protectableObjectInstance = new ProtectableObject();
-                                                
-                                                JToken friendlyNameValue = propertiesValue["friendlyName"];
-                                                if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string friendlyNameInstance = ((string)friendlyNameValue);
-                                                    protectableObjectInstance.FriendlyName = friendlyNameInstance;
-                                                }
-                                                
-                                                JToken protectionStatusValue = propertiesValue["protectionStatus"];
-                                                if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
-                                                {
-                                                    string protectionStatusInstance = ((string)protectionStatusValue);
-                                                    protectableObjectInstance.ProtectionStatus = protectionStatusInstance;
-                                                }
-                                                
-                                                JToken resourceGroupValue = propertiesValue["resourceGroup"];
-                                                if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
-                                                {
-                                                    string resourceGroupInstance = ((string)resourceGroupValue);
-                                                    protectableObjectInstance.ResourceGroup = resourceGroupInstance;
-                                                }
-                                                
-                                                JToken providerTypeValue = propertiesValue["providerType"];
-                                                if (providerTypeValue != null && providerTypeValue.Type != JTokenType.Null)
-                                                {
-                                                    string providerTypeInstance = ((string)providerTypeValue);
-                                                    protectableObjectInstance.ProviderType = providerTypeInstance;
-                                                }
-                                                protectableObjectResourceInstance.Properties = protectableObjectInstance;
+                                                string friendlyNameInstance = ((string)friendlyNameValue);
+                                                protectableItemInstance.FriendlyName = friendlyNameInstance;
                                             }
-                                            if (typeName == "IaaSVMProtectableObject")
+                                            
+                                            JToken protectionStatusValue = propertiesValue["protectionStatus"];
+                                            if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
                                             {
-                                                IaaSVMProtectableObject iaaSVMProtectableObjectInstance = new IaaSVMProtectableObject();
-                                                
-                                                JToken virtualMachineVersionValue = propertiesValue["VirtualMachineVersion"];
-                                                if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                                    iaaSVMProtectableObjectInstance.VirtualMachineVersion = virtualMachineVersionInstance;
-                                                }
-                                                
-                                                JToken containerUriValue = propertiesValue["containerUri"];
-                                                if (containerUriValue != null && containerUriValue.Type != JTokenType.Null)
-                                                {
-                                                    string containerUriInstance = ((string)containerUriValue);
-                                                    iaaSVMProtectableObjectInstance.ContainerUri = containerUriInstance;
-                                                }
-                                                
-                                                JToken protectableObjectUriValue = propertiesValue["protectableObjectUri"];
-                                                if (protectableObjectUriValue != null && protectableObjectUriValue.Type != JTokenType.Null)
-                                                {
-                                                    string protectableObjectUriInstance = ((string)protectableObjectUriValue);
-                                                    iaaSVMProtectableObjectInstance.ProtectableObjectUri = protectableObjectUriInstance;
-                                                }
-                                                
-                                                JToken friendlyNameValue2 = propertiesValue["friendlyName"];
-                                                if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                {
-                                                    string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                    iaaSVMProtectableObjectInstance.FriendlyName = friendlyNameInstance2;
-                                                }
-                                                
-                                                JToken protectionStatusValue2 = propertiesValue["protectionStatus"];
-                                                if (protectionStatusValue2 != null && protectionStatusValue2.Type != JTokenType.Null)
-                                                {
-                                                    string protectionStatusInstance2 = ((string)protectionStatusValue2);
-                                                    iaaSVMProtectableObjectInstance.ProtectionStatus = protectionStatusInstance2;
-                                                }
-                                                
-                                                JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
-                                                if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
-                                                {
-                                                    string resourceGroupInstance2 = ((string)resourceGroupValue2);
-                                                    iaaSVMProtectableObjectInstance.ResourceGroup = resourceGroupInstance2;
-                                                }
-                                                
-                                                JToken providerTypeValue2 = propertiesValue["providerType"];
-                                                if (providerTypeValue2 != null && providerTypeValue2.Type != JTokenType.Null)
-                                                {
-                                                    string providerTypeInstance2 = ((string)providerTypeValue2);
-                                                    iaaSVMProtectableObjectInstance.ProviderType = providerTypeInstance2;
-                                                }
-                                                protectableObjectResourceInstance.Properties = iaaSVMProtectableObjectInstance;
+                                                string protectionStatusInstance = ((string)protectionStatusValue);
+                                                protectableItemInstance.ProtectionStatus = protectionStatusInstance;
                                             }
-                                        }
-                                        
-                                        JToken idValue = valueValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            protectableObjectResourceInstance.Id = idInstance;
-                                        }
-                                        
-                                        JToken nameValue = valueValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            protectableObjectResourceInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken typeValue = valueValue["type"];
-                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                        {
-                                            string typeInstance = ((string)typeValue);
-                                            protectableObjectResourceInstance.Type = typeInstance;
-                                        }
-                                        
-                                        JToken locationValue = valueValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            protectableObjectResourceInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                        {
-                                            foreach (JProperty property in tagsSequenceElement)
+                                            
+                                            JToken resourceGroupValue = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
                                             {
-                                                string tagsKey = ((string)property.Name);
-                                                string tagsValue = ((string)property.Value);
-                                                protectableObjectResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                                string resourceGroupInstance = ((string)resourceGroupValue);
+                                                protectableItemInstance.ResourceGroup = resourceGroupInstance;
                                             }
+                                            
+                                            JToken providerTypeValue = propertiesValue["providerType"];
+                                            if (providerTypeValue != null && providerTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string providerTypeInstance = ((string)providerTypeValue);
+                                                protectableItemInstance.ProviderType = providerTypeInstance;
+                                            }
+                                            protectableObjectResourceInstance.Properties = protectableItemInstance;
                                         }
-                                        
-                                        JToken eTagValue = valueValue["eTag"];
-                                        if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                        if (typeName == "IaaSVMProtectableItem")
                                         {
-                                            string eTagInstance = ((string)eTagValue);
-                                            protectableObjectResourceInstance.ETag = eTagInstance;
+                                            IaaSVMProtectableItem iaaSVMProtectableItemInstance = new IaaSVMProtectableItem();
+                                            
+                                            JToken vmVersionValue = propertiesValue["VmVersion"];
+                                            if (vmVersionValue != null && vmVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string vmVersionInstance = ((string)vmVersionValue);
+                                                iaaSVMProtectableItemInstance.VirtualMachineVersion = vmVersionInstance;
+                                            }
+                                            
+                                            JToken containerUriValue = propertiesValue["ContainerUri"];
+                                            if (containerUriValue != null && containerUriValue.Type != JTokenType.Null)
+                                            {
+                                                string containerUriInstance = ((string)containerUriValue);
+                                                iaaSVMProtectableItemInstance.ContainerUri = containerUriInstance;
+                                            }
+                                            
+                                            JToken protectableObjectUriValue = propertiesValue["ProtectableObjectUri"];
+                                            if (protectableObjectUriValue != null && protectableObjectUriValue.Type != JTokenType.Null)
+                                            {
+                                                string protectableObjectUriInstance = ((string)protectableObjectUriValue);
+                                                iaaSVMProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance;
+                                            }
+                                            
+                                            JToken friendlyNameValue2 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                iaaSVMProtectableItemInstance.FriendlyName = friendlyNameInstance2;
+                                            }
+                                            
+                                            JToken protectionStatusValue2 = propertiesValue["protectionStatus"];
+                                            if (protectionStatusValue2 != null && protectionStatusValue2.Type != JTokenType.Null)
+                                            {
+                                                string protectionStatusInstance2 = ((string)protectionStatusValue2);
+                                                iaaSVMProtectableItemInstance.ProtectionStatus = protectionStatusInstance2;
+                                            }
+                                            
+                                            JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
+                                            {
+                                                string resourceGroupInstance2 = ((string)resourceGroupValue2);
+                                                iaaSVMProtectableItemInstance.ResourceGroup = resourceGroupInstance2;
+                                            }
+                                            
+                                            JToken providerTypeValue2 = propertiesValue["providerType"];
+                                            if (providerTypeValue2 != null && providerTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string providerTypeInstance2 = ((string)providerTypeValue2);
+                                                iaaSVMProtectableItemInstance.ProviderType = providerTypeInstance2;
+                                            }
+                                            protectableObjectResourceInstance.Properties = iaaSVMProtectableItemInstance;
                                         }
                                     }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        protectableObjectResourceInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        protectableObjectResourceInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        protectableObjectResourceInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        protectableObjectResourceInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            protectableObjectResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken eTagValue = valueValue["eTag"];
+                                    if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                    {
+                                        string eTagInstance = ((string)eTagValue);
+                                        protectableObjectResourceInstance.ETag = eTagInstance;
+                                    }
                                 }
-                                
-                                JToken nextLinkValue = itemListValue["nextLink"];
-                                if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                                {
-                                    string nextLinkInstance = ((string)nextLinkValue);
-                                    itemListInstance.NextLink = nextLinkInstance;
-                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                itemListInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

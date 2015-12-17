@@ -26,25 +26,36 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectionContainer object.
+    /// The definition of a MabProtectionContainer object.
     /// </summary>
-    public partial class IaasVmProtectionContainer : ProtectionContainer
+    public partial class MabProtectionContainer : ProtectionContainer
     {
-        private string _vmVersion;
+        private bool _canReRegister;
         
         /// <summary>
-        /// Optional. VM Version
+        /// Optional. Specifies whether the container is re-registrable
         /// </summary>
-        public string VmVersion
+        public bool CanReRegister
         {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
+            get { return this._canReRegister; }
+            set { this._canReRegister = value; }
+        }
+        
+        private long _containerId;
+        
+        /// <summary>
+        /// Optional. ID of container
+        /// </summary>
+        public long ContainerId
+        {
+            get { return this._containerId; }
+            set { this._containerId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectionContainer class.
+        /// Initializes a new instance of the MabProtectionContainer class.
         /// </summary>
-        public IaasVmProtectionContainer()
+        public MabProtectionContainer()
         {
         }
     }

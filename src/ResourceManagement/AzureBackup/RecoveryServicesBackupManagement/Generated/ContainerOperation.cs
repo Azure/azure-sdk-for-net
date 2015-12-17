@@ -27,7 +27,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Newtonsoft.Json.Linq;
@@ -251,11 +250,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='queryParams'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -263,7 +262,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerListResponse.
         /// </returns>
-        public async Task<ProtectionContainerListResponse> ListAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, CancellationToken cancellationToken)
+        public async Task<ProtectionContainerListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -273,6 +272,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             if (resourceName == null)
             {
                 throw new ArgumentNullException("resourceName");
+            }
+            if (queryParams == null)
+            {
+                throw new ArgumentNullException("queryParams");
             }
             if (customRequestHeaders == null)
             {
@@ -288,8 +291,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("queryParams", queryParams);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                tracingParameters.Add("fabricName", fabricName);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -308,14 +311,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/backupFabrics/";
-            if (fabricName != null)
-            {
-                url = url + Uri.EscapeDataString(fabricName);
-            }
-            url = url + "/protectionContainers";
+            url = url + "/backupProtectionContainers";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
+            List<string> odataFilter = new List<string>();
+            if (queryParams.ProviderType != null)
+            {
+                odataFilter.Add("providertype eq '" + Uri.EscapeDataString(queryParams.ProviderType) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -391,134 +398,243 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken itemListValue = responseDoc["itemList"];
-                            if (itemListValue != null && itemListValue.Type != JTokenType.Null)
+                            ProtectionContainerResourceList itemListInstance = new ProtectionContainerResourceList();
+                            result.ItemList = itemListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                ProtectionContainerResourceList itemListInstance = new ProtectionContainerResourceList();
-                                result.ItemList = itemListInstance;
-                                
-                                JToken valueArray = itemListValue["value"];
-                                if (valueArray != null && valueArray.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    foreach (JToken valueValue in ((JArray)valueArray))
+                                    ProtectionContainerResource protectionContainerResourceInstance = new ProtectionContainerResource();
+                                    itemListInstance.ProtectionContainers.Add(protectionContainerResourceInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ProtectionContainerResource protectionContainerResourceInstance = new ProtectionContainerResource();
-                                        itemListInstance.ProtectionContainers.Add(protectionContainerResourceInstance);
-                                        
-                                        JToken propertiesValue = valueValue["properties"];
-                                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                        string typeName = ((string)propertiesValue["objectType"]);
+                                        if (typeName == "ProtectionContainer")
                                         {
-                                            string typeName = ((string)propertiesValue["objectType"]);
-                                            if (typeName == "IaasVmProtectionContainer")
+                                            ProtectionContainer protectionContainerInstance = new ProtectionContainer();
+                                            
+                                            JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
                                             {
-                                                IaasVmProtectionContainer iaasVmProtectionContainerInstance = new IaasVmProtectionContainer();
-                                                
-                                                JToken friendlyNameValue = propertiesValue["friendlyName"];
-                                                if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string friendlyNameInstance = ((string)friendlyNameValue);
-                                                    iaasVmProtectionContainerInstance.FriendlyName = friendlyNameInstance;
-                                                }
-                                                
-                                                JToken registrationStatusValue = propertiesValue["registrationStatus"];
-                                                if (registrationStatusValue != null && registrationStatusValue.Type != JTokenType.Null)
-                                                {
-                                                    string registrationStatusInstance = ((string)registrationStatusValue);
-                                                    iaasVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance;
-                                                }
-                                                
-                                                JToken containerIdValue = propertiesValue["containerId"];
-                                                if (containerIdValue != null && containerIdValue.Type != JTokenType.Null)
-                                                {
-                                                    string containerIdInstance = ((string)containerIdValue);
-                                                    iaasVmProtectionContainerInstance.ContainerId = containerIdInstance;
-                                                }
-                                                
-                                                JToken resourceGroupValue = propertiesValue["resourceGroup"];
-                                                if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
-                                                {
-                                                    string resourceGroupInstance = ((string)resourceGroupValue);
-                                                    iaasVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance;
-                                                }
-                                                
-                                                JToken vmVersionValue = propertiesValue["vmVersion"];
-                                                if (vmVersionValue != null && vmVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string vmVersionInstance = ((string)vmVersionValue);
-                                                    iaasVmProtectionContainerInstance.VmVersion = vmVersionInstance;
-                                                }
-                                                
-                                                JToken providerTypeValue = propertiesValue["providerType"];
-                                                if (providerTypeValue != null && providerTypeValue.Type != JTokenType.Null)
-                                                {
-                                                    string providerTypeInstance = ((string)providerTypeValue);
-                                                    iaasVmProtectionContainerInstance.ProviderType = providerTypeInstance;
-                                                }
-                                                
-                                                JToken workloadTypeValue = propertiesValue["workloadType"];
-                                                if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
-                                                {
-                                                    string workloadTypeInstance = ((string)workloadTypeValue);
-                                                    iaasVmProtectionContainerInstance.WorkloadType = workloadTypeInstance;
-                                                }
-                                                protectionContainerResourceInstance.Properties = iaasVmProtectionContainerInstance;
+                                                string friendlyNameInstance = ((string)friendlyNameValue);
+                                                protectionContainerInstance.FriendlyName = friendlyNameInstance;
                                             }
-                                        }
-                                        
-                                        JToken idValue = valueValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            protectionContainerResourceInstance.Id = idInstance;
-                                        }
-                                        
-                                        JToken nameValue = valueValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            protectionContainerResourceInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken typeValue = valueValue["type"];
-                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                        {
-                                            string typeInstance = ((string)typeValue);
-                                            protectionContainerResourceInstance.Type = typeInstance;
-                                        }
-                                        
-                                        JToken locationValue = valueValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            protectionContainerResourceInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                        {
-                                            foreach (JProperty property in tagsSequenceElement)
+                                            
+                                            JToken registrationStatusValue = propertiesValue["registrationStatus"];
+                                            if (registrationStatusValue != null && registrationStatusValue.Type != JTokenType.Null)
                                             {
-                                                string tagsKey = ((string)property.Name);
-                                                string tagsValue = ((string)property.Value);
-                                                protectionContainerResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                                string registrationStatusInstance = ((string)registrationStatusValue);
+                                                protectionContainerInstance.RegistrationStatus = registrationStatusInstance;
                                             }
+                                            
+                                            JToken resourceGroupValue = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
+                                            {
+                                                string resourceGroupInstance = ((string)resourceGroupValue);
+                                                protectionContainerInstance.ResourceGroup = resourceGroupInstance;
+                                            }
+                                            
+                                            JToken healthStatusValue = propertiesValue["healthStatus"];
+                                            if (healthStatusValue != null && healthStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string healthStatusInstance = ((string)healthStatusValue);
+                                                protectionContainerInstance.HealthStatus = healthStatusInstance;
+                                            }
+                                            protectionContainerResourceInstance.Properties = protectionContainerInstance;
                                         }
-                                        
-                                        JToken eTagValue = valueValue["eTag"];
-                                        if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                        if (typeName == "IaaSVMContainer")
                                         {
-                                            string eTagInstance = ((string)eTagValue);
-                                            protectionContainerResourceInstance.ETag = eTagInstance;
+                                            IaasVmProtectionContainer iaasVmProtectionContainerInstance = new IaasVmProtectionContainer();
+                                            
+                                            JToken vmVersionValue = propertiesValue["vmVersion"];
+                                            if (vmVersionValue != null && vmVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string vmVersionInstance = ((string)vmVersionValue);
+                                                iaasVmProtectionContainerInstance.VmVersion = vmVersionInstance;
+                                            }
+                                            
+                                            JToken friendlyNameValue2 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                iaasVmProtectionContainerInstance.FriendlyName = friendlyNameInstance2;
+                                            }
+                                            
+                                            JToken registrationStatusValue2 = propertiesValue["registrationStatus"];
+                                            if (registrationStatusValue2 != null && registrationStatusValue2.Type != JTokenType.Null)
+                                            {
+                                                string registrationStatusInstance2 = ((string)registrationStatusValue2);
+                                                iaasVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance2;
+                                            }
+                                            
+                                            JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
+                                            {
+                                                string resourceGroupInstance2 = ((string)resourceGroupValue2);
+                                                iaasVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance2;
+                                            }
+                                            
+                                            JToken healthStatusValue2 = propertiesValue["healthStatus"];
+                                            if (healthStatusValue2 != null && healthStatusValue2.Type != JTokenType.Null)
+                                            {
+                                                string healthStatusInstance2 = ((string)healthStatusValue2);
+                                                iaasVmProtectionContainerInstance.HealthStatus = healthStatusInstance2;
+                                            }
+                                            protectionContainerResourceInstance.Properties = iaasVmProtectionContainerInstance;
+                                        }
+                                        if (typeName == "DpmContainer")
+                                        {
+                                            DpmProtectionContainer dpmProtectionContainerInstance = new DpmProtectionContainer();
+                                            
+                                            JToken canReRegisterValue = propertiesValue["canReRegister"];
+                                            if (canReRegisterValue != null && canReRegisterValue.Type != JTokenType.Null)
+                                            {
+                                                bool canReRegisterInstance = ((bool)canReRegisterValue);
+                                                dpmProtectionContainerInstance.CanReRegister = canReRegisterInstance;
+                                            }
+                                            
+                                            JToken containerIdValue = propertiesValue["containerId"];
+                                            if (containerIdValue != null && containerIdValue.Type != JTokenType.Null)
+                                            {
+                                                long containerIdInstance = ((long)containerIdValue);
+                                                dpmProtectionContainerInstance.ContainerId = containerIdInstance;
+                                            }
+                                            
+                                            JToken friendlyNameValue3 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance3 = ((string)friendlyNameValue3);
+                                                dpmProtectionContainerInstance.FriendlyName = friendlyNameInstance3;
+                                            }
+                                            
+                                            JToken registrationStatusValue3 = propertiesValue["registrationStatus"];
+                                            if (registrationStatusValue3 != null && registrationStatusValue3.Type != JTokenType.Null)
+                                            {
+                                                string registrationStatusInstance3 = ((string)registrationStatusValue3);
+                                                dpmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance3;
+                                            }
+                                            
+                                            JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
+                                            {
+                                                string resourceGroupInstance3 = ((string)resourceGroupValue3);
+                                                dpmProtectionContainerInstance.ResourceGroup = resourceGroupInstance3;
+                                            }
+                                            
+                                            JToken healthStatusValue3 = propertiesValue["healthStatus"];
+                                            if (healthStatusValue3 != null && healthStatusValue3.Type != JTokenType.Null)
+                                            {
+                                                string healthStatusInstance3 = ((string)healthStatusValue3);
+                                                dpmProtectionContainerInstance.HealthStatus = healthStatusInstance3;
+                                            }
+                                            protectionContainerResourceInstance.Properties = dpmProtectionContainerInstance;
+                                        }
+                                        if (typeName == "MabContainer")
+                                        {
+                                            MabProtectionContainer mabProtectionContainerInstance = new MabProtectionContainer();
+                                            
+                                            JToken canReRegisterValue2 = propertiesValue["canReRegister"];
+                                            if (canReRegisterValue2 != null && canReRegisterValue2.Type != JTokenType.Null)
+                                            {
+                                                bool canReRegisterInstance2 = ((bool)canReRegisterValue2);
+                                                mabProtectionContainerInstance.CanReRegister = canReRegisterInstance2;
+                                            }
+                                            
+                                            JToken containerIdValue2 = propertiesValue["containerId"];
+                                            if (containerIdValue2 != null && containerIdValue2.Type != JTokenType.Null)
+                                            {
+                                                long containerIdInstance2 = ((long)containerIdValue2);
+                                                mabProtectionContainerInstance.ContainerId = containerIdInstance2;
+                                            }
+                                            
+                                            JToken friendlyNameValue4 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue4 != null && friendlyNameValue4.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance4 = ((string)friendlyNameValue4);
+                                                mabProtectionContainerInstance.FriendlyName = friendlyNameInstance4;
+                                            }
+                                            
+                                            JToken registrationStatusValue4 = propertiesValue["registrationStatus"];
+                                            if (registrationStatusValue4 != null && registrationStatusValue4.Type != JTokenType.Null)
+                                            {
+                                                string registrationStatusInstance4 = ((string)registrationStatusValue4);
+                                                mabProtectionContainerInstance.RegistrationStatus = registrationStatusInstance4;
+                                            }
+                                            
+                                            JToken resourceGroupValue4 = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue4 != null && resourceGroupValue4.Type != JTokenType.Null)
+                                            {
+                                                string resourceGroupInstance4 = ((string)resourceGroupValue4);
+                                                mabProtectionContainerInstance.ResourceGroup = resourceGroupInstance4;
+                                            }
+                                            
+                                            JToken healthStatusValue4 = propertiesValue["healthStatus"];
+                                            if (healthStatusValue4 != null && healthStatusValue4.Type != JTokenType.Null)
+                                            {
+                                                string healthStatusInstance4 = ((string)healthStatusValue4);
+                                                mabProtectionContainerInstance.HealthStatus = healthStatusInstance4;
+                                            }
+                                            protectionContainerResourceInstance.Properties = mabProtectionContainerInstance;
                                         }
                                     }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        protectionContainerResourceInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        protectionContainerResourceInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        protectionContainerResourceInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        protectionContainerResourceInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            protectionContainerResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken eTagValue = valueValue["eTag"];
+                                    if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                    {
+                                        string eTagInstance = ((string)eTagValue);
+                                        protectionContainerResourceInstance.ETag = eTagInstance;
+                                    }
                                 }
-                                
-                                JToken nextLinkValue = itemListValue["nextLink"];
-                                if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                                {
-                                    string nextLinkInstance = ((string)nextLinkValue);
-                                    itemListInstance.NextLink = nextLinkInstance;
-                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                itemListInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

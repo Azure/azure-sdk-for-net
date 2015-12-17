@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
@@ -110,20 +109,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='queryParams'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
         /// </param>
         /// <returns>
         /// The definition of a ProtectionContainerListResponse.
         /// </returns>
-        public static ProtectionContainerListResponse List(this IContainerOperation operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
+        public static ProtectionContainerListResponse List(this IContainerOperation operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).ListAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName);
+                return ((IContainerOperation)s).ListAsync(resourceGroupName, resourceName, queryParams, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -141,18 +140,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='queryParams'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Optional. Backup Fabric name for the backup item
         /// </param>
         /// <returns>
         /// The definition of a ProtectionContainerListResponse.
         /// </returns>
-        public static Task<ProtectionContainerListResponse> ListAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
+        public static Task<ProtectionContainerListResponse> ListAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, resourceName, queryParams, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

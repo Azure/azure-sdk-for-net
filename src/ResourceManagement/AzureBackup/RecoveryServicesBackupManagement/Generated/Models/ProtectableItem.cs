@@ -26,25 +26,47 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectionContainer object.
+    /// The definition of a ProtectableItem object.
     /// </summary>
-    public partial class IaasVmProtectionContainer : ProtectionContainer
+    public partial class ProtectableItem : ProtectableObjectBase
     {
-        private string _vmVersion;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. VM Version
+        /// Optional. Friendly Name
         /// </summary>
-        public string VmVersion
+        public string FriendlyName
         {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
+        private string _protectionStatus;
+        
+        /// <summary>
+        /// Optional. Protection Status
+        /// </summary>
+        public string ProtectionStatus
+        {
+            get { return this._protectionStatus; }
+            set { this._protectionStatus = value; }
+        }
+        
+        private string _resourceGroup;
+        
+        /// <summary>
+        /// Optional. Resource Group
+        /// </summary>
+        public string ResourceGroup
+        {
+            get { return this._resourceGroup; }
+            set { this._resourceGroup = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectionContainer class.
+        /// Initializes a new instance of the ProtectableItem class.
         /// </summary>
-        public IaasVmProtectionContainer()
+        public ProtectableItem()
         {
         }
     }
