@@ -28,8 +28,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a ProtectedItemCreateOrUpdateRequest.
     /// </summary>
-    public partial class ProtectedItemCreateOrUpdateRequest : ProtectedItemResource
+    public partial class ProtectedItemCreateOrUpdateRequest
     {
+        private ProtectedItemResource _item;
+        
+        /// <summary>
+        /// Optional. Item
+        /// </summary>
+        public ProtectedItemResource Item
+        {
+            get { return this._item; }
+            set { this._item = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// ProtectedItemCreateOrUpdateRequest class.

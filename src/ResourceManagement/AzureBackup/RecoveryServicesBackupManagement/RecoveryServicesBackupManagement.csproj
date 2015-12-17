@@ -214,9 +214,6 @@
     <Compile Include="Generated\Models\ProtectedItemResource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\ProtectedItemResourceList.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\ProtectedItemResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -248,9 +245,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectionPolicyResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectionPolicyResponse.cs">

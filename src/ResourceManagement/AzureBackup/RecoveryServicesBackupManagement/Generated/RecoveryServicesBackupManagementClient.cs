@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._restore = new RestoreOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2015-03-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._restore = new RestoreOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2015-03-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

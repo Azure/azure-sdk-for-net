@@ -126,16 +126,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + null;
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs/";
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/cancel";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-15");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -357,13 +357,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -473,7 +466,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -724,14 +717,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + null;
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/exportBackupJobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -760,7 +753,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-03-15");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -814,7 +807,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -864,7 +857,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -953,13 +946,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -1069,7 +1055,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -1324,15 +1310,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + null;
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs/";
             url = url + Uri.EscapeDataString(jobName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1414,7 +1400,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -1464,7 +1450,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -1553,13 +1539,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -1669,7 +1648,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -1920,9 +1899,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + null;
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs/";
@@ -1930,7 +1909,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2012,7 +1991,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["ObjectType"]);
+                                string typeName = ((string)propertiesValue["objectType"]);
                                 if (typeName == "Job")
                                 {
                                     Job jobInstance = new Job();
@@ -2062,7 +2041,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                        string typeName2 = ((string)extendedInfoValue["objectType"]);
                                         if (typeName2 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -2151,13 +2130,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 if (typeName == "IaaSVMJob")
                                 {
                                     IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                    
-                                    JToken instanceIdValue = propertiesValue["instanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                    }
                                     
                                     JToken durationValue2 = propertiesValue["duration"];
                                     if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -2267,7 +2239,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                        string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                         if (typeName3 == "IaaSVMJobExtendedInfo")
                                         {
                                             IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();
@@ -2506,14 +2478,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + null;
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
-            url = url + "recoveryServicesVault";
+            url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
+            queryParameters.Add("api-version=2015-03-15");
             List<string> odataFilter = new List<string>();
             if (queryFilter != null && queryFilter.Status != null)
             {
@@ -2531,13 +2503,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 odataFilter.Add("jobId eq '" + Uri.EscapeDataString(queryFilter.JobId) + "'");
             }
-            if (queryFilter != null)
+            if (queryFilter != null && queryFilter.StartTime != null)
             {
-                odataFilter.Add("startTime eq '" + Uri.EscapeDataString(queryFilter.StartTime.ToString()) + "'");
+                odataFilter.Add("startTime eq '" + Uri.EscapeDataString(queryFilter.StartTime) + "'");
             }
-            if (queryFilter != null)
+            if (queryFilter != null && queryFilter.EndTime != null)
             {
-                odataFilter.Add("endTime eq '" + Uri.EscapeDataString(queryFilter.EndTime.ToString()) + "'");
+                odataFilter.Add("endTime eq '" + Uri.EscapeDataString(queryFilter.EndTime) + "'");
             }
             if (queryFilter != null && queryFilter.SkipToken != null)
             {
@@ -2640,7 +2612,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)propertiesValue["ObjectType"]);
+                                        string typeName = ((string)propertiesValue["objectType"]);
                                         if (typeName == "Job")
                                         {
                                             Job jobInstance = new Job();
@@ -2690,7 +2662,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                             {
-                                                string typeName2 = ((string)extendedInfoValue["ObjectType"]);
+                                                string typeName2 = ((string)extendedInfoValue["objectType"]);
                                                 if (typeName2 == "IaaSVMJobExtendedInfo")
                                                 {
                                                     IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance = new IaaSVMJobExtendedInfo();
@@ -2779,13 +2751,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (typeName == "IaaSVMJob")
                                         {
                                             IaaSVMJob iaaSVMJobInstance = new IaaSVMJob();
-                                            
-                                            JToken instanceIdValue = propertiesValue["instanceId"];
-                                            if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                            {
-                                                string instanceIdInstance = ((string)instanceIdValue);
-                                                iaaSVMJobInstance.InstanceId = instanceIdInstance;
-                                            }
                                             
                                             JToken durationValue2 = propertiesValue["duration"];
                                             if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
@@ -2895,7 +2860,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                             {
-                                                string typeName3 = ((string)extendedInfoValue2["ObjectType"]);
+                                                string typeName3 = ((string)extendedInfoValue2["objectType"]);
                                                 if (typeName3 == "IaaSVMJobExtendedInfo")
                                                 {
                                                     IaaSVMJobExtendedInfo iaaSVMJobExtendedInfoInstance2 = new IaaSVMJobExtendedInfo();

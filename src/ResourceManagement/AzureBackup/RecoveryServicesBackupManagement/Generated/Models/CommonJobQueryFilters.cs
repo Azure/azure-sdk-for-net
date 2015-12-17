@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class CommonJobQueryFilters : JobQueryFilters
     {
-        private DateTime _endTime;
+        private string _endTime;
         
         /// <summary>
         /// Optional. EndTime query parameter
         /// </summary>
-        public DateTime EndTime
+        public string EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }
@@ -74,12 +74,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._skipToken = value; }
         }
         
-        private DateTime _startTime;
+        private string _startTime;
         
         /// <summary>
         /// Optional. StartTime query parameter
         /// </summary>
-        public DateTime StartTime
+        public string StartTime
         {
             get { return this._startTime; }
             set { this._startTime = value; }

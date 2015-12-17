@@ -65,17 +65,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._errorDetails = value; }
         }
         
-        private string _instanceId;
-        
-        /// <summary>
-        /// Optional. Job InstanceId
-        /// </summary>
-        public string InstanceId
-        {
-            get { return this._instanceId; }
-            set { this._instanceId = value; }
-        }
-        
         private string _virtualMachineVersion;
         
         /// <summary>
