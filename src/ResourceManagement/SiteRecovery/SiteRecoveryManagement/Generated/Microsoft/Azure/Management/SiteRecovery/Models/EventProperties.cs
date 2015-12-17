@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._eventType = value; }
         }
         
-        private string _fabricName;
+        private string _fabricId;
         
         /// <summary>
-        /// Optional. The site Id.
+        /// Optional. The fabric Id.
         /// </summary>
-        public string FabricName
+        public string FabricId
         {
-            get { return this._fabricName; }
-            set { this._fabricName = value; }
+            get { return this._fabricId; }
+            set { this._fabricId = value; }
         }
         
         private IList<HealthError> _healthErrors;

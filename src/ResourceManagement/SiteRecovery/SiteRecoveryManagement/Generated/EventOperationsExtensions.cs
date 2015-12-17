@@ -37,6 +37,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IEventOperations.
         /// </param>
+        /// <param name='eventName'>
+        /// Required. Filter for the events to be fetched.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// Model class for event response.
+        /// </returns>
+        public static EventResponse Get(this IEventOperations operations, string eventName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).GetAsync(eventName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the list of events under the vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IEventOperations.
+        /// </param>
+        /// <param name='eventName'>
+        /// Required. Filter for the events to be fetched.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// Model class for event response.
+        /// </returns>
+        public static Task<EventResponse> GetAsync(this IEventOperations operations, string eventName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetAsync(eventName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of events under the vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IEventOperations.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Filter for the events to be fetched.
         /// </param>

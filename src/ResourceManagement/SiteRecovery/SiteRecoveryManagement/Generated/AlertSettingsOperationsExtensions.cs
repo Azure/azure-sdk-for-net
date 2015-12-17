@@ -83,6 +83,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Updates the alert settings for the vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IAlertSettingsOperations.
+        /// </param>
+        /// <param name='alertSettingsName'>
+        /// Required. Alert Settings name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// Model class for alerts response.
+        /// </returns>
+        public static AlertSettingsResponse Get(this IAlertSettingsOperations operations, string alertSettingsName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAlertSettingsOperations)s).GetAsync(alertSettingsName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates the alert settings for the vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IAlertSettingsOperations.
+        /// </param>
+        /// <param name='alertSettingsName'>
+        /// Required. Alert Settings name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// Model class for alerts response.
+        /// </returns>
+        public static Task<AlertSettingsResponse> GetAsync(this IAlertSettingsOperations operations, string alertSettingsName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetAsync(alertSettingsName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the list of events under the vault.
         /// </summary>
         /// <param name='operations'>
