@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 {
                     // IList is the only one we are handling
                     var elems = propValue as IList;
-                    if (elems != null)
+                    if (elems != null && elems.Count != 0)
                     {
                         int itemCount = 0;
                         string[] multiPropQuery = new string[elems.Count];
