@@ -424,6 +424,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <summary>
         /// Gets the specified saved search for a given workspace.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
         /// <param name='savedSearchId'>
         /// Required. The id of the saved search.
         /// </param>
@@ -433,9 +439,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// Value object for saved search results.
         /// </returns>
-        public async Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string savedSearchId, CancellationToken cancellationToken)
+        public async Task<SearchGetSavedSearchResponse> GetSavedSearchAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException("workspaceName");
+            }
             if (savedSearchId == null)
             {
                 throw new ArgumentNullException("savedSearchId");
@@ -448,13 +462,24 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("savedSearchId", savedSearchId);
                 TracingAdapter.Enter(invocationId, this, "GetSavedSearchAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.OperationalInsights/workspaces/";
+            url = url + Uri.EscapeDataString(workspaceName);
+            url = url + "/savedSearches/";
             url = url + Uri.EscapeDataString(savedSearchId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-20");
@@ -615,6 +640,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <summary>
         /// Gets the results from a saved search for a given workspace.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
         /// <param name='savedSearchId'>
         /// Required. The id of the saved search.
         /// </param>
@@ -624,9 +655,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// The get search result operation response.
         /// </returns>
-        public async Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(string savedSearchId, CancellationToken cancellationToken)
+        public async Task<SearchGetSearchResultsResponse> GetSavedSearchResultsAsync(string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException("workspaceName");
+            }
             if (savedSearchId == null)
             {
                 throw new ArgumentNullException("savedSearchId");
@@ -639,13 +678,24 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("savedSearchId", savedSearchId);
                 TracingAdapter.Enter(invocationId, this, "GetSavedSearchResultsAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.OperationalInsights/workspaces/";
+            url = url + Uri.EscapeDataString(workspaceName);
+            url = url + "/savedSearches/";
             url = url + Uri.EscapeDataString(savedSearchId);
             url = url + "/results";
             List<string> queryParameters = new List<string>();
@@ -2146,6 +2196,12 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <summary>
         /// Gets updated search results for a given search query.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the workspace.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// Required. A unique workspace instance name.
+        /// </param>
         /// <param name='id'>
         /// Required. The id of the search that will have results updated.
         /// </param>
@@ -2155,9 +2211,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <returns>
         /// The get search result operation response.
         /// </returns>
-        public async Task<SearchGetSearchResultsResponse> UpdateSearchResultsAsync(string id, CancellationToken cancellationToken)
+        public async Task<SearchGetSearchResultsResponse> UpdateSearchResultsAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException("workspaceName");
+            }
             if (id == null)
             {
                 throw new ArgumentNullException("id");
@@ -2170,13 +2234,24 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("id", id);
                 TracingAdapter.Enter(invocationId, this, "UpdateSearchResultsAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.OperationalInsights/workspaces/";
+            url = url + Uri.EscapeDataString(workspaceName);
+            url = url + "/search/";
             url = url + Uri.EscapeDataString(id);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-20");
