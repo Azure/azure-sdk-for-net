@@ -14,6 +14,7 @@
     <Compile Include="ScenarioTests\DeletionTests.cs" />
     <Compile Include="ScenarioTests\E2E\SingleVM\EndToEndTests.cs" />
     <Compile Include="ScenarioTests\EnumerationTests.cs" />
+    <Compile Include="ScenarioTests\ExportTests.cs" />
     <Compile Include="ScenarioTests\FailoverTests.cs" />
     <Compile Include="ScenarioTests\GetTests.cs" />
     <Compile Include="ScenarioTests\ProcessServerTests.cs" />

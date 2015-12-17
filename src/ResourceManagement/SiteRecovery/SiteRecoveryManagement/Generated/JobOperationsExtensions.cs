@@ -221,6 +221,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Export jobs to blob.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Job Query Filters
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse Export(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).ExportAsync(parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Export jobs to blob.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Job Query Filters
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> ExportAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ExportAsync(parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the job details.
         /// </summary>
         /// <param name='operations'>
