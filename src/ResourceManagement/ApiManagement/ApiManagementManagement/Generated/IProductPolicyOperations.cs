@@ -102,6 +102,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='policyStream'>
         /// Policy stream.
         /// </param>
+        /// <param name='etag'>
+        /// ETag.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -109,6 +112,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string pid, string format, Stream policyStream, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetAsync(string resourceGroupName, string serviceName, string pid, string format, Stream policyStream, string etag, CancellationToken cancellationToken);
     }
 }

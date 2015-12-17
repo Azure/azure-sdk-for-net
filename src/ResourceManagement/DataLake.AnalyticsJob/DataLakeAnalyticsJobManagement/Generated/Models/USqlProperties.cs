@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
         private long? _yarnApplicationTimeStamp;
         
         /// <summary>
-        /// Optional. Gets or sets the timestamp (int ticks) for the yarn
+        /// Optional. Gets or sets the timestamp (in ticks) for the yarn
         /// application executing the job.This value should not be set by the
         /// user and will be ignored if it is.
         /// </summary>
