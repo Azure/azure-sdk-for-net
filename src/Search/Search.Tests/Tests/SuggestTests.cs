@@ -268,6 +268,34 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(Data.TestDocuments[0], response.Results[0].Document.ToHotel());
         }
 
+        protected void TestCanSuggestWithCustomConverter()
+        {
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+            Index index = Book.DefineIndex();
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+            var doc = new CustomBook()
+            {
+                InternationalStandardBookNumber = "123",
+                Name = "Lord of the Rings",
+                AuthorName = "J.R.R. Tolkien",
+                PublishDateTime = new DateTime(1954, 7, 29)
+            };
+
+            var batch = IndexBatch.Upload(new[] { doc });
+
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
+
+            var parameters = new SuggestParameters() { Select = new[] { "*" } };
+            DocumentSuggestResult<CustomBook> response = 
+                indexClient.Documents.Suggest<CustomBook>("Lord", "sg", parameters);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(doc, response.Results[0].Document);
+        }
+
         private void AssertKeySequenceEqual(DocumentSuggestResult<Hotel> response, params string[] expectedKeys)
         {
             Assert.NotNull(response.Results);
