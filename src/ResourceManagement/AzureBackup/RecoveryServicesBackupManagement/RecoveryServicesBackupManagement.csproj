@@ -62,6 +62,8 @@
     <Compile Include="Generated\IRestoreOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
+    <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
     <Compile Include="Generated\Models\CommonJobQueryFilters.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
