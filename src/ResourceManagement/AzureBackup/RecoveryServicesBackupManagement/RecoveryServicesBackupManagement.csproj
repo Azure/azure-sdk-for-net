@@ -84,14 +84,6 @@
     <Compile Include="Generated\Models\ErrorInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
-    <Compile Include="Generated\Models\CommonJobQueryFilters.cs" />
-    <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
-    <Compile Include="Generated\Models\DailyRetentionFormat.cs" />
-    <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
-    <Compile Include="Generated\Models\Day.cs" />
-    <Compile Include="Generated\Models\DpmProtectionContainer.cs" />
-    <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\GetOperationStatus.cs" />
@@ -103,9 +95,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectableObject.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -160,30 +149,6 @@
     </Compile>
     <Compile Include="Generated\Models\OperationResultInfo.cs" />
     <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
-    <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
-    <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
-    <Compile Include="Generated\Models\IaasVmProtectionContainer.cs" />
-    <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
-    <Compile Include="Generated\Models\Job.cs" />
-    <Compile Include="Generated\Models\JobBase.cs" />
-    <Compile Include="Generated\Models\JobExtendedInfo.cs" />
-    <Compile Include="Generated\Models\JobListResponse.cs" />
-    <Compile Include="Generated\Models\JobQueryFilters.cs" />
-    <Compile Include="Generated\Models\JobRequestObject.cs" />
-    <Compile Include="Generated\Models\JobResource.cs" />
-    <Compile Include="Generated\Models\JobResourceList.cs" />
-    <Compile Include="Generated\Models\JobResponse.cs" />
-    <Compile Include="Generated\Models\JobSupportedAction.cs" />
-    <Compile Include="Generated\Models\JobTaskDetails.cs" />
-    <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
-    <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
-    <Compile Include="Generated\Models\MabProtectionContainer.cs" />
-    <Compile Include="Generated\Models\Month.cs" />
-    <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
-    <Compile Include="Generated\Models\OperationResultInfo.cs" />
-    <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
     <Compile Include="Generated\Models\OperationStatusBase.cs" />
     <Compile Include="Generated\Models\OperationStatusError.cs" />
     <Compile Include="Generated\Models\OperationStatusExtendedInfo.cs" />
@@ -194,9 +159,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectableItem.cs" />
-    <Compile Include="Generated\Models\ProtectableObject.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\ProtectableObjectBase.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -380,75 +342,6 @@
     <Compile Include="Generated\RestoreOperationsExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />
-    <Compile Include="Generated\Models\ProtectableItem.cs" />
-    <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
-    <Compile Include="Generated\Models\ProtectableObjectListQueryParameters.cs" />
-    <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
-    <Compile Include="Generated\Models\ProtectableObjectResource.cs" />
-    <Compile Include="Generated\Models\ProtectableObjectResourceList.cs" />
-    <Compile Include="Generated\Models\ProtectedItem.cs" />
-    <Compile Include="Generated\Models\ProtectedItemBase.cs" />
-    <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateRequest.cs" />
-    <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateResponse.cs" />
-    <Compile Include="Generated\Models\ProtectedItemExtendedInfo.cs" />
-    <Compile Include="Generated\Models\ProtectedItemListQueryParam.cs" />
-    <Compile Include="Generated\Models\ProtectedItemListResponse.cs" />
-    <Compile Include="Generated\Models\ProtectedItemResource.cs" />
-    <Compile Include="Generated\Models\ProtectedItemResourceList.cs" />
-    <Compile Include="Generated\Models\ProtectedItemResponse.cs" />
-    <Compile Include="Generated\Models\ProtectionContainer.cs" />
-    <Compile Include="Generated\Models\ProtectionContainerBase.cs" />
-    <Compile Include="Generated\Models\ProtectionContainerListQueryParams.cs" />
-    <Compile Include="Generated\Models\ProtectionContainerListResponse.cs" />
-    <Compile Include="Generated\Models\ProtectionContainerResource.cs" />
-    <Compile Include="Generated\Models\ProtectionContainerResourceList.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicy.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicyBase.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicyQueryParameters.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicyRequest.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicyResource.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicyResponse.cs" />
-    <Compile Include="Generated\Models\ProviderType.cs" />
-    <Compile Include="Generated\Models\ProviderTypes.cs" />
-    <Compile Include="Generated\Models\RecoveryPoint.cs" />
-    <Compile Include="Generated\Models\RecoveryPointBase.cs" />
-    <Compile Include="Generated\Models\RecoveryPointListResponse.cs" />
-    <Compile Include="Generated\Models\RecoveryPointQueryParameters.cs" />
-    <Compile Include="Generated\Models\RecoveryPointResource.cs" />
-    <Compile Include="Generated\Models\RecoveryPointResourceList.cs" />
-    <Compile Include="Generated\Models\RecoveryPointResponse.cs" />
-    <Compile Include="Generated\Models\RecoveryType.cs" />
-    <Compile Include="Generated\Models\Resource.cs" />
-    <Compile Include="Generated\Models\RestoreRequest.cs" />
-    <Compile Include="Generated\Models\RestoreRequestResource.cs" />
-    <Compile Include="Generated\Models\RetentionDuration.cs" />
-    <Compile Include="Generated\Models\RetentionDurationType.cs" />
-    <Compile Include="Generated\Models\RetentionPolicy.cs" />
-    <Compile Include="Generated\Models\RetentionScheduleBase.cs" />
-    <Compile Include="Generated\Models\RetentionScheduleFormat.cs" />
-    <Compile Include="Generated\Models\SchedulePolicy.cs" />
-    <Compile Include="Generated\Models\SimpleRetentionPolicy.cs" />
-    <Compile Include="Generated\Models\SimpleSchedulePolicy.cs" />
-    <Compile Include="Generated\Models\TriggerRestoreRequest.cs" />
-    <Compile Include="Generated\Models\WeeklyRetentionFormat.cs" />
-    <Compile Include="Generated\Models\WeeklyRetentionSchedule.cs" />
-    <Compile Include="Generated\Models\WeekNumber.cs" />
-    <Compile Include="Generated\Models\YearlyRetentionSchedule.cs" />
-    <Compile Include="Generated\ProtectableObjectOperations.cs" />
-    <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
-    <Compile Include="Generated\ProtectedItemOperations.cs" />
-    <Compile Include="Generated\ProtectedItemOperationsExtensions.cs" />
-    <Compile Include="Generated\ProtectionPolicyOperations.cs" />
-    <Compile Include="Generated\ProtectionPolicyOperationsExtensions.cs" />
-    <Compile Include="Generated\RecoveryPointOperations.cs" />
-    <Compile Include="Generated\RecoveryPointOperationsExtensions.cs" />
-    <Compile Include="Generated\RecoveryServicesBackupManagementClient.cs" />
-    <Compile Include="Generated\RecoveryServicesBackupManagementClientExtensions.cs" />
-    <Compile Include="Generated\RestoreOperations.cs" />
-    <Compile Include="Generated\RestoreOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
