@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         
         /// <summary>
         /// Required. Gets or sets the definition of the stream analytics job
-        /// to be created or updated. It is in the json format.
+        /// to be created or updated in json format.
         /// </summary>
         public string Content
         {

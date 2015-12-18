@@ -48,6 +48,10 @@ namespace StreamAnalytics.Tests.OperationTests
         public const string User = "customersolution";
         public const string Password = "$TestStringToBeReplaced";
 
+        // Function secrets
+        public const string ExecuteEndpoint = "https://ussouthcentral.services.azureml.net/workspaces/f80d5d7a77fa4a46bf2a30c63c078dca/services/b7be5e40fd194258896fb602c1858eaf/execute?api-version=2.0&details=true";
+        public const string ApiKey = "$TestStringToBeReplaced";
+
         /// <summary>
         /// Generate a Resource Management client from the test base to use for managing resource groups.
         /// </summary>

@@ -78,7 +78,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Operations for managing the input of the stream analytics job.
+        /// Operations for managing the function(s) of the stream analytics job.
+        /// </summary>
+        IFunctionOperations Functions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the input(s) of the stream analytics job.
         /// </summary>
         IInputOperations Inputs
         {
@@ -94,7 +102,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Operations for managing the output of the stream analytics job.
+        /// Operations for managing the output(s) of the stream analytics job.
         /// </summary>
         IOutputOperations Outputs
         {
@@ -144,6 +152,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        Task<DataSourceTestConnectionResponse> GetTestConnectionStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        Task<ResourceTestConnectionResponse> GetTestConnectionStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
     }
 }
