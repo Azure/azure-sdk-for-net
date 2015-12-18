@@ -21,32 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a OperationStatusExtendedInfo object.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class OperationStatusExtendedInfo
     {
-        private ProtectionPolicyResourceList _itemList;
-        
         /// <summary>
-        /// Optional. ItemList
+        /// Initializes a new instance of the OperationStatusExtendedInfo class.
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
-        {
-            get { return this._itemList; }
-            set { this._itemList = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
-        /// </summary>
-        public ProtectionPolicyListResponse()
+        public OperationStatusExtendedInfo()
         {
         }
     }

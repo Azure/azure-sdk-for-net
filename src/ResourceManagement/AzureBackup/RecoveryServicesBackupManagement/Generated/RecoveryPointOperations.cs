@@ -231,89 +231,85 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken recoveryPointValue = responseDoc["recoveryPoint"];
-                            if (recoveryPointValue != null && recoveryPointValue.Type != JTokenType.Null)
+                            RecoveryPointResource recPointInstance = new RecoveryPointResource();
+                            result.RecPoint = recPointInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                RecoveryPointResource recoveryPointInstance = new RecoveryPointResource();
-                                result.RecPoint = recoveryPointInstance;
-                                
-                                JToken propertiesValue = recoveryPointValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                string typeName = ((string)propertiesValue["objectType"]);
+                                if (typeName == "IaasVMRecoveryPoint")
                                 {
-                                    string typeName = ((string)propertiesValue["ObjectType"]);
-                                    if (typeName == "RecoveryPoint")
+                                    RecoveryPoint recoveryPointInstance = new RecoveryPoint();
+                                    
+                                    JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
+                                    if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
                                     {
-                                        RecoveryPoint recoveryPointInstance2 = new RecoveryPoint();
-                                        
-                                        JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
-                                        if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
-                                            recoveryPointInstance2.RecoveryPointType = recoveryPointTypeInstance;
-                                        }
-                                        
-                                        JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
-                                        if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
-                                        {
-                                            string recoveryPointTimeInstance = ((string)recoveryPointTimeValue);
-                                            recoveryPointInstance2.RecoveryPointTime = recoveryPointTimeInstance;
-                                        }
-                                        
-                                        JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
-                                        if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
-                                        {
-                                            string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
-                                            recoveryPointInstance2.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
-                                        }
-                                        recoveryPointInstance.Properties = recoveryPointInstance2;
+                                        string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
+                                        recoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance;
                                     }
-                                }
-                                
-                                JToken idValue = recoveryPointValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    recoveryPointInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = recoveryPointValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    recoveryPointInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = recoveryPointValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    recoveryPointInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = recoveryPointValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    recoveryPointInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)recoveryPointValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
+                                    
+                                    JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
+                                    if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
                                     {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        recoveryPointInstance.Tags.Add(tagsKey, tagsValue);
+                                        string recoveryPointTimeInstance = ((string)recoveryPointTimeValue);
+                                        recoveryPointInstance.RecoveryPointTime = recoveryPointTimeInstance;
                                     }
+                                    
+                                    JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
+                                    if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
+                                    {
+                                        string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
+                                        recoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
+                                    }
+                                    recPointInstance.Properties = recoveryPointInstance;
                                 }
-                                
-                                JToken eTagValue = recoveryPointValue["eTag"];
-                                if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                recPointInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                recPointInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                recPointInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                recPointInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string eTagInstance = ((string)eTagValue);
-                                    recoveryPointInstance.ETag = eTagInstance;
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    recPointInstance.Tags.Add(tagsKey, tagsValue);
                                 }
+                            }
+                            
+                            JToken eTagValue = responseDoc["eTag"];
+                            if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                            {
+                                string eTagInstance = ((string)eTagValue);
+                                recPointInstance.ETag = eTagInstance;
                             }
                             
                             JToken locationValue2 = responseDoc["location"];
@@ -544,106 +540,102 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken recoveryPointListValue = responseDoc["recoveryPointList"];
-                            if (recoveryPointListValue != null && recoveryPointListValue.Type != JTokenType.Null)
+                            RecoveryPointResourceList recoveryPointListInstance = new RecoveryPointResourceList();
+                            result.RecoveryPointList = recoveryPointListInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                RecoveryPointResourceList recoveryPointListInstance = new RecoveryPointResourceList();
-                                result.RecoveryPointList = recoveryPointListInstance;
-                                
-                                JToken valueArray = recoveryPointListValue["value"];
-                                if (valueArray != null && valueArray.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    foreach (JToken valueValue in ((JArray)valueArray))
+                                    RecoveryPointResource recoveryPointResourceInstance = new RecoveryPointResource();
+                                    recoveryPointListInstance.RecoveryPoints.Add(recoveryPointResourceInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        RecoveryPointResource recoveryPointResourceInstance = new RecoveryPointResource();
-                                        recoveryPointListInstance.RecoveryPoints.Add(recoveryPointResourceInstance);
-                                        
-                                        JToken propertiesValue = valueValue["properties"];
-                                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                        string typeName = ((string)propertiesValue["objectType"]);
+                                        if (typeName == "IaasVMRecoveryPoint")
                                         {
-                                            string typeName = ((string)propertiesValue["ObjectType"]);
-                                            if (typeName == "RecoveryPoint")
+                                            RecoveryPoint recoveryPointInstance = new RecoveryPoint();
+                                            
+                                            JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
+                                            if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
                                             {
-                                                RecoveryPoint recoveryPointInstance = new RecoveryPoint();
-                                                
-                                                JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
-                                                if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
-                                                {
-                                                    string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
-                                                    recoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance;
-                                                }
-                                                
-                                                JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
-                                                if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
-                                                {
-                                                    string recoveryPointTimeInstance = ((string)recoveryPointTimeValue);
-                                                    recoveryPointInstance.RecoveryPointTime = recoveryPointTimeInstance;
-                                                }
-                                                
-                                                JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
-                                                if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
-                                                {
-                                                    string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
-                                                    recoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
-                                                }
-                                                recoveryPointResourceInstance.Properties = recoveryPointInstance;
+                                                string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
+                                                recoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance;
                                             }
-                                        }
-                                        
-                                        JToken idValue = valueValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            recoveryPointResourceInstance.Id = idInstance;
-                                        }
-                                        
-                                        JToken nameValue = valueValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            recoveryPointResourceInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken typeValue = valueValue["type"];
-                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                        {
-                                            string typeInstance = ((string)typeValue);
-                                            recoveryPointResourceInstance.Type = typeInstance;
-                                        }
-                                        
-                                        JToken locationValue = valueValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            recoveryPointResourceInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                        {
-                                            foreach (JProperty property in tagsSequenceElement)
+                                            
+                                            JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
+                                            if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
                                             {
-                                                string tagsKey = ((string)property.Name);
-                                                string tagsValue = ((string)property.Value);
-                                                recoveryPointResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                                string recoveryPointTimeInstance = ((string)recoveryPointTimeValue);
+                                                recoveryPointInstance.RecoveryPointTime = recoveryPointTimeInstance;
                                             }
-                                        }
-                                        
-                                        JToken eTagValue = valueValue["eTag"];
-                                        if (eTagValue != null && eTagValue.Type != JTokenType.Null)
-                                        {
-                                            string eTagInstance = ((string)eTagValue);
-                                            recoveryPointResourceInstance.ETag = eTagInstance;
+                                            
+                                            JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
+                                            if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
+                                            {
+                                                string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
+                                                recoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
+                                            }
+                                            recoveryPointResourceInstance.Properties = recoveryPointInstance;
                                         }
                                     }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        recoveryPointResourceInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        recoveryPointResourceInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        recoveryPointResourceInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        recoveryPointResourceInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            recoveryPointResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken eTagValue = valueValue["eTag"];
+                                    if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                    {
+                                        string eTagInstance = ((string)eTagValue);
+                                        recoveryPointResourceInstance.ETag = eTagInstance;
+                                    }
                                 }
-                                
-                                JToken nextLinkValue = recoveryPointListValue["nextLink"];
-                                if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                                {
-                                    string nextLinkInstance = ((string)nextLinkValue);
-                                    recoveryPointListInstance.NextLink = nextLinkInstance;
-                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                recoveryPointListInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

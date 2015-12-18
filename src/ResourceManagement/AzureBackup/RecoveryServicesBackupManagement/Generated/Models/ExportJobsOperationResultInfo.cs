@@ -21,32 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition for ExportJobsOperationResultInfo class.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class ExportJobsOperationResultInfo : OperationResultInfoBase
     {
-        private ProtectionPolicyResourceList _itemList;
+        private string _blobSasKey;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. Blob SAS key for export job
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public string BlobSasKey
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._blobSasKey; }
+            set { this._blobSasKey = value; }
+        }
+        
+        private string _blobUrl;
+        
+        /// <summary>
+        /// Optional. BlobUrl for export job
+        /// </summary>
+        public string BlobUrl
+        {
+            get { return this._blobUrl; }
+            set { this._blobUrl = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
+        /// Initializes a new instance of the ExportJobsOperationResultInfo
         /// class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public ExportJobsOperationResultInfo()
         {
         }
     }

@@ -21,32 +21,52 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a ProtectableItem object.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class ProtectableItem : ProtectableObjectBase
     {
-        private ProtectionPolicyResourceList _itemList;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. Friendly Name
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public string FriendlyName
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
+        private string _protectionStatus;
+        
+        /// <summary>
+        /// Optional. Protection Status
+        /// </summary>
+        public string ProtectionStatus
+        {
+            get { return this._protectionStatus; }
+            set { this._protectionStatus = value; }
+        }
+        
+        private string _resourceGroup;
+        
+        /// <summary>
+        /// Optional. Resource Group
+        /// </summary>
+        public string ResourceGroup
+        {
+            get { return this._resourceGroup; }
+            set { this._resourceGroup = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// Initializes a new instance of the ProtectableItem class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public ProtectableItem()
         {
         }
     }

@@ -21,33 +21,32 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The enum for all supported versions type pf Recovery
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public static partial class RecoveryType
     {
-        private ProtectionPolicyResourceList _itemList;
+        /// <summary>
+        /// Invalid RecoveryType of RestoreRequest.
+        /// </summary>
+        public const string Invalid = "Invalid";
         
         /// <summary>
-        /// Optional. ItemList
+        /// OriginalLocation RecoveryType of RestoreRequest.
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
-        {
-            get { return this._itemList; }
-            set { this._itemList = value; }
-        }
+        public const string OriginalLocation = "OriginalLocation";
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// AlternateLocation RecoveryType of RestoreRequest.
         /// </summary>
-        public ProtectionPolicyListResponse()
-        {
-        }
+        public const string AlternateLocation = "AlternateLocation";
+        
+        /// <summary>
+        /// RestoreDisks RecoveryType of RestoreRequest.
+        /// </summary>
+        public const string RestoreDisks = "RestoreDisks";
     }
 }

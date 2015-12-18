@@ -27,26 +27,26 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a OperationStatusResponse.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class BackUpOperationStatusResponse : AzureOperationResponse
     {
-        private ProtectionPolicyResourceList _itemList;
+        private BackUpOperationStatus _operationStatus;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. operationStatus
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public BackUpOperationStatus OperationStatus
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._operationStatus; }
+            set { this._operationStatus = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
+        /// Initializes a new instance of the BackUpOperationStatusResponse
         /// class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public BackUpOperationStatusResponse()
         {
         }
     }

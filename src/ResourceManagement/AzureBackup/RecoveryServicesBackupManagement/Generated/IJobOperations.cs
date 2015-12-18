@@ -48,9 +48,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        Task<JobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> CancelJobAsync(string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Export job.
@@ -61,6 +62,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='queryFilter'>
+        /// QueryFilter for ExportJob.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -68,9 +72,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        Task<JobResponse> ExportJobAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> ExportJobAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the details of specific job Objects.
@@ -80,6 +85,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </param>
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='jobName'>
+        /// Job name  for GetOperationResult.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -101,6 +109,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='operationId'>
+        /// OperationId for GetOperationResult.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a GetOperationResultResponse.
+        /// </returns>
+        Task<GetOperationResultResponse> GetExportJobOperationResultAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the operation result of specific job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='jobName'>
+        /// Job name  for GetOperationResult.
+        /// </param>
+        /// <param name='operationId'>
+        /// OperationId for GetOperationResult.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -121,6 +158,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='queryFilter'>
+        /// QueryFilter for List job.
+        /// </param>
+        /// <param name='paginationParams'>
+        /// Pagination parameter for skip token and top.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -130,6 +173,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a JobListResponse.
         /// </returns>
-        Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobListResponse> ListAsync(string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

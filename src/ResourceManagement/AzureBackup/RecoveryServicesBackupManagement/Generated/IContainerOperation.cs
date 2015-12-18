@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
@@ -56,10 +55,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
         /// </returns>
-        Task<AzureOperationResponse> GetRefreshOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// List all protection containers.
@@ -70,11 +69,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
         /// </param>
+        /// <param name='queryParams'>
+        /// ResourceName for recoveryServices Vault.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
-        /// </param>
-        /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -82,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerListResponse.
         /// </returns>
-        Task<ProtectionContainerListResponse> ListAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, CancellationToken cancellationToken);
+        Task<ProtectionContainerListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Trigger the Discovery.

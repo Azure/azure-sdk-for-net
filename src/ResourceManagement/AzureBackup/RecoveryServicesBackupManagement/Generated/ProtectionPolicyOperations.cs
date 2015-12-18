@@ -2565,13 +2565,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            ProtectionPolicyResourceList itemListInstance = new ProtectionPolicyResourceList();
+                            result.ItemList = itemListInstance;
+                            
                             JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     ProtectionPolicyResource protectionPolicyResourceInstance = new ProtectionPolicyResource();
-                                    result.Value.Add(protectionPolicyResourceInstance);
+                                    itemListInstance.Value.Add(protectionPolicyResourceInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -2985,7 +2988,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
-                                result.NextLink = nextLinkInstance;
+                                itemListInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

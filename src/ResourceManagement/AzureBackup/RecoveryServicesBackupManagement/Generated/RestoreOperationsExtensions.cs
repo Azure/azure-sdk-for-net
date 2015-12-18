@@ -58,15 +58,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='recoveryPointId'>
         /// Optional. Recovery point id for the backup item
         /// </param>
+        /// <param name='request'>
+        /// Optional. RestoreRequest for the backup item
+        /// </param>
         /// <returns>
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static BaseRecoveryServicesJobResponse TriggerRestore(this IRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId)
+        public static BaseRecoveryServicesJobResponse TriggerRestore(this IRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreRequest request)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRestoreOperations)s).TriggerRestoreAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId);
+                return ((IRestoreOperations)s).TriggerRestoreAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId, request);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -99,13 +102,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='recoveryPointId'>
         /// Optional. Recovery point id for the backup item
         /// </param>
+        /// <param name='request'>
+        /// Optional. RestoreRequest for the backup item
+        /// </param>
         /// <returns>
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static Task<BaseRecoveryServicesJobResponse> TriggerRestoreAsync(this IRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId)
+        public static Task<BaseRecoveryServicesJobResponse> TriggerRestoreAsync(this IRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, TriggerRestoreRequest request)
         {
-            return operations.TriggerRestoreAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId, CancellationToken.None);
+            return operations.TriggerRestoreAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, containerName, protectedItemName, recoveryPointId, request, CancellationToken.None);
         }
     }
 }

@@ -21,32 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a GetOperationResultResponse.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class PaginationRequest
     {
-        private ProtectionPolicyResourceList _itemList;
+        private string _skipToken;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. It will work as continuation token
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public string SkipToken
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._skipToken; }
+            set { this._skipToken = value; }
+        }
+        
+        private string _top;
+        
+        /// <summary>
+        /// Optional. It will decide result count
+        /// </summary>
+        public string Top
+        {
+            get { return this._top; }
+            set { this._top = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// Initializes a new instance of the PaginationRequest class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public PaginationRequest()
         {
         }
     }

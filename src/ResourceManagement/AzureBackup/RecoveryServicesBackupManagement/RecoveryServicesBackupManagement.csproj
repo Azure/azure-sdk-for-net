@@ -86,6 +86,8 @@
     </Compile>
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
+    <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -102,9 +104,11 @@
     <Compile Include="Generated\Models\Day.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\DpmProtectionContainer.cs" />
     <Compile Include="Generated\Models\ErrorInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\IaaSVMErrorInfo.cs">
       <SubType>Code</SubType>
@@ -116,6 +120,7 @@
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectableObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +131,7 @@
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
     <Compile Include="Generated\Models\Job.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -163,6 +169,7 @@
     <Compile Include="Generated\Models\LongTermSchedulePolicy.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\MabProtectionContainer.cs" />
     <Compile Include="Generated\Models\Month.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -171,9 +178,15 @@
     </Compile>
     <Compile Include="Generated\Models\OperationResultInfo.cs" />
     <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
+    <Compile Include="Generated\Models\OperationStatusError.cs" />
+    <Compile Include="Generated\Models\OperationStatusExtendedInfo.cs" />
+    <Compile Include="Generated\Models\OperationStatusJobExtendedInfo.cs" />
+    <Compile Include="Generated\Models\OperationStatusValues.cs" />
+    <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectableItem.cs" />
     <Compile Include="Generated\Models\ProtectableObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -214,12 +227,15 @@
     <Compile Include="Generated\Models\ProtectedItemResource.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectedItemResourceList.cs" />
     <Compile Include="Generated\Models\ProtectedItemResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectionContainer.cs" />
     <Compile Include="Generated\Models\ProtectionContainerBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectionContainerListQueryParams.cs" />
     <Compile Include="Generated\Models\ProtectionContainerListResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -247,6 +263,7 @@
     <Compile Include="Generated\Models\ProtectionPolicyResource.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -277,9 +294,12 @@
     <Compile Include="Generated\Models\RecoveryPointResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\RecoveryType.cs" />
     <Compile Include="Generated\Models\Resource.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\RestoreRequest.cs" />
+    <Compile Include="Generated\Models\RestoreRequestResource.cs" />
     <Compile Include="Generated\Models\RetentionDuration.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -304,6 +324,7 @@
     <Compile Include="Generated\Models\SimpleSchedulePolicy.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\TriggerRestoreRequest.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionFormat.cs">
       <SubType>Code</SubType>
     </Compile>

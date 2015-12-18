@@ -21,33 +21,45 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a RestoreRequestResource object.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class RestoreRequestResource
     {
-        private ProtectionPolicyResourceList _itemList;
+        private RestoreRequest _properties;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Required. properties for RestoreRequest.
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public RestoreRequest Properties
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// Initializes a new instance of the RestoreRequestResource class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public RestoreRequestResource()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RestoreRequestResource class with
+        /// required arguments.
+        /// </summary>
+        public RestoreRequestResource(RestoreRequest properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

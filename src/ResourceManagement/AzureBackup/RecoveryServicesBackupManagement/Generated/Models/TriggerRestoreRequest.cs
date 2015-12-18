@@ -21,32 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a TriggerRestoreRequest Object.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class TriggerRestoreRequest
     {
-        private ProtectionPolicyResourceList _itemList;
+        private RestoreRequestResource _item;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. Item
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public RestoreRequestResource Item
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._item; }
+            set { this._item = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// Initializes a new instance of the TriggerRestoreRequest class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public TriggerRestoreRequest()
         {
         }
     }

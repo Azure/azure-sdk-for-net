@@ -29,28 +29,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectionContainerBase
     {
-        private string _providerType;
-        
-        /// <summary>
-        /// Optional. Provider Type
-        /// </summary>
-        public string ProviderType
-        {
-            get { return this._providerType; }
-            set { this._providerType = value; }
-        }
-        
-        private string _workloadType;
-        
-        /// <summary>
-        /// Optional. Workload Type
-        /// </summary>
-        public string WorkloadType
-        {
-            get { return this._workloadType; }
-            set { this._workloadType = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the ProtectionContainerBase class.
         /// </summary>

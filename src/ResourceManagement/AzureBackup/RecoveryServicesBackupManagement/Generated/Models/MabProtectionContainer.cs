@@ -21,32 +21,41 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a MabProtectionContainer object.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class MabProtectionContainer : ProtectionContainer
     {
-        private ProtectionPolicyResourceList _itemList;
+        private bool _canReRegister;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. Specifies whether the container is re-registrable
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public bool CanReRegister
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._canReRegister; }
+            set { this._canReRegister = value; }
+        }
+        
+        private long _containerId;
+        
+        /// <summary>
+        /// Optional. ID of container
+        /// </summary>
+        public long ContainerId
+        {
+            get { return this._containerId; }
+            set { this._containerId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// Initializes a new instance of the MabProtectionContainer class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public MabProtectionContainer()
         {
         }
     }

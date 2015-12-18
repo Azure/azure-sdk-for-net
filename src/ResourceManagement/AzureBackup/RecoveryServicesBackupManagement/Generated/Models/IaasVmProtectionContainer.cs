@@ -28,61 +28,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a IaasVmProtectionContainer object.
     /// </summary>
-    public partial class IaasVmProtectionContainer : ProtectionContainerBase
+    public partial class IaasVmProtectionContainer : ProtectionContainer
     {
-        private string _containerId;
+        private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. Container ID
+        /// Optional. Virtual Machine Version
         /// </summary>
-        public string ContainerId
+        public string VirtualMachineVersion
         {
-            get { return this._containerId; }
-            set { this._containerId = value; }
-        }
-        
-        private string _friendlyName;
-        
-        /// <summary>
-        /// Optional. Friendly Name
-        /// </summary>
-        public string FriendlyName
-        {
-            get { return this._friendlyName; }
-            set { this._friendlyName = value; }
-        }
-        
-        private string _registrationStatus;
-        
-        /// <summary>
-        /// Optional. Registration Status
-        /// </summary>
-        public string RegistrationStatus
-        {
-            get { return this._registrationStatus; }
-            set { this._registrationStatus = value; }
-        }
-        
-        private string _resourceGroup;
-        
-        /// <summary>
-        /// Optional. Resource Group
-        /// </summary>
-        public string ResourceGroup
-        {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
-        }
-        
-        private string _vmVersion;
-        
-        /// <summary>
-        /// Optional. VM Version
-        /// </summary>
-        public string VmVersion
-        {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>

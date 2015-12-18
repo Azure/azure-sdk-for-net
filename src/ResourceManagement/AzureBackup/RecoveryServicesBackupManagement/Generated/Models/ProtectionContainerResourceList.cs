@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<ProtectionContainerResource> _protectionContainers;
         
         /// <summary>
-        /// Optional. value
+        /// Optional. List of ProtectionContainer responses.
         /// </summary>
         public IList<ProtectionContainerResource> ProtectionContainers
         {

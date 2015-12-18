@@ -21,32 +21,52 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The definition of a IaasVM ProtectableItem object.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class IaaSVMProtectableItem : ProtectableItem
     {
-        private ProtectionPolicyResourceList _itemList;
+        private string _containerUri;
         
         /// <summary>
-        /// Optional. ItemList
+        /// Optional. Container Uri
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
+        public string ContainerUri
         {
-            get { return this._itemList; }
-            set { this._itemList = value; }
+            get { return this._containerUri; }
+            set { this._containerUri = value; }
+        }
+        
+        private string _protectableObjectUri;
+        
+        /// <summary>
+        /// Optional. ProtectableObject Uri
+        /// </summary>
+        public string ProtectableObjectUri
+        {
+            get { return this._protectableObjectUri; }
+            set { this._protectableObjectUri = value; }
+        }
+        
+        private string _virtualMachineVersion;
+        
+        /// <summary>
+        /// Optional. Classic or Classic VM
+        /// </summary>
+        public string VirtualMachineVersion
+        {
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// Initializes a new instance of the IaaSVMProtectableItem class.
         /// </summary>
-        public ProtectionPolicyListResponse()
+        public IaaSVMProtectableItem()
         {
         }
     }

@@ -1739,6 +1739,285 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Get the operation stauts of specific operationId.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required.
+        /// </param>
+        /// <param name='protectedItemName'>
+        /// Required.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public async Task<BackUpOperationStatusResponse> GetOperationStatusAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
+            if (protectedItemName == null)
+            {
+                throw new ArgumentNullException("protectedItemName");
+            }
+            if (operationId == null)
+            {
+                throw new ArgumentNullException("operationId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("protectedItemName", protectedItemName);
+                tracingParameters.Add("operationId", operationId);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + "vaults";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/backupFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/protectionContainers/";
+            url = url + Uri.EscapeDataString(containerName);
+            url = url + "/protectedItems/";
+            url = url + Uri.EscapeDataString(protectedItemName);
+            url = url + "/operationsStatus/";
+            url = url + Uri.EscapeDataString(operationId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-15");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BackUpOperationStatusResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BackUpOperationStatusResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            BackUpOperationStatus operationStatusInstance = new BackUpOperationStatus();
+                            result.OperationStatus = operationStatusInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                operationStatusInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                operationStatusInstance.Name = nameInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                operationStatusInstance.Status = statusInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                string startTimeInstance = ((string)startTimeValue);
+                                operationStatusInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = responseDoc["endTime"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                string endTimeInstance = ((string)endTimeValue);
+                                operationStatusInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                            {
+                                OperationStatusError errorInstance = new OperationStatusError();
+                                operationStatusInstance.OperationStatusError = errorInstance;
+                                
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                {
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                {
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
+                                }
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)propertiesValue["objectType"]);
+                                if (typeName == "OperationStatusJobExtendedInfo")
+                                {
+                                    OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
+                                    
+                                    JToken jobIdValue = propertiesValue["jobId"];
+                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                    {
+                                        string jobIdInstance = ((string)jobIdValue);
+                                        operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
+                                    }
+                                    operationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Get the list of all protected Objects.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1750,6 +2029,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -1759,7 +2041,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectedItemsListResponse.
         /// </returns>
-        public async Task<ProtectedItemListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectedItemListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectedItemListQueryParam queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1781,6 +2063,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("queryFilter", queryFilter);
+                tracingParameters.Add("paginationParams", paginationParams);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -1816,17 +2099,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 odataFilter.Add("policyName eq '" + Uri.EscapeDataString(queryFilter.PolicyName) + "'");
             }
-            if (queryFilter != null && queryFilter.SkipToken != null)
-            {
-                odataFilter.Add("skipToken eq '" + Uri.EscapeDataString(queryFilter.SkipToken) + "'");
-            }
-            if (queryFilter != null && queryFilter.TopToken != null)
-            {
-                odataFilter.Add("topToken eq '" + Uri.EscapeDataString(queryFilter.TopToken) + "'");
-            }
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
+            if (paginationParams != null && paginationParams.SkipToken != null)
+            {
+                queryParameters.Add("$skiptoken=" + Uri.EscapeDataString(paginationParams.SkipToken));
+            }
+            if (paginationParams != null && paginationParams.Top != null)
+            {
+                queryParameters.Add("$top=" + Uri.EscapeDataString(paginationParams.Top));
             }
             if (queryParameters.Count > 0)
             {
@@ -1903,13 +2186,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
+                            ProtectedItemResourceList itemListInstance = new ProtectedItemResourceList();
+                            result.ItemList = itemListInstance;
+                            
                             JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
                                     ProtectedItemResource protectedItemResourceInstance = new ProtectedItemResource();
-                                    result.Value.Add(protectedItemResourceInstance);
+                                    itemListInstance.Value.Add(protectedItemResourceInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -2190,7 +2476,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
-                                result.NextLink = nextLinkInstance;
+                                itemListInstance.NextLink = nextLinkInstance;
                             }
                         }
                         

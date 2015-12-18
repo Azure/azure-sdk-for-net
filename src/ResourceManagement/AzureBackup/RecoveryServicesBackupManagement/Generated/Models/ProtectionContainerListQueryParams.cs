@@ -25,30 +25,19 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectedItemListQueryParam object.
+    /// The definition of a ProtectionContainerListQueryParams object.
     /// </summary>
-    public partial class ProtectedItemListQueryParam
+    public partial class ProtectionContainerListQueryParams
     {
-        private string _datasourceType;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. Datasource Type query parameter
+        /// Optional. Container friendly name
         /// </summary>
-        public string DatasourceType
+        public string FriendlyName
         {
-            get { return this._datasourceType; }
-            set { this._datasourceType = value; }
-        }
-        
-        private string _policyName;
-        
-        /// <summary>
-        /// Optional. PolicyName query parameter
-        /// </summary>
-        public string PolicyName
-        {
-            get { return this._policyName; }
-            set { this._policyName = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
         }
         
         private string _providerType;
@@ -62,10 +51,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._providerType = value; }
         }
         
+        private string _registrationStatus;
+        
         /// <summary>
-        /// Initializes a new instance of the ProtectedItemListQueryParam class.
+        /// Optional. Container registration status
         /// </summary>
-        public ProtectedItemListQueryParam()
+        public string RegistrationStatus
+        {
+            get { return this._registrationStatus; }
+            set { this._registrationStatus = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ProtectionContainerListQueryParams class.
+        /// </summary>
+        public ProtectionContainerListQueryParams()
         {
         }
     }

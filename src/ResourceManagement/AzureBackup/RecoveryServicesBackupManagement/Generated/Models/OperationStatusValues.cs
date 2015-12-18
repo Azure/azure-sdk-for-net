@@ -21,33 +21,37 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyListResponse.
+    /// The enum for all supported type of OperationStatus
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public static partial class OperationStatusValues
     {
-        private ProtectionPolicyResourceList _itemList;
+        /// <summary>
+        /// Invalid Status of OperationStatus.
+        /// </summary>
+        public const string Invalid = "Invalid";
         
         /// <summary>
-        /// Optional. ItemList
+        /// InProgress Status of OperationStatus.
         /// </summary>
-        public ProtectionPolicyResourceList ItemList
-        {
-            get { return this._itemList; }
-            set { this._itemList = value; }
-        }
+        public const string InProgress = "InProgress";
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
+        /// Succeeded Status of OperationStatus.
         /// </summary>
-        public ProtectionPolicyListResponse()
-        {
-        }
+        public const string Succeeded = "Succeeded";
+        
+        /// <summary>
+        /// Failed Status of OperationStatus.
+        /// </summary>
+        public const string Failed = "Failed";
+        
+        /// <summary>
+        /// Canceled Status of OperationStatus.
+        /// </summary>
+        public const string Canceled = "Canceled";
     }
 }
