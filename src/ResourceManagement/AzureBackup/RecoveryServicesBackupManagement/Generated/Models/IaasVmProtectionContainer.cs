@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class IaasVmProtectionContainer : ProtectionContainer
     {
-        private string _vmVersion;
+        private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. VM Version
+        /// Optional. Virtual Machine Version
         /// </summary>
-        public string VmVersion
+        public string VirtualMachineVersion
         {
-            get { return this._vmVersion; }
-            set { this._vmVersion = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>

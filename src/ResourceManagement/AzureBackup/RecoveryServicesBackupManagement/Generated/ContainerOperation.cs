@@ -317,11 +317,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             List<string> odataFilter = new List<string>();
             if (queryParams.ProviderType != null)
             {
-                odataFilter.Add("providertype eq '" + Uri.EscapeDataString(queryParams.ProviderType) + "'");
+                odataFilter.Add("providerType eq '" + Uri.EscapeDataString(queryParams.ProviderType) + "'");
+            }
+            if (queryParams.RegistrationStatus != null)
+            {
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(queryParams.RegistrationStatus) + "'");
+            }
+            if (queryParams.FriendlyName != null)
+            {
+                odataFilter.Add("friendlyName eq '" + Uri.EscapeDataString(queryParams.FriendlyName) + "'");
             }
             if (odataFilter.Count > 0)
             {
-                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
             if (queryParameters.Count > 0)
             {
@@ -444,17 +452,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string healthStatusInstance = ((string)healthStatusValue);
                                                 protectionContainerInstance.HealthStatus = healthStatusInstance;
                                             }
+                                            
+                                            JToken typeValue = propertiesValue["type"];
+                                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance = ((string)typeValue);
+                                                protectionContainerInstance.Type = typeInstance;
+                                            }
                                             protectionContainerResourceInstance.Properties = protectionContainerInstance;
                                         }
                                         if (typeName == "IaaSVMContainer")
                                         {
                                             IaasVmProtectionContainer iaasVmProtectionContainerInstance = new IaasVmProtectionContainer();
                                             
-                                            JToken vmVersionValue = propertiesValue["vmVersion"];
-                                            if (vmVersionValue != null && vmVersionValue.Type != JTokenType.Null)
+                                            JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
+                                            if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                             {
-                                                string vmVersionInstance = ((string)vmVersionValue);
-                                                iaasVmProtectionContainerInstance.VmVersion = vmVersionInstance;
+                                                string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
+                                                iaasVmProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                             }
                                             
                                             JToken friendlyNameValue2 = propertiesValue["friendlyName"];
@@ -483,6 +498,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string healthStatusInstance2 = ((string)healthStatusValue2);
                                                 iaasVmProtectionContainerInstance.HealthStatus = healthStatusInstance2;
+                                            }
+                                            
+                                            JToken typeValue2 = propertiesValue["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance2 = ((string)typeValue2);
+                                                iaasVmProtectionContainerInstance.Type = typeInstance2;
                                             }
                                             protectionContainerResourceInstance.Properties = iaasVmProtectionContainerInstance;
                                         }
@@ -531,6 +553,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string healthStatusInstance3 = ((string)healthStatusValue3);
                                                 dpmProtectionContainerInstance.HealthStatus = healthStatusInstance3;
                                             }
+                                            
+                                            JToken typeValue3 = propertiesValue["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance3 = ((string)typeValue3);
+                                                dpmProtectionContainerInstance.Type = typeInstance3;
+                                            }
                                             protectionContainerResourceInstance.Properties = dpmProtectionContainerInstance;
                                         }
                                         if (typeName == "MabContainer")
@@ -578,6 +607,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string healthStatusInstance4 = ((string)healthStatusValue4);
                                                 mabProtectionContainerInstance.HealthStatus = healthStatusInstance4;
                                             }
+                                            
+                                            JToken typeValue4 = propertiesValue["type"];
+                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance4 = ((string)typeValue4);
+                                                mabProtectionContainerInstance.Type = typeInstance4;
+                                            }
                                             protectionContainerResourceInstance.Properties = mabProtectionContainerInstance;
                                         }
                                     }
@@ -596,11 +632,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         protectionContainerResourceInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken typeValue5 = valueValue["type"];
+                                    if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
                                     {
-                                        string typeInstance = ((string)typeValue);
-                                        protectionContainerResourceInstance.Type = typeInstance;
+                                        string typeInstance5 = ((string)typeValue5);
+                                        protectionContainerResourceInstance.Type = typeInstance5;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
