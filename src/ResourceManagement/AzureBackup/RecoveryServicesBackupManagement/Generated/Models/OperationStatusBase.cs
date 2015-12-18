@@ -21,30 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectableObject object.
+    /// The definition of a OperationStatusBase object.
     /// </summary>
-    public partial class IaaSVMProtectableObject : ProtectableObject
+    public partial class OperationStatusBase
     {
-        private string _virtualMachineVersion;
-        
         /// <summary>
-        /// Optional. Classic or Classic VM
+        /// Initializes a new instance of the OperationStatusBase class.
         /// </summary>
-        public string VirtualMachineVersion
-        {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the IaaSVMProtectableObject class.
-        /// </summary>
-        public IaaSVMProtectableObject()
+        public OperationStatusBase()
         {
         }
     }

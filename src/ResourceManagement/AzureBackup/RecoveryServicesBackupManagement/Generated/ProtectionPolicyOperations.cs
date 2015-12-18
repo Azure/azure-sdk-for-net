@@ -278,6 +278,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         JObject weeklyScheduleValue = new JObject();
                                         retentionPolicyValue["weeklySchedule"] = weeklyScheduleValue;
+<<<<<<< HEAD
                                         
                                         if (derived5.WeeklySchedule.DaysOfTheWeek != null)
                                         {
@@ -289,6 +290,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             weeklyScheduleValue["daysOfTheWeek"] = daysOfTheWeekArray;
                                         }
                                         
+=======
+                                        
+                                        if (derived5.WeeklySchedule.DaysOfTheWeek != null)
+                                        {
+                                            JArray daysOfTheWeekArray = new JArray();
+                                            foreach (DayOfWeek daysOfTheWeekItem in derived5.WeeklySchedule.DaysOfTheWeek)
+                                            {
+                                                daysOfTheWeekArray.Add(daysOfTheWeekItem.ToString());
+                                            }
+                                            weeklyScheduleValue["daysOfTheWeek"] = daysOfTheWeekArray;
+                                        }
+                                        
+>>>>>>> dev1
                                         if (derived5.WeeklySchedule.RetentionTimes != null)
                                         {
                                             JArray retentionTimesArray2 = new JArray();
@@ -314,9 +328,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         JObject monthlyScheduleValue = new JObject();
                                         retentionPolicyValue["monthlySchedule"] = monthlyScheduleValue;
+<<<<<<< HEAD
                                         
                                         monthlyScheduleValue["retentionScheduleFormat"] = derived5.MonthlySchedule.RetentionScheduleFormat.ToString();
                                         
+=======
+                                        
+                                        monthlyScheduleValue["retentionScheduleFormat"] = derived5.MonthlySchedule.RetentionScheduleFormat.ToString();
+                                        
+>>>>>>> dev1
                                         if (derived5.MonthlySchedule.RetentionScheduleDaily != null)
                                         {
                                             JObject retentionScheduleDailyValue = new JObject();
@@ -1146,7 +1166,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
+<<<<<<< HEAD
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
+=======
+                    if (statusCode != HttpStatusCode.OK)
+>>>>>>> dev1
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1304,7 +1328,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1318,7 +1342,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     // Create Result
                     ProtectionPolicyResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
