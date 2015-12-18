@@ -50,6 +50,23 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.NotNull(getResponse);
                 Assert.NotNull(getResponse.Value);
                 Assert.True(getResponse.Value.Enabled);
+
+                ApiManagementClient.TenantAccess.RegeneratePrimaryKey(ResourceGroupName, ApiManagementServiceName);
+                
+                var getResponse2 = ApiManagementClient.TenantAccess.Get(ResourceGroupName, ApiManagementServiceName);
+
+                Assert.NotNull(getResponse2);
+                Assert.NotNull(getResponse2.Value);
+                Assert.Equal(getResponse.Value.SecondaryKey, getResponse2.Value.SecondaryKey);
+                Assert.NotEqual(getResponse.Value.PrimaryKey, getResponse2.Value.PrimaryKey);
+
+                ApiManagementClient.TenantAccess.RegenerateSecondaryKey(ResourceGroupName, ApiManagementServiceName);
+
+                getResponse2 = ApiManagementClient.TenantAccess.Get(ResourceGroupName, ApiManagementServiceName);
+
+                Assert.NotNull(getResponse2);
+                Assert.NotNull(getResponse2.Value);
+                Assert.NotEqual(getResponse.Value.SecondaryKey, getResponse2.Value.SecondaryKey);
             }
             finally
             {

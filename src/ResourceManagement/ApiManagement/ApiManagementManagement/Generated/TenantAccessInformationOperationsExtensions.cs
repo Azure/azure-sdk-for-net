@@ -81,6 +81,102 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
+        /// Regenerate primary access key.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.ApiManagement.ITenantAccessInformationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the Api Management service.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse RegeneratePrimaryKey(this ITenantAccessInformationOperations operations, string resourceGroupName, string serviceName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITenantAccessInformationOperations)s).RegeneratePrimaryKeyAsync(resourceGroupName, serviceName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Regenerate primary access key.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.ApiManagement.ITenantAccessInformationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the Api Management service.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> RegeneratePrimaryKeyAsync(this ITenantAccessInformationOperations operations, string resourceGroupName, string serviceName)
+        {
+            return operations.RegeneratePrimaryKeyAsync(resourceGroupName, serviceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Regenerate secondary access key.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.ApiManagement.ITenantAccessInformationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the Api Management service.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse RegenerateSecondaryKey(this ITenantAccessInformationOperations operations, string resourceGroupName, string serviceName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITenantAccessInformationOperations)s).RegenerateSecondaryKeyAsync(resourceGroupName, serviceName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Regenerate secondary access key.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.ApiManagement.ITenantAccessInformationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the Api Management service.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> RegenerateSecondaryKeyAsync(this ITenantAccessInformationOperations operations, string resourceGroupName, string serviceName)
+        {
+            return operations.RegenerateSecondaryKeyAsync(resourceGroupName, serviceName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Update tenant settings.
         /// </summary>
         /// <param name='operations'>

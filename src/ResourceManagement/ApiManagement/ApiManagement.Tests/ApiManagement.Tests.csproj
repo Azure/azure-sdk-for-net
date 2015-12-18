@@ -28,7 +28,7 @@
     <Compile Include="ScenarioTests\SmapiTestsFixture.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiOperations.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiProducts.cs" />
-    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.TenantSettings.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.TenantAccessInformationGetUpdate.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Apis.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.AuthorizationServers.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Certificates.cs" />
@@ -292,20 +292,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Net45-Debug\SessionRecords\Features.Tests.LiveFeatureTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.TestsFixture\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\Microsoft.WindowsAzure.Management.Storage.Testing.StorageManagementOperationTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\Microsoft.WindowsAzure.Management.Testing.ManagementReproTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceGroups.Tests.LiveProviderTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceGroups.Tests.LiveResourceGroupTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceGroups.Tests.LiveResourceTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceGroups.Tests.LiveSubscriptionTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceGroups.Tests.LiveTagsTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceGroups.Tests.LiveTenantTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\ResourceProviderFunctionalTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\SmapiFunctionalTests\" />
-    <Folder Include="bin\Net45-Debug\SessionRecords\SmapiTestsFixture\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

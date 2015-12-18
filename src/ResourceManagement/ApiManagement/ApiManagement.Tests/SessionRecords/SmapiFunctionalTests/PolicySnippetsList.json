@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice5175/policySnippets?api-version=2014-02-14&scope=All",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNTE3NS9wb2xpY3lTbmlwcGV0cz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JnNjb3BlPUFsbA==",
+      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/policySnippets?api-version=2014-02-14&scope=All",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9wb2xpY3lTbmlwcGV0cz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JnNjb3BlPUFsbA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -25,16 +25,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a67b094a-5626-4571-99c7-324aefe03208"
+          "c2c5efb5-0a7d-4145-b6c7-8359d68ba57c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "962d3bfe-fd2f-4b34-b17d-eb319ff84a53"
+          "54276f5f-e2b7-42c7-b3a4-7eb5d1ce3615"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151218T004234Z:962d3bfe-fd2f-4b34-b17d-eb319ff84a53"
+          "CENTRALUS:20151218T194701Z:54276f5f-e2b7-42c7-b3a4-7eb5d1ce3615"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,7 +43,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 00:42:34 GMT"
+          "Fri, 18 Dec 2015 19:47:01 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -52,8 +52,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice5175/policySnippets?api-version=2014-02-14&scope=Api",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNTE3NS9wb2xpY3lTbmlwcGV0cz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JnNjb3BlPUFwaQ==",
+      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/policySnippets?api-version=2014-02-14&scope=Api",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9wb2xpY3lTbmlwcGV0cz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0JnNjb3BlPUFwaQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -76,16 +76,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d3dd6a27-a147-42e1-8275-5acc538ff647"
+          "d01bf718-6926-438c-a28a-3019946eb7d4"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14997"
         ],
         "x-ms-correlation-request-id": [
-          "f75ea708-1a01-469e-b180-10b1c18d7293"
+          "049eb191-911c-4136-af8a-a0cb1a12930f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151218T004234Z:f75ea708-1a01-469e-b180-10b1c18d7293"
+          "CENTRALUS:20151218T194701Z:049eb191-911c-4136-af8a-a0cb1a12930f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -94,7 +94,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 00:42:34 GMT"
+          "Fri, 18 Dec 2015 19:47:01 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
