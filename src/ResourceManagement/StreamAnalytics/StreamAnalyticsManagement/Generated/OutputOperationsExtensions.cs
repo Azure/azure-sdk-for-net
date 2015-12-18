@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// Required. The output Name of the stream analytics job.
+        /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static DataSourceTestConnectionResponse BeginTestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static ResourceTestConnectionResponse BeginTestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -72,12 +72,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// Required. The output Name of the stream analytics job.
+        /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static Task<ResourceTestConnectionResponse> BeginTestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return operations.BeginTestConnectionAsync(resourceGroupName, jobName, outputName, CancellationToken.None);
         }
@@ -430,12 +430,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// Required. The output Name of the stream analytics job.
+        /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static DataSourceTestConnectionResponse TestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static ResourceTestConnectionResponse TestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -458,12 +458,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// Required. The output Name of the stream analytics job.
+        /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static Task<DataSourceTestConnectionResponse> TestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static Task<ResourceTestConnectionResponse> TestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return operations.TestConnectionAsync(resourceGroupName, jobName, outputName, CancellationToken.None);
         }

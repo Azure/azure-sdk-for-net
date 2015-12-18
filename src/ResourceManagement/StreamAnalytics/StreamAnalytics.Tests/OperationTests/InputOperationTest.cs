@@ -126,9 +126,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(1, jobGetResponse.Job.Properties.Inputs.Count);
 
                     // Test input connectivity
-                    DataSourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
+                    ResourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the input
                     Serialization csvSerialization = new CsvSerialization()
@@ -276,9 +276,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.NotNull(streamInputPropertiesInResponse.Etag);
 
                     // Test input connectivity
-                    DataSourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
+                    ResourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the input
                     Serialization csvSerialization = new CsvSerialization()
@@ -424,9 +424,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(1, inputListResponse.Value.Count);
 
                     // Test input connectivity
-                    DataSourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
+                    ResourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the input
                     BlobReferenceInputDataSource blobReferenceInputDataSource = new BlobReferenceInputDataSource()
@@ -565,9 +565,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(inputCreateOrUpdateResponse.Input.Properties.Etag, inputGetResponse.Input.Properties.Etag);
 
                     // Test input connectivity
-                    DataSourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
+                    ResourceTestConnectionResponse response = client.Inputs.TestConnection(resourceGroupName, resourceName, inputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the input
                     string newSharedPolicyName = TestUtilities.GenerateName("owner");

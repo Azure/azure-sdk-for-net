@@ -39,7 +39,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
     /// <summary>
-    /// Operations for managing the output of the stream analytics job.
+    /// Operations for managing the output(s) of the stream analytics job.
     /// </summary>
     internal partial class OutputOperations : IServiceOperations<StreamAnalyticsManagementClient>, IOutputOperations
     {
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// Required. The output Name of the stream analytics job.
+        /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public async Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
+        public async Task<ResourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -187,13 +187,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     }
                     
                     // Create Result
-                    DataSourceTestConnectionResponse result = null;
+                    ResourceTestConnectionResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.BadRequest || statusCode == HttpStatusCode.NotFound)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DataSourceTestConnectionResponse();
+                        result = new ResourceTestConnectionResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
                                 string statusInstance = ((string)statusValue);
-                                result.DataSourceTestStatus = statusInstance;
+                                result.ResourceTestStatus = statusInstance;
                             }
                             
                             JToken errorValue = responseDoc["error"];
@@ -266,11 +266,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -5117,7 +5117,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// Required. The output Name of the stream analytics job.
+        /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -5125,7 +5125,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public async Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
+        public async Task<ResourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
         {
             StreamAnalyticsManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -5141,13 +5141,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            DataSourceTestConnectionResponse response = await client.Outputs.BeginTestConnectionAsync(resourceGroupName, jobName, outputName, cancellationToken).ConfigureAwait(false);
+            ResourceTestConnectionResponse response = await client.Outputs.BeginTestConnectionAsync(resourceGroupName, jobName, outputName, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
             }
             cancellationToken.ThrowIfCancellationRequested();
-            DataSourceTestConnectionResponse result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ResourceTestConnectionResponse result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
