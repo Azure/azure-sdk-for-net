@@ -1768,7 +1768,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a OperationStatusResponse.
         /// </returns>
-        public async Task<GetOperationStatusResponse> GetOperationStatusAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<BackUpOperationStatusResponse> GetOperationStatusAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1834,7 +1834,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + Uri.EscapeDataString(containerName);
             url = url + "/protectedItems/";
             url = url + Uri.EscapeDataString(protectedItemName);
-            url = url + "/operationStatus/";
+            url = url + "/operationsStatus/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
@@ -1898,13 +1898,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     }
                     
                     // Create Result
-                    GetOperationStatusResponse result = null;
+                    BackUpOperationStatusResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new GetOperationStatusResponse();
+                        result = new BackUpOperationStatusResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1913,85 +1913,81 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string typeName = ((string)responseDoc["objectType"]);
-                            if (typeName == "OperationStatus")
+                            BackUpOperationStatus operationStatusInstance = new BackUpOperationStatus();
+                            result.OperationStatus = operationStatusInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                GetOperationStatus getOperationStatusInstance = new GetOperationStatus();
+                                string idInstance = ((string)idValue);
+                                operationStatusInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                operationStatusInstance.Name = nameInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                operationStatusInstance.Status = statusInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                string startTimeInstance = ((string)startTimeValue);
+                                operationStatusInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = responseDoc["endTime"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                string endTimeInstance = ((string)endTimeValue);
+                                operationStatusInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                            {
+                                OperationStatusError errorInstance = new OperationStatusError();
+                                operationStatusInstance.OperationStatusError = errorInstance;
                                 
-                                JToken idValue = responseDoc["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = ((string)idValue);
-                                    getOperationStatusInstance.Id = idInstance;
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
                                 }
                                 
-                                JToken nameValue = responseDoc["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    getOperationStatusInstance.Name = nameInstance;
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
                                 }
-                                
-                                JToken statusValue = responseDoc["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)propertiesValue["objectType"]);
+                                if (typeName == "OperationStatusJobExtendedInfo")
                                 {
-                                    string statusInstance = ((string)statusValue);
-                                    getOperationStatusInstance.Status = statusInstance;
-                                }
-                                
-                                JToken startTimeValue = responseDoc["startTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    string startTimeInstance = ((string)startTimeValue);
-                                    getOperationStatusInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken endTimeValue = responseDoc["endTime"];
-                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                {
-                                    string endTimeInstance = ((string)endTimeValue);
-                                    getOperationStatusInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JToken errorValue = responseDoc["error"];
-                                if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                {
-                                    OperationStatusError errorInstance = new OperationStatusError();
-                                    getOperationStatusInstance.OperationStatusError = errorInstance;
+                                    OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
                                     
-                                    JToken codeValue = errorValue["code"];
-                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                    JToken jobIdValue = propertiesValue["jobId"];
+                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
                                     {
-                                        string codeInstance = ((string)codeValue);
-                                        errorInstance.Code = codeInstance;
+                                        string jobIdInstance = ((string)jobIdValue);
+                                        operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
                                     }
-                                    
-                                    JToken messageValue = errorValue["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        errorInstance.Message = messageInstance;
-                                    }
+                                    operationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
                                 }
-                                
-                                JToken propertiesValue = responseDoc["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    string typeName2 = ((string)propertiesValue["objectType"]);
-                                    if (typeName2 == "OperationStatusJobExtendedInfo")
-                                    {
-                                        OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
-                                        
-                                        JToken jobIdValue = propertiesValue["jobId"];
-                                        if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
-                                        {
-                                            string jobIdInstance = ((string)jobIdValue);
-                                            operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
-                                        }
-                                        getOperationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
-                                    }
-                                }
-                                result.OperationStatus = getOperationStatusInstance;
                             }
                         }
                         
