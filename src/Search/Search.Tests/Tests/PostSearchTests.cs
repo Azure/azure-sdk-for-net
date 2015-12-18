@@ -156,5 +156,11 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(TestCanSearchWithMismatchedPropertyCase);
         }
+
+        [Fact]
+        public void CanSearchWithCustomConverter()
+        {
+            Run(TestCanSearchWithCustomConverter);
+        }
     }
 }
