@@ -141,6 +141,16 @@ namespace Microsoft.Azure.Management.RecoveryServices
             get { return this._vaults; }
         }
         
+        private IVaultUsageOperations _vaultUsage;
+        
+        /// <summary>
+        /// Definition of vault operations for the Recovery Services extension.
+        /// </summary>
+        public virtual IVaultUsageOperations VaultUsage
+        {
+            get { return this._vaultUsage; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the RecoveryServicesManagementClient
         /// class.
@@ -152,6 +162,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             this._resourceGroup = new ResourceGroupsOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vaults = new VaultOperations(this);
+            this._vaultUsage = new VaultUsageOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -240,6 +251,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             this._resourceGroup = new ResourceGroupsOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vaults = new VaultOperations(this);
+            this._vaultUsage = new VaultUsageOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
