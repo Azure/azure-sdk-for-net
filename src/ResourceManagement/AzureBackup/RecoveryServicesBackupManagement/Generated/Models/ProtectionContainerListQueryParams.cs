@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectionContainerListQueryParams
     {
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Optional. Container friendly name
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
         private string _providerType;
         
         /// <summary>
@@ -38,6 +49,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._providerType; }
             set { this._providerType = value; }
+        }
+        
+        private string _registrationStatus;
+        
+        /// <summary>
+        /// Optional. Container registration status
+        /// </summary>
+        public string RegistrationStatus
+        {
+            get { return this._registrationStatus; }
+            set { this._registrationStatus = value; }
         }
         
         /// <summary>

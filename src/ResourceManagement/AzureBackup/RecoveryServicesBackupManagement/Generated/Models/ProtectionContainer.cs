@@ -74,6 +74,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._resourceGroup = value; }
         }
         
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Container Type
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ProtectionContainer class.
         /// </summary>
