@@ -74,13 +74,12 @@
     <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
-    <Compile Include="Generated\Models\GetOperationStatus.cs" />
-    <Compile Include="Generated\Models\GetOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\IaaSVMErrorInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJob.cs" />
     <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
+    <Compile Include="Generated\Models\IaaSVMProtectableObject.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
     <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs" />
@@ -103,7 +102,6 @@
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\OperationResultInfo.cs" />
     <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
-    <Compile Include="Generated\Models\OperationStatusBase.cs" />
     <Compile Include="Generated\Models\OperationStatusError.cs" />
     <Compile Include="Generated\Models\OperationStatusExtendedInfo.cs" />
     <Compile Include="Generated\Models\OperationStatusJobExtendedInfo.cs" />
@@ -111,6 +109,7 @@
     <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />
     <Compile Include="Generated\Models\ProtectableItem.cs" />
+    <Compile Include="Generated\Models\ProtectableObject.cs" />
     <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListQueryParameters.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />

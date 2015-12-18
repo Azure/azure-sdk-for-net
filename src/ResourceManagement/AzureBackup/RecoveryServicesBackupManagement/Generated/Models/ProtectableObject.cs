@@ -21,31 +21,52 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a OperationStatusResponse.
+    /// The definition of a IaaSVMProtectableObject object.
     /// </summary>
-    public partial class GetOperationStatusResponse : AzureOperationResponse
+    public partial class ProtectableObject : ProtectableObjectBase
     {
-        private OperationStatusBase _operationStatus;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. operationStatus
+        /// Optional. Friendly Name
         /// </summary>
-        public OperationStatusBase OperationStatus
+        public string FriendlyName
         {
-            get { return this._operationStatus; }
-            set { this._operationStatus = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
+        private string _protectionStatus;
+        
+        /// <summary>
+        /// Optional. Protection Status
+        /// </summary>
+        public string ProtectionStatus
+        {
+            get { return this._protectionStatus; }
+            set { this._protectionStatus = value; }
+        }
+        
+        private string _resourceGroup;
+        
+        /// <summary>
+        /// Optional. Resource Group
+        /// </summary>
+        public string ResourceGroup
+        {
+            get { return this._resourceGroup; }
+            set { this._resourceGroup = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GetOperationStatusResponse class.
+        /// Initializes a new instance of the ProtectableObject class.
         /// </summary>
-        public GetOperationStatusResponse()
+        public ProtectableObject()
         {
         }
     }
