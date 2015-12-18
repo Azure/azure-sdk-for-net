@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         {
             this.Jobs = new JobsOperations(this);
             this.BaseUri = new Uri("https://accountname.jobserviceuri");
-            this.ApiVersion = "2015-10-01-preview";
+            this.ApiVersion = "2015-11-01-preview";
             this.Jobserviceuri = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings

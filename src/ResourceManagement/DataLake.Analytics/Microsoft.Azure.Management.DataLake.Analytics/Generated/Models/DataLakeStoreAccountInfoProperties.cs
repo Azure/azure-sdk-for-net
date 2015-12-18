@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Data Lake Store account properties information.
     /// </summary>
-    public partial class DataLakeStoreAccountProperties
+    public partial class DataLakeStoreAccountInfoProperties
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// DataLakeStoreAccountInfoProperties class.
         /// </summary>
-        public DataLakeStoreAccountProperties() { }
+        public DataLakeStoreAccountInfoProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// DataLakeStoreAccountInfoProperties class.
         /// </summary>
-        public DataLakeStoreAccountProperties(string suffix = default(string))
+        public DataLakeStoreAccountInfoProperties(string suffix = default(string))
         {
             Suffix = suffix;
         }

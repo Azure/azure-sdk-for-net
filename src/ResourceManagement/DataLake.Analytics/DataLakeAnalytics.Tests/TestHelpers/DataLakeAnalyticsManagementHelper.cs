@@ -191,14 +191,12 @@ namespace DataLakeAnalytics.Tests
                             DataLakeStoreAccounts =
                                 new List
                                     <
-                                        Microsoft.Azure.Management.DataLake.Analytics.Models.
-                                            DataLakeStoreAccount>
+                                        DataLakeStoreAccountInfo>
                                 {
-                                    new Microsoft.Azure.Management.DataLake.Analytics.Models.
-                                        DataLakeStoreAccount
+                                    new DataLakeStoreAccountInfo
                                     {
                                         Name = dataLakeStoreAccountName,
-                                        Properties = new Microsoft.Azure.Management.DataLake.Analytics.Models.DataLakeStoreAccountProperties
+                                        Properties = new DataLakeStoreAccountInfoProperties
                                         {
                                             Suffix =
                                                 datalakeStoreEndpoint.Replace(
@@ -375,7 +373,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                     getJobResponse.JobId, getJobResponse.State, getJobResponse.Result,
-                    getJobResponse.ErrorMessage));
+                    getJobResponse.ErrorMessage != null && getJobResponse.ErrorMessage.Count > 0 ? getJobResponse.ErrorMessage[0].Details : "no error information returned"));
         }
     }
 }

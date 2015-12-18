@@ -45,12 +45,12 @@ namespace DataLakeAnalytics.Tests
                             Properties = new DataLakeAnalyticsAccountProperties
                             {
                                 DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
-                                DataLakeStoreAccounts = new List<DataLakeStoreAccount>
+                                DataLakeStoreAccounts = new List<DataLakeStoreAccountInfo>
                                 {
-                                    new DataLakeStoreAccount
+                                    new DataLakeStoreAccountInfo
                                     {
                                         Name = commonData.DataLakeStoreAccountName,
-                                        Properties = new DataLakeStoreAccountProperties
+                                        Properties = new DataLakeStoreAccountInfoProperties
                                         {
                                             Suffix = commonData.DataLakeStoreAccountSuffix
                                         }
@@ -137,7 +137,7 @@ namespace DataLakeAnalytics.Tests
                 // Add, list and remove a data source to the first account
                 clientToUse.DataLakeAnalyticsAccount.AddDataLakeStoreAccount(commonData.ResourceGroupName,
                     commonData.DataLakeAnalyticsAccountName, commonData.SecondDataLakeStoreAccountName, new AddDataLakeStoreParameters {
-                    Properties = new DataLakeStoreAccountProperties {Suffix = commonData.DataLakeStoreAccountSuffix}
+                    Properties = new DataLakeStoreAccountInfoProperties {Suffix = commonData.DataLakeStoreAccountSuffix}
                     });
 
                 // Get the data sources and confirm there are 2

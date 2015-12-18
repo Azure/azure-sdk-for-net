@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the AddDataLakeStoreParameters class.
         /// </summary>
-        public AddDataLakeStoreParameters(DataLakeStoreAccountProperties properties = default(DataLakeStoreAccountProperties))
+        public AddDataLakeStoreParameters(DataLakeStoreAccountInfoProperties properties = default(DataLakeStoreAccountInfoProperties))
         {
             Properties = properties;
         }
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// added.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public DataLakeStoreAccountProperties Properties { get; set; }
+        public DataLakeStoreAccountInfoProperties Properties { get; set; }
 
     }
 }

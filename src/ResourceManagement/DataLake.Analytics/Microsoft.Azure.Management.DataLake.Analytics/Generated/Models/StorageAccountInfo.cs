@@ -17,36 +17,36 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Data Lake Store account information.
+    /// Azure Storage account information.
     /// </summary>
-    public partial class DataLakeStoreAccount
+    public partial class StorageAccountInfo
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccount class.
+        /// Initializes a new instance of the StorageAccountInfo class.
         /// </summary>
-        public DataLakeStoreAccount() { }
+        public StorageAccountInfo() { }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccount class.
+        /// Initializes a new instance of the StorageAccountInfo class.
         /// </summary>
-        public DataLakeStoreAccount(string name = default(string), DataLakeStoreAccountProperties properties = default(DataLakeStoreAccountProperties))
+        public StorageAccountInfo(string name = default(string), StorageAccountProperties properties = default(StorageAccountProperties))
         {
             Name = name;
             Properties = properties;
         }
 
         /// <summary>
-        /// Gets or sets the account name of the Data Lake Store account.
+        /// Gets or sets the account name associated with the Azure storage
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties associated with this Data Lake Store
-        /// account.
+        /// Gets or sets the properties associated with this storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public DataLakeStoreAccountProperties Properties { get; set; }
+        public StorageAccountProperties Properties { get; set; }
 
     }
 }
