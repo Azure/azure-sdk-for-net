@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the OutboundNatRule class.
         /// </summary>
-        public OutboundNatRule(int? allocatedOutboundPorts, SubResource backendAddressPool, string name = default(string), string etag = default(string), IList<SubResource> frontendIPConfigurations = default(IList<SubResource>), string provisioningState = default(string))
+        public OutboundNatRule(SubResource backendAddressPool, string name = default(string), string etag = default(string), int? allocatedOutboundPorts = default(int?), IList<SubResource> frontendIPConfigurations = default(IList<SubResource>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -84,10 +84,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (AllocatedOutboundPorts == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AllocatedOutboundPorts");
-            }
             if (BackendAddressPool == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "BackendAddressPool");

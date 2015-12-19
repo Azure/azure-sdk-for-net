@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// The authorization key.
+        /// The authorizationKey.
         /// </summary>
         [JsonProperty(PropertyName = "properties.authorizationKey")]
         public string AuthorizationKey { get; set; }
