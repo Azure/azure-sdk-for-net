@@ -129,8 +129,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<Indexer> CreateOrUpdateAsync( this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Indexer> result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -204,8 +204,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<Indexer> GetAsync( this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Indexer> result = await operations.GetWithHttpMessagesAsync(indexerName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.GetWithHttpMessagesAsync(indexerName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -236,8 +236,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<IndexerListResult> ListAsync( this IIndexersOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IndexerListResult> result = await operations.ListWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -274,8 +274,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<Indexer> CreateAsync( this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Indexer> result = await operations.CreateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.CreateWithHttpMessagesAsync(indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -312,8 +312,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<IndexerExecutionInfo> GetStatusAsync( this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IndexerExecutionInfo> result = await operations.GetStatusWithHttpMessagesAsync(indexerName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.GetStatusWithHttpMessagesAsync(indexerName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
     }

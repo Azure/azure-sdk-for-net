@@ -151,6 +151,18 @@ namespace Microsoft.Azure.Search.Tests
             Run(TestCanFilterNonNullableType);
         }
 
+        [Fact]
+        public void CanSearchWithMismatchedPropertyCase()
+        {
+            Run(TestCanSearchWithMismatchedPropertyCase);
+        }
+
+        [Fact]
+        public void CanSearchWithCustomConverter()
+        {
+            Run(TestCanSearchWithCustomConverter);
+        }
+
         protected override SearchIndexClient GetClient()
         {
             SearchIndexClient client = base.GetClient();

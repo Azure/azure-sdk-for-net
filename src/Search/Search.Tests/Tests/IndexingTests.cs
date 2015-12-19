@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
+    using Newtonsoft.Json.Serialization;
     using Xunit;
 
     public sealed class IndexingTests : SearchTestBase<IndexFixture>
@@ -195,18 +196,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-                Index index =
-                    new Index()
-                    {
-                        Name = SearchTestUtilities.GenerateName(),
-                        Fields = new[]
-                        {
-                            new Field("ISBN", DataType.String) { IsKey = true },
-                            new Field("Title", DataType.String),
-                            new Field("Author", DataType.String)
-                        }
-                    };
-
+                Index index = Book.DefineIndex();
                 serviceClient.Indexes.Create(index);
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
@@ -230,17 +220,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-                Index index =
-                    new Index()
-                    {
-                        Name = SearchTestUtilities.GenerateName(),
-                        Fields = new[]
-                        {
-                            new Field("ISBN", DataType.String) { IsKey = true },
-                            new Field("PublishDate", DataType.DateTimeOffset)
-                        }
-                    };
-
+                Index index = Book.DefineIndex();
                 serviceClient.Indexes.Create(index);
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
@@ -274,17 +254,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-                Index index =
-                    new Index()
-                    {
-                        Name = SearchTestUtilities.GenerateName(),
-                        Fields = new[]
-                        {
-                            new Field("ISBN", DataType.String) { IsKey = true },
-                            new Field("PublishDate", DataType.DateTimeOffset)
-                        }
-                    };
-
+                Index index = Book.DefineIndex();
                 serviceClient.Indexes.Create(index);
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
@@ -472,6 +442,57 @@ namespace Microsoft.Azure.Search.Tests
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");
 
                 Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
+        public void CanIndexAndRetrieveWithCustomConverter()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+                Index index = Book.DefineIndex();
+                serviceClient.Indexes.Create(index);
+
+                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+                // Pre-index the document so we can test that Merge works with the custom converter.
+                var firstBook = new Book()
+                {
+                    ISBN = "123",
+                    Title = "The Hobbit",
+                    Author = "J.R.R. Tolkeen",  // Misspelled on purpose.
+                    PublishDate = new DateTime(1945, 09, 21)    // Incorrect date on purpose (should be 1937).
+                };
+
+                DocumentIndexResult result = indexClient.Documents.Index(IndexBatch.Upload(new[] { firstBook }));
+
+                Assert.Equal(1, result.Results.Count);
+                AssertIndexActionSucceeded("123", result.Results[0]);
+
+                SearchTestUtilities.WaitForIndexing();
+
+                var expectedBook = new CustomBook()
+                {
+                    InternationalStandardBookNumber = "123",
+                    AuthorName = "J.R.R. Tolkien",
+                    PublishDateTime = new DateTime(1937, 09, 21)
+                };
+
+                result = indexClient.Documents.Index(IndexBatch.Merge(new[] { expectedBook }));
+
+                Assert.Equal(1, result.Results.Count);
+                AssertIndexActionSucceeded("123", result.Results[0]);
+
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(1, indexClient.Documents.Count());
+
+                CustomBook actualBook =
+                    indexClient.Documents.Get<CustomBook>(expectedBook.InternationalStandardBookNumber);
+
+                Assert.Equal(expectedBook, actualBook);
             });
         }
 

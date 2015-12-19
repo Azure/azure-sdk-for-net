@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-
+    using Rest.Serialization;
     internal partial class DocumentsOperations
     {
         internal static readonly string[] SelectAll = new[] { "*" };
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("batch");
             }
 
-            string payload = JsonUtility.SerializeObject(batch, JsonUtility.DocumentSerializerSettings);
+            string payload = SafeJsonConvert.SerializeObject(batch, JsonUtility.DocumentSerializerSettings);
             return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
         }
 
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Search
             }
 
             bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType<T>();
-            string payload = JsonUtility.SerializeObject(batch, JsonUtility.CreateSerializerSettings<T>(useCamelCase));
+            string payload = SafeJsonConvert.SerializeObject(batch, JsonUtility.CreateSerializerSettings<T>(useCamelCase));
 
             return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
         }
@@ -215,14 +215,14 @@ namespace Microsoft.Azure.Search
         private static DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload)
             where T : class
         {
-            return JsonUtility.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
                 payload,
                 JsonUtility.CreateTypedDeserializerSettings<T>());
         }
 
         private static DocumentSearchResponsePayload<SearchResult, Document> DeserializeForSearch(string payload)
         {
-            return JsonUtility.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
                 payload,
                 JsonUtility.DocumentDeserializerSettings);
         }
@@ -230,14 +230,14 @@ namespace Microsoft.Azure.Search
         private static DocumentSuggestResponsePayload<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload)
             where T : class
         {
-            return JsonUtility.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
                 payload,
                 JsonUtility.CreateTypedDeserializerSettings<T>());
         }
 
         private static DocumentSuggestResponsePayload<SuggestResult, Document> DeserializeForSuggest(string payload)
         {
-            return JsonUtility.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
+            return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
                 payload,
                 JsonUtility.DocumentDeserializerSettings);
         }
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Search
             if (!useGet)
             {
                 string requestContent =
-                    JsonUtility.SerializeObject(searchParameters, JsonUtility.DefaultSerializerSettings);
+                    SafeJsonConvert.SerializeObject(searchParameters, JsonUtility.DefaultSerializerSettings);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Search
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
                         ex = new CloudException(errorBody.Message);
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Search
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
                         ex = new CloudException(errorBody.Message);
@@ -550,7 +550,7 @@ namespace Microsoft.Azure.Search
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonUtility.DeserializeObject<T>(responseContent, jsonSerializerSettings);
+                    result.Body = SafeJsonConvert.DeserializeObject<T>(responseContent, jsonSerializerSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -678,7 +678,7 @@ namespace Microsoft.Azure.Search
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
                         ex = new CloudException(errorBody.Message);
@@ -713,7 +713,7 @@ namespace Microsoft.Azure.Search
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonUtility.DeserializeObject<DocumentIndexResult>(responseContent, this.Client.DeserializationSettings);
+                    result.Body = SafeJsonConvert.DeserializeObject<DocumentIndexResult>(responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -943,7 +943,7 @@ namespace Microsoft.Azure.Search
             {
                 SuggestParametersPayload payload = suggestParameters.ToPayload(searchText, suggesterName);
                 string requestContent =
-                    JsonUtility.SerializeObject(payload, JsonUtility.DefaultSerializerSettings);
+                    SafeJsonConvert.SerializeObject(payload, JsonUtility.DefaultSerializerSettings);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.Search
                 try
                 {
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonUtility.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                    CloudError errorBody = SafeJsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                     if (errorBody != null)
                     {
                         ex = new CloudException(errorBody.Message);

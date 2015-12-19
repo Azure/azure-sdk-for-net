@@ -95,5 +95,17 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(TestCanSuggestWithDateTimeInStaticModel);
         }
+
+        [Fact]
+        public void CanSuggestWithMismatchedPropertyCase()
+        {
+            Run(TestCanSuggestWithMismatchedPropertyCase);
+        }
+
+        [Fact]
+        public void CanSuggestWithCustomConverter()
+        {
+            Run(TestCanSuggestWithCustomConverter);
+        }
     }
 }
