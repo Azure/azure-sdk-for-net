@@ -57,8 +57,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         /// <typeparam name="T">The type of the service client to return</typeparam>
         /// <returns>A Service client using credentials and base uri from the current environment</returns>
-        public T GetServiceClient<T>(params DelegatingHandler[] handlers)
-            where T : ServiceClient<T>, IAzureClient
+        public T GetServiceClient<T>(params DelegatingHandler[] handlers) where T : class
         {
             return GetServiceClient<T>(TestEnvironmentFactory.GetTestEnvironment(), handlers);
         }
@@ -69,8 +68,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="handlers">Delegating existingHandlers</param>
         /// <returns></returns>
-        public T GetServiceClient<T>(TestEnvironment currentEnvironment, params DelegatingHandler[] handlers)
-            where T : ServiceClient<T>, IAzureClient
+        public T GetServiceClient<T>(TestEnvironment currentEnvironment, params DelegatingHandler[] handlers) where T : class
         {
             T client;
             handlers = AddHandlers(currentEnvironment, handlers);

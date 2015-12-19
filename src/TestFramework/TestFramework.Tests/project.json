@@ -25,7 +25,6 @@
   "dependencies": {
     "Microsoft.Azure.Test.HttpRecorder": "",
     "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "",
-    "Microsoft.Rest.ClientRuntime.Azure": "[2.5.2, 3.0)",
     "xunit": "2.1.0"
   },
   "compileFiles": "../../../tools/DisableTestRunParallel.cs"

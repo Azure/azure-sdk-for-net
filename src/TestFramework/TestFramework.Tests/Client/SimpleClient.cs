@@ -10,7 +10,7 @@ using Microsoft.Rest;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Client
 {
-    public partial class SimpleClient : ServiceClient<SimpleClient>, ISimpleClient, IAzureClient
+    public partial class SimpleClient : ServiceClient<SimpleClient>, ISimpleClient
     {
         public SimpleClient(params DelegatingHandler[] handlers) : base(handlers)
         {
