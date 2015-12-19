@@ -28,11 +28,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
 
             //Environment.SetEnvironmentVariable(
             //    "TEST_CSM_ORGID_AUTHENTICATION",
-            //    "SubscriptionId=0baef07a-330c-42f7-92a0-e80993f45d1d;Environment=Prod;AADTenant=72f988bf-86f1-41af-91ab-2d7cd011db47");
+            //    "SubscriptionId=;Environment=;AADTenant=");
 
             //Environment.SetEnvironmentVariable(
             //    "TEST_ORGID_AUTHENTICATION",
-            //    "SubscriptionId=0baef07a-330c-42f7-92a0-e80993f45d1d;Environment=Prod");
+            //    "SubscriptionId=;Environment=");
 #endif
 
             TestUtilities.StartTest();
