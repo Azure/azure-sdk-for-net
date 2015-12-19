@@ -103,7 +103,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication">
-      <HintPath>..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.Authentication.1.3.0-preview\lib\net45\Microsoft.Rest.ClientRuntime.Azure.Authentication.dll</HintPath>
+      <HintPath>..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.Authentication.0.11.0\lib\net45\Microsoft.Rest.ClientRuntime.Azure.Authentication.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Security" />

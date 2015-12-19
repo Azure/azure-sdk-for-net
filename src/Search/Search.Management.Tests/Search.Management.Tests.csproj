@@ -56,22 +56,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.8.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.9.0\lib\portable-net45+win+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.9.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.6.0\lib\portable-net45+win+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.5.2\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.2.6.0\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
