@@ -142,6 +142,17 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._schema = value; }
         }
         
+        private string _searchId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the request id of the search.
+        /// </summary>
+        public string SearchId
+        {
+            get { return this._searchId; }
+            set { this._searchId = value; }
+        }
+        
         private IList<SearchSort> _sort;
         
         /// <summary>

@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the id of the search.
+        /// Optional. Gets or sets the id of the search, which includes the
+        /// full url.
         /// </summary>
         public string Id
         {

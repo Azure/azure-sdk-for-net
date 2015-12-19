@@ -52,11 +52,10 @@ namespace OperationalInsights.Tests.OperationTests
                 Assert.NotNull(searchResult.Value);
                 Assert.Equal(searchResult.Value.Count, topCount);
 
-                String[] idStrings = searchResult.Id.Split('/');
                 var updatedSearchResult = client.Search.UpdateSearchResults(
                     resourceGroupName,
                     workspaceName,
-                    idStrings[idStrings.Length - 1]);
+                    searchResult.Metadata.SearchId);
                 Assert.NotNull(updatedSearchResult);
                 Assert.NotNull(searchResult.Metadata);
                 Assert.NotNull(searchResult.Value);

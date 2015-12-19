@@ -787,6 +787,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 SearchMetadata metadataInstance = new SearchMetadata();
                                 result.Metadata = metadataInstance;
                                 
+                                JToken requestIdValue = metadataValue["RequestId"];
+                                if (requestIdValue != null && requestIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestIdInstance = ((string)requestIdValue);
+                                    metadataInstance.SearchId = requestIdInstance;
+                                }
+                                
                                 JToken resultTypeValue = metadataValue["resultType"];
                                 if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
                                 {
@@ -1141,6 +1148,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
                             {
                                 SearchMetadata metadataInstance = new SearchMetadata();
                                 result.Metadata = metadataInstance;
+                                
+                                JToken requestIdValue = metadataValue["RequestId"];
+                                if (requestIdValue != null && requestIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestIdInstance = ((string)requestIdValue);
+                                    metadataInstance.SearchId = requestIdInstance;
+                                }
                                 
                                 JToken resultTypeValue = metadataValue["resultType"];
                                 if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
@@ -1587,6 +1601,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
                                 SearchMetadata metadataInstance = new SearchMetadata();
                                 result.Metadata = metadataInstance;
                                 
+                                JToken requestIdValue = metadataValue["RequestId"];
+                                if (requestIdValue != null && requestIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestIdInstance = ((string)requestIdValue);
+                                    metadataInstance.SearchId = requestIdInstance;
+                                }
+                                
                                 JToken resultTypeValue = metadataValue["resultType"];
                                 if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
                                 {
@@ -1941,6 +1962,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
                             {
                                 SearchMetadata metadataInstance = new SearchMetadata();
                                 result.Metadata = metadataInstance;
+                                
+                                JToken requestIdValue = metadataValue["RequestId"];
+                                if (requestIdValue != null && requestIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestIdInstance = ((string)requestIdValue);
+                                    metadataInstance.SearchId = requestIdInstance;
+                                }
                                 
                                 JToken resultTypeValue = metadataValue["resultType"];
                                 if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
@@ -2341,6 +2369,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
                             {
                                 SearchMetadata metadataInstance = new SearchMetadata();
                                 result.Metadata = metadataInstance;
+                                
+                                JToken requestIdValue = metadataValue["RequestId"];
+                                if (requestIdValue != null && requestIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestIdInstance = ((string)requestIdValue);
+                                    metadataInstance.SearchId = requestIdInstance;
+                                }
                                 
                                 JToken resultTypeValue = metadataValue["resultType"];
                                 if (resultTypeValue != null && resultTypeValue.Type != JTokenType.Null)
