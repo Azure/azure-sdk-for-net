@@ -98,24 +98,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
-        /// peering for the dedicated circuit with the specified service key.
-        /// </summary>
-        /// <param name='serviceKey'>
-        /// The servicee key representing the dedicated circuit.
-        /// </param>
-        /// <param name='accessType'>
-        /// Whether the peering is private or public.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
-        /// </returns>
-        Task<BorderGatewayProtocolPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// The Get Express Route operation status gets information on the
         /// status of Express Route operations in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx

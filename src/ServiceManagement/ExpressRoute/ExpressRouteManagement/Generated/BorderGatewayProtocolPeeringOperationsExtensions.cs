@@ -212,54 +212,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
-        /// peering for the dedicated circuit with the specified service key.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
-        /// </param>
-        /// <param name='serviceKey'>
-        /// Required. The servicee key representing the dedicated circuit.
-        /// </param>
-        /// <param name='accessType'>
-        /// Required. Whether the peering is private or public.
-        /// </param>
-        /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
-        /// </returns>
-        public static BorderGatewayProtocolPeeringGetResponse Get(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IBorderGatewayProtocolPeeringOperations)s).GetAsync(serviceKey, accessType);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
-        /// peering for the dedicated circuit with the specified service key.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
-        /// </param>
-        /// <param name='serviceKey'>
-        /// Required. The servicee key representing the dedicated circuit.
-        /// </param>
-        /// <param name='accessType'>
-        /// Required. Whether the peering is private or public.
-        /// </param>
-        /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
-        /// </returns>
-        public static Task<BorderGatewayProtocolPeeringGetResponse> GetAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
-        {
-            return operations.GetAsync(serviceKey, accessType, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// The Get Express Route operation status gets information on the
         /// status of Express Route operations in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
