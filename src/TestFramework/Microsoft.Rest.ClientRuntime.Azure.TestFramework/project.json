@@ -10,6 +10,9 @@
   },
   "frameworks": {
     "net45": {
+      "dependencies": {
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "2.18.206251556"
+      },
       "frameworkAssemblies": {
         "System.Net.Http": "",
         "System.Runtime": { "type": "build" },
@@ -27,12 +30,12 @@
         "System.Linq": "4.0.1-beta-23516",
         "System.Runtime": "4.0.21-beta-23516",
         "System.Threading": "4.0.11-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516"
+        "System.Net.Http": "4.0.1-beta-23516",
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha"
       }
     }
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.2.1-preview",
     "Microsoft.Azure.Test.HttpRecorder": ""
   }
 }
