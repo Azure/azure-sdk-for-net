@@ -1,25 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationPolicies?api-version=2015-11-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3JnMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXNCVlREMi92YXVsdHMvcnN2L3JlcGxpY2F0aW9uUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
+      "RequestUri": "/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationPolicies?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvY2ZlYWQ4MjYtNjcwZi00YzQ1LThmM2YtY2ZlZTQyMTdkNzZiL3Jlc291cmNlR3JvdXBzL1M5MS0xL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlc0JWVEQyL3ZhdWx0cy9TOTEtMS0yLTMtNC01L3JlcGxpY2F0aW9uUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "Accept-Language": [
+          "en"
+        ],
         "x-ms-client-request-id": [
-          "776287af-05b5-45b2-a3fa-6318099802ef"
+          "c0554eb0-66a8-499f-be81-6399e8eb7525"
         ],
         "x-ms-version": [
           "2015-01-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationPolicies/ARMProfile1111131273982\",\r\n      \"name\": \"ARMProfile1111131273982\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationPolicies\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"ARMProfile1111131273982\",\r\n        \"providerSpecificDetails\": {\r\n          \"instanceType\": \"HyperVReplicaAzure\",\r\n          \"recoveryPointHistoryDurationInHours\": 0,\r\n          \"applicationConsistentSnapshotFrequencyInHours\": 0,\r\n          \"replicationInterval\": 30,\r\n          \"encryption\": \"Disabled\",\r\n          \"activeStorageAccountId\": \"/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationPolicies/ARMProfile1111810757796\",\r\n      \"name\": \"ARMProfile1111810757796\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationPolicies\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"ARMProfile1111810757796\",\r\n        \"providerSpecificDetails\": {\r\n          \"instanceType\": \"HyperVReplicaAzure\",\r\n          \"recoveryPointHistoryDurationInHours\": 0,\r\n          \"applicationConsistentSnapshotFrequencyInHours\": 0,\r\n          \"replicationInterval\": 30,\r\n          \"encryption\": \"Disabled\",\r\n          \"activeStorageAccountId\": \"/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationPolicies/ARMProfile111202411334\",\r\n      \"name\": \"ARMProfile111202411334\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationPolicies\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"ARMProfile111202411334\",\r\n        \"providerSpecificDetails\": {\r\n          \"instanceType\": \"HyperVReplicaAzure\",\r\n          \"recoveryPointHistoryDurationInHours\": 0,\r\n          \"applicationConsistentSnapshotFrequencyInHours\": 0,\r\n          \"replicationInterval\": 30,\r\n          \"encryption\": \"Disabled\",\r\n          \"activeStorageAccountId\": \"/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationPolicies/Hydra-Profile-HyperVAzure\",\r\n      \"name\": \"Hydra-Profile-HyperVAzure\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationPolicies\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"Hydra-Profile-HyperVAzure\",\r\n        \"providerSpecificDetails\": {\r\n          \"instanceType\": \"HyperVReplicaAzure\",\r\n          \"recoveryPointHistoryDurationInHours\": 0,\r\n          \"applicationConsistentSnapshotFrequencyInHours\": 0,\r\n          \"replicationInterval\": 30,\r\n          \"encryption\": \"Disabled\",\r\n          \"activeStorageAccountId\": \"/subscriptions/c89695cf-3a29-4ff0-86da-2696d2c5322b/resourceGroups/Default-Storage-SoutheastAsia/providers/Microsoft.ClassicStorage/storageAccounts/sa03sub10v1sea\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationPolicies/S91-ProtectionPolicy\",\r\n      \"name\": \"S91-ProtectionPolicy\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationPolicies\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"S91-ProtectionPolicy\",\r\n        \"providerSpecificDetails\": {\r\n          \"instanceType\": \"HyperVReplicaAzure\",\r\n          \"recoveryPointHistoryDurationInHours\": 0,\r\n          \"applicationConsistentSnapshotFrequencyInHours\": 0,\r\n          \"replicationInterval\": 300,\r\n          \"encryption\": \"Disabled\",\r\n          \"activeStorageAccountId\": \"/subscriptions/91e244cd-0c4a-422e-8dea-ba370ba1ff64/resourceGroups/s91rg/providers/Microsoft.Storage/storageAccounts/s91stacc\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "2193"
+          "1466"
         ],
         "Content-Type": [
           "application/json"
@@ -31,7 +34,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "776287af-05b5-45b2-a3fa-6318099802ef 11/6/2015 3:09:52 PM"
+          "c0554eb0-66a8-499f-be81-6399e8eb7525 12/21/2015 11:28:36 AM"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,19 +53,19 @@
           "ASP.NET"
         ],
         "x-ms-client-request-id": [
-          "776287af-05b5-45b2-a3fa-6318099802ef"
+          "c0554eb0-66a8-499f-be81-6399e8eb7525"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14971"
         ],
         "x-ms-correlation-request-id": [
-          "4ccc355d-9d2d-4cd4-9388-2ae8002b64a7"
+          "3a323aa1-0c9f-4015-8409-bf1de3fae177"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151106T150952Z:4ccc355d-9d2d-4cd4-9388-2ae8002b64a7"
+          "CENTRALUS:20151221T112836Z:3a323aa1-0c9f-4015-8409-bf1de3fae177"
         ],
         "Date": [
-          "Fri, 06 Nov 2015 15:09:51 GMT"
+          "Mon, 21 Dec 2015 11:28:36 GMT"
         ]
       },
       "StatusCode": 200
@@ -70,6 +73,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "00a07ea0-ad8b-491c-9de8-77bf10881499"
+    "SubscriptionId": "cfead826-670f-4c45-8f3f-cfee4217d76b"
   }
 }

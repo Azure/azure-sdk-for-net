@@ -24,7 +24,6 @@ namespace SiteRecovery.Tests
         //"bcdrvcenter";
         private string port = "443";
 
-        [Fact]
         public void GetVCenters()
         {
             using (UndoContext context = UndoContext.Current)
@@ -49,7 +48,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetAllVCenters()
         {
             using (UndoContext context = UndoContext.Current)
@@ -64,7 +62,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetVCenter()
         {
             using (UndoContext context = UndoContext.Current)
@@ -106,7 +103,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetVCenterNegativeTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -148,7 +144,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void DeleteVCenter()
         {
             using (UndoContext context = UndoContext.Current)
@@ -180,7 +175,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UpdateVCenter()
         {
             using (UndoContext context = UndoContext.Current)
@@ -236,8 +230,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-	[Fact]
-        public void AddVCenter()
+	public void AddVCenter()
         {
             using (UndoContext context = UndoContext.Current)
             {

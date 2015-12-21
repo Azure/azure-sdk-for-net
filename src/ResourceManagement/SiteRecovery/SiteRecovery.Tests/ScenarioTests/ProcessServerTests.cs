@@ -15,7 +15,6 @@ namespace SiteRecovery.Tests
     {
         private string runAsAccountName = "mobility_update_account";
 
-        [Fact]
         public void ProcessServerLoadBalance()
         {
             using (UndoContext context = UndoContext.Current)
@@ -74,7 +73,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void ProcessServerFailover()
         {
             using (UndoContext context = UndoContext.Current)
@@ -119,7 +117,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void DeployProcessServer()
         {
             using (UndoContext context = UndoContext.Current)
@@ -150,7 +147,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UpdateMobilityService()
         {
             using (UndoContext context = UndoContext.Current)
@@ -217,7 +213,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void DiscoverProtectableItemPhysicalServer()
         {
             using (UndoContext context = UndoContext.Current)

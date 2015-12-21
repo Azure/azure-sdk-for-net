@@ -73,15 +73,15 @@ namespace Microsoft.Azure.Test
                 Environment.GetEnvironmentVariable("CLOUD_SERVICE_NAME");
 
             SiteRecoveryTestsBase.MyVaultName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "rsv" :
+                "S91-1-2-3-4-5" :
                 Environment.GetEnvironmentVariable("RESOURCE_NAME");
 
             SiteRecoveryTestsBase.VaultKey = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "otAYMXSEU7HNR8bjmj2tow==" :
+                "8dr012Ze+WIPM5z1xSNGZA==" :
                 Environment.GetEnvironmentVariable("CHANNEL_INTEGRITY_KEY");
 
             SiteRecoveryTestsBase.MyResourceGroupName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "rg1" :
+                "S91-1" :
                 Environment.GetEnvironmentVariable("RESOURCE_GROUP_NAME");
 
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyCloudService))

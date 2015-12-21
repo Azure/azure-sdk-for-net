@@ -28,7 +28,6 @@ namespace SiteRecovery.Tests
 {
     public class PairingTests : SiteRecoveryTestsBase
     {
-        [Fact]
         public void PairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -113,7 +112,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UnpairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -140,7 +138,7 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-                string policyName = "Hydra-Profile-HyperVAzure-" + new Random().Next();
+                string policyName = "Hydra-Profile-HyperVAzure";
                 HyperVReplicaAzurePolicyInput hvrAPolicy = new HyperVReplicaAzurePolicyInput()
                 {
                     ApplicationConsistentSnapshotFrequencyInHours = 0,
@@ -174,13 +172,11 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-
-                var response = client.Policies.List(RequestHeaders);
-                var deleteResponse = client.Policies.Delete(response.Policies[0].Name, RequestHeaders);
+                string policyName = "Hydra-Profile-HyperVAzure";
+                var deleteResponse = client.Policies.Delete(policyName, RequestHeaders);
             }
         }
 
-        [Fact]
         public void CreateHyperV2012Profile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -221,7 +217,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void CreateHyperV2012R2Profile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -263,7 +258,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void CreateVMwareAzureV2Profile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -301,7 +295,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void PairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -329,7 +322,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UnPairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -349,7 +341,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void PurgeCloudPair()
         {
             using (UndoContext context = UndoContext.Current)
@@ -392,7 +383,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void CreateVMwareAzureV2Mapping()
         {
             using (UndoContext context = UndoContext.Current)
@@ -449,7 +439,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void PairUnpairStorageClassifications()
         {
             using (UndoContext context = UndoContext.Current)

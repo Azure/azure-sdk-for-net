@@ -27,19 +27,16 @@ namespace SiteRecovery.Tests
 {
     public class ProtectionTests : SiteRecoveryTestsBase
     {
-        [Fact]
         public void EnableDR()
         {
             
         }
 
-        [Fact]
         public void DisableDR()
         {
             
         }
 
-        [Fact]
         public void PurgeDR()
         {
             using (UndoContext context = UndoContext.Current)
@@ -92,7 +89,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UpdateProtection()
         {
             using (UndoContext context = UndoContext.Current)
@@ -125,7 +121,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EnableProtectionForVMwareVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -221,7 +216,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void DisableProtectionForVMwareVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -287,7 +281,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void PurgeProtectionForVMwareVM()
         {
             using (UndoContext context = UndoContext.Current)
