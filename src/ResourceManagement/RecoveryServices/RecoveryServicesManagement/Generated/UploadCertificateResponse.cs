@@ -21,46 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// The response model for the upload certificate response
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class UploadCertificateResponse : AzureOperationResponse
     {
-        private StorageTypeProperties _properties;
+        private CertificateProperties _properties;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Optional. The certificate properties
         /// </summary>
-        public StorageTypeProperties Properties
+        public CertificateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Initializes a new instance of the UploadCertificateResponse class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public UploadCertificateResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
-        /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

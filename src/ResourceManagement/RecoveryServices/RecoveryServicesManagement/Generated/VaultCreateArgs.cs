@@ -26,41 +26,48 @@ using Microsoft.Azure.Management.RecoveryServices.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// The definition of a cloud service object.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class VaultCreateArgs
     {
-        private StorageTypeProperties _properties;
+        private string _location;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Optional. Label for the vault
         /// </summary>
-        public StorageTypeProperties Properties
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private VaultProperties _properties;
+        
+        /// <summary>
+        /// Optional. properties
+        /// </summary>
+        public VaultProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
+        private VaultSku _sku;
+        
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Optional. Sku
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public VaultSku Sku
         {
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
+        /// Initializes a new instance of the VaultCreateArgs class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
-            : this()
+        public VaultCreateArgs()
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

@@ -21,46 +21,27 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// The status of the asynchronous request.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public enum RecoveryServicesOperationStatus
     {
-        private StorageTypeProperties _properties;
+        /// <summary>
+        /// The asynchronous request is in progress.
+        /// </summary>
+        InProgress = 0,
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// The asynchronous request succeeded.
         /// </summary>
-        public StorageTypeProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
+        Succeeded = 1,
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// The asynchronous request failed.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
-        {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
-        /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
-        }
+        Failed = 2,
     }
 }

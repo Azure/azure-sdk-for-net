@@ -21,76 +21,73 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The definition of a get resource storage config response.
+    /// The certificate properties
     /// </summary>
-    public partial class GetResourceStorageConfigResponse : AzureOperationResponse
+    public partial class CertificateProperties
     {
-        private string _eTag;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. ETag of the Vault.
+        /// Optional. Friendly name of the certificate.
         /// </summary>
-        public string ETag
+        public string FriendlyName
         {
-            get { return this._eTag; }
-            set { this._eTag = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
         }
         
-        private long _id;
+        private string _globalAcsHostName;
         
         /// <summary>
-        /// Optional. Gets or sets the resource ID.
+        /// Optional. Global ACS Host name.
         /// </summary>
-        public long Id
+        public string GlobalAcsHostName
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._globalAcsHostName; }
+            set { this._globalAcsHostName = value; }
         }
         
-        private long _name;
+        private string _globalAcsNamespace;
         
         /// <summary>
-        /// Optional. Gets or sets the resource Name.
+        /// Optional. Global ACS Namespace.
         /// </summary>
-        public long Name
+        public string GlobalAcsNamespace
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._globalAcsNamespace; }
+            set { this._globalAcsNamespace = value; }
         }
         
-        private StorageDetails _properties;
+        private string _globalAcsRPRealm;
         
         /// <summary>
-        /// Optional. The resource storage details.
+        /// Optional. Global ACS RP realm.
         /// </summary>
-        public StorageDetails Properties
+        public string GlobalAcsRPRealm
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._globalAcsRPRealm; }
+            set { this._globalAcsRPRealm = value; }
         }
         
-        private long _type;
+        private long _resourceId;
         
         /// <summary>
-        /// Optional. Gets or sets the resource Type.
+        /// Optional. ASR vault id: resource id
         /// </summary>
-        public long Type
+        public long ResourceId
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._resourceId; }
+            set { this._resourceId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GetResourceStorageConfigResponse
-        /// class.
+        /// Initializes a new instance of the CertificateProperties class.
         /// </summary>
-        public GetResourceStorageConfigResponse()
+        public CertificateProperties()
         {
         }
     }

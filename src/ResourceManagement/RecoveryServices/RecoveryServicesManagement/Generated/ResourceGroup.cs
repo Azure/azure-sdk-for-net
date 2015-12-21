@@ -21,46 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// The definition of a resource group object.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class ResourceGroup : ResourceBaseExtended
     {
-        private StorageTypeProperties _properties;
+        private ResourceGroupProperties _properties;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Optional. Properties of resourceGroup
         /// </summary>
-        public StorageTypeProperties Properties
+        public ResourceGroupProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Initializes a new instance of the ResourceGroup class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public ResourceGroup()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
+        /// Initializes a new instance of the ResourceGroup class with required
+        /// arguments.
         /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
+        public ResourceGroup(string location)
             : this()
         {
-            if (properties == null)
+            if (location == null)
             {
-                throw new ArgumentNullException("properties");
+                throw new ArgumentNullException("location");
             }
-            this.Properties = properties;
+            this.Location = location;
         }
     }
 }

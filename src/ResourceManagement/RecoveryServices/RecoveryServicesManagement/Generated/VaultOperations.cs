@@ -1072,14 +1072,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
                             {
                                 string etagInstance = ((string)etagValue);
-                                result.ETags = etagInstance;
+                                result.ETag = etagInstance;
                             }
                             
                             JToken propertiesValue = responseDoc["Properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
                                 StorageDetails propertiesInstance = new StorageDetails();
-                                result.StorageDetails = propertiesInstance;
+                                result.Properties = propertiesInstance;
                                 
                                 JToken storageTypeValue = propertiesValue["storageType"];
                                 if (storageTypeValue != null && storageTypeValue.Type != JTokenType.Null)
@@ -1160,9 +1160,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ArgumentNullException("updateVaultStorageTypeRequest");
             }
-            if (updateVaultStorageTypeRequest.StorageTypeProperties == null)
+            if (updateVaultStorageTypeRequest.Properties == null)
             {
-                throw new ArgumentNullException("updateVaultStorageTypeRequest.StorageTypeProperties");
+                throw new ArgumentNullException("updateVaultStorageTypeRequest.Properties");
             }
             
             // Tracing
@@ -1240,9 +1240,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 JObject propertiesValue = new JObject();
                 updateVaultStorageTypeRequestValue["properties"] = propertiesValue;
                 
-                if (updateVaultStorageTypeRequest.StorageTypeProperties.StorageModelType != null)
+                if (updateVaultStorageTypeRequest.Properties.StorageModelType != null)
                 {
-                    propertiesValue["storageModelType"] = updateVaultStorageTypeRequest.StorageTypeProperties.StorageModelType;
+                    propertiesValue["storageModelType"] = updateVaultStorageTypeRequest.Properties.StorageModelType;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

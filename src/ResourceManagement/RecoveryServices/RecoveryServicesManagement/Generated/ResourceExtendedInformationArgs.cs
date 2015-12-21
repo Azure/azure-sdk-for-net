@@ -26,34 +26,34 @@ using Microsoft.Azure.Management.RecoveryServices.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// Vault exteneded information.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class ResourceExtendedInformationArgs
     {
-        private StorageTypeProperties _properties;
+        private ResourceExtendedInfoProperties _properties;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Required. Contract version for the entity.
         /// </summary>
-        public StorageTypeProperties Properties
+        public ResourceExtendedInfoProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
+        /// Initializes a new instance of the ResourceExtendedInformationArgs
         /// class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public ResourceExtendedInformationArgs()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
+        /// Initializes a new instance of the ResourceExtendedInformationArgs
         /// class with required arguments.
         /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
+        public ResourceExtendedInformationArgs(ResourceExtendedInfoProperties properties)
             : this()
         {
             if (properties == null)

@@ -20,47 +20,52 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// The response model for the list resource group operation.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class ResourceGroupListResponse : AzureOperationResponse, IEnumerable<ResourceGroup>
     {
-        private StorageTypeProperties _properties;
+        private IList<ResourceGroup> _resourceGroups;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Optional. The list of resource groups for the given subscription.
         /// </summary>
-        public StorageTypeProperties Properties
+        public IList<ResourceGroup> ResourceGroups
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._resourceGroups; }
+            set { this._resourceGroups = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Initializes a new instance of the ResourceGroupListResponse class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public ResourceGroupListResponse()
         {
+            this.ResourceGroups = new LazyList<ResourceGroup>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
+        /// Gets the sequence of ResourceGroups.
         /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
-            : this()
+        public IEnumerator<ResourceGroup> GetEnumerator()
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
+            return this.ResourceGroups.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of ResourceGroups.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
