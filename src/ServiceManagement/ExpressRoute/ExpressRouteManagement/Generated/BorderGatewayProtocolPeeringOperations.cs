@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -683,6 +684,244 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             {
                                 string idInstance = idElement.Value;
                                 result.OperationId = idInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
+        /// peering for the dedicated circuit with the specified service key.
+        /// </summary>
+        /// <param name='serviceKey'>
+        /// Required. The servicee key representing the dedicated circuit.
+        /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Border Gateway Protocol Peering Operation Response.
+        /// </returns>
+        public async Task<BorderGatewayProtocolPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceKey == null)
+            {
+                throw new ArgumentNullException("serviceKey");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceKey", serviceKey);
+                tracingParameters.Add("accessType", accessType);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2011-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BorderGatewayProtocolPeeringGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BorderGatewayProtocolPeeringGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement bgpPeeringElement = responseDoc.Element(XName.Get("BgpPeering", "http://schemas.microsoft.com/windowsazure"));
+                        if (bgpPeeringElement != null)
+                        {
+                            AzureBgpPeering bgpPeeringInstance = new AzureBgpPeering();
+                            result.BgpPeering = bgpPeeringInstance;
+                            
+                            XElement advertisedPublicPrefixesElement = bgpPeeringElement.Element(XName.Get("AdvertisedPublicPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                            if (advertisedPublicPrefixesElement != null)
+                            {
+                                string advertisedPublicPrefixesInstance = advertisedPublicPrefixesElement.Value;
+                                bgpPeeringInstance.AdvertisedPublicPrefixes = advertisedPublicPrefixesInstance;
+                            }
+                            
+                            XElement advertisedPublicPrefixesStateElement = bgpPeeringElement.Element(XName.Get("AdvertisedPublicPrefixesState", "http://schemas.microsoft.com/windowsazure"));
+                            if (advertisedPublicPrefixesStateElement != null)
+                            {
+                                string advertisedPublicPrefixesStateInstance = advertisedPublicPrefixesStateElement.Value;
+                                bgpPeeringInstance.AdvertisedPublicPrefixesState = advertisedPublicPrefixesStateInstance;
+                            }
+                            
+                            XElement azureAsnElement = bgpPeeringElement.Element(XName.Get("AzureAsn", "http://schemas.microsoft.com/windowsazure"));
+                            if (azureAsnElement != null)
+                            {
+                                uint azureAsnInstance = uint.Parse(azureAsnElement.Value, CultureInfo.InvariantCulture);
+                                bgpPeeringInstance.AzureAsn = azureAsnInstance;
+                            }
+                            
+                            XElement customerAsnElement = bgpPeeringElement.Element(XName.Get("CustomerAsn", "http://schemas.microsoft.com/windowsazure"));
+                            if (customerAsnElement != null)
+                            {
+                                uint customerAsnInstance = uint.Parse(customerAsnElement.Value, CultureInfo.InvariantCulture);
+                                bgpPeeringInstance.CustomerAutonomousSystemNumber = customerAsnInstance;
+                            }
+                            
+                            XElement peerAsnElement = bgpPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
+                            if (peerAsnElement != null)
+                            {
+                                uint peerAsnInstance = uint.Parse(peerAsnElement.Value, CultureInfo.InvariantCulture);
+                                bgpPeeringInstance.PeerAsn = peerAsnInstance;
+                            }
+                            
+                            XElement primaryAzurePortElement = bgpPeeringElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
+                            if (primaryAzurePortElement != null)
+                            {
+                                string primaryAzurePortInstance = primaryAzurePortElement.Value;
+                                bgpPeeringInstance.PrimaryAzurePort = primaryAzurePortInstance;
+                            }
+                            
+                            XElement primaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
+                            if (primaryPeerSubnetElement != null)
+                            {
+                                string primaryPeerSubnetInstance = primaryPeerSubnetElement.Value;
+                                bgpPeeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
+                            }
+                            
+                            XElement routingRegistryNameElement = bgpPeeringElement.Element(XName.Get("RoutingRegistryName", "http://schemas.microsoft.com/windowsazure"));
+                            if (routingRegistryNameElement != null)
+                            {
+                                string routingRegistryNameInstance = routingRegistryNameElement.Value;
+                                bgpPeeringInstance.RoutingRegistryName = routingRegistryNameInstance;
+                            }
+                            
+                            XElement secondaryAzurePortElement = bgpPeeringElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
+                            if (secondaryAzurePortElement != null)
+                            {
+                                string secondaryAzurePortInstance = secondaryAzurePortElement.Value;
+                                bgpPeeringInstance.SecondaryAzurePort = secondaryAzurePortInstance;
+                            }
+                            
+                            XElement secondaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("SecondaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
+                            if (secondaryPeerSubnetElement != null)
+                            {
+                                string secondaryPeerSubnetInstance = secondaryPeerSubnetElement.Value;
+                                bgpPeeringInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
+                            }
+                            
+                            XElement stateElement = bgpPeeringElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                BgpPeeringState stateInstance = ((BgpPeeringState)Enum.Parse(typeof(BgpPeeringState), stateElement.Value, true));
+                                bgpPeeringInstance.State = stateInstance;
+                            }
+                            
+                            XElement vlanIdElement = bgpPeeringElement.Element(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
+                            if (vlanIdElement != null)
+                            {
+                                uint vlanIdInstance = uint.Parse(vlanIdElement.Value, CultureInfo.InvariantCulture);
+                                bgpPeeringInstance.VlanId = vlanIdInstance;
                             }
                         }
                         
