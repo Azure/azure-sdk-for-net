@@ -47,10 +47,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\BackupOperationResults.cs" />
+    <Compile Include="Generated\BackupOperationResultsExtensions.cs" />
     <Compile Include="Generated\BackupOperations.cs" />
     <Compile Include="Generated\BackupOperationsExtensions.cs" />
     <Compile Include="Generated\ContainerOperation.cs" />
     <Compile Include="Generated\ContainerOperationExtensions.cs" />
+    <Compile Include="Generated\IBackupOperationResults.cs" />
     <Compile Include="Generated\IBackupOperations.cs" />
     <Compile Include="Generated\IContainerOperation.cs" />
     <Compile Include="Generated\IJobOperations.cs" />
@@ -79,7 +82,6 @@
     <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectableObject.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
     <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs" />
@@ -109,7 +111,6 @@
     <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />
     <Compile Include="Generated\Models\ProtectableItem.cs" />
-    <Compile Include="Generated\Models\ProtectableObject.cs" />
     <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListQueryParameters.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Generated\RestoreOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

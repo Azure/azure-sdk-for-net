@@ -76,6 +76,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Definition of OperationResults operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IBackupOperationResults BackupOperationResults
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of Backup operations for the Azure Backup extension.
         /// </summary>
         IBackupOperations Backup
