@@ -104,6 +104,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> CancelAsync(string jobName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Export jobs to blob.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Job Query Filters
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        Task<JobResponse> ExportAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get the job details.
         /// </summary>
         /// <param name='jobId'>
@@ -174,6 +191,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <summary>
         /// Get the list of all jobs.
         /// </summary>
+        /// <param name='parameters'>
+        /// Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -183,7 +203,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list Jobs operation.
         /// </returns>
-        Task<JobListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Restart the job .

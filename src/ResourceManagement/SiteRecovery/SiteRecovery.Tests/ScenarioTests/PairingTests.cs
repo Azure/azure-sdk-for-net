@@ -28,7 +28,6 @@ namespace SiteRecovery.Tests
 {
     public class PairingTests : SiteRecoveryTestsBase
     {
-        
         public void PairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -113,7 +112,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void UnpairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -140,7 +138,7 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-                string policyName = "ARMProfile";
+                string policyName = "Hydra-Profile-HyperVAzure";
                 HyperVReplicaAzurePolicyInput hvrAPolicy = new HyperVReplicaAzurePolicyInput()
                 {
                     ApplicationConsistentSnapshotFrequencyInHours = 0,
@@ -174,9 +172,8 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-
-                var response = client.Policies.List(RequestHeaders);
-                var deleteResponse = client.Policies.Delete(response.Policies[0].Name, RequestHeaders);
+                string policyName = "Hydra-Profile-HyperVAzure";
+                var deleteResponse = client.Policies.Delete(policyName, RequestHeaders);
             }
         }
 
@@ -298,7 +295,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void PairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -326,7 +322,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void UnPairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -346,7 +341,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void PurgeCloudPair()
         {
             using (UndoContext context = UndoContext.Current)
@@ -442,6 +436,64 @@ namespace SiteRecovery.Tests
 
                 var mappingCreationResponse = response as MappingOperationResponse;
                 Assert.NotNull(mappingCreationResponse);
+            }
+        }
+
+        public void PairUnpairStorageClassifications()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                FabricListResponse responseServers = client.Fabrics.List(RequestHeaders);
+
+                foreach (Fabric fabric in responseServers.Fabrics)
+                {
+                    if (fabric.Properties.CustomDetails.InstanceType == "VMM")
+                    {
+                        var storageClassifications = client.StorageClassification.List(fabric.Name, RequestHeaders);
+
+                        if (storageClassifications.StorageClassifications.Count > 1)
+                        {
+                            StorageClassificationMappingInputProperties mapProps = new StorageClassificationMappingInputProperties()
+                            {
+                                TargetStorageClassificationId = storageClassifications.StorageClassifications[1].Id
+                            };
+
+                            StorageClassificationMappingInput mapInput = new StorageClassificationMappingInput()
+                            {
+                                Properties = mapProps
+                            };
+
+                            string mappingName = "StorageClassificationMapping-" + (new Random()).Next();
+
+                            var pairResp = client.StorageClassificationMapping.PairStorageClassification(
+                                fabric.Name,
+                                storageClassifications.StorageClassifications[0].Name,
+                                mappingName,
+                                mapInput,
+                                RequestHeaders);
+
+                            var mappings = client.StorageClassificationMapping.List(
+                                fabric.Name,
+                                storageClassifications.StorageClassifications[0].Name,
+                                RequestHeaders);
+
+                            var mapping = client.StorageClassificationMapping.Get(
+                                fabric.Name,
+                                storageClassifications.StorageClassifications[0].Name,
+                                mappings.StorageClassificationMappings[0].Name,
+                                RequestHeaders);
+
+                            var unpairResp = client.StorageClassificationMapping.UnpairStorageClassification(
+                                fabric.Name,
+                                storageClassifications.StorageClassifications[0].Name,
+                                mappingName,
+                                RequestHeaders);
+                        }
+                    }
+                }
             }
         }
     }

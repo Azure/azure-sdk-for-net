@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/Json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -248,6 +248,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -255,6 +263,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -344,7 +360,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -374,7 +390,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
@@ -418,6 +434,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -425,6 +449,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -522,7 +554,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -552,7 +584,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/Json");
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
@@ -601,7 +633,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -638,6 +670,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -645,6 +685,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -872,7 +920,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters/";
+            url = url + "/replicationvCenters/";
             url = url + Uri.EscapeDataString(vCenterName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
@@ -902,6 +950,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1016,6 +1065,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Port = portInstance;
                                 }
                                 
+                                JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                {
+                                    string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                    propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
+                                }
+                                
                                 JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
                                 if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
                                 {
@@ -1062,10 +1118,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     vCenterInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -1142,7 +1242,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/Json");
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1257,6 +1356,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Port = portInstance;
                                 }
                                 
+                                JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                {
+                                    string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                    propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
+                                }
+                                
                                 JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
                                 if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
                                 {
@@ -1331,6 +1437,41 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
                                 result.Status = statusInstance;
                             }
+                            
+                            JToken cultureValue = responseDoc["Culture"];
+                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                            {
+                                string cultureInstance = ((string)cultureValue);
+                                result.Culture = cultureInstance;
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
@@ -1339,6 +1480,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -1346,6 +1495,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1435,7 +1592,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/Json");
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1512,6 +1668,41 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
                                 result.Status = statusInstance;
                             }
+                            
+                            JToken cultureValue = responseDoc["Culture"];
+                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                            {
+                                string cultureInstance = ((string)cultureValue);
+                                result.Culture = cultureInstance;
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
@@ -1520,6 +1711,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -1527,6 +1726,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1616,7 +1823,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/Json");
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1731,6 +1937,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.Port = portInstance;
                                 }
                                 
+                                JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                {
+                                    string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                    propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
+                                }
+                                
                                 JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
                                 if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
                                 {
@@ -1805,6 +2018,41 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
                                 result.Status = statusInstance;
                             }
+                            
+                            JToken cultureValue = responseDoc["Culture"];
+                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                            {
+                                string cultureInstance = ((string)cultureValue);
+                                result.Culture = cultureInstance;
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
@@ -1813,6 +2061,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -1820,6 +2076,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1913,7 +2177,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/replicationFabrics/";
             url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/vCenters";
+            url = url + "/replicationvCenters";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -1942,6 +2206,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -2061,6 +2326,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.Port = portInstance;
                                         }
                                         
+                                        JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                        if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                        {
+                                            string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                            propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
+                                        }
+                                        
                                         JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
                                         if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
                                         {
@@ -2116,10 +2388,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 result.NextLink = nextLinkInstance;
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -2190,7 +2506,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceType);
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/vCenters";
+            url = url + "/replicationvCenters";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -2219,6 +2535,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -2338,6 +2655,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.Port = portInstance;
                                         }
                                         
+                                        JToken runAsAccountIdValue = propertiesValue["runAsAccountId"];
+                                        if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
+                                        {
+                                            string runAsAccountIdInstance = ((string)runAsAccountIdValue);
+                                            propertiesInstance.RunAsAccountId = runAsAccountIdInstance;
+                                        }
+                                        
                                         JToken fabricArmResourceNameValue = propertiesValue["fabricArmResourceName"];
                                         if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
                                         {
@@ -2393,10 +2717,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 result.NextLink = nextLinkInstance;
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();

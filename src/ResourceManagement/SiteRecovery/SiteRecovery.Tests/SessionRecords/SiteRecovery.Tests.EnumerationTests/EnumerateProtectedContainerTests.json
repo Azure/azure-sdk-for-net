@@ -1,25 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics?api-version=2015-11-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3JnMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXNCVlREMi92YXVsdHMvcnN2L3JlcGxpY2F0aW9uRmFicmljcz9hcGktdmVyc2lvbj0yMDE1LTExLTEw",
+      "RequestUri": "/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvY2ZlYWQ4MjYtNjcwZi00YzQ1LThmM2YtY2ZlZTQyMTdkNzZiL3Jlc291cmNlR3JvdXBzL1M5MS0xL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlc0JWVEQyL3ZhdWx0cy9TOTEtMS0yLTMtNC01L3JlcGxpY2F0aW9uRmFicmljcz9hcGktdmVyc2lvbj0yMDE1LTExLTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "Accept-Language": [
+          "en"
+        ],
         "x-ms-client-request-id": [
-          "94f2a3da-7ae6-495d-9c4b-4cb60ec090e2"
+          "60ed941c-4825-4d65-9df2-17cd8305519d"
         ],
         "x-ms-version": [
           "2015-01-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics\",\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"encryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": \"473344A3549EC61FFADCD2FD5BF2019BF8ACB4EB\",\r\n          \"kekCertExpiryDate\": \"2018-11-06T20:14:27Z\"\r\n        },\r\n        \"rolloverEncryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"internalIdentifier\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"VMM\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"IDCWS-VHM-33.dratest.nttest.microsoft.com\",\r\n        \"encryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": \"BD79302664E45D5F9995CE93075DE39A343F880F\",\r\n          \"kekCertExpiryDate\": \"2018-12-17T17:17:17Z\"\r\n        },\r\n        \"rolloverEncryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"internalIdentifier\": \"1d7bd88a-17f7-4696-aca7-ac8e6147ade2\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"VMM\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"d8b0fb79beebbc725294be75216531ed62eb4d29f1019b701baed3044576f5a0\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics\",\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/d8b0fb79beebbc725294be75216531ed62eb4d29f1019b701baed3044576f5a0\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"ESTLABTEMP17.dratest.nttest.microsoft.com\",\r\n        \"encryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": \"26C05A261524A6DF7965C9E1D89CA2C79E64935E\",\r\n          \"kekCertExpiryDate\": \"2018-12-17T12:27:05Z\"\r\n        },\r\n        \"rolloverEncryptionDetails\": {\r\n          \"kekState\": \"Enabled\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"internalIdentifier\": \"73ca09bb-2b5a-45fb-8389-dac61c861cf6\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"VMM\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "781"
+          "1563"
         ],
         "Content-Type": [
           "application/json"
@@ -31,7 +34,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "94f2a3da-7ae6-495d-9c4b-4cb60ec090e2 11/6/2015 3:17:42 PM"
+          "60ed941c-4825-4d65-9df2-17cd8305519d 12/21/2015 11:30:58 AM"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,43 +53,46 @@
           "ASP.NET"
         ],
         "x-ms-client-request-id": [
-          "94f2a3da-7ae6-495d-9c4b-4cb60ec090e2"
+          "60ed941c-4825-4d65-9df2-17cd8305519d"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14965"
         ],
         "x-ms-correlation-request-id": [
-          "8ac0594e-d8d0-4cff-970e-377258749b93"
+          "77d29473-120f-44d8-b61a-6b7f9ab0c667"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151106T151742Z:8ac0594e-d8d0-4cff-970e-377258749b93"
+          "CENTRALUS:20151221T113058Z:77d29473-120f-44d8-b61a-6b7f9ab0c667"
         ],
         "Date": [
-          "Fri, 06 Nov 2015 15:17:41 GMT"
+          "Mon, 21 Dec 2015 11:30:58 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers?api-version=2015-11-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3JnMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXNCVlREMi92YXVsdHMvcnN2L3JlcGxpY2F0aW9uRmFicmljcy8xNTZmM2ZkNTE0YzYzMmRjZTYxMmQzOGExODdjYTQzMjgxMDYxMzIzMjgwYTRlNDJmOGU0NzQyZDhlMmRjYWU1L3JlcGxpY2F0aW9uUHJvdGVjdGlvbkNvbnRhaW5lcnM/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
+      "RequestUri": "/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationProtectionContainers?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvY2ZlYWQ4MjYtNjcwZi00YzQ1LThmM2YtY2ZlZTQyMTdkNzZiL3Jlc291cmNlR3JvdXBzL1M5MS0xL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlc0JWVEQyL3ZhdWx0cy9TOTEtMS0yLTMtNC01L3JlcGxpY2F0aW9uRmFicmljcy84NTJiOWQ2ZjYwNDEwYmY1ZWY3YjVjZjc5NThlMmI5OGVlNjc2YTk1ZmE4NmVlNTBkMWRmMDdlMGZkZWM5Zjg5L3JlcGxpY2F0aW9uUHJvdGVjdGlvbkNvbnRhaW5lcnM/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "Accept-Language": [
+          "en"
+        ],
         "x-ms-client-request-id": [
-          "94f2a3da-7ae6-495d-9c4b-4cb60ec090e2"
+          "60ed941c-4825-4d65-9df2-17cd8305519d"
         ],
         "x-ms-version": [
           "2015-01-01"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/05aa0992-6033-44f6-86cb-5e20bb05aee6\",\r\n      \"name\": \"05aa0992-6033-44f6-86cb-5e20bb05aee6\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"cloud\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/19996177-88ca-4aa8-8fe6-8ae9198c06d3\",\r\n      \"name\": \"19996177-88ca-4aa8-8fe6-8ae9198c06d3\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"cloud9\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/38e252d5-6243-472d-91d0-76874ee5f5f1\",\r\n      \"name\": \"38e252d5-6243-472d-91d0-76874ee5f5f1\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"signoff102e2acloud\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/42432614-e000-4cb9-8827-a49ea1d0d3cc\",\r\n      \"name\": \"42432614-e000-4cb9-8827-a49ea1d0d3cc\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"d2\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/7c3641bb-d572-4d56-80da-498440f924e7\",\r\n      \"name\": \"7c3641bb-d572-4d56-80da-498440f924e7\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"d1\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/b007f06c-646c-4978-a7bd-2a3d1a13110e\",\r\n      \"name\": \"b007f06c-646c-4978-a7bd-2a3d1a13110e\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"alokSec\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/de58c031-820e-4e1a-9505-763523bb69c5\",\r\n      \"name\": \"de58c031-820e-4e1a-9505-763523bb69c5\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"alokPri\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/f0982c81-dfb1-4bfa-ba0d-a7d941f6e8c7\",\r\n      \"name\": \"f0982c81-dfb1-4bfa-ba0d-a7d941f6e8c7\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"azurecloud\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/rg1/providers/Microsoft.RecoveryServicesBVTD2/vaults/rsv/replicationFabrics/156f3fd514c632dce612d38a187ca43281061323280a4e42f8e4742d8e2dcae5/replicationProtectionContainers/ff10d996-9083-4aee-b99d-7f7f44c81118\",\r\n      \"name\": \"ff10d996-9083-4aee-b99d-7f7f44c81118\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\",\r\n        \"friendlyName\": \"rec\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationProtectionContainers/2e3d684e-76b9-40e9-8028-65b5759cabc2\",\r\n      \"name\": \"2e3d684e-76b9-40e9-8028-65b5759cabc2\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"IDCWS-VHM-33.dratest.nttest.microsoft.com\",\r\n        \"friendlyName\": \"cloud-e2e-recovery-ARM\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationProtectionContainers/49b9dae8-1335-4e90-9bf5-d2f931eae13a\",\r\n      \"name\": \"49b9dae8-1335-4e90-9bf5-d2f931eae13a\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"IDCWS-VHM-33.dratest.nttest.microsoft.com\",\r\n        \"friendlyName\": \"asrcloud4\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationProtectionContainers/4b858953-7e6c-45ba-a2e0-7d6579e7c7b7\",\r\n      \"name\": \"4b858953-7e6c-45ba-a2e0-7d6579e7c7b7\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"IDCWS-VHM-33.dratest.nttest.microsoft.com\",\r\n        \"friendlyName\": \"cloud5_recovery\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationProtectionContainers/90ce4262-3058-4ae8-ac64-757acf460f32\",\r\n      \"name\": \"90ce4262-3058-4ae8-ac64-757acf460f32\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"IDCWS-VHM-33.dratest.nttest.microsoft.com\",\r\n        \"friendlyName\": \"NonCSPCloud\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/cfead826-670f-4c45-8f3f-cfee4217d76b/resourceGroups/S91-1/providers/Microsoft.RecoveryServicesBVTD2/vaults/S91-1-2-3-4-5/replicationFabrics/852b9d6f60410bf5ef7b5cf7958e2b98ee676a95fa86ee50d1df07e0fdec9f89/replicationProtectionContainers/c38abb8b-e8c2-4ac1-99b0-165a0ab26608\",\r\n      \"name\": \"c38abb8b-e8c2-4ac1-99b0-165a0ab26608\",\r\n      \"type\": \"Microsoft.RecoveryServicesBVTD2/vaults/replicationFabrics/replicationProtectionContainers\",\r\n      \"properties\": {\r\n        \"fabricFriendlyName\": \"IDCWS-VHM-33.dratest.nttest.microsoft.com\",\r\n        \"friendlyName\": \"E2ACloud\",\r\n        \"fabricType\": \"VMM\",\r\n        \"protectedItemCount\": 0,\r\n        \"pairingStatus\": \"NotPaired\",\r\n        \"role\": \"\",\r\n        \"fabricSpecificDetails\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "5811"
+          "3342"
         ],
         "Content-Type": [
           "application/json"
@@ -98,7 +104,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "94f2a3da-7ae6-495d-9c4b-4cb60ec090e2 11/6/2015 3:17:44 PM"
+          "60ed941c-4825-4d65-9df2-17cd8305519d 12/21/2015 11:30:59 AM"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,19 +123,19 @@
           "ASP.NET"
         ],
         "x-ms-client-request-id": [
-          "94f2a3da-7ae6-495d-9c4b-4cb60ec090e2"
+          "60ed941c-4825-4d65-9df2-17cd8305519d"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14964"
         ],
         "x-ms-correlation-request-id": [
-          "01e57a94-1628-476f-8a0d-784ee1e04f4b"
+          "52c62234-93db-438e-b235-2ff8c7792c5d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151106T151744Z:01e57a94-1628-476f-8a0d-784ee1e04f4b"
+          "CENTRALUS:20151221T113059Z:52c62234-93db-438e-b235-2ff8c7792c5d"
         ],
         "Date": [
-          "Fri, 06 Nov 2015 15:17:43 GMT"
+          "Mon, 21 Dec 2015 11:30:58 GMT"
         ]
       },
       "StatusCode": 200
@@ -137,6 +143,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "00a07ea0-ad8b-491c-9de8-77bf10881499"
+    "SubscriptionId": "cfead826-670f-4c45-8f3f-cfee4217d76b"
   }
 }

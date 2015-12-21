@@ -135,6 +135,58 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Deploy a Process Server.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to deploy a Process Server.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginDeployProcessServer(this IFabricOperations operations, string fabricName, DeployProcessServerRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFabricOperations)s).BeginDeployProcessServerAsync(fabricName, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deploy a Process Server.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to deploy a Process Server.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginDeployProcessServerAsync(this IFabricOperations operations, string fabricName, DeployProcessServerRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginDeployProcessServerAsync(fabricName, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Purges a Fabric
         /// </summary>
         /// <param name='operations'>
@@ -383,6 +435,58 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Deploy a Process Server.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to deploy a Process Server.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse DeployProcessServer(this IFabricOperations operations, string fabricName, DeployProcessServerRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFabricOperations)s).DeployProcessServerAsync(fabricName, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deploy a Process Server.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to deploy a Process Server.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> DeployProcessServerAsync(this IFabricOperations operations, string fabricName, DeployProcessServerRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.DeployProcessServerAsync(fabricName, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the server object by Id.
         /// </summary>
         /// <param name='operations'>
@@ -536,6 +640,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
+        public static DeployProcessServerOperationResponse GetDeployProcessServerStatus(this IFabricOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFabricOperations)s).GetDeployProcessServerStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<DeployProcessServerOperationResponse> GetDeployProcessServerStatusAsync(this IFabricOperations operations, string operationStatusLink)
+        {
+            return operations.GetDeployProcessServerStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
         public static LongRunningOperationResponse GetPurgeStatus(this IFabricOperations operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
@@ -659,7 +809,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Get the list of all servers under the vault.
+        /// Get the list of all fabrics under the vault.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -681,7 +831,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Get the list of all servers under the vault.
+        /// Get the list of all fabrics under the vault.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

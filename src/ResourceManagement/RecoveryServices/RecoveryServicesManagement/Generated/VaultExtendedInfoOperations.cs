@@ -69,14 +69,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Get the vault extended info.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group containing the job
-        /// collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='resourceName'>
         /// Required. The name of the resource.
         /// </param>
         /// <param name='extendedInfoArgs'>
-        /// Required. Create resource exnteded info input parameters.
+        /// Required. Create resource extended info input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -436,6 +436,297 @@ namespace Microsoft.Azure.Management.RecoveryServices
                                 }
                                 
                                 JToken encryptionKeyThumbprintValue = propertiesValue["encryptionKeyThumbprint"];
+                                if (encryptionKeyThumbprintValue != null && encryptionKeyThumbprintValue.Type != JTokenType.Null)
+                                {
+                                    string encryptionKeyThumbprintInstance = ((string)encryptionKeyThumbprintValue);
+                                    propertiesInstance.EncryptionKeyThumbprint = encryptionKeyThumbprintInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                extendedInformationInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                extendedInformationInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                extendedInformationInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                extendedInformationInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    extendedInformationInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Update the vault extended info.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group containing the vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. The name of the resource.
+        /// </param>
+        /// <param name='extendedInfoArgs'>
+        /// Required. Update resource extended info input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the resource extended information object
+        /// </returns>
+        public async Task<ResourceExtendedInformationResponse> UpdateExtendedInfoAsync(string resourceGroupName, string resourceName, ResourceExtendedInformationArgs extendedInfoArgs, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (extendedInfoArgs == null)
+            {
+                throw new ArgumentNullException("extendedInfoArgs");
+            }
+            if (extendedInfoArgs.Properties == null)
+            {
+                throw new ArgumentNullException("extendedInfoArgs.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("extendedInfoArgs", extendedInfoArgs);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "UpdateExtendedInfoAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + "vaults";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/extendedInformation/vaultExtendedInfo";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-08-15");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject resourceExtendedInformationArgsValue = new JObject();
+                requestDoc = resourceExtendedInformationArgsValue;
+                
+                JObject propertiesValue = new JObject();
+                resourceExtendedInformationArgsValue["properties"] = propertiesValue;
+                
+                if (extendedInfoArgs.Properties.IntegrityKey != null)
+                {
+                    propertiesValue["integrityKey"] = extendedInfoArgs.Properties.IntegrityKey;
+                }
+                
+                if (extendedInfoArgs.Properties.Algorithm != null)
+                {
+                    propertiesValue["algorithm"] = extendedInfoArgs.Properties.Algorithm;
+                }
+                
+                if (extendedInfoArgs.Properties.EncryptionKey != null)
+                {
+                    propertiesValue["encryptionKey"] = extendedInfoArgs.Properties.EncryptionKey;
+                }
+                
+                if (extendedInfoArgs.Properties.EncryptionKeyThumbprint != null)
+                {
+                    propertiesValue["encryptionKeyThumbprint"] = extendedInfoArgs.Properties.EncryptionKeyThumbprint;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ResourceExtendedInformationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ResourceExtendedInformationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ResourceExtendedInformation extendedInformationInstance = new ResourceExtendedInformation();
+                            result.ResourceExtendedInformation = extendedInformationInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                ResourceExtendedInfoProperties propertiesInstance = new ResourceExtendedInfoProperties();
+                                extendedInformationInstance.Properties = propertiesInstance;
+                                
+                                JToken integrityKeyValue = propertiesValue2["integrityKey"];
+                                if (integrityKeyValue != null && integrityKeyValue.Type != JTokenType.Null)
+                                {
+                                    string integrityKeyInstance = ((string)integrityKeyValue);
+                                    propertiesInstance.IntegrityKey = integrityKeyInstance;
+                                }
+                                
+                                JToken algorithmValue = propertiesValue2["algorithm"];
+                                if (algorithmValue != null && algorithmValue.Type != JTokenType.Null)
+                                {
+                                    string algorithmInstance = ((string)algorithmValue);
+                                    propertiesInstance.Algorithm = algorithmInstance;
+                                }
+                                
+                                JToken encryptionKeyValue = propertiesValue2["encryptionKey"];
+                                if (encryptionKeyValue != null && encryptionKeyValue.Type != JTokenType.Null)
+                                {
+                                    string encryptionKeyInstance = ((string)encryptionKeyValue);
+                                    propertiesInstance.EncryptionKey = encryptionKeyInstance;
+                                }
+                                
+                                JToken encryptionKeyThumbprintValue = propertiesValue2["encryptionKeyThumbprint"];
                                 if (encryptionKeyThumbprintValue != null && encryptionKeyThumbprintValue.Type != JTokenType.Null)
                                 {
                                     string encryptionKeyThumbprintInstance = ((string)encryptionKeyThumbprintValue);

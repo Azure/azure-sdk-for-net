@@ -53,6 +53,19 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._clientRequestId = value; }
         }
         
+        private string _culture;
+        
+        /// <summary>
+        /// Optional. Language to be used for current request. See
+        /// https://msdn.microsoft.com/en-us/library/ee825488%28v=cs.20%29.aspx
+        /// for language codes.
+        /// </summary>
+        public string Culture
+        {
+            get { return this._culture; }
+            set { this._culture = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the CustomRequestHeaders class.
         /// </summary>

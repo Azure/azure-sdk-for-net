@@ -31,6 +31,134 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public static partial class ReplicationProtectedItemOperationsExtensions
     {
         /// <summary>
+        /// Apply recovery point for the given Replication protected item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Apply recovery point input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse ApplyRecoveryPoint(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, ApplyRecoveryPointInput input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).ApplyRecoveryPointAsync(fabricName, protectionContainerName, replicationProtectedItemName, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Apply recovery point for the given Replication protected item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Apply recovery point input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> ApplyRecoveryPointAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, ApplyRecoveryPointInput input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ApplyRecoveryPointAsync(fabricName, protectionContainerName, replicationProtectedItemName, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Apply recovery point for the given Replication protected item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Apply recovery point input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginApplyRecoveryPoint(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, ApplyRecoveryPointInput input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).BeginApplyRecoveryPointAsync(fabricName, protectionContainerName, replicationProtectedItemName, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Apply recovery point for the given Replication protected item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Apply recovery point input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginApplyRecoveryPointAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, ApplyRecoveryPointInput input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginApplyRecoveryPointAsync(fabricName, protectionContainerName, replicationProtectedItemName, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Execute commit failover for the given Replication protected item.
         /// </summary>
         /// <param name='operations'>
@@ -336,6 +464,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<LongRunningOperationResponse> BeginPurgeProtectionAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.BeginPurgeProtectionAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Executes repair VM replication for the given Replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginRepairVMReplication(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).BeginRepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Executes repair VM replication for the given Replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginRepairVMReplicationAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginRepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -918,6 +1106,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// Service response for replication protected items operation.
         /// </returns>
+        public static ReplicationProtectedItemOperationResponse GetApplyRecoveryPointStatus(this IReplicationProtectedItemOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).GetApplyRecoveryPointStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// Service response for replication protected items operation.
+        /// </returns>
+        public static Task<ReplicationProtectedItemOperationResponse> GetApplyRecoveryPointStatusAsync(this IReplicationProtectedItemOperations operations, string operationStatusLink)
+        {
+            return operations.GetApplyRecoveryPointStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// Service response for replication protected items operation.
+        /// </returns>
         public static ReplicationProtectedItemOperationResponse GetCommitFailoverStatus(this IReplicationProtectedItemOperations operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
@@ -1130,6 +1364,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<LongRunningOperationResponse> GetPurgeStatusAsync(this IReplicationProtectedItemOperations operations, string operationStatusLink)
         {
             return operations.GetPurgeStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// Service response for replication protected items operation.
+        /// </returns>
+        public static ReplicationProtectedItemOperationResponse GetRepairVMReplicationStatus(this IReplicationProtectedItemOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).GetRepairVMReplicationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// Service response for replication protected items operation.
+        /// </returns>
+        public static Task<ReplicationProtectedItemOperationResponse> GetRepairVMReplicationStatusAsync(this IReplicationProtectedItemOperations operations, string operationStatusLink)
+        {
+            return operations.GetRepairVMReplicationStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -1415,6 +1695,166 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Enumerate all replication protected items under vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='skipToken'>
+        /// Optional. Continuation Token.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. Protected items query parameter.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        public static ReplicationProtectedItemListResponse ListAll(this IReplicationProtectedItemOperations operations, string skipToken, ProtectedItemsQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).ListAllAsync(skipToken, parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Enumerate all replication protected items under vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='skipToken'>
+        /// Optional. Continuation Token.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. Protected items query parameter.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        public static Task<ReplicationProtectedItemListResponse> ListAllAsync(this IReplicationProtectedItemOperations operations, string skipToken, ProtectedItemsQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListAllAsync(skipToken, parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get subsequent page data for replication protected items under
+        /// vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        public static ReplicationProtectedItemListResponse ListAllNext(this IReplicationProtectedItemOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).ListAllNextAsync(nextLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get subsequent page data for replication protected items under
+        /// vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        public static Task<ReplicationProtectedItemListResponse> ListAllNextAsync(this IReplicationProtectedItemOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListAllNextAsync(nextLink, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets list of recovery azure vm sizes for a replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric unique name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container unique name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item unique name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of recovery azure vm sizes.
+        /// </returns>
+        public static TargetComputeSizeResponse ListTargetComputeSizes(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).ListTargetComputeSizesAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets list of recovery azure vm sizes for a replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric unique name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container unique name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item unique name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of recovery azure vm sizes.
+        /// </returns>
+        public static Task<TargetComputeSizeResponse> ListTargetComputeSizesAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListTargetComputeSizesAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Execute planned failover for the given Replication protected item.
         /// </summary>
         /// <param name='operations'>
@@ -1534,6 +1974,66 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<LongRunningOperationResponse> PurgeProtectionAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.PurgeProtectionAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Executes repair VM replication for the given Replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse RepairVMReplication(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationProtectedItemOperations)s).RepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Executes repair VM replication for the given Replication protected
+        /// item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IReplicationProtectedItemOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric name.
+        /// </param>
+        /// <param name='protectionContainerName'>
+        /// Required. Protection container name.
+        /// </param>
+        /// <param name='replicationProtectedItemName'>
+        /// Required. Replication protected item name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> RepairVMReplicationAsync(this IReplicationProtectedItemOperations operations, string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.RepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

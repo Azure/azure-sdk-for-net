@@ -25,7 +25,6 @@ namespace SiteRecovery.Tests
 {
     public class DeletionTests : SiteRecoveryTestsBase
     {
-        
         public void RemoveServer()
         {
             using (UndoContext context = UndoContext.Current)

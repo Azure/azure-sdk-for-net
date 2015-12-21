@@ -91,6 +91,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of alert settings operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IAlertSettingsOperations AlertSettings
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of event operations for the Site Recovery extension.
+        /// </summary>
+        IEventOperations Events
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of fabric operations for the Site Recovery extension.
         /// </summary>
         IFabricOperations Fabrics
@@ -168,6 +185,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of recovery plan operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IRecoveryPlanOperations RecoveryPlan
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of recovery point operations for Site recovery extension.
+        /// </summary>
+        IRecoveryPointOperations RecoveryPoint
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of provider operations for the Site Recovery extension.
         /// </summary>
         IRecoveryServicesProviderOperations RecoveryServicesProvider
@@ -180,6 +214,24 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Recovery extension.
         /// </summary>
         IReplicationProtectedItemOperations ReplicationProtectedItem
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of storage mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IStorageClassificationMappingOperations StorageClassificationMapping
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of storage classification operations for the Site
+        /// Recovery extension.
+        /// </summary>
+        IStorageClassificationOperations StorageClassification
         {
             get; 
         }
