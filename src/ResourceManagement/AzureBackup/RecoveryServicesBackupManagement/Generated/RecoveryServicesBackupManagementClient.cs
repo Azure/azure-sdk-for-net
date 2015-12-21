@@ -92,6 +92,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             set { this._resourceNamespace = value; }
         }
         
+        private IBackupOperationResults _backupOperationResults;
+        
+        /// <summary>
+        /// Definition of OperationResults operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual IBackupOperationResults BackupOperationResults
+        {
+            get { return this._backupOperationResults; }
+        }
+        
         private IBackupOperations _backup;
         
         /// <summary>
@@ -183,6 +194,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient()
             : base()
         {
+            this._backupOperationResults = new BackupOperationResults(this);
             this._backup = new BackupOperations(this);
             this._container = new ContainerOperation(this);
             this._job = new JobOperations(this);
@@ -275,6 +287,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._backupOperationResults = new BackupOperationResults(this);
             this._backup = new BackupOperations(this);
             this._container = new ContainerOperation(this);
             this._job = new JobOperations(this);
