@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
@@ -28,7 +27,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         static MockContext()
         {
-            ServiceClientTracing.AddTracingInterceptor(new TestingTracingInterceptor());
         }
 
         /// <summary>
@@ -72,32 +70,59 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             T client;
             handlers = AddHandlers(currentEnvironment, handlers);
+            var constructors = typeof(T).GetConstructors();
 
+            Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
+            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo.AccessToken});
+
+            ConstructorInfo constructor = null;
             if (currentEnvironment.UsesCustomUri())
             {
-                ConstructorInfo constructor = typeof(T).GetConstructor(new Type[]
+                foreach (var c in constructors)
                 {
-                    typeof(Uri),
-                    typeof(ServiceClientCredentials),
-                    typeof(DelegatingHandler[])
-                });
+                    var parameters = c.GetParameters();
+                    if (parameters.Length == 3 && 
+                        parameters[0].ParameterType.Name == "Uri" && 
+                        parameters[1].ParameterType.Name == "ServiceClientCredentials" &&
+                        parameters[2].ParameterType.Name == "DelegatingHandler[]")
+                    {
+                        constructor = c;
+                        break;
+                    }
+                }
+                if (constructor == null)
+                {
+                    throw new InvalidOperationException(
+                        "can't find constructor (uri, ServiceClientCredentials, DelegatingHandler[]) to create client");
+                }
                 client = constructor.Invoke(new object[]
                 {
                     currentEnvironment.BaseUri,
-                    currentEnvironment.Credentials,
+                    tokenCred,
                     handlers
                 }) as T;
             }
             else
             {
-                ConstructorInfo constructor = typeof(T).GetConstructor(new Type[]
+                foreach (var c in constructors)
                 {
-                    typeof(ServiceClientCredentials),
-                    typeof(DelegatingHandler[])
-                });
+                    var parameters = c.GetParameters();
+                    if (parameters.Length == 2 && 
+                        parameters[0].ParameterType.Name == "ServiceClientCredentials" &&
+                        parameters[1].ParameterType.Name == "DelegatingHandler[]")
+                    {
+                        constructor = c;
+                        break;
+                    }
+                }
+                if (constructor == null)
+                {
+                    throw new InvalidOperationException(
+                        "can't find constructor (ServiceClientCredentials, DelegatingHandler[]) to create client");
+                }
                 client = constructor.Invoke(new object[]
                 {
-                    currentEnvironment.Credentials,
+                    tokenCred,
                     handlers
                 }) as T;
             }
@@ -151,7 +176,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 handlers.Add(server);
             }
 
-            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.Credentials);
+            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.TokenInfo);
             handlers.Add(cleaner);
             undoHandlers.Add(cleaner);
 
