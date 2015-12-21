@@ -165,6 +165,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
@@ -203,7 +204,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -240,6 +241,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -247,6 +256,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -320,7 +337,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 return response;
             }
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse result = await client.ProtectionContainer.GetDiscoverProtectableItemStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            DiscoverProtectableItemResponse result = await client.ProtectionContainer.GetDiscoverProtectableItemStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
@@ -437,6 +454,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -582,10 +600,54 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     protectionContainerInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -627,9 +689,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// Service response for operation which change status of protection
+        /// container.
         /// </returns>
-        public async Task<LongRunningOperationResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<DiscoverProtectableItemResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -662,7 +725,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("Accept", "application/Json");
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -697,13 +759,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
+                    DiscoverProtectableItemResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new LongRunningOperationResponse();
+                        result = new DiscoverProtectableItemResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -712,11 +774,108 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken locationValue = responseDoc["Location"];
+                            ProtectionContainer protectionContainerInstance = new ProtectionContainer();
+                            result.ProtectionContainer = protectionContainerInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ProtectionContainerProperties propertiesInstance = new ProtectionContainerProperties();
+                                protectionContainerInstance.Properties = propertiesInstance;
+                                
+                                JToken fabricFriendlyNameValue = propertiesValue["fabricFriendlyName"];
+                                if (fabricFriendlyNameValue != null && fabricFriendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string fabricFriendlyNameInstance = ((string)fabricFriendlyNameValue);
+                                    propertiesInstance.FabricFriendlyName = fabricFriendlyNameInstance;
+                                }
+                                
+                                JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string friendlyNameInstance = ((string)friendlyNameValue);
+                                    propertiesInstance.FriendlyName = friendlyNameInstance;
+                                }
+                                
+                                JToken fabricTypeValue = propertiesValue["fabricType"];
+                                if (fabricTypeValue != null && fabricTypeValue.Type != JTokenType.Null)
+                                {
+                                    string fabricTypeInstance = ((string)fabricTypeValue);
+                                    propertiesInstance.FabricType = fabricTypeInstance;
+                                }
+                                
+                                JToken protectedItemCountValue = propertiesValue["protectedItemCount"];
+                                if (protectedItemCountValue != null && protectedItemCountValue.Type != JTokenType.Null)
+                                {
+                                    int protectedItemCountInstance = ((int)protectedItemCountValue);
+                                    propertiesInstance.ProtectedItemCount = protectedItemCountInstance;
+                                }
+                                
+                                JToken pairingStatusValue = propertiesValue["pairingStatus"];
+                                if (pairingStatusValue != null && pairingStatusValue.Type != JTokenType.Null)
+                                {
+                                    string pairingStatusInstance = ((string)pairingStatusValue);
+                                    propertiesInstance.PairingStatus = pairingStatusInstance;
+                                }
+                                
+                                JToken roleValue = propertiesValue["role"];
+                                if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                {
+                                    string roleInstance = ((string)roleValue);
+                                    propertiesInstance.Role = roleInstance;
+                                }
+                                
+                                JToken fabricSpecificDetailsValue = propertiesValue["fabricSpecificDetails"];
+                                if (fabricSpecificDetailsValue != null && fabricSpecificDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName = ((string)fabricSpecificDetailsValue["instanceType"]);
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                protectionContainerInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                protectionContainerInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                protectionContainerInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                result.Location = locationInstance;
+                                protectionContainerInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    protectionContainerInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken locationValue2 = responseDoc["Location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            {
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
                             }
                             
                             JToken retryAfterValue = responseDoc["RetryAfter"];
@@ -739,6 +898,41 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
                                 result.Status = statusInstance;
                             }
+                            
+                            JToken cultureValue = responseDoc["Culture"];
+                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                            {
+                                string cultureInstance = ((string)cultureValue);
+                                result.Culture = cultureInstance;
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
@@ -747,6 +941,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         result.AsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("Location"))
                     {
                         result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
@@ -754,6 +956,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
                         result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -876,6 +1086,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -1035,10 +1246,361 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 result.NextLink = nextLinkInstance;
                             }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
                         }
                         
                     }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the list of all ProtectionContainers for the given vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionContainers operation.
+        /// </returns>
+        public async Task<ProtectionContainerListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "ListAllAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceType);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/replicationProtectionContainers";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-11-10");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ProtectionContainerListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProtectionContainerListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    ProtectionContainer protectionContainerInstance = new ProtectionContainer();
+                                    result.ProtectionContainers.Add(protectionContainerInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        ProtectionContainerProperties propertiesInstance = new ProtectionContainerProperties();
+                                        protectionContainerInstance.Properties = propertiesInstance;
+                                        
+                                        JToken fabricFriendlyNameValue = propertiesValue["fabricFriendlyName"];
+                                        if (fabricFriendlyNameValue != null && fabricFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string fabricFriendlyNameInstance = ((string)fabricFriendlyNameValue);
+                                            propertiesInstance.FabricFriendlyName = fabricFriendlyNameInstance;
+                                        }
+                                        
+                                        JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                        if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string friendlyNameInstance = ((string)friendlyNameValue);
+                                            propertiesInstance.FriendlyName = friendlyNameInstance;
+                                        }
+                                        
+                                        JToken fabricTypeValue = propertiesValue["fabricType"];
+                                        if (fabricTypeValue != null && fabricTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string fabricTypeInstance = ((string)fabricTypeValue);
+                                            propertiesInstance.FabricType = fabricTypeInstance;
+                                        }
+                                        
+                                        JToken protectedItemCountValue = propertiesValue["protectedItemCount"];
+                                        if (protectedItemCountValue != null && protectedItemCountValue.Type != JTokenType.Null)
+                                        {
+                                            int protectedItemCountInstance = ((int)protectedItemCountValue);
+                                            propertiesInstance.ProtectedItemCount = protectedItemCountInstance;
+                                        }
+                                        
+                                        JToken pairingStatusValue = propertiesValue["pairingStatus"];
+                                        if (pairingStatusValue != null && pairingStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string pairingStatusInstance = ((string)pairingStatusValue);
+                                            propertiesInstance.PairingStatus = pairingStatusInstance;
+                                        }
+                                        
+                                        JToken roleValue = propertiesValue["role"];
+                                        if (roleValue != null && roleValue.Type != JTokenType.Null)
+                                        {
+                                            string roleInstance = ((string)roleValue);
+                                            propertiesInstance.Role = roleInstance;
+                                        }
+                                        
+                                        JToken fabricSpecificDetailsValue = propertiesValue["fabricSpecificDetails"];
+                                        if (fabricSpecificDetailsValue != null && fabricSpecificDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName = ((string)fabricSpecificDetailsValue["instanceType"]);
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        protectionContainerInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        protectionContainerInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        protectionContainerInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        protectionContainerInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            protectionContainerInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Content != null && httpResponse.Content.Headers.Contains("Content-Type"))
+                    {
+                        result.ContentType = httpResponse.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = httpResponse.Headers.GetValues("Date").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        result.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-correlation-request-id"))
+                    {
+                        result.CorrelationRequestId = httpResponse.Headers.GetValues("x-ms-correlation-request-id").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();

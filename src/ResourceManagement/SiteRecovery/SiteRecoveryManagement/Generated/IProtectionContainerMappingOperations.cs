@@ -232,6 +232,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<ProtectionContainerMappingListResponse> ListAsync(string fabricName, string protectionContainerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Get the list of all protection container mapping under a vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Protection Container mapping collection object.
+        /// </returns>
+        Task<ProtectionContainerMappingListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Purges protection for given protection container
         /// </summary>
         /// <param name='fabricName'>
