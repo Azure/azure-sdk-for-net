@@ -16,6 +16,7 @@
     <Compile Include="ScenarioTests\Sql2.LocationCapabilitiesTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedIndexScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ServerAdministratorScenarioTests.cs" />
+    <Compile Include="ScenarioTests\Sql2.ServerCommunicationLinkTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ServiceTierAdvisorScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedElasticPoolScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.SecureConnectionScenarioTest.cs" />

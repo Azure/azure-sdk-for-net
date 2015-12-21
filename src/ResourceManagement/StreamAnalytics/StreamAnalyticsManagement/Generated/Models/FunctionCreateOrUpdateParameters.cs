@@ -21,18 +21,34 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The test status of the input or output.
+    /// Parameters specifying the function definition for the function create
+    /// or update operation.
     /// </summary>
-    public static partial class DataSourceTestStatus
+    public partial class FunctionCreateOrUpdateParameters
     {
-        public const string TestNotAttempted = "TestNotAttempted";
+        private Function _function;
         
-        public const string TestSucceeded = "TestSucceeded";
+        /// <summary>
+        /// Optional. Gets or sets the definition of the function to be created
+        /// or updated.
+        /// </summary>
+        public Function Function
+        {
+            get { return this._function; }
+            set { this._function = value; }
+        }
         
-        public const string TestFailed = "TestFailed";
+        /// <summary>
+        /// Initializes a new instance of the FunctionCreateOrUpdateParameters
+        /// class.
+        /// </summary>
+        public FunctionCreateOrUpdateParameters()
+        {
+        }
     }
 }

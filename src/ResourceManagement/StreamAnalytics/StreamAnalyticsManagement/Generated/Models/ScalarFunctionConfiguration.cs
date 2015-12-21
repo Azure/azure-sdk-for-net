@@ -20,58 +20,58 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The test result of the input or output data source.
+    /// The configuration of the scalar function.
     /// </summary>
-    public partial class DataSourceTestConnectionResponse : LongRunningOperationResponse
+    public partial class ScalarFunctionConfiguration
     {
-        private string _dataSourceTestStatus;
+        private FunctionBinding _binding;
         
         /// <summary>
-        /// Required. Gets the test status.
+        /// Optional. Gets or sets the physical binding of the function. In the
+        /// Azure Machine Learning web service’s case, this describes the
+        /// endpoint.
         /// </summary>
-        public string DataSourceTestStatus
+        public FunctionBinding Binding
         {
-            get { return this._dataSourceTestStatus; }
-            set { this._dataSourceTestStatus = value; }
+            get { return this._binding; }
+            set { this._binding = value; }
         }
         
-        private ErrorResponse _error;
+        private IList<FunctionInput> _inputs;
         
         /// <summary>
-        /// Optional. Gets the error response.
+        /// Optional. Gets or sets a list of inputs describing the parameters
+        /// of the function.
         /// </summary>
-        public ErrorResponse Error
+        public IList<FunctionInput> Inputs
         {
-            get { return this._error; }
-            set { this._error = value; }
+            get { return this._inputs; }
+            set { this._inputs = value; }
+        }
+        
+        private FunctionOutput _output;
+        
+        /// <summary>
+        /// Optional. Gets or sets the output of the function.
+        /// </summary>
+        public FunctionOutput Output
+        {
+            get { return this._output; }
+            set { this._output = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataSourceTestConnectionResponse
-        /// class.
+        /// Initializes a new instance of the ScalarFunctionConfiguration class.
         /// </summary>
-        public DataSourceTestConnectionResponse()
+        public ScalarFunctionConfiguration()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DataSourceTestConnectionResponse
-        /// class with required arguments.
-        /// </summary>
-        public DataSourceTestConnectionResponse(string dataSourceTestStatus)
-            : this()
-        {
-            if (dataSourceTestStatus == null)
-            {
-                throw new ArgumentNullException("dataSourceTestStatus");
-            }
-            this.DataSourceTestStatus = dataSourceTestStatus;
         }
     }
 }

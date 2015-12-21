@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static DataSourceTestConnectionResponse GetTestConnectionStatus(this IStreamAnalyticsManagementClient operations, string operationStatusLink)
+        public static ResourceTestConnectionResponse GetTestConnectionStatus(this IStreamAnalyticsManagementClient operations, string operationStatusLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static Task<DataSourceTestConnectionResponse> GetTestConnectionStatusAsync(this IStreamAnalyticsManagementClient operations, string operationStatusLink)
+        public static Task<ResourceTestConnectionResponse> GetTestConnectionStatusAsync(this IStreamAnalyticsManagementClient operations, string operationStatusLink)
         {
             return operations.GetTestConnectionStatusAsync(operationStatusLink, CancellationToken.None);
         }

@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.RemoteApp">
-      <PackageVersion>2.0.2</PackageVersion>
+      <PackageVersion>2.0.3</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
       <Publish>true</Publish>
     </SdkNuGetPackage>

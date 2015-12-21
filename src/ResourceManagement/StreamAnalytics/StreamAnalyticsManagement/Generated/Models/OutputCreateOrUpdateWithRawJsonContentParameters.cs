@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         
         /// <summary>
         /// Required. Gets or sets the definition of the output to be created
-        /// or updated. It is in json format.
+        /// or updated in json format.
         /// </summary>
         public string Content
         {
