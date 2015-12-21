@@ -25,6 +25,7 @@ using System.Net;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Rest;
 
 namespace Authorization.Tests
 {
@@ -165,9 +166,11 @@ namespace Authorization.Tests
                 this.GraphClient.DeleteGroup(group);
             }
 
+            var env = TestEnvironmentFactory.GetTestEnvironment();
+            var cred = new TokenCredentials(env.TokenInfo.AccessToken, env.TokenInfo.AccessTokenType);
             var authorizationClient = new AuthorizationManagementClient(
                 TestEnvironmentFactory.GetTestEnvironment().BaseUri,
-                TestEnvironmentFactory.GetTestEnvironment().Credentials);
+                cred);
             foreach (var assignment in authorizationClient.RoleAssignments.List(null))
             {
                 authorizationClient.RoleAssignments.DeleteById(assignment.Id);

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Rest;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
@@ -277,7 +278,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public ServiceClientCredentials Credentials { get; set; }
+        public TokenInfo TokenInfo { get; set; }
 
         public string ServicePrincipal { get; set; }
 

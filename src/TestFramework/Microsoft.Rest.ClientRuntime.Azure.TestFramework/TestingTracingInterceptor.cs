@@ -4,12 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
-using Microsoft.Rest;
+using System.Text;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
-    public class TestingTracingInterceptor : IServiceClientTracingInterceptor
+    public class TestingTracingInterceptor
     {
         private void Write(string message, params object[] arguments)
         {
@@ -36,12 +37,32 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         
         public void SendRequest(string invocationId, HttpRequestMessage request)
         {
-            Write("{0} - {1}", invocationId, request.AsFormattedString());
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(request.ToString());
+            if (request.Content != null)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine("Body:");
+                stringBuilder.AppendLine("{");
+                stringBuilder.AppendLine(request.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult());
+                stringBuilder.AppendLine("}");
+            }
+            Write("{0} - {1}", invocationId, stringBuilder.ToString());
         }
 
         public void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
-            Write("{0} - {1}", invocationId, response.AsFormattedString());
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(response.ToString());
+            if (response.Content != null)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine("Body:");
+                stringBuilder.AppendLine("{");
+                stringBuilder.AppendLine(response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult());
+                stringBuilder.AppendLine("}");
+            }
+            Write("{0} - {1}", invocationId, stringBuilder.ToString());
         }
 
         public void EnterMethod(string invocationId, object instance, string method, IDictionary<string, object> parameters)
