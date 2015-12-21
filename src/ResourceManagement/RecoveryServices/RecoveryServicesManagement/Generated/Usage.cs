@@ -21,76 +21,85 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The definition of a get resource storage config response.
+    /// The Usage object.
     /// </summary>
-    public partial class GetResourceStorageConfigResponse : AzureOperationResponse
+    public partial class Usage
     {
-        private string _eTag;
+        private string _currentValue;
         
         /// <summary>
-        /// Optional. ETag of the Vault.
+        /// Required. Gets or sets the current value of usage.
         /// </summary>
-        public string ETag
+        public string CurrentValue
         {
-            get { return this._eTag; }
-            set { this._eTag = value; }
+            get { return this._currentValue; }
+            set { this._currentValue = value; }
         }
         
-        private long _id;
+        private string _limit;
         
         /// <summary>
-        /// Optional. Gets or sets the resource ID.
+        /// Required. Gets or sets the limit of usage.
         /// </summary>
-        public long Id
+        public string Limit
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._limit; }
+            set { this._limit = value; }
         }
         
-        private long _name;
+        private Name _name;
         
         /// <summary>
-        /// Optional. Gets or sets the resource Name.
+        /// Required. Gets or sets the name of usage.
         /// </summary>
-        public long Name
+        public Name Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
         
-        private StorageDetails _properties;
+        private string _nextResetTime;
         
         /// <summary>
-        /// Optional. The resource storage details.
+        /// Optional. Gets or sets the next reset time of usage.
         /// </summary>
-        public StorageDetails Properties
+        public string NextResetTime
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._nextResetTime; }
+            set { this._nextResetTime = value; }
         }
         
-        private long _type;
+        private string _quotaPeriod;
         
         /// <summary>
-        /// Optional. Gets or sets the resource Type.
+        /// Optional. Gets or sets the quota period of usage.
         /// </summary>
-        public long Type
+        public string QuotaPeriod
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._quotaPeriod; }
+            set { this._quotaPeriod = value; }
+        }
+        
+        private string _unit;
+        
+        /// <summary>
+        /// Required. Gets or sets the unit of usage.
+        /// </summary>
+        public string Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GetResourceStorageConfigResponse
-        /// class.
+        /// Initializes a new instance of the Usage class.
         /// </summary>
-        public GetResourceStorageConfigResponse()
+        public Usage()
         {
         }
     }

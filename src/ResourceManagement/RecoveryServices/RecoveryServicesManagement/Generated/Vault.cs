@@ -20,16 +20,17 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure;
+using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The definition of a get resource storage config response.
+    /// The response model for the Vm group object.
     /// </summary>
-    public partial class GetResourceStorageConfigResponse : AzureOperationResponse
+    public partial class Vault
     {
         private string _eTag;
         
@@ -42,56 +43,78 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
             set { this._eTag = value; }
         }
         
-        private long _id;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the resource ID.
+        /// Optional. Gets or sets the ID of the resource.
         /// </summary>
-        public long Id
+        public string Id
         {
             get { return this._id; }
             set { this._id = value; }
         }
         
-        private long _name;
+        private string _location;
         
         /// <summary>
-        /// Optional. Gets or sets the resource Name.
+        /// Optional. Gets or sets the location of the resource.
         /// </summary>
-        public long Name
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of the resource.
+        /// </summary>
+        public string Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
         
-        private StorageDetails _properties;
+        private VaultProperties _properties;
         
         /// <summary>
-        /// Optional. The resource storage details.
+        /// Optional. Properties of the vault.
         /// </summary>
-        public StorageDetails Properties
+        public VaultProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
-        private long _type;
+        private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Gets or sets the resource Type.
+        /// Optional. Gets or sets the tags attached to the resource.
         /// </summary>
-        public long Type
+        public IDictionary<string, string> Tags
+        {
+            get { return this._tags; }
+            set { this._tags = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of the resource.
+        /// </summary>
+        public string Type
         {
             get { return this._type; }
             set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GetResourceStorageConfigResponse
-        /// class.
+        /// Initializes a new instance of the Vault class.
         /// </summary>
-        public GetResourceStorageConfigResponse()
+        public Vault()
         {
+            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

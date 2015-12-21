@@ -20,40 +20,41 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// Certificate to be uploaded to the vault
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class CertificateArgs
     {
-        private StorageTypeProperties _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Required. Properties of the certificate.
         /// </summary>
-        public StorageTypeProperties Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Initializes a new instance of the CertificateArgs class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public CertificateArgs()
         {
+            this.Properties = new LazyDictionary<string, string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
+        /// Initializes a new instance of the CertificateArgs class with
+        /// required arguments.
         /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
+        public CertificateArgs(IDictionary<string, string> properties)
             : this()
         {
             if (properties == null)

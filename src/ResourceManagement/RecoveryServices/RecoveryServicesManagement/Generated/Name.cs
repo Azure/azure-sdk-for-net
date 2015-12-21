@@ -21,46 +21,60 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// The Name object of Usage.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class Name
     {
-        private StorageTypeProperties _properties;
+        private string _localizedValue;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Required. Gets or sets the localized value of usage.
         /// </summary>
-        public StorageTypeProperties Properties
+        public string LocalizedValue
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._localizedValue; }
+            set { this._localizedValue = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// Required. Gets or sets the value of usage.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Initializes a new instance of the Name class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public Name()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
+        /// Initializes a new instance of the Name class with required
+        /// arguments.
         /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
+        public Name(string value, string localizedValue)
             : this()
         {
-            if (properties == null)
+            if (value == null)
             {
-                throw new ArgumentNullException("properties");
+                throw new ArgumentNullException("value");
             }
-            this.Properties = properties;
+            if (localizedValue == null)
+            {
+                throw new ArgumentNullException("localizedValue");
+            }
+            this.Value = value;
+            this.LocalizedValue = localizedValue;
         }
     }
 }

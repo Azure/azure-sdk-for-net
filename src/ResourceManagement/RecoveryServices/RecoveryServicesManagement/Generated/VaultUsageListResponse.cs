@@ -20,47 +20,52 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// The response model for Vault usage.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class VaultUsageListResponse : AzureOperationResponse, IEnumerable<Usage>
     {
-        private StorageTypeProperties _properties;
+        private IList<Usage> _value;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Optional. The list of usage for the given vault.
         /// </summary>
-        public StorageTypeProperties Properties
+        public IList<Usage> Value
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Initializes a new instance of the VaultUsageListResponse class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public VaultUsageListResponse()
         {
+            this.Value = new LazyList<Usage>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
+        /// Gets the sequence of Value.
         /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
-            : this()
+        public IEnumerator<Usage> GetEnumerator()
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
+            return this.Value.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Value.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

@@ -21,46 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The request model for the update vault storage type operation.
+    /// Model for storage type properties.
     /// </summary>
-    public partial class UpdateVaultStorageTypeRequest
+    public partial class StorageTypeProperties
     {
-        private StorageTypeProperties _properties;
+        private string _storageModelType;
         
         /// <summary>
-        /// Required. Storage type properties.
+        /// Optional. Gets or sets the storage model type.
         /// </summary>
-        public StorageTypeProperties Properties
+        public string StorageModelType
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._storageModelType; }
+            set { this._storageModelType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class.
+        /// Initializes a new instance of the StorageTypeProperties class.
         /// </summary>
-        public UpdateVaultStorageTypeRequest()
+        public StorageTypeProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the UpdateVaultStorageTypeRequest
-        /// class with required arguments.
-        /// </summary>
-        public UpdateVaultStorageTypeRequest(StorageTypeProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }
