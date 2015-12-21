@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
     /// <summary>
     /// Creates a Data Lake Store filesystem management client.
     /// </summary>
-    public partial interface IDataLakeStoreFileSystemManagementClient
+    public partial interface IDataLakeStoreFileSystemManagementClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.

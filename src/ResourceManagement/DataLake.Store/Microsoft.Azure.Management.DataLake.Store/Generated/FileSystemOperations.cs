@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, object streamContents, string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
@@ -102,118 +102,118 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ConcurrentAppend", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ConcurrentAppend", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "WebHdfsExt/{filePath}").ToString();
-            url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "WebHdfsExt/{filePath}").ToString();
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
-            httpRequest.Content = new StreamContent(streamContents);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content = new StreamContent(streamContents);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -263,73 +263,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("path", path);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("fsaction", fsaction);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CheckAccess", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CheckAccess", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{path}").ToString();
-            url = url.Replace("{path}", Uri.EscapeDataString(path));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{path}").ToString();
+            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (fsaction != null)
             {
-                queryParameters.Add(string.Format("fsaction={0}", Uri.EscapeDataString(fsaction)));
+                _queryParameters.Add(string.Format("fsaction={0}", Uri.EscapeDataString(fsaction)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -337,45 +337,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -424,73 +424,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("path", path);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Mkdirs", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Mkdirs", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{path}").ToString();
-            url = url.Replace("{path}", Uri.EscapeDataString(path));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{path}").ToString();
+            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (permission != null)
             {
-                queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
+                _queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -498,72 +498,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<FileOperationResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -613,73 +613,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("destinationPath", destinationPath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("sources", sources);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Concat", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Concat", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{destinationPath}").ToString();
-            url = url.Replace("{destinationPath}", Uri.EscapeDataString(destinationPath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{destinationPath}").ToString();
+            _url = _url.Replace("{destinationPath}", Uri.EscapeDataString(destinationPath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (sources != null)
             {
-                queryParameters.Add(string.Format("sources={0}", Uri.EscapeDataString(sources)));
+                _queryParameters.Add(string.Format("sources={0}", Uri.EscapeDataString(sources)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -687,45 +687,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -766,7 +766,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string msConcatDestinationPath, string accountname, System.IO.Stream streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string msConcatDestinationPath, string accountname, object streamContents, bool? deletesourcedirectory = default(bool?), string op = "MSCONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (msConcatDestinationPath == null)
             {
@@ -793,11 +793,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("msConcatDestinationPath", msConcatDestinationPath);
                 tracingParameters.Add("accountname", accountname);
@@ -805,111 +805,111 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "MsConcat", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "MsConcat", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{msConcatDestinationPath}").ToString();
-            url = url.Replace("{msConcatDestinationPath}", Uri.EscapeDataString(msConcatDestinationPath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{msConcatDestinationPath}").ToString();
+            _url = _url.Replace("{msConcatDestinationPath}", Uri.EscapeDataString(msConcatDestinationPath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (deletesourcedirectory != null)
             {
-                queryParameters.Add(string.Format("deletesourcedirectory={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(deletesourcedirectory, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("deletesourcedirectory={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(deletesourcedirectory, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
-            httpRequest.Content = new StreamContent(streamContents);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content = new StreamContent(streamContents);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -962,11 +962,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("listFilePath", listFilePath);
                 tracingParameters.Add("accountname", accountname);
@@ -974,66 +974,66 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListFileStatus", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListFileStatus", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{listFilePath}").ToString();
-            url = url.Replace("{listFilePath}", Uri.EscapeDataString(listFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{listFilePath}").ToString();
+            _url = _url.Replace("{listFilePath}", Uri.EscapeDataString(listFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (top != null)
             {
-                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
             }
             if (skip != null)
             {
-                queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("$skip={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(skip, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -1041,72 +1041,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileStatusesResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<FileStatusesResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileStatusesResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileStatusesResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -1152,68 +1152,68 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("getContentSummaryFilePath", getContentSummaryFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetContentSummary", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetContentSummary", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/va/{getContentSummaryFilePath}").ToString();
-            url = url.Replace("{getContentSummaryFilePath}", Uri.EscapeDataString(getContentSummaryFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/va/{getContentSummaryFilePath}").ToString();
+            _url = _url.Replace("{getContentSummaryFilePath}", Uri.EscapeDataString(getContentSummaryFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -1221,72 +1221,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<ContentSummaryResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<ContentSummaryResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<ContentSummaryResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ContentSummaryResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -1332,68 +1332,68 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("getFilePath", getFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetFileStatus", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetFileStatus", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{getFilePath}").ToString();
-            url = url.Replace("{getFilePath}", Uri.EscapeDataString(getFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{getFilePath}").ToString();
+            _url = _url.Replace("{getFilePath}", Uri.EscapeDataString(getFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -1401,72 +1401,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileStatusResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<FileStatusResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileStatusResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileStatusResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -1502,7 +1502,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DirectAppendWithHttpMessagesAsync(string directFilePath, string accountname, System.IO.Stream streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DirectAppendWithHttpMessagesAsync(string directFilePath, string accountname, object streamContents, long? buffersize = default(long?), string op = "APPEND", bool? append = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
@@ -1529,11 +1529,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("accountname", accountname);
@@ -1542,115 +1542,115 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DirectAppend", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DirectAppend", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
-            url = url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
+            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (buffersize != null)
             {
-                queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (append != null)
             {
-                queryParameters.Add(string.Format("append={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(append, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("append={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(append, this.Client.SerializationSettings).Trim('"'))));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
-            httpRequest.Content = new StreamContent(streamContents);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content = new StreamContent(streamContents);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -1699,7 +1699,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DirectCreateWithHttpMessagesAsync(string directFilePath, string accountname, System.IO.Stream streamContents = default(System.IO.Stream), long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DirectCreateWithHttpMessagesAsync(string directFilePath, string accountname, object streamContents = default(object), long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), string op = "CREATE", bool? write = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
@@ -1722,11 +1722,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("accountname", accountname);
@@ -1739,131 +1739,131 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("write", write);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DirectCreate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DirectCreate", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
-            url = url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
+            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (buffersize != null)
             {
-                queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (overwrite != null)
             {
-                queryParameters.Add(string.Format("overwrite={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(overwrite, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("overwrite={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(overwrite, this.Client.SerializationSettings).Trim('"'))));
             }
             if (blocksize != null)
             {
-                queryParameters.Add(string.Format("blocksize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(blocksize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("blocksize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(blocksize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (replication != null)
             {
-                queryParameters.Add(string.Format("replication={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(replication, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("replication={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(replication, this.Client.SerializationSettings).Trim('"'))));
             }
             if (permission != null)
             {
-                queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
+                _queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (write != null)
             {
-                queryParameters.Add(string.Format("write={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(write, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("write={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(write, this.Client.SerializationSettings).Trim('"'))));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
-            httpRequest.Content = new StreamContent(streamContents);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content = new StreamContent(streamContents);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 201)
+            if ((int)_statusCode != 201)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -1922,11 +1922,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("accountname", accountname);
@@ -1936,74 +1936,74 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("read", read);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DirectOpen", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DirectOpen", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
-            url = url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{directFilePath}").ToString();
+            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (length != null)
             {
-                queryParameters.Add(string.Format("length={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(length, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("length={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(length, this.Client.SerializationSettings).Trim('"'))));
             }
             if (offset != null)
             {
-                queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
             }
             if (buffersize != null)
             {
-                queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (read != null)
             {
-                queryParameters.Add(string.Format("read={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(read, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("read={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(read, this.Client.SerializationSettings).Trim('"'))));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -2011,71 +2011,71 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<byte[]>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<byte[]>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    result.Body = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    _result.Body = await _httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -2129,73 +2129,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setAclFilePath", setAclFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "SetAcl", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SetAcl", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setAclFilePath}").ToString();
-            url = url.Replace("{setAclFilePath}", Uri.EscapeDataString(setAclFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setAclFilePath}").ToString();
+            _url = _url.Replace("{setAclFilePath}", Uri.EscapeDataString(setAclFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (aclspec != null)
             {
-                queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
+                _queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -2203,45 +2203,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -2295,73 +2295,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("modifyAclFilePath", modifyAclFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ModifyAclEntries", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ModifyAclEntries", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{modifyAclFilePath}").ToString();
-            url = url.Replace("{modifyAclFilePath}", Uri.EscapeDataString(modifyAclFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{modifyAclFilePath}").ToString();
+            _url = _url.Replace("{modifyAclFilePath}", Uri.EscapeDataString(modifyAclFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (aclspec != null)
             {
-                queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
+                _queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -2369,45 +2369,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -2461,73 +2461,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("removeAclFilePath", removeAclFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "RemoveAclEntries", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "RemoveAclEntries", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{removeAclFilePath}").ToString();
-            url = url.Replace("{removeAclFilePath}", Uri.EscapeDataString(removeAclFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{removeAclFilePath}").ToString();
+            _url = _url.Replace("{removeAclFilePath}", Uri.EscapeDataString(removeAclFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (aclspec != null)
             {
-                queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
+                _queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -2535,45 +2535,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -2619,68 +2619,68 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("removeDefaultAclFilePath", removeDefaultAclFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "RemoveDefaultAcl", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "RemoveDefaultAcl", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{removeDefaultAclFilePath}").ToString();
-            url = url.Replace("{removeDefaultAclFilePath}", Uri.EscapeDataString(removeDefaultAclFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{removeDefaultAclFilePath}").ToString();
+            _url = _url.Replace("{removeDefaultAclFilePath}", Uri.EscapeDataString(removeDefaultAclFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -2688,45 +2688,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -2772,68 +2772,68 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("aclFilePath", aclFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "RemoveAcl", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "RemoveAcl", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{aclFilePath}").ToString();
-            url = url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{aclFilePath}").ToString();
+            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -2841,45 +2841,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -2925,68 +2925,68 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("aclFilePath", aclFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetAclStatus", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetAclStatus", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{aclFilePath}").ToString();
-            url = url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{aclFilePath}").ToString();
+            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -2994,72 +2994,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<AclStatusResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<AclStatusResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<AclStatusResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<AclStatusResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -3109,73 +3109,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginAppend", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginAppend", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
-            url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (buffersize != null)
             {
-                queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -3183,53 +3183,53 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 307)
+            if ((int)_statusCode != 307)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationHeaderResponse<FileSystemBeginAppendHeaders>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationHeaderResponse<FileSystemBeginAppendHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             try
             {
-                result.Headers = httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginAppendHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginAppendHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
                 throw new RestException("Unable to deserialize the headers.", ex);
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -3291,11 +3291,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("accountname", accountname);
@@ -3306,78 +3306,78 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginCreate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
-            url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (buffersize != null)
             {
-                queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (overwrite != null)
             {
-                queryParameters.Add(string.Format("overwrite={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(overwrite, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("overwrite={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(overwrite, this.Client.SerializationSettings).Trim('"'))));
             }
             if (blocksize != null)
             {
-                queryParameters.Add(string.Format("blocksize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(blocksize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("blocksize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(blocksize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (replication != null)
             {
-                queryParameters.Add(string.Format("replication={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(replication, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("replication={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(replication, this.Client.SerializationSettings).Trim('"'))));
             }
             if (permission != null)
             {
-                queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
+                _queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -3385,53 +3385,53 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 307)
+            if ((int)_statusCode != 307)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationHeaderResponse<FileSystemBeginCreateHeaders>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationHeaderResponse<FileSystemBeginCreateHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             try
             {
-                result.Headers = httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginCreateHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginCreateHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
                 throw new RestException("Unable to deserialize the headers.", ex);
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -3484,11 +3484,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("accountname", accountname);
@@ -3497,70 +3497,70 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginOpen", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginOpen", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
-            url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (length != null)
             {
-                queryParameters.Add(string.Format("length={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(length, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("length={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(length, this.Client.SerializationSettings).Trim('"'))));
             }
             if (offset != null)
             {
-                queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
             }
             if (buffersize != null)
             {
-                queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -3568,53 +3568,53 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 307)
+            if ((int)_statusCode != 307)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationHeaderResponse<FileSystemBeginOpenHeaders>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationHeaderResponse<FileSystemBeginOpenHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             try
             {
-                result.Headers = httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginOpenHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<FileSystemBeginOpenHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
                 throw new RestException("Unable to deserialize the headers.", ex);
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -3663,73 +3663,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("recursive", recursive);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
-            url = url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{filePath}").ToString();
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (recursive != null)
             {
-                queryParameters.Add(string.Format("recursive={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(recursive, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("recursive={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(recursive, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("DELETE");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -3737,72 +3737,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<FileOperationResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -3859,11 +3859,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("symLinkFilePath", symLinkFilePath);
                 tracingParameters.Add("accountname", accountname);
@@ -3871,66 +3871,66 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("createParent", createParent);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateSymLink", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateSymLink", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{symLinkFilePath}").ToString();
-            url = url.Replace("{symLinkFilePath}", Uri.EscapeDataString(symLinkFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{symLinkFilePath}").ToString();
+            _url = _url.Replace("{symLinkFilePath}", Uri.EscapeDataString(symLinkFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (destination != null)
             {
-                queryParameters.Add(string.Format("destination={0}", Uri.EscapeDataString(destination)));
+                _queryParameters.Add(string.Format("destination={0}", Uri.EscapeDataString(destination)));
             }
             if (createParent != null)
             {
-                queryParameters.Add(string.Format("createParent={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(createParent, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("createParent={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(createParent, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -3938,45 +3938,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -4029,73 +4029,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("renameFilePath", renameFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("destination", destination);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Rename", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Rename", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{renameFilePath}").ToString();
-            url = url.Replace("{renameFilePath}", Uri.EscapeDataString(renameFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{renameFilePath}").ToString();
+            _url = _url.Replace("{renameFilePath}", Uri.EscapeDataString(renameFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (destination != null)
             {
-                queryParameters.Add(string.Format("destination={0}", Uri.EscapeDataString(destination)));
+                _queryParameters.Add(string.Format("destination={0}", Uri.EscapeDataString(destination)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -4103,72 +4103,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<FileOperationResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -4222,11 +4222,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setOwnerFilePath", setOwnerFilePath);
                 tracingParameters.Add("accountname", accountname);
@@ -4234,66 +4234,66 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("group", group);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "SetOwner", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SetOwner", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setOwnerFilePath}").ToString();
-            url = url.Replace("{setOwnerFilePath}", Uri.EscapeDataString(setOwnerFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setOwnerFilePath}").ToString();
+            _url = _url.Replace("{setOwnerFilePath}", Uri.EscapeDataString(setOwnerFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (owner != null)
             {
-                queryParameters.Add(string.Format("owner={0}", Uri.EscapeDataString(owner)));
+                _queryParameters.Add(string.Format("owner={0}", Uri.EscapeDataString(owner)));
             }
             if (group != null)
             {
-                queryParameters.Add(string.Format("group={0}", Uri.EscapeDataString(group)));
+                _queryParameters.Add(string.Format("group={0}", Uri.EscapeDataString(group)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -4301,45 +4301,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -4389,73 +4389,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setPermissionFilePath", setPermissionFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "SetPermission", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SetPermission", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setPermissionFilePath}").ToString();
-            url = url.Replace("{setPermissionFilePath}", Uri.EscapeDataString(setPermissionFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setPermissionFilePath}").ToString();
+            _url = _url.Replace("{setPermissionFilePath}", Uri.EscapeDataString(setPermissionFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (permission != null)
             {
-                queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
+                _queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -4463,45 +4463,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -4550,73 +4550,73 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("setReplicationFilePath", setReplicationFilePath);
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("replication", replication);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "SetReplication", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SetReplication", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setReplicationFilePath}").ToString();
-            url = url.Replace("{setReplicationFilePath}", Uri.EscapeDataString(setReplicationFilePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{setReplicationFilePath}").ToString();
+            _url = _url.Replace("{setReplicationFilePath}", Uri.EscapeDataString(setReplicationFilePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (replication != null)
             {
-                queryParameters.Add(string.Format("replication={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(replication, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("replication={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(replication, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -4624,72 +4624,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FileOperationResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<FileOperationResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<FileOperationResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -4708,7 +4708,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string fileAppendRequestLink, System.IO.Stream streamContents, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string fileAppendRequestLink, object streamContents, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (fileAppendRequestLink == null)
             {
@@ -4719,96 +4719,96 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "streamContents");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fileAppendRequestLink", fileAppendRequestLink);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Append", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Append", tracingParameters);
             }
             // Construct URL
-            var url = fileAppendRequestLink;
-            List<string> queryParameters = new List<string>();
-            if (queryParameters.Count > 0)
+            var _url = fileAppendRequestLink;
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
-            httpRequest.Content = new StreamContent(streamContents);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content = new StreamContent(streamContents);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -4860,11 +4860,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("sourcePath", sourcePath);
                 tracingParameters.Add("accountname", accountname);
@@ -4872,66 +4872,66 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("accesstime", accesstime);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "SetTimes", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SetTimes", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{sourcePath}").ToString();
-            url = url.Replace("{sourcePath}", Uri.EscapeDataString(sourcePath));
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/{sourcePath}").ToString();
+            _url = _url.Replace("{sourcePath}", Uri.EscapeDataString(sourcePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (modificationtime != null)
             {
-                queryParameters.Add(string.Format("modificationtime={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(modificationtime, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("modificationtime={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(modificationtime, this.Client.SerializationSettings).Trim('"'))));
             }
             if (accesstime != null)
             {
-                queryParameters.Add(string.Format("accesstime={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(accesstime, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("accesstime={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(accesstime, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -4939,45 +4939,45 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -5016,66 +5016,66 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetHomeDirectory", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetHomeDirectory", tracingParameters);
             }
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1").ToString();
-            url = url.Replace("accountname", Uri.EscapeDataString(accountname));
-            url = url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
-            List<string> queryParameters = new List<string>();
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "webhdfs/v1/").ToString();
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
-                queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (queryParameters.Count > 0)
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.SubscriptionId != null)
             {
-                if (httpRequest.Headers.Contains("subscriptionId"))
+                if (_httpRequest.Headers.Contains("subscriptionId"))
                 {
-                    httpRequest.Headers.Remove("subscriptionId");
+                    _httpRequest.Headers.Remove("subscriptionId");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -5083,72 +5083,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<HomeDirectoryResult>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<HomeDirectoryResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.Body = JsonConvert.DeserializeObject<HomeDirectoryResult>(responseContent, this.Client.DeserializationSettings);
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _result.Body = SafeJsonConvert.DeserializeObject<HomeDirectoryResult>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -5167,103 +5167,103 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string fileCreateRequestLink, System.IO.Stream streamContents = default(System.IO.Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string fileCreateRequestLink, object streamContents = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (fileCreateRequestLink == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "fileCreateRequestLink");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fileCreateRequestLink", fileCreateRequestLink);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Create", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
-            var url = fileCreateRequestLink;
-            List<string> queryParameters = new List<string>();
-            if (queryParameters.Count > 0)
+            var _url = fileCreateRequestLink;
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
             // Serialize Request
-            httpRequest.Content = new StreamContent(streamContents);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content = new StreamContent(streamContents);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 201)
+            if ((int)_statusCode != 201)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
         /// <summary>
@@ -5285,46 +5285,46 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "fileOpenRequestLink");
             }
             // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fileOpenRequestLink", fileOpenRequestLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Open", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Open", tracingParameters);
             }
             // Construct URL
-            var url = fileOpenRequestLink;
-            List<string> queryParameters = new List<string>();
-            if (queryParameters.Count > 0)
+            var _url = fileOpenRequestLink;
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
             {
-                url += "?" + string.Join("&", queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             if (this.Client.AcceptLanguage != null)
             {
-                if (httpRequest.Headers.Contains("accept-language"))
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    httpRequest.Headers.Remove("accept-language");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
-                foreach(var header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
-                    if (httpRequest.Headers.Contains(header.Key))
+                    if (_httpRequest.Headers.Contains(_header.Key))
                     {
-                        httpRequest.Headers.Remove(header.Key);
+                        _httpRequest.Headers.Remove(_header.Key);
                     }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
             }
 
@@ -5332,71 +5332,71 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
+            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)statusCode != 200)
+            if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                    if (errorBody != null)
+                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
                     {
-                        ex = new CloudException(errorBody.Message);
-                        ex.Body = errorBody;
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
                     }
                 }
                 catch (JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
+                ex.Request = _httpRequest;
+                ex.Response = _httpResponse;
+                if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(invocationId, ex);
+                    ServiceClientTracing.Error(_invocationId, ex);
                 }
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<byte[]>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            var _result = new AzureOperationResponse<byte[]>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)statusCode == 200)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
-                    result.Body = await httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    _result.Body = await _httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
                 catch (JsonException ex)
                 {
                     throw new RestException("Unable to deserialize the response.", ex);
                 }
             }
-            if (shouldTrace)
+            if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(invocationId, result);
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            return result;
+            return _result;
         }
 
     }
