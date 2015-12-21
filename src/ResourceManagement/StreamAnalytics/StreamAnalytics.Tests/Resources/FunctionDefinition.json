@@ -1,0 +1,41 @@
+﻿{
+    "name": "scoreTweet",
+    "properties": {
+        "type": "Scalar",
+        "properties": {
+            "inputs": [
+                {
+                    "dataType": "nvarchar(max)",
+                    "isConfigurationParameter": false
+                }
+            ],
+            "output": {
+                "dataType": "nvarchar(max)"
+            },
+            "binding": {
+                "type": "Microsoft.MachineLearning/WebService",
+                "properties": {
+                    "endpoint": "https://ussouthcentral.services.azureml.net/workspaces/f80d5d7a77fa4a46bf2a30c63c078dca/services/b7be5e40fd194258896fb602c1858eaf/execute?api-version=2.0&details=true",
+                    "apiKey": "$TestStringToBeReplaced",
+                    "inputs": {
+                        "name": "input1",
+                        "columnNames": [
+                            {
+                                "name": "tweet",
+                                "dataType": "String",
+                                "mapTo": 0
+                            }
+                        ]
+                    },
+                    "outputs": [
+                        {
+                            "name": "Sentiment",
+                            "dataType": "String"
+                        }
+                    ],
+                    "batchSize": 10
+                }
+            }
+        }
+    }
+}

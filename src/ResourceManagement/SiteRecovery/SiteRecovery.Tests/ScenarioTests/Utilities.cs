@@ -165,7 +165,8 @@ namespace SiteRecovery.Tests
                     Thread.Sleep(new TimeSpan(0, 1, 0));
                 }
 
-                JobListResponse jobList = client.Jobs.List(requestHeaders);
+                JobQueryParameter queryParam = new JobQueryParameter();
+                JobListResponse jobList = client.Jobs.List(queryParam, requestHeaders);
                 trackingFinished = true;
 
                 foreach (var job in jobList.Jobs)
@@ -197,7 +198,8 @@ namespace SiteRecovery.Tests
             CustomRequestHeaders requestHeaders)
         {
 
-            JobListResponse jobList = client.Jobs.List(requestHeaders);
+            JobQueryParameter queryParam = new JobQueryParameter();
+            JobListResponse jobList = client.Jobs.List(queryParam, requestHeaders);
 
             foreach (var job in jobList.Jobs)
             {

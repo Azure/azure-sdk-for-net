@@ -112,9 +112,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// Service response for operation which change status of protection
+        /// container.
         /// </returns>
-        Task<LongRunningOperationResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        Task<DiscoverProtectableItemResponse> GetDiscoverProtectableItemStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all ProtectionContainers for the given server.
@@ -132,5 +133,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the list ProtectionContainers operation.
         /// </returns>
         Task<ProtectionContainerListResponse> ListAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of all ProtectionContainers for the given vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list ProtectionContainers operation.
+        /// </returns>
+        Task<ProtectionContainerListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

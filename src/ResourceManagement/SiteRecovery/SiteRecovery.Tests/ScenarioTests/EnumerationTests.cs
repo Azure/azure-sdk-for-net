@@ -13,11 +13,13 @@
 // limitations under the License.
 //
 
+using System;
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Management.SiteRecovery;
-using Microsoft.Azure.Management.RecoveryServices;
 using System.Net;
+using System.Web;
 using Xunit;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
@@ -69,10 +71,6 @@ namespace SiteRecovery.Tests
                     fabric => fabric.Properties.CustomDetails.InstanceType == "VMM");
                 Assert.NotNull(vmWareFabric);
 
-                //var vmWareDetails =
-                //   vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
-                //Assert.NotNull(vmWareDetails);
-
                 var response = client.ProtectionContainer.List(
                     vmWareFabric.Name,
                     RequestHeaders);
@@ -100,7 +98,8 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                var response = client.Jobs.List(RequestHeaders);
+                JobQueryParameter queryParam = new JobQueryParameter();
+                var response = client.Jobs.List(queryParam, RequestHeaders);
 
                 Assert.True(response.Jobs.Count > 0, "Jobs count can't be less than 1");
                 Assert.True(response.Jobs.All(
@@ -113,7 +112,6 @@ namespace SiteRecovery.Tests
             }
         }
         
-        
         public void EnumerateProtectableItems()
         {
             using (UndoContext context = UndoContext.Current)
@@ -125,11 +123,85 @@ namespace SiteRecovery.Tests
                 //string containerId = "4f94127d-2eb3-449d-a708-250752e93cb4";
                 string containerId = "8cc5a958-d437-41d0-9411-fad0841c0445";
 
-                var response = client.ProtectableItem.List(fabricId, containerId, "All", RequestHeaders);
+                List<ProtectableItem> protectableItemList = new List<ProtectableItem>();
+                ProtectableItemListResponse protectableItemListResponse = client.ProtectableItem.List(fabricId, containerId, "All", null, "1000", RequestHeaders);
+                protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+                while (protectableItemListResponse.NextLink != null)
+                {
+                    protectableItemListResponse = client.ProtectableItem.ListNext(protectableItemListResponse.NextLink, RequestHeaders);
+                    protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+                }
             }
         }
 
-        
+        public void EnumerateTargetComputeSizes()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                string fabricId = "332ef14f4ba397490601076e38b80f7fe4139f8dcc22a3996c16a01060637050";
+                string containerId = "08bd0c6c-fa5e-46dc-bfd6-f596eb82d3cc";
+                string vmId = "dc8d329d-29d4-42ce-aac4-d7408e720fd3";
+                TargetComputeSizeResponse resp = client.ReplicationProtectedItem.ListTargetComputeSizes(fabricId, containerId, vmId, RequestHeaders);
+            }
+        }
+
+        public void EnumerateProtectedItemsUnderVault()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                List<ReplicationProtectedItem> itemsList = new List<ReplicationProtectedItem>();
+
+                var protectedItemsResponse = client.ReplicationProtectedItem.ListAll(
+                    null,
+                    null,
+                    RequestHeaders);
+                itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                while (protectedItemsResponse.NextLink != null)
+                {
+                    protectedItemsResponse = client.ReplicationProtectedItem.ListAllNext(
+                        protectedItemsResponse.NextLink,
+                        RequestHeaders);
+
+                    itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                }
+            }
+        }
+
+        public void EnumerateProtectedItemsUnderFabric()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                List<ReplicationProtectedItem> itemsList = new List<ReplicationProtectedItem>();
+                var queryParams = new ProtectedItemsQueryParameter
+                {
+                    SourceFabricName = "2163c4b41217f3a2274ffa9914d6707b5a93b013683762e18378d0af4fe2ca0c"
+                };
+
+                var protectedItemsResponse = client.ReplicationProtectedItem.ListAll(
+                    null,
+                    queryParams,
+                    RequestHeaders);
+                itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                while (protectedItemsResponse.NextLink != null)
+                {
+                    protectedItemsResponse = client.ReplicationProtectedItem.ListAllNext(
+                        protectedItemsResponse.NextLink,
+                        RequestHeaders);
+
+                    itemsList.AddRange(protectedItemsResponse.ReplicationProtectedItems);
+                }
+            }
+        }
+
         public void EnumerateNetworksUnderFabricTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -154,7 +226,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void EnumerateNetworkMappingsUnderNetworkTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -191,6 +262,32 @@ namespace SiteRecovery.Tests
                 var response = client.Policies.List(RequestHeaders);
                 Assert.NotNull(response);
                 Assert.NotEmpty(response.Policies);
+            }
+        }
+
+        public void EnumerateEventsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.Events.List(new EventQueryParameter(), RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Events);
+            }
+        }
+
+        public void EnumerateAlertSettingsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.AlertSettings.List(RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Alerts);
             }
         }
     }

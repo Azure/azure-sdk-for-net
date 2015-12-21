@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -29,7 +28,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the upload certificate response
     /// </summary>
-    public partial class UploadCertificateResponse : AzureOperationResponse
+    public partial class UploadCertificateResponse : OperationCommonResponse
     {
         private CertificateProperties _properties;
         

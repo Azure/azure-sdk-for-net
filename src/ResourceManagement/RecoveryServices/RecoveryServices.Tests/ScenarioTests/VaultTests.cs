@@ -25,8 +25,8 @@ namespace RecoveryServices.Tests
 {
     public class VaultTests : RecoveryServicesTestsBase
     {
-        string resourceGroupName = "testsitegroup";
-        string resourceName = "rsv5";
+        string resourceGroupName = "S91-1";
+        string resourceName = "rsv6";
 
         [Fact]
         public void CreateVault()
@@ -56,11 +56,14 @@ namespace RecoveryServices.Tests
             {
                 context.Start();
                 var rsmClient = GetRecoveryServicesClient(CustomHttpHandler);
-                VaultListResponse response = rsmClient.Vaults.Get(resourceGroupName, RequestHeaders);
+                VaultResponse response = rsmClient.Vaults.Get(
+                    resourceGroupName,
+                    resourceName,
+                    RequestHeaders);
 
-                Assert.NotNull(response.Vaults[0].Name);
-                Assert.NotNull(response.Vaults[0].Id);
-                Assert.NotNull(response.Vaults[0].Properties.ProvisioningState);
+                Assert.NotNull(response.Vault.Name);
+                Assert.NotNull(response.Vault.Id);
+                Assert.NotNull(response.Vault.Properties.ProvisioningState);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }

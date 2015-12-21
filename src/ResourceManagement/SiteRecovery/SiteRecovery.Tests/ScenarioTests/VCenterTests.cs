@@ -8,18 +8,22 @@ using Microsoft.Azure.Management.SiteRecovery;
 using Xunit;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 using Microsoft.Azure;
+using System.Net;
 
 namespace SiteRecovery.Tests
 {
     public class VCenterTests : SiteRecoveryTestsBase
     {
-        private string vCenterName = "vcenter";
-        private string newVCenterName = "bcdr-vcenter-1";
-        private string ipAddress = "10.150.208.248";
+        private string vCenterName = "inmtest62";
+        //"bcdr-vcenter";
+        private string newVCenterName = "inmtest222-updated";
+        //"bcdr-vcenter-updated";
+        private string ipAddress = "10.150.209.9";
+        //"10.150.208.184";
         private string runAsAccountName = "vcenter";
+        //"bcdrvcenter";
         private string port = "443";
 
-        
         public void GetVCenters()
         {
             using (UndoContext context = UndoContext.Current)
@@ -44,7 +48,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void GetAllVCenters()
         {
             using (UndoContext context = UndoContext.Current)
@@ -59,7 +62,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void GetVCenter()
         {
             using (UndoContext context = UndoContext.Current)
@@ -101,7 +103,47 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        public void GetVCenterNegativeTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics.First(
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                Assert.NotNull(vmWareFabric);
+
+                VCenterResponse vCenterResponse = null;
+                try
+                {
+                    vCenterResponse = client.VCenters.Get(
+                        vmWareFabric.Name,
+                        "UnrealisticVCenterName007",
+                        RequestHeaders);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.ToUpper().Contains("NOTFOUND"))
+                    {
+                        vCenterResponse = new VCenterResponse();
+                        vCenterResponse.VCenter = null;
+                        vCenterResponse.StatusCode = HttpStatusCode.NotFound;
+                    }
+                }
+
+                Assert.NotNull(vCenterResponse);
+                Assert.Equal(HttpStatusCode.NotFound, vCenterResponse.StatusCode);
+                Assert.Null(vCenterResponse.VCenter);
+            }
+        }
+
         public void DeleteVCenter()
         {
             using (UndoContext context = UndoContext.Current)
@@ -133,7 +175,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void UpdateVCenter()
         {
             using (UndoContext context = UndoContext.Current)
@@ -189,7 +230,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        public void AddVCenter()
+	public void AddVCenter()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -213,9 +254,9 @@ namespace SiteRecovery.Tests
                 Assert.NotEmpty(vmWareDetails.ProcessServers);
                 var processServer = vmWareDetails.ProcessServers[0];
 
-                var runAsAccount = vmWareDetails.RunAsAccounts.First(
+                var runAsAccount = vmWareDetails.RunAsAccounts.FirstOrDefault(
                     account => account.AccountName.Equals(
-                        "vm",
+                        this.runAsAccountName,
                         StringComparison.InvariantCultureIgnoreCase));
                 Assert.NotNull(runAsAccount);
 
