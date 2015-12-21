@@ -278,7 +278,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public string Token { get; set; }
+        public TokenInfo TokenInfo { get; set; }
 
         public string ServicePrincipal { get; set; }
 

@@ -73,7 +73,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             var constructors = typeof(T).GetConstructors();
 
             Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
-            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.Token});
+            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo.AccessToken});
 
             ConstructorInfo constructor = null;
             if (currentEnvironment.UsesCustomUri())
@@ -122,7 +122,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
                 client = constructor.Invoke(new object[]
                 {
-                    currentEnvironment.Token,
+                    tokenCred,
                     handlers
                 }) as T;
             }
@@ -176,7 +176,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 handlers.Add(server);
             }
 
-            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.Token);
+            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.TokenInfo);
             handlers.Add(cleaner);
             undoHandlers.Add(cleaner);
 

@@ -10,6 +10,7 @@ using System.Threading;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
@@ -44,7 +45,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 testEnv.UserName = TestEnvironment.UserIdDefault;
                 SetEnvironmentSubscriptionId(testEnv, connectionString);
-                testEnv.Token = TestEnvironment.RawTokenDefault;
+                testEnv.TokenInfo = new TokenInfo(TestEnvironment.RawTokenDefault);
             }
             else //Record or None
             {
@@ -61,7 +62,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     if (parsedConnection.ContainsKey(TestEnvironment.RawToken))
                     {
                         var token = parsedConnection[TestEnvironment.RawToken];
-                        testEnv.Token = token;
+                        testEnv.TokenInfo = new TokenInfo(token);
                     }
                     else
                     {
@@ -70,29 +71,32 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                         if (testEnv.UserName != null && password != null)
                         {
-                            testEnv.Token = TestEnvironmentFactory.LoginUserAsync(testEnv.Tenant, 
+                            var result = TestEnvironmentFactory.LoginUserAsync(testEnv.Tenant, 
                                 testEnv.UserName, 
                                 password, 
                                 testEnv.Endpoints.AADTokenAudienceUri.ToString(),
                                 testEnv.Endpoints.AADAuthUri.ToString())
-                                .ConfigureAwait(false).GetAwaiter().GetResult().AccessToken;
+                                .ConfigureAwait(false).GetAwaiter().GetResult();
+                            testEnv.TokenInfo = new TokenInfo(result);
                         }
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
-                            testEnv.Token = TestEnvironmentFactory.LoginServicePrincipalAsync(testEnv.Tenant,
+                            var result = TestEnvironmentFactory.LoginServicePrincipalAsync(testEnv.Tenant,
                                 testEnv.ServicePrincipal, 
                                 password, 
                                 testEnv.Endpoints.AADTokenAudienceUri.ToString(),
                                 testEnv.Endpoints.AADAuthUri.ToString())
-                                .ConfigureAwait(false).GetAwaiter().GetResult().AccessToken;
+                                .ConfigureAwait(false).GetAwaiter().GetResult();
+                            testEnv.TokenInfo = new TokenInfo(result);
                         }
 #if NET45
                         else
                         {
-                            testEnv.Token = LoginWithPromptAsync(testEnv.Tenant,
+                            var result = LoginWithPromptAsync(testEnv.Tenant,
                                 testEnv.Endpoints.AADTokenAudienceUri.ToString(),
                                 testEnv.Endpoints.AADAuthUri.ToString())
-                                .ConfigureAwait(false).GetAwaiter().GetResult().AccessToken;
+                                .ConfigureAwait(false).GetAwaiter().GetResult();
+                            testEnv.TokenInfo = new TokenInfo(result);
                         }
 #endif
                     }
@@ -105,7 +109,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     //Getting subscriptions from server
                     var subscriptions = ListSubscriptions(
                         testEnv.BaseUri.ToString(),
-                        testEnv.Token);
+                        testEnv.TokenInfo);
 
                     if (subscriptions.Count == 0)
                     {
@@ -185,7 +189,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, string token)
+        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, TokenInfo token)
         {
             var request = new HttpRequestMessage
             {
@@ -193,7 +197,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             };
 
             HttpClient client = new HttpClient();
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.Headers.Authorization = new AuthenticationHeaderValue(token.AccessTokenType, 
+                token.AccessToken);
             HttpResponseMessage response = client.SendAsync(request).Result;
             response.EnsureSuccessStatusCode();
 
