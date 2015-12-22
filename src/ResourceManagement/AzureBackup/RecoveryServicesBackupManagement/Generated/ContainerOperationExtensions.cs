@@ -329,5 +329,77 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         {
             return operations.RefreshAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Unregister protection container
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Backup Fabric name for the backup item
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. Container Name of protectionContainers
+        /// </param>
+        /// <param name='request'>
+        /// Required. Update request for protectionContainers
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static BaseRecoveryServicesJobResponse Unregister(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string containerName, ProtectionContainerUpdateRequest request, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperation)s).UnregisterAsync(resourceGroupName, resourceName, fabricName, containerName, request, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Unregister protection container
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Backup Fabric name for the backup item
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. Container Name of protectionContainers
+        /// </param>
+        /// <param name='request'>
+        /// Required. Update request for protectionContainers
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static Task<BaseRecoveryServicesJobResponse> UnregisterAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string containerName, ProtectionContainerUpdateRequest request, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.UnregisterAsync(resourceGroupName, resourceName, fabricName, containerName, request, customRequestHeaders, CancellationToken.None);
+        }
     }
 }

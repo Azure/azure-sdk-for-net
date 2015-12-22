@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -1709,6 +1711,420 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BaseRecoveryServicesJobResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BaseRecoveryServicesJobResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
+                            }
+                            
+                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
+                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
+                                result.AzureAsyncOperation = azureAsyncOperationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["retryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                string retryAfterInstance = ((string)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Unregister protection container
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Backup Fabric name for the backup item
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. Container Name of protectionContainers
+        /// </param>
+        /// <param name='request'>
+        /// Required. Update request for protectionContainers
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public async Task<BaseRecoveryServicesJobResponse> UnregisterAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, ProtectionContainerUpdateRequest request, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException("fabricName");
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("fabricName", fabricName);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("request", request);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "UnregisterAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + "vaults";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/backupFabrics/";
+            url = url + Uri.EscapeDataString(fabricName);
+            url = url + "/protectionContainers/";
+            url = url + Uri.EscapeDataString(containerName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-15");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                if (request.Item != null)
+                {
+                    JObject itemValue = new JObject();
+                    requestDoc = itemValue;
+                    
+                    if (request.Item.Properties != null)
+                    {
+                        JObject propertiesValue = new JObject();
+                        itemValue["properties"] = propertiesValue;
+                        if (request.Item.Properties is ProtectionContainer)
+                        {
+                            propertiesValue["objectType"] = "ProtectionContainer";
+                            ProtectionContainer derived = ((ProtectionContainer)request.Item.Properties);
+                            
+                            if (derived.FriendlyName != null)
+                            {
+                                propertiesValue["friendlyName"] = derived.FriendlyName;
+                            }
+                            
+                            if (derived.RegistrationStatus != null)
+                            {
+                                propertiesValue["registrationStatus"] = derived.RegistrationStatus;
+                            }
+                            
+                            if (derived.ResourceGroup != null)
+                            {
+                                propertiesValue["resourceGroup"] = derived.ResourceGroup;
+                            }
+                            
+                            if (derived.HealthStatus != null)
+                            {
+                                propertiesValue["healthStatus"] = derived.HealthStatus;
+                            }
+                            
+                            if (derived.Type != null)
+                            {
+                                propertiesValue["type"] = derived.Type;
+                            }
+                        }
+                        if (request.Item.Properties is IaasVmProtectionContainer)
+                        {
+                            propertiesValue["objectType"] = "IaaSVMContainer";
+                            IaasVmProtectionContainer derived2 = ((IaasVmProtectionContainer)request.Item.Properties);
+                            
+                            if (derived2.VirtualMachineVersion != null)
+                            {
+                                propertiesValue["virtualMachineVersion"] = derived2.VirtualMachineVersion;
+                            }
+                            
+                            if (derived2.FriendlyName != null)
+                            {
+                                propertiesValue["friendlyName"] = derived2.FriendlyName;
+                            }
+                            
+                            if (derived2.RegistrationStatus != null)
+                            {
+                                propertiesValue["registrationStatus"] = derived2.RegistrationStatus;
+                            }
+                            
+                            if (derived2.ResourceGroup != null)
+                            {
+                                propertiesValue["resourceGroup"] = derived2.ResourceGroup;
+                            }
+                            
+                            if (derived2.HealthStatus != null)
+                            {
+                                propertiesValue["healthStatus"] = derived2.HealthStatus;
+                            }
+                            
+                            if (derived2.Type != null)
+                            {
+                                propertiesValue["type"] = derived2.Type;
+                            }
+                        }
+                        if (request.Item.Properties is DpmProtectionContainer)
+                        {
+                            propertiesValue["objectType"] = "DpmContainer";
+                            DpmProtectionContainer derived3 = ((DpmProtectionContainer)request.Item.Properties);
+                            
+                            propertiesValue["canReRegister"] = derived3.CanReRegister;
+                            
+                            propertiesValue["containerId"] = derived3.ContainerId;
+                            
+                            if (derived3.FriendlyName != null)
+                            {
+                                propertiesValue["friendlyName"] = derived3.FriendlyName;
+                            }
+                            
+                            if (derived3.RegistrationStatus != null)
+                            {
+                                propertiesValue["registrationStatus"] = derived3.RegistrationStatus;
+                            }
+                            
+                            if (derived3.ResourceGroup != null)
+                            {
+                                propertiesValue["resourceGroup"] = derived3.ResourceGroup;
+                            }
+                            
+                            if (derived3.HealthStatus != null)
+                            {
+                                propertiesValue["healthStatus"] = derived3.HealthStatus;
+                            }
+                            
+                            if (derived3.Type != null)
+                            {
+                                propertiesValue["type"] = derived3.Type;
+                            }
+                        }
+                        if (request.Item.Properties is MabProtectionContainer)
+                        {
+                            propertiesValue["objectType"] = "MabContainer";
+                            MabProtectionContainer derived4 = ((MabProtectionContainer)request.Item.Properties);
+                            
+                            propertiesValue["canReRegister"] = derived4.CanReRegister;
+                            
+                            propertiesValue["containerId"] = derived4.ContainerId;
+                            
+                            if (derived4.FriendlyName != null)
+                            {
+                                propertiesValue["friendlyName"] = derived4.FriendlyName;
+                            }
+                            
+                            if (derived4.RegistrationStatus != null)
+                            {
+                                propertiesValue["registrationStatus"] = derived4.RegistrationStatus;
+                            }
+                            
+                            if (derived4.ResourceGroup != null)
+                            {
+                                propertiesValue["resourceGroup"] = derived4.ResourceGroup;
+                            }
+                            
+                            if (derived4.HealthStatus != null)
+                            {
+                                propertiesValue["healthStatus"] = derived4.HealthStatus;
+                            }
+                            
+                            if (derived4.Type != null)
+                            {
+                                propertiesValue["type"] = derived4.Type;
+                            }
+                        }
+                    }
+                    
+                    if (request.Item.Id != null)
+                    {
+                        itemValue["id"] = request.Item.Id;
+                    }
+                    
+                    if (request.Item.Name != null)
+                    {
+                        itemValue["name"] = request.Item.Name;
+                    }
+                    
+                    if (request.Item.Type != null)
+                    {
+                        itemValue["type"] = request.Item.Type;
+                    }
+                    
+                    if (request.Item.Location != null)
+                    {
+                        itemValue["location"] = request.Item.Location;
+                    }
+                    
+                    if (request.Item.Tags != null)
+                    {
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in request.Item.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        itemValue["tags"] = tagsDictionary;
+                    }
+                    
+                    if (request.Item.ETag != null)
+                    {
+                        itemValue["eTag"] = request.Item.ETag;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
