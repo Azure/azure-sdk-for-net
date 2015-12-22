@@ -27,40 +27,26 @@ using Microsoft.Azure.Management.RecoveryServices.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The definition of a resource group object.
+    /// The response model for the Replication Usgaes.
     /// </summary>
-    public partial class ResourceGroup : ResourceBaseExtended
+    public partial class ReplicationUsagesResponse : AzureOperationResponse
     {
-        private ResourceGroupProperties _properties;
+        private ReplicationUsages _replicationVaultUsages;
         
         /// <summary>
-        /// Optional. Properties of resourceGroup
+        /// Optional. The resource replication usages object
         /// </summary>
-        public ResourceGroupProperties Properties
+        public ReplicationUsages ReplicationVaultUsages
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._replicationVaultUsages; }
+            set { this._replicationVaultUsages = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceGroup class.
+        /// Initializes a new instance of the ReplicationUsagesResponse class.
         /// </summary>
-        public ResourceGroup()
+        public ReplicationUsagesResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceGroup class with required
-        /// arguments.
-        /// </summary>
-        public ResourceGroup(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }

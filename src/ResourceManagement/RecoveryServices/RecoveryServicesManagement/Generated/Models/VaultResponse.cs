@@ -27,25 +27,25 @@ using Microsoft.Azure.Management.RecoveryServices.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The response model for the upload certificate response
+    /// The response model for Vault.
     /// </summary>
-    public partial class UploadCertificateResponse : AzureOperationResponse
+    public partial class VaultResponse : AzureOperationResponse
     {
-        private CertificateProperties _properties;
+        private Vault _vault;
         
         /// <summary>
-        /// Optional. The certificate properties
+        /// Optional. The vault resource object.
         /// </summary>
-        public CertificateProperties Properties
+        public Vault Vault
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._vault; }
+            set { this._vault = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UploadCertificateResponse class.
+        /// Initializes a new instance of the VaultResponse class.
         /// </summary>
-        public UploadCertificateResponse()
+        public VaultResponse()
         {
         }
     }

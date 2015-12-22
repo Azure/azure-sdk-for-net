@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Creates a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the (resource group?) cloud service
-        /// containing the job collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// Required. The name of the vault to create.
@@ -340,8 +340,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Deletes a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the (Resource Group) cloud service containing
-        /// the job collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// Required. The name of the vault to delete.
@@ -449,7 +449,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -497,8 +497,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Creates a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the (resource group) cloud service containing
-        /// the job collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// Optional. The name of the vault to create.
@@ -595,8 +595,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Deletes a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the (Resource Group) cloud service containing
-        /// the job collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// Required. The name of the vault to delete.
@@ -689,11 +689,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Get the Vaults.
+        /// Get the Vault details.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the (resource group?) cloud service
-        /// containing the vault collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. The name of the resource.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -704,12 +707,16 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <returns>
         /// The response model for Vault.
         /// </returns>
-        public async Task<VaultListResponse> GetAsync(string resourceGroupName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<VaultResponse> GetAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
             }
             
             // Tracing
@@ -720,6 +727,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
@@ -737,6 +745,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "vaults";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -800,13 +810,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
                     }
                     
                     // Create Result
-                    VaultListResponse result = null;
+                    VaultResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new VaultListResponse();
+                        result = new VaultResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -815,74 +825,67 @@ namespace Microsoft.Azure.Management.RecoveryServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            Vault vaultInstance = new Vault();
+                            result.Vault = vaultInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken valueValue in ((JArray)valueArray))
+                                string idInstance = ((string)idValue);
+                                vaultInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                vaultInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                vaultInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                vaultInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    Vault vaultInstance = new Vault();
-                                    result.Vaults.Add(vaultInstance);
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        vaultInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        vaultInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        vaultInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        vaultInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            vaultInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        VaultProperties propertiesInstance = new VaultProperties();
-                                        vaultInstance.Properties = propertiesInstance;
-                                        
-                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                        {
-                                            string provisioningStateInstance = ((string)provisioningStateValue);
-                                            propertiesInstance.ProvisioningState = provisioningStateInstance;
-                                        }
-                                    }
-                                    
-                                    JToken eTagValue = valueValue["eTag"];
-                                    if (eTagValue != null && eTagValue.Type != JTokenType.Null)
-                                    {
-                                        string eTagInstance = ((string)eTagValue);
-                                        vaultInstance.ETag = eTagInstance;
-                                    }
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    vaultInstance.Tags.Add(tagsKey, tagsValue);
                                 }
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                VaultProperties propertiesInstance = new VaultProperties();
+                                vaultInstance.Properties = propertiesInstance;
+                                
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                            }
+                            
+                            JToken eTagValue = responseDoc["eTag"];
+                            if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                            {
+                                string eTagInstance = ((string)eTagValue);
+                                vaultInstance.ETag = eTagInstance;
                             }
                         }
                         
@@ -1068,13 +1071,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
                                 result.Type = typeInstance;
                             }
                             
-                            JToken etagValue = responseDoc["Etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
-                            {
-                                string etagInstance = ((string)etagValue);
-                                result.ETag = etagInstance;
-                            }
-                            
                             JToken propertiesValue = responseDoc["Properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
@@ -1093,6 +1089,230 @@ namespace Microsoft.Azure.Management.RecoveryServices
                                 {
                                     string storageTypeStateInstance = ((string)storageTypeStateValue);
                                     propertiesInstance.StorageTypeState = storageTypeStateInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Retrieve a list of Vaults.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for Vault.
+        /// </returns>
+        public async Task<VaultListResponse> ListAsync(string resourceGroupName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/";
+            url = url + "vaults";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-11-10");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VaultListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VaultListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    Vault vaultInstance = new Vault();
+                                    result.Vaults.Add(vaultInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        vaultInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        vaultInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        vaultInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        vaultInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            vaultInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        VaultProperties propertiesInstance = new VaultProperties();
+                                        vaultInstance.Properties = propertiesInstance;
+                                        
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken eTagValue = valueValue["eTag"];
+                                    if (eTagValue != null && eTagValue.Type != JTokenType.Null)
+                                    {
+                                        string eTagInstance = ((string)eTagValue);
+                                        vaultInstance.ETag = eTagInstance;
+                                    }
                                 }
                             }
                         }

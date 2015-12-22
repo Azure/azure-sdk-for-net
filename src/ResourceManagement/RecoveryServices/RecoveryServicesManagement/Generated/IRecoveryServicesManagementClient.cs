@@ -79,6 +79,15 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
+        /// Definition of vault usage operations for the Recovery Services
+        /// extension.
+        /// </summary>
+        IReplicationUsagesOperations ReplicationUsages
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of cloud service operations for the Recovery services
         /// extension.
         /// </summary>

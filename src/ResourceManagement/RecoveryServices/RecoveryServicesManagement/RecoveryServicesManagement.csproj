@@ -20,48 +20,9 @@
     <NoWarn>$(NoWarn);0108</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Generated\CertificateArgs.cs" />
-    <Compile Include="Generated\CertificateProperties.cs" />
-    <Compile Include="Generated\CustomRequestHeaders.cs" />
-    <Compile Include="Generated\GetResourceStorageConfigResponse.cs" />
-    <Compile Include="Generated\IRecoveryServicesManagementClient.cs" />
-    <Compile Include="Generated\IResourceGroupsOperations.cs" />
-    <Compile Include="Generated\IVaultExtendedInfoOperations.cs" />
-    <Compile Include="Generated\IVaultOperations.cs" />
-    <Compile Include="Generated\IVaultUsageOperations.cs" />
-    <Compile Include="Generated\Name.cs" />
-    <Compile Include="Generated\RecoveryServicesManagementClient.cs" />
-    <Compile Include="Generated\RecoveryServicesManagementClientExtensions.cs" />
-    <Compile Include="Generated\RecoveryServicesOperationStatus.cs" />
-    <Compile Include="Generated\RecoveryServicesOperationStatusResponse.cs" />
-    <Compile Include="Generated\ResourceExtendedInfoProperties.cs" />
-    <Compile Include="Generated\ResourceExtendedInformation.cs" />
-    <Compile Include="Generated\ResourceExtendedInformationArgs.cs" />
-    <Compile Include="Generated\ResourceExtendedInformationResponse.cs" />
-    <Compile Include="Generated\ResourceGroup.cs" />
-    <Compile Include="Generated\ResourceGroupListResponse.cs" />
-    <Compile Include="Generated\ResourceGroupProperties.cs" />
-    <Compile Include="Generated\ResourceGroupsOperations.cs" />
-    <Compile Include="Generated\ResourceGroupsOperationsExtensions.cs" />
-    <Compile Include="Generated\StorageDetails.cs" />
-    <Compile Include="Generated\StorageTypeProperties.cs" />
-    <Compile Include="Generated\UpdateVaultStorageTypeRequest.cs" />
-    <Compile Include="Generated\UploadCertificateResponse.cs" />
-    <Compile Include="Generated\Usage.cs" />
-    <Compile Include="Generated\Vault.cs" />
-    <Compile Include="Generated\VaultCreateArgs.cs" />
-    <Compile Include="Generated\VaultCreateResponse.cs" />
-    <Compile Include="Generated\VaultExtendedInfoOperations.cs" />
-    <Compile Include="Generated\VaultExtendedInfoOperationsExtensions.cs" />
-    <Compile Include="Generated\VaultListResponse.cs" />
-    <Compile Include="Generated\VaultOperations.cs" />
-    <Compile Include="Generated\VaultOperationsExtensions.cs" />
-    <Compile Include="Generated\VaultProperties.cs" />
-    <Compile Include="Generated\VaultSku.cs" />
-    <Compile Include="Generated\VaultUsageListResponse.cs" />
-    <Compile Include="Generated\VaultUsageOperations.cs" />
-    <Compile Include="Generated\VaultUsageOperationsExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+	  <Compile Include="Generated\Models\**\*.cs" />
+	  <Compile Include="Generated\*.cs" />
+	  <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.RecoveryServices.nuget.proj">

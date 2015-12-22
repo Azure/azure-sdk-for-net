@@ -31,17 +31,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// </summary>
     public partial class GetResourceStorageConfigResponse : AzureOperationResponse
     {
-        private string _eTag;
-        
-        /// <summary>
-        /// Optional. ETag of the Vault.
-        /// </summary>
-        public string ETag
-        {
-            get { return this._eTag; }
-            set { this._eTag = value; }
-        }
-        
         private long _id;
         
         /// <summary>

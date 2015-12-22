@@ -25,56 +25,60 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The Name object of Usage.
+    /// The definition of jobs summary object.
     /// </summary>
-    public partial class Name
+    public partial class JobsSummary
     {
-        private string _localizedValue;
+        private int _failedJobs;
         
         /// <summary>
-        /// Required. Gets or sets the localized value of usage.
+        /// Required. Count of failed jobs.
         /// </summary>
-        public string LocalizedValue
+        public int FailedJobs
         {
-            get { return this._localizedValue; }
-            set { this._localizedValue = value; }
+            get { return this._failedJobs; }
+            set { this._failedJobs = value; }
         }
         
-        private string _value;
+        private int _inProgressJobs;
         
         /// <summary>
-        /// Required. Gets or sets the value of usage.
+        /// Required. Count of in progress jobs.
         /// </summary>
-        public string Value
+        public int InProgressJobs
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._inProgressJobs; }
+            set { this._inProgressJobs = value; }
+        }
+        
+        private int _suspendedJobs;
+        
+        /// <summary>
+        /// Required. Count of suspended jobs.
+        /// </summary>
+        public int SuspendedJobs
+        {
+            get { return this._suspendedJobs; }
+            set { this._suspendedJobs = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Name class.
+        /// Initializes a new instance of the JobsSummary class.
         /// </summary>
-        public Name()
+        public JobsSummary()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the Name class with required
+        /// Initializes a new instance of the JobsSummary class with required
         /// arguments.
         /// </summary>
-        public Name(string value, string localizedValue)
+        public JobsSummary(int failedJobs, int suspendedJobs, int inProgressJobs)
             : this()
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            if (localizedValue == null)
-            {
-                throw new ArgumentNullException("localizedValue");
-            }
-            this.Value = value;
-            this.LocalizedValue = localizedValue;
+            this.FailedJobs = failedJobs;
+            this.SuspendedJobs = suspendedJobs;
+            this.InProgressJobs = inProgressJobs;
         }
     }
 }
