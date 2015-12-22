@@ -3094,6 +3094,400 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
+        /// Retrieve the default definition of a function for a stream
+        /// analytics job. The raw json content will be used for the request
+        /// body.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='functionName'>
+        /// Required. The name of the function for the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to retrieve the default
+        /// definition of a function for a stream analytics job.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response of the retrieve default function definition operation.
+        /// </returns>
+        public async Task<FunctionRetrieveDefaultDefinitionResponse> RetrieveDefaultDefinitionWithRawJsonContentAsync(string resourceGroupName, string jobName, string functionName, FunctionRetrieveDefaultDefinitionWithRawJsonContentParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            if (functionName == null)
+            {
+                throw new ArgumentNullException("functionName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Content == null)
+            {
+                throw new ArgumentNullException("parameters.Content");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("functionName", functionName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "RetrieveDefaultDefinitionWithRawJsonContentAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/functions/";
+            url = url + Uri.EscapeDataString(functionName);
+            url = url + "/RetrieveDefaultDefinition";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = parameters.Content;
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    FunctionRetrieveDefaultDefinitionResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new FunctionRetrieveDefaultDefinitionResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Function functionInstance = new Function();
+                            result.Function = functionInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                functionInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)propertiesValue["type"]);
+                                if (typeName == "Scalar")
+                                {
+                                    ScalarFunctionProperties scalarFunctionPropertiesInstance = new ScalarFunctionProperties();
+                                    
+                                    JToken propertiesValue2 = propertiesValue["properties"];
+                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                    {
+                                        ScalarFunctionConfiguration propertiesInstance = new ScalarFunctionConfiguration();
+                                        scalarFunctionPropertiesInstance.Properties = propertiesInstance;
+                                        
+                                        JToken inputsArray = propertiesValue2["inputs"];
+                                        if (inputsArray != null && inputsArray.Type != JTokenType.Null)
+                                        {
+                                            propertiesInstance.Inputs = new System.Collections.Generic.List<Microsoft.Azure.Management.StreamAnalytics.Models.FunctionInput>();
+                                            foreach (JToken inputsValue in ((JArray)inputsArray))
+                                            {
+                                                FunctionInput functionInputInstance = new FunctionInput();
+                                                propertiesInstance.Inputs.Add(functionInputInstance);
+                                                
+                                                JToken dataTypeValue = inputsValue["dataType"];
+                                                if (dataTypeValue != null && dataTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string dataTypeInstance = ((string)dataTypeValue);
+                                                    functionInputInstance.DataType = dataTypeInstance;
+                                                }
+                                                
+                                                JToken isConfigurationParameterValue = inputsValue["isConfigurationParameter"];
+                                                if (isConfigurationParameterValue != null && isConfigurationParameterValue.Type != JTokenType.Null)
+                                                {
+                                                    bool isConfigurationParameterInstance = ((bool)isConfigurationParameterValue);
+                                                    functionInputInstance.IsConfigurationParameter = isConfigurationParameterInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken outputValue = propertiesValue2["output"];
+                                        if (outputValue != null && outputValue.Type != JTokenType.Null)
+                                        {
+                                            FunctionOutput outputInstance = new FunctionOutput();
+                                            propertiesInstance.Output = outputInstance;
+                                            
+                                            JToken dataTypeValue2 = outputValue["dataType"];
+                                            if (dataTypeValue2 != null && dataTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string dataTypeInstance2 = ((string)dataTypeValue2);
+                                                outputInstance.DataType = dataTypeInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken bindingValue = propertiesValue2["binding"];
+                                        if (bindingValue != null && bindingValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName2 = ((string)bindingValue["type"]);
+                                            if (typeName2 == "Microsoft.MachineLearning/WebService")
+                                            {
+                                                AzureMachineLearningWebServiceFunctionBinding azureMachineLearningWebServiceFunctionBindingInstance = new AzureMachineLearningWebServiceFunctionBinding();
+                                                
+                                                JToken propertiesValue3 = bindingValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    AzureMachineLearningWebServiceFunctionBindingProperties propertiesInstance2 = new AzureMachineLearningWebServiceFunctionBindingProperties();
+                                                    azureMachineLearningWebServiceFunctionBindingInstance.Properties = propertiesInstance2;
+                                                    
+                                                    JToken endpointValue = propertiesValue3["endpoint"];
+                                                    if (endpointValue != null && endpointValue.Type != JTokenType.Null)
+                                                    {
+                                                        string endpointInstance = ((string)endpointValue);
+                                                        propertiesInstance2.Endpoint = endpointInstance;
+                                                    }
+                                                    
+                                                    JToken apiKeyValue = propertiesValue3["apiKey"];
+                                                    if (apiKeyValue != null && apiKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string apiKeyInstance = ((string)apiKeyValue);
+                                                        propertiesInstance2.ApiKey = apiKeyInstance;
+                                                    }
+                                                    
+                                                    JToken inputsValue2 = propertiesValue3["inputs"];
+                                                    if (inputsValue2 != null && inputsValue2.Type != JTokenType.Null)
+                                                    {
+                                                        AzureMachineLearningWebServiceInputs inputsInstance = new AzureMachineLearningWebServiceInputs();
+                                                        propertiesInstance2.Inputs = inputsInstance;
+                                                        
+                                                        JToken nameValue2 = inputsValue2["name"];
+                                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nameInstance2 = ((string)nameValue2);
+                                                            inputsInstance.Name = nameInstance2;
+                                                        }
+                                                        
+                                                        JToken columnNamesArray = inputsValue2["columnNames"];
+                                                        if (columnNamesArray != null && columnNamesArray.Type != JTokenType.Null)
+                                                        {
+                                                            inputsInstance.ColumnNames = new System.Collections.Generic.List<Microsoft.Azure.Management.StreamAnalytics.Models.AzureMachineLearningWebServiceInputColumn>();
+                                                            foreach (JToken columnNamesValue in ((JArray)columnNamesArray))
+                                                            {
+                                                                AzureMachineLearningWebServiceInputColumn azureMachineLearningWebServiceInputColumnInstance = new AzureMachineLearningWebServiceInputColumn();
+                                                                inputsInstance.ColumnNames.Add(azureMachineLearningWebServiceInputColumnInstance);
+                                                                
+                                                                JToken nameValue3 = columnNamesValue["name"];
+                                                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance3 = ((string)nameValue3);
+                                                                    azureMachineLearningWebServiceInputColumnInstance.Name = nameInstance3;
+                                                                }
+                                                                
+                                                                JToken dataTypeValue3 = columnNamesValue["dataType"];
+                                                                if (dataTypeValue3 != null && dataTypeValue3.Type != JTokenType.Null)
+                                                                {
+                                                                    string dataTypeInstance3 = ((string)dataTypeValue3);
+                                                                    azureMachineLearningWebServiceInputColumnInstance.DataType = dataTypeInstance3;
+                                                                }
+                                                                
+                                                                JToken mapToValue = columnNamesValue["mapTo"];
+                                                                if (mapToValue != null && mapToValue.Type != JTokenType.Null)
+                                                                {
+                                                                    int mapToInstance = ((int)mapToValue);
+                                                                    azureMachineLearningWebServiceInputColumnInstance.MapTo = mapToInstance;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken outputsArray = propertiesValue3["outputs"];
+                                                    if (outputsArray != null && outputsArray.Type != JTokenType.Null)
+                                                    {
+                                                        propertiesInstance2.Outputs = new System.Collections.Generic.List<Microsoft.Azure.Management.StreamAnalytics.Models.AzureMachineLearningWebServiceOutputColumn>();
+                                                        foreach (JToken outputsValue in ((JArray)outputsArray))
+                                                        {
+                                                            AzureMachineLearningWebServiceOutputColumn azureMachineLearningWebServiceOutputColumnInstance = new AzureMachineLearningWebServiceOutputColumn();
+                                                            propertiesInstance2.Outputs.Add(azureMachineLearningWebServiceOutputColumnInstance);
+                                                            
+                                                            JToken nameValue4 = outputsValue["name"];
+                                                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance4 = ((string)nameValue4);
+                                                                azureMachineLearningWebServiceOutputColumnInstance.Name = nameInstance4;
+                                                            }
+                                                            
+                                                            JToken dataTypeValue4 = outputsValue["dataType"];
+                                                            if (dataTypeValue4 != null && dataTypeValue4.Type != JTokenType.Null)
+                                                            {
+                                                                string dataTypeInstance4 = ((string)dataTypeValue4);
+                                                                azureMachineLearningWebServiceOutputColumnInstance.DataType = dataTypeInstance4;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken batchSizeValue = propertiesValue3["batchSize"];
+                                                    if (batchSizeValue != null && batchSizeValue.Type != JTokenType.Null)
+                                                    {
+                                                        int batchSizeInstance = ((int)batchSizeValue);
+                                                        propertiesInstance2.BatchSize = batchSizeInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken typeValue = bindingValue["type"];
+                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance = ((string)typeValue);
+                                                    azureMachineLearningWebServiceFunctionBindingInstance.Type = typeInstance;
+                                                }
+                                                propertiesInstance.Binding = azureMachineLearningWebServiceFunctionBindingInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken etagValue = propertiesValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        scalarFunctionPropertiesInstance.Etag = etagInstance;
+                                    }
+                                    
+                                    JToken typeValue2 = propertiesValue["type"];
+                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance2 = ((string)typeValue2);
+                                        scalarFunctionPropertiesInstance.Type = typeInstance2;
+                                    }
+                                    functionInstance.Properties = scalarFunctionPropertiesInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                    }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Function.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Test the connectivity of a function for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
