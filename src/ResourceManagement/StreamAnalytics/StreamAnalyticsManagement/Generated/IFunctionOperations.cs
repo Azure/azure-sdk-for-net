@@ -206,6 +206,32 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<FunctionRetrieveDefaultDefinitionResponse> RetrieveDefaultDefinitionAsync(string resourceGroupName, string jobName, string functionName, FunctionRetrieveDefaultDefinitionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Retrieve the default definition of a function for a stream
+        /// analytics job. The raw json content will be used for the request
+        /// body.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// The name of the stream analytics job.
+        /// </param>
+        /// <param name='functionName'>
+        /// The name of the function for the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters required to retrieve the default definition of a
+        /// function for a stream analytics job.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response of the retrieve default function definition operation.
+        /// </returns>
+        Task<FunctionRetrieveDefaultDefinitionResponse> RetrieveDefaultDefinitionWithRawJsonContentAsync(string resourceGroupName, string jobName, string functionName, FunctionRetrieveDefaultDefinitionWithRawJsonContentParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Test the connectivity of a function for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
