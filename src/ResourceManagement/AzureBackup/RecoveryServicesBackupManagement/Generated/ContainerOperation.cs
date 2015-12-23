@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerResponse.
         /// </returns>
-        public async Task<ProtectionContainerResponse> GetContainerOperationResultExAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectionContainerResponse> GetContainerOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (operationResultLink == null)
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationResultLink", operationResultLink);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "GetContainerOperationResultExAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetContainerOperationResultByURLAsync", tracingParameters);
             }
             
             // Construct URL

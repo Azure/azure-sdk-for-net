@@ -116,11 +116,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerResponse.
         /// </returns>
-        public static ProtectionContainerResponse GetContainerOperationResultEx(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        public static ProtectionContainerResponse GetContainerOperationResultByURL(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).GetContainerOperationResultExAsync(operationResultLink, customRequestHeaders);
+                return ((IContainerOperation)s).GetContainerOperationResultByURLAsync(operationResultLink, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerResponse.
         /// </returns>
-        public static Task<ProtectionContainerResponse> GetContainerOperationResultExAsync(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectionContainerResponse> GetContainerOperationResultByURLAsync(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetContainerOperationResultExAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
+            return operations.GetContainerOperationResultByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
