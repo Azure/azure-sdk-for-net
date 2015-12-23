@@ -280,6 +280,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             get { return this._subscriptions; }
         }
         
+        private ITenantAccessInformationOperations _tenantAccess;
+        
+        /// <summary>
+        /// Operations for managing Tenant Access Information.
+        /// </summary>
+        public virtual ITenantAccessInformationOperations TenantAccess
+        {
+            get { return this._tenantAccess; }
+        }
+        
         private ITenantPolicyOperations _tenantPolicy;
         
         /// <summary>
@@ -365,6 +375,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._reports = new ReportsOperations(this);
             this._resourceProvider = new ResourceProviderOperations(this);
             this._subscriptions = new SubscriptionsOperations(this);
+            this._tenantAccess = new TenantAccessInformationOperations(this);
             this._tenantPolicy = new TenantPolicyOperations(this);
             this._userApplications = new UserApplicationsOperations(this);
             this._userGroups = new UserGroupsOperations(this);
@@ -455,6 +466,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._reports = new ReportsOperations(this);
             this._resourceProvider = new ResourceProviderOperations(this);
             this._subscriptions = new SubscriptionsOperations(this);
+            this._tenantAccess = new TenantAccessInformationOperations(this);
             this._tenantPolicy = new TenantPolicyOperations(this);
             this._userApplications = new UserApplicationsOperations(this);
             this._userGroups = new UserGroupsOperations(this);
