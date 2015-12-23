@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <summary>
         /// Gets list of service principals from the current tenant.
         /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='nextLink'>
+        /// Next link for list operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,6 +87,6 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<ServicePrincipal>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ServicePrincipal>>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

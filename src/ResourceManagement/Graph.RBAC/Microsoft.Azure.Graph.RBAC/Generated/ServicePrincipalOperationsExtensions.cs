@@ -153,12 +153,12 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='nextLink'>
+            /// Next link for list operation.
             /// </param>
-            public static IPage<ServicePrincipal> ListNext(this IServicePrincipalOperations operations, string nextPageLink)
+            public static IPage<ServicePrincipal> ListNext(this IServicePrincipalOperations operations, string nextLink)
             {
-                return Task.Factory.StartNew(s => ((IServicePrincipalOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IServicePrincipalOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -167,15 +167,15 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='nextLink'>
+            /// Next link for list operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ServicePrincipal>> ListNextAsync( this IServicePrincipalOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ServicePrincipal>> ListNextAsync( this IServicePrincipalOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
             }
 

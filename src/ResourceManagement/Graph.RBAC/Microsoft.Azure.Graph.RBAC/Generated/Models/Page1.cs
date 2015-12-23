@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
          /// <summary>
          /// Gets the link to the next page.
          /// </summary>
-         [JsonProperty("nextLink")]
+         [JsonProperty("")]
          public string NextPageLink { get; private set; }
 
          [JsonProperty("value")]

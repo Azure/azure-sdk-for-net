@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='parameters'>
             /// User filtering parameters.
             /// </param>
-            public static IPage<string> GetMemberGroups(this IUserOperations operations, string objectId, UserGetMemberGroupsParameters parameters)
+            public static IEnumerable<string> GetMemberGroups(this IUserOperations operations, string objectId, UserGetMemberGroupsParameters parameters)
             {
                 return Task.Factory.StartNew(s => ((IUserOperations)s).GetMemberGroupsAsync(objectId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<string>> GetMemberGroupsAsync( this IUserOperations operations, string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<string>> GetMemberGroupsAsync( this IUserOperations operations, string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.GetMemberGroupsWithHttpMessagesAsync(objectId, parameters, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
@@ -193,12 +193,12 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='nextLink'>
+            /// Next link for list operation.
             /// </param>
-            public static IPage<User> ListNext(this IUserOperations operations, string nextPageLink)
+            public static IPage<User> ListNext(this IUserOperations operations, string nextLink)
             {
-                return Task.Factory.StartNew(s => ((IUserOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IUserOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -207,49 +207,15 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='nextLink'>
+            /// Next link for list operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<User>> ListNextAsync( this IUserOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<User>> ListNextAsync( this IUserOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
-            }
-
-            /// <summary>
-            /// Gets a collection that contains the Object IDs of the groups of which the
-            /// user is a member.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<string> GetMemberGroupsNext(this IUserOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IUserOperations)s).GetMemberGroupsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a collection that contains the Object IDs of the groups of which the
-            /// user is a member.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<string>> GetMemberGroupsNextAsync( this IUserOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                var _result = await operations.GetMemberGroupsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
             }
 
