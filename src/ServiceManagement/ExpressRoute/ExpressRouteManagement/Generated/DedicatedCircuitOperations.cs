@@ -727,7 +727,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             XElement billingTypeElement = dedicatedCircuitElement.Element(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
                             if (billingTypeElement != null)
                             {
-                                BillingType billingTypeInstance = ((BillingType)Enum.Parse(typeof(BillingType), billingTypeElement.Value, true));
+                                string billingTypeInstance = billingTypeElement.Value;
                                 dedicatedCircuitInstance.BillingType = billingTypeInstance;
                             }
                             
@@ -1129,7 +1129,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 XElement billingTypeElement = dedicatedCircuitsElement.Element(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
                                 if (billingTypeElement != null)
                                 {
-                                    BillingType billingTypeInstance = ((BillingType)Enum.Parse(typeof(BillingType), billingTypeElement.Value, true));
+                                    string billingTypeInstance = billingTypeElement.Value;
                                     dedicatedCircuitInstance.BillingType = billingTypeInstance;
                                 }
                                 

@@ -29,14 +29,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public enum BillingType
     {
-        ServiceProviderType = 0,
+        MeteredData = 0,
         
-        MeteredData = 1,
-        
-        IXP = 2,
-        
-        UnlimitedData = 3,
-        
-        Telco = 4,
+        UnlimitedData = 1,
     }
 }
