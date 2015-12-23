@@ -221,6 +221,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Export jobs to blob.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Job Query Filters
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse Export(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).ExportAsync(parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Export jobs to blob.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Job Query Filters
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> ExportAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ExportAsync(parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the job details.
         /// </summary>
         /// <param name='operations'>
@@ -411,17 +457,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list Jobs operation.
         /// </returns>
-        public static JobListResponse List(this IJobOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static JobListResponse List(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).ListAsync(customRequestHeaders);
+                return ((IJobOperations)s).ListAsync(parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -433,15 +482,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Job query parameter.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the list Jobs operation.
         /// </returns>
-        public static Task<JobListResponse> ListAsync(this IJobOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobListResponse> ListAsync(this IJobOperations operations, JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

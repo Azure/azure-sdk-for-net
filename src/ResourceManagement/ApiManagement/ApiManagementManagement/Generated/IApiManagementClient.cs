@@ -228,6 +228,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
+        /// Operations for managing Tenant Access Information.
+        /// </summary>
+        ITenantAccessInformationOperations TenantAccess
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing Tenant Policy.
         /// </summary>
         ITenantPolicyOperations TenantPolicy

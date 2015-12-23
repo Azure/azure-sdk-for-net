@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2015-08-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -174,6 +174,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -318,7 +319,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2015-08-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -345,6 +346,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -397,49 +399,49 @@ namespace Microsoft.Azure.Management.RecoveryServices
                             ResourceExtendedInformation extendedInformationInstance = new ResourceExtendedInformation();
                             result.ResourceExtendedInformation = extendedInformationInstance;
                             
-                            JToken resourceGroupNameValue = responseDoc["ResourceGroupName"];
+                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
                             if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
                             {
                                 string resourceGroupNameInstance = ((string)resourceGroupNameValue);
                                 extendedInformationInstance.ResourceGroupName = resourceGroupNameInstance;
                             }
                             
-                            JToken extendedInfoValue = responseDoc["ExtendedInfo"];
+                            JToken extendedInfoValue = responseDoc["extendedInfo"];
                             if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                             {
                                 string extendedInfoInstance = ((string)extendedInfoValue);
                                 extendedInformationInstance.ExtendedInfo = extendedInfoInstance;
                             }
                             
-                            JToken extendedInfoETagValue = responseDoc["ExtendedInfoETag"];
+                            JToken extendedInfoETagValue = responseDoc["extendedInfoETag"];
                             if (extendedInfoETagValue != null && extendedInfoETagValue.Type != JTokenType.Null)
                             {
                                 string extendedInfoETagInstance = ((string)extendedInfoETagValue);
                                 extendedInformationInstance.ExtendedInfoETag = extendedInfoETagInstance;
                             }
                             
-                            JToken resourceIdValue = responseDoc["ResourceId"];
+                            JToken resourceIdValue = responseDoc["resourceId"];
                             if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                             {
                                 long resourceIdInstance = ((long)resourceIdValue);
                                 extendedInformationInstance.ResourceId = resourceIdInstance;
                             }
                             
-                            JToken resourceNameValue = responseDoc["ResourceName"];
+                            JToken resourceNameValue = responseDoc["resourceName"];
                             if (resourceNameValue != null && resourceNameValue.Type != JTokenType.Null)
                             {
                                 string resourceNameInstance = ((string)resourceNameValue);
                                 extendedInformationInstance.ResourceName = resourceNameInstance;
                             }
                             
-                            JToken resourceTypeValue = responseDoc["ResourceType"];
+                            JToken resourceTypeValue = responseDoc["resourceType"];
                             if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
                             {
                                 string resourceTypeInstance = ((string)resourceTypeValue);
                                 extendedInformationInstance.ResourceType = resourceTypeInstance;
                             }
                             
-                            JToken subscriptionIdValue = responseDoc["SubscriptionId"];
+                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
                             if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                             {
                                 Guid subscriptionIdInstance = Guid.Parse(((string)subscriptionIdValue));
@@ -557,7 +559,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/ExtendedInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2015-08-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -584,6 +586,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 
@@ -636,49 +639,49 @@ namespace Microsoft.Azure.Management.RecoveryServices
                             ResourceExtendedInformation extendedInformationInstance = new ResourceExtendedInformation();
                             result.ResourceExtendedInformation = extendedInformationInstance;
                             
-                            JToken resourceGroupNameValue = responseDoc["ResourceGroupName"];
+                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
                             if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
                             {
                                 string resourceGroupNameInstance = ((string)resourceGroupNameValue);
                                 extendedInformationInstance.ResourceGroupName = resourceGroupNameInstance;
                             }
                             
-                            JToken extendedInfoValue = responseDoc["ExtendedInfo"];
+                            JToken extendedInfoValue = responseDoc["extendedInfo"];
                             if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                             {
                                 string extendedInfoInstance = ((string)extendedInfoValue);
                                 extendedInformationInstance.ExtendedInfo = extendedInfoInstance;
                             }
                             
-                            JToken extendedInfoETagValue = responseDoc["ExtendedInfoETag"];
+                            JToken extendedInfoETagValue = responseDoc["extendedInfoETag"];
                             if (extendedInfoETagValue != null && extendedInfoETagValue.Type != JTokenType.Null)
                             {
                                 string extendedInfoETagInstance = ((string)extendedInfoETagValue);
                                 extendedInformationInstance.ExtendedInfoETag = extendedInfoETagInstance;
                             }
                             
-                            JToken resourceIdValue = responseDoc["ResourceId"];
+                            JToken resourceIdValue = responseDoc["resourceId"];
                             if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                             {
                                 long resourceIdInstance = ((long)resourceIdValue);
                                 extendedInformationInstance.ResourceId = resourceIdInstance;
                             }
                             
-                            JToken resourceNameValue = responseDoc["ResourceName"];
+                            JToken resourceNameValue = responseDoc["resourceName"];
                             if (resourceNameValue != null && resourceNameValue.Type != JTokenType.Null)
                             {
                                 string resourceNameInstance = ((string)resourceNameValue);
                                 extendedInformationInstance.ResourceName = resourceNameInstance;
                             }
                             
-                            JToken resourceTypeValue = responseDoc["ResourceType"];
+                            JToken resourceTypeValue = responseDoc["resourceType"];
                             if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
                             {
                                 string resourceTypeInstance = ((string)resourceTypeValue);
                                 extendedInformationInstance.ResourceType = resourceTypeInstance;
                             }
                             
-                            JToken subscriptionIdValue = responseDoc["SubscriptionId"];
+                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
                             if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                             {
                                 Guid subscriptionIdInstance = Guid.Parse(((string)subscriptionIdValue));
@@ -798,7 +801,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/certificates/";
             url = url + Uri.EscapeDataString(certFriendlyName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2015-08-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -825,6 +828,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
@@ -939,6 +943,34 @@ namespace Microsoft.Azure.Management.RecoveryServices
                                     long resourceIdInstance = ((long)resourceIdValue);
                                     propertiesInstance.ResourceId = resourceIdInstance;
                                 }
+                            }
+                            
+                            JToken clientRequestIdValue = responseDoc["ClientRequestId"];
+                            if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string clientRequestIdInstance = ((string)clientRequestIdValue);
+                                result.ClientRequestId = clientRequestIdInstance;
+                            }
+                            
+                            JToken correlationRequestIdValue = responseDoc["CorrelationRequestId"];
+                            if (correlationRequestIdValue != null && correlationRequestIdValue.Type != JTokenType.Null)
+                            {
+                                string correlationRequestIdInstance = ((string)correlationRequestIdValue);
+                                result.CorrelationRequestId = correlationRequestIdInstance;
+                            }
+                            
+                            JToken dateValue = responseDoc["Date"];
+                            if (dateValue != null && dateValue.Type != JTokenType.Null)
+                            {
+                                string dateInstance = ((string)dateValue);
+                                result.Date = dateInstance;
+                            }
+                            
+                            JToken contentTypeValue = responseDoc["ContentType"];
+                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                            {
+                                string contentTypeInstance = ((string)contentTypeValue);
+                                result.ContentType = contentTypeInstance;
                             }
                         }
                         

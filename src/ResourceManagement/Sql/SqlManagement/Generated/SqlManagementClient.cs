@@ -314,7 +314,18 @@ namespace Microsoft.Azure.Management.Sql
         {
             get { return this._transparentDataEncryption; }
         }
-        
+
+        private IServerCommunicationLinkOperations _communicationLinks;
+
+        /// <summary>
+        /// Represents all the operations of Azure SQL Database Server
+        /// Communication links.  Contains operations to: Create, Retrieve, and Delete.
+        /// </summary>
+        public virtual IServerCommunicationLinkOperations CommunicationLinks
+        {
+            get { return this._communicationLinks; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
@@ -340,6 +351,7 @@ namespace Microsoft.Azure.Management.Sql
             this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._serviceTierAdvisors = new ServiceTierAdvisorOperations(this);
             this._transparentDataEncryption = new TransparentDataEncryptionOperations(this);
+            this._communicationLinks = new ServerCommunicationLinkOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -424,6 +436,7 @@ namespace Microsoft.Azure.Management.Sql
             this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._serviceTierAdvisors = new ServiceTierAdvisorOperations(this);
             this._transparentDataEncryption = new TransparentDataEncryptionOperations(this);
+            this._communicationLinks = new ServerCommunicationLinkOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

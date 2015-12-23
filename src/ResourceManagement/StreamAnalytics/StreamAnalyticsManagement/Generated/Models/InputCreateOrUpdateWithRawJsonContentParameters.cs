@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Parameters specifying the input definition for by the input create or
+    /// Parameters specifying the input definition for the input create or
     /// update operation which uses the raw json content.
     /// </summary>
     public partial class InputCreateOrUpdateWithRawJsonContentParameters
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         
         /// <summary>
         /// Required. Gets or sets the definition of the input to be created or
-        /// updated. It is in the json format.
+        /// updated in json format.
         /// </summary>
         public string Content
         {
