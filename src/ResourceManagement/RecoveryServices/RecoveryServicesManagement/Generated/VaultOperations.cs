@@ -1050,28 +1050,28 @@ namespace Microsoft.Azure.Management.RecoveryServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken idValue = responseDoc["Id"];
+                            JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 long idInstance = ((long)idValue);
                                 result.Id = idInstance;
                             }
                             
-                            JToken nameValue = responseDoc["Name"];
+                            JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 long nameInstance = ((long)nameValue);
                                 result.Name = nameInstance;
                             }
                             
-                            JToken typeValue = responseDoc["Type"];
+                            JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
                                 long typeInstance = ((long)typeValue);
                                 result.Type = typeInstance;
                             }
                             
-                            JToken propertiesValue = responseDoc["Properties"];
+                            JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
                                 StorageDetails propertiesInstance = new StorageDetails();
