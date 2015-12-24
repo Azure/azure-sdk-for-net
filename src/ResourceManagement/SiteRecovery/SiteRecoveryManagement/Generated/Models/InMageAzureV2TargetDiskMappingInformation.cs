@@ -25,26 +25,37 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Disable protection provider specific input.
+    /// Vm disk mapping details of InMageAzureV2 Vm.
     /// </summary>
-    public partial class DisableProtectionProviderSpecificInput
+    public partial class InMageAzureV2TargetDiskMappingInformation
     {
-        private string _instanceType;
+        private string _diskName;
         
         /// <summary>
-        /// Optional. Gets or sets the Instance type name.
+        /// Optional. The Disk Name.
         /// </summary>
-        public string InstanceType
+        public string DiskName
         {
-            get { return this._instanceType; }
-            set { this._instanceType = value; }
+            get { return this._diskName; }
+            set { this._diskName = value; }
+        }
+        
+        private string _masterTargetLunId;
+        
+        /// <summary>
+        /// Optional. The master target LUN Id.
+        /// </summary>
+        public string MasterTargetLunId
+        {
+            get { return this._masterTargetLunId; }
+            set { this._masterTargetLunId = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DisableProtectionProviderSpecificInput class.
+        /// InMageAzureV2TargetDiskMappingInformation class.
         /// </summary>
-        public DisableProtectionProviderSpecificInput()
+        public InMageAzureV2TargetDiskMappingInformation()
         {
         }
     }

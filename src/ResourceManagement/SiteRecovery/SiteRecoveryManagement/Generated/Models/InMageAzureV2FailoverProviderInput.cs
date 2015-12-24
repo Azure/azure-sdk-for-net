@@ -21,30 +21,44 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Disable protection provider specific input.
+    /// InMageAzureV2 provider specific input for failover.
     /// </summary>
-    public partial class DisableProtectionProviderSpecificInput
+    public partial class InMageAzureV2FailoverProviderInput : ProviderSpecificFailoverInput
     {
-        private string _instanceType;
+        private string _recoveryPointId;
         
         /// <summary>
-        /// Optional. Gets or sets the Instance type name.
+        /// Optional. the recovery point id to be passed to failover to a
+        /// particular recovery point. In case of latest recovery point, null
+        /// should be passed.
         /// </summary>
-        public string InstanceType
+        public string RecoveryPointId
         {
-            get { return this._instanceType; }
-            set { this._instanceType = value; }
+            get { return this._recoveryPointId; }
+            set { this._recoveryPointId = value; }
+        }
+        
+        private string _vaultLocation;
+        
+        /// <summary>
+        /// Optional. Location of the vault.
+        /// </summary>
+        public string VaultLocation
+        {
+            get { return this._vaultLocation; }
+            set { this._vaultLocation = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DisableProtectionProviderSpecificInput class.
+        /// InMageAzureV2FailoverProviderInput class.
         /// </summary>
-        public DisableProtectionProviderSpecificInput()
+        public InMageAzureV2FailoverProviderInput()
         {
         }
     }

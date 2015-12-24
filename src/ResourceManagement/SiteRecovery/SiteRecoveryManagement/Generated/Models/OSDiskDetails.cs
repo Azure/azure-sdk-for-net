@@ -25,26 +25,47 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Disable protection provider specific input.
+    /// Details of the OS Disk.
     /// </summary>
-    public partial class DisableProtectionProviderSpecificInput
+    public partial class OSDiskDetails
     {
-        private string _instanceType;
+        private string _oSDiskId;
         
         /// <summary>
-        /// Optional. Gets or sets the Instance type name.
+        /// Optional. The id of the disk containing the OS.
         /// </summary>
-        public string InstanceType
+        public string OSDiskId
         {
-            get { return this._instanceType; }
-            set { this._instanceType = value; }
+            get { return this._oSDiskId; }
+            set { this._oSDiskId = value; }
+        }
+        
+        private string _oSType;
+        
+        /// <summary>
+        /// Optional. The type of the OS on the VM.
+        /// </summary>
+        public string OSType
+        {
+            get { return this._oSType; }
+            set { this._oSType = value; }
+        }
+        
+        private string _vhdName;
+        
+        /// <summary>
+        /// Optional. The OS disk VHD name.
+        /// </summary>
+        public string VhdName
+        {
+            get { return this._vhdName; }
+            set { this._vhdName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DisableProtectionProviderSpecificInput class.
+        /// Initializes a new instance of the OSDiskDetails class.
         /// </summary>
-        public DisableProtectionProviderSpecificInput()
+        public OSDiskDetails()
         {
         }
     }

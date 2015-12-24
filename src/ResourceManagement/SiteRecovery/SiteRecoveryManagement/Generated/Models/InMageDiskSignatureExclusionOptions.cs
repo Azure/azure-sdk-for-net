@@ -25,26 +25,28 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Disable protection provider specific input.
+    /// Guest disk signature based disk exclusion option when doing enable
+    /// protection of virtual machine in InMage provider.
     /// </summary>
-    public partial class DisableProtectionProviderSpecificInput
+    public partial class InMageDiskSignatureExclusionOptions
     {
-        private string _instanceType;
+        private string _diskSignature;
         
         /// <summary>
-        /// Optional. Gets or sets the Instance type name.
+        /// Optional. The guest signature of disk to be excluded from
+        /// replication.
         /// </summary>
-        public string InstanceType
+        public string DiskSignature
         {
-            get { return this._instanceType; }
-            set { this._instanceType = value; }
+            get { return this._diskSignature; }
+            set { this._diskSignature = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DisableProtectionProviderSpecificInput class.
+        /// InMageDiskSignatureExclusionOptions class.
         /// </summary>
-        public DisableProtectionProviderSpecificInput()
+        public InMageDiskSignatureExclusionOptions()
         {
         }
     }

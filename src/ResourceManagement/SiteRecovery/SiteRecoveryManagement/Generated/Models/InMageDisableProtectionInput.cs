@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
     /// Disable protection provider specific input.
     /// </summary>
-    public partial class DisableProtectionProviderSpecificInput
+    public partial class InMageDisableProtectionInput : DisableProtectionProviderSpecificInput
     {
-        private string _instanceType;
+        private string _replicaVmDeletionStatus;
         
         /// <summary>
-        /// Optional. Gets or sets the Instance type name.
+        /// Optional. Indicates whether the replica VM should be destroyed or
+        /// retained. Values from Delete and Retain.
         /// </summary>
-        public string InstanceType
+        public string ReplicaVmDeletionStatus
         {
-            get { return this._instanceType; }
-            set { this._instanceType = value; }
+            get { return this._replicaVmDeletionStatus; }
+            set { this._replicaVmDeletionStatus = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DisableProtectionProviderSpecificInput class.
+        /// Initializes a new instance of the InMageDisableProtectionInput
+        /// class.
         /// </summary>
-        public DisableProtectionProviderSpecificInput()
+        public InMageDisableProtectionInput()
         {
         }
     }

@@ -21,31 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Disable protection provider specific input.
+    /// InMageAzureV2 provider specific input to apply recovery point.
     /// </summary>
-    public partial class DisableProtectionProviderSpecificInput
+    public partial class InMageAzureV2ApplyRecoveryPointInput : ApplyRecoveryPointProviderSpecificInput
     {
-        private string _instanceType;
+        private string _vaultLocation;
         
         /// <summary>
-        /// Optional. Gets or sets the Instance type name.
+        /// Required. Gets or sets Location of the vault.
         /// </summary>
-        public string InstanceType
+        public string VaultLocation
         {
-            get { return this._instanceType; }
-            set { this._instanceType = value; }
+            get { return this._vaultLocation; }
+            set { this._vaultLocation = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DisableProtectionProviderSpecificInput class.
+        /// InMageAzureV2ApplyRecoveryPointInput class.
         /// </summary>
-        public DisableProtectionProviderSpecificInput()
+        public InMageAzureV2ApplyRecoveryPointInput()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// InMageAzureV2ApplyRecoveryPointInput class with required arguments.
+        /// </summary>
+        public InMageAzureV2ApplyRecoveryPointInput(string vaultLocation)
+            : this()
+        {
+            if (vaultLocation == null)
+            {
+                throw new ArgumentNullException("vaultLocation");
+            }
+            this.VaultLocation = vaultLocation;
         }
     }
 }

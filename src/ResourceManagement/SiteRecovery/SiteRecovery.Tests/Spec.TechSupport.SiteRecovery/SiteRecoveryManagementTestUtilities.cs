@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Test
                     IgnoreCertificateErrorHandler;
             }
 
-            TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
-            //TestEnvironment environment = new RDFETestEnvironmentFactory().GetTestEnvironment();
-            //environment.BaseUri = new Uri("https://localhost:8443/Rdfeproxy.svc");
+            // TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
+            TestEnvironment environment = new RDFETestEnvironmentFactory().GetTestEnvironment();
+            environment.BaseUri = new Uri("https://localhost:8443/Rdfeproxy.svc");
             // environment.BaseUri = new Uri("https://sea-bvtd2-srs1-t56tl.cloudapp.net");
 
 
