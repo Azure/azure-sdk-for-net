@@ -190,8 +190,8 @@ namespace SiteRecovery.Tests
 
                 Random random = new Random(100);
                 //string storageAccountName = "bvtstoragev2";
-                string storageAccountSubscriptionId = "e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b";
-                string storageAccountId = "/subscriptions/e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b/resourceGroups/Default-Storage-SoutheastAsia/providers/Microsoft.Storage/storageAccounts/bvtstoragev2";
+                string storageAccountSubscriptionId = "42195872-7e70-4f8a-837f-84b28ecbb78b";
+                string storageAccountId = "/subscriptions/42195872-7e70-4f8a-837f-84b28ecbb78b/resourceGroups/Default-Storage-SoutheastAsia/providers/Microsoft.ClassicStorage/storageAccounts/hikewalrstorage";
                 var response = client.ReplicationProtectedItem.EnableProtection(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
