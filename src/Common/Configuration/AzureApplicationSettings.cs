@@ -241,6 +241,10 @@ namespace Microsoft.Azure
             return assembly;
         }
 
+        /// <summary>
+        /// Writes to trace output if WriteToTrace is true
+        /// </summary>
+        /// <param name="message">The message to write to Trace</param>
         private static void WriteTraceLine(string message)
         {
             if (WriteToTrace)
