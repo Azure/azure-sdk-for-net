@@ -103,6 +103,7 @@
     <Compile Include="Generated\Models\MabFileFolderProtectedItem.cs" />
     <Compile Include="Generated\Models\MabProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\MabProtectionContainer.cs" />
+    <Compile Include="Generated\Models\Month.cs" />
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\OperationResultInfo.cs" />
     <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
@@ -157,14 +158,17 @@
     <Compile Include="Generated\Models\RestoreRequest.cs" />
     <Compile Include="Generated\Models\RestoreRequestResource.cs" />
     <Compile Include="Generated\Models\RetentionDuration.cs" />
+    <Compile Include="Generated\Models\RetentionDurationType.cs" />
     <Compile Include="Generated\Models\RetentionPolicy.cs" />
     <Compile Include="Generated\Models\RetentionScheduleBase.cs" />
+    <Compile Include="Generated\Models\RetentionScheduleFormat.cs" />
     <Compile Include="Generated\Models\SchedulePolicy.cs" />
     <Compile Include="Generated\Models\SimpleRetentionPolicy.cs" />
     <Compile Include="Generated\Models\SimpleSchedulePolicy.cs" />
     <Compile Include="Generated\Models\TriggerRestoreRequest.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionFormat.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\WeekNumber.cs" />
     <Compile Include="Generated\Models\YearlyRetentionSchedule.cs" />
     <Compile Include="Generated\ProtectableObjectOperations.cs" />
     <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
