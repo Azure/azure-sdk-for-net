@@ -88,6 +88,18 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._runbook = value; }
         }
         
+        private string _runOn;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of the hybrid worker group the
+        /// webhook job will run on.
+        /// </summary>
+        public string RunOn
+        {
+            get { return this._runOn; }
+            set { this._runOn = value; }
+        }
+        
         private string _uri;
         
         /// <summary>

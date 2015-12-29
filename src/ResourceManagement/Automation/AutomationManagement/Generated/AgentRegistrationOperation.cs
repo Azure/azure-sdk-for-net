@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/agentRegistrationInformation";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -237,6 +237,13 @@ namespace Microsoft.Azure.Management.Automation
                                     keysInstance.Secondary = secondaryInstance;
                                 }
                             }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                agentRegistrationInstance.Id = idInstance;
+                            }
                         }
                         
                     }
@@ -341,7 +348,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/agentRegistrationInformation/regenerateKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -488,6 +495,13 @@ namespace Microsoft.Azure.Management.Automation
                                     string secondaryInstance = ((string)secondaryValue);
                                     keysInstance.Secondary = secondaryInstance;
                                 }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                agentRegistrationInstance.Id = idInstance;
                             }
                         }
                         

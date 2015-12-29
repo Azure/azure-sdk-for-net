@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/streams/";
             url = url + Uri.EscapeDataString(jobStreamId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -215,6 +215,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             JobStream jobStreamInstance = new JobStream();
                             result.JobStream = jobStreamInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobStreamInstance.Id = idInstance;
+                            }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -378,7 +385,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/draft/testJob/streams/";
             url = url + Uri.EscapeDataString(jobStreamId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -457,6 +464,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             JobStream jobStreamInstance = new JobStream();
                             result.JobStream = jobStreamInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobStreamInstance.Id = idInstance;
+                            }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -625,7 +639,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -709,6 +723,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     JobStream jobStreamInstance = new JobStream();
                                     result.JobStreams.Add(jobStreamInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        jobStreamInstance.Id = idInstance;
+                                    }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -914,6 +935,13 @@ namespace Microsoft.Azure.Management.Automation
                                     JobStream jobStreamInstance = new JobStream();
                                     result.JobStreams.Add(jobStreamInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        jobStreamInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
@@ -1101,7 +1129,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1185,6 +1213,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     JobStream jobStreamInstance = new JobStream();
                                     result.JobStreams.Add(jobStreamInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        jobStreamInstance.Id = idInstance;
+                                    }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)

@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/configurations/";
             url = url + Uri.EscapeDataString(configurationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -997,7 +997,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(configurationName);
             url = url + "/content";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/configurations";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of the credential.
+    /// Information about a field of a type.
     /// </summary>
-    public partial class CredentialNavigation
+    public partial class TypeField
     {
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the credential.
+        /// Optional. Gets or sets the name of the field.
         /// </summary>
         public string Name
         {
@@ -40,10 +40,21 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
+        private string _type;
+        
         /// <summary>
-        /// Initializes a new instance of the CredentialNavigation class.
+        /// Optional. Gets or sets the type of the field.
         /// </summary>
-        public CredentialNavigation()
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the TypeField class.
+        /// </summary>
+        public TypeField()
         {
         }
     }

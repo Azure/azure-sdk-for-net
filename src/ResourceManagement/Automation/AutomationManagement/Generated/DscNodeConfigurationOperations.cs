@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/nodeConfigurations/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -284,11 +284,11 @@ namespace Microsoft.Azure.Management.Automation
                             DscNodeConfiguration nodeConfigurationInstance = new DscNodeConfiguration();
                             result.NodeConfiguration = nodeConfigurationInstance;
                             
-                            JToken configurationNameValue = responseDoc["configurationName"];
-                            if (configurationNameValue != null && configurationNameValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string configurationNameInstance = ((string)configurationNameValue);
-                                nodeConfigurationInstance.Name = configurationNameInstance;
+                                string nameInstance = ((string)nameValue);
+                                nodeConfigurationInstance.Name = nameInstance;
                             }
                             
                             JToken lastModifiedTimeValue = responseDoc["lastModifiedTime"];
@@ -311,12 +311,19 @@ namespace Microsoft.Azure.Management.Automation
                                 DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
                                 nodeConfigurationInstance.Configuration = configurationInstance;
                                 
-                                JToken nameValue = configurationValue2["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                JToken nameValue2 = configurationValue2["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    configurationInstance.Name = nameInstance;
+                                    string nameInstance2 = ((string)nameValue2);
+                                    configurationInstance.Name = nameInstance2;
                                 }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                nodeConfigurationInstance.Id = idInstance;
                             }
                         }
                         
@@ -418,7 +425,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/nodeConfigurations/";
             url = url + Uri.EscapeDataString(nodeConfigurationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -497,11 +504,11 @@ namespace Microsoft.Azure.Management.Automation
                             DscNodeConfiguration nodeConfigurationInstance = new DscNodeConfiguration();
                             result.NodeConfiguration = nodeConfigurationInstance;
                             
-                            JToken configurationNameValue = responseDoc["configurationName"];
-                            if (configurationNameValue != null && configurationNameValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string configurationNameInstance = ((string)configurationNameValue);
-                                nodeConfigurationInstance.Name = configurationNameInstance;
+                                string nameInstance = ((string)nameValue);
+                                nodeConfigurationInstance.Name = nameInstance;
                             }
                             
                             JToken lastModifiedTimeValue = responseDoc["lastModifiedTime"];
@@ -524,12 +531,19 @@ namespace Microsoft.Azure.Management.Automation
                                 DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
                                 nodeConfigurationInstance.Configuration = configurationInstance;
                                 
-                                JToken nameValue = configurationValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                JToken nameValue2 = configurationValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    configurationInstance.Name = nameInstance;
+                                    string nameInstance2 = ((string)nameValue2);
+                                    configurationInstance.Name = nameInstance2;
                                 }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                nodeConfigurationInstance.Id = idInstance;
                             }
                         }
                         
@@ -635,7 +649,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -720,11 +734,11 @@ namespace Microsoft.Azure.Management.Automation
                                     DscNodeConfiguration dscNodeConfigurationInstance = new DscNodeConfiguration();
                                     result.DscNodeConfigurations.Add(dscNodeConfigurationInstance);
                                     
-                                    JToken configurationNameValue = valueValue["configurationName"];
-                                    if (configurationNameValue != null && configurationNameValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string configurationNameInstance = ((string)configurationNameValue);
-                                        dscNodeConfigurationInstance.Name = configurationNameInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        dscNodeConfigurationInstance.Name = nameInstance;
                                     }
                                     
                                     JToken lastModifiedTimeValue = valueValue["lastModifiedTime"];
@@ -747,12 +761,19 @@ namespace Microsoft.Azure.Management.Automation
                                         DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
                                         dscNodeConfigurationInstance.Configuration = configurationInstance;
                                         
-                                        JToken nameValue = configurationValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        JToken nameValue2 = configurationValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
-                                            string nameInstance = ((string)nameValue);
-                                            configurationInstance.Name = nameInstance;
+                                            string nameInstance2 = ((string)nameValue2);
+                                            configurationInstance.Name = nameInstance2;
                                         }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        dscNodeConfigurationInstance.Id = idInstance;
                                     }
                                 }
                             }
@@ -907,11 +928,11 @@ namespace Microsoft.Azure.Management.Automation
                                     DscNodeConfiguration dscNodeConfigurationInstance = new DscNodeConfiguration();
                                     result.DscNodeConfigurations.Add(dscNodeConfigurationInstance);
                                     
-                                    JToken configurationNameValue = valueValue["configurationName"];
-                                    if (configurationNameValue != null && configurationNameValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string configurationNameInstance = ((string)configurationNameValue);
-                                        dscNodeConfigurationInstance.Name = configurationNameInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        dscNodeConfigurationInstance.Name = nameInstance;
                                     }
                                     
                                     JToken lastModifiedTimeValue = valueValue["lastModifiedTime"];
@@ -934,12 +955,19 @@ namespace Microsoft.Azure.Management.Automation
                                         DscConfigurationAssociationProperty configurationInstance = new DscConfigurationAssociationProperty();
                                         dscNodeConfigurationInstance.Configuration = configurationInstance;
                                         
-                                        JToken nameValue = configurationValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        JToken nameValue2 = configurationValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
-                                            string nameInstance = ((string)nameValue);
-                                            configurationInstance.Name = nameInstance;
+                                            string nameInstance2 = ((string)nameValue2);
+                                            configurationInstance.Name = nameInstance2;
                                         }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        dscNodeConfigurationInstance.Id = idInstance;
                                     }
                                 }
                             }

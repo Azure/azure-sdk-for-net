@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/nodes/";
             url = url + Uri.EscapeDataString(nodeId.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/nodes/";
             url = url + Uri.EscapeDataString(nodeId.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -413,6 +413,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string statusInstance = ((string)statusValue);
                                 nodeInstance.Status = statusInstance;
+                            }
+                            
+                            JToken nodeIdValue = responseDoc["nodeId"];
+                            if (nodeIdValue != null && nodeIdValue.Type != JTokenType.Null)
+                            {
+                                Guid nodeIdInstance = Guid.Parse(((string)nodeIdValue));
+                                nodeInstance.NodeId = nodeIdInstance;
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -572,7 +579,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -704,6 +711,13 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         string statusInstance = ((string)statusValue);
                                         dscNodeInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken nodeIdValue = valueValue["nodeId"];
+                                    if (nodeIdValue != null && nodeIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid nodeIdInstance = Guid.Parse(((string)nodeIdValue));
+                                        dscNodeInstance.NodeId = nodeIdInstance;
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -953,6 +967,13 @@ namespace Microsoft.Azure.Management.Automation
                                         dscNodeInstance.Status = statusInstance;
                                     }
                                     
+                                    JToken nodeIdValue = valueValue["nodeId"];
+                                    if (nodeIdValue != null && nodeIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid nodeIdInstance = Guid.Parse(((string)nodeIdValue));
+                                        dscNodeInstance.NodeId = nodeIdInstance;
+                                    }
+                                    
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
@@ -1112,9 +1133,12 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/nodes/";
-            url = url + Uri.EscapeDataString(parameters.Id.ToString());
+            if (parameters.NodeId != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.NodeId.ToString());
+            }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1154,7 +1178,7 @@ namespace Microsoft.Azure.Management.Automation
                 JObject dscNodePatchParametersValue = new JObject();
                 requestDoc = dscNodePatchParametersValue;
                 
-                dscNodePatchParametersValue["id"] = parameters.Id.ToString();
+                dscNodePatchParametersValue["nodeId"] = parameters.NodeId.ToString();
                 
                 if (parameters.NodeConfiguration != null)
                 {
@@ -1263,6 +1287,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string statusInstance = ((string)statusValue);
                                 nodeInstance.Status = statusInstance;
+                            }
+                            
+                            JToken nodeIdValue = responseDoc["nodeId"];
+                            if (nodeIdValue != null && nodeIdValue.Type != JTokenType.Null)
+                            {
+                                Guid nodeIdInstance = Guid.Parse(((string)nodeIdValue));
+                                nodeInstance.NodeId = nodeIdInstance;
                             }
                             
                             JToken idValue = responseDoc["id"];

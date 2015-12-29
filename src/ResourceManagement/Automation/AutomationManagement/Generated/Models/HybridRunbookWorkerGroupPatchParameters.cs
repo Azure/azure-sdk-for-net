@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class HybridRunbookWorkerGroupPatchParameters
     {
-        private CredentialNavigation _credential;
+        private RunAsCredentialAssociationProperty _credential;
         
         /// <summary>
         /// Optional. Sets the credential of a worker group.
         /// </summary>
-        public CredentialNavigation Credential
+        public RunAsCredentialAssociationProperty Credential
         {
             get { return this._credential; }
             set { this._credential = value; }
