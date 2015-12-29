@@ -30,23 +30,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// </summary>
     public partial class Usage
     {
-        private string _currentValue;
+        private long _currentValue;
         
         /// <summary>
         /// Required. Gets or sets the current value of usage.
         /// </summary>
-        public string CurrentValue
+        public long CurrentValue
         {
             get { return this._currentValue; }
             set { this._currentValue = value; }
         }
         
-        private string _limit;
+        private long _limit;
         
         /// <summary>
         /// Required. Gets or sets the limit of usage.
         /// </summary>
-        public string Limit
+        public long Limit
         {
             get { return this._limit; }
             set { this._limit = value; }

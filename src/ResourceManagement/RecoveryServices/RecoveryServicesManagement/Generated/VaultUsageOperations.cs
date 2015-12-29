@@ -237,14 +237,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
                                     JToken currentValueValue = valueValue["currentValue"];
                                     if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
                                     {
-                                        string currentValueInstance = ((string)currentValueValue);
+                                        long currentValueInstance = ((long)currentValueValue);
                                         usageInstance.CurrentValue = currentValueInstance;
                                     }
                                     
                                     JToken limitValue = valueValue["limit"];
                                     if (limitValue != null && limitValue.Type != JTokenType.Null)
                                     {
-                                        string limitInstance = ((string)limitValue);
+                                        long limitInstance = ((long)limitValue);
                                         usageInstance.Limit = limitInstance;
                                     }
                                     
