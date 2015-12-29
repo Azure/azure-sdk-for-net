@@ -83,7 +83,6 @@
     <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectableObject.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
     <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs" />
@@ -104,7 +103,6 @@
     <Compile Include="Generated\Models\MabFileFolderProtectedItem.cs" />
     <Compile Include="Generated\Models\MabProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\MabProtectionContainer.cs" />
-    <Compile Include="Generated\Models\Month.cs" />
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\OperationResultInfo.cs" />
     <Compile Include="Generated\Models\OperationResultInfoBase.cs" />
@@ -115,7 +113,6 @@
     <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />
     <Compile Include="Generated\Models\ProtectableItem.cs" />
-    <Compile Include="Generated\Models\ProtectableObject.cs" />
     <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListQueryParameters.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
@@ -139,7 +136,6 @@
     <Compile Include="Generated\Models\ProtectionContainerResourceList.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResponse.cs" />
     <Compile Include="Generated\Models\ProtectionContainerUpdateRequest.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicy.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyBase.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyQueryParameters.cs" />
@@ -161,17 +157,14 @@
     <Compile Include="Generated\Models\RestoreRequest.cs" />
     <Compile Include="Generated\Models\RestoreRequestResource.cs" />
     <Compile Include="Generated\Models\RetentionDuration.cs" />
-    <Compile Include="Generated\Models\RetentionDurationType.cs" />
     <Compile Include="Generated\Models\RetentionPolicy.cs" />
     <Compile Include="Generated\Models\RetentionScheduleBase.cs" />
-    <Compile Include="Generated\Models\RetentionScheduleFormat.cs" />
     <Compile Include="Generated\Models\SchedulePolicy.cs" />
     <Compile Include="Generated\Models\SimpleRetentionPolicy.cs" />
     <Compile Include="Generated\Models\SimpleSchedulePolicy.cs" />
     <Compile Include="Generated\Models\TriggerRestoreRequest.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionFormat.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionSchedule.cs" />
-    <Compile Include="Generated\Models\WeekNumber.cs" />
     <Compile Include="Generated\Models\YearlyRetentionSchedule.cs" />
     <Compile Include="Generated\ProtectableObjectOperations.cs" />
     <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />
