@@ -68,12 +68,36 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <returns></returns>
         public T GetServiceClient<T>(TestEnvironment currentEnvironment, params DelegatingHandler[] handlers) where T : class
         {
+            Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
+            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo.AccessToken });
+
+            return GetServiceClientWithCredentials<T>(currentEnvironment, tokenCred, handlers);
+        }
+
+        /// <summary>
+        /// Get a test environment using default options
+        /// </summary>
+        /// <typeparam name="T">The type of the service client to return</typeparam>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="handlers">Delegating existingHandlers</param>
+        /// <returns>A Service client using credentials and base uri from the current environment</returns>
+        public T GetServiceClientWithCredentials<T>(object credentials, params DelegatingHandler[] handlers) where T : class
+        {
+            return GetServiceClientWithCredentials<T>(TestEnvironmentFactory.GetTestEnvironment(), credentials, handlers);
+        }
+
+        /// <summary>
+        /// Get a test environment, allowing the test to customize the creation options
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="handlers">Delegating existingHandlers</param>
+        /// <returns></returns>
+        public T GetServiceClientWithCredentials<T>(TestEnvironment currentEnvironment, object credentials, params DelegatingHandler[] handlers) where T : class
+        {
             T client;
             handlers = AddHandlers(currentEnvironment, handlers);
             var constructors = typeof(T).GetConstructors();
-
-            Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
-            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo.AccessToken});
 
             ConstructorInfo constructor = null;
             if (currentEnvironment.UsesCustomUri())
@@ -81,8 +105,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 foreach (var c in constructors)
                 {
                     var parameters = c.GetParameters();
-                    if (parameters.Length == 3 && 
-                        parameters[0].ParameterType.Name == "Uri" && 
+                    if (parameters.Length == 3 &&
+                        parameters[0].ParameterType.Name == "Uri" &&
                         parameters[1].ParameterType.Name == "ServiceClientCredentials" &&
                         parameters[2].ParameterType.Name == "DelegatingHandler[]")
                     {
@@ -98,7 +122,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 client = constructor.Invoke(new object[]
                 {
                     currentEnvironment.BaseUri,
-                    tokenCred,
+                    credentials,
                     handlers
                 }) as T;
             }
@@ -107,7 +131,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 foreach (var c in constructors)
                 {
                     var parameters = c.GetParameters();
-                    if (parameters.Length == 2 && 
+                    if (parameters.Length == 2 &&
                         parameters[0].ParameterType.Name == "ServiceClientCredentials" &&
                         parameters[1].ParameterType.Name == "DelegatingHandler[]")
                     {
@@ -122,7 +146,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
                 client = constructor.Invoke(new object[]
                 {
-                    tokenCred,
+                    credentials,
                     handlers
                 }) as T;
             }
