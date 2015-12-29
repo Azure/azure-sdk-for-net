@@ -7,38 +7,19 @@ namespace Microsoft.Azure.Search
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Serialization;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
 
     internal static class JsonUtility
     {
-        public static readonly JsonSerializerSettings DefaultSerializerSettings = CreateDefaultSettings();
-
         public static readonly JsonSerializerSettings DocumentSerializerSettings = 
             CreateSerializerSettings<Document>(useCamelCase: false);
 
         public static readonly JsonSerializerSettings DocumentDeserializerSettings =
             CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
 
-        private static readonly IContractResolver CamelCaseResolver =
-            new ValueTypePreservingContractResolver(new CamelCasePropertyNamesContractResolver());
+        private static readonly IContractResolver CamelCaseResolver = new CamelCasePropertyNamesContractResolver();
 
-        private static readonly IContractResolver DefaultResolver =
-            new ValueTypePreservingContractResolver(new DefaultContractResolver());
-
-        public static JsonSerializerSettings CreateDefaultSettings()
-        {
-            return new JsonSerializerSettings()
-            {
-                ContractResolver = CamelCaseResolver,
-                Converters = new JsonConverter[]
-                {
-                    new StringEnumConverter() { CamelCaseText = true }
-                },
-                DefaultValueHandling = DefaultValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            };
-        }
+        private static readonly IContractResolver DefaultResolver = new DefaultContractResolver();
 
         public static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
         {
@@ -51,7 +32,7 @@ namespace Microsoft.Azure.Search
                     new IndexActionConverter<T>(),
                     new DateTimeConverter()
                 },
-                DefaultValueHandling = DefaultValueHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore,
                 Formatting = Formatting.Indented
             };
         }

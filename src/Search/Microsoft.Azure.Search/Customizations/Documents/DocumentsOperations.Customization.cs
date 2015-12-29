@@ -301,8 +301,7 @@ namespace Microsoft.Azure.Search
             // Serialize Request for POST only
             if (!useGet)
             {
-                string requestContent =
-                    SafeJsonConvert.SerializeObject(searchParameters, JsonUtility.DefaultSerializerSettings);
+                string requestContent = SafeJsonConvert.SerializeObject(searchParameters, this.Client.SerializationSettings);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -942,8 +941,7 @@ namespace Microsoft.Azure.Search
             if (!useGet)
             {
                 SuggestParametersPayload payload = suggestParameters.ToPayload(searchText, suggesterName);
-                string requestContent =
-                    SafeJsonConvert.SerializeObject(payload, JsonUtility.DefaultSerializerSettings);
+                string requestContent = SafeJsonConvert.SerializeObject(payload, this.Client.SerializationSettings);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

@@ -145,8 +145,10 @@ namespace Microsoft.Azure.Search.Tests
 
             HitHighlights highlights = response.Results[0].Highlights;
             Assert.NotNull(highlights);
-            SearchAssert.SequenceEqual(new[] { Description, Category }, highlights.Keys);
-
+            Assert.Equal(2, highlights.Keys.Count);
+            Assert.Contains(Description, highlights.Keys);
+            Assert.Contains(Category, highlights.Keys);
+            
             string categoryHighlight = highlights[Category].Single();
             Assert.Equal("<b>Luxury</b>", categoryHighlight);
 
