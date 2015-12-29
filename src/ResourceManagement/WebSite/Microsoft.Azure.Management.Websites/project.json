@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1-preview",
+  "version": "1.0.2-preview",
   "description": "Provides website management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure website management", "website management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
@@ -12,7 +12,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[2.5.2, 3.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[2.5.4,3.0)"
   },
 
   "frameworks": {

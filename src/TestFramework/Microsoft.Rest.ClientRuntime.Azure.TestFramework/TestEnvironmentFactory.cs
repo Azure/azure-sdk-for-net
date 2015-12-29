@@ -8,8 +8,9 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.Azure.Authentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
@@ -44,7 +45,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 testEnv.UserName = TestEnvironment.UserIdDefault;
                 SetEnvironmentSubscriptionId(testEnv, connectionString);
-                testEnv.Credentials = new TokenCredentials(TestEnvironment.RawTokenDefault);
+                testEnv.TokenInfo = new TokenInfo(TestEnvironment.RawTokenDefault);
             }
             else //Record or None
             {
@@ -61,62 +62,45 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     if (parsedConnection.ContainsKey(TestEnvironment.RawToken))
                     {
                         var token = parsedConnection[TestEnvironment.RawToken];
-                        testEnv.Credentials = new TokenCredentials(token);
+                        testEnv.TokenInfo = new TokenInfo(token);
                     }
                     else
                     {
                         string password = null;
-                        if(testEnv.UserName != null && 
-                           !parsedConnection.TryGetValue(TestEnvironment.AADPasswordKey, out password))
-                        {
-                            throw new InvalidOperationException("Certificate is not yet supported on dnxcore platform");
-                        }
+                        parsedConnection.TryGetValue(TestEnvironment.AADPasswordKey, out password);
 
                         if (testEnv.UserName != null && password != null)
                         {
-                            ServiceClientTracing.Information("Using AAD auth with username and password combination");
-                            testEnv.Credentials = UserTokenProvider.LoginSilentAsync(testEnv.ClientId,
-                                testEnv.Tenant, testEnv.UserName, password, testEnv.AsAzureEnvironment(), null)
+                            var result = TestEnvironmentFactory.LoginUserAsync(testEnv.Tenant, 
+                                testEnv.UserName, 
+                                password, 
+                                testEnv.Endpoints.AADTokenAudienceUri.ToString(),
+                                testEnv.Endpoints.AADAuthUri.ToString())
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
+                            testEnv.TokenInfo = new TokenInfo(result);
                         }
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
-                            ServiceClientTracing.Information("Using AAD auth with service principal and password combination");
-                            testEnv.Credentials = ApplicationTokenProvider.LoginSilentAsync(testEnv.Tenant,
-                                testEnv.ServicePrincipal, password, testEnv.AsAzureEnvironment())
+                            var result = TestEnvironmentFactory.LoginServicePrincipalAsync(testEnv.Tenant,
+                                testEnv.ServicePrincipal, 
+                                password, 
+                                testEnv.Endpoints.AADTokenAudienceUri.ToString(),
+                                testEnv.Endpoints.AADAuthUri.ToString())
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
+                            testEnv.TokenInfo = new TokenInfo(result);
                         }
 #if NET45
                         else
                         {
-                            ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
-                            ActiveDirectoryClientSettings directoryClientSettings = new ActiveDirectoryClientSettings()
-                            {
-                                ClientId = testEnv.ClientId,
-                                PromptBehavior = PromptBehavior.Auto,
-                                ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
-                            };
-                            testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant, directoryClientSettings, TestUtilities.AsAzureEnvironment(testEnv)).ConfigureAwait(false).GetAwaiter().GetResult();
+                            var result = LoginWithPromptAsync(testEnv.Tenant,
+                                testEnv.Endpoints.AADTokenAudienceUri.ToString(),
+                                testEnv.Endpoints.AADAuthUri.ToString())
+                                .ConfigureAwait(false).GetAwaiter().GetResult();
+                            testEnv.TokenInfo = new TokenInfo(result);
                         }
 #endif
                     }
                 }//end-of-if connectionString present
-
-                if (testEnv.Credentials == null)
-                {
-                    throw new InvalidOperationException("Prompting for credential is not yet supported for cross-platform testing");
-                    //will authenticate the user if the connection string is nullOrEmpty and the mode is not playback
-                    //ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
-                    //var clientSettings = new ActiveDirectoryClientSettings
-                    //{
-                    //    ClientId = testEnv.ClientId,
-                    //    PromptBehavior = PromptBehavior.Auto,
-                    //    ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
-                    //};
-                    //testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant,
-                    //        clientSettings, testEnv.AsAzureEnvironment())
-                    //        .ConfigureAwait(false).GetAwaiter().GetResult();
-                }
 
                 // Management Clients that are not subscription based should set "SubscriptionId=None" in
                 // the connection string.
@@ -125,7 +109,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     //Getting subscriptions from server
                     var subscriptions = ListSubscriptions(
                         testEnv.BaseUri.ToString(),
-                        testEnv.Credentials);
+                        testEnv.TokenInfo);
 
                     if (subscriptions.Count == 0)
                     {
@@ -205,7 +189,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, ServiceClientCredentials credentials)
+        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, TokenInfo token)
         {
             var request = new HttpRequestMessage
             {
@@ -213,7 +197,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             };
 
             HttpClient client = new HttpClient();
-            credentials.ProcessHttpRequestAsync(request, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            request.Headers.Authorization = new AuthenticationHeaderValue(token.AccessTokenType, 
+                token.AccessToken);
             HttpResponseMessage response = client.SendAsync(request).Result;
             response.EnsureSuccessStatusCode();
 
@@ -223,5 +208,58 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             var results = ((JArray)jsonResult["value"]).Select(item => new SubscriptionInfo((JObject)item)).ToList();
             return results;
         }
+
+        private static async Task<AuthenticationResult> LoginUserAsync(string domain, 
+            string username, 
+            string password,
+            string resource,
+            string authenticationEndpoint)
+        {
+            var credentials = new UserCredential(username, password);
+            var authenticationContext = new AuthenticationContext(authenticationEndpoint + domain, 
+                false);
+            return await authenticationContext.AcquireTokenAsync(resource,
+                  TestEnvironment.ClientIdDefault, credentials).ConfigureAwait(false);
+               
+        }
+
+        private static async Task<AuthenticationResult> LoginServicePrincipalAsync(string domain, 
+            string servicePrincipalId, 
+            string key,
+            string resource,
+            string authenticationEndpoint)
+        {
+            var credentials = new ClientCredential(servicePrincipalId, key);
+            var authenticationContext = new AuthenticationContext(authenticationEndpoint + domain, 
+                false);
+            return await authenticationContext.AcquireTokenAsync(resource, credentials)
+                .ConfigureAwait(false);
+               
+        }
+#if NET45
+
+        private static async Task<AuthenticationResult> LoginWithPromptAsync(string domain,
+            string resource,
+            string authenticationEndpoint)
+        {
+            var authenticationContext = new AuthenticationContext(authenticationEndpoint + domain, 
+                false, 
+                TokenCache.DefaultShared);
+            TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            var task = new Task<AuthenticationResult>(() =>
+            {
+                var result = authenticationContext.AcquireToken(
+                    resource,
+                    TestEnvironment.ClientIdDefault,
+                    new Uri("urn:ietf:wg:oauth:2.0:oob"),
+                    PromptBehavior.Auto,
+                    UserIdentifier.AnyUser);
+                return result;
+            });
+
+            task.Start(scheduler);
+            return await task.ConfigureAwait(false);
+        }
+#endif
     }
 }

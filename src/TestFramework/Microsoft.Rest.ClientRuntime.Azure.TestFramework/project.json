@@ -1,5 +1,5 @@
-{
-  "version": "1.1.0-preview",
+﻿{
+  "version": "1.2.0-preview",
   "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
   "authors": [ "Microsoft Corporation" ],
   "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
@@ -10,6 +10,9 @@
   },
   "frameworks": {
     "net45": {
+      "dependencies": {
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "2.18.206251556"
+      },
       "frameworkAssemblies": {
         "System.Net.Http": "",
         "System.Runtime": { "type": "build" },
@@ -27,13 +30,12 @@
         "System.Linq": "4.0.1-beta-23516",
         "System.Runtime": "4.0.21-beta-23516",
         "System.Threading": "4.0.11-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516"
+        "System.Net.Http": "4.0.1-beta-23516",
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha"
       }
     }
   },
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "1.2.1-preview",
-    "Microsoft.Rest.ClientRuntime.Azure": "2.5.3",
     "Microsoft.Azure.Test.HttpRecorder": ""
   }
 }

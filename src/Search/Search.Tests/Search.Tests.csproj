@@ -41,7 +41,6 @@
     <Compile Include="Tests\Serialization\GeographyPointConverterTests.cs" />
     <Compile Include="Tests\Serialization\SearchParametersTests.cs" />
     <Compile Include="Tests\Serialization\SuggestParametersTests.cs" />
-    <Compile Include="Tests\Serialization\ValueTypePreservingContractResolverTests.cs" />
     <Compile Include="Tests\SoftDeleteColumnDeletionDetectionPolicyTests.cs" />
     <Compile Include="Tests\SuggestTests.cs" />
     <Compile Include="Utilities\DocumentsFixture.cs" />

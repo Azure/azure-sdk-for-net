@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Management.Authorization.Models
 {
     using System;
     using System.Linq;
@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Deployment filter.
+    /// Role Definitions filter
     /// </summary>
-    public partial class DeploymentExtendedFilter
+    public partial class RoleDefinitionFilter
     {
         /// <summary>
-        /// Initializes a new instance of the DeploymentExtendedFilter class.
+        /// Initializes a new instance of the RoleDefinitionFilter class.
         /// </summary>
-        public DeploymentExtendedFilter() { }
+        public RoleDefinitionFilter() { }
 
         /// <summary>
-        /// Initializes a new instance of the DeploymentExtendedFilter class.
+        /// Initializes a new instance of the RoleDefinitionFilter class.
         /// </summary>
-        public DeploymentExtendedFilter(string provisioningState = default(string))
+        public RoleDefinitionFilter(string roleName = default(string))
         {
-            ProvisioningState = provisioningState;
+            RoleName = roleName;
         }
 
         /// <summary>
-        /// Gets or sets the provisioning state.
+        /// Returns role definition with the specific name.
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        [JsonProperty(PropertyName = "roleName")]
+        public string RoleName { get; set; }
 
     }
 }
