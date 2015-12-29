@@ -17,11 +17,9 @@ namespace Microsoft.Azure.Search
         public static readonly JsonSerializerSettings DocumentDeserializerSettings =
             CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
 
-        private static readonly IContractResolver CamelCaseResolver =
-            new ValueTypePreservingContractResolver(new CamelCasePropertyNamesContractResolver());
+        private static readonly IContractResolver CamelCaseResolver = new CamelCasePropertyNamesContractResolver();
 
-        private static readonly IContractResolver DefaultResolver =
-            new ValueTypePreservingContractResolver(new DefaultContractResolver());
+        private static readonly IContractResolver DefaultResolver = new DefaultContractResolver();
 
         public static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
         {
@@ -34,7 +32,7 @@ namespace Microsoft.Azure.Search
                     new IndexActionConverter<T>(),
                     new DateTimeConverter()
                 },
-                DefaultValueHandling = DefaultValueHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore,
                 Formatting = Formatting.Indented
             };
         }
