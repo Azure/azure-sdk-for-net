@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/exportBackupJobs";
+            url = url + "/backupJobsExport";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
             List<string> odataFilter = new List<string>();

@@ -26,9 +26,9 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectedItemExtendedInfo object.
+    /// The definition of a MabProtectedItemExtendedInfo object.
     /// </summary>
-    public partial class IaasVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
+    public partial class MabProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
         private System.DateTime? _oldestRecoveryPoint;
         
@@ -39,17 +39,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._oldestRecoveryPoint; }
             set { this._oldestRecoveryPoint = value; }
-        }
-        
-        private bool _policyInconsistent;
-        
-        /// <summary>
-        /// Optional. If DataSourcePolicy is inconsistent with global policy
-        /// </summary>
-        public bool PolicyInconsistent
-        {
-            get { return this._policyInconsistent; }
-            set { this._policyInconsistent = value; }
         }
         
         private int _recoveryPointCount;
@@ -64,10 +53,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectedItemExtendedInfo
+        /// Initializes a new instance of the MabProtectedItemExtendedInfo
         /// class.
         /// </summary>
-        public IaasVmProtectedItemExtendedInfo()
+        public MabProtectedItemExtendedInfo()
         {
         }
     }

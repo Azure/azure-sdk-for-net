@@ -74,28 +74,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._friendlyName = value; }
         }
         
-        private string _lastBackupStatus;
-        
-        /// <summary>
-        /// Optional. Healthy or Unhealthy
-        /// </summary>
-        public string LastBackupStatus
-        {
-            get { return this._lastBackupStatus; }
-            set { this._lastBackupStatus = value; }
-        }
-        
-        private System.DateTime? _lastBackupTime;
-        
-        /// <summary>
-        /// Optional. Last backup time
-        /// </summary>
-        public System.DateTime? LastBackupTime
-        {
-            get { return this._lastBackupTime; }
-            set { this._lastBackupTime = value; }
-        }
-        
         private System.DateTime? _lastRecoveryPoint;
         
         /// <summary>
@@ -105,50 +83,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._lastRecoveryPoint; }
             set { this._lastRecoveryPoint = value; }
-        }
-        
-        private bool _policyInconsistent;
-        
-        /// <summary>
-        /// Optional. If DataSourcePolicy is inconsistent with global policy
-        /// </summary>
-        public bool PolicyInconsistent
-        {
-            get { return this._policyInconsistent; }
-            set { this._policyInconsistent = value; }
-        }
-        
-        private string _policyName;
-        
-        /// <summary>
-        /// Optional. Policy name with which Object is protected
-        /// </summary>
-        public string PolicyName
-        {
-            get { return this._policyName; }
-            set { this._policyName = value; }
-        }
-        
-        private string _protectionState;
-        
-        /// <summary>
-        /// Optional. Protection State of Protected Item
-        /// </summary>
-        public string ProtectionState
-        {
-            get { return this._protectionState; }
-            set { this._protectionState = value; }
-        }
-        
-        private string _protectionStatus;
-        
-        /// <summary>
-        /// Optional. Protection Status of Protected Item
-        /// </summary>
-        public string ProtectionStatus
-        {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
         }
         
         private string _workloadType;

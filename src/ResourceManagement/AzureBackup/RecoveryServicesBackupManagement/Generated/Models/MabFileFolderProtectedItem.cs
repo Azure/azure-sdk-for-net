@@ -20,45 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a WeeklyRetentionFormat object.
+    /// The definition of a MabFileFolder ProtectedItem object.
     /// </summary>
-    public partial class WeeklyRetentionFormat
+    public partial class MabFileFolderProtectedItem : ProtectedItem
     {
-        private IList<string> _daysOfTheWeek;
+        private string _computerName;
         
         /// <summary>
-        /// Optional. List of days of week.
+        /// Optional. computerName
         /// </summary>
-        public IList<string> DaysOfTheWeek
+        public string ComputerName
         {
-            get { return this._daysOfTheWeek; }
-            set { this._daysOfTheWeek = value; }
-        }
-        
-        private IList<string> _weeksOfTheMonth;
-        
-        /// <summary>
-        /// Optional. List of weeks of month.
-        /// </summary>
-        public IList<string> WeeksOfTheMonth
-        {
-            get { return this._weeksOfTheMonth; }
-            set { this._weeksOfTheMonth = value; }
+            get { return this._computerName; }
+            set { this._computerName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WeeklyRetentionFormat class.
+        /// Initializes a new instance of the MabFileFolderProtectedItem class.
         /// </summary>
-        public WeeklyRetentionFormat()
+        public MabFileFolderProtectedItem()
         {
-            this.DaysOfTheWeek = new List<string>();
-            this.WeeksOfTheMonth = new List<string>();
         }
     }
 }

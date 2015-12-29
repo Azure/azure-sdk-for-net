@@ -26,48 +26,36 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectedItemExtendedInfo object.
+    /// The definition of a ProtectionPolicy object.
     /// </summary>
-    public partial class IaasVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
+    public partial class AzureIaaSVMProtectionPolicy : ProtectionPolicyBase
     {
-        private System.DateTime? _oldestRecoveryPoint;
+        private RetentionPolicy _retentionPolicy;
         
         /// <summary>
-        /// Optional. OldestRecoveryPoint for the protected item
+        /// Optional. Retention Policy
         /// </summary>
-        public System.DateTime? OldestRecoveryPoint
+        public RetentionPolicy RetentionPolicy
         {
-            get { return this._oldestRecoveryPoint; }
-            set { this._oldestRecoveryPoint = value; }
+            get { return this._retentionPolicy; }
+            set { this._retentionPolicy = value; }
         }
         
-        private bool _policyInconsistent;
+        private SchedulePolicy _schedulePolicy;
         
         /// <summary>
-        /// Optional. If DataSourcePolicy is inconsistent with global policy
+        /// Optional. Backup Schedule of ProtectionPolicy.
         /// </summary>
-        public bool PolicyInconsistent
+        public SchedulePolicy SchedulePolicy
         {
-            get { return this._policyInconsistent; }
-            set { this._policyInconsistent = value; }
-        }
-        
-        private int _recoveryPointCount;
-        
-        /// <summary>
-        /// Optional. RecoveryPointCount for the protected item
-        /// </summary>
-        public int RecoveryPointCount
-        {
-            get { return this._recoveryPointCount; }
-            set { this._recoveryPointCount = value; }
+            get { return this._schedulePolicy; }
+            set { this._schedulePolicy = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectedItemExtendedInfo
-        /// class.
+        /// Initializes a new instance of the AzureIaaSVMProtectionPolicy class.
         /// </summary>
-        public IaasVmProtectedItemExtendedInfo()
+        public AzureIaaSVMProtectionPolicy()
         {
         }
     }

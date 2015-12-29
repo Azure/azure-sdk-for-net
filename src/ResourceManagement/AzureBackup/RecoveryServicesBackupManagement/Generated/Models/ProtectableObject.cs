@@ -26,48 +26,47 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectedItemExtendedInfo object.
+    /// The definition of a IaaSVMProtectableObject object.
     /// </summary>
-    public partial class IaasVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
+    public partial class ProtectableObject : ProtectableObjectBase
     {
-        private System.DateTime? _oldestRecoveryPoint;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. OldestRecoveryPoint for the protected item
+        /// Optional. Friendly Name
         /// </summary>
-        public System.DateTime? OldestRecoveryPoint
+        public string FriendlyName
         {
-            get { return this._oldestRecoveryPoint; }
-            set { this._oldestRecoveryPoint = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
         }
         
-        private bool _policyInconsistent;
+        private string _protectionStatus;
         
         /// <summary>
-        /// Optional. If DataSourcePolicy is inconsistent with global policy
+        /// Optional. Protection Status
         /// </summary>
-        public bool PolicyInconsistent
+        public string ProtectionStatus
         {
-            get { return this._policyInconsistent; }
-            set { this._policyInconsistent = value; }
+            get { return this._protectionStatus; }
+            set { this._protectionStatus = value; }
         }
         
-        private int _recoveryPointCount;
+        private string _resourceGroup;
         
         /// <summary>
-        /// Optional. RecoveryPointCount for the protected item
+        /// Optional. Resource Group
         /// </summary>
-        public int RecoveryPointCount
+        public string ResourceGroup
         {
-            get { return this._recoveryPointCount; }
-            set { this._recoveryPointCount = value; }
+            get { return this._resourceGroup; }
+            set { this._resourceGroup = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectedItemExtendedInfo
-        /// class.
+        /// Initializes a new instance of the ProtectableObject class.
         /// </summary>
-        public IaasVmProtectedItemExtendedInfo()
+        public ProtectableObject()
         {
         }
     }

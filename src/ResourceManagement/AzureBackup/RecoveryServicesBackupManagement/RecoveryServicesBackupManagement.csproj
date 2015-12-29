@@ -65,6 +65,7 @@
     <Compile Include="Generated\IRestoreOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMProtectionPolicy.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
+    <Compile Include="Generated\Models\IaaSVMProtectableObject.cs" />
     <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
     <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaasVmProtectionContainer.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="Generated\Models\JobTaskDetails.cs" />
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
     <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
+    <Compile Include="Generated\Models\MabFileFolderProtectedItem.cs" />
+    <Compile Include="Generated\Models\MabProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\MabProtectionContainer.cs" />
     <Compile Include="Generated\Models\Month.cs" />
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
@@ -111,6 +115,7 @@
     <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />
     <Compile Include="Generated\Models\ProtectableItem.cs" />
+    <Compile Include="Generated\Models\ProtectableObject.cs" />
     <Compile Include="Generated\Models\ProtectableObjectBase.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListQueryParameters.cs" />
     <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />

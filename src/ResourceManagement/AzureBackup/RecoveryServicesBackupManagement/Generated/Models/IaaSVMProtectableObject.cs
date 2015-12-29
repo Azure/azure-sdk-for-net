@@ -20,45 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a WeeklyRetentionFormat object.
+    /// The definition of a IaasVM ProtectableObject object.
     /// </summary>
-    public partial class WeeklyRetentionFormat
+    public partial class IaaSVMProtectableObject : ProtectableObject
     {
-        private IList<string> _daysOfTheWeek;
+        private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. List of days of week.
+        /// Optional. Classic or Classic VM
         /// </summary>
-        public IList<string> DaysOfTheWeek
+        public string VirtualMachineVersion
         {
-            get { return this._daysOfTheWeek; }
-            set { this._daysOfTheWeek = value; }
-        }
-        
-        private IList<string> _weeksOfTheMonth;
-        
-        /// <summary>
-        /// Optional. List of weeks of month.
-        /// </summary>
-        public IList<string> WeeksOfTheMonth
-        {
-            get { return this._weeksOfTheMonth; }
-            set { this._weeksOfTheMonth = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WeeklyRetentionFormat class.
+        /// Initializes a new instance of the IaaSVMProtectableObject class.
         /// </summary>
-        public WeeklyRetentionFormat()
+        public IaaSVMProtectableObject()
         {
-            this.DaysOfTheWeek = new List<string>();
-            this.WeeksOfTheMonth = new List<string>();
         }
     }
 }

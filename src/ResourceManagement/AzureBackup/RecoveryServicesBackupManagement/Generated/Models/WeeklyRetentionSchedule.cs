@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class WeeklyRetentionSchedule : RetentionScheduleBase
     {
-        private IList<DayOfWeek> _daysOfTheWeek;
+        private IList<string> _daysOfTheWeek;
         
         /// <summary>
         /// Optional. List of Days of Week for Weekly Retention policy.
         /// </summary>
-        public IList<DayOfWeek> DaysOfTheWeek
+        public IList<string> DaysOfTheWeek
         {
             get { return this._daysOfTheWeek; }
             set { this._daysOfTheWeek = value; }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         public WeeklyRetentionSchedule()
         {
-            this.DaysOfTheWeek = new List<DayOfWeek>();
+            this.DaysOfTheWeek = new List<string>();
         }
     }
 }
