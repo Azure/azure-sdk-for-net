@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<RoleDefinition> List(this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinition> odataQuery = default(ODataQuery<RoleDefinition>))
+            public static IPage<RoleDefinition> List(this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinitionFilter> odataQuery = default(ODataQuery<RoleDefinitionFilter>))
             {
                 return Task.Factory.StartNew(s => ((IRoleDefinitionsOperations)s).ListAsync(scope, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleDefinition>> ListAsync( this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinition> odataQuery = default(ODataQuery<RoleDefinition>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleDefinition>> ListAsync( this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinitionFilter> odataQuery = default(ODataQuery<RoleDefinitionFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.ListWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
