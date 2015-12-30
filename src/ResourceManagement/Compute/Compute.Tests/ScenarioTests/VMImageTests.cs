@@ -87,80 +87,80 @@ namespace Compute.Tests
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
+                var query = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineImageResource>();
+
                 // Filter: top - Negative Test
+                query.Top = 0;
                 var vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    top: 0);
+                    query);
                 Assert.True(vmimages.Count == 0);
 
                 // Filter: top - Positive Test
+                query.Top = 1;
                 vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    top: 1);
+                    query);
                 Assert.True(vmimages.Count == 1);
 
                 // Filter: top - Positive Test
+                query.Top = 2;
                 vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    top: 2);
+                    query);
                 Assert.True(vmimages.Count == 2);
-                //Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
 
                 // Filter: orderby - Positive Test
+                query.Top = null;
+                query.OrderBy = "name desc";
                 vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    orderby:"name desc");
-                //Assert.Equal(AvailableWindowsServerImageVersions.Length, vmimages.Count);
-                for (int i = 0; i < AvailableWindowsServerImageVersions.Length; i++)
-                {
-                    //Assert.Equal(AvailableWindowsServerImageVersions[i], vmimages[i].Name);
-                }
+                    query);
 
                 // Filter: orderby - Positive Test
+                query.Top = 2;
+                query.OrderBy = "name asc";
                 vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    top: 2,
-                    orderby: "name asc");
+                    query);
                 Assert.True(vmimages.Count == 2);
-                //Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
-                //Assert.True(vmimages[1].Name == AvailableWindowsServerImageVersions.Reverse().Skip(1).First());
 
                 // Filter: top orderby - Positive Test
+                query.Top = 1;
+                query.OrderBy = "name desc";
                 vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    top: 1,
-                    orderby: "name desc");
+                    query);
                 Assert.True(vmimages.Count == 1);
-                //Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions[0]);
 
                 // Filter: top orderby - Positive Test
+                query.Top = 1;
+                query.OrderBy = "name asc";
                 vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    top: 1, 
-                    orderby: "name asc");
+                    query);
                 Assert.True(vmimages.Count == 1);
-                //Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
             }
         }
 

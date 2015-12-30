@@ -421,13 +421,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineExtension"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineExtension"
@@ -472,13 +472,13 @@
           }
         ],
         "responses": {
-          "202": {
+          "200": {
             "description": ""
           },
           "204": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           }
         },
@@ -517,7 +517,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "The expand expression to apply on the operation."
+            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -895,14 +895,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": ""
+          },
           "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineCaptureResult"
             }
-          },
-          "202": {
-            "description": ""
           }
         },
         "x-ms-long-running-operation": true
@@ -947,13 +947,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachine"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachine"
@@ -994,10 +994,10 @@
           "200": {
             "description": ""
           },
-          "202": {
+          "204": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           }
         },
@@ -1029,7 +1029,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "The expand expression to apply on the operation."
+            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -1376,13 +1376,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineScaleSet"
@@ -1468,13 +1468,13 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": ""
-          },
           "200": {
             "description": ""
           },
           "204": {
+            "description": ""
+          },
+          "202": {
             "description": ""
           }
         },
@@ -2117,7 +2117,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "The expand expression to apply on the operation."
+            "description": "The list parameters."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
