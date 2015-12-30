@@ -11,23 +11,44 @@ namespace Microsoft.Azure.Search
 
     internal static class JsonUtility
     {
-        public static readonly JsonSerializerSettings DocumentSerializerSettings = 
-            CreateSerializerSettings<Document>(useCamelCase: false);
-
-        public static readonly JsonSerializerSettings DocumentDeserializerSettings =
-            CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
-
         private static readonly IContractResolver CamelCaseResolver = new CamelCasePropertyNamesContractResolver();
 
         private static readonly IContractResolver DefaultResolver = new DefaultContractResolver();
 
-        public static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
+        public static JsonSerializerSettings CreateTypedSerializerSettings<T>(
+            JsonSerializerSettings baseSettings,
+            bool useCamelCase) where T : class
+        {
+            // TODO: Merge settings
+            return CreateSerializerSettings<T>(useCamelCase);
+        }
+
+        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
+            where T : class
+        {
+            // TODO: Merge settings
+            return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>();
+        }
+
+        public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings)
+        {
+            // TODO: Merge settings
+            return CreateSerializerSettings<Document>(useCamelCase: false);
+        }
+
+        public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings)
+        {
+            // TODO: Merge settings
+            return CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
+        }
+
+        private static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
         {
             return new JsonSerializerSettings()
             {
                 ContractResolver = useCamelCase ? CamelCaseResolver : DefaultResolver,
                 Converters = new JsonConverter[]
-                { 
+                {
                     new GeographyPointConverter(),
                     new IndexActionConverter<T>(),
                     new DateTimeConverter()
@@ -35,11 +56,6 @@ namespace Microsoft.Azure.Search
                 NullValueHandling = NullValueHandling.Ignore,
                 Formatting = Formatting.Indented
             };
-        }
-
-        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>() where T : class
-        {
-            return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>();
         }
 
         private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>()
