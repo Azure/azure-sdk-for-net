@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the InboundNatRule class.
         /// </summary>
-        public InboundNatRule(string protocol, int? frontendPort, bool? enableFloatingIP, string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfiguration backendIPConfiguration = default(NetworkInterfaceIPConfiguration), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), string provisioningState = default(string))
+        public InboundNatRule(string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfiguration backendIPConfiguration = default(NetworkInterfaceIPConfiguration), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -128,27 +128,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (Protocol == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
-            }
-            if (FrontendPort == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FrontendPort");
-            }
-            if (EnableFloatingIP == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EnableFloatingIP");
-            }
-            if (this.BackendIPConfiguration != null)
-            {
-                this.BackendIPConfiguration.Validate();
-            }
-        }
     }
 }

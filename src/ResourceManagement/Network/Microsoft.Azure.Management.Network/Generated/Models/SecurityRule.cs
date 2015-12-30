@@ -75,40 +75,40 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets Source Port or Range. Integer or range between 0 and
-        /// 65535. Asterix â€œ*â€ can also be used to match all ports.
+        /// 65535. Asterix '*' can also be used to match all ports.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourcePortRange")]
         public string SourcePortRange { get; set; }
 
         /// <summary>
         /// Gets or sets Destination Port or Range. Integer or range between 0
-        /// and 65535. Asterix â€œ*â€ can also be used to match all ports.
+        /// and 65535. Asterix '*' can also be used to match all ports.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationPortRange")]
         public string DestinationPortRange { get; set; }
 
         /// <summary>
         /// Gets or sets source address prefix. CIDR or source IP range.
-        /// Asterix â€œ*â€ can also be used to match all source IPs. Default
-        /// tags such as â€˜VirtualNetworkâ€™, â€˜AzureLoadBalancerâ€™ and
-        /// â€˜Internetâ€™ can also be used. If this is an ingress rule,
-        /// specifies where network traffic originates from.
+        /// Asterix '*' can also be used to match all source IPs. Default
+        /// tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet'
+        /// can also be used. If this is an ingress rule, specifies where
+        /// network traffic originates from.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets destination address prefix. CIDR or source IP range.
-        /// Asterix â€œ*â€ can also be used to match all source IPs. Default
-        /// tags such as â€˜VirtualNetworkâ€™, â€˜AzureLoadBalancerâ€™ and
-        /// â€˜Internetâ€™ can also be used.
+        /// Asterix '*' can also be used to match all source IPs. Default
+        /// tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet'
+        /// can also be used.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationAddressPrefix")]
         public string DestinationAddressPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets network traffic is allowed or denied. Possible values
-        /// are â€œAllowâ€ and â€œDenyâ€. Possible values for this property
+        /// are 'Allow' and 'Deny'. Possible values for this property
         /// include: 'Allow', 'Deny'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.access")]

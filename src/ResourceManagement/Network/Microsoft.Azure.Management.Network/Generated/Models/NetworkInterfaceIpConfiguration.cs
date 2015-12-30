@@ -96,29 +96,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.LoadBalancerInboundNatRules != null)
-            {
-                foreach (var element in this.LoadBalancerInboundNatRules)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (this.Subnet != null)
-            {
-                this.Subnet.Validate();
-            }
-            if (this.PublicIPAddress != null)
-            {
-                this.PublicIPAddress.Validate();
-            }
-        }
     }
 }
