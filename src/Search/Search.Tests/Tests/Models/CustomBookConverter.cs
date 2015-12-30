@@ -8,11 +8,17 @@ namespace Microsoft.Azure.Search.Tests
     using Newtonsoft.Json;
     using Serialization;
 
-    internal class CustomBookConverter : ConverterBase
+    internal class CustomBookConverter<T> : ConverterBase where T : CustomBook, new()
     {
+        public void Install(ISearchIndexClient client)
+        {
+            client.SerializationSettings.Converters.Add(this);
+            client.DeserializationSettings.Converters.Add(this);
+        }
+
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(CustomBook);
+            return objectType == typeof(T);
         }
 
         public override object ReadJson(
@@ -27,7 +33,7 @@ namespace Microsoft.Azure.Search.Tests
                 return null;
             }
 
-            var book = new CustomBook();
+            var book = new T();
 
             ExpectAndAdvance(reader, JsonToken.StartObject);
 
@@ -65,7 +71,7 @@ namespace Microsoft.Azure.Search.Tests
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var book = (CustomBook)value;
+            var book = (T)value;
             writer.WriteStartObject();
             writer.WritePropertyName("ISBN");
             serializer.Serialize(writer, book.InternationalStandardBookNumber);

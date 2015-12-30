@@ -257,9 +257,10 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(doc2, response.Results[0].Document);
         }
 
-        protected void TestCanSuggestWithMismatchedPropertyCase()
+        protected void TestCanSuggestWithCustomContractResolver()
         {
             SearchIndexClient client = GetClientForQuery();
+            client.DeserializationSettings.ContractResolver = new MyCustomContractResolver();
 
             var parameters = new SuggestParameters() { Select = new[] { "*" } };
             DocumentSuggestResult<LoudHotel> response = client.Documents.Suggest<LoudHotel>("Best", "sg", parameters);
@@ -270,13 +271,33 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestCanSuggestWithCustomConverter()
         {
+            TestCanSuggestWithCustomConverter<CustomBookWithConverter>();
+        }
+
+        protected void TestCanSuggestWithCustomConverterViaSettings()
+        {
+            Action<SearchIndexClient> customizeSettings =
+                client =>
+                {
+                    var converter = new CustomBookConverter<CustomBook>();
+                    converter.Install(client);
+                };
+
+            TestCanSuggestWithCustomConverter<CustomBook>(customizeSettings);
+        }
+
+        private void TestCanSuggestWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
+            where T : CustomBook, new()
+        {
+            customizeSettings = customizeSettings ?? (client => { });
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
             Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            customizeSettings(indexClient);
 
-            var doc = new CustomBook()
+            var doc = new T()
             {
                 InternationalStandardBookNumber = "123",
                 Name = "Lord of the Rings",
@@ -290,8 +311,8 @@ namespace Microsoft.Azure.Search.Tests
             SearchTestUtilities.WaitForIndexing();
 
             var parameters = new SuggestParameters() { Select = new[] { "*" } };
-            DocumentSuggestResult<CustomBook> response = 
-                indexClient.Documents.Suggest<CustomBook>("Lord", "sg", parameters);
+            DocumentSuggestResult<T> response = indexClient.Documents.Suggest<T>("Lord", "sg", parameters);
+
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc, response.Results[0].Document);
         }
