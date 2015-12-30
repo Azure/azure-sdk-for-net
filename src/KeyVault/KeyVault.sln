@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{2697CC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Cryptography.Tests", "KeyVault.Cryptography.Tests\KeyVault.Cryptography.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E273F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Extensions.Tests", "KeyVault.Extensions.Tests\KeyVault.Extensions.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E274A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Net40-Debug|Any CPU = Net40-Debug|Any CPU
@@ -87,6 +89,14 @@ Global
 		{E01674C0-B8D7-4598-971C-48B0180E273F}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{E01674C0-B8D7-4598-971C-48B0180E273F}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{E01674C0-B8D7-4598-971C-48B0180E273F}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,5 +108,6 @@ Global
 		{B419782D-CA57-40F9-9322-340A4E852E82} = {2697CCC5-FB26-4F02-9AAA-97D55883C4A3}
 		{937E445A-5604-4998-A9F5-9BE1E39001A4} = {2697CCC5-FB26-4F02-9AAA-97D55883C4A3}
 		{E01674C0-B8D7-4598-971C-48B0180E273F} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
+		{E01674C0-B8D7-4598-971C-48B0180E274A} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
 	EndGlobalSection
 EndGlobal

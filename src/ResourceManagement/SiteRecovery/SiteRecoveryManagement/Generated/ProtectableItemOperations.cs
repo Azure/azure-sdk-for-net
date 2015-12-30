@@ -689,17 +689,22 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(protectionContainerName);
             url = url + "/replicationProtectableItems";
             List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (typeOfEntities != null)
             {
-                queryParameters.Add("filter=" + Uri.EscapeDataString(typeOfEntities));
+                odataFilter.Add("State eq '" + Uri.EscapeDataString(typeOfEntities) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
             if (skipToken != null)
             {
-                queryParameters.Add("skipToken=" + Uri.EscapeDataString(skipToken));
+                queryParameters.Add("$skipToken=" + Uri.EscapeDataString(skipToken));
             }
             if (take != null)
             {
-                queryParameters.Add("take=" + Uri.EscapeDataString(take));
+                queryParameters.Add("$take=" + Uri.EscapeDataString(take));
             }
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)

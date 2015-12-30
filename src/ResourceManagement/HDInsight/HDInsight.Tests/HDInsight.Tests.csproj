@@ -21,6 +21,7 @@
     <Compile Include="ScenarioTests\HttpTests.cs" />
     <Compile Include="ScenarioTests\ListClusterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\MetastoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

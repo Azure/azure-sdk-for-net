@@ -133,7 +133,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = this.GetSiteRecoveryClient(this.CustomHttpHandler);
 
-                string vmId = "6d1a20c4-7e4c-11e5-bbda-0050569e3855";
+                string vmId = "dee537e5-a9a0-11e5-af2b-0050569e66ab";
                 string vmAccount = "vm";
 
                 var responseServers = client.Fabrics.List(RequestHeaders);
@@ -185,13 +185,13 @@ namespace SiteRecovery.Tests
                 Assert.NotEmpty(policyResponse.Policies);
 
                 var policy = policyResponse.Policies.First(
-                    p => p.Properties.ProviderSpecificDetails.InstanceType == "VMwareAzureV2");
+                    p => p.Properties.ProviderSpecificDetails.InstanceType == "InMageAzureV2");
                 Assert.NotNull(policy);
 
                 Random random = new Random(100);
                 //string storageAccountName = "bvtstoragev2";
-                string storageAccountSubscriptionId = "e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b";
-                string storageAccountId = "/subscriptions/e7c9ee80-fa3b-4d71-a0db-e8e46e0e6e3b/resourceGroups/Default-Storage-SoutheastAsia/providers/Microsoft.Storage/storageAccounts/bvtstoragev2";
+                string storageAccountSubscriptionId = "42195872-7e70-4f8a-837f-84b28ecbb78b";
+                string storageAccountId = "/subscriptions/42195872-7e70-4f8a-837f-84b28ecbb78b/resourceGroups/Default-Storage-SoutheastAsia/providers/Microsoft.ClassicStorage/storageAccounts/hikewalrstorage";
                 var response = client.ReplicationProtectedItem.EnableProtection(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
@@ -202,7 +202,7 @@ namespace SiteRecovery.Tests
                         {
                             PolicyId = policy.Id,
                             ProtectableItemId = hikewalrProtectableItem.Id,
-                            ProviderSpecificDetails = new VMwareAzureV2EnableProtectionInput
+                            ProviderSpecificDetails = new InMageAzureV2EnableProtectionInput
                             {
                                 MultiVmGroupId = Guid.NewGuid().ToString(),
                                 MultiVmGroupName = policy.Name + random.Next().ToString(),

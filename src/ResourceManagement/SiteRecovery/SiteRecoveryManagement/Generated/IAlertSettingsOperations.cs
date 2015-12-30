@@ -53,6 +53,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<AlertSettingsResponse> ConfigureAsync(string alertSettingsName, ConfigureAlertSettingsRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Updates the alert settings for the vault.
+        /// </summary>
+        /// <param name='alertSettingsName'>
+        /// Alert Settings name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Model class for alerts response.
+        /// </returns>
+        Task<AlertSettingsResponse> GetAsync(string alertSettingsName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get the list of events under the vault.
         /// </summary>
         /// <param name='customRequestHeaders'>

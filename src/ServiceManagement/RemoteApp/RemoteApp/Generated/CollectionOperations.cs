@@ -3210,6 +3210,11 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
                 
                 collectionUpdateDetailsValue["WaitBeforeShutdownInMinutes"] = collectionDetails.WaitBeforeShutdownInMinutes;
                 
+                if (collectionDetails.SubnetName != null)
+                {
+                    collectionUpdateDetailsValue["SubnetName"] = collectionDetails.SubnetName;
+                }
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");

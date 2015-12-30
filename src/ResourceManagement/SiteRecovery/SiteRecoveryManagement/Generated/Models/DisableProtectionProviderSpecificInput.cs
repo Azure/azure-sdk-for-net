@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class DisableProtectionProviderSpecificInput
     {
+        private string _instanceType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Instance type name.
+        /// </summary>
+        public string InstanceType
+        {
+            get { return this._instanceType; }
+            set { this._instanceType = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// DisableProtectionProviderSpecificInput class.

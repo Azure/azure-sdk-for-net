@@ -96,10 +96,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IFunctionOperations _functions;
+        
+        /// <summary>
+        /// Operations for managing the function(s) of the stream analytics job.
+        /// </summary>
+        public virtual IFunctionOperations Functions
+        {
+            get { return this._functions; }
+        }
+        
         private IInputOperations _inputs;
         
         /// <summary>
-        /// Operations for managing the input of the stream analytics job.
+        /// Operations for managing the input(s) of the stream analytics job.
         /// </summary>
         public virtual IInputOperations Inputs
         {
@@ -119,7 +129,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         private IOutputOperations _outputs;
         
         /// <summary>
-        /// Operations for managing the output of the stream analytics job.
+        /// Operations for managing the output(s) of the stream analytics job.
         /// </summary>
         public virtual IOutputOperations Outputs
         {
@@ -154,6 +164,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public StreamAnalyticsManagementClient()
             : base()
         {
+            this._functions = new FunctionOperations(this);
             this._inputs = new InputOperations(this);
             this._streamingJobs = new JobOperations(this);
             this._outputs = new OutputOperations(this);
@@ -235,6 +246,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public StreamAnalyticsManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._functions = new FunctionOperations(this);
             this._inputs = new InputOperations(this);
             this._streamingJobs = new JobOperations(this);
             this._outputs = new OutputOperations(this);
@@ -385,7 +397,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -426,11 +437,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -479,7 +490,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public async Task<DataSourceTestConnectionResponse> GetTestConnectionStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<ResourceTestConnectionResponse> GetTestConnectionStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -513,7 +524,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -546,13 +556,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     }
                     
                     // Create Result
-                    DataSourceTestConnectionResponse result = null;
+                    ResourceTestConnectionResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent || statusCode == HttpStatusCode.BadRequest)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new DataSourceTestConnectionResponse();
+                        result = new ResourceTestConnectionResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -565,7 +575,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
                                 string statusInstance = ((string)statusValue);
-                                result.DataSourceTestStatus = statusInstance;
+                                result.ResourceTestStatus = statusInstance;
                             }
                             
                             JToken errorValue = responseDoc["error"];
@@ -625,11 +635,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (result.DataSourceTestStatus == DataSourceTestStatus.TestFailed)
+                    if (result.ResourceTestStatus == ResourceTestStatus.TestFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (result.DataSourceTestStatus == DataSourceTestStatus.TestSucceeded)
+                    if (result.ResourceTestStatus == ResourceTestStatus.TestSucceeded)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

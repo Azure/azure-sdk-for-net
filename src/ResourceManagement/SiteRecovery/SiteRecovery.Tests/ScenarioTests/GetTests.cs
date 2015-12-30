@@ -301,9 +301,10 @@ namespace SiteRecovery.Tests
                     containersResponse.ProtectionContainers.Count > 0,
                     "Containers count can't be less than 1.");
 
-                var containersMappingResponse = client.ProtectionContainerMapping.List(
+                var containersMappingResponse = client.ProtectionContainerMapping.Get(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
+                    "Hitesh-VMwareAzureV2-Mapping",
                     RequestHeaders);
                 Assert.NotNull(containersMappingResponse);
             }
@@ -320,14 +321,124 @@ namespace SiteRecovery.Tests
                 var response = client.Events.List(
                     new EventQueryParameter
                     {
-                        StartTime = DateTime.Now.AddDays(-21).ToString(),
-                        EndTime = DateTime.Now.AddDays(-7).ToString(),
+                        StartTime = DateTime.Parse("01112015 000000").ToString(),
+                        EndTime = DateTime.Now.AddDays(-1).ToString(),
                         AffectedObjectFriendlyName = "sadko-1102-1",
-                        FabricName = "21e443a8cf90841638add43368f2f69db0e8b7511acdbb1c1111e3a75e5095b6"
                     },
                     RequestHeaders);
                 Assert.NotNull(response);
                 Assert.NotEmpty(response.Events);
+            }
+        }
+
+        [Fact]
+        public void GetEvent()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.Events.List(
+                    new EventQueryParameter
+                    {
+                        StartTime = DateTime.Parse("2015-11-01 00:00").ToString(),
+                        EndTime = DateTime.Now.AddDays(-1).ToString(),
+                        AffectedObjectFriendlyName = "sadko-1102-1",
+                    },
+                    RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Events);
+
+                var eventResponse = client.Events.Get(
+                    response.Events[0].Name,
+                    RequestHeaders);
+                Assert.NotNull(eventResponse);
+                Assert.NotNull(eventResponse.Event);
+            }
+        }
+
+        [Fact]
+        public void GetEventNegativeTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                EventResponse eventResponse = null;
+
+                try
+                {
+                    client.Events.Get(
+                        "UnrealisticEventName42", // Because 42 is the answer to life, the universe and everything.
+                        RequestHeaders);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.ToUpper().Contains("NOTFOUND"))
+                    {
+                        eventResponse = new EventResponse();
+                        eventResponse.Event = null;
+                        eventResponse.StatusCode = HttpStatusCode.NotFound;
+                    }
+                }
+
+                Assert.NotNull(eventResponse);
+                Assert.Null(eventResponse.Event);
+                Assert.Equal(HttpStatusCode.NotFound, eventResponse.StatusCode);
+            }
+        }
+
+        [Fact]
+        public void GetAlertSettingsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.AlertSettings.List(RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Alerts);
+
+                var alertResponse = client.AlertSettings.Get(
+                    response.Alerts[0].Name,
+                    RequestHeaders);
+
+                Assert.NotNull(alertResponse);
+                Assert.NotNull(alertResponse.Alert);
+            }
+        }
+
+        [Fact]
+        public void GetAlertSettingsNegativeTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                AlertSettingsResponse alertResponse = null;
+
+                try
+                {
+                    alertResponse = client.AlertSettings.Get(
+                        "dummyName",
+                        RequestHeaders);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.ToUpper().Contains("NOTFOUND"))
+                    {
+                        alertResponse = new AlertSettingsResponse();
+                        alertResponse.Alert = null;
+                        alertResponse.StatusCode = HttpStatusCode.NotFound;
+                    }
+                }
+
+                Assert.NotNull(alertResponse);
+                Assert.Equal(alertResponse.StatusCode, HttpStatusCode.NotFound);
             }
         }
     }
