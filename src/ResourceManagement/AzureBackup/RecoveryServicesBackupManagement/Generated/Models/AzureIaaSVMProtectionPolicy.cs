@@ -21,27 +21,42 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// Retention Schedule Format.
+    /// The definition of a ProtectionPolicy object.
     /// </summary>
-    public static partial class RetentionScheduleFormat
+    public partial class AzureIaaSVMProtectionPolicy : ProtectionPolicyBase
     {
-        /// <summary>
-        /// Invalid Retention Schedule Format.
-        /// </summary>
-        public const string Invalid = "Invalid";
+        private RetentionPolicy _retentionPolicy;
         
         /// <summary>
-        /// Daily Retention Schedule Format.
+        /// Optional. Retention Policy
         /// </summary>
-        public const string Daily = "Daily";
+        public RetentionPolicy RetentionPolicy
+        {
+            get { return this._retentionPolicy; }
+            set { this._retentionPolicy = value; }
+        }
+        
+        private SchedulePolicy _schedulePolicy;
         
         /// <summary>
-        /// Weekly Retention Schedule Format.
+        /// Optional. Backup Schedule of ProtectionPolicy.
         /// </summary>
-        public const string Weekly = "Weekly";
+        public SchedulePolicy SchedulePolicy
+        {
+            get { return this._schedulePolicy; }
+            set { this._schedulePolicy = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AzureIaaSVMProtectionPolicy class.
+        /// </summary>
+        public AzureIaaSVMProtectionPolicy()
+        {
+        }
     }
 }

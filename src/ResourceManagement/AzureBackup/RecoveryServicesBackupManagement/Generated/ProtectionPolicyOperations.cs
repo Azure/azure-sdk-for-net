@@ -188,10 +188,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     {
                         JObject propertiesValue = new JObject();
                         itemValue["properties"] = propertiesValue;
-                        if (request.Item.Properties is ProtectionPolicy)
+                        if (request.Item.Properties is AzureIaaSVMProtectionPolicy)
                         {
-                            propertiesValue["objectType"] = "ProtectionPolicy";
-                            ProtectionPolicy derived = ((ProtectionPolicy)request.Item.Properties);
+                            propertiesValue["backupManagementType"] = "AzureIaasVM";
+                            AzureIaaSVMProtectionPolicy derived = ((AzureIaaSVMProtectionPolicy)request.Item.Properties);
                             
                             if (derived.SchedulePolicy != null)
                             {
@@ -199,20 +199,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["schedulePolicy"] = schedulePolicyValue;
                                 if (derived.SchedulePolicy is SimpleSchedulePolicy)
                                 {
-                                    schedulePolicyValue["objectType"] = "SimpleSchedulePolicy";
+                                    schedulePolicyValue["schedulePolicyType"] = "SimpleSchedulePolicy";
                                     SimpleSchedulePolicy derived2 = ((SimpleSchedulePolicy)derived.SchedulePolicy);
                                     
-                                    if (derived2.ScheduleRunType != null)
+                                    if (derived2.ScheduleRunFrequency != null)
                                     {
-                                        schedulePolicyValue["scheduleRunType"] = derived2.ScheduleRunType;
+                                        schedulePolicyValue["scheduleRunFrequency"] = derived2.ScheduleRunFrequency;
                                     }
                                     
                                     if (derived2.ScheduleRunDays != null)
                                     {
                                         JArray scheduleRunDaysArray = new JArray();
-                                        foreach (DayOfWeek scheduleRunDaysItem in derived2.ScheduleRunDays)
+                                        foreach (string scheduleRunDaysItem in derived2.ScheduleRunDays)
                                         {
-                                            scheduleRunDaysArray.Add(scheduleRunDaysItem.ToString());
+                                            scheduleRunDaysArray.Add(scheduleRunDaysItem);
                                         }
                                         schedulePolicyValue["scheduleRunDays"] = scheduleRunDaysArray;
                                     }
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 }
                                 if (derived.SchedulePolicy is LongTermSchedulePolicy)
                                 {
-                                    schedulePolicyValue["objectType"] = "LongTermSchedulePolicy";
+                                    schedulePolicyValue["schedulePolicyType"] = "LongTermSchedulePolicy";
                                     LongTermSchedulePolicy derived3 = ((LongTermSchedulePolicy)derived.SchedulePolicy);
                                 }
                             }
@@ -240,12 +240,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["retentionPolicy"] = retentionPolicyValue;
                                 if (derived.RetentionPolicy is SimpleRetentionPolicy)
                                 {
-                                    retentionPolicyValue["objectType"] = "SimpleRetentionPolicy";
+                                    retentionPolicyValue["retentionPolicyType"] = "SimpleRetentionPolicy";
                                     SimpleRetentionPolicy derived4 = ((SimpleRetentionPolicy)derived.RetentionPolicy);
                                 }
                                 if (derived.RetentionPolicy is LongTermRetentionPolicy)
                                 {
-                                    retentionPolicyValue["objectType"] = "LongTermRetentionPolicy";
+                                    retentionPolicyValue["retentionPolicyType"] = "LongTermRetentionPolicy";
                                     LongTermRetentionPolicy derived5 = ((LongTermRetentionPolicy)derived.RetentionPolicy);
                                     
                                     if (derived5.DailySchedule != null)
@@ -270,7 +270,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             
                                             retentionDurationValue["count"] = derived5.DailySchedule.RetentionDuration.Count;
                                             
-                                            retentionDurationValue["durationType"] = derived5.DailySchedule.RetentionDuration.DurationType.ToString();
+                                            if (derived5.DailySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue["durationType"] = derived5.DailySchedule.RetentionDuration.DurationType;
+                                            }
                                         }
                                     }
                                     
@@ -282,9 +285,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         if (derived5.WeeklySchedule.DaysOfTheWeek != null)
                                         {
                                             JArray daysOfTheWeekArray = new JArray();
-                                            foreach (DayOfWeek daysOfTheWeekItem in derived5.WeeklySchedule.DaysOfTheWeek)
+                                            foreach (string daysOfTheWeekItem in derived5.WeeklySchedule.DaysOfTheWeek)
                                             {
-                                                daysOfTheWeekArray.Add(daysOfTheWeekItem.ToString());
+                                                daysOfTheWeekArray.Add(daysOfTheWeekItem);
                                             }
                                             weeklyScheduleValue["daysOfTheWeek"] = daysOfTheWeekArray;
                                         }
@@ -306,7 +309,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             
                                             retentionDurationValue2["count"] = derived5.WeeklySchedule.RetentionDuration.Count;
                                             
-                                            retentionDurationValue2["durationType"] = derived5.WeeklySchedule.RetentionDuration.DurationType.ToString();
+                                            if (derived5.WeeklySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue2["durationType"] = derived5.WeeklySchedule.RetentionDuration.DurationType;
+                                            }
                                         }
                                     }
                                     
@@ -315,7 +321,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         JObject monthlyScheduleValue = new JObject();
                                         retentionPolicyValue["monthlySchedule"] = monthlyScheduleValue;
                                         
-                                        monthlyScheduleValue["retentionScheduleFormat"] = derived5.MonthlySchedule.RetentionScheduleFormat.ToString();
+                                        if (derived5.MonthlySchedule.RetentionScheduleFormatType != null)
+                                        {
+                                            monthlyScheduleValue["retentionScheduleFormatType"] = derived5.MonthlySchedule.RetentionScheduleFormatType;
+                                        }
                                         
                                         if (derived5.MonthlySchedule.RetentionScheduleDaily != null)
                                         {
@@ -346,9 +355,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             if (derived5.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
                                             {
                                                 JArray daysOfTheWeekArray2 = new JArray();
-                                                foreach (DayOfWeek daysOfTheWeekItem2 in derived5.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
+                                                foreach (string daysOfTheWeekItem2 in derived5.MonthlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
                                                 {
-                                                    daysOfTheWeekArray2.Add(daysOfTheWeekItem2.ToString());
+                                                    daysOfTheWeekArray2.Add(daysOfTheWeekItem2);
                                                 }
                                                 retentionScheduleWeeklyValue["daysOfTheWeek"] = daysOfTheWeekArray2;
                                             }
@@ -356,9 +365,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             if (derived5.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
                                             {
                                                 JArray weeksOfTheMonthArray = new JArray();
-                                                foreach (WeekNumber weeksOfTheMonthItem in derived5.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
+                                                foreach (string weeksOfTheMonthItem in derived5.MonthlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
                                                 {
-                                                    weeksOfTheMonthArray.Add(weeksOfTheMonthItem.ToString());
+                                                    weeksOfTheMonthArray.Add(weeksOfTheMonthItem);
                                                 }
                                                 retentionScheduleWeeklyValue["weeksOfTheMonth"] = weeksOfTheMonthArray;
                                             }
@@ -381,7 +390,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             
                                             retentionDurationValue3["count"] = derived5.MonthlySchedule.RetentionDuration.Count;
                                             
-                                            retentionDurationValue3["durationType"] = derived5.MonthlySchedule.RetentionDuration.DurationType.ToString();
+                                            if (derived5.MonthlySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue3["durationType"] = derived5.MonthlySchedule.RetentionDuration.DurationType;
+                                            }
                                         }
                                     }
                                     
@@ -390,14 +402,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         JObject yearlyScheduleValue = new JObject();
                                         retentionPolicyValue["yearlySchedule"] = yearlyScheduleValue;
                                         
-                                        yearlyScheduleValue["retentionScheduleFormat"] = derived5.YearlySchedule.RetentionScheduleFormat.ToString();
+                                        if (derived5.YearlySchedule.RetentionScheduleFormatType != null)
+                                        {
+                                            yearlyScheduleValue["retentionScheduleFormatType"] = derived5.YearlySchedule.RetentionScheduleFormatType;
+                                        }
                                         
                                         if (derived5.YearlySchedule.MonthsOfYear != null)
                                         {
                                             JArray monthsOfYearArray = new JArray();
-                                            foreach (Month monthsOfYearItem in derived5.YearlySchedule.MonthsOfYear)
+                                            foreach (string monthsOfYearItem in derived5.YearlySchedule.MonthsOfYear)
                                             {
-                                                monthsOfYearArray.Add(monthsOfYearItem.ToString());
+                                                monthsOfYearArray.Add(monthsOfYearItem);
                                             }
                                             yearlyScheduleValue["monthsOfYear"] = monthsOfYearArray;
                                         }
@@ -431,9 +446,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             if (derived5.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek != null)
                                             {
                                                 JArray daysOfTheWeekArray3 = new JArray();
-                                                foreach (DayOfWeek daysOfTheWeekItem3 in derived5.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
+                                                foreach (string daysOfTheWeekItem3 in derived5.YearlySchedule.RetentionScheduleWeekly.DaysOfTheWeek)
                                                 {
-                                                    daysOfTheWeekArray3.Add(daysOfTheWeekItem3.ToString());
+                                                    daysOfTheWeekArray3.Add(daysOfTheWeekItem3);
                                                 }
                                                 retentionScheduleWeeklyValue2["daysOfTheWeek"] = daysOfTheWeekArray3;
                                             }
@@ -441,9 +456,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             if (derived5.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth != null)
                                             {
                                                 JArray weeksOfTheMonthArray2 = new JArray();
-                                                foreach (WeekNumber weeksOfTheMonthItem2 in derived5.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
+                                                foreach (string weeksOfTheMonthItem2 in derived5.YearlySchedule.RetentionScheduleWeekly.WeeksOfTheMonth)
                                                 {
-                                                    weeksOfTheMonthArray2.Add(weeksOfTheMonthItem2.ToString());
+                                                    weeksOfTheMonthArray2.Add(weeksOfTheMonthItem2);
                                                 }
                                                 retentionScheduleWeeklyValue2["weeksOfTheMonth"] = weeksOfTheMonthArray2;
                                             }
@@ -466,7 +481,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             
                                             retentionDurationValue4["count"] = derived5.YearlySchedule.RetentionDuration.Count;
                                             
-                                            retentionDurationValue4["durationType"] = derived5.YearlySchedule.RetentionDuration.DurationType.ToString();
+                                            if (derived5.YearlySchedule.RetentionDuration.DurationType != null)
+                                            {
+                                                retentionDurationValue4["durationType"] = derived5.YearlySchedule.RetentionDuration.DurationType;
+                                            }
                                         }
                                     }
                                 }
@@ -564,24 +582,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue2["objectType"]);
-                                if (typeName == "ProtectionPolicy")
+                                string typeName = ((string)propertiesValue2["backupManagementType"]);
+                                if (typeName == "AzureIaasVM")
                                 {
-                                    ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
                                     
                                     JToken schedulePolicyValue2 = propertiesValue2["schedulePolicy"];
                                     if (schedulePolicyValue2 != null && schedulePolicyValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)schedulePolicyValue2["objectType"]);
+                                        string typeName2 = ((string)schedulePolicyValue2["schedulePolicyType"]);
                                         if (typeName2 == "SimpleSchedulePolicy")
                                         {
                                             SimpleSchedulePolicy simpleSchedulePolicyInstance = new SimpleSchedulePolicy();
                                             
-                                            JToken scheduleRunTypeValue = schedulePolicyValue2["scheduleRunType"];
-                                            if (scheduleRunTypeValue != null && scheduleRunTypeValue.Type != JTokenType.Null)
+                                            JToken scheduleRunFrequencyValue = schedulePolicyValue2["scheduleRunFrequency"];
+                                            if (scheduleRunFrequencyValue != null && scheduleRunFrequencyValue.Type != JTokenType.Null)
                                             {
-                                                string scheduleRunTypeInstance = ((string)scheduleRunTypeValue);
-                                                simpleSchedulePolicyInstance.ScheduleRunType = scheduleRunTypeInstance;
+                                                string scheduleRunFrequencyInstance = ((string)scheduleRunFrequencyValue);
+                                                simpleSchedulePolicyInstance.ScheduleRunFrequency = scheduleRunFrequencyInstance;
                                             }
                                             
                                             JToken scheduleRunDaysArray2 = schedulePolicyValue2["scheduleRunDays"];
@@ -589,7 +607,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 foreach (JToken scheduleRunDaysValue in ((JArray)scheduleRunDaysArray2))
                                                 {
-                                                    simpleSchedulePolicyInstance.ScheduleRunDays.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)scheduleRunDaysValue), true)));
+                                                    simpleSchedulePolicyInstance.ScheduleRunDays.Add(((string)scheduleRunDaysValue));
                                                 }
                                             }
                                             
@@ -601,23 +619,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     simpleSchedulePolicyInstance.ScheduleRunTimes.Add(((DateTime)scheduleRunTimesValue));
                                                 }
                                             }
-                                            protectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
                                         }
                                         if (typeName2 == "LongTermSchedulePolicy")
                                         {
                                             LongTermSchedulePolicy longTermSchedulePolicyInstance = new LongTermSchedulePolicy();
-                                            protectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
                                         }
                                     }
                                     
                                     JToken retentionPolicyValue2 = propertiesValue2["retentionPolicy"];
                                     if (retentionPolicyValue2 != null && retentionPolicyValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)retentionPolicyValue2["objectType"]);
+                                        string typeName3 = ((string)retentionPolicyValue2["retentionPolicyType"]);
                                         if (typeName3 == "SimpleRetentionPolicy")
                                         {
                                             SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
-                                            protectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                         }
                                         if (typeName3 == "LongTermRetentionPolicy")
                                         {
@@ -654,7 +672,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue = retentionDurationValue5["durationType"];
                                                     if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue), true));
+                                                        string durationTypeInstance = ((string)durationTypeValue);
                                                         retentionDurationInstance.DurationType = durationTypeInstance;
                                                     }
                                                 }
@@ -671,7 +689,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 {
                                                     foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray4))
                                                     {
-                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue), true)));
+                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue));
                                                     }
                                                 }
                                                 
@@ -700,7 +718,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue2 = retentionDurationValue6["durationType"];
                                                     if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance2 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue2), true));
+                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
                                                         retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                     }
                                                 }
@@ -712,11 +730,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 MonthlyRetentionSchedule monthlyScheduleInstance = new MonthlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.MonthlySchedule = monthlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatValue = monthlyScheduleValue2["retentionScheduleFormat"];
-                                                if (retentionScheduleFormatValue != null && retentionScheduleFormatValue.Type != JTokenType.Null)
+                                                JToken retentionScheduleFormatTypeValue = monthlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue != null && retentionScheduleFormatTypeValue.Type != JTokenType.Null)
                                                 {
-                                                    RetentionScheduleFormat retentionScheduleFormatInstance = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue), true));
-                                                    monthlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance;
+                                                    string retentionScheduleFormatTypeInstance = ((string)retentionScheduleFormatTypeValue);
+                                                    monthlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance;
                                                 }
                                                 
                                                 JToken retentionScheduleDailyValue3 = monthlyScheduleValue2["retentionScheduleDaily"];
@@ -761,7 +779,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray5))
                                                         {
-                                                            retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue2), true)));
+                                                            retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue2));
                                                         }
                                                     }
                                                     
@@ -770,7 +788,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray3))
                                                         {
-                                                            retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue), true)));
+                                                            retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue));
                                                         }
                                                     }
                                                 }
@@ -800,7 +818,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue3 = retentionDurationValue7["durationType"];
                                                     if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance3 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue3), true));
+                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
                                                         retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                     }
                                                 }
@@ -812,11 +830,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 YearlyRetentionSchedule yearlyScheduleInstance = new YearlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.YearlySchedule = yearlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatValue2 = yearlyScheduleValue2["retentionScheduleFormat"];
-                                                if (retentionScheduleFormatValue2 != null && retentionScheduleFormatValue2.Type != JTokenType.Null)
+                                                JToken retentionScheduleFormatTypeValue2 = yearlyScheduleValue2["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue2 != null && retentionScheduleFormatTypeValue2.Type != JTokenType.Null)
                                                 {
-                                                    RetentionScheduleFormat retentionScheduleFormatInstance2 = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue2), true));
-                                                    yearlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance2;
+                                                    string retentionScheduleFormatTypeInstance2 = ((string)retentionScheduleFormatTypeValue2);
+                                                    yearlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance2;
                                                 }
                                                 
                                                 JToken monthsOfYearArray2 = yearlyScheduleValue2["monthsOfYear"];
@@ -824,7 +842,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 {
                                                     foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray2))
                                                     {
-                                                        yearlyScheduleInstance.MonthsOfYear.Add(((Month)Enum.Parse(typeof(Month), ((string)monthsOfYearValue), true)));
+                                                        yearlyScheduleInstance.MonthsOfYear.Add(((string)monthsOfYearValue));
                                                     }
                                                 }
                                                 
@@ -870,7 +888,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray6))
                                                         {
-                                                            retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue3), true)));
+                                                            retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue3));
                                                         }
                                                     }
                                                     
@@ -879,7 +897,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray4))
                                                         {
-                                                            retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue2), true)));
+                                                            retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue2));
                                                         }
                                                     }
                                                 }
@@ -909,15 +927,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue4 = retentionDurationValue8["durationType"];
                                                     if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance4 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue4), true));
+                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
                                                         retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                     }
                                                 }
                                             }
-                                            protectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
                                     }
-                                    itemInstance.Properties = protectionPolicyInstance;
+                                    itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                 }
                             }
                             
@@ -1146,7 +1164,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1304,7 +1322,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1318,7 +1336,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     // Create Result
                     ProtectionPolicyResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1337,24 +1355,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["objectType"]);
-                                if (typeName == "ProtectionPolicy")
+                                string typeName = ((string)propertiesValue["backupManagementType"]);
+                                if (typeName == "AzureIaasVM")
                                 {
-                                    ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
                                     
                                     JToken schedulePolicyValue = propertiesValue["schedulePolicy"];
                                     if (schedulePolicyValue != null && schedulePolicyValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)schedulePolicyValue["objectType"]);
+                                        string typeName2 = ((string)schedulePolicyValue["schedulePolicyType"]);
                                         if (typeName2 == "SimpleSchedulePolicy")
                                         {
                                             SimpleSchedulePolicy simpleSchedulePolicyInstance = new SimpleSchedulePolicy();
                                             
-                                            JToken scheduleRunTypeValue = schedulePolicyValue["scheduleRunType"];
-                                            if (scheduleRunTypeValue != null && scheduleRunTypeValue.Type != JTokenType.Null)
+                                            JToken scheduleRunFrequencyValue = schedulePolicyValue["scheduleRunFrequency"];
+                                            if (scheduleRunFrequencyValue != null && scheduleRunFrequencyValue.Type != JTokenType.Null)
                                             {
-                                                string scheduleRunTypeInstance = ((string)scheduleRunTypeValue);
-                                                simpleSchedulePolicyInstance.ScheduleRunType = scheduleRunTypeInstance;
+                                                string scheduleRunFrequencyInstance = ((string)scheduleRunFrequencyValue);
+                                                simpleSchedulePolicyInstance.ScheduleRunFrequency = scheduleRunFrequencyInstance;
                                             }
                                             
                                             JToken scheduleRunDaysArray = schedulePolicyValue["scheduleRunDays"];
@@ -1362,7 +1380,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 foreach (JToken scheduleRunDaysValue in ((JArray)scheduleRunDaysArray))
                                                 {
-                                                    simpleSchedulePolicyInstance.ScheduleRunDays.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)scheduleRunDaysValue), true)));
+                                                    simpleSchedulePolicyInstance.ScheduleRunDays.Add(((string)scheduleRunDaysValue));
                                                 }
                                             }
                                             
@@ -1374,23 +1392,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     simpleSchedulePolicyInstance.ScheduleRunTimes.Add(((DateTime)scheduleRunTimesValue));
                                                 }
                                             }
-                                            protectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
                                         }
                                         if (typeName2 == "LongTermSchedulePolicy")
                                         {
                                             LongTermSchedulePolicy longTermSchedulePolicyInstance = new LongTermSchedulePolicy();
-                                            protectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
                                         }
                                     }
                                     
                                     JToken retentionPolicyValue = propertiesValue["retentionPolicy"];
                                     if (retentionPolicyValue != null && retentionPolicyValue.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)retentionPolicyValue["objectType"]);
+                                        string typeName3 = ((string)retentionPolicyValue["retentionPolicyType"]);
                                         if (typeName3 == "SimpleRetentionPolicy")
                                         {
                                             SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
-                                            protectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                         }
                                         if (typeName3 == "LongTermRetentionPolicy")
                                         {
@@ -1427,7 +1445,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue = retentionDurationValue["durationType"];
                                                     if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue), true));
+                                                        string durationTypeInstance = ((string)durationTypeValue);
                                                         retentionDurationInstance.DurationType = durationTypeInstance;
                                                     }
                                                 }
@@ -1444,7 +1462,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 {
                                                     foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray))
                                                     {
-                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue), true)));
+                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue));
                                                     }
                                                 }
                                                 
@@ -1473,7 +1491,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue2 = retentionDurationValue2["durationType"];
                                                     if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance2 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue2), true));
+                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
                                                         retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                     }
                                                 }
@@ -1485,11 +1503,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 MonthlyRetentionSchedule monthlyScheduleInstance = new MonthlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.MonthlySchedule = monthlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatValue = monthlyScheduleValue["retentionScheduleFormat"];
-                                                if (retentionScheduleFormatValue != null && retentionScheduleFormatValue.Type != JTokenType.Null)
+                                                JToken retentionScheduleFormatTypeValue = monthlyScheduleValue["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue != null && retentionScheduleFormatTypeValue.Type != JTokenType.Null)
                                                 {
-                                                    RetentionScheduleFormat retentionScheduleFormatInstance = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue), true));
-                                                    monthlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance;
+                                                    string retentionScheduleFormatTypeInstance = ((string)retentionScheduleFormatTypeValue);
+                                                    monthlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance;
                                                 }
                                                 
                                                 JToken retentionScheduleDailyValue = monthlyScheduleValue["retentionScheduleDaily"];
@@ -1534,7 +1552,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray2))
                                                         {
-                                                            retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue2), true)));
+                                                            retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue2));
                                                         }
                                                     }
                                                     
@@ -1543,7 +1561,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray))
                                                         {
-                                                            retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue), true)));
+                                                            retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue));
                                                         }
                                                     }
                                                 }
@@ -1573,7 +1591,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue3 = retentionDurationValue3["durationType"];
                                                     if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance3 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue3), true));
+                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
                                                         retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                     }
                                                 }
@@ -1585,11 +1603,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 YearlyRetentionSchedule yearlyScheduleInstance = new YearlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.YearlySchedule = yearlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatValue2 = yearlyScheduleValue["retentionScheduleFormat"];
-                                                if (retentionScheduleFormatValue2 != null && retentionScheduleFormatValue2.Type != JTokenType.Null)
+                                                JToken retentionScheduleFormatTypeValue2 = yearlyScheduleValue["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue2 != null && retentionScheduleFormatTypeValue2.Type != JTokenType.Null)
                                                 {
-                                                    RetentionScheduleFormat retentionScheduleFormatInstance2 = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue2), true));
-                                                    yearlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance2;
+                                                    string retentionScheduleFormatTypeInstance2 = ((string)retentionScheduleFormatTypeValue2);
+                                                    yearlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance2;
                                                 }
                                                 
                                                 JToken monthsOfYearArray = yearlyScheduleValue["monthsOfYear"];
@@ -1597,7 +1615,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 {
                                                     foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray))
                                                     {
-                                                        yearlyScheduleInstance.MonthsOfYear.Add(((Month)Enum.Parse(typeof(Month), ((string)monthsOfYearValue), true)));
+                                                        yearlyScheduleInstance.MonthsOfYear.Add(((string)monthsOfYearValue));
                                                     }
                                                 }
                                                 
@@ -1643,7 +1661,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray3))
                                                         {
-                                                            retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue3), true)));
+                                                            retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue3));
                                                         }
                                                     }
                                                     
@@ -1652,7 +1670,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray2))
                                                         {
-                                                            retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue2), true)));
+                                                            retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue2));
                                                         }
                                                     }
                                                 }
@@ -1682,15 +1700,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue4 = retentionDurationValue4["durationType"];
                                                     if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance4 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue4), true));
+                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
                                                         retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                     }
                                                 }
                                             }
-                                            protectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
                                     }
-                                    itemInstance.Properties = protectionPolicyInstance;
+                                    itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                 }
                             }
                             
@@ -1949,24 +1967,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue["objectType"]);
-                                if (typeName == "ProtectionPolicy")
+                                string typeName = ((string)propertiesValue["backupManagementType"]);
+                                if (typeName == "AzureIaasVM")
                                 {
-                                    ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                    AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
                                     
                                     JToken schedulePolicyValue = propertiesValue["schedulePolicy"];
                                     if (schedulePolicyValue != null && schedulePolicyValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)schedulePolicyValue["objectType"]);
+                                        string typeName2 = ((string)schedulePolicyValue["schedulePolicyType"]);
                                         if (typeName2 == "SimpleSchedulePolicy")
                                         {
                                             SimpleSchedulePolicy simpleSchedulePolicyInstance = new SimpleSchedulePolicy();
                                             
-                                            JToken scheduleRunTypeValue = schedulePolicyValue["scheduleRunType"];
-                                            if (scheduleRunTypeValue != null && scheduleRunTypeValue.Type != JTokenType.Null)
+                                            JToken scheduleRunFrequencyValue = schedulePolicyValue["scheduleRunFrequency"];
+                                            if (scheduleRunFrequencyValue != null && scheduleRunFrequencyValue.Type != JTokenType.Null)
                                             {
-                                                string scheduleRunTypeInstance = ((string)scheduleRunTypeValue);
-                                                simpleSchedulePolicyInstance.ScheduleRunType = scheduleRunTypeInstance;
+                                                string scheduleRunFrequencyInstance = ((string)scheduleRunFrequencyValue);
+                                                simpleSchedulePolicyInstance.ScheduleRunFrequency = scheduleRunFrequencyInstance;
                                             }
                                             
                                             JToken scheduleRunDaysArray = schedulePolicyValue["scheduleRunDays"];
@@ -1974,7 +1992,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 foreach (JToken scheduleRunDaysValue in ((JArray)scheduleRunDaysArray))
                                                 {
-                                                    simpleSchedulePolicyInstance.ScheduleRunDays.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)scheduleRunDaysValue), true)));
+                                                    simpleSchedulePolicyInstance.ScheduleRunDays.Add(((string)scheduleRunDaysValue));
                                                 }
                                             }
                                             
@@ -1986,23 +2004,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     simpleSchedulePolicyInstance.ScheduleRunTimes.Add(((DateTime)scheduleRunTimesValue));
                                                 }
                                             }
-                                            protectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
                                         }
                                         if (typeName2 == "LongTermSchedulePolicy")
                                         {
                                             LongTermSchedulePolicy longTermSchedulePolicyInstance = new LongTermSchedulePolicy();
-                                            protectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
                                         }
                                     }
                                     
                                     JToken retentionPolicyValue = propertiesValue["retentionPolicy"];
                                     if (retentionPolicyValue != null && retentionPolicyValue.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = ((string)retentionPolicyValue["objectType"]);
+                                        string typeName3 = ((string)retentionPolicyValue["retentionPolicyType"]);
                                         if (typeName3 == "SimpleRetentionPolicy")
                                         {
                                             SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
-                                            protectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                         }
                                         if (typeName3 == "LongTermRetentionPolicy")
                                         {
@@ -2039,7 +2057,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue = retentionDurationValue["durationType"];
                                                     if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue), true));
+                                                        string durationTypeInstance = ((string)durationTypeValue);
                                                         retentionDurationInstance.DurationType = durationTypeInstance;
                                                     }
                                                 }
@@ -2056,7 +2074,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 {
                                                     foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray))
                                                     {
-                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue), true)));
+                                                        weeklyScheduleInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue));
                                                     }
                                                 }
                                                 
@@ -2085,7 +2103,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue2 = retentionDurationValue2["durationType"];
                                                     if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance2 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue2), true));
+                                                        string durationTypeInstance2 = ((string)durationTypeValue2);
                                                         retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                     }
                                                 }
@@ -2097,11 +2115,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 MonthlyRetentionSchedule monthlyScheduleInstance = new MonthlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.MonthlySchedule = monthlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatValue = monthlyScheduleValue["retentionScheduleFormat"];
-                                                if (retentionScheduleFormatValue != null && retentionScheduleFormatValue.Type != JTokenType.Null)
+                                                JToken retentionScheduleFormatTypeValue = monthlyScheduleValue["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue != null && retentionScheduleFormatTypeValue.Type != JTokenType.Null)
                                                 {
-                                                    RetentionScheduleFormat retentionScheduleFormatInstance = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue), true));
-                                                    monthlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance;
+                                                    string retentionScheduleFormatTypeInstance = ((string)retentionScheduleFormatTypeValue);
+                                                    monthlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance;
                                                 }
                                                 
                                                 JToken retentionScheduleDailyValue = monthlyScheduleValue["retentionScheduleDaily"];
@@ -2146,7 +2164,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray2))
                                                         {
-                                                            retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue2), true)));
+                                                            retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue2));
                                                         }
                                                     }
                                                     
@@ -2155,7 +2173,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray))
                                                         {
-                                                            retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue), true)));
+                                                            retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue));
                                                         }
                                                     }
                                                 }
@@ -2185,7 +2203,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue3 = retentionDurationValue3["durationType"];
                                                     if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance3 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue3), true));
+                                                        string durationTypeInstance3 = ((string)durationTypeValue3);
                                                         retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                     }
                                                 }
@@ -2197,11 +2215,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 YearlyRetentionSchedule yearlyScheduleInstance = new YearlyRetentionSchedule();
                                                 longTermRetentionPolicyInstance.YearlySchedule = yearlyScheduleInstance;
                                                 
-                                                JToken retentionScheduleFormatValue2 = yearlyScheduleValue["retentionScheduleFormat"];
-                                                if (retentionScheduleFormatValue2 != null && retentionScheduleFormatValue2.Type != JTokenType.Null)
+                                                JToken retentionScheduleFormatTypeValue2 = yearlyScheduleValue["retentionScheduleFormatType"];
+                                                if (retentionScheduleFormatTypeValue2 != null && retentionScheduleFormatTypeValue2.Type != JTokenType.Null)
                                                 {
-                                                    RetentionScheduleFormat retentionScheduleFormatInstance2 = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue2), true));
-                                                    yearlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance2;
+                                                    string retentionScheduleFormatTypeInstance2 = ((string)retentionScheduleFormatTypeValue2);
+                                                    yearlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance2;
                                                 }
                                                 
                                                 JToken monthsOfYearArray = yearlyScheduleValue["monthsOfYear"];
@@ -2209,7 +2227,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 {
                                                     foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray))
                                                     {
-                                                        yearlyScheduleInstance.MonthsOfYear.Add(((Month)Enum.Parse(typeof(Month), ((string)monthsOfYearValue), true)));
+                                                        yearlyScheduleInstance.MonthsOfYear.Add(((string)monthsOfYearValue));
                                                     }
                                                 }
                                                 
@@ -2255,7 +2273,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray3))
                                                         {
-                                                            retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue3), true)));
+                                                            retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue3));
                                                         }
                                                     }
                                                     
@@ -2264,7 +2282,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray2))
                                                         {
-                                                            retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue2), true)));
+                                                            retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue2));
                                                         }
                                                     }
                                                 }
@@ -2294,15 +2312,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     JToken durationTypeValue4 = retentionDurationValue4["durationType"];
                                                     if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                     {
-                                                        RetentionDurationType durationTypeInstance4 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue4), true));
+                                                        string durationTypeInstance4 = ((string)durationTypeValue4);
                                                         retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                     }
                                                 }
                                             }
-                                            protectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
+                                            azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                         }
                                     }
-                                    itemInstance.Properties = protectionPolicyInstance;
+                                    itemInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                 }
                             }
                             
@@ -2579,24 +2597,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)propertiesValue["objectType"]);
-                                        if (typeName == "ProtectionPolicy")
+                                        string typeName = ((string)propertiesValue["backupManagementType"]);
+                                        if (typeName == "AzureIaasVM")
                                         {
-                                            ProtectionPolicy protectionPolicyInstance = new ProtectionPolicy();
+                                            AzureIaaSVMProtectionPolicy azureIaaSVMProtectionPolicyInstance = new AzureIaaSVMProtectionPolicy();
                                             
                                             JToken schedulePolicyValue = propertiesValue["schedulePolicy"];
                                             if (schedulePolicyValue != null && schedulePolicyValue.Type != JTokenType.Null)
                                             {
-                                                string typeName2 = ((string)schedulePolicyValue["objectType"]);
+                                                string typeName2 = ((string)schedulePolicyValue["schedulePolicyType"]);
                                                 if (typeName2 == "SimpleSchedulePolicy")
                                                 {
                                                     SimpleSchedulePolicy simpleSchedulePolicyInstance = new SimpleSchedulePolicy();
                                                     
-                                                    JToken scheduleRunTypeValue = schedulePolicyValue["scheduleRunType"];
-                                                    if (scheduleRunTypeValue != null && scheduleRunTypeValue.Type != JTokenType.Null)
+                                                    JToken scheduleRunFrequencyValue = schedulePolicyValue["scheduleRunFrequency"];
+                                                    if (scheduleRunFrequencyValue != null && scheduleRunFrequencyValue.Type != JTokenType.Null)
                                                     {
-                                                        string scheduleRunTypeInstance = ((string)scheduleRunTypeValue);
-                                                        simpleSchedulePolicyInstance.ScheduleRunType = scheduleRunTypeInstance;
+                                                        string scheduleRunFrequencyInstance = ((string)scheduleRunFrequencyValue);
+                                                        simpleSchedulePolicyInstance.ScheduleRunFrequency = scheduleRunFrequencyInstance;
                                                     }
                                                     
                                                     JToken scheduleRunDaysArray = schedulePolicyValue["scheduleRunDays"];
@@ -2604,7 +2622,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                     {
                                                         foreach (JToken scheduleRunDaysValue in ((JArray)scheduleRunDaysArray))
                                                         {
-                                                            simpleSchedulePolicyInstance.ScheduleRunDays.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)scheduleRunDaysValue), true)));
+                                                            simpleSchedulePolicyInstance.ScheduleRunDays.Add(((string)scheduleRunDaysValue));
                                                         }
                                                     }
                                                     
@@ -2616,23 +2634,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             simpleSchedulePolicyInstance.ScheduleRunTimes.Add(((DateTime)scheduleRunTimesValue));
                                                         }
                                                     }
-                                                    protectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
+                                                    azureIaaSVMProtectionPolicyInstance.SchedulePolicy = simpleSchedulePolicyInstance;
                                                 }
                                                 if (typeName2 == "LongTermSchedulePolicy")
                                                 {
                                                     LongTermSchedulePolicy longTermSchedulePolicyInstance = new LongTermSchedulePolicy();
-                                                    protectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
+                                                    azureIaaSVMProtectionPolicyInstance.SchedulePolicy = longTermSchedulePolicyInstance;
                                                 }
                                             }
                                             
                                             JToken retentionPolicyValue = propertiesValue["retentionPolicy"];
                                             if (retentionPolicyValue != null && retentionPolicyValue.Type != JTokenType.Null)
                                             {
-                                                string typeName3 = ((string)retentionPolicyValue["objectType"]);
+                                                string typeName3 = ((string)retentionPolicyValue["retentionPolicyType"]);
                                                 if (typeName3 == "SimpleRetentionPolicy")
                                                 {
                                                     SimpleRetentionPolicy simpleRetentionPolicyInstance = new SimpleRetentionPolicy();
-                                                    protectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
+                                                    azureIaaSVMProtectionPolicyInstance.RetentionPolicy = simpleRetentionPolicyInstance;
                                                 }
                                                 if (typeName3 == "LongTermRetentionPolicy")
                                                 {
@@ -2669,7 +2687,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             JToken durationTypeValue = retentionDurationValue["durationType"];
                                                             if (durationTypeValue != null && durationTypeValue.Type != JTokenType.Null)
                                                             {
-                                                                RetentionDurationType durationTypeInstance = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue), true));
+                                                                string durationTypeInstance = ((string)durationTypeValue);
                                                                 retentionDurationInstance.DurationType = durationTypeInstance;
                                                             }
                                                         }
@@ -2686,7 +2704,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                         {
                                                             foreach (JToken daysOfTheWeekValue in ((JArray)daysOfTheWeekArray))
                                                             {
-                                                                weeklyScheduleInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue), true)));
+                                                                weeklyScheduleInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue));
                                                             }
                                                         }
                                                         
@@ -2715,7 +2733,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             JToken durationTypeValue2 = retentionDurationValue2["durationType"];
                                                             if (durationTypeValue2 != null && durationTypeValue2.Type != JTokenType.Null)
                                                             {
-                                                                RetentionDurationType durationTypeInstance2 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue2), true));
+                                                                string durationTypeInstance2 = ((string)durationTypeValue2);
                                                                 retentionDurationInstance2.DurationType = durationTypeInstance2;
                                                             }
                                                         }
@@ -2727,11 +2745,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                         MonthlyRetentionSchedule monthlyScheduleInstance = new MonthlyRetentionSchedule();
                                                         longTermRetentionPolicyInstance.MonthlySchedule = monthlyScheduleInstance;
                                                         
-                                                        JToken retentionScheduleFormatValue = monthlyScheduleValue["retentionScheduleFormat"];
-                                                        if (retentionScheduleFormatValue != null && retentionScheduleFormatValue.Type != JTokenType.Null)
+                                                        JToken retentionScheduleFormatTypeValue = monthlyScheduleValue["retentionScheduleFormatType"];
+                                                        if (retentionScheduleFormatTypeValue != null && retentionScheduleFormatTypeValue.Type != JTokenType.Null)
                                                         {
-                                                            RetentionScheduleFormat retentionScheduleFormatInstance = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue), true));
-                                                            monthlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance;
+                                                            string retentionScheduleFormatTypeInstance = ((string)retentionScheduleFormatTypeValue);
+                                                            monthlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance;
                                                         }
                                                         
                                                         JToken retentionScheduleDailyValue = monthlyScheduleValue["retentionScheduleDaily"];
@@ -2776,7 +2794,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             {
                                                                 foreach (JToken daysOfTheWeekValue2 in ((JArray)daysOfTheWeekArray2))
                                                                 {
-                                                                    retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue2), true)));
+                                                                    retentionScheduleWeeklyInstance.DaysOfTheWeek.Add(((string)daysOfTheWeekValue2));
                                                                 }
                                                             }
                                                             
@@ -2785,7 +2803,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             {
                                                                 foreach (JToken weeksOfTheMonthValue in ((JArray)weeksOfTheMonthArray))
                                                                 {
-                                                                    retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue), true)));
+                                                                    retentionScheduleWeeklyInstance.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue));
                                                                 }
                                                             }
                                                         }
@@ -2815,7 +2833,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             JToken durationTypeValue3 = retentionDurationValue3["durationType"];
                                                             if (durationTypeValue3 != null && durationTypeValue3.Type != JTokenType.Null)
                                                             {
-                                                                RetentionDurationType durationTypeInstance3 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue3), true));
+                                                                string durationTypeInstance3 = ((string)durationTypeValue3);
                                                                 retentionDurationInstance3.DurationType = durationTypeInstance3;
                                                             }
                                                         }
@@ -2827,11 +2845,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                         YearlyRetentionSchedule yearlyScheduleInstance = new YearlyRetentionSchedule();
                                                         longTermRetentionPolicyInstance.YearlySchedule = yearlyScheduleInstance;
                                                         
-                                                        JToken retentionScheduleFormatValue2 = yearlyScheduleValue["retentionScheduleFormat"];
-                                                        if (retentionScheduleFormatValue2 != null && retentionScheduleFormatValue2.Type != JTokenType.Null)
+                                                        JToken retentionScheduleFormatTypeValue2 = yearlyScheduleValue["retentionScheduleFormatType"];
+                                                        if (retentionScheduleFormatTypeValue2 != null && retentionScheduleFormatTypeValue2.Type != JTokenType.Null)
                                                         {
-                                                            RetentionScheduleFormat retentionScheduleFormatInstance2 = ((RetentionScheduleFormat)Enum.Parse(typeof(RetentionScheduleFormat), ((string)retentionScheduleFormatValue2), true));
-                                                            yearlyScheduleInstance.RetentionScheduleFormat = retentionScheduleFormatInstance2;
+                                                            string retentionScheduleFormatTypeInstance2 = ((string)retentionScheduleFormatTypeValue2);
+                                                            yearlyScheduleInstance.RetentionScheduleFormatType = retentionScheduleFormatTypeInstance2;
                                                         }
                                                         
                                                         JToken monthsOfYearArray = yearlyScheduleValue["monthsOfYear"];
@@ -2839,7 +2857,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                         {
                                                             foreach (JToken monthsOfYearValue in ((JArray)monthsOfYearArray))
                                                             {
-                                                                yearlyScheduleInstance.MonthsOfYear.Add(((Month)Enum.Parse(typeof(Month), ((string)monthsOfYearValue), true)));
+                                                                yearlyScheduleInstance.MonthsOfYear.Add(((string)monthsOfYearValue));
                                                             }
                                                         }
                                                         
@@ -2885,7 +2903,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             {
                                                                 foreach (JToken daysOfTheWeekValue3 in ((JArray)daysOfTheWeekArray3))
                                                                 {
-                                                                    retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((DayOfWeek)Enum.Parse(typeof(DayOfWeek), ((string)daysOfTheWeekValue3), true)));
+                                                                    retentionScheduleWeeklyInstance2.DaysOfTheWeek.Add(((string)daysOfTheWeekValue3));
                                                                 }
                                                             }
                                                             
@@ -2894,7 +2912,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             {
                                                                 foreach (JToken weeksOfTheMonthValue2 in ((JArray)weeksOfTheMonthArray2))
                                                                 {
-                                                                    retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((WeekNumber)Enum.Parse(typeof(WeekNumber), ((string)weeksOfTheMonthValue2), true)));
+                                                                    retentionScheduleWeeklyInstance2.WeeksOfTheMonth.Add(((string)weeksOfTheMonthValue2));
                                                                 }
                                                             }
                                                         }
@@ -2924,15 +2942,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                             JToken durationTypeValue4 = retentionDurationValue4["durationType"];
                                                             if (durationTypeValue4 != null && durationTypeValue4.Type != JTokenType.Null)
                                                             {
-                                                                RetentionDurationType durationTypeInstance4 = ((RetentionDurationType)Enum.Parse(typeof(RetentionDurationType), ((string)durationTypeValue4), true));
+                                                                string durationTypeInstance4 = ((string)durationTypeValue4);
                                                                 retentionDurationInstance4.DurationType = durationTypeInstance4;
                                                             }
                                                         }
                                                     }
-                                                    protectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
+                                                    azureIaaSVMProtectionPolicyInstance.RetentionPolicy = longTermRetentionPolicyInstance;
                                                 }
                                             }
-                                            protectionPolicyResourceInstance.Properties = protectionPolicyInstance;
+                                            protectionPolicyResourceInstance.Properties = azureIaaSVMProtectionPolicyInstance;
                                         }
                                     }
                                     

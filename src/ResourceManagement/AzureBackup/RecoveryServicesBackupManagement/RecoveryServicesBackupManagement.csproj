@@ -65,6 +65,7 @@
     <Compile Include="Generated\IRestoreOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMProtectionPolicy.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
@@ -99,6 +100,8 @@
     <Compile Include="Generated\Models\JobTaskDetails.cs" />
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
     <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
+    <Compile Include="Generated\Models\MabFileFolderProtectedItem.cs" />
+    <Compile Include="Generated\Models\MabProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\MabProtectionContainer.cs" />
     <Compile Include="Generated\Models\Month.cs" />
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
@@ -134,7 +137,6 @@
     <Compile Include="Generated\Models\ProtectionContainerResourceList.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResponse.cs" />
     <Compile Include="Generated\Models\ProtectionContainerUpdateRequest.cs" />
-    <Compile Include="Generated\Models\ProtectionPolicy.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyBase.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyQueryParameters.cs" />

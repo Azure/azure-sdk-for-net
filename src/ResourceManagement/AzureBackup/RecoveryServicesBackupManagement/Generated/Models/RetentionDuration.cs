@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
@@ -41,12 +40,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._count = value; }
         }
         
-        private RetentionDurationType _durationType;
+        private string _durationType;
         
         /// <summary>
         /// Optional. Retention duration type of retention policy.
         /// </summary>
-        public RetentionDurationType DurationType
+        public string DurationType
         {
             get { return this._durationType; }
             set { this._durationType = value; }

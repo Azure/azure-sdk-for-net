@@ -26,36 +26,37 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicy object.
+    /// The definition of a MabProtectedItemExtendedInfo object.
     /// </summary>
-    public partial class ProtectionPolicy : ProtectionPolicyBase
+    public partial class MabProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
-        private RetentionPolicy _retentionPolicy;
+        private System.DateTime? _oldestRecoveryPoint;
         
         /// <summary>
-        /// Optional. Retention Policy
+        /// Optional. OldestRecoveryPoint for the protected item
         /// </summary>
-        public RetentionPolicy RetentionPolicy
+        public System.DateTime? OldestRecoveryPoint
         {
-            get { return this._retentionPolicy; }
-            set { this._retentionPolicy = value; }
+            get { return this._oldestRecoveryPoint; }
+            set { this._oldestRecoveryPoint = value; }
         }
         
-        private SchedulePolicy _schedulePolicy;
+        private int _recoveryPointCount;
         
         /// <summary>
-        /// Optional. Backup Schedule of ProtectionPolicy.
+        /// Optional. RecoveryPointCount for the protected item
         /// </summary>
-        public SchedulePolicy SchedulePolicy
+        public int RecoveryPointCount
         {
-            get { return this._schedulePolicy; }
-            set { this._schedulePolicy = value; }
+            get { return this._recoveryPointCount; }
+            set { this._recoveryPointCount = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicy class.
+        /// Initializes a new instance of the MabProtectedItemExtendedInfo
+        /// class.
         /// </summary>
-        public ProtectionPolicy()
+        public MabProtectedItemExtendedInfo()
         {
         }
     }

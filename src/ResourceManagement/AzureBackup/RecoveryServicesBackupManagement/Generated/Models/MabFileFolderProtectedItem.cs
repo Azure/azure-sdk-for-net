@@ -21,27 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// Retention Schedule Format.
+    /// The definition of a MabFileFolder ProtectedItem object.
     /// </summary>
-    public static partial class RetentionScheduleFormat
+    public partial class MabFileFolderProtectedItem : ProtectedItem
     {
-        /// <summary>
-        /// Invalid Retention Schedule Format.
-        /// </summary>
-        public const string Invalid = "Invalid";
+        private string _computerName;
         
         /// <summary>
-        /// Daily Retention Schedule Format.
+        /// Optional. computerName
         /// </summary>
-        public const string Daily = "Daily";
+        public string ComputerName
+        {
+            get { return this._computerName; }
+            set { this._computerName = value; }
+        }
         
         /// <summary>
-        /// Weekly Retention Schedule Format.
+        /// Initializes a new instance of the MabFileFolderProtectedItem class.
         /// </summary>
-        public const string Weekly = "Weekly";
+        public MabFileFolderProtectedItem()
+        {
+        }
     }
 }

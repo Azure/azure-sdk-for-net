@@ -27,31 +27,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Week Number Of the Month.
     /// </summary>
-    public enum WeekNumber
+    public static partial class WeekNumber
     {
         /// <summary>
         /// First Week Number of the Month.
         /// </summary>
-        First = 0,
+        public const string First = "First";
         
         /// <summary>
         /// Second Week Number of the Month.
         /// </summary>
-        Second = 1,
+        public const string Second = "Second";
         
         /// <summary>
         /// Third Week Number of the Month.
         /// </summary>
-        Third = 2,
+        public const string Third = "Third";
         
         /// <summary>
         /// Fourth Week Number of the Month.
         /// </summary>
-        Fourth = 3,
+        public const string Fourth = "Fourth";
         
         /// <summary>
         /// Last Week Number of the Month.
         /// </summary>
-        Last = 4,
+        public const string Last = "Last";
     }
 }

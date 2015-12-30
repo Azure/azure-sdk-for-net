@@ -31,15 +31,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class SimpleSchedulePolicy : SchedulePolicy
     {
-        private IList<DayOfWeek> _scheduleRunDays;
+        private IList<string> _scheduleRunDays;
         
         /// <summary>
         /// Optional. ScheduleRunDays of ProtectionPolicy.
         /// </summary>
-        public IList<DayOfWeek> ScheduleRunDays
+        public IList<string> ScheduleRunDays
         {
             get { return this._scheduleRunDays; }
             set { this._scheduleRunDays = value; }
+        }
+        
+        private string _scheduleRunFrequency;
+        
+        /// <summary>
+        /// Optional. scheduleRunType Schedule of ProtectionPolicy.
+        /// </summary>
+        public string ScheduleRunFrequency
+        {
+            get { return this._scheduleRunFrequency; }
+            set { this._scheduleRunFrequency = value; }
         }
         
         private IList<DateTime> _scheduleRunTimes;
@@ -53,23 +64,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._scheduleRunTimes = value; }
         }
         
-        private string _scheduleRunType;
-        
-        /// <summary>
-        /// Optional. scheduleRunType Schedule of ProtectionPolicy.
-        /// </summary>
-        public string ScheduleRunType
-        {
-            get { return this._scheduleRunType; }
-            set { this._scheduleRunType = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the SimpleSchedulePolicy class.
         /// </summary>
         public SimpleSchedulePolicy()
         {
-            this.ScheduleRunDays = new List<DayOfWeek>();
+            this.ScheduleRunDays = new List<string>();
             this.ScheduleRunTimes = new List<DateTime>();
         }
     }

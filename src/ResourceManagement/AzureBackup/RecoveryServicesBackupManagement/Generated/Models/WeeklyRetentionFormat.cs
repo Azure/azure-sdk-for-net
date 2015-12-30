@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
@@ -31,23 +30,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class WeeklyRetentionFormat
     {
-        private IList<DayOfWeek> _daysOfTheWeek;
+        private IList<string> _daysOfTheWeek;
         
         /// <summary>
         /// Optional. List of days of week.
         /// </summary>
-        public IList<DayOfWeek> DaysOfTheWeek
+        public IList<string> DaysOfTheWeek
         {
             get { return this._daysOfTheWeek; }
             set { this._daysOfTheWeek = value; }
         }
         
-        private IList<WeekNumber> _weeksOfTheMonth;
+        private IList<string> _weeksOfTheMonth;
         
         /// <summary>
         /// Optional. List of weeks of month.
         /// </summary>
-        public IList<WeekNumber> WeeksOfTheMonth
+        public IList<string> WeeksOfTheMonth
         {
             get { return this._weeksOfTheMonth; }
             set { this._weeksOfTheMonth = value; }
@@ -58,8 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         public WeeklyRetentionFormat()
         {
-            this.DaysOfTheWeek = new List<DayOfWeek>();
-            this.WeeksOfTheMonth = new List<WeekNumber>();
+            this.DaysOfTheWeek = new List<string>();
+            this.WeeksOfTheMonth = new List<string>();
         }
     }
 }

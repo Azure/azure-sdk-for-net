@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class YearlyRetentionSchedule : RetentionScheduleBase
     {
-        private IList<Month> _monthsOfYear;
+        private IList<string> _monthsOfYear;
         
         /// <summary>
         /// Optional. List of months of year of yearly retention policy.
         /// </summary>
-        public IList<Month> MonthsOfYear
+        public IList<string> MonthsOfYear
         {
             get { return this._monthsOfYear; }
             set { this._monthsOfYear = value; }
@@ -53,15 +53,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._retentionScheduleDaily = value; }
         }
         
-        private RetentionScheduleFormat _retentionScheduleFormat;
+        private string _retentionScheduleFormatType;
         
         /// <summary>
         /// Optional. Retention ScheduleFormat for yearly retention policy.
         /// </summary>
-        public RetentionScheduleFormat RetentionScheduleFormat
+        public string RetentionScheduleFormatType
         {
-            get { return this._retentionScheduleFormat; }
-            set { this._retentionScheduleFormat = value; }
+            get { return this._retentionScheduleFormatType; }
+            set { this._retentionScheduleFormatType = value; }
         }
         
         private WeeklyRetentionFormat _retentionScheduleWeekly;
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         public YearlyRetentionSchedule()
         {
-            this.MonthsOfYear = new List<Month>();
+            this.MonthsOfYear = new List<string>();
         }
     }
 }

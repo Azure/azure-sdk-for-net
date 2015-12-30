@@ -30,15 +30,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class IaasVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
-        private string _oldestRecoveryPoint;
+        private System.DateTime? _oldestRecoveryPoint;
         
         /// <summary>
         /// Optional. OldestRecoveryPoint for the protected item
         /// </summary>
-        public string OldestRecoveryPoint
+        public System.DateTime? OldestRecoveryPoint
         {
             get { return this._oldestRecoveryPoint; }
             set { this._oldestRecoveryPoint = value; }
+        }
+        
+        private bool _policyInconsistent;
+        
+        /// <summary>
+        /// Optional. If DataSourcePolicy is inconsistent with global policy
+        /// </summary>
+        public bool PolicyInconsistent
+        {
+            get { return this._policyInconsistent; }
+            set { this._policyInconsistent = value; }
         }
         
         private int _recoveryPointCount;

@@ -27,31 +27,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The RetentionDuration type.
     /// </summary>
-    public enum RetentionDurationType
+    public static partial class RetentionDurationType
     {
         /// <summary>
         /// Invalid RetentionDurationType of ProtectionPolicy.
         /// </summary>
-        Invalid = 0,
+        public const string Invalid = "Invalid";
         
         /// <summary>
         /// Days RetentionDurationType of ProtectionPolicy.
         /// </summary>
-        Days = 1,
+        public const string Days = "Days";
         
         /// <summary>
         /// Weeks RetentionDurationType of ProtectionPolicy.
         /// </summary>
-        Weeks = 2,
+        public const string Weeks = "Weeks";
         
         /// <summary>
         /// Months RetentionDurationType of ProtectionPolicy.
         /// </summary>
-        Months = 3,
+        public const string Months = "Months";
         
         /// <summary>
         /// Years RetentionDurationType of ProtectionPolicy.
         /// </summary>
-        Years = 4,
+        public const string Years = "Years";
     }
 }

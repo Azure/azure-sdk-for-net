@@ -27,71 +27,71 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// Month of the year.
     /// </summary>
-    public enum Month
+    public static partial class Month
     {
         /// <summary>
         /// Invalid Month of the year.
         /// </summary>
-        Invalid = 0,
+        public const string Invalid = "Invalid";
         
         /// <summary>
         /// January Month of the year.
         /// </summary>
-        January = 1,
+        public const string January = "January";
         
         /// <summary>
         /// February Month of the year.
         /// </summary>
-        February = 2,
+        public const string February = "February";
         
         /// <summary>
         /// March Month of the year.
         /// </summary>
-        March = 3,
+        public const string March = "March";
         
         /// <summary>
         /// April Month of the year.
         /// </summary>
-        April = 4,
+        public const string April = "April";
         
         /// <summary>
         /// May Month of the year.
         /// </summary>
-        May = 5,
+        public const string May = "May";
         
         /// <summary>
         /// June Month of the year.
         /// </summary>
-        June = 6,
+        public const string June = "June";
         
         /// <summary>
         /// July Month of the year.
         /// </summary>
-        July = 7,
+        public const string July = "July";
         
         /// <summary>
         /// August Month of the year.
         /// </summary>
-        August = 8,
+        public const string August = "August";
         
         /// <summary>
         /// September Month of the year.
         /// </summary>
-        September = 9,
+        public const string September = "September";
         
         /// <summary>
         /// October Month of the year.
         /// </summary>
-        October = 10,
+        public const string October = "October";
         
         /// <summary>
         /// November Month of the year.
         /// </summary>
-        November = 11,
+        public const string November = "November";
         
         /// <summary>
         /// December Month of the year.
         /// </summary>
-        December = 12,
+        public const string December = "December";
     }
 }

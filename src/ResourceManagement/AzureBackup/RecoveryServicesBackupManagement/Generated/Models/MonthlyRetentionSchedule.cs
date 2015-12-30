@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._retentionScheduleDaily = value; }
         }
         
-        private RetentionScheduleFormat _retentionScheduleFormat;
+        private string _retentionScheduleFormatType;
         
         /// <summary>
         /// Optional. Retention ScheduleType for monthly retention policy.
         /// </summary>
-        public RetentionScheduleFormat RetentionScheduleFormat
+        public string RetentionScheduleFormatType
         {
-            get { return this._retentionScheduleFormat; }
-            set { this._retentionScheduleFormat = value; }
+            get { return this._retentionScheduleFormatType; }
+            set { this._retentionScheduleFormatType = value; }
         }
         
         private WeeklyRetentionFormat _retentionScheduleWeekly;
