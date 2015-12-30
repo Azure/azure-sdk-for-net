@@ -4,10 +4,12 @@
 
 namespace Microsoft.Azure.Search
 {
+    using System.Collections.Generic;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Serialization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using Rest.Serialization;
 
     internal static class JsonUtility
     {
@@ -19,62 +21,103 @@ namespace Microsoft.Azure.Search
             JsonSerializerSettings baseSettings,
             bool useCamelCase) where T : class
         {
-            // TODO: Merge settings
-            return CreateSerializerSettings<T>(useCamelCase);
+            return CreateSerializerSettings<T>(baseSettings, useCamelCase);
         }
 
         public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
             where T : class
         {
-            // TODO: Merge settings
-            return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>();
+            return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>(baseSettings);
         }
 
         public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings)
         {
-            // TODO: Merge settings
-            return CreateSerializerSettings<Document>(useCamelCase: false);
+            return CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
         }
 
         public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings)
         {
-            // TODO: Merge settings
-            return CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
+            return CreateDeserializerSettings<SearchResult, SuggestResult, Document>(baseSettings);
         }
 
-        private static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
+        private static JsonSerializerSettings CreateSerializerSettings<T>(
+            JsonSerializerSettings baseSettings, 
+            bool useCamelCase) where T : class
         {
-            return new JsonSerializerSettings()
+            JsonSerializerSettings settings = CopySettings(baseSettings);
+            settings.Converters.Add(new GeographyPointConverter());
+            settings.Converters.Add(new IndexActionConverter<T>());
+            settings.Converters.Add(new DateTimeConverter());
+            settings.NullValueHandling = NullValueHandling.Ignore;
+
+            if (useCamelCase)
             {
-                ContractResolver = useCamelCase ? CamelCaseResolver : DefaultResolver,
-                Converters = new JsonConverter[]
-                {
-                    new GeographyPointConverter(),
-                    new IndexActionConverter<T>(),
-                    new DateTimeConverter()
-                },
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            };
+                settings.ContractResolver = CamelCaseResolver;
+            }
+            else if (settings.ContractResolver is ReadOnlyJsonContractResolver)
+            {
+                settings.ContractResolver = DefaultResolver;
+            }
+
+            return settings;
         }
 
-        private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>()
+        private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>(
+            JsonSerializerSettings baseSettings)
             where TSearchResult : SearchResultBase<TDoc>, new()
             where TSuggestResult : SuggestResultBase<TDoc>, new()
             where TDoc : class
         {
+            JsonSerializerSettings settings = CopySettings(baseSettings);
+            settings.Converters.Add(new GeographyPointConverter());
+            settings.Converters.Add(new DocumentConverter());
+            settings.Converters.Add(new DateTimeConverter());
+            settings.Converters.Add(new SearchResultConverter<TSearchResult, TDoc>());
+            settings.Converters.Add(new SuggestResultConverter<TSuggestResult, TDoc>());
+            settings.DateParseHandling = DateParseHandling.DateTimeOffset;
+
+            // Fail when deserializing null into a non-nullable type. This is to avoid silent data corruption issues.
+            settings.NullValueHandling = NullValueHandling.Include;
+
+            if (settings.ContractResolver is ReadOnlyJsonContractResolver)
+            {
+                settings.ContractResolver = DefaultResolver;
+            }
+
+            return settings;
+        }
+
+        private static JsonSerializerSettings CopySettings(JsonSerializerSettings baseSettings)
+        {
             return new JsonSerializerSettings()
             {
-                ContractResolver = DefaultResolver,
-                Converters = new JsonConverter[]
-                { 
-                    new GeographyPointConverter(),
-                    new DocumentConverter(),
-                    new DateTimeConverter(),
-                    new SearchResultConverter<TSearchResult, TDoc>(),
-                    new SuggestResultConverter<TSuggestResult, TDoc>()
-                },
-                DateParseHandling = DateParseHandling.DateTimeOffset
+                CheckAdditionalContent = baseSettings.CheckAdditionalContent,
+                ConstructorHandling = baseSettings.ConstructorHandling,
+                Context = baseSettings.Context,
+                ContractResolver = baseSettings.ContractResolver,
+                Converters = new List<JsonConverter>(baseSettings.Converters),
+                Culture = baseSettings.Culture,
+                DateFormatHandling = baseSettings.DateFormatHandling,
+                DateFormatString = baseSettings.DateFormatString,
+                DateParseHandling = baseSettings.DateParseHandling,
+                DateTimeZoneHandling = baseSettings.DateTimeZoneHandling,
+                DefaultValueHandling = baseSettings.DefaultValueHandling,
+                EqualityComparer = baseSettings.EqualityComparer,
+                Error = baseSettings.Error,
+                FloatFormatHandling = baseSettings.FloatFormatHandling,
+                FloatParseHandling = baseSettings.FloatParseHandling,
+                Formatting = baseSettings.Formatting,
+                MaxDepth = baseSettings.MaxDepth,
+                MetadataPropertyHandling = baseSettings.MetadataPropertyHandling,
+                MissingMemberHandling = baseSettings.MissingMemberHandling,
+                NullValueHandling = baseSettings.NullValueHandling,
+                ObjectCreationHandling = baseSettings.ObjectCreationHandling,
+                PreserveReferencesHandling = baseSettings.PreserveReferencesHandling,
+                ReferenceLoopHandling = baseSettings.ReferenceLoopHandling,
+                ReferenceResolverProvider = baseSettings.ReferenceResolverProvider,
+                StringEscapeHandling = baseSettings.StringEscapeHandling,
+                TraceWriter = baseSettings.TraceWriter,
+                TypeNameHandling = baseSettings.TypeNameHandling
             };
         }
     }
