@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the AADObject class.
         /// </summary>
-        public AADObject(string objectId = default(string), string objectType = default(string), string displayName = default(string), string userPrincipalName = default(string), string mail = default(string), bool? mailEnabled = default(bool?), bool? securityEnabled = default(bool?), string signInName = default(string), IList<string> servicePrincipalNames = default(IList<string>))
+        public AADObject(string objectId = default(string), string objectType = default(string), string displayName = default(string), string userPrincipalName = default(string), string mail = default(string), bool? mailEnabled = default(bool?), bool? securityEnabled = default(bool?), string signInName = default(string), IList<string> servicePrincipalNames = default(IList<string>), string userType = default(string))
         {
             ObjectId = objectId;
             ObjectType = objectType;
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
             SecurityEnabled = securityEnabled;
             SignInName = signInName;
             ServicePrincipalNames = servicePrincipalNames;
+            UserType = userType;
         }
 
         /// <summary>
@@ -95,6 +96,12 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         [JsonProperty(PropertyName = "servicePrincipalNames")]
         public IList<string> ServicePrincipalNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user type
+        /// </summary>
+        [JsonProperty(PropertyName = "userType")]
+        public string UserType { get; set; }
 
     }
 }

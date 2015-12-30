@@ -20,6 +20,32 @@ namespace Microsoft.Azure.Graph.RBAC
     public static partial class ObjectsOperationsExtensions
     {
             /// <summary>
+            /// Gets the details for current logged in user
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static AADObject GetCurrentUser(this IObjectsOperations operations)
+            {
+                return Task.Factory.StartNew(s => ((IObjectsOperations)s).GetCurrentUserAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details for current logged in user
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AADObject> GetCurrentUserAsync( this IObjectsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.GetCurrentUserWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
+            }
+
+            /// <summary>
             /// Gets AD group membership by provided AD object Ids
             /// </summary>
             /// <param name='operations'>

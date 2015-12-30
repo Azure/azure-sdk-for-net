@@ -29,13 +29,16 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the Application class.
         /// </summary>
-        public Application(string objectId = default(string), string objectType = default(string), string appId = default(string), IList<string> appPermissions = default(IList<string>), bool? availableToOtherTenants = default(bool?))
+        public Application(string objectId = default(string), string objectType = default(string), string appId = default(string), IList<string> appPermissions = default(IList<string>), bool? availableToOtherTenants = default(bool?), string displayName = default(string), IList<string> identifierUris = default(IList<string>), IList<string> replyUrls = default(IList<string>))
         {
             ObjectId = objectId;
             ObjectType = objectType;
             AppId = appId;
             AppPermissions = appPermissions;
             AvailableToOtherTenants = availableToOtherTenants;
+            DisplayName = displayName;
+            IdentifierUris = identifierUris;
+            ReplyUrls = replyUrls;
         }
 
         /// <summary>
@@ -67,6 +70,24 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         [JsonProperty(PropertyName = "availableToOtherTenants")]
         public bool? AvailableToOtherTenants { get; set; }
+
+        /// <summary>
+        /// Gets or sets the displayName
+        /// </summary>
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the application identifier Uris
+        /// </summary>
+        [JsonProperty(PropertyName = "identifierUris")]
+        public IList<string> IdentifierUris { get; set; }
+
+        /// <summary>
+        /// Gets or sets the application reply Urls
+        /// </summary>
+        [JsonProperty(PropertyName = "replyUrls")]
+        public IList<string> ReplyUrls { get; set; }
 
     }
 }

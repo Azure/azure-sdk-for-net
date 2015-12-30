@@ -23,6 +23,16 @@ namespace Microsoft.Azure.Graph.RBAC
     public partial interface IObjectsOperations
     {
         /// <summary>
+        /// Gets the details for current logged in user
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<AADObject>> GetCurrentUserWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets AD group membership by provided AD object Ids
         /// </summary>
         /// <param name='parameters'>
