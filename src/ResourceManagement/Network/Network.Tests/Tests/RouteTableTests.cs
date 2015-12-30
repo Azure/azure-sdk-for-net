@@ -94,6 +94,7 @@
                 string route2Name = TestUtilities.GenerateName();
 
                 var routeTable = new RouteTable() { Location = location, };
+                routeTable.Routes = new List<Route>();
 
                 // Add a route
                 var route1 = new Route()
@@ -202,6 +203,7 @@
                 string route1Name = TestUtilities.GenerateName();
 
                 var routeTable = new RouteTable() { Location = location, };
+                routeTable.Routes = new List<Route>();
 
                 var route1 = new Route()
                 {
@@ -228,7 +230,7 @@
                     routeTableName);
 
                 // Verify that the subnet reference is null
-                Assert.False(getRouteTableResponse.Subnets.Any());
+                Assert.Null(getRouteTableResponse.Subnets);
 
                 // Create Vnet with subnet and add a route table
                 string vnetName = TestUtilities.GenerateName();

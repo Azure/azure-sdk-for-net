@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Net;
+    using System.Collections.Generic;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Resources;
@@ -37,6 +38,7 @@
                 string route2Name = TestUtilities.GenerateName();
 
                 var routeTable = new RouteTable() { Location = location, };
+                routeTable.Routes = new List<Route>();
 
                 // Add a route
                 var route1 = new Route()
@@ -194,6 +196,7 @@
                 string route4Name = TestUtilities.GenerateName();
 
                 var routeTable = new RouteTable() { Location = location, };
+                routeTable.Routes = new List<Route>();
 
                 // Add a route
                 var route1 = new Route()
