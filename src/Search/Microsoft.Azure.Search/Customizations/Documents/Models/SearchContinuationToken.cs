@@ -5,11 +5,14 @@
 namespace Microsoft.Azure.Search.Models
 {
     using System;
+    using Newtonsoft.Json;
+    using Serialization;
 
     /// <summary>
     /// Encapsulates state required to continue fetching search results. This is necessary when Azure Search cannot
     /// fulfill a search request with a single response.
     /// </summary>
+    [JsonConverter(typeof(SearchContinuationTokenConverter))]
     public class SearchContinuationToken
     {
         internal SearchContinuationToken(string nextLink, SearchParametersPayload nextPageParameters)

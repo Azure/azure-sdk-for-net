@@ -25,3 +25,12 @@ using System.Runtime.InteropServices;
 #else
 [assembly: InternalsVisibleTo("Search.Tests")]
 #endif
+
+namespace Microsoft.Azure.Search
+{
+    internal class Consts
+    {
+        // Putting this in AssemblyInfo.cs so we remember to change it when the major SDK version changes.
+        public const string TargetApiVersion = "2015-02-28";
+    }
+}
