@@ -1065,7 +1065,7 @@ namespace Microsoft.Azure.Search
             return shouldTrace;
         }
 
-        private class DocumentSearchResponsePayload<TResult, TDoc>
+        private class DocumentSearchResponsePayload<TResult, TDoc> : SearchContinuationTokenPayload
             where TResult : SearchResultBase<TDoc>
             where TDoc : class
         {
@@ -1080,12 +1080,6 @@ namespace Microsoft.Azure.Search
 
             [JsonProperty("value")]
             public List<TResult> Documents { get; set; }
-
-            [JsonProperty("@odata.nextLink")]
-            public string NextLink { get; set; }
-
-            [JsonProperty("@search.nextPageParameters")]
-            public SearchParametersPayload NextPageParameters { get; set; }
         }
 
         private class DocumentSuggestResponsePayload<TResult, TDoc>

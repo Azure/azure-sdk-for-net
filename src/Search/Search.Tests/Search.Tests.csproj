@@ -43,6 +43,7 @@
     <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\Serialization\DateTimeConverterTests.cs" />
     <Compile Include="Tests\Serialization\GeographyPointConverterTests.cs" />
+    <Compile Include="Tests\Serialization\SearchContinuationTokenConverterTests.cs" />
     <Compile Include="Tests\Serialization\SearchParametersTests.cs" />
     <Compile Include="Tests\Serialization\SuggestParametersTests.cs" />
     <Compile Include="Tests\SoftDeleteColumnDeletionDetectionPolicyTests.cs" />
