@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Serialization
             {
                 nextLinkUri = new Uri(payload.NextLink);
             }
-            catch (UriFormatException e)
+            catch (FormatException e)
             {
                 throw new JsonSerializationException(
                     "Cannot deserialize continuation token. Failed to parse nextLink because it is not a valid URL.", 
