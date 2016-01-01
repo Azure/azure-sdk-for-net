@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._currentScenario = value; }
         }
         
+        private string _currentScenarioStatus;
+        
+        /// <summary>
+        /// Optional. Current scenario status.
+        /// </summary>
+        public string CurrentScenarioStatus
+        {
+            get { return this._currentScenarioStatus; }
+            set { this._currentScenarioStatus = value; }
+        }
+        
         private string _failoverDeploymentModel;
         
         /// <summary>
@@ -184,17 +195,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._replicationProvidersList; }
             set { this._replicationProvidersList = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional. Status of the recovery plan.
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
         }
         
         /// <summary>
