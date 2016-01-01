@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Common.Authentication
                 {
                     result = context.AcquireToken(config.ResourceClientUri, config.ClientId,
                         config.ClientRedirectUri, promptBehavior,
-                        new UserIdentifier(userId, UserIdentifierType.OptionalDisplayableId),
+                        new UserIdentifier(userId, UserIdentifierType.RequiredDisplayableId),
                         AdalConfiguration.EnableEbdMagicCookie);
                 }
                 else

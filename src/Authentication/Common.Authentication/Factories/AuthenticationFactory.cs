@@ -18,6 +18,7 @@ using System;
 using System.Linq;
 using System.Security;
 using Hyak.Common;
+using Microsoft.Azure.Common.Authentication.Authentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
@@ -165,6 +166,12 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
         {
+            return GetServiceClientCredentials(context,
+                AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId);
+        }
+
+        public ServiceClientCredentials GetServiceClientCredentials(AzureContext context, AzureEnvironment.Endpoint targetEndpoint)
+        {
             if (context.Account == null)
             {
                 throw new ArgumentException(Resources.ArmAccountNotFound);
@@ -226,12 +233,19 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
                 if(context.Account.Type == AzureAccount.AccountType.User)
                 {
-                    result = Rest.Azure.Authentication.UserTokenProvider.CreateCredentialsFromCache(
-                        AdalConfiguration.PowerShellClientId, 
-                        tenant, 
-                        context.Account.Id, 
-                        env, 
-                        tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
+                    if (targetEndpoint == AzureEnvironment.Endpoint.Graph)
+                    {
+                        result = new TokenCredentials(new UserRefreshTokenProvider(context, tenant, targetEndpoint, AdalConfiguration.PowerShellClientId));
+                    }
+                    else
+                    {
+                        result = Rest.Azure.Authentication.UserTokenProvider.CreateCredentialsFromCache(
+                            AdalConfiguration.PowerShellClientId,
+                            tenant,
+                            context.Account.Id,
+                            env,
+                            tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
+                    }
                 }
                 else if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
                 {
