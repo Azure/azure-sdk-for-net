@@ -290,7 +290,9 @@ namespace Microsoft.Azure.Management.Search
                     }
             };
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
+
+            UserAgentHelper.SetUserAgent(HttpClient, this.GetType());
         }    
     }
 }
