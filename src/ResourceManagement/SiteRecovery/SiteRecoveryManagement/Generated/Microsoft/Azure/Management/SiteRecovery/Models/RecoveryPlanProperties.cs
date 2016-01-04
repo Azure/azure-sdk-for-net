@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class RecoveryPlanProperties
     {
-        private IList<string> _allowedOperationsList;
+        private IList<string> _allowedOperations;
         
         /// <summary>
         /// Optional. Allowed operations on the recovery plan.
         /// </summary>
-        public IList<string> AllowedOperationsList
+        public IList<string> AllowedOperations
         {
-            get { return this._allowedOperationsList; }
-            set { this._allowedOperationsList = value; }
+            get { return this._allowedOperations; }
+            set { this._allowedOperations = value; }
         }
         
         private CurrentScenarioDetails _currentScenario;
@@ -186,15 +186,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._recoveryFabricId = value; }
         }
         
-        private IList<string> _replicationProvidersList;
+        private IList<string> _replicationProviders;
         
         /// <summary>
         /// Optional. List of replication providers.
         /// </summary>
-        public IList<string> ReplicationProvidersList
+        public IList<string> ReplicationProviders
         {
-            get { return this._replicationProvidersList; }
-            set { this._replicationProvidersList = value; }
+            get { return this._replicationProviders; }
+            set { this._replicationProviders = value; }
         }
         
         /// <summary>
@@ -202,9 +202,9 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public RecoveryPlanProperties()
         {
-            this.AllowedOperationsList = new LazyList<string>();
+            this.AllowedOperations = new LazyList<string>();
             this.Groups = new LazyList<RecoveryPlanGroup>();
-            this.ReplicationProvidersList = new LazyList<string>();
+            this.ReplicationProviders = new LazyList<string>();
         }
         
         /// <summary>

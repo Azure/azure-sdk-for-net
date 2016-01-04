@@ -54,26 +54,26 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._customDetails = value; }
         }
         
-        private IList<string> _failoverDirectionsList;
+        private IList<string> _failoverDirections;
         
         /// <summary>
         /// Required. Allowed failover directions.
         /// </summary>
-        public IList<string> FailoverDirectionsList
+        public IList<string> FailoverDirections
         {
-            get { return this._failoverDirectionsList; }
-            set { this._failoverDirectionsList = value; }
+            get { return this._failoverDirections; }
+            set { this._failoverDirections = value; }
         }
         
-        private IList<string> _failoverTypesList;
+        private IList<string> _failoverTypes;
         
         /// <summary>
         /// Required. Allowed failover types.
         /// </summary>
-        public IList<string> FailoverTypesList
+        public IList<string> FailoverTypes
         {
-            get { return this._failoverTypesList; }
-            set { this._failoverTypesList = value; }
+            get { return this._failoverTypes; }
+            set { this._failoverTypes = value; }
         }
         
         /// <summary>
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public RecoveryPlanAction()
         {
-            this.FailoverDirectionsList = new LazyList<string>();
-            this.FailoverTypesList = new LazyList<string>();
+            this.FailoverDirections = new LazyList<string>();
+            this.FailoverTypes = new LazyList<string>();
         }
     }
 }

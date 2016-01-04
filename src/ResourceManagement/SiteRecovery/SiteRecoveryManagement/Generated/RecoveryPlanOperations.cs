@@ -299,13 +299,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.CustomDetails.InstanceType");
                             }
-                            if (endGroupActionsParameterItem.FailoverDirectionsList == null)
+                            if (endGroupActionsParameterItem.FailoverDirections == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverDirectionsList");
+                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverDirections");
                             }
-                            if (endGroupActionsParameterItem.FailoverTypesList == null)
+                            if (endGroupActionsParameterItem.FailoverTypes == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverTypesList");
+                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverTypes");
                             }
                         }
                     }
@@ -333,13 +333,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.CustomDetails.InstanceType");
                             }
-                            if (startGroupActionsParameterItem.FailoverDirectionsList == null)
+                            if (startGroupActionsParameterItem.FailoverDirections == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverDirectionsList");
+                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverDirections");
                             }
-                            if (startGroupActionsParameterItem.FailoverTypesList == null)
+                            if (startGroupActionsParameterItem.FailoverTypes == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverTypesList");
+                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverTypes");
                             }
                         }
                     }
@@ -479,29 +479,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         
                                         recoveryPlanActionValue["actionName"] = startGroupActionsItem.ActionName;
                                         
-                                        if (startGroupActionsItem.FailoverTypesList != null)
+                                        if (startGroupActionsItem.FailoverTypes != null)
                                         {
-                                            if (startGroupActionsItem.FailoverTypesList is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverTypesList).IsInitialized)
+                                            if (startGroupActionsItem.FailoverTypes is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverTypes).IsInitialized)
                                             {
-                                                JArray failoverTypesListArray = new JArray();
-                                                foreach (string failoverTypesListItem in startGroupActionsItem.FailoverTypesList)
+                                                JArray failoverTypesArray = new JArray();
+                                                foreach (string failoverTypesItem in startGroupActionsItem.FailoverTypes)
                                                 {
-                                                    failoverTypesListArray.Add(failoverTypesListItem);
+                                                    failoverTypesArray.Add(failoverTypesItem);
                                                 }
-                                                recoveryPlanActionValue["failoverTypesList"] = failoverTypesListArray;
+                                                recoveryPlanActionValue["failoverTypes"] = failoverTypesArray;
                                             }
                                         }
                                         
-                                        if (startGroupActionsItem.FailoverDirectionsList != null)
+                                        if (startGroupActionsItem.FailoverDirections != null)
                                         {
-                                            if (startGroupActionsItem.FailoverDirectionsList is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverDirectionsList).IsInitialized)
+                                            if (startGroupActionsItem.FailoverDirections is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverDirections).IsInitialized)
                                             {
-                                                JArray failoverDirectionsListArray = new JArray();
-                                                foreach (string failoverDirectionsListItem in startGroupActionsItem.FailoverDirectionsList)
+                                                JArray failoverDirectionsArray = new JArray();
+                                                foreach (string failoverDirectionsItem in startGroupActionsItem.FailoverDirections)
                                                 {
-                                                    failoverDirectionsListArray.Add(failoverDirectionsListItem);
+                                                    failoverDirectionsArray.Add(failoverDirectionsItem);
                                                 }
-                                                recoveryPlanActionValue["failoverDirectionsList"] = failoverDirectionsListArray;
+                                                recoveryPlanActionValue["failoverDirections"] = failoverDirectionsArray;
                                             }
                                         }
                                         
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue["instanceType"] = "ScriptActionDetails";
                                             RecoveryPlanScriptActionDetails derived = ((RecoveryPlanScriptActionDetails)startGroupActionsItem.CustomDetails);
                                             
-                                            customDetailsValue["scriptPath"] = derived.ScriptPath;
+                                            customDetailsValue["path"] = derived.Path;
                                             
                                             if (derived.Timeout != null)
                                             {
@@ -568,29 +568,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         
                                         recoveryPlanActionValue2["actionName"] = endGroupActionsItem.ActionName;
                                         
-                                        if (endGroupActionsItem.FailoverTypesList != null)
+                                        if (endGroupActionsItem.FailoverTypes != null)
                                         {
-                                            if (endGroupActionsItem.FailoverTypesList is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverTypesList).IsInitialized)
+                                            if (endGroupActionsItem.FailoverTypes is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverTypes).IsInitialized)
                                             {
-                                                JArray failoverTypesListArray2 = new JArray();
-                                                foreach (string failoverTypesListItem2 in endGroupActionsItem.FailoverTypesList)
+                                                JArray failoverTypesArray2 = new JArray();
+                                                foreach (string failoverTypesItem2 in endGroupActionsItem.FailoverTypes)
                                                 {
-                                                    failoverTypesListArray2.Add(failoverTypesListItem2);
+                                                    failoverTypesArray2.Add(failoverTypesItem2);
                                                 }
-                                                recoveryPlanActionValue2["failoverTypesList"] = failoverTypesListArray2;
+                                                recoveryPlanActionValue2["failoverTypes"] = failoverTypesArray2;
                                             }
                                         }
                                         
-                                        if (endGroupActionsItem.FailoverDirectionsList != null)
+                                        if (endGroupActionsItem.FailoverDirections != null)
                                         {
-                                            if (endGroupActionsItem.FailoverDirectionsList is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverDirectionsList).IsInitialized)
+                                            if (endGroupActionsItem.FailoverDirections is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverDirections).IsInitialized)
                                             {
-                                                JArray failoverDirectionsListArray2 = new JArray();
-                                                foreach (string failoverDirectionsListItem2 in endGroupActionsItem.FailoverDirectionsList)
+                                                JArray failoverDirectionsArray2 = new JArray();
+                                                foreach (string failoverDirectionsItem2 in endGroupActionsItem.FailoverDirections)
                                                 {
-                                                    failoverDirectionsListArray2.Add(failoverDirectionsListItem2);
+                                                    failoverDirectionsArray2.Add(failoverDirectionsItem2);
                                                 }
-                                                recoveryPlanActionValue2["failoverDirectionsList"] = failoverDirectionsListArray2;
+                                                recoveryPlanActionValue2["failoverDirections"] = failoverDirectionsArray2;
                                             }
                                         }
                                         
@@ -601,7 +601,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue2["instanceType"] = "ScriptActionDetails";
                                             RecoveryPlanScriptActionDetails derived4 = ((RecoveryPlanScriptActionDetails)endGroupActionsItem.CustomDetails);
                                             
-                                            customDetailsValue2["scriptPath"] = derived4.ScriptPath;
+                                            customDetailsValue2["path"] = derived4.Path;
                                             
                                             if (derived4.Timeout != null)
                                             {
@@ -1984,13 +1984,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.CustomDetails.InstanceType");
                             }
-                            if (endGroupActionsParameterItem.FailoverDirectionsList == null)
+                            if (endGroupActionsParameterItem.FailoverDirections == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverDirectionsList");
+                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverDirections");
                             }
-                            if (endGroupActionsParameterItem.FailoverTypesList == null)
+                            if (endGroupActionsParameterItem.FailoverTypes == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverTypesList");
+                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverTypes");
                             }
                         }
                     }
@@ -2018,13 +2018,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.CustomDetails.InstanceType");
                             }
-                            if (startGroupActionsParameterItem.FailoverDirectionsList == null)
+                            if (startGroupActionsParameterItem.FailoverDirections == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverDirectionsList");
+                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverDirections");
                             }
-                            if (startGroupActionsParameterItem.FailoverTypesList == null)
+                            if (startGroupActionsParameterItem.FailoverTypes == null)
                             {
-                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverTypesList");
+                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.FailoverTypes");
                             }
                         }
                     }
@@ -2147,29 +2147,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         
                                         recoveryPlanActionValue["actionName"] = startGroupActionsItem.ActionName;
                                         
-                                        if (startGroupActionsItem.FailoverTypesList != null)
+                                        if (startGroupActionsItem.FailoverTypes != null)
                                         {
-                                            if (startGroupActionsItem.FailoverTypesList is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverTypesList).IsInitialized)
+                                            if (startGroupActionsItem.FailoverTypes is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverTypes).IsInitialized)
                                             {
-                                                JArray failoverTypesListArray = new JArray();
-                                                foreach (string failoverTypesListItem in startGroupActionsItem.FailoverTypesList)
+                                                JArray failoverTypesArray = new JArray();
+                                                foreach (string failoverTypesItem in startGroupActionsItem.FailoverTypes)
                                                 {
-                                                    failoverTypesListArray.Add(failoverTypesListItem);
+                                                    failoverTypesArray.Add(failoverTypesItem);
                                                 }
-                                                recoveryPlanActionValue["failoverTypesList"] = failoverTypesListArray;
+                                                recoveryPlanActionValue["failoverTypes"] = failoverTypesArray;
                                             }
                                         }
                                         
-                                        if (startGroupActionsItem.FailoverDirectionsList != null)
+                                        if (startGroupActionsItem.FailoverDirections != null)
                                         {
-                                            if (startGroupActionsItem.FailoverDirectionsList is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverDirectionsList).IsInitialized)
+                                            if (startGroupActionsItem.FailoverDirections is ILazyCollection == false || ((ILazyCollection)startGroupActionsItem.FailoverDirections).IsInitialized)
                                             {
-                                                JArray failoverDirectionsListArray = new JArray();
-                                                foreach (string failoverDirectionsListItem in startGroupActionsItem.FailoverDirectionsList)
+                                                JArray failoverDirectionsArray = new JArray();
+                                                foreach (string failoverDirectionsItem in startGroupActionsItem.FailoverDirections)
                                                 {
-                                                    failoverDirectionsListArray.Add(failoverDirectionsListItem);
+                                                    failoverDirectionsArray.Add(failoverDirectionsItem);
                                                 }
-                                                recoveryPlanActionValue["failoverDirectionsList"] = failoverDirectionsListArray;
+                                                recoveryPlanActionValue["failoverDirections"] = failoverDirectionsArray;
                                             }
                                         }
                                         
@@ -2180,7 +2180,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue["instanceType"] = "ScriptActionDetails";
                                             RecoveryPlanScriptActionDetails derived = ((RecoveryPlanScriptActionDetails)startGroupActionsItem.CustomDetails);
                                             
-                                            customDetailsValue["scriptPath"] = derived.ScriptPath;
+                                            customDetailsValue["path"] = derived.Path;
                                             
                                             if (derived.Timeout != null)
                                             {
@@ -2236,29 +2236,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         
                                         recoveryPlanActionValue2["actionName"] = endGroupActionsItem.ActionName;
                                         
-                                        if (endGroupActionsItem.FailoverTypesList != null)
+                                        if (endGroupActionsItem.FailoverTypes != null)
                                         {
-                                            if (endGroupActionsItem.FailoverTypesList is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverTypesList).IsInitialized)
+                                            if (endGroupActionsItem.FailoverTypes is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverTypes).IsInitialized)
                                             {
-                                                JArray failoverTypesListArray2 = new JArray();
-                                                foreach (string failoverTypesListItem2 in endGroupActionsItem.FailoverTypesList)
+                                                JArray failoverTypesArray2 = new JArray();
+                                                foreach (string failoverTypesItem2 in endGroupActionsItem.FailoverTypes)
                                                 {
-                                                    failoverTypesListArray2.Add(failoverTypesListItem2);
+                                                    failoverTypesArray2.Add(failoverTypesItem2);
                                                 }
-                                                recoveryPlanActionValue2["failoverTypesList"] = failoverTypesListArray2;
+                                                recoveryPlanActionValue2["failoverTypes"] = failoverTypesArray2;
                                             }
                                         }
                                         
-                                        if (endGroupActionsItem.FailoverDirectionsList != null)
+                                        if (endGroupActionsItem.FailoverDirections != null)
                                         {
-                                            if (endGroupActionsItem.FailoverDirectionsList is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverDirectionsList).IsInitialized)
+                                            if (endGroupActionsItem.FailoverDirections is ILazyCollection == false || ((ILazyCollection)endGroupActionsItem.FailoverDirections).IsInitialized)
                                             {
-                                                JArray failoverDirectionsListArray2 = new JArray();
-                                                foreach (string failoverDirectionsListItem2 in endGroupActionsItem.FailoverDirectionsList)
+                                                JArray failoverDirectionsArray2 = new JArray();
+                                                foreach (string failoverDirectionsItem2 in endGroupActionsItem.FailoverDirections)
                                                 {
-                                                    failoverDirectionsListArray2.Add(failoverDirectionsListItem2);
+                                                    failoverDirectionsArray2.Add(failoverDirectionsItem2);
                                                 }
-                                                recoveryPlanActionValue2["failoverDirectionsList"] = failoverDirectionsListArray2;
+                                                recoveryPlanActionValue2["failoverDirections"] = failoverDirectionsArray2;
                                             }
                                         }
                                         
@@ -2269,7 +2269,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             customDetailsValue2["instanceType"] = "ScriptActionDetails";
                                             RecoveryPlanScriptActionDetails derived4 = ((RecoveryPlanScriptActionDetails)endGroupActionsItem.CustomDetails);
                                             
-                                            customDetailsValue2["scriptPath"] = derived4.ScriptPath;
+                                            customDetailsValue2["path"] = derived4.Path;
                                             
                                             if (derived4.Timeout != null)
                                             {
@@ -2782,21 +2782,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -2909,21 +2909,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -2935,11 +2935,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -3035,21 +3035,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -3061,11 +3061,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -3411,21 +3411,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -3538,21 +3538,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -3564,11 +3564,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -3664,21 +3664,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -3690,11 +3690,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -4099,21 +4099,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -4226,21 +4226,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -4252,11 +4252,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -4352,21 +4352,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -4378,11 +4378,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -4787,21 +4787,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -4914,21 +4914,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -4940,11 +4940,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -5040,21 +5040,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -5066,11 +5066,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -5475,21 +5475,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -5602,21 +5602,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -5628,11 +5628,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -5728,21 +5728,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -5754,11 +5754,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -6163,21 +6163,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -6290,21 +6290,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -6316,11 +6316,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -6416,21 +6416,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -6442,11 +6442,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -6851,21 +6851,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -6978,21 +6978,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -7004,11 +7004,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -7104,21 +7104,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -7130,11 +7130,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -7539,21 +7539,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -7666,21 +7666,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -7692,11 +7692,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -7792,21 +7792,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -7818,11 +7818,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -8227,21 +8227,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                 }
                                 
-                                JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                    foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                     {
-                                        propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                        propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                     }
                                 }
                                 
-                                JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                    foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                     {
-                                        propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                        propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                     }
                                 }
                                 
@@ -8354,21 +8354,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                 }
                                                 
-                                                JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                    foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                        recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                    foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                     {
-                                                        recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                        recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                     }
                                                 }
                                                 
@@ -8380,11 +8380,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                        if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                        JToken pathValue = customDetailsValue["path"];
+                                                        if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance = ((string)scriptPathValue);
-                                                            recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                            string pathInstance = ((string)pathValue);
+                                                            recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                         }
                                                         
                                                         JToken timeoutValue = customDetailsValue["timeout"];
@@ -8480,21 +8480,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                 }
                                                 
-                                                JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                    foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                        recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                     }
                                                 }
                                                 
-                                                JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                    foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                     {
-                                                        recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                        recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                     }
                                                 }
                                                 
@@ -8506,11 +8506,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                         
-                                                        JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                        if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                        JToken pathValue2 = customDetailsValue2["path"];
+                                                        if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                         {
-                                                            string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                            recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                            string pathInstance2 = ((string)pathValue2);
+                                                            recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                         }
                                                         
                                                         JToken timeoutValue3 = customDetailsValue2["timeout"];
@@ -8944,21 +8944,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.FailoverDeploymentModel = failoverDeploymentModelInstance;
                                         }
                                         
-                                        JToken replicationProvidersListArray = propertiesValue["replicationProvidersList"];
-                                        if (replicationProvidersListArray != null && replicationProvidersListArray.Type != JTokenType.Null)
+                                        JToken replicationProvidersArray = propertiesValue["replicationProviders"];
+                                        if (replicationProvidersArray != null && replicationProvidersArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken replicationProvidersListValue in ((JArray)replicationProvidersListArray))
+                                            foreach (JToken replicationProvidersValue in ((JArray)replicationProvidersArray))
                                             {
-                                                propertiesInstance.ReplicationProvidersList.Add(((string)replicationProvidersListValue));
+                                                propertiesInstance.ReplicationProviders.Add(((string)replicationProvidersValue));
                                             }
                                         }
                                         
-                                        JToken allowedOperationsListArray = propertiesValue["allowedOperationsList"];
-                                        if (allowedOperationsListArray != null && allowedOperationsListArray.Type != JTokenType.Null)
+                                        JToken allowedOperationsArray = propertiesValue["allowedOperations"];
+                                        if (allowedOperationsArray != null && allowedOperationsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken allowedOperationsListValue in ((JArray)allowedOperationsListArray))
+                                            foreach (JToken allowedOperationsValue in ((JArray)allowedOperationsArray))
                                             {
-                                                propertiesInstance.AllowedOperationsList.Add(((string)allowedOperationsListValue));
+                                                propertiesInstance.AllowedOperations.Add(((string)allowedOperationsValue));
                                             }
                                         }
                                         
@@ -9071,21 +9071,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             recoveryPlanActionInstance.ActionName = actionNameInstance;
                                                         }
                                                         
-                                                        JToken failoverTypesListArray = startGroupActionsValue["failoverTypesList"];
-                                                        if (failoverTypesListArray != null && failoverTypesListArray.Type != JTokenType.Null)
+                                                        JToken failoverTypesArray = startGroupActionsValue["failoverTypes"];
+                                                        if (failoverTypesArray != null && failoverTypesArray.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JToken failoverTypesListValue in ((JArray)failoverTypesListArray))
+                                                            foreach (JToken failoverTypesValue in ((JArray)failoverTypesArray))
                                                             {
-                                                                recoveryPlanActionInstance.FailoverTypesList.Add(((string)failoverTypesListValue));
+                                                                recoveryPlanActionInstance.FailoverTypes.Add(((string)failoverTypesValue));
                                                             }
                                                         }
                                                         
-                                                        JToken failoverDirectionsListArray = startGroupActionsValue["failoverDirectionsList"];
-                                                        if (failoverDirectionsListArray != null && failoverDirectionsListArray.Type != JTokenType.Null)
+                                                        JToken failoverDirectionsArray = startGroupActionsValue["failoverDirections"];
+                                                        if (failoverDirectionsArray != null && failoverDirectionsArray.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JToken failoverDirectionsListValue in ((JArray)failoverDirectionsListArray))
+                                                            foreach (JToken failoverDirectionsValue in ((JArray)failoverDirectionsArray))
                                                             {
-                                                                recoveryPlanActionInstance.FailoverDirectionsList.Add(((string)failoverDirectionsListValue));
+                                                                recoveryPlanActionInstance.FailoverDirections.Add(((string)failoverDirectionsValue));
                                                             }
                                                         }
                                                         
@@ -9097,11 +9097,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             {
                                                                 RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance = new RecoveryPlanScriptActionDetails();
                                                                 
-                                                                JToken scriptPathValue = customDetailsValue["scriptPath"];
-                                                                if (scriptPathValue != null && scriptPathValue.Type != JTokenType.Null)
+                                                                JToken pathValue = customDetailsValue["path"];
+                                                                if (pathValue != null && pathValue.Type != JTokenType.Null)
                                                                 {
-                                                                    string scriptPathInstance = ((string)scriptPathValue);
-                                                                    recoveryPlanScriptActionDetailsInstance.ScriptPath = scriptPathInstance;
+                                                                    string pathInstance = ((string)pathValue);
+                                                                    recoveryPlanScriptActionDetailsInstance.Path = pathInstance;
                                                                 }
                                                                 
                                                                 JToken timeoutValue = customDetailsValue["timeout"];
@@ -9197,21 +9197,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             recoveryPlanActionInstance2.ActionName = actionNameInstance2;
                                                         }
                                                         
-                                                        JToken failoverTypesListArray2 = endGroupActionsValue["failoverTypesList"];
-                                                        if (failoverTypesListArray2 != null && failoverTypesListArray2.Type != JTokenType.Null)
+                                                        JToken failoverTypesArray2 = endGroupActionsValue["failoverTypes"];
+                                                        if (failoverTypesArray2 != null && failoverTypesArray2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JToken failoverTypesListValue2 in ((JArray)failoverTypesListArray2))
+                                                            foreach (JToken failoverTypesValue2 in ((JArray)failoverTypesArray2))
                                                             {
-                                                                recoveryPlanActionInstance2.FailoverTypesList.Add(((string)failoverTypesListValue2));
+                                                                recoveryPlanActionInstance2.FailoverTypes.Add(((string)failoverTypesValue2));
                                                             }
                                                         }
                                                         
-                                                        JToken failoverDirectionsListArray2 = endGroupActionsValue["failoverDirectionsList"];
-                                                        if (failoverDirectionsListArray2 != null && failoverDirectionsListArray2.Type != JTokenType.Null)
+                                                        JToken failoverDirectionsArray2 = endGroupActionsValue["failoverDirections"];
+                                                        if (failoverDirectionsArray2 != null && failoverDirectionsArray2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JToken failoverDirectionsListValue2 in ((JArray)failoverDirectionsListArray2))
+                                                            foreach (JToken failoverDirectionsValue2 in ((JArray)failoverDirectionsArray2))
                                                             {
-                                                                recoveryPlanActionInstance2.FailoverDirectionsList.Add(((string)failoverDirectionsListValue2));
+                                                                recoveryPlanActionInstance2.FailoverDirections.Add(((string)failoverDirectionsValue2));
                                                             }
                                                         }
                                                         
@@ -9223,11 +9223,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             {
                                                                 RecoveryPlanScriptActionDetails recoveryPlanScriptActionDetailsInstance2 = new RecoveryPlanScriptActionDetails();
                                                                 
-                                                                JToken scriptPathValue2 = customDetailsValue2["scriptPath"];
-                                                                if (scriptPathValue2 != null && scriptPathValue2.Type != JTokenType.Null)
+                                                                JToken pathValue2 = customDetailsValue2["path"];
+                                                                if (pathValue2 != null && pathValue2.Type != JTokenType.Null)
                                                                 {
-                                                                    string scriptPathInstance2 = ((string)scriptPathValue2);
-                                                                    recoveryPlanScriptActionDetailsInstance2.ScriptPath = scriptPathInstance2;
+                                                                    string pathInstance2 = ((string)pathValue2);
+                                                                    recoveryPlanScriptActionDetailsInstance2.Path = pathInstance2;
                                                                 }
                                                                 
                                                                 JToken timeoutValue3 = customDetailsValue2["timeout"];

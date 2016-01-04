@@ -151,13 +151,13 @@ namespace SiteRecovery.Tests.ScenarioTests
                             new RecoveryPlanAction()
                             {
                                 ActionName = "S1",
-                                FailoverTypesList = new List<string>() { "PlannedFailover" },
-                                FailoverDirectionsList = new List<string>() { "PrimaryToRecovery" },
+                                FailoverTypes = new List<string>() { "PlannedFailover" },
+                                FailoverDirections = new List<string>() { "PrimaryToRecovery" },
                                 CustomDetails = new RecoveryPlanScriptActionDetails()
                                 {
                                     InstanceType = "ScriptActionDetails",
                                     FabricLocation = "Recovery",
-                                    ScriptPath = "path1",
+                                    Path = "path1",
                                     Timeout = null
                                 }
                             }
@@ -167,8 +167,8 @@ namespace SiteRecovery.Tests.ScenarioTests
                             new RecoveryPlanAction()
                             {
                                 ActionName = "M1",
-                                FailoverTypesList = new List<string>() { "UnplannedFailover" },
-                                FailoverDirectionsList = new List<string>() { "RecoveryToPrimary" },
+                                FailoverTypes = new List<string>() { "UnplannedFailover" },
+                                FailoverDirections = new List<string>() { "RecoveryToPrimary" },
                                 CustomDetails = new RecoveryPlanManualActionDetails()
                                 {
                                     InstanceType = "ManualActionDetails",
@@ -201,21 +201,21 @@ namespace SiteRecovery.Tests.ScenarioTests
                             new RecoveryPlanAction()
                             {
                                 ActionName = "S2",
-                                FailoverTypesList = new List<string>() { "PlannedFailover" },
-                                FailoverDirectionsList = new List<string>() { "PrimaryToRecovery" },
+                                FailoverTypes = new List<string>() { "PlannedFailover" },
+                                FailoverDirections = new List<string>() { "PrimaryToRecovery" },
                                 CustomDetails = new RecoveryPlanScriptActionDetails()
                                 {
                                     InstanceType = "ScriptActionDetails",
                                     FabricLocation = "Primary",
-                                    ScriptPath = "path2",
+                                    Path = "path2",
                                     Timeout = null
                                 }
                             },
                             new RecoveryPlanAction()
                             {
                                 ActionName = "M2",
-                                FailoverTypesList = new List<string>() { "UnplannedFailover" },
-                                FailoverDirectionsList = new List<string>() { "RecoveryToPrimary" },
+                                FailoverTypes = new List<string>() { "UnplannedFailover" },
+                                FailoverDirections = new List<string>() { "RecoveryToPrimary" },
                                 CustomDetails = new RecoveryPlanManualActionDetails()
                                 {
                                     InstanceType = "ManualActionDetails",
@@ -246,18 +246,18 @@ namespace SiteRecovery.Tests.ScenarioTests
 
             Assert.True(rp.Properties.Groups.Last().StartGroupActions.Count == 1);
             Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].ActionName == "S1");
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverTypesList.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverTypesList[0] == "PlannedFailover");
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverDirectionsList.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverDirectionsList[0] == "PrimaryToRecovery");
+            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverTypes.Count == 1);
+            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverTypes[0] == "PlannedFailover");
+            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverDirections.Count == 1);
+            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverDirections[0] == "PrimaryToRecovery");
             Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].CustomDetails.InstanceType == "ScriptActionDetails");
 
             Assert.True(rp.Properties.Groups.Last().EndGroupActions.Count == 1);
             Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].ActionName == "M1");
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverTypesList.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverTypesList[0] == "UnplannedFailover");
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirectionsList.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirectionsList[0] == "RecoveryToPrimary");
+            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverTypes.Count == 1);
+            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverTypes[0] == "UnplannedFailover");
+            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirections.Count == 1);
+            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirections[0] == "RecoveryToPrimary");
             Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].CustomDetails.InstanceType == "ManualActionDetails");
         }
 
@@ -275,17 +275,17 @@ namespace SiteRecovery.Tests.ScenarioTests
 
             Assert.True(rp.Properties.Groups[0].StartGroupActions.Count == 2);
             Assert.True(rp.Properties.Groups[0].StartGroupActions[0].ActionName == "S2");
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverTypesList.Count == 1);
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverTypesList[0] == "PlannedFailover");
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverDirectionsList.Count == 1);
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverDirectionsList[0] == "PrimaryToRecovery");
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverTypes.Count == 1);
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverTypes[0] == "PlannedFailover");
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverDirections.Count == 1);
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[0].FailoverDirections[0] == "PrimaryToRecovery");
             Assert.True(rp.Properties.Groups[0].StartGroupActions[0].CustomDetails.InstanceType == "ScriptActionDetails");
 
             Assert.True(rp.Properties.Groups[0].StartGroupActions[1].ActionName == "M2");
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverTypesList.Count == 1);
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverTypesList[0] == "UnplannedFailover");
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverDirectionsList.Count == 1);
-            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverDirectionsList[0] == "RecoveryToPrimary");
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverTypes.Count == 1);
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverTypes[0] == "UnplannedFailover");
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverDirections.Count == 1);
+            Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverDirections[0] == "RecoveryToPrimary");
             Assert.True(rp.Properties.Groups[0].StartGroupActions[1].CustomDetails.InstanceType == "ManualActionDetails");
         }
     }
