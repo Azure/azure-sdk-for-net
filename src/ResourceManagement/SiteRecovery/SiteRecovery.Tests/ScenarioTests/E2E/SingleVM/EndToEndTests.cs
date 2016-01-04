@@ -27,7 +27,6 @@ namespace SiteRecovery.Tests
 {
     public class EndToEndTests : SiteRecoveryTestsBase
     {
-        
         public void EndToEndE2ESingleVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -36,6 +35,7 @@ namespace SiteRecovery.Tests
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
                 bool pairClouds = true;
+                bool StorageClassificationMapping = true;
                 bool enableDR = true;
                 bool pfo = true;
                 bool commit = true;
@@ -46,6 +46,7 @@ namespace SiteRecovery.Tests
                 bool rrReverse = true;
                 bool disableDR = true;
                 bool unpair = true;
+                bool StorageClassificationUnmap = true;
                 bool removePolicy = true;
 
                 var fabrics = client.Fabrics.List(RequestHeaders);
@@ -65,6 +66,7 @@ namespace SiteRecovery.Tests
                 string recCld = string.Empty;
                 string policyName = "Hydra-EndToEndE2ESingleVM-" + (new Random()).Next();
                 string mappingName = "Mapping-EndToEndE2ESingleVM-" + (new Random()).Next();
+                string StorageClassificationMappingName = "StrgMapping-EndToEndE2ESingleVM-453834979";// "StrgMapping-EndToEndE2ESingleVM-" + (new Random()).Next();
                 string replicationProtectedItemName = "PE" + (new Random()).Next();
                 string enableDRVmName = string.Empty;
                 Policy currentPolicy = null;
@@ -94,6 +96,29 @@ namespace SiteRecovery.Tests
                 else
                 {
                     recCld = client.ProtectionContainer.Get(selectedFabric.Name, recCldGuid, RequestHeaders).ProtectionContainer.Id;
+                }
+
+                StorageClassification selectedStorageClassification = null;
+                if (StorageClassificationMapping)
+                {
+                    IList<StorageClassification> StorageClassifications = client.StorageClassification.List(selectedFabric.Name, RequestHeaders).StorageClassifications;
+
+                    if (StorageClassifications.Count > 1)
+                    {
+                        StorageClassificationMappingInputProperties strgInputProps = new StorageClassificationMappingInputProperties()
+                        {
+                            TargetStorageClassificationId = StorageClassifications[1].Id
+                        };
+
+                        StorageClassificationMappingInput strgInput = new StorageClassificationMappingInput()
+                        {
+                            Properties = strgInputProps
+                        };
+
+                        var mapStorageClassifications = client.StorageClassificationMapping.PairStorageClassification(selectedFabric.Name, StorageClassifications[0].Name, StorageClassificationMappingName, strgInput, RequestHeaders);
+
+                        selectedStorageClassification = StorageClassifications[0];
+                    }
                 }
 
                 if (pairClouds)
@@ -200,12 +225,12 @@ namespace SiteRecovery.Tests
                     EnableProtectionInputProperties enableDRProp = new EnableProtectionInputProperties();
                     if (string.IsNullOrEmpty(enableDRVmName))
                     {
-                        var protectableItems = client.ProtectableItem.List(selectedFabric.Name, priCld, "Unprotected", RequestHeaders);
+                        var protectableItem = GetUnprotectedItem(client, selectedFabric.Name, priCld);
 
                         enableDRProp = new EnableProtectionInputProperties()
                         {
                             PolicyId = currentPolicy.Id,
-                            ProtectableItemId = protectableItems.ProtectableItems[0].Id,
+                            ProtectableItemId = protectableItem.Id,
                             ProviderSpecificDetails = new EnableProtectionProviderSpecificInput()
                         };
                     }
@@ -383,6 +408,11 @@ namespace SiteRecovery.Tests
                         RequestHeaders);
                 }
 
+                if (StorageClassificationUnmap)
+                {
+                    var unmapStorageClassifications = client.StorageClassificationMapping.UnpairStorageClassification(selectedFabric.Name, selectedStorageClassification.Name, StorageClassificationMappingName, RequestHeaders);
+                }
+
                 if (removePolicy)
                 {
                     var policyDeletion = client.Policies.Delete(currentPolicy.Name, RequestHeaders);
@@ -390,7 +420,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void EndToEndE2ASingleVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -475,7 +504,7 @@ namespace SiteRecovery.Tests
                         OnlineIrStartTime =  null,
                         RecoveryPointHistoryDuration = 0,
                         ReplicationInterval = 30,
-                        StorageAccounts = new List<string>() { "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc" }
+                        StorageAccounts = new List<string>() { "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/StorageAccounts/bvtmapped2storacc" }
                     };
 
                     CreatePolicyInputProperties createInputProp = new CreatePolicyInputProperties()
@@ -522,7 +551,8 @@ namespace SiteRecovery.Tests
                 {
                     if (string.IsNullOrEmpty(enableDRName))
                     {
-                        protectableItem = client.ProtectableItem.List(selectedFabric.Name, primaryCloud.Name, "Unprotected", RequestHeaders).ProtectableItems[0];
+
+                        protectableItem = GetUnprotectedItem(client, selectedFabric.Name, primaryCloud.Name);
                         enableDRName = protectableItem.Name;
                     }
                     else
@@ -536,7 +566,7 @@ namespace SiteRecovery.Tests
                         OSType = "Windows",
                         VhdId = (protectableItem.Properties.CustomDetails as HyperVVirtualMachineDetails).DiskDetailsList[0].VhdId,
                         VmName = protectableItem.Properties.FriendlyName,
-                        TargetStorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc",
+                        TargetStorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorageClassification/StorageClassificationAccounts/bvtmapped2storacc",
                     };
 
                     EnableProtectionInputProperties enableDRProp = new EnableProtectionInputProperties()
@@ -604,7 +634,7 @@ namespace SiteRecovery.Tests
                         OSType = "Windows",
                         VHDId = (protectableItem.Properties.CustomDetails as HyperVVirtualMachineDetails).DiskDetailsList[0].VhdId,
                         VmName = protectableItem.Properties.FriendlyName,
-                        StorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc",
+                        StorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/StorageAccounts/bvtmapped2storacc",
                     };
 
                     ReverseReplicationInputProperties rrProp = new ReverseReplicationInputProperties()
@@ -719,7 +749,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void EndToEndB2ASingleVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -788,7 +817,7 @@ namespace SiteRecovery.Tests
                         OnlineIrStartTime = null,
                         RecoveryPointHistoryDuration = 0,
                         ReplicationInterval = 30,
-                        StorageAccounts = new List<string>() { "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc" }
+                        StorageAccounts = new List<string>() { "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/StorageAccounts/bvtmapped2storacc" }
                     };
 
                     CreatePolicyInputProperties createInputProp = new CreatePolicyInputProperties()
@@ -834,7 +863,7 @@ namespace SiteRecovery.Tests
                 {
                     if (string.IsNullOrEmpty(enableDRName))
                     {
-                        protectableItem = client.ProtectableItem.List(selectedFabric.Name, primaryCloud.Name, "Unprotected", RequestHeaders).ProtectableItems[0];
+                        protectableItem = GetUnprotectedItem(client, selectedFabric.Name, primaryCloud.Name);
                         enableDRName = protectableItem.Name;
                     }
                     else
@@ -848,7 +877,7 @@ namespace SiteRecovery.Tests
                         OSType = "Windows",
                         VhdId = (protectableItem.Properties.CustomDetails as HyperVVirtualMachineDetails).DiskDetailsList[0].VhdId,
                         VmName = protectableItem.Properties.FriendlyName,
-                        TargetStorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc",
+                        TargetStorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/StorageAccounts/bvtmapped2storacc",
                     };
 
                     EnableProtectionInputProperties enableDRProp = new EnableProtectionInputProperties()
@@ -919,7 +948,7 @@ namespace SiteRecovery.Tests
                         OSType = "Windows",
                         VHDId = (protectableItem.Properties.CustomDetails as HyperVVirtualMachineDetails).DiskDetailsList[0].VhdId,
                         VmName = protectableItem.Properties.FriendlyName,
-                        StorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/bvtmapped2storacc",
+                        StorageAccountId = "/subscriptions/19b823e2-d1f3-4805-93d7-401c5d8230d5/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/StorageAccounts/bvtmapped2storacc",
                     };
 
                     ReverseReplicationInputProperties rrProp = new ReverseReplicationInputProperties()
@@ -1029,6 +1058,27 @@ namespace SiteRecovery.Tests
                     var policyDeletion = client.Policies.Delete(selectedPolicy.Name, RequestHeaders);
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns an unprotected item.
+        /// </summary>
+        /// <param name="client">Site Recovery management client.</param>
+        /// <param name="fabricId">Fabric Id.</param>
+        /// <param name="containerId">Container Id.</param>
+        /// <returns>Unprotected VM.</returns>
+        private ProtectableItem GetUnprotectedItem(SiteRecoveryManagementClient client, string fabricId, string containerId)
+        {
+            List<ProtectableItem> protectableItemList = new List<ProtectableItem>();
+            ProtectableItemListResponse protectableItemListResponse = client.ProtectableItem.List(fabricId, containerId, "Unprotected", null, "1000", RequestHeaders);
+            protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+            while (protectableItemListResponse.NextLink != null)
+            {
+                protectableItemListResponse = client.ProtectableItem.ListNext(protectableItemListResponse.NextLink, RequestHeaders);
+                protectableItemList.AddRange(protectableItemListResponse.ProtectableItems);
+            }
+
+            return protectableItemList[0];
         }
     }
 }

@@ -39,14 +39,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group containing the job
-        /// collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='resourceName'>
         /// Required. The name of the resource.
         /// </param>
         /// <param name='extendedInfoArgs'>
-        /// Required. Create resource exnteded info input parameters.
+        /// Required. Create resource extended info input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -72,14 +72,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group containing the job
-        /// collection.
+        /// Required. The name of the Resource group/ Cloud service containing
+        /// the resource/ Vault collection.
         /// </param>
         /// <param name='resourceName'>
         /// Required. The name of the resource.
         /// </param>
         /// <param name='extendedInfoArgs'>
-        /// Required. Create resource exnteded info input parameters.
+        /// Required. Create resource extended info input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -145,6 +145,64 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public static Task<ResourceExtendedInformationResponse> GetExtendedInfoAsync(this IVaultExtendedInfoOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetExtendedInfoAsync(resourceGroupName, resourceName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update the vault extended info.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group containing the vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. The name of the resource.
+        /// </param>
+        /// <param name='extendedInfoArgs'>
+        /// Required. Update resource extended info input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the resource extended information object
+        /// </returns>
+        public static ResourceExtendedInformationResponse UpdateExtendedInfo(this IVaultExtendedInfoOperations operations, string resourceGroupName, string resourceName, ResourceExtendedInformationArgs extendedInfoArgs, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVaultExtendedInfoOperations)s).UpdateExtendedInfoAsync(resourceGroupName, resourceName, extendedInfoArgs, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update the vault extended info.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group containing the vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. The name of the resource.
+        /// </param>
+        /// <param name='extendedInfoArgs'>
+        /// Required. Update resource extended info input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the resource extended information object
+        /// </returns>
+        public static Task<ResourceExtendedInformationResponse> UpdateExtendedInfoAsync(this IVaultExtendedInfoOperations operations, string resourceGroupName, string resourceName, ResourceExtendedInformationArgs extendedInfoArgs, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.UpdateExtendedInfoAsync(resourceGroupName, resourceName, extendedInfoArgs, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

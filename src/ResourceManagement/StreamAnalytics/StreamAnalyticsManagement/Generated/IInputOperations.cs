@@ -28,7 +28,7 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
     /// <summary>
-    /// Operations for managing the input of the stream analytics job.
+    /// Operations for managing the input(s) of the stream analytics job.
     /// </summary>
     public partial interface IInputOperations
     {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// The input name of the stream analytics job.
+        /// The name of the input for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
+        Task<ResourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create or update an input for a stream analytics job.
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response of the get stream analytics intput operation.
+        /// The response of the get stream analytics input operation.
         /// </returns>
         Task<InputGetResponse> GetAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
         
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// The input name of the stream analytics job.
+        /// The name of the input for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -202,6 +202,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
+        Task<ResourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
     }
 }

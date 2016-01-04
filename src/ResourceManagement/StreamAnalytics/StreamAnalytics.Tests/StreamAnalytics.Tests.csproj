@@ -9,6 +9,7 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="OperationTests\BasicDelegatingHandler.cs" />
+    <Compile Include="OperationTests\FunctionOperationTest.cs" />
     <Compile Include="OperationTests\InputOperationTest.cs" />
     <Compile Include="OperationTests\JobOperationsTest.cs" />
     <Compile Include="OperationTests\OutputOperationTest.cs" />
@@ -18,6 +19,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\FunctionDefinition.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\RetrieveDefaultFunctionDefinitionRequest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\TransformationDefinition.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -28,6 +35,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\JobDefinition.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.FunctionOperationTest\Test_FunctionOperations_Full_Scalar_AzureMLWebService.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.FunctionOperationTest\Test_FunctionOperations_RetrieveDefaultDefinitionWithRawJsonContent.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.InputOperationsTest\Test_InputOperations_E2E.json">
