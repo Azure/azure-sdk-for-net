@@ -1661,10 +1661,10 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.True(failedHistories.Count() >= 0);
                 Assert.True(failedHistories.All(history => history.Properties.Status == JobExecutionStatus.Failed));
 
-                var listResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName);
                 var listTopResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, top: 5);
                 var listSkipResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, top: 5, skip: 5);
-                
+                var listResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName);
+
                 Assert.True(listResult.Count() >= 0);
                 Assert.True(listResult.ElementAt(0).Id.Contains(id));
                 Assert.True(listResult.ElementAt(0).Name.Contains(jobDefinitionName));
@@ -1678,8 +1678,6 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.NotNull(listResult.ElementAt(0).Properties.StartTime);
                 
                 Assert.True(listTopResult.Count() == 5);
-                Assert.Equal(listResult.ElementAt(0).Id, listTopResult.ElementAt(0).Id);
-                Assert.Equal(listResult.ElementAt(0).Name, listTopResult.ElementAt(0).Name);
                 Assert.Equal(listResult.ElementAt(0).Type, listTopResult.ElementAt(0).Type);
                 Assert.Equal(listResult.ElementAt(0).Properties.ActionName, listTopResult.ElementAt(0).Properties.ActionName);
                 Assert.Equal(listResult.ElementAt(0).Properties.EndTime, listTopResult.ElementAt(0).Properties.EndTime);
