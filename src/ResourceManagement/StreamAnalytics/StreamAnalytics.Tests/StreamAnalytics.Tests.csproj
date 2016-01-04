@@ -22,6 +22,9 @@
     <None Include="Resources\FunctionDefinition.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\RetrieveDefaultFunctionDefinitionRequest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\TransformationDefinition.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -35,6 +38,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.FunctionOperationTest\Test_FunctionOperations_Full_Scalar_AzureMLWebService.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.FunctionOperationTest\Test_FunctionOperations_RetrieveDefaultDefinitionWithRawJsonContent.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\StreamAnalytics.Tests.OperationTests.InputOperationsTest\Test_InputOperations_E2E.json">

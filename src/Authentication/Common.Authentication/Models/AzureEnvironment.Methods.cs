@@ -96,8 +96,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.AzureSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.AzureGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.AzureTrafficManagerDnsSuffix },
-                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId}
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId }
                     }
                 }
             },
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.ChinaSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.ChinaGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.ChinaTrafficManagerDnsSuffix },
-                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.ChinaAzureKeyVaultDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.ChinaAzureKeyVaultServiceEndpointResourceId }
                     }
                 }
             }
@@ -339,6 +339,10 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKeyVaultDnsSuffix = "vault.azure.net";
 
+        public const string ChinaAzureKeyVaultDnsSuffix = "vault.azure.cn";
+
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
+
+        public const string ChinaAzureKeyVaultServiceEndpointResourceId = "https://vault.azure.cn";
     }
 }
