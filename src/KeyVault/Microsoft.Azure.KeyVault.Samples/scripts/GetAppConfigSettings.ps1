@@ -16,6 +16,17 @@ $applicationPassword = '' # If not specified, script will generate a random pass
 $location            = 'East US'                          # Get-AzureLocation
 
 # **********************************************************************************************
+# Generates a secure 32-byte symmetric key for authentication
+# **********************************************************************************************
+Function GenerateSymmetricKey()
+{
+    $key = New-Object byte[](32)
+    $rng = [System.Security.Cryptography.RNGCryptoServiceProvider]::Create()
+    $rng.GetBytes($key)
+    return [System.Convert]::ToBase64String($key)
+}
+
+# **********************************************************************************************
 # Should we bounce this script execution?
 # **********************************************************************************************
 if (($vaultName -eq 'MyVaultName') -or ($resourceGroupName -eq 'MyResourceGroupName') -or ($applicationName -eq 'MyAppName'))
@@ -45,7 +56,7 @@ if(-not $SvcPrincipals)
 {
 	if(-not $applicationPassword)
 	{
-		$applicationPassword = [Guid]::NewGuid()
+		$applicationPassword = GenerateSymmetricKey
 	}
 	
     # Create a new AD application if not created before

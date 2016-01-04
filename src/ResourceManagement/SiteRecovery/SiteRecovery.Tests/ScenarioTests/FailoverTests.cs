@@ -26,7 +26,6 @@ namespace SiteRecovery.Tests
 {
     public class FailoverTests : SiteRecoveryTestsBase
     {
-        [Fact]
         public void E2EFailover()
         {
             using (UndoContext context = UndoContext.Current)
@@ -54,8 +53,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-	[Fact]
-        public void CommitFailover()
+	public void CommitFailover()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -71,7 +69,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void RR()
         {
             using (UndoContext context = UndoContext.Current)
@@ -88,7 +85,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void E2ETFO()
         {
             using (UndoContext context = UndoContext.Current)
@@ -136,7 +132,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void E2EUFO()
         {
             using (UndoContext context = UndoContext.Current)
@@ -165,7 +160,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void ApplyRecoveryPoint()
         {
             using (UndoContext context = UndoContext.Current)
@@ -235,7 +229,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void VMwareAzureV2UnplannedFailover()
         {
             using (UndoContext context = UndoContext.Current)

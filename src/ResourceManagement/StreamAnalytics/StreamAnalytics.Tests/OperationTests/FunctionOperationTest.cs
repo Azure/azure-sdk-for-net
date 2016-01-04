@@ -12,7 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System;
+using System.IO;
 using System.Net;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
@@ -190,6 +190,72 @@ namespace StreamAnalytics.Tests.OperationTests
                     jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
                     Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
                     Assert.Equal(0, jobGetResponse.Job.Properties.Functions.Count);
+                }
+                finally
+                {
+                    client.StreamingJobs.Delete(resourceGroupName, resourceName);
+                    resourceClient.ResourceGroups.Delete(resourceGroupName);
+                }
+            }
+        }
+
+        [Fact]
+        public void Test_FunctionOperations_RetrieveDefaultDefinitionWithRawJsonContent()
+        {
+            BasicDelegatingHandler handler = new BasicDelegatingHandler();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                string resourceGroupName = TestUtilities.GenerateName("StreamAnalytics");
+                string resourceName = TestUtilities.GenerateName("MyStreamingJobSubmittedBySDK");
+
+                string serviceLocation = TestHelper.GetDefaultLocation();
+
+                var resourceClient = TestHelper.GetResourceClient(handler);
+                var client = TestHelper.GetStreamAnalyticsManagementClient(handler);
+
+                try
+                {
+                    ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
+                    resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
+
+                    // Construct the JobCreateProperties
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
+
+                    // Create a streaming job
+                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobCreateOrUpdateResponse.StatusCode);
+
+                    // Get a streaming job to check
+                    JobGetParameters jobGetParameters = new JobGetParameters(string.Empty);
+                    JobGetResponse jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(serviceLocation, jobGetResponse.Job.Location);
+                    Assert.Equal(resourceName, jobGetResponse.Job.Name);
+
+                    // Retrieve default definition of the function
+                    string functionName = TestUtilities.GenerateName("functiontest");
+                    string content = File.ReadAllText(@"Resources\RetrieveDefaultFunctionDefinitionRequest.json");
+                    var retrieveDefaultDefinitionParameters = new FunctionRetrieveDefaultDefinitionWithRawJsonContentParameters
+                        ()
+                    {
+                        Content = content
+                    };
+                    FunctionRetrieveDefaultDefinitionResponse retrieveDefaultDefinitionResponse =
+                        client.Functions.RetrieveDefaultDefinitionWithRawJsonContent(resourceGroupName, resourceName, functionName,
+                            retrieveDefaultDefinitionParameters);
+                    Assert.Equal(functionName, retrieveDefaultDefinitionResponse.Function.Name);
+                    ScalarFunctionProperties scalarFunctionProperties =
+                        (ScalarFunctionProperties)retrieveDefaultDefinitionResponse.Function.Properties;
+                    AzureMachineLearningWebServiceFunctionBinding azureMachineLearningWebServiceFunctionBinding =
+                        (AzureMachineLearningWebServiceFunctionBinding)scalarFunctionProperties.Properties.Binding;
+                    Assert.Equal(TestHelper.ExecuteEndpoint, azureMachineLearningWebServiceFunctionBinding.Properties.Endpoint);
+                    Assert.Equal(1000, azureMachineLearningWebServiceFunctionBinding.Properties.BatchSize);
+                    Assert.Null(azureMachineLearningWebServiceFunctionBinding.Properties.ApiKey);
+                    azureMachineLearningWebServiceFunctionBinding.Properties.ApiKey = TestHelper.ApiKey;
                 }
                 finally
                 {

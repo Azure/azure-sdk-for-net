@@ -26,7 +26,6 @@ namespace SiteRecovery.Tests
 {
     public class ExportTests : SiteRecoveryTestsBase
     {
-        [Fact(Timeout = (5 * 60 * 1000))]
         public void ExportJobTest()
         {
             int timeToWaitInMins = 2;
