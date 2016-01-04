@@ -32,6 +32,17 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
     /// </summary>
     public partial class Collection
     {
+        private CollectionAclLevel _aclLevel;
+        
+        /// <summary>
+        /// Optional. Application ACL level (Collection or Application)
+        /// </summary>
+        public CollectionAclLevel AclLevel
+        {
+            get { return this._aclLevel; }
+            set { this._aclLevel = value; }
+        }
+        
         private ActiveDirectoryConfig _adInfo;
         
         /// <summary>
