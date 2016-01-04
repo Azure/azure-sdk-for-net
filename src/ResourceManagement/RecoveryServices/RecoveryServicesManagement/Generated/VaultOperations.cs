@@ -972,7 +972,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/";
             url = url + "vaults";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/storageconfig/vaultstorageconfig";
+            url = url + "/backupstorageconfig/vaultstorageconfig";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -1413,7 +1413,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/";
             url = url + "vaults";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/storageconfig/vaultstorageconfig";
+            url = url + "/backupstorageconfig/vaultstorageconfig";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
