@@ -6,12 +6,13 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Microsoft.Azure.Search;
 
 [assembly: AssemblyTitle("Microsoft Azure Search Library")]
 [assembly: AssemblyDescription("Makes it easy to develop a .NET application that uses Azure Search.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion(Consts.AssemblyFileVersion)]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
@@ -25,3 +26,15 @@ using System.Runtime.InteropServices;
 #else
 [assembly: InternalsVisibleTo("Search.Tests")]
 #endif
+
+namespace Microsoft.Azure.Search
+{
+    internal class Consts
+    {
+        // Putting this in AssemblyInfo.cs so we remember to change it when the major SDK version changes.
+        public const string TargetApiVersion = "2015-02-28";
+
+        // Making this a constant so we can use it to set the UserAgent header.
+        public const string AssemblyFileVersion = "1.0.0.0";
+    }
+}

@@ -290,7 +290,9 @@ namespace Microsoft.Azure.Search
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScoringFunction>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScoringFunction>("type"));
             DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
-        }    
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
+
+            UserAgentHelper.SetUserAgent(HttpClient, this.GetType());
+        }
     }
 }

@@ -96,6 +96,24 @@ namespace Microsoft.Azure.Search.Tests
             Run(TestCanSuggestWithDateTimeInStaticModel);
         }
 
+        [Fact]
+        public void CanSuggestWithCustomContractResolver()
+        {
+            Run(TestCanSuggestWithCustomContractResolver);
+        }
+
+        [Fact]
+        public void CanSuggestWithCustomConverterViaSettings()
+        {
+            Run(TestCanSuggestWithCustomConverterViaSettings);
+        }
+
+        [Fact]
+        public void CanSuggestWithCustomConverter()
+        {
+            Run(TestCanSuggestWithCustomConverter);
+        }
+
         protected override SearchIndexClient GetClient()
         {
             SearchIndexClient client = base.GetClient();

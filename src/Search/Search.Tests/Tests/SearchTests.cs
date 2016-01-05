@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
     using Xunit;
 
@@ -146,8 +145,10 @@ namespace Microsoft.Azure.Search.Tests
 
             HitHighlights highlights = response.Results[0].Highlights;
             Assert.NotNull(highlights);
-            SearchAssert.SequenceEqual(new[] { Description, Category }, highlights.Keys);
-
+            Assert.Equal(2, highlights.Keys.Count);
+            Assert.Contains(Description, highlights.Keys);
+            Assert.Contains(Category, highlights.Keys);
+            
             string categoryHighlight = highlights[Category].Single();
             Assert.Equal("<b>Luxury</b>", categoryHighlight);
 
@@ -482,19 +483,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index =
-                new Index()
-                {
-                    Name = SearchTestUtilities.GenerateName(),
-                    Fields = new[]
-                    {
-                        new Field("ISBN", DataType.String) { IsKey = true },
-                        new Field("Title", DataType.String) { IsSearchable = true },
-                        new Field("Author", DataType.String),
-                        new Field("PublishDate", DataType.DateTimeOffset)
-                    }
-                };
-
+            Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
@@ -629,6 +618,65 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc.IntValue, response.Results[0].Document.IntValue);
+        }
+
+        protected void TestCanSearchWithCustomContractResolver()
+        {
+            SearchIndexClient client = GetClientForQuery();
+            client.DeserializationSettings.ContractResolver = new MyCustomContractResolver();
+
+            DocumentSearchResult<LoudHotel> response = client.Documents.Search<LoudHotel>("Best");
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(Data.TestDocuments[0], response.Results[0].Document.ToHotel());
+        }
+
+        protected void TestCanSearchWithCustomConverter()
+        {
+            TestCanSearchWithCustomConverter<CustomBookWithConverter>();
+        }
+
+        protected void TestCanSearchWithCustomConverterViaSettings()
+        {
+            Action<SearchIndexClient> customizeSettings =
+                client =>
+                {
+                    var converter = new CustomBookConverter<CustomBook>();
+                    converter.Install(client);
+                };
+
+            TestCanSearchWithCustomConverter<CustomBook>(customizeSettings);
+        }
+
+        private void TestCanSearchWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
+            where T : CustomBook, new()
+        {
+            customizeSettings = customizeSettings ?? (client => { });
+
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+            Index index = Book.DefineIndex();
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            customizeSettings(indexClient);
+
+            var doc = new T()
+            {
+                InternationalStandardBookNumber = "123",
+                Name = "Lord of the Rings",
+                AuthorName = "J.R.R. Tolkien",
+                PublishDateTime = new DateTime(1954, 7, 29)
+            };
+
+            var batch = IndexBatch.Upload(new[] { doc });
+
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
+
+            DocumentSearchResult<T> response = indexClient.Documents.Search<T>("*");
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(doc, response.Results[0].Document);
         }
 
         private IEnumerable<string> IndexDocuments(SearchIndexClient client, int totalDocCount)

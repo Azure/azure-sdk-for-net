@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Search
             /// </param>
             public static async Task<long?> CountAsync( this IDocumentsOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<long?> result = await operations.CountWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.CountWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
     }

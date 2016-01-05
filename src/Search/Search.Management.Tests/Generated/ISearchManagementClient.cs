@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Search
     /// <summary>
     /// Client that can be used to manage Azure Search services and API keys.
     /// </summary>
-    public partial interface ISearchManagementClient
+    public partial interface ISearchManagementClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.

@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static async Task<SearchServiceResource> CreateOrUpdateAsync( this IServicesOperations operations, string resourceGroupName, string serviceName, SearchServiceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SearchServiceResource> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
             /// <summary>
@@ -134,8 +134,8 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static async Task<SearchServiceListResult> ListAsync( this IServicesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SearchServiceListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
     }

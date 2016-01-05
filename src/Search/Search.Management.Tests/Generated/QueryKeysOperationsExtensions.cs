@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static async Task<ListQueryKeysResult> ListAsync( this IQueryKeysOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ListQueryKeysResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
             }
 
     }

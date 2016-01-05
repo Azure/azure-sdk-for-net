@@ -150,5 +150,23 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(TestCanFilterNonNullableType);
         }
+
+        [Fact]
+        public void CanSearchWithCustomContractResolver()
+        {
+            Run(TestCanSearchWithCustomContractResolver);
+        }
+
+        [Fact]
+        public void CanSearchWithCustomConverterViaSettings()
+        {
+            Run(TestCanSearchWithCustomConverterViaSettings);
+        }
+
+        [Fact]
+        public void CanSearchWithCustomConverter()
+        {
+            Run(TestCanSearchWithCustomConverter);
+        }
     }
 }

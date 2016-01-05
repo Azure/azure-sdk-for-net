@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PublicIPAddress class.
         /// </summary>
-        public PublicIPAddress(string publicIPAllocationMethod, string etag = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
+        public PublicIPAddress(string etag = default(string), string publicIPAllocationMethod = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
         {
             Etag = etag;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -91,19 +91,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (PublicIPAllocationMethod == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PublicIPAllocationMethod");
-            }
-            if (this.IpConfiguration != null)
-            {
-                this.IpConfiguration.Validate();
-            }
-        }
     }
 }

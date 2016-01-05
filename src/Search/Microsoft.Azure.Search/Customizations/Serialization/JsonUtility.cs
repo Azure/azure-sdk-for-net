@@ -4,114 +4,120 @@
 
 namespace Microsoft.Azure.Search
 {
-    using System;
-    using System.Globalization;
-    using System.IO;
+    using System.Collections.Generic;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Serialization;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
+    using Rest.Serialization;
 
     internal static class JsonUtility
     {
-        public static readonly JsonSerializerSettings DefaultSerializerSettings = CreateDefaultSettings();
+        private static readonly IContractResolver CamelCaseResolver = new CamelCasePropertyNamesContractResolver();
 
-        public static readonly JsonSerializerSettings DocumentSerializerSettings = 
-            CreateSerializerSettings<Document>(useCamelCase: false);
+        private static readonly IContractResolver DefaultResolver = new DefaultContractResolver();
 
-        public static readonly JsonSerializerSettings DocumentDeserializerSettings =
-            CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
-
-        private static readonly IContractResolver CamelCaseResolver =
-            new ValueTypePreservingContractResolver(new CamelCasePropertyNamesContractResolver());
-
-        private static readonly IContractResolver DefaultResolver =
-            new ValueTypePreservingContractResolver(new DefaultContractResolver());
-
-        public static JsonSerializerSettings CreateDefaultSettings()
+        public static JsonSerializerSettings CreateTypedSerializerSettings<T>(
+            JsonSerializerSettings baseSettings,
+            bool useCamelCase) where T : class
         {
-            return new JsonSerializerSettings()
-            {
-                ContractResolver = CamelCaseResolver,
-                Converters = new JsonConverter[]
-                {
-                    new StringEnumConverter() { CamelCaseText = true }
-                },
-                DefaultValueHandling = DefaultValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            };
+            return CreateSerializerSettings<T>(baseSettings, useCamelCase);
         }
 
-        public static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
+        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
+            where T : class
         {
-            return new JsonSerializerSettings()
-            {
-                ContractResolver = useCamelCase ? CamelCaseResolver : DefaultResolver,
-                Converters = new JsonConverter[]
-                { 
-                    new GeographyPointConverter(),
-                    new IndexActionConverter<T>(),
-                    new DateTimeConverter()
-                },
-                DefaultValueHandling = DefaultValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            };
+            return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>(baseSettings);
         }
 
-        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>() where T : class
+        public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings)
         {
-            return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>();
+            return CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
         }
 
-        public static T DeserializeObject<T>(string json, JsonSerializerSettings settings)
+        public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings)
         {
-            if (json == null)
+            return CreateDeserializerSettings<SearchResult, SuggestResult, Document>(baseSettings);
+        }
+
+        private static JsonSerializerSettings CreateSerializerSettings<T>(
+            JsonSerializerSettings baseSettings, 
+            bool useCamelCase) where T : class
+        {
+            JsonSerializerSettings settings = CopySettings(baseSettings);
+            settings.Converters.Add(new GeographyPointConverter());
+            settings.Converters.Add(new IndexActionConverter<T>());
+            settings.Converters.Add(new DateTimeConverter());
+            settings.NullValueHandling = NullValueHandling.Ignore;
+
+            if (useCamelCase)
             {
-                throw new ArgumentNullException("json");
+                settings.ContractResolver = CamelCaseResolver;
+            }
+            else if (settings.ContractResolver is ReadOnlyJsonContractResolver)
+            {
+                settings.ContractResolver = DefaultResolver;
             }
 
-            // Use Create() instead of CreateDefault() here so that our own settings aren't merged with the defaults.
-            var serializer = JsonSerializer.Create(settings);
-            serializer.CheckAdditionalContent = true;
-
-            using (var reader = new JsonTextReader(new StringReader(json)))
-            {
-                return (T)serializer.Deserialize(reader, typeof(T));
-            }
+            return settings;
         }
 
-        public static string SerializeObject(object obj, JsonSerializerSettings settings)
-        {
-            // Use Create() instead of CreateDefault() here so that our own settings aren't merged with the defaults.
-            var serializer = JsonSerializer.Create(settings);
-            var stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-
-            using (var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = serializer.Formatting })
-            {
-                serializer.Serialize(jsonWriter, obj);
-            }
-
-            return stringWriter.ToString();
-        }
-
-        private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>()
+        private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>(
+            JsonSerializerSettings baseSettings)
             where TSearchResult : SearchResultBase<TDoc>, new()
             where TSuggestResult : SuggestResultBase<TDoc>, new()
             where TDoc : class
         {
+            JsonSerializerSettings settings = CopySettings(baseSettings);
+            settings.Converters.Add(new GeographyPointConverter());
+            settings.Converters.Add(new DocumentConverter());
+            settings.Converters.Add(new DateTimeConverter());
+            settings.Converters.Add(new SearchResultConverter<TSearchResult, TDoc>());
+            settings.Converters.Add(new SuggestResultConverter<TSuggestResult, TDoc>());
+            settings.DateParseHandling = DateParseHandling.DateTimeOffset;
+
+            // Fail when deserializing null into a non-nullable type. This is to avoid silent data corruption issues.
+            settings.NullValueHandling = NullValueHandling.Include;
+
+            if (settings.ContractResolver is ReadOnlyJsonContractResolver)
+            {
+                settings.ContractResolver = DefaultResolver;
+            }
+
+            return settings;
+        }
+
+        private static JsonSerializerSettings CopySettings(JsonSerializerSettings baseSettings)
+        {
             return new JsonSerializerSettings()
             {
-                ContractResolver = DefaultResolver,
-                Converters = new JsonConverter[]
-                { 
-                    new GeographyPointConverter(),
-                    new DocumentConverter(),
-                    new DateTimeConverter(),
-                    new SearchResultConverter<TSearchResult, TDoc>(),
-                    new SuggestResultConverter<TSuggestResult, TDoc>()
-                },
-                DateParseHandling = DateParseHandling.DateTimeOffset
+                CheckAdditionalContent = baseSettings.CheckAdditionalContent,
+                ConstructorHandling = baseSettings.ConstructorHandling,
+                Context = baseSettings.Context,
+                ContractResolver = baseSettings.ContractResolver,
+                Converters = new List<JsonConverter>(baseSettings.Converters),
+                Culture = baseSettings.Culture,
+                DateFormatHandling = baseSettings.DateFormatHandling,
+                DateFormatString = baseSettings.DateFormatString,
+                DateParseHandling = baseSettings.DateParseHandling,
+                DateTimeZoneHandling = baseSettings.DateTimeZoneHandling,
+                DefaultValueHandling = baseSettings.DefaultValueHandling,
+                EqualityComparer = baseSettings.EqualityComparer,
+                Error = baseSettings.Error,
+                FloatFormatHandling = baseSettings.FloatFormatHandling,
+                FloatParseHandling = baseSettings.FloatParseHandling,
+                Formatting = baseSettings.Formatting,
+                MaxDepth = baseSettings.MaxDepth,
+                MetadataPropertyHandling = baseSettings.MetadataPropertyHandling,
+                MissingMemberHandling = baseSettings.MissingMemberHandling,
+                NullValueHandling = baseSettings.NullValueHandling,
+                ObjectCreationHandling = baseSettings.ObjectCreationHandling,
+                PreserveReferencesHandling = baseSettings.PreserveReferencesHandling,
+                ReferenceLoopHandling = baseSettings.ReferenceLoopHandling,
+                ReferenceResolverProvider = baseSettings.ReferenceResolverProvider,
+                StringEscapeHandling = baseSettings.StringEscapeHandling,
+                TraceWriter = baseSettings.TraceWriter,
+                TypeNameHandling = baseSettings.TypeNameHandling
             };
         }
     }
