@@ -685,7 +685,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static byte[] DirectOpen(this IFileSystemOperations operations, string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true)
+            public static System.IO.Stream DirectOpen(this IFileSystemOperations operations, string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true)
             {
                 return Task.Factory.StartNew(s => ((IFileSystemOperations)s).DirectOpenAsync(directFilePath, accountname, length, offset, buffersize, op, read), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -723,7 +723,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<byte[]> DirectOpenAsync( this IFileSystemOperations operations, string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.IO.Stream> DirectOpenAsync( this IFileSystemOperations operations, string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.DirectOpenWithHttpMessagesAsync(directFilePath, accountname, length, offset, buffersize, op, read, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
@@ -1763,7 +1763,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='fileOpenRequestLink'>
             /// The link to the file to open including all required parameters.
             /// </param>
-            public static byte[] Open(this IFileSystemOperations operations, string fileOpenRequestLink)
+            public static System.IO.Stream Open(this IFileSystemOperations operations, string fileOpenRequestLink)
             {
                 return Task.Factory.StartNew(s => ((IFileSystemOperations)s).OpenAsync(fileOpenRequestLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1780,7 +1780,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<byte[]> OpenAsync( this IFileSystemOperations operations, string fileOpenRequestLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.IO.Stream> OpenAsync( this IFileSystemOperations operations, string fileOpenRequestLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.OpenWithHttpMessagesAsync(fileOpenRequestLink, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;

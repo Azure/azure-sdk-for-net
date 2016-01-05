@@ -1903,7 +1903,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<byte[]>> DirectOpenWithHttpMessagesAsync(string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<System.IO.Stream>> DirectOpenWithHttpMessagesAsync(string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
@@ -2056,7 +2056,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<byte[]>();
+            var _result = new AzureOperationResponse<System.IO.Stream>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2066,14 +2066,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Deserialize Response
             if ((int)_statusCode == 200)
             {
-                try
-                {
-                    _result.Body = await _httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                }
-                catch (JsonException ex)
-                {
-                    throw new RestException("Unable to deserialize the response.", ex);
-                }
+                _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
             if (_shouldTrace)
             {
@@ -5284,7 +5277,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<byte[]>> OpenWithHttpMessagesAsync(string fileOpenRequestLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string fileOpenRequestLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (fileOpenRequestLink == null)
             {
@@ -5379,7 +5372,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<byte[]>();
+            var _result = new AzureOperationResponse<System.IO.Stream>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -5389,14 +5382,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Deserialize Response
             if ((int)_statusCode == 200)
             {
-                try
-                {
-                    _result.Body = await _httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                }
-                catch (JsonException ex)
-                {
-                    throw new RestException("Unable to deserialize the response.", ex);
-                }
+                _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
             if (_shouldTrace)
             {

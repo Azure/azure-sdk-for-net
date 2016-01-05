@@ -750,7 +750,7 @@ namespace DataLakeStore.Tests
         internal void CompareFileContents(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, string filePath, string expectedContents, bool useDirectOpen = false)
         {
             // download a file and ensure they are equal
-            byte[] openResponse;
+            Stream openResponse;
             if (useDirectOpen)
             {
                 openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.DirectOpen(filePath, caboAccountName, null);
@@ -766,7 +766,7 @@ namespace DataLakeStore.Tests
 
             }
 
-            string toCompare = Encoding.UTF8.GetString(openResponse);
+            string toCompare = new StreamReader(openResponse).ReadToEnd();
             Assert.Equal(expectedContents, toCompare);
         }
 
