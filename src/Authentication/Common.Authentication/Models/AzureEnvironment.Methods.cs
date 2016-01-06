@@ -339,9 +339,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureResourceManagerEndpoint = "https://management.azure.com/";
 
-        public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn";
+        public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn/";
 
-        public const string USGovernmentResourceManagerEndpoint = "https://management.usgovcloudapi.net";
+        public const string USGovernmentResourceManagerEndpoint = "https://management.usgovcloudapi.net/";
 
         public const string GalleryEndpoint = "https://gallery.azure.com/";
 
