@@ -102,7 +102,8 @@ namespace Microsoft.Azure.Management.HDInsight
                         ClusterType = clusterCreateParameters.ClusterType.ToString()
                     },
                     ClusterVersion = clusterCreateParameters.Version,
-                    OperatingSystemType = clusterCreateParameters.OSType
+                    OperatingSystemType = clusterCreateParameters.OSType,
+                    ClusterTier = clusterCreateParameters.Tier 
                 }
             };
 

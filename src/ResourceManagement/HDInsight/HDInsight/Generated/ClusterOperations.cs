@@ -154,6 +154,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -344,6 +348,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -616,6 +624,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -659,6 +671,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     }
                     
                     propertiesValue["osType"] = clusterCreateParameters.Properties.OperatingSystemType.ToString();
+                    
+                    propertiesValue["Tier"] = clusterCreateParameters.Properties.ClusterTier.ToString();
                     
                     if (clusterCreateParameters.Properties.ClusterDefinition != null)
                     {
@@ -940,6 +954,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                 {
                                     OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                     propertiesInstance.OperatingSystemType = osTypeInstance;
+                                }
+                                
+                                JToken tierValue = propertiesValue2["Tier"];
+                                if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                {
+                                    Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                    propertiesInstance.ClusterTier = tierInstance;
                                 }
                                 
                                 JToken clusterDefinitionValue2 = propertiesValue2["clusterDefinition"];
@@ -1367,6 +1388,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1761,6 +1786,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2185,6 +2214,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2506,6 +2539,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                 {
                                     OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                     propertiesInstance.OperatingSystemType = osTypeInstance;
+                                }
+                                
+                                JToken tierValue = propertiesValue["Tier"];
+                                if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                {
+                                    Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                    propertiesInstance.ClusterTier = tierInstance;
                                 }
                                 
                                 JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
@@ -2920,6 +2960,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3463,6 +3507,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3607,6 +3655,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3721,6 +3773,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                 {
                                     OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                     propertiesInstance.OperatingSystemType = osTypeInstance;
+                                }
+                                
+                                JToken tierValue = propertiesValue["Tier"];
+                                if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                {
+                                    Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                    propertiesInstance.ClusterTier = tierInstance;
                                 }
                                 
                                 JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
@@ -4109,6 +4168,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
@@ -4547,6 +4610,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4666,6 +4733,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                         {
                                             OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                             propertiesInstance.OperatingSystemType = osTypeInstance;
+                                        }
+                                        
+                                        JToken tierValue = propertiesValue["Tier"];
+                                        if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                        {
+                                            Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                            propertiesInstance.ClusterTier = tierInstance;
                                         }
                                         
                                         JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
@@ -5082,6 +5156,10 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+<<<<<<< HEAD
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
+>>>>>>> 02e86bd... Adding Tier parameter to cluster creation
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5201,6 +5279,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                         {
                                             OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                             propertiesInstance.OperatingSystemType = osTypeInstance;
+                                        }
+                                        
+                                        JToken tierValue = propertiesValue["Tier"];
+                                        if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                        {
+                                            Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                            propertiesInstance.ClusterTier = tierInstance;
                                         }
                                         
                                         JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];

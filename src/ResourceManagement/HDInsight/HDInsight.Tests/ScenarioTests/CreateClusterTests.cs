@@ -188,6 +188,69 @@ namespace HDInsight.Tests
         }
 
         [Fact]
+        public void TestCreateHumboldtClusterWithPremiumTier()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
+                cluster.Tier= Tier.Premium;
+                const string dnsname = "hdisdk-PremiumClusterTest";
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                client.Clusters.Get(resourceGroup, dnsname);
+
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        [Fact]
+        public void TestCreateWindowsPremiumCluster()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetPaasClusterSpec();
+                cluster.Properties.ClusterTier = Tier.Premium;
+                const string dnsname = "hdisdk-WindowsPremiumClusterTest";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                try
+                {
+                    client.Clusters.Create(resourceGroup, dnsname, cluster);
+                }
+                catch (CloudException ex)
+                {
+                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.BadRequest);
+                }
+
+                OperationResource result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+
+            }
+        }
+
+        [Fact]
         public void TestCreateHumboldtClusterWithSshUsernamePassword()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
