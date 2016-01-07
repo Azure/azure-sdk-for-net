@@ -30,7 +30,6 @@ namespace SiteRecovery.Tests
     {
         private const string RecoveryservicePrefix = "RecoveryServices";
 
-        [Fact]
         public void ConfigureAlertSettingsTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -65,7 +64,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UnconfigureAlertSettingsTest()
         {
             using (UndoContext context = UndoContext.Current)

@@ -28,7 +28,6 @@ namespace SiteRecovery.Tests
 {
     public class PairingTests : SiteRecoveryTestsBase
     {
-        [Fact]
         public void PairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -113,7 +112,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UnpairClouds()
         {
             using (UndoContext context = UndoContext.Current)
@@ -140,7 +138,7 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-                string policyName = "Hydra-Profile-HyperVAzure-" + new Random().Next();
+                string policyName = "Hydra-Profile-HyperVAzure";
                 HyperVReplicaAzurePolicyInput hvrAPolicy = new HyperVReplicaAzurePolicyInput()
                 {
                     ApplicationConsistentSnapshotFrequencyInHours = 0,
@@ -174,13 +172,11 @@ namespace SiteRecovery.Tests
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-
-                var response = client.Policies.List(RequestHeaders);
-                var deleteResponse = client.Policies.Delete(response.Policies[0].Name, RequestHeaders);
+                string policyName = "Hydra-Profile-HyperVAzure";
+                var deleteResponse = client.Policies.Delete(policyName, RequestHeaders);
             }
         }
 
-        [Fact]
         public void CreateHyperV2012Profile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -221,7 +217,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void CreateHyperV2012R2Profile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -263,15 +258,14 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
-        public void CreateInMageAzureV2Profile()
+        public void CreateVMwareAzureV2Profile()
         {
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
-                string policyName = "Hitesh-InMageAzureV2-Profile";
-                InMageAzureV2PolicyInput input = new InMageAzureV2PolicyInput
+                string policyName = "Hitesh-VMwareAzureV2-Profile";
+                VMwareAzureV2PolicyInput input = new VMwareAzureV2PolicyInput
                 {
                     AppConsistentFrequencyInMinutes = 15,
                     CrashConsistentFrequencyInMinutes = 15,
@@ -301,44 +295,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
-        public void CreateInMageProfile()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var client = GetSiteRecoveryClient(CustomHttpHandler);
-                string policyName = "Hitesh-InMage-Profile";
-                var input = new InMagePolicyInput
-                {
-                    AppConsistentFrequencyInMinutes = 15,
-                    MultiVmSyncStatus = "Disable",
-                    RecoveryPointHistory = 15,
-                    RecoveryPointThresholdInMinutes = 30
-                };
-
-                CreatePolicyInputProperties createInputProp = new CreatePolicyInputProperties()
-                {
-                    ProviderSpecificInput = input
-                };
-
-                CreatePolicyInput policyInput = new CreatePolicyInput()
-                {
-                    Properties = createInputProp
-                };
-
-                var response = client.Policies.Create(policyName, policyInput, RequestHeaders);
-                Assert.NotNull(response);
-                Assert.Equal(response.Status, OperationStatus.Succeeded);
-
-                var policyResponse = response as CreatePolicyOperationResponse;
-                Assert.NotNull(policyResponse);
-                Assert.NotNull(policyResponse.Policy);
-                Assert.Equal(policyResponse.Policy.Name, policyName);
-            }
-        }
-
-        [Fact]
         public void PairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -366,7 +322,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UnPairNetworks()
         {
             using (UndoContext context = UndoContext.Current)
@@ -386,7 +341,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void PurgeCloudPair()
         {
             using (UndoContext context = UndoContext.Current)
@@ -429,8 +383,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
-        public void CreateInMageAzureV2Mapping()
+        public void CreateVMwareAzureV2Mapping()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -460,13 +413,13 @@ namespace SiteRecovery.Tests
                 Assert.NotEmpty(policyResponse.Policies);
 
                 var policy = policyResponse.Policies.First(
-                    p => p.Properties.ProviderSpecificDetails.InstanceType == "InMageAzureV2");
+                    p => p.Properties.ProviderSpecificDetails.InstanceType == "VMwareAzureV2");
                 Assert.NotNull(policy);
 
                 var response = client.ProtectionContainerMapping.ConfigureProtection(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
-                    "Hitesh-InMageAzureV2-Mapping",
+                    "Hitesh-VMwareAzureV2-Mapping",
                     new CreateProtectionContainerMappingInput
                     {
                         Properties = new CreateProtectionContainerMappingInputProperties
@@ -486,64 +439,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
-        public void CreateInMageMapping()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var client = GetSiteRecoveryClient(CustomHttpHandler);
-
-                var responseServers = client.Fabrics.List(RequestHeaders);
-
-                Assert.True(
-                    responseServers.Fabrics.Count > 0,
-                    "Servers count can't be less than 1");
-
-                var vmWareFabric = responseServers.Fabrics.First(
-                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
-                Assert.NotNull(vmWareFabric);
-
-                var containersResponse = client.ProtectionContainer.List(
-                    vmWareFabric.Name,
-                    RequestHeaders);
-                Assert.NotNull(containersResponse);
-                Assert.True(
-                    containersResponse.ProtectionContainers.Count > 0,
-                    "Containers count can't be less than 1.");
-
-                var policyResponse = client.Policies.List(RequestHeaders);
-                Assert.NotNull(policyResponse);
-                Assert.NotEmpty(policyResponse.Policies);
-
-                var policy = policyResponse.Policies.First(
-                    p => p.Properties.ProviderSpecificDetails.InstanceType == "InMage");
-                Assert.NotNull(policy);
-
-                var response = client.ProtectionContainerMapping.ConfigureProtection(
-                    vmWareFabric.Name,
-                    containersResponse.ProtectionContainers[0].Name,
-                    "Hitesh-InMage-Mapping",
-                    new CreateProtectionContainerMappingInput
-                    {
-                        Properties = new CreateProtectionContainerMappingInputProperties
-                        {
-                            PolicyId = policy.Id,
-                            ProviderSpecificInput = new ReplicationProviderContainerMappingInput(),
-                            TargetProtectionContainerId = containersResponse.ProtectionContainers[0].Id
-                        }
-                    },
-                    RequestHeaders);
-
-                Assert.NotNull(response);
-                Assert.Equal(OperationStatus.Succeeded, response.Status);
-
-                var mappingCreationResponse = response as MappingOperationResponse;
-                Assert.NotNull(mappingCreationResponse);
-            }
-        }
-
-        [Fact]
         public void PairUnpairStorageClassifications()
         {
             using (UndoContext context = UndoContext.Current)

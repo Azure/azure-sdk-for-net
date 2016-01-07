@@ -25,8 +25,8 @@ namespace RecoveryServices.Tests
 {
     public class VaultTests : RecoveryServicesTestsBase
     {
-        string resourceGroupName = "testsitegroup";
-        string resourceName = "rsv5";
+        string resourceGroupName = "S91-1";
+        string resourceName = "rsv6";
 
         [Fact]
         public void CreateVault()
@@ -50,22 +50,6 @@ namespace RecoveryServices.Tests
         }
 
         [Fact]
-        public void RetrieveAllVaults()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var rsmClient = GetRecoveryServicesClient(CustomHttpHandler);
-                VaultListResponse response = rsmClient.Vaults.List(resourceGroupName, RequestHeaders);
-
-                Assert.NotNull(response.Vaults[0].Name);
-                Assert.NotNull(response.Vaults[0].Id);
-                Assert.NotNull(response.Vaults[0].Properties.ProvisioningState);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            }
-        }
-
-        [Fact]
         public void RetrieveVault()
         {
             using (UndoContext context = UndoContext.Current)
@@ -80,27 +64,6 @@ namespace RecoveryServices.Tests
                 Assert.NotNull(response.Vault.Name);
                 Assert.NotNull(response.Vault.Id);
                 Assert.NotNull(response.Vault.Properties.ProvisioningState);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            }
-        }
-
-        [Fact]
-        public void RetrieveVaultUsages()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var rsmClient = GetRecoveryServicesClient(CustomHttpHandler);
-                ReplicationUsagesResponse response = rsmClient.ReplicationUsages.Get(
-                    resourceGroupName,
-                    resourceName,
-                    RequestHeaders);
-
-                Assert.NotNull(response.ReplicationVaultUsages);
-                Assert.NotNull(response.ReplicationVaultUsages.JobsSummary);
-                Assert.NotNull(response.ReplicationVaultUsages.MonitoringSummary);
-                Assert.NotNull(response.ReplicationVaultUsages.ProtectedItemCount);
-                Assert.NotNull(response.ReplicationVaultUsages.RecoveryPlanCount);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }

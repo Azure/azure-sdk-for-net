@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
                 TestUtilities.StartTest("SmapiTestsFixture", "CreateApiManagementService");
 
                 this.ResourceGroupName = this.ResourceManagementClient.TryGetResourceGroup(Location);
-                this.Location = "West US"; //this.ManagmentClient.TryGetLocation("West US");
+                this.Location = "South Central US"; //this.ManagmentClient.TryGetLocation("West US");
 
                 if (string.IsNullOrWhiteSpace(ResourceGroupName))
                 {

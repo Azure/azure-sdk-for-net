@@ -33,6 +33,7 @@ namespace KeyVault.Tests
                 this._credential = data._ClientCredential;
                 this._tokenCache = new TokenCache();
                 this._vaultAddress = data.vaultAddress;
+                this._standardVaultOnly = data.standardVaultOnly;
 
                 //Create one key to use for testing. Key creation is expensive.
                 var myClient = CreateKeyVaultClient();
@@ -49,7 +50,8 @@ namespace KeyVault.Tests
             }            
         }        
 
-        private string _vaultAddress = "";        
+        private string _vaultAddress = "";
+        private bool _standardVaultOnly = false;
         private ClientCredential _credential;
         private TokenCache _tokenCache;
         private string _keyName = "";
@@ -272,6 +274,8 @@ namespace KeyVault.Tests
         [Fact]
         public void KeyVaultCreateHsmKeyTest()
         {
+            if (_standardVaultOnly) return;
+
             using (var undoContext = UndoContext.Current)
             {
                 undoContext.Start();
@@ -307,6 +311,8 @@ namespace KeyVault.Tests
         //[Fact]
         public void KeyVaultImportHsmByoKeyTest()
         {
+            if (_standardVaultOnly) return;
+
             using (var undoContext = UndoContext.Current)
             {
                 undoContext.Start();

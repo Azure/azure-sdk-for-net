@@ -17,6 +17,7 @@ namespace KeyVault.Tests
     {
         // Required in test code
         public string vaultAddress;
+        public bool standardVaultOnly;
         public ClientCredential _ClientCredential;
 
         // Required for cleaning up at the end of the test
@@ -177,6 +178,12 @@ namespace KeyVault.Tests
             string vault = TestConfigurationManager.TryGetEnvironmentOrAppSetting("VaultUrl");
             string authClientId = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientId");
             string authSecret = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientSecret");
+            string standardVaultOnlyString = TestConfigurationManager.TryGetEnvironmentOrAppSetting("StandardVaultOnly");
+            bool result;
+            if (!bool.TryParse(standardVaultOnlyString, out result))
+            {
+                result = false;
+            }
 
             if (string.IsNullOrWhiteSpace(vault) || string.IsNullOrWhiteSpace(authClientId) || string.IsNullOrWhiteSpace(authSecret))
                 return false;
@@ -184,6 +191,7 @@ namespace KeyVault.Tests
             {
                 this.vaultAddress = vault;
                 this._ClientCredential = new ClientCredential(authClientId, authSecret);
+                this.standardVaultOnly = result;
                 return true;
             }
         }

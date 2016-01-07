@@ -73,7 +73,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetStorageClassification()
         {
             using (UndoContext context = UndoContext.Current)
@@ -132,7 +131,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetAllProtectedContainerTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -144,8 +142,7 @@ namespace SiteRecovery.Tests
             }
         }
 
-	[Fact]
-        public void GetReplicationProtectedItems()
+	public void GetReplicationProtectedItems()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -159,7 +156,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetVMwareAzureV2ReplicationProtectableItems()
         {
             using (UndoContext context = UndoContext.Current)
@@ -208,7 +204,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetVMwareAzureV2ReplicationProtectedItem()
         {
             using (UndoContext context = UndoContext.Current)
@@ -227,7 +222,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetNetworkTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -241,7 +235,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetNetworkMappingTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -260,7 +253,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetContainerMappings()
         {
             using (UndoContext context = UndoContext.Current)
@@ -275,7 +267,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetVMwareAzureV2ContainerMapping()
         {
             using (UndoContext context = UndoContext.Current)
@@ -310,7 +301,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetEvents()
         {
             using (UndoContext context = UndoContext.Current)
@@ -331,7 +321,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetEvent()
         {
             using (UndoContext context = UndoContext.Current)
@@ -358,7 +347,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetEventNegativeTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -390,7 +378,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetAlertSettingsTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -411,7 +398,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetAlertSettingsNegativeTest()
         {
             using (UndoContext context = UndoContext.Current)
