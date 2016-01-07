@@ -1,0 +1,41 @@
+{
+  "version": "0.9.7-preview",
+  "description": "Provides tool capabilities for Data Lake Store Uploader services, enabling rapid upload of data into Azure Data Lake Store.",
+  "authors": [ "Microsoft" ],
+  "tags": [ "Microsoft", "Azure", "Data", "Lake", "Store", "Uploader", "management", "Data Lake Store Uploader", "Data Lake Store Uploader management", "REST", "HTTP", "client", "windowsazureofficial" ],
+  "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+  "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+
+  "compilationOptions": {
+    "delaySign": true,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Azure.Management.DataLake.Store": "0.9.3-preview"
+  },
+
+  "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "System.Collections": { "type": "build" },
+        "System.Linq.Expressions": { "type": "build" },
+        "System.Runtime": { "type": "build" },
+        "System.Runtime.Serialization": "",
+        "System.Threading.Tasks": { "type": "build" }
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Diagnostics.Tools": "4.0.1-beta-23516",
+        "System.Net.Http": "4.0.1-beta-23516",
+        "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
+        "System.Threading.Tasks": "4.0.11-beta-23516",
+        "System.Xml.ReaderWriter": "4.0.11-beta-23516",
+        "System.Runtime.Serialization.Xml": "4.1.0-beta-23516",
+        "System.Threading.Thread": "4.0.0-beta-23516",
+        "System.Threading.Tasks.Parallel": "4.0.1-beta-23516"
+      }
+    }
+  }
+}
