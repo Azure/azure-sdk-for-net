@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Common.Authentication.Authentication
     {
         private UserIdentifier _userId;
 
-        protected override string GetRefreshToken(string DefaultResourceId)
+        protected override string GetRefreshToken(string defaultResourceId)
         {
-            var result = Context.AcquireTokenSilent(DefaultResourceId, ClientId, _userId);
+            var result = Context.AcquireTokenSilent(defaultResourceId, ClientId, _userId);
             return result.RefreshToken;
         }
 

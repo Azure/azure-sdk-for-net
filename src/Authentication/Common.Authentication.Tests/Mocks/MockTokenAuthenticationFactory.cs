@@ -17,6 +17,7 @@ using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Rest;
 using System;
+using System.Runtime.CompilerServices;
 using System.Security;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
@@ -87,8 +88,13 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             return new AccessTokenCredential(context.Subscription.Id, Token);
         }
 
-
         public ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
+        {
+            return GetServiceClientCredentials(context, AzureEnvironment.Endpoint.ResourceManager);
+        }
+
+
+        public ServiceClientCredentials GetServiceClientCredentials(AzureContext context, AzureEnvironment.Endpoint targetEndpoint)
         {
             return new TokenCredentials(Token.AccessToken);
         }

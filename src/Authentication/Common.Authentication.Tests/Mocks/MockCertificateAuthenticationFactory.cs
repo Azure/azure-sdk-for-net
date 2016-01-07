@@ -17,6 +17,7 @@ using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Rest;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {
@@ -74,8 +75,13 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             return new CertificateCloudCredentials(context.Subscription.Id.ToString(), Certificate);
         }
 
+         public ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
+        {
+            return GetServiceClientCredentials(context, AzureEnvironment.Endpoint.ResourceManager);
+        }
 
-        public Rest.ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
+
+        public ServiceClientCredentials GetServiceClientCredentials(AzureContext context, AzureEnvironment.Endpoint targetEndpoint)
         {
             throw new System.NotImplementedException();
         }

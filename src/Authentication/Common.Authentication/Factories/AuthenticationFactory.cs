@@ -37,17 +37,17 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         public ITokenProvider TokenProvider { get; set; }
 
         public IAccessToken Authenticate(
-            AzureAccount account, 
-            AzureEnvironment environment, 
-            string tenant, 
-            SecureString password, 
+            AzureAccount account,
+            AzureEnvironment environment,
+            string tenant,
+            SecureString password,
             ShowDialog promptBehavior,
-            TokenCache tokenCache, 
+            TokenCache tokenCache,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
             var configuration = GetAdalConfiguration(environment, tenant, resourceId, tokenCache);
 
-            TracingAdapter.Information(Resources.AdalAuthConfigurationTrace, configuration.AdDomain, configuration.AdEndpoint, 
+            TracingAdapter.Information(Resources.AdalAuthConfigurationTrace, configuration.AdDomain, configuration.AdEndpoint,
                 configuration.ClientId, configuration.ClientRedirectUri, configuration.ResourceClientUri, configuration.ValidateAuthority);
             IAccessToken token;
             if (account.IsPropertySet(AzureAccount.Property.CertificateThumbprint))
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                     : Resources.NoSubscriptionInContext;
                 throw new ApplicationException(exceptionMessage);
             }
-            
+
             if (context.Account == null)
             {
                 var exceptionMessage = targetEndpoint == AzureEnvironment.Endpoint.ServiceManagement
@@ -134,29 +134,29 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             try
             {
-                TracingAdapter.Information(Resources.UPNAuthenticationTrace, 
+                TracingAdapter.Information(Resources.UPNAuthenticationTrace,
                     context.Account.Id, context.Environment.Name, tenant);
                 var tokenCache = AzureSession.TokenCache;
-                if(context.TokenCache != null && context.TokenCache.Length > 0)
+                if (context.TokenCache != null && context.TokenCache.Length > 0)
                 {
                     tokenCache = new TokenCache(context.TokenCache);
                 }
-                
+
                 var token = Authenticate(context.Account, context.Environment,
-                        tenant, null, ShowDialog.Never, tokenCache);
+                        tenant, null, ShowDialog.Never, tokenCache, context.Environment.GetTokenAudience(targetEndpoint));
 
                 if (context.TokenCache != null && context.TokenCache.Length > 0)
                 {
                     context.TokenCache = tokenCache.Serialize();
                 }
 
-                TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace, 
+                TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace,
                     token.LoginType, token.TenantId, token.UserId);
                 return new AccessTokenCredential(context.Subscription.Id, token);
             }
             catch (Exception ex)
             {
-                 TracingAdapter.Information(Resources.AdalAuthException, ex.Message);
+                TracingAdapter.Information(Resources.AdalAuthException, ex.Message);
                 var exceptionMessage = targetEndpoint == AzureEnvironment.Endpoint.ServiceManagement
                     ? Resources.InvalidSubscriptionState
                     : Resources.InvalidArmContext;
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 var env = new ActiveDirectoryServiceSettings
                 {
                     AuthenticationEndpoint = context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ActiveDirectory),
-                    TokenAudience = context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId),
+                    TokenAudience = context.Environment.GetEndpointAsUri(context.Environment.GetTokenAudience(targetEndpoint)),
                     ValidateAuthority = !context.Environment.OnPremise
                 };
 
@@ -231,21 +231,14 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
                 ServiceClientCredentials result = null;
 
-                if(context.Account.Type == AzureAccount.AccountType.User)
+                if (context.Account.Type == AzureAccount.AccountType.User)
                 {
-                    if (targetEndpoint == AzureEnvironment.Endpoint.Graph)
-                    {
-                        result = new TokenCredentials(new UserRefreshTokenProvider(context, tenant, targetEndpoint, AdalConfiguration.PowerShellClientId));
-                    }
-                    else
-                    {
-                        result = Rest.Azure.Authentication.UserTokenProvider.CreateCredentialsFromCache(
-                            AdalConfiguration.PowerShellClientId,
-                            tenant,
-                            context.Account.Id,
-                            env,
-                            tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
-                    }
+                    result = Rest.Azure.Authentication.UserTokenProvider.CreateCredentialsFromCache(
+                        AdalConfiguration.PowerShellClientId,
+                        tenant,
+                        context.Account.Id,
+                        env,
+                        tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
                 else if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
                 {
@@ -301,7 +294,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             {
                 AdEndpoint = adEndpoint,
                 ResourceClientUri = environment.Endpoints[resourceId],
-                AdDomain = tenantId, 
+                AdDomain = tenantId,
                 ValidateAuthority = !environment.OnPremise,
                 TokenCache = tokenCache
             };

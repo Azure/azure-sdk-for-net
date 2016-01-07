@@ -45,14 +45,16 @@ namespace Microsoft.Azure.Common.Authentication.Authentication
             !context.Environment.OnPremise, 
             new TokenCache(context.TokenCache), 
             context.Environment.GetEndpoint(AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId), 
-            context.Environment.GetEndpoint(targetEndpoint), 
+            targetEndpoint == AzureEnvironment.Endpoint.Graph? 
+            context.Environment.GetEndpoint(AzureEnvironment.Endpoint.GraphEndpointResourceId) : 
+            context.Environment.GetEndpoint(AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId), 
             clientId)
         {
         }
         protected string DefaultResourceId { get; set; }
         protected string TargetResourceId { get; set; }
         protected string ClientId { get; set; }
-        protected abstract string GetRefreshToken(string DefaultResourceId);
+        protected abstract string GetRefreshToken(string defaultResourceId);
 
         protected  AuthenticationContext Context { get; set; }
 
