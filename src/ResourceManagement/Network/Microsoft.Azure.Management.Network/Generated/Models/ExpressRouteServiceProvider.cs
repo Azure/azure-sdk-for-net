@@ -31,12 +31,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteServiceProvider
         /// class.
         /// </summary>
-        public ExpressRouteServiceProvider(string id = default(string), string name = default(string), string type = default(string), ExpressRouteServiceProviderPropertiesFormat properties = default(ExpressRouteServiceProviderPropertiesFormat))
+        public ExpressRouteServiceProvider(string id = default(string), string name = default(string), string type = default(string), IList<string> peeringLocations = default(IList<string>), IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
-            Properties = properties;
+            PeeringLocations = peeringLocations;
+            BandwidthsOffered = bandwidthsOffered;
+            ProvisioningState = provisioningState;
         }
 
         /// <summary>
@@ -58,9 +60,22 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Type { get; set; }
 
         /// <summary>
+        /// Gets or list of peering locations
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ExpressRouteServiceProviderPropertiesFormat Properties { get; set; }
+        [JsonProperty(PropertyName = "peeringLocations")]
+        public IList<string> PeeringLocations { get; set; }
+
+        /// <summary>
+        /// Gets or bandwidths offered
+        /// </summary>
+        [JsonProperty(PropertyName = "bandwidthsOffered")]
+        public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; set; }
+
+        /// <summary>
+        /// Gets or sets Provisioning state of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
 
     }
 }
