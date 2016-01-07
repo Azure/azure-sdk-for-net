@@ -16,7 +16,6 @@
 // governing permissions and limitations under the License.
 
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
@@ -88,6 +87,18 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             }
 
             return temp;
+        }
+
+        protected static byte[] Take( int count, byte[] source )
+        {
+            if ( source.Length == count )
+                return source;
+
+            var target = new byte[count];
+
+            Array.Copy( source, target, count );
+
+            return target;
         }
 
         class AesKwEncryptor : ICryptoTransform

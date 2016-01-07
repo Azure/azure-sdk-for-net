@@ -24,6 +24,8 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
     {
         public const string AlgorithmName = "A128KW";
 
+        const int KeySizeInBytes = 128 >> 3;
+
         public AesKw128()
             : base( AlgorithmName )
         {
@@ -34,10 +36,10 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             if ( key == null )
                 throw new ArgumentNullException( "key" );
 
-            if ( key.Length << 3 != 128 )
-                throw new ArgumentOutOfRangeException( "key", "key must be 128 bits long" );
+            if ( key.Length < KeySizeInBytes )
+                throw new ArgumentOutOfRangeException( "key", "key must be at least 128 bits" );
 
-            return base.CreateDecryptor( key, iv );
+            return base.CreateDecryptor( AesKw.Take( KeySizeInBytes, key ), iv );
         }
 
         public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv )
@@ -45,10 +47,10 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             if ( key == null )
                 throw new ArgumentNullException( "key" );
 
-            if ( key.Length << 3 != 128 )
-                throw new ArgumentOutOfRangeException( "key", "key must be 128 bits long" );
+            if ( key.Length < KeySizeInBytes )
+                throw new ArgumentOutOfRangeException( "key", "key must be at least 128 bits long" );
 
-            return base.CreateEncryptor( key, iv );
+            return base.CreateEncryptor( AesKw.Take( KeySizeInBytes, key ), iv );
         }
     }
 }

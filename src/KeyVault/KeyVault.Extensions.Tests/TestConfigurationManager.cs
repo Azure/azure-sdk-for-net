@@ -18,7 +18,7 @@
 using System;
 using System.Configuration;
 
-namespace KeyVault.Tests
+namespace KeyVault.Extensions.Tests
 {
     class TestConfigurationManager
     {
