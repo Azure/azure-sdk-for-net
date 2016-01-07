@@ -17,7 +17,7 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Data Lake Store Uploader management "Data Lake Store Uploader" "Data Lake Store Uploader management" REST HTTP client windowsazureofficial</tags>
     <references>
-      <group targetFramework="net40">
+      <group targetFramework="net45">
         <reference file="Microsoft.Azure.Management.DataLake.StoreUploader.dll" />
       </group>
     </references>
