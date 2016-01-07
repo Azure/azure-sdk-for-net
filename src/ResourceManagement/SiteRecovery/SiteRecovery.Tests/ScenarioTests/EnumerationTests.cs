@@ -211,6 +211,39 @@ namespace SiteRecovery.Tests
         }
 
         [Fact]
+        public void EnumerateProtectedItemsUnderVmWareFabric()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics.First(
+                    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                Assert.NotNull(vmWareFabric);
+
+                var containersResponse = client.ProtectionContainer.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+                Assert.NotNull(containersResponse);
+                Assert.True(
+                    containersResponse.ProtectionContainers.Count > 0,
+                    "Containers count can't be less than 1.");
+
+                var protectedItemsResponse = client.ReplicationProtectedItem.List(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    RequestHeaders);
+            }
+        }
+
+        [Fact]
         public void EnumerateNetworksUnderFabricTest()
         {
             using (UndoContext context = UndoContext.Current)
