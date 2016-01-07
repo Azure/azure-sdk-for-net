@@ -971,8 +971,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "vaults";
+            url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/storageconfig/vaultstorageconfig";
+            url = url + "/backupstorageconfig/vaultstorageconfig";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -1053,21 +1054,21 @@ namespace Microsoft.Azure.Management.RecoveryServices
                             JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                long idInstance = ((long)idValue);
+                                string idInstance = ((string)idValue);
                                 result.Id = idInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                long nameInstance = ((long)nameValue);
+                                string nameInstance = ((string)nameValue);
                                 result.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                long typeInstance = ((long)typeValue);
+                                string typeInstance = ((string)typeValue);
                                 result.Type = typeInstance;
                             }
                             
@@ -1412,8 +1413,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "vaults";
+            url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/storageconfig/vaultstorageconfig";
+            url = url + "/backupstorageconfig/vaultstorageconfig";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)

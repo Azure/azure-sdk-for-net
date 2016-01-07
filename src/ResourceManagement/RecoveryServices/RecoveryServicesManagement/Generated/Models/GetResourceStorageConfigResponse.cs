@@ -31,23 +31,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// </summary>
     public partial class GetResourceStorageConfigResponse : AzureOperationResponse
     {
-        private long _id;
+        private string _id;
         
         /// <summary>
         /// Optional. Gets or sets the resource ID.
         /// </summary>
-        public long Id
+        public string Id
         {
             get { return this._id; }
             set { this._id = value; }
         }
         
-        private long _name;
+        private string _name;
         
         /// <summary>
         /// Optional. Gets or sets the resource Name.
         /// </summary>
-        public long Name
+        public string Name
         {
             get { return this._name; }
             set { this._name = value; }
@@ -64,12 +64,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
             set { this._properties = value; }
         }
         
-        private long _type;
+        private string _type;
         
         /// <summary>
         /// Optional. Gets or sets the resource Type.
         /// </summary>
-        public long Type
+        public string Type
         {
             get { return this._type; }
             set { this._type = value; }
