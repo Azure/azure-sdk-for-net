@@ -1,5 +1,12 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version
+_Release date:_ 
+
+### Feature Additions
+
+* Added new StorageFormat type JsonFormat type to define datasets whose data is in JSON format. 
+
 ## Version 4.2.0
 Release date: 2015.11.10
 

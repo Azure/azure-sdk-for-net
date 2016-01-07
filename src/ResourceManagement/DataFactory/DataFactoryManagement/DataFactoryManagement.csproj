@@ -27,6 +27,8 @@
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormat.cs" />
+    <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormatFilePattern.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
