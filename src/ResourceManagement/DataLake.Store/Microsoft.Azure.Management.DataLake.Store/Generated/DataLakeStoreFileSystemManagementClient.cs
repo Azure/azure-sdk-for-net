@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 // 
@@ -113,11 +113,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            ClientCertificateOptions = ClientCertificateOption.Automatic
-        }, handlers)
+        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -138,21 +134,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            ClientCertificateOptions = rootHandler.ClientCertificateOptions,
-            AutomaticDecompression = rootHandler.AutomaticDecompression,
-            CookieContainer = rootHandler.CookieContainer,
-            Credentials = rootHandler.Credentials,
-            MaxAutomaticRedirections = rootHandler.MaxAutomaticRedirections,
-            MaxRequestContentBufferSize = rootHandler.MaxRequestContentBufferSize,
-            PreAuthenticate = rootHandler.PreAuthenticate,
-            Proxy = rootHandler.Proxy,
-            UseCookies = rootHandler.UseCookies,
-            UseDefaultCredentials = rootHandler.UseDefaultCredentials,
-            UseProxy = rootHandler.UseProxy
-        }, handlers)
+        protected DataLakeStoreFileSystemManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -170,11 +152,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            ClientCertificateOptions = ClientCertificateOption.Automatic
-        }, handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -199,21 +177,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            ClientCertificateOptions = rootHandler.ClientCertificateOptions,
-            AutomaticDecompression = rootHandler.AutomaticDecompression,
-            CookieContainer = rootHandler.CookieContainer,
-            Credentials = rootHandler.Credentials,
-            MaxAutomaticRedirections = rootHandler.MaxAutomaticRedirections,
-            MaxRequestContentBufferSize = rootHandler.MaxRequestContentBufferSize,
-            PreAuthenticate = rootHandler.PreAuthenticate,
-            Proxy = rootHandler.Proxy,
-            UseCookies = rootHandler.UseCookies,
-            UseDefaultCredentials = rootHandler.UseDefaultCredentials,
-            UseProxy = rootHandler.UseProxy
-        }, handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -238,11 +202,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            ClientCertificateOptions = ClientCertificateOption.Automatic
-        }, handlers)
+        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -275,21 +235,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            ClientCertificateOptions = rootHandler.ClientCertificateOptions,
-            AutomaticDecompression = rootHandler.AutomaticDecompression,
-            CookieContainer = rootHandler.CookieContainer,
-            Credentials = rootHandler.Credentials,
-            MaxAutomaticRedirections = rootHandler.MaxAutomaticRedirections,
-            MaxRequestContentBufferSize = rootHandler.MaxRequestContentBufferSize,
-            PreAuthenticate = rootHandler.PreAuthenticate,
-            Proxy = rootHandler.Proxy,
-            UseCookies = rootHandler.UseCookies,
-            UseDefaultCredentials = rootHandler.UseDefaultCredentials,
-            UseProxy = rootHandler.UseProxy
-        }, handlers)
+        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -348,4 +294,3 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }    
     }
 }
-
