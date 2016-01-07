@@ -18,8 +18,8 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Data Lake Store Uploader Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Data Lake Store Uploader functions for managing the Microsoft Azure Data Lake Store Uploader service.")]
+[assembly: AssemblyTitle("Microsoft Azure DataLakeUploader Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure DataLakeUploader functions for managing the Microsoft Azure DataLakeUploader service.")]
 
 [assembly: AssemblyVersion("0.9.7.0")]
 [assembly: AssemblyFileVersion("0.9.7.0")]
