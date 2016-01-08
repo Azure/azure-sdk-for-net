@@ -26,25 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectionContainer object.
+    /// The definition of a classic compute vm object.
     /// </summary>
-    public partial class IaasVmProtectionContainer : ProtectionContainer
+    public partial class AzureIaasClassiccomputeVmProtectableItem : AzureIaaSVMProtectableItem
     {
-        private string _virtualMachineVersion;
-        
         /// <summary>
-        /// Optional. Virtual Machine Version
+        /// Initializes a new instance of the
+        /// AzureIaasClassiccomputeVmProtectableItem class.
         /// </summary>
-        public string VirtualMachineVersion
-        {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the IaasVmProtectionContainer class.
-        /// </summary>
-        public IaasVmProtectionContainer()
+        public AzureIaasClassiccomputeVmProtectableItem()
         {
         }
     }

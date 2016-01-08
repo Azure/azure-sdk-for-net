@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the Delete Item Operation Result
+        /// Get the Delete Item Operation Result by OperationId
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -194,6 +194,203 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     GetOperationResultResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent || statusCode == HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GetOperationResultResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken operationValue = responseDoc["operation"];
+                            if (operationValue != null && operationValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)operationValue["objectType"]);
+                                if (typeName == "OperationResultInfo")
+                                {
+                                    OperationResultInfo operationResultInfoInstance = new OperationResultInfo();
+                                    
+                                    JToken jobListArray = operationValue["jobList"];
+                                    if (jobListArray != null && jobListArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken jobListValue in ((JArray)jobListArray))
+                                        {
+                                            operationResultInfoInstance.JobList.Add(((string)jobListValue));
+                                        }
+                                    }
+                                    result.Operation = operationResultInfoInstance;
+                                }
+                                if (typeName == "ExportJobsOperationResultInfo")
+                                {
+                                    ExportJobsOperationResultInfo exportJobsOperationResultInfoInstance = new ExportJobsOperationResultInfo();
+                                    
+                                    JToken blobUrlValue = operationValue["blobUrl"];
+                                    if (blobUrlValue != null && blobUrlValue.Type != JTokenType.Null)
+                                    {
+                                        string blobUrlInstance = ((string)blobUrlValue);
+                                        exportJobsOperationResultInfoInstance.BlobUrl = blobUrlInstance;
+                                    }
+                                    
+                                    JToken blobSasKeyValue = operationValue["blobSasKey"];
+                                    if (blobSasKeyValue != null && blobSasKeyValue.Type != JTokenType.Null)
+                                    {
+                                        string blobSasKeyInstance = ((string)blobSasKeyValue);
+                                        exportJobsOperationResultInfoInstance.BlobSasKey = blobSasKeyInstance;
+                                    }
+                                    result.Operation = exportJobsOperationResultInfoInstance;
+                                }
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
+                            }
+                            
+                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
+                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
+                            {
+                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
+                                result.AzureAsyncOperation = azureAsyncOperationInstance;
+                            }
+                            
+                            JToken retryAfterValue = responseDoc["retryAfter"];
+                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                            {
+                                string retryAfterInstance = ((string)retryAfterValue);
+                                result.RetryAfter = retryAfterInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the Delete Item Operation Result by URL
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a GetOperationResultResponse.
+        /// </returns>
+        public async Task<GetOperationResultResponse> GetBackupOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationResultLink == null)
+            {
+                throw new ArgumentNullException("operationResultLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationResultLink", operationResultLink);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "GetBackupOperationResultByURLAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationResultLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GetOperationResultResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);

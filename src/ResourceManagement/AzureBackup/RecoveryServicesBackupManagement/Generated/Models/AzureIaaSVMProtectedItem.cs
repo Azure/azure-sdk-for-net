@@ -28,8 +28,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a IaasVM ProtectedItem object.
     /// </summary>
-    public partial class IaaSVMProtectedItem : ProtectedItem
+    public partial class AzureIaaSVMProtectedItem : ProtectedItem
     {
+        private AzureIaaSVmProtectedItemExtendedInfo _extendedInfo;
+        
+        /// <summary>
+        /// Optional. ExtendedInfo for the azure iaas vm protected item
+        /// </summary>
+        public AzureIaaSVmProtectedItemExtendedInfo ExtendedInfo
+        {
+            get { return this._extendedInfo; }
+            set { this._extendedInfo = value; }
+        }
+        
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Optional. Azure IaaSVM Protected Item FriendlyName
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
         private string _lastBackupStatus;
         
         /// <summary>
@@ -85,21 +107,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._protectionStatus = value; }
         }
         
-        private string _virtualMachineVersion;
+        private string _virtualMachineId;
         
         /// <summary>
-        /// Optional. Classic or V2 VM
+        /// Optional. Azure Virtual Machine Id
         /// </summary>
-        public string VirtualMachineVersion
+        public string VirtualMachineId
         {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
+            get { return this._virtualMachineId; }
+            set { this._virtualMachineId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMProtectedItem class.
+        /// Initializes a new instance of the AzureIaaSVMProtectedItem class.
         /// </summary>
-        public IaaSVMProtectedItem()
+        public AzureIaaSVMProtectedItem()
         {
         }
     }

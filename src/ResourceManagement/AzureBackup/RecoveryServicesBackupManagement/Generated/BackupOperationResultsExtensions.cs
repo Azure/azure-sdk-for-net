@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class BackupOperationResultsExtensions
     {
         /// <summary>
-        /// Get the Delete Item Operation Result
+        /// Get the Delete Item Operation Result by OperationId
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the Delete Item Operation Result
+        /// Get the Delete Item Operation Result by OperationId
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -86,6 +86,52 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public static Task<GetOperationResultResponse> GetBackupOperationResultAsync(this IBackupOperationResults operations, string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetBackupOperationResultAsync(resourceGroupName, resourceName, operationId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the Delete Item Operation Result by URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupOperationResults.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a GetOperationResultResponse.
+        /// </returns>
+        public static GetOperationResultResponse GetBackupOperationResultByURL(this IBackupOperationResults operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IBackupOperationResults)s).GetBackupOperationResultByURLAsync(operationResultLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the Delete Item Operation Result by URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IBackupOperationResults.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a GetOperationResultResponse.
+        /// </returns>
+        public static Task<GetOperationResultResponse> GetBackupOperationResultByURLAsync(this IBackupOperationResults operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetBackupOperationResultByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
         }
     }
 }

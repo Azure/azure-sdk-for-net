@@ -30,6 +30,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectionContainer : ProtectionContainerBase
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. Backup Management Type
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
+        private string _containerType;
+        
+        /// <summary>
+        /// Optional. Container Type
+        /// </summary>
+        public string ContainerType
+        {
+            get { return this._containerType; }
+            set { this._containerType = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
@@ -61,28 +83,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._registrationStatus; }
             set { this._registrationStatus = value; }
-        }
-        
-        private string _resourceGroup;
-        
-        /// <summary>
-        /// Optional. Resource Group
-        /// </summary>
-        public string ResourceGroup
-        {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Container Type
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>

@@ -21,18 +21,20 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of ProtectableObjectBase object.
+    /// The definition of a compute vm object.
     /// </summary>
-    public partial class ProtectableObjectBase
+    public partial class AzureIaasComputeVmProtectionContainer : AzureIaasVmProtectionContainer
     {
         /// <summary>
-        /// Initializes a new instance of the ProtectableObjectBase class.
+        /// Initializes a new instance of the
+        /// AzureIaasComputeVmProtectionContainer class.
         /// </summary>
-        public ProtectableObjectBase()
+        public AzureIaasComputeVmProtectionContainer()
         {
         }
     }

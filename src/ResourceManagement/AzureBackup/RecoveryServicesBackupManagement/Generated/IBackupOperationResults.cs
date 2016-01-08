@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public partial interface IBackupOperationResults
     {
         /// <summary>
-        /// Get the Delete Item Operation Result
+        /// Get the Delete Item Operation Result by OperationId
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -52,5 +52,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a GetOperationResultResponse.
         /// </returns>
         Task<GetOperationResultResponse> GetBackupOperationResultAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the Delete Item Operation Result by URL
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a GetOperationResultResponse.
+        /// </returns>
+        Task<GetOperationResultResponse> GetBackupOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

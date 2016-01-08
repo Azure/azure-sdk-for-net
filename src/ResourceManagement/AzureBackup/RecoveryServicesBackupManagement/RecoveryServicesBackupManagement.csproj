@@ -65,6 +65,16 @@
     <Compile Include="Generated\IRestoreOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AzureIaasClassiccomputeVmProtectableItem.cs" />
+    <Compile Include="Generated\Models\AzureIaaSClassicComputeVMProtectedItem.cs" />
+    <Compile Include="Generated\Models\AzureIaasComputeVmProtectableItem.cs" />
+    <Compile Include="Generated\Models\AzureIaaSComputeVMProtectedItem.cs" />
+    <Compile Include="Generated\Models\AzureIaasComputeVmProtectionContainer.cs" />
+    <Compile Include="Generated\Models\AzureIaasVmClassicComputeProtectionContainer.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMProtectableItem.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMProtectedItem.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVmProtectedItemExtendedInfo.cs" />
+    <Compile Include="Generated\Models\AzureIaasVmProtectionContainer.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMProtectionPolicy.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
@@ -82,10 +92,6 @@
     <Compile Include="Generated\Models\IaaSVMJob.cs" />
     <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
     <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectableItem.cs" />
-    <Compile Include="Generated\Models\IaaSVMProtectedItem.cs" />
-    <Compile Include="Generated\Models\IaasVmProtectedItemExtendedInfo.cs" />
-    <Compile Include="Generated\Models\IaasVmProtectionContainer.cs" />
     <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
     <Compile Include="Generated\Models\Job.cs" />
     <Compile Include="Generated\Models\JobBase.cs" />
@@ -101,7 +107,7 @@
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
     <Compile Include="Generated\Models\LongTermSchedulePolicy.cs" />
     <Compile Include="Generated\Models\MabFileFolderProtectedItem.cs" />
-    <Compile Include="Generated\Models\MabProtectedItemExtendedInfo.cs" />
+    <Compile Include="Generated\Models\MabFileFolderProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\MabProtectionContainer.cs" />
     <Compile Include="Generated\Models\Month.cs" />
     <Compile Include="Generated\Models\MonthlyRetentionSchedule.cs" />
@@ -145,7 +151,6 @@
     <Compile Include="Generated\Models\ProtectionPolicyResourceList.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyResponse.cs" />
     <Compile Include="Generated\Models\ProviderType.cs" />
-    <Compile Include="Generated\Models\ProviderTypes.cs" />
     <Compile Include="Generated\Models\RecoveryPoint.cs" />
     <Compile Include="Generated\Models\RecoveryPointBase.cs" />
     <Compile Include="Generated\Models\RecoveryPointListResponse.cs" />

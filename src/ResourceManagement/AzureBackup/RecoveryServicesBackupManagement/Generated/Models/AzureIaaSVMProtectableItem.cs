@@ -26,58 +26,47 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition for ProtectedItem class.
+    /// The definition of a IaasVM ProtectableItem object.
     /// </summary>
-    public partial class ProtectedItem : ProtectedItemBase
+    public partial class AzureIaaSVMProtectableItem : ProtectableItem
     {
-        private string _backupManagementType;
+        private string _resourceGroup;
         
         /// <summary>
-        /// Optional. BackupManagementType for Protected Item
+        /// Optional. Resource Group
         /// </summary>
-        public string BackupManagementType
+        public string ResourceGroup
         {
-            get { return this._backupManagementType; }
-            set { this._backupManagementType = value; }
+            get { return this._resourceGroup; }
+            set { this._resourceGroup = value; }
         }
         
-        private string _containerName;
+        private string _virtualMachineId;
         
         /// <summary>
-        /// Optional. Container Name for the protected item
+        /// Optional. VirtualMachine Id
         /// </summary>
-        public string ContainerName
+        public string VirtualMachineId
         {
-            get { return this._containerName; }
-            set { this._containerName = value; }
+            get { return this._virtualMachineId; }
+            set { this._virtualMachineId = value; }
         }
         
-        private System.DateTime? _lastRecoveryPoint;
+        private string _virtualMachineVersion;
         
         /// <summary>
-        /// Optional. Last Recovery point date and time
+        /// Optional. Classic or Classic VM
         /// </summary>
-        public System.DateTime? LastRecoveryPoint
+        public string VirtualMachineVersion
         {
-            get { return this._lastRecoveryPoint; }
-            set { this._lastRecoveryPoint = value; }
-        }
-        
-        private string _workloadType;
-        
-        /// <summary>
-        /// Optional. WorkloadType for Protected Item
-        /// </summary>
-        public string WorkloadType
-        {
-            get { return this._workloadType; }
-            set { this._workloadType = value; }
+            get { return this._virtualMachineVersion; }
+            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProtectedItem class.
+        /// Initializes a new instance of the AzureIaaSVMProtectableItem class.
         /// </summary>
-        public ProtectedItem()
+        public AzureIaaSVMProtectableItem()
         {
         }
     }

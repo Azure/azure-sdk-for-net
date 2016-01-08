@@ -26,47 +26,37 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectableItem object.
+    /// The definition of a MabFileFolderProtectedItemExtendedInfo object.
     /// </summary>
-    public partial class IaaSVMProtectableItem : ProtectableItem
+    public partial class MabFileFolderProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
-        private string _containerUri;
+        private System.DateTime? _oldestRecoveryPoint;
         
         /// <summary>
-        /// Optional. Container Uri
+        /// Optional. OldestRecoveryPoint for the protected item
         /// </summary>
-        public string ContainerUri
+        public System.DateTime? OldestRecoveryPoint
         {
-            get { return this._containerUri; }
-            set { this._containerUri = value; }
+            get { return this._oldestRecoveryPoint; }
+            set { this._oldestRecoveryPoint = value; }
         }
         
-        private string _protectableObjectUri;
+        private int _recoveryPointCount;
         
         /// <summary>
-        /// Optional. ProtectableObject Uri
+        /// Optional. RecoveryPointCount for the protected item
         /// </summary>
-        public string ProtectableObjectUri
+        public int RecoveryPointCount
         {
-            get { return this._protectableObjectUri; }
-            set { this._protectableObjectUri = value; }
-        }
-        
-        private string _virtualMachineVersion;
-        
-        /// <summary>
-        /// Optional. Classic or Classic VM
-        /// </summary>
-        public string VirtualMachineVersion
-        {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
+            get { return this._recoveryPointCount; }
+            set { this._recoveryPointCount = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMProtectableItem class.
+        /// Initializes a new instance of the
+        /// MabFileFolderProtectedItemExtendedInfo class.
         /// </summary>
-        public IaaSVMProtectableItem()
+        public MabFileFolderProtectedItemExtendedInfo()
         {
         }
     }

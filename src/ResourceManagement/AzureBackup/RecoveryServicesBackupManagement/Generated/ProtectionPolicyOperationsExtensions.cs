@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Get the status of Protection policy operation by OperationId.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Get the status of Protection policy operation by OperationId.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -275,6 +275,52 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public static Task<ProtectionPolicyResponse> GetOperationResultAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetOperationResultAsync(resourceGroupName, resourceName, policyName, operationId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectionPolicyResponse.
+        /// </returns>
+        public static ProtectionPolicyResponse GetProtectionPolicyResultByURL(this IProtectionPolicyOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionPolicyOperations)s).GetProtectionPolicyResultByURLAsync(operationResultLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectionPolicyResponse.
+        /// </returns>
+        public static Task<ProtectionPolicyResponse> GetProtectionPolicyResultByURLAsync(this IProtectionPolicyOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetProtectionPolicyResultByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

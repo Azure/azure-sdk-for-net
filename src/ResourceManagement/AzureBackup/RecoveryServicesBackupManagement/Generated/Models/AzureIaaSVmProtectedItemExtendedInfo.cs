@@ -26,9 +26,9 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVmProtectedItemExtendedInfo object.
+    /// The definition of a AzureIaaSVmProtectedItemExtendedInfo object.
     /// </summary>
-    public partial class IaasVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
+    public partial class AzureIaaSVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
         private System.DateTime? _oldestRecoveryPoint;
         
@@ -64,10 +64,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaasVmProtectedItemExtendedInfo
-        /// class.
+        /// Initializes a new instance of the
+        /// AzureIaaSVmProtectedItemExtendedInfo class.
         /// </summary>
-        public IaasVmProtectedItemExtendedInfo()
+        public AzureIaaSVmProtectedItemExtendedInfo()
         {
         }
     }

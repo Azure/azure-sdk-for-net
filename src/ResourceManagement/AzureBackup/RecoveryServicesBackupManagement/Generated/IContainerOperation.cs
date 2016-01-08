@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<ProtectionContainerResponse> GetContainerOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the status of container operation
+        /// Get the status of container operation by URL
         /// </summary>
         /// <param name='operationResultLink'>
         /// Location value returned by operation.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<ProtectionContainerResponse> GetContainerOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the status of refresh container operation
+        /// Get the status of refresh container operation by OperationId
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -105,6 +105,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// operations.
         /// </returns>
         Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the status of refresh container operation by URL
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// List all protection containers.
