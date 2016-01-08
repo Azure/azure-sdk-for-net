@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.DataLake.StoreUploader.nuget.proj" />
-    <None Include="Microsoft.Azure.Management.DataLake.StoreUploader.nuspec" />
+    <None Include="Microsoft.Azure.Management.DataLake.StoreUploader.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -78,12 +80,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DataLake.StoreFileSystem\DataLakeStoreFileSystemManagement\DataLakeStoreFileSystemManagement.csproj">
-      <Project>{cd70673d-5a14-471c-962c-28d5afd0d900}</Project>
-      <Name>DataLakeFileSystemManagement</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
