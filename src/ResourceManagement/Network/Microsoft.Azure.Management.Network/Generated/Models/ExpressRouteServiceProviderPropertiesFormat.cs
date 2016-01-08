@@ -17,21 +17,21 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// ExpressRouteResourceProvider object
+    /// Properties of ExpressRouteServiceProvider
     /// </summary>
-    public partial class ExpressRouteServiceProvider : Resource
+    public partial class ExpressRouteServiceProviderPropertiesFormat
     {
         /// <summary>
-        /// Initializes a new instance of the ExpressRouteServiceProvider
-        /// class.
+        /// Initializes a new instance of the
+        /// ExpressRouteServiceProviderPropertiesFormat class.
         /// </summary>
-        public ExpressRouteServiceProvider() { }
+        public ExpressRouteServiceProviderPropertiesFormat() { }
 
         /// <summary>
-        /// Initializes a new instance of the ExpressRouteServiceProvider
-        /// class.
+        /// Initializes a new instance of the
+        /// ExpressRouteServiceProviderPropertiesFormat class.
         /// </summary>
-        public ExpressRouteServiceProvider(IList<string> peeringLocations = default(IList<string>), IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
+        public ExpressRouteServiceProviderPropertiesFormat(IList<string> peeringLocations = default(IList<string>), IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
         {
             PeeringLocations = peeringLocations;
             BandwidthsOffered = bandwidthsOffered;
@@ -41,19 +41,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or list of peering locations
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peeringLocations")]
+        [JsonProperty(PropertyName = "peeringLocations")]
         public IList<string> PeeringLocations { get; set; }
 
         /// <summary>
         /// Gets or bandwidths offered
         /// </summary>
-        [JsonProperty(PropertyName = "properties.bandwidthsOffered")]
+        [JsonProperty(PropertyName = "bandwidthsOffered")]
         public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
+
     }
 }
