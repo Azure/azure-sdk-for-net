@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._initialReplicationDetails = value; }
         }
         
-        private string _lastReplicatedTime;
+        private System.DateTime? _lastReplicatedTime;
         
         /// <summary>
         /// Optional. Gets or sets the Last replication time.
         /// </summary>
-        public string LastReplicatedTime
+        public System.DateTime? LastReplicatedTime
         {
             get { return this._lastReplicatedTime; }
             set { this._lastReplicatedTime = value; }
