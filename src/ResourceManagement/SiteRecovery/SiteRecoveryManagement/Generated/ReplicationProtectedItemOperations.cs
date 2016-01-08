@@ -4099,7 +4099,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -4243,7 +4243,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -5214,7 +5214,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -5867,7 +5867,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -6011,7 +6011,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -6982,7 +6982,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -7694,7 +7694,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -7838,7 +7838,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -8809,7 +8809,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -9752,7 +9752,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -9896,7 +9896,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -10867,7 +10867,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -11579,7 +11579,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -11723,7 +11723,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -12694,7 +12694,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -13637,7 +13637,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -13781,7 +13781,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -14752,7 +14752,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -15464,7 +15464,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -15608,7 +15608,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -16579,7 +16579,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -17291,7 +17291,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -17435,7 +17435,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -18406,7 +18406,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -19118,7 +19118,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -19262,7 +19262,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -20233,7 +20233,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -20945,7 +20945,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -21089,7 +21089,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -22060,7 +22060,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -22772,7 +22772,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                            DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
@@ -22916,7 +22916,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                            DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                         }
                                         
@@ -23887,7 +23887,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                         if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                         {
-                                            string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                            DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                         }
                                         
@@ -24648,7 +24648,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                                    DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                                     hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                                 }
                                                 
@@ -24792,7 +24792,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                                    DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                                     hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                                 }
                                                 
@@ -25763,7 +25763,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                                    DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                                 }
                                                 
@@ -26475,7 +26475,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                                    DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                                     hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                                 }
                                                 
@@ -26619,7 +26619,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                                    DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                                     hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                                 }
                                                 
@@ -27590,7 +27590,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                                    DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                                 }
                                                 
@@ -28260,7 +28260,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue != null && lastReplicatedTimeValue.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance = ((string)lastReplicatedTimeValue);
+                                                    DateTime lastReplicatedTimeInstance = ((DateTime)lastReplicatedTimeValue);
                                                     hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                                 }
                                                 
@@ -28404,7 +28404,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue2 = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue2 != null && lastReplicatedTimeValue2.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance2 = ((string)lastReplicatedTimeValue2);
+                                                    DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                                     hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
                                                 }
                                                 
@@ -29375,7 +29375,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken lastReplicatedTimeValue3 = providerSpecificDetailsValue["lastReplicatedTime"];
                                                 if (lastReplicatedTimeValue3 != null && lastReplicatedTimeValue3.Type != JTokenType.Null)
                                                 {
-                                                    string lastReplicatedTimeInstance3 = ((string)lastReplicatedTimeValue3);
+                                                    DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
                                                 }
                                                 
