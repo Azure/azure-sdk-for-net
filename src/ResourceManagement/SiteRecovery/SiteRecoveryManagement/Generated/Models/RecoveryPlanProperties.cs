@@ -98,17 +98,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._groups = value; }
         }
         
-        private string _lastPlannedFailoverStatus;
-        
-        /// <summary>
-        /// Optional. Last planned failover status.
-        /// </summary>
-        public string LastPlannedFailoverStatus
-        {
-            get { return this._lastPlannedFailoverStatus; }
-            set { this._lastPlannedFailoverStatus = value; }
-        }
-        
         private System.DateTime? _lastPlannedFailoverTime;
         
         /// <summary>
@@ -118,17 +107,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._lastPlannedFailoverTime; }
             set { this._lastPlannedFailoverTime = value; }
-        }
-        
-        private string _lastTestFailoverStatus;
-        
-        /// <summary>
-        /// Optional. Last test failover status.
-        /// </summary>
-        public string LastTestFailoverStatus
-        {
-            get { return this._lastTestFailoverStatus; }
-            set { this._lastTestFailoverStatus = value; }
         }
         
         private System.DateTime? _lastTestFailoverTime;

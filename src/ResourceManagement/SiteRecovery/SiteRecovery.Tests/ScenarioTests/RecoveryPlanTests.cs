@@ -39,7 +39,6 @@ namespace SiteRecovery.Tests.ScenarioTests
 
                 CreateRecoveryPlanInput input = new CreateRecoveryPlanInput();
                 input.Properties = new CreateRecoveryPlanInputProperties();
-                input.Properties.FailoverDeploymentModel = "None";
                 input.Properties.PrimaryFabricId = fabrics.First().Id;
                 input.Properties.RecoveryFabricId = fabrics.First().Id;
 
@@ -134,7 +133,6 @@ namespace SiteRecovery.Tests.ScenarioTests
         {
             CreateRecoveryPlanInput input = new CreateRecoveryPlanInput();
             input.Properties = new CreateRecoveryPlanInputProperties();
-            input.Properties.FailoverDeploymentModel = "None";
             input.Properties.PrimaryFabricId = fabricId;
             input.Properties.RecoveryFabricId = fabricId;
             input.Properties.Groups = new List<RecoveryPlanGroup>();
@@ -185,7 +183,6 @@ namespace SiteRecovery.Tests.ScenarioTests
         {
             CreateRecoveryPlanInput input = new CreateRecoveryPlanInput();
             input.Properties = new CreateRecoveryPlanInputProperties();
-            input.Properties.FailoverDeploymentModel = "None";
             input.Properties.PrimaryFabricId = fabricId;
             input.Properties.RecoveryFabricId = fabricId;
             input.Properties.Groups = new List<RecoveryPlanGroup>();
@@ -238,7 +235,15 @@ namespace SiteRecovery.Tests.ScenarioTests
         {
             Assert.True(rp.Properties.PrimaryFabricId == fabricId);
             Assert.True(rp.Properties.RecoveryFabricId == fabricId);
-            Assert.True(rp.Properties.FailoverDeploymentModel == "None");
+
+            Assert.True(rp.Properties.Groups.Count == 3);
+            Assert.True(rp.Properties.Groups[0].GroupName == "Shutdown");
+            Assert.True(rp.Properties.Groups[0].GroupType == "Shutdown");
+            Assert.True(rp.Properties.Groups[0].ReplicationProtectedItems.Count == 0);
+            Assert.True(rp.Properties.Groups[1].GroupName == "Failover");
+            Assert.True(rp.Properties.Groups[1].GroupType == "Failover");
+            Assert.True(rp.Properties.Groups[1].ReplicationProtectedItems.Count == 0);
+
             Assert.True(rp.Properties.Groups.Last().GroupName == "G1");
             Assert.True(rp.Properties.Groups.Last().GroupType == "Boot");
             Assert.True(rp.Properties.Groups.Last().ReplicationProtectedItems.Count == 1);
@@ -259,6 +264,15 @@ namespace SiteRecovery.Tests.ScenarioTests
             Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirections.Count == 1);
             Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirections[0] == "RecoveryToPrimary");
             Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].CustomDetails.InstanceType == "ManualActionDetails");
+
+            RecoveryPlanScriptActionDetails scriptAction =
+                rp.Properties.Groups.Last().StartGroupActions[0].CustomDetails as RecoveryPlanScriptActionDetails;
+            Assert.True(scriptAction.Path == "path1");
+            Assert.True(scriptAction.FabricLocation == "Recovery");
+
+            RecoveryPlanManualActionDetails manualAction =
+                rp.Properties.Groups.Last().EndGroupActions[0].CustomDetails as RecoveryPlanManualActionDetails;
+            Assert.True(manualAction.Description == "desc1");
         }
 
         private static void ValidateCreateInput2(
@@ -268,10 +282,15 @@ namespace SiteRecovery.Tests.ScenarioTests
         {
             Assert.True(rp.Properties.PrimaryFabricId == fabricId);
             Assert.True(rp.Properties.RecoveryFabricId == fabricId);
-            Assert.True(rp.Properties.FailoverDeploymentModel == "None");
 
+            Assert.True(rp.Properties.Groups.Count == 2);
+            Assert.True(rp.Properties.Groups[0].GroupName == "Shutdown");
             Assert.True(rp.Properties.Groups[0].GroupType == "Shutdown");
             Assert.True(rp.Properties.Groups[0].ReplicationProtectedItems.Count == 0);
+
+            Assert.True(rp.Properties.Groups[1].GroupName == "Failover");
+            Assert.True(rp.Properties.Groups[1].GroupType == "Failover");
+            Assert.True(rp.Properties.Groups[1].ReplicationProtectedItems.Count == 0);
 
             Assert.True(rp.Properties.Groups[0].StartGroupActions.Count == 2);
             Assert.True(rp.Properties.Groups[0].StartGroupActions[0].ActionName == "S2");
@@ -287,6 +306,15 @@ namespace SiteRecovery.Tests.ScenarioTests
             Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverDirections.Count == 1);
             Assert.True(rp.Properties.Groups[0].StartGroupActions[1].FailoverDirections[0] == "RecoveryToPrimary");
             Assert.True(rp.Properties.Groups[0].StartGroupActions[1].CustomDetails.InstanceType == "ManualActionDetails");
+
+            RecoveryPlanScriptActionDetails scriptAction =
+                rp.Properties.Groups[0].StartGroupActions[0].CustomDetails as RecoveryPlanScriptActionDetails;
+            Assert.True(scriptAction.Path == "path2");
+            Assert.True(scriptAction.FabricLocation == "Primary");
+
+            RecoveryPlanManualActionDetails manualAction =
+                rp.Properties.Groups[0].StartGroupActions[1].CustomDetails as RecoveryPlanManualActionDetails;
+            Assert.True(manualAction.Description == "desc2");
         }
     }
 }
