@@ -6,6 +6,7 @@
     <ProjectGuid>{AD47B1E5-3400-4ACD-8403-C29B42ED9112}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AutoRestProjects>true</AutoRestProjects>
     <RootNamespace>Microsoft.Azure.Management.DataLake.StoreUploader</RootNamespace>
     <AssemblyName>Microsoft.Azure.Management.DataLake.StoreUploader</AssemblyName>
     <OutputType>Library</OutputType>
