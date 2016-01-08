@@ -2111,16 +2111,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             providerSpecificDetailsValue["instanceType"] = "InMageAzureV2";
                             InMageAzureV2ReprotectInput derived2 = ((InMageAzureV2ReprotectInput)input.Properties.ProviderSpecificDetails);
                             
-                            if (derived2.AgentGeneratedVmId != null)
-                            {
-                                providerSpecificDetailsValue["agentGeneratedVmId"] = derived2.AgentGeneratedVmId;
-                            }
-                            
-                            if (derived2.PlanName != null)
-                            {
-                                providerSpecificDetailsValue["planName"] = derived2.PlanName;
-                            }
-                            
                             if (derived2.ProcessServerId != null)
                             {
                                 providerSpecificDetailsValue["processServerId"] = derived2.ProcessServerId;
@@ -2131,35 +2121,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 providerSpecificDetailsValue["masterTargetId"] = derived2.MasterTargetId;
                             }
                             
-                            if (derived2.RetentionDrive != null)
+                            if (derived2.PolicyId != null)
                             {
-                                providerSpecificDetailsValue["retentionDrive"] = derived2.RetentionDrive;
+                                providerSpecificDetailsValue["policyId"] = derived2.PolicyId;
                             }
                             
-                            if (derived2.PSIpAddress != null)
+                            if (derived2.RunAsAccountId != null)
                             {
-                                providerSpecificDetailsValue["psIpAddress"] = derived2.PSIpAddress;
+                                providerSpecificDetailsValue["runAsAccountId"] = derived2.RunAsAccountId;
                             }
                             
-                            if (derived2.UseNatIPFor != null)
+                            if (derived2.StorageAccountId != null)
                             {
-                                providerSpecificDetailsValue["useNatIPFor"] = derived2.UseNatIPFor;
-                            }
-                            
-                            if (derived2.DiskMap != null)
-                            {
-                                providerSpecificDetailsValue["diskMap"] = derived2.DiskMap.ToString();
-                            }
-                            
-                            providerSpecificDetailsValue["recoveryPointThreshold"] = derived2.RecoveryPointThreshold;
-                            
-                            providerSpecificDetailsValue["recoveryPointHistory"] = derived2.RecoveryPointHistory;
-                            
-                            providerSpecificDetailsValue["appConsistentFrequency"] = derived2.AppConsistentFrequency;
-                            
-                            if (derived2.MultiVmSyncStatus != null)
-                            {
-                                providerSpecificDetailsValue["multiVmSyncStatus"] = derived2.MultiVmSyncStatus;
+                                providerSpecificDetailsValue["storageAccountId"] = derived2.StorageAccountId;
                             }
                         }
                         if (input.Properties.ProviderSpecificDetails is InMageReprotectInput)

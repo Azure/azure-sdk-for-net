@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         
         /// <summary>
         /// Optional. Indicates whether the replica VM should be destroyed or
-        /// retained. Values from Delete and Retain.
+        /// retained. Values from Required and NotRequired.
         /// </summary>
         public string ReplicaVmDeletionStatus
         {

@@ -306,7 +306,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                string vmId = "1faecbb8-b47d-11e5-af2b-0050569e66ab";
+                string vmId = "7192c867-b38e-11e5-af2b-0050569e66ab";
                 var responseServers = client.Fabrics.List(RequestHeaders);
 
                 Assert.True(
@@ -374,7 +374,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                string vmId = "719221fa-b38e-11e5-af2b-0050569e66ab";
+                string vmId = "7192c867-b38e-11e5-af2b-0050569e66ab";
                 string vmAccount = "vm";
 
                 var responseServers = client.Fabrics.List(RequestHeaders);
@@ -491,7 +491,7 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(vmWareDetails);
 
                 var processServer = vmWareDetails.ProcessServers.FirstOrDefault(
-                    ps => ps.FriendlyName.Equals("hikewalr-ps"));
+                    ps => ps.FriendlyName.Equals("hikewalr-cs"));
                 Assert.NotNull(processServer);
 
                 var masterTargetServer = vmWareDetails.MasterTargetServers.FirstOrDefault();
@@ -502,8 +502,6 @@ namespace SiteRecovery.Tests
                         vmAccount,
                         StringComparison.InvariantCultureIgnoreCase));
                 Assert.NotNull(runAsAccount);
-
-                string dataStoreName = "datastore-local (1)";
 
                 var containersResponse = client.ProtectionContainer.List(
                     vmWareFabric.Name,
@@ -525,7 +523,7 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(protectedItem.Properties.ProviderSpecificDetails);
 
                 var vmWareAzureV2Details = protectedItem.Properties.ProviderSpecificDetails
-                    as InMageAzureV2ProviderSpecificSettings;
+                    as InMageProviderSpecificSettings;
                 Assert.NotNull(vmWareAzureV2Details);
 
                 var policiesResponse = client.Policies.List(RequestHeaders);
@@ -536,6 +534,8 @@ namespace SiteRecovery.Tests
                     p => p.Properties.ProviderSpecificDetails.InstanceType == "InMageAzureV2");
                 Assert.NotNull(policy);
 
+                string storageAccountId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/hikewalrstoragewestus";
+
                 ReverseReplicationInput input = new ReverseReplicationInput
                 {
                     Properties = new ReverseReplicationInputProperties
@@ -545,6 +545,9 @@ namespace SiteRecovery.Tests
                         {
                             MasterTargetId = masterTargetServer.Id,
                             ProcessServerId = processServer.Id,
+                            PolicyId = policy.Id,
+                            RunAsAccountId = runAsAccount.AccountId,
+                            StorageAccountId = storageAccountId
                         }
                     }
                 };

@@ -20,9 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -32,39 +30,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class InMageAzureV2ReprotectInput : ReverseReplicationProviderSpecificInput
     {
-        private string _agentGeneratedVmId;
-        
-        /// <summary>
-        /// Optional. The Agent generated Vm Id.
-        /// </summary>
-        public string AgentGeneratedVmId
-        {
-            get { return this._agentGeneratedVmId; }
-            set { this._agentGeneratedVmId = value; }
-        }
-        
-        private int _appConsistentFrequency;
-        
-        /// <summary>
-        /// Optional. The app consistent frequency (in minutes).
-        /// </summary>
-        public int AppConsistentFrequency
-        {
-            get { return this._appConsistentFrequency; }
-            set { this._appConsistentFrequency = value; }
-        }
-        
-        private IList<InMageAzureV2TargetDiskMappingInformation> _diskMap;
-        
-        /// <summary>
-        /// Optional. The disk mapping for each disk of InMage VM.
-        /// </summary>
-        public IList<InMageAzureV2TargetDiskMappingInformation> DiskMap
-        {
-            get { return this._diskMap; }
-            set { this._diskMap = value; }
-        }
-        
         private string _masterTargetId;
         
         /// <summary>
@@ -76,26 +41,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._masterTargetId = value; }
         }
         
-        private string _multiVmSyncStatus;
+        private string _policyId;
         
         /// <summary>
-        /// Optional. Value indicating whether multi-VM sync has to be enabled.
+        /// Optional. The id of the policy to be used for reprotection.
         /// </summary>
-        public string MultiVmSyncStatus
+        public string PolicyId
         {
-            get { return this._multiVmSyncStatus; }
-            set { this._multiVmSyncStatus = value; }
-        }
-        
-        private string _planName;
-        
-        /// <summary>
-        /// Optional. The Protection Plan Name.
-        /// </summary>
-        public string PlanName
-        {
-            get { return this._planName; }
-            set { this._planName = value; }
+            get { return this._policyId; }
+            set { this._policyId = value; }
         }
         
         private string _processServerId;
@@ -109,60 +63,26 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._processServerId = value; }
         }
         
-        private string _pSIpAddress;
+        private string _runAsAccountId;
         
         /// <summary>
-        /// Optional. The PS public IP address if PS NAT is being configured.
+        /// Optional. The id of the run as account to be used for re-protection.
         /// </summary>
-        public string PSIpAddress
+        public string RunAsAccountId
         {
-            get { return this._pSIpAddress; }
-            set { this._pSIpAddress = value; }
+            get { return this._runAsAccountId; }
+            set { this._runAsAccountId = value; }
         }
         
-        private int _recoveryPointHistory;
+        private string _storageAccountId;
         
         /// <summary>
-        /// Optional. The duration in minutes until which the recovery points
-        /// need to be stored.
+        /// Optional. The id of the storage account to be used
         /// </summary>
-        public int RecoveryPointHistory
+        public string StorageAccountId
         {
-            get { return this._recoveryPointHistory; }
-            set { this._recoveryPointHistory = value; }
-        }
-        
-        private int _recoveryPointThreshold;
-        
-        /// <summary>
-        /// Optional. The recovery point threshold in minutes.
-        /// </summary>
-        public int RecoveryPointThreshold
-        {
-            get { return this._recoveryPointThreshold; }
-            set { this._recoveryPointThreshold = value; }
-        }
-        
-        private string _retentionDrive;
-        
-        /// <summary>
-        /// Optional. The retention drive.
-        /// </summary>
-        public string RetentionDrive
-        {
-            get { return this._retentionDrive; }
-            set { this._retentionDrive = value; }
-        }
-        
-        private string _useNatIPFor;
-        
-        /// <summary>
-        /// Optional. The value for which server do we have to use NAT Ip for.
-        /// </summary>
-        public string UseNatIPFor
-        {
-            get { return this._useNatIPFor; }
-            set { this._useNatIPFor = value; }
+            get { return this._storageAccountId; }
+            set { this._storageAccountId = value; }
         }
         
         /// <summary>
@@ -170,7 +90,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public InMageAzureV2ReprotectInput()
         {
-            this.DiskMap = new LazyList<InMageAzureV2TargetDiskMappingInformation>();
         }
     }
 }

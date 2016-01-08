@@ -255,7 +255,6 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(policy);
 
                 Random random = new Random(100);
-                //string storageAccountName = "bvtstoragev2";
                 string storageAccountSubscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
                 string storageAccountId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/Default-Storage-WestUS/providers/Microsoft.ClassicStorage/storageAccounts/hikewalrstoragewestus";
                 var response = client.ReplicationProtectedItem.EnableProtection(
