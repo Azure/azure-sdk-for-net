@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of container operation
+        /// Get the status of container operation by URL
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of container operation
+        /// Get the status of container operation by URL
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of refresh container operation
+        /// Get the status of refresh container operation by OperationId
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of refresh container operation
+        /// Get the status of refresh container operation by OperationId
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -210,6 +210,54 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetRefreshOperationResultAsync(resourceGroupName, resourceName, fabricName, operationId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the status of refresh container operation by URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static BaseRecoveryServicesJobResponse GetRefreshOperationResultByURL(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperation)s).GetRefreshOperationResultByURLAsync(operationResultLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the status of refresh container operation by URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetRefreshOperationResultByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

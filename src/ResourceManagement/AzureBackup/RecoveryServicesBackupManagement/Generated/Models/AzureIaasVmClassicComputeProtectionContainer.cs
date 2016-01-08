@@ -26,37 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a MabProtectedItemExtendedInfo object.
+    /// The definition of a classic compute vm object.
     /// </summary>
-    public partial class MabProtectedItemExtendedInfo : ProtectedItemExtendedInfo
+    public partial class AzureIaasVmClassicComputeProtectionContainer : AzureIaasVmProtectionContainer
     {
-        private System.DateTime? _oldestRecoveryPoint;
-        
         /// <summary>
-        /// Optional. OldestRecoveryPoint for the protected item
+        /// Initializes a new instance of the
+        /// AzureIaasVmClassicComputeProtectionContainer class.
         /// </summary>
-        public System.DateTime? OldestRecoveryPoint
-        {
-            get { return this._oldestRecoveryPoint; }
-            set { this._oldestRecoveryPoint = value; }
-        }
-        
-        private int _recoveryPointCount;
-        
-        /// <summary>
-        /// Optional. RecoveryPointCount for the protected item
-        /// </summary>
-        public int RecoveryPointCount
-        {
-            get { return this._recoveryPointCount; }
-            set { this._recoveryPointCount = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the MabProtectedItemExtendedInfo
-        /// class.
-        /// </summary>
-        public MabProtectedItemExtendedInfo()
+        public AzureIaasVmClassicComputeProtectionContainer()
         {
         }
     }

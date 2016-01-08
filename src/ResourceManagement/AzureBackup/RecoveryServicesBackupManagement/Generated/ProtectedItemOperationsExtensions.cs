@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific protected Objects.
+        /// Get ProtectedObject Operation result by OperationId.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific protected Objects.
+        /// Get ProtectedObject Operation result by OperationId.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -400,6 +400,98 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public static Task<BackUpOperationStatusResponse> GetOperationStatusAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetOperationStatusAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, operationId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the operation stauts of specific URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static BackUpOperationStatusResponse GetOperationStatusByURL(this IProtectedItemOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectedItemOperations)s).GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the operation stauts of specific URL
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(this IProtectedItemOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get ProtectedObject Operation result by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectedItemResponse.
+        /// </returns>
+        public static ProtectedItemResponse GetProtectedItemOperationResultByURL(this IProtectedItemOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectedItemOperations)s).GetProtectedItemOperationResultByURLAsync(operationResultLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get ProtectedObject Operation result by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectedItemOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a ProtectedItemResponse.
+        /// </returns>
+        public static Task<ProtectedItemResponse> GetProtectedItemOperationResultByURLAsync(this IProtectedItemOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetProtectedItemOperationResultByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

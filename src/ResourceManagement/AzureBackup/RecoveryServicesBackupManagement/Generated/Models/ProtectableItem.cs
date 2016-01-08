@@ -30,6 +30,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class ProtectableItem : ProtectableObjectBase
     {
+        private string _backupManagementType;
+        
+        /// <summary>
+        /// Optional. Backup Management Type
+        /// </summary>
+        public string BackupManagementType
+        {
+            get { return this._backupManagementType; }
+            set { this._backupManagementType = value; }
+        }
+        
+        private string _containerUri;
+        
+        /// <summary>
+        /// Optional. Container Uri
+        /// </summary>
+        public string ContainerUri
+        {
+            get { return this._containerUri; }
+            set { this._containerUri = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
@@ -41,26 +63,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._friendlyName = value; }
         }
         
-        private string _protectionStatus;
+        private string _protectableItemType;
         
         /// <summary>
-        /// Optional. Protection Status
+        /// Optional. protectableItem Type
         /// </summary>
-        public string ProtectionStatus
+        public string ProtectableItemType
         {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
+            get { return this._protectableItemType; }
+            set { this._protectableItemType = value; }
         }
         
-        private string _resourceGroup;
+        private string _protectableObjectUri;
         
         /// <summary>
-        /// Optional. Resource Group
+        /// Optional. ProtectableObject Uri
         /// </summary>
-        public string ResourceGroup
+        public string ProtectableObjectUri
         {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
+            get { return this._protectableObjectUri; }
+            set { this._protectableObjectUri = value; }
+        }
+        
+        private string _protectionState;
+        
+        /// <summary>
+        /// Optional. Protection State
+        /// </summary>
+        public string ProtectionState
+        {
+            get { return this._protectionState; }
+            set { this._protectionState = value; }
         }
         
         /// <summary>

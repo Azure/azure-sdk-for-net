@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = ((string)propertiesValue["objectType"]);
+                                        string typeName = ((string)propertiesValue["protectableItemType"]);
                                         if (typeName == "ProtectableItem")
                                         {
                                             ProtectableItem protectableItemInstance = new ProtectableItem();
@@ -244,81 +244,245 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 protectableItemInstance.FriendlyName = friendlyNameInstance;
                                             }
                                             
-                                            JToken protectionStatusValue = propertiesValue["protectionStatus"];
-                                            if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
+                                            JToken protectionStateValue = propertiesValue["protectionState"];
+                                            if (protectionStateValue != null && protectionStateValue.Type != JTokenType.Null)
                                             {
-                                                string protectionStatusInstance = ((string)protectionStatusValue);
-                                                protectableItemInstance.ProtectionStatus = protectionStatusInstance;
-                                            }
-                                            
-                                            JToken resourceGroupValue = propertiesValue["resourceGroup"];
-                                            if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
-                                            {
-                                                string resourceGroupInstance = ((string)resourceGroupValue);
-                                                protectableItemInstance.ResourceGroup = resourceGroupInstance;
-                                            }
-                                            
-                                            JToken providerTypeValue = propertiesValue["providerType"];
-                                            if (providerTypeValue != null && providerTypeValue.Type != JTokenType.Null)
-                                            {
-                                                string providerTypeInstance = ((string)providerTypeValue);
-                                                protectableItemInstance.ProviderType = providerTypeInstance;
-                                            }
-                                            protectableObjectResourceInstance.Properties = protectableItemInstance;
-                                        }
-                                        if (typeName == "IaaSVMProtectableItem")
-                                        {
-                                            IaaSVMProtectableItem iaaSVMProtectableItemInstance = new IaaSVMProtectableItem();
-                                            
-                                            JToken vmVersionValue = propertiesValue["VmVersion"];
-                                            if (vmVersionValue != null && vmVersionValue.Type != JTokenType.Null)
-                                            {
-                                                string vmVersionInstance = ((string)vmVersionValue);
-                                                iaaSVMProtectableItemInstance.VirtualMachineVersion = vmVersionInstance;
+                                                string protectionStateInstance = ((string)protectionStateValue);
+                                                protectableItemInstance.ProtectionState = protectionStateInstance;
                                             }
                                             
                                             JToken containerUriValue = propertiesValue["ContainerUri"];
                                             if (containerUriValue != null && containerUriValue.Type != JTokenType.Null)
                                             {
                                                 string containerUriInstance = ((string)containerUriValue);
-                                                iaaSVMProtectableItemInstance.ContainerUri = containerUriInstance;
+                                                protectableItemInstance.ContainerUri = containerUriInstance;
                                             }
                                             
                                             JToken protectableObjectUriValue = propertiesValue["ProtectableObjectUri"];
                                             if (protectableObjectUriValue != null && protectableObjectUriValue.Type != JTokenType.Null)
                                             {
                                                 string protectableObjectUriInstance = ((string)protectableObjectUriValue);
-                                                iaaSVMProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance;
+                                                protectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance;
+                                            }
+                                            
+                                            JToken protectableItemTypeValue = propertiesValue["protectableItemType"];
+                                            if (protectableItemTypeValue != null && protectableItemTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string protectableItemTypeInstance = ((string)protectableItemTypeValue);
+                                                protectableItemInstance.ProtectableItemType = protectableItemTypeInstance;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue != null && backupManagementTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance = ((string)backupManagementTypeValue);
+                                                protectableItemInstance.BackupManagementType = backupManagementTypeInstance;
+                                            }
+                                            protectableObjectResourceInstance.Properties = protectableItemInstance;
+                                        }
+                                        if (typeName == "IaaSVMProtectableItem")
+                                        {
+                                            AzureIaaSVMProtectableItem azureIaaSVMProtectableItemInstance = new AzureIaaSVMProtectableItem();
+                                            
+                                            JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
+                                            if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
+                                                azureIaaSVMProtectableItemInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                            }
+                                            
+                                            JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
+                                            if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                            {
+                                                string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                azureIaaSVMProtectableItemInstance.VirtualMachineId = virtualMachineIdInstance;
+                                            }
+                                            
+                                            JToken resourceGroupValue = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
+                                            {
+                                                string resourceGroupInstance = ((string)resourceGroupValue);
+                                                azureIaaSVMProtectableItemInstance.ResourceGroup = resourceGroupInstance;
                                             }
                                             
                                             JToken friendlyNameValue2 = propertiesValue["friendlyName"];
                                             if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                             {
                                                 string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                iaaSVMProtectableItemInstance.FriendlyName = friendlyNameInstance2;
+                                                azureIaaSVMProtectableItemInstance.FriendlyName = friendlyNameInstance2;
                                             }
                                             
-                                            JToken protectionStatusValue2 = propertiesValue["protectionStatus"];
-                                            if (protectionStatusValue2 != null && protectionStatusValue2.Type != JTokenType.Null)
+                                            JToken protectionStateValue2 = propertiesValue["protectionState"];
+                                            if (protectionStateValue2 != null && protectionStateValue2.Type != JTokenType.Null)
                                             {
-                                                string protectionStatusInstance2 = ((string)protectionStatusValue2);
-                                                iaaSVMProtectableItemInstance.ProtectionStatus = protectionStatusInstance2;
+                                                string protectionStateInstance2 = ((string)protectionStateValue2);
+                                                azureIaaSVMProtectableItemInstance.ProtectionState = protectionStateInstance2;
+                                            }
+                                            
+                                            JToken containerUriValue2 = propertiesValue["ContainerUri"];
+                                            if (containerUriValue2 != null && containerUriValue2.Type != JTokenType.Null)
+                                            {
+                                                string containerUriInstance2 = ((string)containerUriValue2);
+                                                azureIaaSVMProtectableItemInstance.ContainerUri = containerUriInstance2;
+                                            }
+                                            
+                                            JToken protectableObjectUriValue2 = propertiesValue["ProtectableObjectUri"];
+                                            if (protectableObjectUriValue2 != null && protectableObjectUriValue2.Type != JTokenType.Null)
+                                            {
+                                                string protectableObjectUriInstance2 = ((string)protectableObjectUriValue2);
+                                                azureIaaSVMProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance2;
+                                            }
+                                            
+                                            JToken protectableItemTypeValue2 = propertiesValue["protectableItemType"];
+                                            if (protectableItemTypeValue2 != null && protectableItemTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string protectableItemTypeInstance2 = ((string)protectableItemTypeValue2);
+                                                azureIaaSVMProtectableItemInstance.ProtectableItemType = protectableItemTypeInstance2;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                                azureIaaSVMProtectableItemInstance.BackupManagementType = backupManagementTypeInstance2;
+                                            }
+                                            protectableObjectResourceInstance.Properties = azureIaaSVMProtectableItemInstance;
+                                        }
+                                        if (typeName == "Microsoft.ClassicCompute/virtualMachines")
+                                        {
+                                            AzureIaasClassiccomputeVmProtectableItem azureIaasClassiccomputeVmProtectableItemInstance = new AzureIaasClassiccomputeVmProtectableItem();
+                                            
+                                            JToken virtualMachineVersionValue2 = propertiesValue["virtualMachineVersion"];
+                                            if (virtualMachineVersionValue2 != null && virtualMachineVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string virtualMachineVersionInstance2 = ((string)virtualMachineVersionValue2);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
+                                            }
+                                            
+                                            JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
+                                            if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.VirtualMachineId = virtualMachineIdInstance2;
                                             }
                                             
                                             JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
                                             if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
                                             {
                                                 string resourceGroupInstance2 = ((string)resourceGroupValue2);
-                                                iaaSVMProtectableItemInstance.ResourceGroup = resourceGroupInstance2;
+                                                azureIaasClassiccomputeVmProtectableItemInstance.ResourceGroup = resourceGroupInstance2;
                                             }
                                             
-                                            JToken providerTypeValue2 = propertiesValue["providerType"];
-                                            if (providerTypeValue2 != null && providerTypeValue2.Type != JTokenType.Null)
+                                            JToken friendlyNameValue3 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
                                             {
-                                                string providerTypeInstance2 = ((string)providerTypeValue2);
-                                                iaaSVMProtectableItemInstance.ProviderType = providerTypeInstance2;
+                                                string friendlyNameInstance3 = ((string)friendlyNameValue3);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.FriendlyName = friendlyNameInstance3;
                                             }
-                                            protectableObjectResourceInstance.Properties = iaaSVMProtectableItemInstance;
+                                            
+                                            JToken protectionStateValue3 = propertiesValue["protectionState"];
+                                            if (protectionStateValue3 != null && protectionStateValue3.Type != JTokenType.Null)
+                                            {
+                                                string protectionStateInstance3 = ((string)protectionStateValue3);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.ProtectionState = protectionStateInstance3;
+                                            }
+                                            
+                                            JToken containerUriValue3 = propertiesValue["ContainerUri"];
+                                            if (containerUriValue3 != null && containerUriValue3.Type != JTokenType.Null)
+                                            {
+                                                string containerUriInstance3 = ((string)containerUriValue3);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.ContainerUri = containerUriInstance3;
+                                            }
+                                            
+                                            JToken protectableObjectUriValue3 = propertiesValue["ProtectableObjectUri"];
+                                            if (protectableObjectUriValue3 != null && protectableObjectUriValue3.Type != JTokenType.Null)
+                                            {
+                                                string protectableObjectUriInstance3 = ((string)protectableObjectUriValue3);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance3;
+                                            }
+                                            
+                                            JToken protectableItemTypeValue3 = propertiesValue["protectableItemType"];
+                                            if (protectableItemTypeValue3 != null && protectableItemTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string protectableItemTypeInstance3 = ((string)protectableItemTypeValue3);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.ProtectableItemType = protectableItemTypeInstance3;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
+                                                azureIaasClassiccomputeVmProtectableItemInstance.BackupManagementType = backupManagementTypeInstance3;
+                                            }
+                                            protectableObjectResourceInstance.Properties = azureIaasClassiccomputeVmProtectableItemInstance;
+                                        }
+                                        if (typeName == "Microsoft.Compute/virtualMachines")
+                                        {
+                                            AzureIaasComputeVmProtectableItem azureIaasComputeVmProtectableItemInstance = new AzureIaasComputeVmProtectableItem();
+                                            
+                                            JToken virtualMachineVersionValue3 = propertiesValue["virtualMachineVersion"];
+                                            if (virtualMachineVersionValue3 != null && virtualMachineVersionValue3.Type != JTokenType.Null)
+                                            {
+                                                string virtualMachineVersionInstance3 = ((string)virtualMachineVersionValue3);
+                                                azureIaasComputeVmProtectableItemInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
+                                            }
+                                            
+                                            JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
+                                            if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
+                                            {
+                                                string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
+                                                azureIaasComputeVmProtectableItemInstance.VirtualMachineId = virtualMachineIdInstance3;
+                                            }
+                                            
+                                            JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
+                                            if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
+                                            {
+                                                string resourceGroupInstance3 = ((string)resourceGroupValue3);
+                                                azureIaasComputeVmProtectableItemInstance.ResourceGroup = resourceGroupInstance3;
+                                            }
+                                            
+                                            JToken friendlyNameValue4 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue4 != null && friendlyNameValue4.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance4 = ((string)friendlyNameValue4);
+                                                azureIaasComputeVmProtectableItemInstance.FriendlyName = friendlyNameInstance4;
+                                            }
+                                            
+                                            JToken protectionStateValue4 = propertiesValue["protectionState"];
+                                            if (protectionStateValue4 != null && protectionStateValue4.Type != JTokenType.Null)
+                                            {
+                                                string protectionStateInstance4 = ((string)protectionStateValue4);
+                                                azureIaasComputeVmProtectableItemInstance.ProtectionState = protectionStateInstance4;
+                                            }
+                                            
+                                            JToken containerUriValue4 = propertiesValue["ContainerUri"];
+                                            if (containerUriValue4 != null && containerUriValue4.Type != JTokenType.Null)
+                                            {
+                                                string containerUriInstance4 = ((string)containerUriValue4);
+                                                azureIaasComputeVmProtectableItemInstance.ContainerUri = containerUriInstance4;
+                                            }
+                                            
+                                            JToken protectableObjectUriValue4 = propertiesValue["ProtectableObjectUri"];
+                                            if (protectableObjectUriValue4 != null && protectableObjectUriValue4.Type != JTokenType.Null)
+                                            {
+                                                string protectableObjectUriInstance4 = ((string)protectableObjectUriValue4);
+                                                azureIaasComputeVmProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance4;
+                                            }
+                                            
+                                            JToken protectableItemTypeValue4 = propertiesValue["protectableItemType"];
+                                            if (protectableItemTypeValue4 != null && protectableItemTypeValue4.Type != JTokenType.Null)
+                                            {
+                                                string protectableItemTypeInstance4 = ((string)protectableItemTypeValue4);
+                                                azureIaasComputeVmProtectableItemInstance.ProtectableItemType = protectableItemTypeInstance4;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue4 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue4 != null && backupManagementTypeValue4.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance4 = ((string)backupManagementTypeValue4);
+                                                azureIaasComputeVmProtectableItemInstance.BackupManagementType = backupManagementTypeInstance4;
+                                            }
+                                            protectableObjectResourceInstance.Properties = azureIaasComputeVmProtectableItemInstance;
                                         }
                                     }
                                     

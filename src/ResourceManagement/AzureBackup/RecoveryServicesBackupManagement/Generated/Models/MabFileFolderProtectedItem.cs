@@ -41,6 +41,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._computerName = value; }
         }
         
+        private MabFileFolderProtectedItemExtendedInfo _extendedInfo;
+        
+        /// <summary>
+        /// Optional. ExtendedInfo for the Mab File folder protected item
+        /// </summary>
+        public MabFileFolderProtectedItemExtendedInfo ExtendedInfo
+        {
+            get { return this._extendedInfo; }
+            set { this._extendedInfo = value; }
+        }
+        
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Optional. Mab File Folder Protected Item FriendlyName
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the MabFileFolderProtectedItem class.
         /// </summary>
