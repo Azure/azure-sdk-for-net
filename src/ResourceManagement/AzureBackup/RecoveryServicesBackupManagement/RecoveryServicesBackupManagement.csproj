@@ -85,6 +85,7 @@
     <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\Day.cs" />
     <Compile Include="Generated\Models\DpmProtectionContainer.cs" />
+    <Compile Include="Generated\Models\DpmVenusProtectionContainer.cs" />
     <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />

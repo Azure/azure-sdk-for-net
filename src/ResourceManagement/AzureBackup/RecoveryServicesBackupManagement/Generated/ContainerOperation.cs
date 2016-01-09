@@ -511,57 +511,111 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                     itemInstance.Properties = dpmProtectionContainerInstance;
                                 }
-                                if (typeName == "MABContainer")
+                                if (typeName == "DPMVenusContainer")
                                 {
-                                    MabProtectionContainer mabProtectionContainerInstance = new MabProtectionContainer();
+                                    DpmVenusProtectionContainer dpmVenusProtectionContainerInstance = new DpmVenusProtectionContainer();
                                     
                                     JToken canReRegisterValue2 = propertiesValue["canReRegister"];
                                     if (canReRegisterValue2 != null && canReRegisterValue2.Type != JTokenType.Null)
                                     {
                                         bool canReRegisterInstance2 = ((bool)canReRegisterValue2);
-                                        mabProtectionContainerInstance.CanReRegister = canReRegisterInstance2;
+                                        dpmVenusProtectionContainerInstance.CanReRegister = canReRegisterInstance2;
                                     }
                                     
                                     JToken containerIdValue2 = propertiesValue["containerId"];
                                     if (containerIdValue2 != null && containerIdValue2.Type != JTokenType.Null)
                                     {
                                         long containerIdInstance2 = ((long)containerIdValue2);
-                                        mabProtectionContainerInstance.ContainerId = containerIdInstance2;
+                                        dpmVenusProtectionContainerInstance.ContainerId = containerIdInstance2;
                                     }
                                     
                                     JToken friendlyNameValue6 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue6 != null && friendlyNameValue6.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance6 = ((string)friendlyNameValue6);
-                                        mabProtectionContainerInstance.FriendlyName = friendlyNameInstance6;
+                                        dpmVenusProtectionContainerInstance.FriendlyName = friendlyNameInstance6;
                                     }
                                     
                                     JToken registrationStatusValue6 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue6 != null && registrationStatusValue6.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance6 = ((string)registrationStatusValue6);
-                                        mabProtectionContainerInstance.RegistrationStatus = registrationStatusInstance6;
+                                        dpmVenusProtectionContainerInstance.RegistrationStatus = registrationStatusInstance6;
                                     }
                                     
                                     JToken healthStatusValue6 = propertiesValue["healthStatus"];
                                     if (healthStatusValue6 != null && healthStatusValue6.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance6 = ((string)healthStatusValue6);
-                                        mabProtectionContainerInstance.HealthStatus = healthStatusInstance6;
+                                        dpmVenusProtectionContainerInstance.HealthStatus = healthStatusInstance6;
                                     }
                                     
                                     JToken containerTypeValue6 = propertiesValue["containerType"];
                                     if (containerTypeValue6 != null && containerTypeValue6.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance6 = ((string)containerTypeValue6);
-                                        mabProtectionContainerInstance.ContainerType = containerTypeInstance6;
+                                        dpmVenusProtectionContainerInstance.ContainerType = containerTypeInstance6;
                                     }
                                     
                                     JToken backupManagementTypeValue6 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue6 != null && backupManagementTypeValue6.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance6 = ((string)backupManagementTypeValue6);
-                                        mabProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance6;
+                                        dpmVenusProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance6;
+                                    }
+                                    itemInstance.Properties = dpmVenusProtectionContainerInstance;
+                                }
+                                if (typeName == "MABContainer")
+                                {
+                                    MabProtectionContainer mabProtectionContainerInstance = new MabProtectionContainer();
+                                    
+                                    JToken canReRegisterValue3 = propertiesValue["canReRegister"];
+                                    if (canReRegisterValue3 != null && canReRegisterValue3.Type != JTokenType.Null)
+                                    {
+                                        bool canReRegisterInstance3 = ((bool)canReRegisterValue3);
+                                        mabProtectionContainerInstance.CanReRegister = canReRegisterInstance3;
+                                    }
+                                    
+                                    JToken containerIdValue3 = propertiesValue["containerId"];
+                                    if (containerIdValue3 != null && containerIdValue3.Type != JTokenType.Null)
+                                    {
+                                        long containerIdInstance3 = ((long)containerIdValue3);
+                                        mabProtectionContainerInstance.ContainerId = containerIdInstance3;
+                                    }
+                                    
+                                    JToken friendlyNameValue7 = propertiesValue["friendlyName"];
+                                    if (friendlyNameValue7 != null && friendlyNameValue7.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance7 = ((string)friendlyNameValue7);
+                                        mabProtectionContainerInstance.FriendlyName = friendlyNameInstance7;
+                                    }
+                                    
+                                    JToken registrationStatusValue7 = propertiesValue["registrationStatus"];
+                                    if (registrationStatusValue7 != null && registrationStatusValue7.Type != JTokenType.Null)
+                                    {
+                                        string registrationStatusInstance7 = ((string)registrationStatusValue7);
+                                        mabProtectionContainerInstance.RegistrationStatus = registrationStatusInstance7;
+                                    }
+                                    
+                                    JToken healthStatusValue7 = propertiesValue["healthStatus"];
+                                    if (healthStatusValue7 != null && healthStatusValue7.Type != JTokenType.Null)
+                                    {
+                                        string healthStatusInstance7 = ((string)healthStatusValue7);
+                                        mabProtectionContainerInstance.HealthStatus = healthStatusInstance7;
+                                    }
+                                    
+                                    JToken containerTypeValue7 = propertiesValue["containerType"];
+                                    if (containerTypeValue7 != null && containerTypeValue7.Type != JTokenType.Null)
+                                    {
+                                        string containerTypeInstance7 = ((string)containerTypeValue7);
+                                        mabProtectionContainerInstance.ContainerType = containerTypeInstance7;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue7 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue7 != null && backupManagementTypeValue7.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance7 = ((string)backupManagementTypeValue7);
+                                        mabProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance7;
                                     }
                                     itemInstance.Properties = mabProtectionContainerInstance;
                                 }
@@ -1055,57 +1109,111 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                     itemInstance.Properties = dpmProtectionContainerInstance;
                                 }
-                                if (typeName == "MABContainer")
+                                if (typeName == "DPMVenusContainer")
                                 {
-                                    MabProtectionContainer mabProtectionContainerInstance = new MabProtectionContainer();
+                                    DpmVenusProtectionContainer dpmVenusProtectionContainerInstance = new DpmVenusProtectionContainer();
                                     
                                     JToken canReRegisterValue2 = propertiesValue["canReRegister"];
                                     if (canReRegisterValue2 != null && canReRegisterValue2.Type != JTokenType.Null)
                                     {
                                         bool canReRegisterInstance2 = ((bool)canReRegisterValue2);
-                                        mabProtectionContainerInstance.CanReRegister = canReRegisterInstance2;
+                                        dpmVenusProtectionContainerInstance.CanReRegister = canReRegisterInstance2;
                                     }
                                     
                                     JToken containerIdValue2 = propertiesValue["containerId"];
                                     if (containerIdValue2 != null && containerIdValue2.Type != JTokenType.Null)
                                     {
                                         long containerIdInstance2 = ((long)containerIdValue2);
-                                        mabProtectionContainerInstance.ContainerId = containerIdInstance2;
+                                        dpmVenusProtectionContainerInstance.ContainerId = containerIdInstance2;
                                     }
                                     
                                     JToken friendlyNameValue6 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue6 != null && friendlyNameValue6.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance6 = ((string)friendlyNameValue6);
-                                        mabProtectionContainerInstance.FriendlyName = friendlyNameInstance6;
+                                        dpmVenusProtectionContainerInstance.FriendlyName = friendlyNameInstance6;
                                     }
                                     
                                     JToken registrationStatusValue6 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue6 != null && registrationStatusValue6.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance6 = ((string)registrationStatusValue6);
-                                        mabProtectionContainerInstance.RegistrationStatus = registrationStatusInstance6;
+                                        dpmVenusProtectionContainerInstance.RegistrationStatus = registrationStatusInstance6;
                                     }
                                     
                                     JToken healthStatusValue6 = propertiesValue["healthStatus"];
                                     if (healthStatusValue6 != null && healthStatusValue6.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance6 = ((string)healthStatusValue6);
-                                        mabProtectionContainerInstance.HealthStatus = healthStatusInstance6;
+                                        dpmVenusProtectionContainerInstance.HealthStatus = healthStatusInstance6;
                                     }
                                     
                                     JToken containerTypeValue6 = propertiesValue["containerType"];
                                     if (containerTypeValue6 != null && containerTypeValue6.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance6 = ((string)containerTypeValue6);
-                                        mabProtectionContainerInstance.ContainerType = containerTypeInstance6;
+                                        dpmVenusProtectionContainerInstance.ContainerType = containerTypeInstance6;
                                     }
                                     
                                     JToken backupManagementTypeValue6 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue6 != null && backupManagementTypeValue6.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance6 = ((string)backupManagementTypeValue6);
-                                        mabProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance6;
+                                        dpmVenusProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance6;
+                                    }
+                                    itemInstance.Properties = dpmVenusProtectionContainerInstance;
+                                }
+                                if (typeName == "MABContainer")
+                                {
+                                    MabProtectionContainer mabProtectionContainerInstance = new MabProtectionContainer();
+                                    
+                                    JToken canReRegisterValue3 = propertiesValue["canReRegister"];
+                                    if (canReRegisterValue3 != null && canReRegisterValue3.Type != JTokenType.Null)
+                                    {
+                                        bool canReRegisterInstance3 = ((bool)canReRegisterValue3);
+                                        mabProtectionContainerInstance.CanReRegister = canReRegisterInstance3;
+                                    }
+                                    
+                                    JToken containerIdValue3 = propertiesValue["containerId"];
+                                    if (containerIdValue3 != null && containerIdValue3.Type != JTokenType.Null)
+                                    {
+                                        long containerIdInstance3 = ((long)containerIdValue3);
+                                        mabProtectionContainerInstance.ContainerId = containerIdInstance3;
+                                    }
+                                    
+                                    JToken friendlyNameValue7 = propertiesValue["friendlyName"];
+                                    if (friendlyNameValue7 != null && friendlyNameValue7.Type != JTokenType.Null)
+                                    {
+                                        string friendlyNameInstance7 = ((string)friendlyNameValue7);
+                                        mabProtectionContainerInstance.FriendlyName = friendlyNameInstance7;
+                                    }
+                                    
+                                    JToken registrationStatusValue7 = propertiesValue["registrationStatus"];
+                                    if (registrationStatusValue7 != null && registrationStatusValue7.Type != JTokenType.Null)
+                                    {
+                                        string registrationStatusInstance7 = ((string)registrationStatusValue7);
+                                        mabProtectionContainerInstance.RegistrationStatus = registrationStatusInstance7;
+                                    }
+                                    
+                                    JToken healthStatusValue7 = propertiesValue["healthStatus"];
+                                    if (healthStatusValue7 != null && healthStatusValue7.Type != JTokenType.Null)
+                                    {
+                                        string healthStatusInstance7 = ((string)healthStatusValue7);
+                                        mabProtectionContainerInstance.HealthStatus = healthStatusInstance7;
+                                    }
+                                    
+                                    JToken containerTypeValue7 = propertiesValue["containerType"];
+                                    if (containerTypeValue7 != null && containerTypeValue7.Type != JTokenType.Null)
+                                    {
+                                        string containerTypeInstance7 = ((string)containerTypeValue7);
+                                        mabProtectionContainerInstance.ContainerType = containerTypeInstance7;
+                                    }
+                                    
+                                    JToken backupManagementTypeValue7 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue7 != null && backupManagementTypeValue7.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance7 = ((string)backupManagementTypeValue7);
+                                        mabProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance7;
                                     }
                                     itemInstance.Properties = mabProtectionContainerInstance;
                                 }
@@ -2013,57 +2121,111 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             }
                                             protectionContainerResourceInstance.Properties = dpmProtectionContainerInstance;
                                         }
-                                        if (typeName == "MABContainer")
+                                        if (typeName == "DPMVenusContainer")
                                         {
-                                            MabProtectionContainer mabProtectionContainerInstance = new MabProtectionContainer();
+                                            DpmVenusProtectionContainer dpmVenusProtectionContainerInstance = new DpmVenusProtectionContainer();
                                             
                                             JToken canReRegisterValue2 = propertiesValue["canReRegister"];
                                             if (canReRegisterValue2 != null && canReRegisterValue2.Type != JTokenType.Null)
                                             {
                                                 bool canReRegisterInstance2 = ((bool)canReRegisterValue2);
-                                                mabProtectionContainerInstance.CanReRegister = canReRegisterInstance2;
+                                                dpmVenusProtectionContainerInstance.CanReRegister = canReRegisterInstance2;
                                             }
                                             
                                             JToken containerIdValue2 = propertiesValue["containerId"];
                                             if (containerIdValue2 != null && containerIdValue2.Type != JTokenType.Null)
                                             {
                                                 long containerIdInstance2 = ((long)containerIdValue2);
-                                                mabProtectionContainerInstance.ContainerId = containerIdInstance2;
+                                                dpmVenusProtectionContainerInstance.ContainerId = containerIdInstance2;
                                             }
                                             
                                             JToken friendlyNameValue6 = propertiesValue["friendlyName"];
                                             if (friendlyNameValue6 != null && friendlyNameValue6.Type != JTokenType.Null)
                                             {
                                                 string friendlyNameInstance6 = ((string)friendlyNameValue6);
-                                                mabProtectionContainerInstance.FriendlyName = friendlyNameInstance6;
+                                                dpmVenusProtectionContainerInstance.FriendlyName = friendlyNameInstance6;
                                             }
                                             
                                             JToken registrationStatusValue6 = propertiesValue["registrationStatus"];
                                             if (registrationStatusValue6 != null && registrationStatusValue6.Type != JTokenType.Null)
                                             {
                                                 string registrationStatusInstance6 = ((string)registrationStatusValue6);
-                                                mabProtectionContainerInstance.RegistrationStatus = registrationStatusInstance6;
+                                                dpmVenusProtectionContainerInstance.RegistrationStatus = registrationStatusInstance6;
                                             }
                                             
                                             JToken healthStatusValue6 = propertiesValue["healthStatus"];
                                             if (healthStatusValue6 != null && healthStatusValue6.Type != JTokenType.Null)
                                             {
                                                 string healthStatusInstance6 = ((string)healthStatusValue6);
-                                                mabProtectionContainerInstance.HealthStatus = healthStatusInstance6;
+                                                dpmVenusProtectionContainerInstance.HealthStatus = healthStatusInstance6;
                                             }
                                             
                                             JToken containerTypeValue6 = propertiesValue["containerType"];
                                             if (containerTypeValue6 != null && containerTypeValue6.Type != JTokenType.Null)
                                             {
                                                 string containerTypeInstance6 = ((string)containerTypeValue6);
-                                                mabProtectionContainerInstance.ContainerType = containerTypeInstance6;
+                                                dpmVenusProtectionContainerInstance.ContainerType = containerTypeInstance6;
                                             }
                                             
                                             JToken backupManagementTypeValue6 = propertiesValue["backupManagementType"];
                                             if (backupManagementTypeValue6 != null && backupManagementTypeValue6.Type != JTokenType.Null)
                                             {
                                                 string backupManagementTypeInstance6 = ((string)backupManagementTypeValue6);
-                                                mabProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance6;
+                                                dpmVenusProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance6;
+                                            }
+                                            protectionContainerResourceInstance.Properties = dpmVenusProtectionContainerInstance;
+                                        }
+                                        if (typeName == "MABContainer")
+                                        {
+                                            MabProtectionContainer mabProtectionContainerInstance = new MabProtectionContainer();
+                                            
+                                            JToken canReRegisterValue3 = propertiesValue["canReRegister"];
+                                            if (canReRegisterValue3 != null && canReRegisterValue3.Type != JTokenType.Null)
+                                            {
+                                                bool canReRegisterInstance3 = ((bool)canReRegisterValue3);
+                                                mabProtectionContainerInstance.CanReRegister = canReRegisterInstance3;
+                                            }
+                                            
+                                            JToken containerIdValue3 = propertiesValue["containerId"];
+                                            if (containerIdValue3 != null && containerIdValue3.Type != JTokenType.Null)
+                                            {
+                                                long containerIdInstance3 = ((long)containerIdValue3);
+                                                mabProtectionContainerInstance.ContainerId = containerIdInstance3;
+                                            }
+                                            
+                                            JToken friendlyNameValue7 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue7 != null && friendlyNameValue7.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance7 = ((string)friendlyNameValue7);
+                                                mabProtectionContainerInstance.FriendlyName = friendlyNameInstance7;
+                                            }
+                                            
+                                            JToken registrationStatusValue7 = propertiesValue["registrationStatus"];
+                                            if (registrationStatusValue7 != null && registrationStatusValue7.Type != JTokenType.Null)
+                                            {
+                                                string registrationStatusInstance7 = ((string)registrationStatusValue7);
+                                                mabProtectionContainerInstance.RegistrationStatus = registrationStatusInstance7;
+                                            }
+                                            
+                                            JToken healthStatusValue7 = propertiesValue["healthStatus"];
+                                            if (healthStatusValue7 != null && healthStatusValue7.Type != JTokenType.Null)
+                                            {
+                                                string healthStatusInstance7 = ((string)healthStatusValue7);
+                                                mabProtectionContainerInstance.HealthStatus = healthStatusInstance7;
+                                            }
+                                            
+                                            JToken containerTypeValue7 = propertiesValue["containerType"];
+                                            if (containerTypeValue7 != null && containerTypeValue7.Type != JTokenType.Null)
+                                            {
+                                                string containerTypeInstance7 = ((string)containerTypeValue7);
+                                                mabProtectionContainerInstance.ContainerType = containerTypeInstance7;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue7 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue7 != null && backupManagementTypeValue7.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance7 = ((string)backupManagementTypeValue7);
+                                                mabProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance7;
                                             }
                                             protectionContainerResourceInstance.Properties = mabProtectionContainerInstance;
                                         }
@@ -2695,10 +2857,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["backupManagementType"] = derived5.BackupManagementType;
                             }
                         }
-                        if (request.Item.Properties is MabProtectionContainer)
+                        if (request.Item.Properties is DpmVenusProtectionContainer)
                         {
-                            propertiesValue["containerType"] = "MABContainer";
-                            MabProtectionContainer derived6 = ((MabProtectionContainer)request.Item.Properties);
+                            propertiesValue["containerType"] = "DPMVenusContainer";
+                            DpmVenusProtectionContainer derived6 = ((DpmVenusProtectionContainer)request.Item.Properties);
                             
                             propertiesValue["canReRegister"] = derived6.CanReRegister;
                             
@@ -2727,6 +2889,40 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived6.BackupManagementType != null)
                             {
                                 propertiesValue["backupManagementType"] = derived6.BackupManagementType;
+                            }
+                        }
+                        if (request.Item.Properties is MabProtectionContainer)
+                        {
+                            propertiesValue["containerType"] = "MABContainer";
+                            MabProtectionContainer derived7 = ((MabProtectionContainer)request.Item.Properties);
+                            
+                            propertiesValue["canReRegister"] = derived7.CanReRegister;
+                            
+                            propertiesValue["containerId"] = derived7.ContainerId;
+                            
+                            if (derived7.FriendlyName != null)
+                            {
+                                propertiesValue["friendlyName"] = derived7.FriendlyName;
+                            }
+                            
+                            if (derived7.RegistrationStatus != null)
+                            {
+                                propertiesValue["registrationStatus"] = derived7.RegistrationStatus;
+                            }
+                            
+                            if (derived7.HealthStatus != null)
+                            {
+                                propertiesValue["healthStatus"] = derived7.HealthStatus;
+                            }
+                            
+                            if (derived7.ContainerType != null)
+                            {
+                                propertiesValue["containerType"] = derived7.ContainerType;
+                            }
+                            
+                            if (derived7.BackupManagementType != null)
+                            {
+                                propertiesValue["backupManagementType"] = derived7.BackupManagementType;
                             }
                         }
                     }
