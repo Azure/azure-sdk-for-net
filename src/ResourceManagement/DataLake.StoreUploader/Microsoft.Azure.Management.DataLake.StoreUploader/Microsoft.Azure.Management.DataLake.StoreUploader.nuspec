@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ResourceManagement\DataLake.StoreUploader\DataLakeStoreUploader\**\*.cs" target="src" />
+    <file src="ResourceManagement\DataLake.StoreUploader\Microsoft.Azure.Management.DataLake.StoreUploader\**\*.cs" target="src" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.StoreUploader.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.StoreUploader.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.DataLake.StoreUploader.xml" target="lib\net40" />

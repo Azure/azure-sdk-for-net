@@ -21,7 +21,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataLake.Store;
-using Microsoft.Azure.Management.DataLake.Store.Models;
 using Microsoft.Rest.Azure;
 
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
