@@ -1400,10 +1400,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("input.Properties");
             }
-            if (input.Properties.NetworkId == null)
-            {
-                throw new ArgumentNullException("input.Properties.NetworkId");
-            }
             if (input.Properties.NetworkType == null)
             {
                 throw new ArgumentNullException("input.Properties.NetworkType");
@@ -1499,7 +1495,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 propertiesValue["networkType"] = input.Properties.NetworkType;
                 
-                propertiesValue["networkId"] = input.Properties.NetworkId;
+                if (input.Properties.NetworkId != null)
+                {
+                    propertiesValue["networkId"] = input.Properties.NetworkId;
+                }
                 
                 if (input.Properties.ProviderSpecificDetails != null)
                 {

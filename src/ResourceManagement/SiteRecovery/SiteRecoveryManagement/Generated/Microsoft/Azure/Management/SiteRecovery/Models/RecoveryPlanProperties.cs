@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Required. Friendly name of the recovery plan.
+        /// Optional. Friendly name of the recovery plan.
         /// </summary>
         public string FriendlyName
         {
@@ -189,13 +189,9 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the RecoveryPlanProperties class with
         /// required arguments.
         /// </summary>
-        public RecoveryPlanProperties(string friendlyName, string primaryFabricId, string recoveryFabricId)
+        public RecoveryPlanProperties(string primaryFabricId, string recoveryFabricId)
             : this()
         {
-            if (friendlyName == null)
-            {
-                throw new ArgumentNullException("friendlyName");
-            }
             if (primaryFabricId == null)
             {
                 throw new ArgumentNullException("primaryFabricId");
@@ -204,7 +200,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             {
                 throw new ArgumentNullException("recoveryFabricId");
             }
-            this.FriendlyName = friendlyName;
             this.PrimaryFabricId = primaryFabricId;
             this.RecoveryFabricId = recoveryFabricId;
         }

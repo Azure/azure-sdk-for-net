@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _networkId;
         
         /// <summary>
-        /// Required. Network Id.
+        /// Optional. Network Id.
         /// </summary>
         public string NetworkId
         {
@@ -79,19 +79,14 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// RecoveryPlanTestFailoverInputProperties class with required
         /// arguments.
         /// </summary>
-        public RecoveryPlanTestFailoverInputProperties(string networkType, string networkId)
+        public RecoveryPlanTestFailoverInputProperties(string networkType)
             : this()
         {
             if (networkType == null)
             {
                 throw new ArgumentNullException("networkType");
             }
-            if (networkId == null)
-            {
-                throw new ArgumentNullException("networkId");
-            }
             this.NetworkType = networkType;
-            this.NetworkId = networkId;
         }
     }
 }

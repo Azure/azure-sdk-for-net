@@ -26,7 +26,6 @@ namespace SiteRecovery.Tests.ScenarioTests
 {
     public class RecoveryPlanTests : SiteRecoveryTestsBase
     {
-        [Fact]
         public void RecoveryPlan_ValidateNames()
         {
             using (UndoContext context = UndoContext.Current)
@@ -55,7 +54,6 @@ namespace SiteRecovery.Tests.ScenarioTests
             }
         }
 
-        [Fact]
         public void RecoveryPlan_ValidateCRUD()
         {
             using (UndoContext context = UndoContext.Current)
@@ -68,24 +66,21 @@ namespace SiteRecovery.Tests.ScenarioTests
                     client.ProtectionContainer.List(
                         fabrics.First().Name,
                         RequestHeaders)
-                    .ProtectionContainers.ToList();
-                var vms = new List<string>()
-                { 
-                    "replicationFabrics/" + fabrics.First().Name + 
-                    "/replicationProtectionContainers/" + containers.First().Name +
-                    "/replicationProtectedItems/e078b286-f168-45be-a729-d9021e1d28b2" 
-                };
-                ////client.ReplicationProtectedItem.List(
-                ////    fabrics.First().Name,
-                ////    containers.First().Name,
-                ////    RequestHeaders)
-                ////.ReplicationProtectedItems.ToList();
+                    .ProtectionContainers
+                    .ToList();
+                var vms = 
+                    client.ReplicationProtectedItem.List(
+                        fabrics.First().Name,
+                        containers.First().Name,
+                        RequestHeaders)
+                    .ReplicationProtectedItems
+                    .ToList();
 
                 // Create two recovery plans.
                 var rpName1 = Guid.NewGuid().ToString();
                 var rpName2 = Guid.NewGuid().ToString();
-                var input1 = GetCreateInput1(fabrics.First().Id, vms.First());
-                var input2 = GetCreateInput2(fabrics.First().Id, vms.First());
+                var input1 = GetCreateInput1(fabrics.First().Id, vms.First().Id);
+                var input2 = GetCreateInput2(fabrics.First().Id, vms.First().Id);
 
                 client.RecoveryPlan.Create(rpName1, input1, RequestHeaders);
                 client.RecoveryPlan.Create(rpName2, input2, RequestHeaders);
@@ -98,8 +93,8 @@ namespace SiteRecovery.Tests.ScenarioTests
                 Assert.True(rps.Find(x => x.Name == rpName1) != null);
                 Assert.True(rps.Find(x => x.Name == rpName2) != null);
 
-                ValidateCreateInput1(rp1, fabrics.First().Id, vms.First());
-                ValidateCreateInput2(rp2, fabrics.First().Id, vms.First());
+                ValidateCreateInput1(rp1, fabrics.First().Id, vms.First().Id);
+                ValidateCreateInput2(rp2, fabrics.First().Id, vms.First().Id);
 
                 // Update the recovery plan with new content.
                 client.RecoveryPlan.Update(
@@ -108,13 +103,13 @@ namespace SiteRecovery.Tests.ScenarioTests
                     {
                         Properties = new UpdateRecoveryPlanInputProperties()
                         {
-                            Groups = GetCreateInput2(fabrics.First().Id, vms.First()).Properties.Groups
+                            Groups = GetCreateInput2(fabrics.First().Id, vms.First().Id).Properties.Groups
                         }
                     },
                     RequestHeaders);
 
                 rp1 = client.RecoveryPlan.Get(rpName1, RequestHeaders).RecoveryPlan;
-                ValidateCreateInput2(rp1, fabrics.First().Id, vms.First());
+                ValidateCreateInput2(rp1, fabrics.First().Id, vms.First().Id);
 
                 // Delete the recovery plans and ensure they are no longer present in enumerate.
                 client.RecoveryPlan.Delete(rpName1, RequestHeaders);
@@ -127,6 +122,229 @@ namespace SiteRecovery.Tests.ScenarioTests
                 rps = client.RecoveryPlan.List(RequestHeaders).RecoveryPlans.ToList();
                 Assert.True(rps.Find(x => x.Name == rpName2) == null);
             }
+        }
+
+        public void RecoveryPlan_ValidateE2A()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+                var fabrics = client.Fabrics.List(RequestHeaders).Fabrics.ToList();
+                var containers =
+                    client.ProtectionContainer.List(
+                        fabrics.First().Name,
+                        RequestHeaders)
+                    .ProtectionContainers
+                    .ToList();
+                var vms = 
+                    client.ReplicationProtectedItem.List(
+                        fabrics.First().Name,
+                        containers.First().Name,
+                        RequestHeaders)
+                    .ReplicationProtectedItems
+                    .ToList();
+
+                // Create one recovery plan.
+                var rpName = "Test-" + Guid.NewGuid().ToString();
+                var input = GetE2AInput(fabrics.First().Id, vms.First().Id);
+                client.RecoveryPlan.Create(rpName, input, RequestHeaders);
+
+                // Test failover.
+                var tfoInput = new RecoveryPlanTestFailoverInput()
+                {
+                    Properties = new RecoveryPlanTestFailoverInputProperties()
+                    {
+                        NetworkId = "/subscriptions/42195872-7e70-4f8a-837f-84b28ecbb78b/resourceGroups/Default-Networking/providers/Microsoft.ClassicNetwork/virtualNetworks/asrinmagenetwork",
+                        NetworkType = "VmNetworkAsInput",
+                        ProviderSpecificDetails = new List<RecoveryPlanProviderSpecificFailoverInput>()
+                        {
+                            new RecoveryPlanHyperVReplicaAzureFailoverInput()
+                            {
+                                InstanceType = "HyperVReplicaAzure",
+                                VaultLocation = "Southeast Asia"
+                            }
+                        }
+                    }
+                };
+                client.RecoveryPlan.TestFailover(rpName, tfoInput, RequestHeaders);
+
+                // Planned failover.
+                var pfoInput = new RecoveryPlanPlannedFailoverInput()
+                {
+                    Properties = new RecoveryPlanPlannedFailoverInputProperties()
+                    {
+                        FailoverDirection = "PrimaryToRecovery",
+                        ProviderSpecificDetails = new List<RecoveryPlanProviderSpecificFailoverInput>()
+                        {
+                            new RecoveryPlanHyperVReplicaAzureFailoverInput()
+                            {
+                                InstanceType = "HyperVReplicaAzure",
+                                VaultLocation = "Southeast Asia"
+                            }
+                        }
+                    }
+                };
+                client.RecoveryPlan.PlannedFailover(rpName, pfoInput, RequestHeaders);
+
+                // Commit failover.
+                client.RecoveryPlan.CommitFailover(rpName, RequestHeaders);
+
+                // Planned failback.
+                var fbInput = new RecoveryPlanPlannedFailoverInput()
+                {
+                    Properties = new RecoveryPlanPlannedFailoverInputProperties()
+                    {
+                        FailoverDirection = "RecoveryToPrimary",
+                        ProviderSpecificDetails = new List<RecoveryPlanProviderSpecificFailoverInput>()
+                        {
+                            new RecoveryPlanHyperVReplicaAzureFailbackInput()
+                            {
+                                InstanceType = "HyperVReplicaAzureFailback",
+                                DataSyncOption = "ForSyncronization",
+                                RecoveryVmCreationOption = "NoAction"
+                            }
+                        }
+                    }
+                };
+                client.RecoveryPlan.PlannedFailover(rpName, fbInput, RequestHeaders);
+
+                // Commit failover.
+                client.RecoveryPlan.CommitFailover(rpName, RequestHeaders);
+
+                // Reverse replicate.
+                client.RecoveryPlan.Reprotect(rpName, RequestHeaders);
+
+                // Unplanned failover.
+                var ufoInput = new RecoveryPlanUnplannedFailoverInput()
+                {
+                    Properties = new RecoveryPlanUnplannedFailoverInputProperties()
+                    {
+                        FailoverDirection = "PrimaryToRecovery",
+                        SourceSiteOperations = "NotRequired",
+                        ProviderSpecificDetails = new List<RecoveryPlanProviderSpecificFailoverInput>()
+                        {
+                            new RecoveryPlanHyperVReplicaAzureFailoverInput()
+                            {
+                                InstanceType = "HyperVReplicaAzure",
+                                VaultLocation = "Southeast Asia"
+                            }
+                        }
+                    }
+                };
+                client.RecoveryPlan.UnplannedFailover(rpName, ufoInput, RequestHeaders);
+            }
+        }
+
+        public void RecoveryPlan_ValidateE2E()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+                var fabrics = client.Fabrics.List(RequestHeaders).Fabrics.ToList();
+                var containers =
+                    client.ProtectionContainer.List(
+                        fabrics.First().Name,
+                        RequestHeaders)
+                    .ProtectionContainers
+                    .ToList();
+                var vms = 
+                    client.ReplicationProtectedItem.List(
+                        fabrics.First().Name,
+                        containers.First().Name,
+                        RequestHeaders)
+                    .ReplicationProtectedItems
+                    .ToList();
+
+                // Create one recovery plan.
+                var rpName = "Test-" + Guid.NewGuid().ToString();
+                var input = GetE2EInput(fabrics.First().Id, vms.First().Id);
+                client.RecoveryPlan.Create(rpName, input, RequestHeaders);
+
+                // Test failover.
+                var tfoInput = new RecoveryPlanTestFailoverInput()
+                {
+                    Properties = new RecoveryPlanTestFailoverInputProperties()
+                    {
+                        NetworkType = "NoNetworkAttachAsInput"
+                    }
+                };
+                client.RecoveryPlan.TestFailover(rpName, tfoInput, RequestHeaders);
+
+                // Planned failover.
+                var pfoInput = new RecoveryPlanPlannedFailoverInput()
+                {
+                    Properties = new RecoveryPlanPlannedFailoverInputProperties()
+                    {
+                        FailoverDirection = "PrimaryToRecovery"
+                    }
+                };
+                client.RecoveryPlan.PlannedFailover(rpName, pfoInput, RequestHeaders);
+
+                // Commit failover.
+                client.RecoveryPlan.CommitFailover(rpName, RequestHeaders);
+
+                // Reverse replicate.
+                client.RecoveryPlan.Reprotect(rpName, RequestHeaders);
+
+                // Unplanned failover.
+                var ufoInput = new RecoveryPlanUnplannedFailoverInput()
+                {
+                    Properties = new RecoveryPlanUnplannedFailoverInputProperties()
+                    {
+                        FailoverDirection = "RecoveryToPrimary",
+                        SourceSiteOperations = "NotRequired"
+                    }
+                };
+                client.RecoveryPlan.UnplannedFailover(rpName, ufoInput, RequestHeaders);
+
+                // Reverse replicate.
+                client.RecoveryPlan.Reprotect(rpName, RequestHeaders);
+            }
+        }
+
+        private static CreateRecoveryPlanInput GetE2AInput(string fabricId, string vmId)
+        {
+            CreateRecoveryPlanInput input = new CreateRecoveryPlanInput();
+            input.Properties = new CreateRecoveryPlanInputProperties();
+            input.Properties.PrimaryFabricId = fabricId;
+            input.Properties.RecoveryFabricId = "microsoft azure";
+            input.Properties.FailoverDeploymentModel = "Classic";
+            input.Properties.Groups = new List<RecoveryPlanGroup>();
+            input.Properties.Groups.Add(new RecoveryPlanGroup()
+            {
+                GroupName = "G1",
+                GroupType = "Boot",
+                ReplicationProtectedItems = new List<string>()
+                {
+                    vmId
+                }
+            });
+
+            return input;
+        }
+
+        private static CreateRecoveryPlanInput GetE2EInput(string fabricId, string vmId)
+        {
+            CreateRecoveryPlanInput input = new CreateRecoveryPlanInput();
+            input.Properties = new CreateRecoveryPlanInputProperties();
+            input.Properties.PrimaryFabricId = fabricId;
+            input.Properties.RecoveryFabricId = fabricId;
+            input.Properties.Groups = new List<RecoveryPlanGroup>();
+            input.Properties.Groups.Add(new RecoveryPlanGroup()
+            {
+                GroupName = "G1",
+                GroupType = "Boot",
+                ReplicationProtectedItems = new List<string>()
+                {
+                    vmId
+                }
+            });
+
+            return input;
         }
 
         private static CreateRecoveryPlanInput GetCreateInput1(string fabricId, string vmId)
