@@ -440,7 +440,7 @@ namespace Microsoft.Azure.Search.Tests
                         },
                         TextWeights = new TextWeights()
                         {
-                            Weights = new Dictionary<string, double?>() { { "description", 1.5 }, { "category", 2.0 } }
+                            Weights = new Dictionary<string, double>() { { "description", 1.5 }, { "category", 2.0 } }
                         }
                     },
                     new ScoringProfile("ProfileTwo")
@@ -564,8 +564,8 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         private static void AssertTextWeightsEqual(
-            KeyValuePair<string, double?> expected, 
-            KeyValuePair<string, double?> actual)
+            KeyValuePair<string, double> expected, 
+            KeyValuePair<string, double> actual)
         {
             Assert.Equal(expected.Key, actual.Key);
             Assert.Equal(expected.Value, actual.Value);
