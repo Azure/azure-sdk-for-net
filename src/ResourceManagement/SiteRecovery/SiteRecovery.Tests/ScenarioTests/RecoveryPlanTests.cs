@@ -462,34 +462,34 @@ namespace SiteRecovery.Tests.ScenarioTests
             Assert.True(rp.Properties.Groups[1].GroupType == "Failover");
             Assert.True(rp.Properties.Groups[1].ReplicationProtectedItems.Count == 0);
 
-            Assert.True(rp.Properties.Groups.Last().GroupName == "G1");
-            Assert.True(rp.Properties.Groups.Last().GroupType == "Boot");
-            Assert.True(rp.Properties.Groups.Last().ReplicationProtectedItems.Count == 1);
-            Assert.True(vmId.Contains(rp.Properties.Groups.Last().ReplicationProtectedItems[0]));
+            Assert.True(rp.Properties.Groups[2].GroupName == "G1");
+            Assert.True(rp.Properties.Groups[2].GroupType == "Boot");
+            Assert.True(rp.Properties.Groups[2].ReplicationProtectedItems.Count == 1);
+            Assert.True(rp.Properties.Groups[2].ReplicationProtectedItems[0] == vmId);
 
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].ActionName == "S1");
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverTypes.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverTypes[0] == "PlannedFailover");
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverDirections.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].FailoverDirections[0] == "PrimaryToRecovery");
-            Assert.True(rp.Properties.Groups.Last().StartGroupActions[0].CustomDetails.InstanceType == "ScriptActionDetails");
+            Assert.True(rp.Properties.Groups[2].StartGroupActions.Count == 1);
+            Assert.True(rp.Properties.Groups[2].StartGroupActions[0].ActionName == "S1");
+            Assert.True(rp.Properties.Groups[2].StartGroupActions[0].FailoverTypes.Count == 1);
+            Assert.True(rp.Properties.Groups[2].StartGroupActions[0].FailoverTypes[0] == "PlannedFailover");
+            Assert.True(rp.Properties.Groups[2].StartGroupActions[0].FailoverDirections.Count == 1);
+            Assert.True(rp.Properties.Groups[2].StartGroupActions[0].FailoverDirections[0] == "PrimaryToRecovery");
+            Assert.True(rp.Properties.Groups[2].StartGroupActions[0].CustomDetails.InstanceType == "ScriptActionDetails");
 
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].ActionName == "M1");
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverTypes.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverTypes[0] == "UnplannedFailover");
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirections.Count == 1);
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].FailoverDirections[0] == "RecoveryToPrimary");
-            Assert.True(rp.Properties.Groups.Last().EndGroupActions[0].CustomDetails.InstanceType == "ManualActionDetails");
+            Assert.True(rp.Properties.Groups[2].EndGroupActions.Count == 1);
+            Assert.True(rp.Properties.Groups[2].EndGroupActions[0].ActionName == "M1");
+            Assert.True(rp.Properties.Groups[2].EndGroupActions[0].FailoverTypes.Count == 1);
+            Assert.True(rp.Properties.Groups[2].EndGroupActions[0].FailoverTypes[0] == "UnplannedFailover");
+            Assert.True(rp.Properties.Groups[2].EndGroupActions[0].FailoverDirections.Count == 1);
+            Assert.True(rp.Properties.Groups[2].EndGroupActions[0].FailoverDirections[0] == "RecoveryToPrimary");
+            Assert.True(rp.Properties.Groups[2].EndGroupActions[0].CustomDetails.InstanceType == "ManualActionDetails");
 
             RecoveryPlanScriptActionDetails scriptAction =
-                rp.Properties.Groups.Last().StartGroupActions[0].CustomDetails as RecoveryPlanScriptActionDetails;
+                rp.Properties.Groups[2].StartGroupActions[0].CustomDetails as RecoveryPlanScriptActionDetails;
             Assert.True(scriptAction.Path == "path1");
             Assert.True(scriptAction.FabricLocation == "Recovery");
 
             RecoveryPlanManualActionDetails manualAction =
-                rp.Properties.Groups.Last().EndGroupActions[0].CustomDetails as RecoveryPlanManualActionDetails;
+                rp.Properties.Groups[2].EndGroupActions[0].CustomDetails as RecoveryPlanManualActionDetails;
             Assert.True(manualAction.Description == "desc1");
         }
 
