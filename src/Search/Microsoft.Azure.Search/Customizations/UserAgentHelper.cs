@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search
     using System.Net.Http;
     using System.Net.Http.Headers;
 
+    // TODO: Remove once this issue is fixed: https://github.com/Azure/autorest/issues/583
     internal static class UserAgentHelper
     {
         public static void SetUserAgent(HttpClient httpClient, Type serviceClientType)
