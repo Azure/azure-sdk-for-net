@@ -317,6 +317,16 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         throw new ArgumentNullException("input.Properties.Groups.GroupType");
                     }
+                    if (groupsParameterItem.ReplicationProtectedItems != null)
+                    {
+                        foreach (RecoveryPlanProtectedItem replicationProtectedItemsParameterItem in groupsParameterItem.ReplicationProtectedItems)
+                        {
+                            if (replicationProtectedItemsParameterItem.Id == null)
+                            {
+                                throw new ArgumentNullException("input.Properties.Groups.ReplicationProtectedItems.Id");
+                            }
+                        }
+                    }
                     if (groupsParameterItem.StartGroupActions != null)
                     {
                         foreach (RecoveryPlanAction startGroupActionsParameterItem in groupsParameterItem.StartGroupActions)
@@ -459,9 +469,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 if (groupsItem.ReplicationProtectedItems is ILazyCollection == false || ((ILazyCollection)groupsItem.ReplicationProtectedItems).IsInitialized)
                                 {
                                     JArray replicationProtectedItemsArray = new JArray();
-                                    foreach (string replicationProtectedItemsItem in groupsItem.ReplicationProtectedItems)
+                                    foreach (RecoveryPlanProtectedItem replicationProtectedItemsItem in groupsItem.ReplicationProtectedItems)
                                     {
-                                        replicationProtectedItemsArray.Add(replicationProtectedItemsItem);
+                                        JObject recoveryPlanProtectedItemValue = new JObject();
+                                        replicationProtectedItemsArray.Add(recoveryPlanProtectedItemValue);
+                                        
+                                        recoveryPlanProtectedItemValue["id"] = replicationProtectedItemsItem.Id;
                                     }
                                     recoveryPlanGroupValue["replicationProtectedItems"] = replicationProtectedItemsArray;
                                 }
@@ -2001,6 +2014,16 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     {
                         throw new ArgumentNullException("input.Properties.Groups.GroupType");
                     }
+                    if (groupsParameterItem.ReplicationProtectedItems != null)
+                    {
+                        foreach (RecoveryPlanProtectedItem replicationProtectedItemsParameterItem in groupsParameterItem.ReplicationProtectedItems)
+                        {
+                            if (replicationProtectedItemsParameterItem.Id == null)
+                            {
+                                throw new ArgumentNullException("input.Properties.Groups.ReplicationProtectedItems.Id");
+                            }
+                        }
+                    }
                     if (groupsParameterItem.StartGroupActions != null)
                     {
                         foreach (RecoveryPlanAction startGroupActionsParameterItem in groupsParameterItem.StartGroupActions)
@@ -2126,9 +2149,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 if (groupsItem.ReplicationProtectedItems is ILazyCollection == false || ((ILazyCollection)groupsItem.ReplicationProtectedItems).IsInitialized)
                                 {
                                     JArray replicationProtectedItemsArray = new JArray();
-                                    foreach (string replicationProtectedItemsItem in groupsItem.ReplicationProtectedItems)
+                                    foreach (RecoveryPlanProtectedItem replicationProtectedItemsItem in groupsItem.ReplicationProtectedItems)
                                     {
-                                        replicationProtectedItemsArray.Add(replicationProtectedItemsItem);
+                                        JObject recoveryPlanProtectedItemValue = new JObject();
+                                        replicationProtectedItemsArray.Add(recoveryPlanProtectedItemValue);
+                                        
+                                        recoveryPlanProtectedItemValue["id"] = replicationProtectedItemsItem.Id;
                                     }
                                     recoveryPlanGroupValue["replicationProtectedItems"] = replicationProtectedItemsArray;
                                 }
@@ -2875,7 +2901,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -3134,11 +3168,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -3490,7 +3524,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -3749,11 +3791,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -4164,7 +4206,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -4423,11 +4473,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -4838,7 +4888,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -5097,11 +5155,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -5512,7 +5570,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -5771,11 +5837,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -6186,7 +6252,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -6445,11 +6519,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -6860,7 +6934,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -7119,11 +7201,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -7534,7 +7616,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -7793,11 +7883,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -8208,7 +8298,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                             {
-                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                
+                                                JToken idValue = replicationProtectedItemsValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
                                             }
                                         }
                                         
@@ -8467,11 +8565,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                recoveryPlanInstance.Id = idInstance;
+                                string idInstance2 = ((string)idValue2);
+                                recoveryPlanInstance.Id = idInstance2;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -8911,7 +9009,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     foreach (JToken replicationProtectedItemsValue in ((JArray)replicationProtectedItemsArray))
                                                     {
-                                                        recoveryPlanGroupInstance.ReplicationProtectedItems.Add(((string)replicationProtectedItemsValue));
+                                                        RecoveryPlanProtectedItem recoveryPlanProtectedItemInstance = new RecoveryPlanProtectedItem();
+                                                        recoveryPlanGroupInstance.ReplicationProtectedItems.Add(recoveryPlanProtectedItemInstance);
+                                                        
+                                                        JToken idValue = replicationProtectedItemsValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance = ((string)idValue);
+                                                            recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                        }
                                                     }
                                                 }
                                                 
@@ -9170,11 +9276,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         }
                                     }
                                     
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    JToken idValue2 = valueValue["id"];
+                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                     {
-                                        string idInstance = ((string)idValue);
-                                        recoveryPlanInstance.Id = idInstance;
+                                        string idInstance2 = ((string)idValue2);
+                                        recoveryPlanInstance.Id = idInstance2;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];

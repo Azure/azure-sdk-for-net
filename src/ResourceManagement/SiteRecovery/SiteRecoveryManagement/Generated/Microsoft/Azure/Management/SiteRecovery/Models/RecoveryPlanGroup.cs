@@ -65,12 +65,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._groupType = value; }
         }
         
-        private IList<string> _replicationProtectedItems;
+        private IList<RecoveryPlanProtectedItem> _replicationProtectedItems;
         
         /// <summary>
         /// Optional. List of protected items.
         /// </summary>
-        public IList<string> ReplicationProtectedItems
+        public IList<RecoveryPlanProtectedItem> ReplicationProtectedItems
         {
             get { return this._replicationProtectedItems; }
             set { this._replicationProtectedItems = value; }
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         public RecoveryPlanGroup()
         {
             this.EndGroupActions = new LazyList<RecoveryPlanAction>();
-            this.ReplicationProtectedItems = new LazyList<string>();
+            this.ReplicationProtectedItems = new LazyList<RecoveryPlanProtectedItem>();
             this.StartGroupActions = new LazyList<RecoveryPlanAction>();
         }
         

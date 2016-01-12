@@ -318,10 +318,13 @@ namespace SiteRecovery.Tests.ScenarioTests
             {
                 GroupName = "G1",
                 GroupType = "Boot",
-                ReplicationProtectedItems = new List<string>()
-                {
-                    vmId
-                }
+                ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
+                        {
+                            new RecoveryPlanProtectedItem()
+                            {
+                                Id = vmId
+                            }
+                        }
             });
 
             return input;
@@ -338,10 +341,13 @@ namespace SiteRecovery.Tests.ScenarioTests
             {
                 GroupName = "G1",
                 GroupType = "Boot",
-                ReplicationProtectedItems = new List<string>()
-                {
-                    vmId
-                }
+                ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
+                        {
+                            new RecoveryPlanProtectedItem()
+                            {
+                                Id = vmId
+                            }
+                        }
             });
 
             return input;
@@ -358,9 +364,12 @@ namespace SiteRecovery.Tests.ScenarioTests
             {
                 GroupName = "G1",
                 GroupType = "Boot",
-                ReplicationProtectedItems = new List<string>()
+                ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
                         {
-                            vmId
+                            new RecoveryPlanProtectedItem()
+                            {
+                                Id = vmId
+                            }
                         },
                 StartGroupActions = new List<RecoveryPlanAction>()
                         {
@@ -408,7 +417,7 @@ namespace SiteRecovery.Tests.ScenarioTests
             {
                 GroupName = "G2",
                 GroupType = "Shutdown",
-                ReplicationProtectedItems = new List<string>()
+                ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
                 {
                 },
                 StartGroupActions = new List<RecoveryPlanAction>()
@@ -465,7 +474,7 @@ namespace SiteRecovery.Tests.ScenarioTests
             Assert.True(rp.Properties.Groups[2].GroupName == "G1");
             Assert.True(rp.Properties.Groups[2].GroupType == "Boot");
             Assert.True(rp.Properties.Groups[2].ReplicationProtectedItems.Count == 1);
-            Assert.True(rp.Properties.Groups[2].ReplicationProtectedItems[0] == vmId);
+            Assert.True(rp.Properties.Groups[2].ReplicationProtectedItems[0].Id == vmId);
 
             Assert.True(rp.Properties.Groups[2].StartGroupActions.Count == 1);
             Assert.True(rp.Properties.Groups[2].StartGroupActions[0].ActionName == "S1");
