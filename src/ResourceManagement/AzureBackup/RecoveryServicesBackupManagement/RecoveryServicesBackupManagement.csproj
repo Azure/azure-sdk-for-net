@@ -71,6 +71,10 @@
     <Compile Include="Generated\Models\AzureIaaSComputeVMProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureIaasComputeVmProtectionContainer.cs" />
     <Compile Include="Generated\Models\AzureIaasVmClassicComputeProtectionContainer.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMErrorInfo.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMJob.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMJobExtendedInfo.cs" />
+    <Compile Include="Generated\Models\AzureIaaSVMJobTaskDetails.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMProtectableItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSVmProtectedItemExtendedInfo.cs" />
@@ -89,10 +93,6 @@
     <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
-    <Compile Include="Generated\Models\IaaSVMErrorInfo.cs" />
-    <Compile Include="Generated\Models\IaaSVMJob.cs" />
-    <Compile Include="Generated\Models\IaaSVMJobExtendedInfo.cs" />
-    <Compile Include="Generated\Models\IaaSVMJobTaskDetails.cs" />
     <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
     <Compile Include="Generated\Models\Job.cs" />
     <Compile Include="Generated\Models\JobBase.cs" />
