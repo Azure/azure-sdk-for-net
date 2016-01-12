@@ -74,17 +74,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._entityFriendlyName = value; }
         }
         
-        private JobExtendedInfo _extendedInfo;
-        
-        /// <summary>
-        /// Optional. Job ExtendedInfo
-        /// </summary>
-        public JobExtendedInfo ExtendedInfo
-        {
-            get { return this._extendedInfo; }
-            set { this._extendedInfo = value; }
-        }
-        
         private string _operation;
         
         /// <summary>

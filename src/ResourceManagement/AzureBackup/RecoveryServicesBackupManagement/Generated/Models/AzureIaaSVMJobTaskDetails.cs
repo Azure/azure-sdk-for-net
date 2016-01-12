@@ -20,35 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of IaaSVMJobExtendedInfo object.
+    /// The definition of a AzureIaaSVMJobTaskDetails object.
     /// </summary>
-    public partial class IaaSVMJobExtendedInfo : JobExtendedInfo
+    public partial class AzureIaaSVMJobTaskDetails : JobTaskDetails
     {
-        private string _dynamicErrorMessage;
+        private TimeSpan _duration;
         
         /// <summary>
-        /// Optional. Field to hold error message added by owner. This message
-        /// is specific to this job. Non localized.
+        /// Optional. Job Duration
         /// </summary>
-        public string DynamicErrorMessage
+        public TimeSpan Duration
         {
-            get { return this._dynamicErrorMessage; }
-            set { this._dynamicErrorMessage = value; }
+            get { return this._duration; }
+            set { this._duration = value; }
+        }
+        
+        private System.DateTime? _endTime;
+        
+        /// <summary>
+        /// Optional. Job EndTime
+        /// </summary>
+        public System.DateTime? EndTime
+        {
+            get { return this._endTime; }
+            set { this._endTime = value; }
         }
         
         private double? _progressPercentage;
         
         /// <summary>
-        /// Optional. Indicates progress of the job. Null if it hasn't started
-        /// or completed.
+        /// Optional. Job ProgressPercentage
         /// </summary>
         public double? ProgressPercentage
         {
@@ -56,35 +63,44 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._progressPercentage = value; }
         }
         
-        private IDictionary<string, string> _propertyBag;
+        private System.DateTime? _startTime;
         
         /// <summary>
-        /// Optional. Gets or sets the job properties to show in properties tab
+        /// Optional. Job StartTime
         /// </summary>
-        public IDictionary<string, string> PropertyBag
+        public System.DateTime? StartTime
         {
-            get { return this._propertyBag; }
-            set { this._propertyBag = value; }
+            get { return this._startTime; }
+            set { this._startTime = value; }
         }
         
-        private IList<IaaSVMJobTaskDetails> _tasksList;
+        private string _status;
         
         /// <summary>
-        /// Optional. TasksList for the Job
+        /// Optional. Job Status
         /// </summary>
-        public IList<IaaSVMJobTaskDetails> TasksList
+        public string Status
         {
-            get { return this._tasksList; }
-            set { this._tasksList = value; }
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private string _taskId;
+        
+        /// <summary>
+        /// Optional. Job TaskId
+        /// </summary>
+        public string TaskId
+        {
+            get { return this._taskId; }
+            set { this._taskId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMJobExtendedInfo class.
+        /// Initializes a new instance of the AzureIaaSVMJobTaskDetails class.
         /// </summary>
-        public IaaSVMJobExtendedInfo()
+        public AzureIaaSVMJobTaskDetails()
         {
-            this.PropertyBag = new LazyDictionary<string, string>();
-            this.TasksList = new LazyList<IaaSVMJobTaskDetails>();
         }
     }
 }
