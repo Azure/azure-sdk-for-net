@@ -368,8 +368,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         Task<AzureOperationResponse<IPage<DataLakeStoreAccountInfo>>> ListDataLakeStoreAccountsWithHttpMessagesAsync(string resourceGroupName, string accountName, ODataQuery<DataLakeStoreAccountInfo> odataQuery = default(ODataQuery<DataLakeStoreAccountInfo>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of the Data Lake Analytics account objects
-        /// within the subscription or within a specific resource group. This
-        /// includes a link to the next page, if any.
+        /// within a specific resource group. This includes a link to the
+        /// next page, if any.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -403,7 +403,42 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<DataLakeAnalyticsAccount>>> ListWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DataLakeAnalyticsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the first page of the Data Lake Analytics account objects
+        /// within the current subscription. This includes a link to the next
+        /// page, if any.
+        /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='select'>
+        /// Gets or sets OData Select statement. Limits the properties on each
+        /// entry to just those requested, e.g.
+        /// Categories?$select=CategoryName,Description. Optional.
+        /// </param>
+        /// <param name='count'>
+        /// Gets or sets a Boolean value of true or false to request a count
+        /// of the matching resources included with the resources in the
+        /// response, e.g. Categories?$count=true. Optional.
+        /// </param>
+        /// <param name='search'>
+        /// Gets or sets a free form search. A free-text search expression to
+        /// match for whether a particular entry should be included in the
+        /// feed, e.g. Categories?$search=blue OR green. Optional.
+        /// </param>
+        /// <param name='format'>
+        /// Gets or sets the return format. Return the response in particular
+        /// formatxii without access to request headers for standard
+        /// content-type negotiation (e.g Orders?$format=json). Optional.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<DataLakeAnalyticsAccount>>> ListWithHttpMessagesAsync(ODataQuery<DataLakeAnalyticsAccount> odataQuery = default(ODataQuery<DataLakeAnalyticsAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the Data Lake Analytics account object specified by the
         /// account name.
@@ -629,8 +664,23 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         Task<AzureOperationResponse<IPage<DataLakeStoreAccountInfo>>> ListDataLakeStoreAccountsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the first page of the Data Lake Analytics account objects
-        /// within the subscription or within a specific resource group. This
-        /// includes a link to the next page, if any.
+        /// within a specific resource group. This includes a link to the
+        /// next page, if any.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<DataLakeAnalyticsAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the first page of the Data Lake Analytics account objects
+        /// within the current subscription. This includes a link to the next
+        /// page, if any.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

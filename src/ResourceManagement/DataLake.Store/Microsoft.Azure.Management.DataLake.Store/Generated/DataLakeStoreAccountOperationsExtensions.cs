@@ -528,8 +528,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription or
-            /// within a specific resource group.
+            /// Lists the Data Lake Store account objects within a specific resource
+            /// group. This includes a link to the next page, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -560,14 +560,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// formatxii without access to request headers for standard content-type
             /// negotiation (e.g Orders?$format=json). Optional.
             /// </param>
-            public static IPage<DataLakeStoreAccount> List(this IDataLakeStoreAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static IPage<DataLakeStoreAccount> ListByResourceGroup(this IDataLakeStoreAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
-                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).ListAsync(resourceGroupName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription or
-            /// within a specific resource group.
+            /// Lists the Data Lake Store account objects within a specific resource
+            /// group. This includes a link to the next page, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -601,9 +601,83 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataLakeStoreAccount>> ListAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataLakeStoreAccount>> ListByResourceGroupAsync( this IDataLakeStoreAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Store account objects within the subscription. This
+            /// includes a link to the next page, if any.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='search'>
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
+            /// </param>
+            /// <param name='format'>
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
+            /// </param>
+            public static IPage<DataLakeStoreAccount> List(this IDataLakeStoreAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).ListAsync(odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Store account objects within the subscription. This
+            /// includes a link to the next page, if any.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// Gets or sets OData Select statement. Limits the properties on each entry
+            /// to just those requested, e.g.
+            /// Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// Gets or sets a Boolean value of true or false to request a count of the
+            /// matching resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='search'>
+            /// Gets or sets a free form search. A free-text search expression to match
+            /// for whether a particular entry should be included in the feed, e.g.
+            /// Categories?$search=blue OR green. Optional.
+            /// </param>
+            /// <param name='format'>
+            /// Gets or sets the return format. Return the response in particular
+            /// formatxii without access to request headers for standard content-type
+            /// negotiation (e.g Orders?$format=json). Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DataLakeStoreAccount>> ListAsync( this IDataLakeStoreAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.ListWithHttpMessagesAsync(odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
             }
 
@@ -676,8 +750,42 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription or
-            /// within a specific resource group.
+            /// Lists the Data Lake Store account objects within a specific resource
+            /// group. This includes a link to the next page, if any.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DataLakeStoreAccount> ListByResourceGroupNext(this IDataLakeStoreAccountOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IDataLakeStoreAccountOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Store account objects within a specific resource
+            /// group. This includes a link to the next page, if any.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DataLakeStoreAccount>> ListByResourceGroupNextAsync( this IDataLakeStoreAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Store account objects within the subscription. This
+            /// includes a link to the next page, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -691,8 +799,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription or
-            /// within a specific resource group.
+            /// Lists the Data Lake Store account objects within the subscription. This
+            /// includes a link to the next page, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

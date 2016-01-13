@@ -129,7 +129,13 @@ namespace DataLakeAnalytics.Tests
 
                 clientToUse.DataLakeAnalyticsAccount.Create(commonData.ResourceGroupName, accountToChange.Name, accountToChange);
 
-                var listResponse = clientToUse.DataLakeAnalyticsAccount.List(commonData.ResourceGroupName, null);
+                var listResponse = clientToUse.DataLakeAnalyticsAccount.List();
+
+                // Assert that there are at least two accounts in the list
+                Assert.True(listResponse.Count() > 1);
+
+                // now list with the resource group
+                listResponse = clientToUse.DataLakeAnalyticsAccount.ListByResourceGroup(commonData.ResourceGroupName);
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
