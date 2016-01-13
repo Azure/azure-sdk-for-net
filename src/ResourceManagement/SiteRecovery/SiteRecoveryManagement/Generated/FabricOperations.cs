@@ -1751,132 +1751,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareFabricDetails vMwareFabricDetailsInstance = new VMwareFabricDetails();
                                         
-                                        JToken vCentersArray = customDetailsValue["vCenters"];
-                                        if (vCentersArray != null && vCentersArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken vCentersValue in ((JArray)vCentersArray))
-                                            {
-                                                VCenter vCenterInstance = new VCenter();
-                                                vMwareFabricDetailsInstance.VCenters.Add(vCenterInstance);
-                                                
-                                                JToken propertiesValue2 = vCentersValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                                {
-                                                    VCenterProperties propertiesInstance2 = new VCenterProperties();
-                                                    vCenterInstance.Properties = propertiesInstance2;
-                                                    
-                                                    JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                        propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                                    }
-                                                    
-                                                    JToken internalIdValue = propertiesValue2["internalId"];
-                                                    if (internalIdValue != null && internalIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string internalIdInstance = ((string)internalIdValue);
-                                                        propertiesInstance2.InternalId = internalIdInstance;
-                                                    }
-                                                    
-                                                    JToken lastHeartbeatValue = propertiesValue2["lastHeartbeat"];
-                                                    if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
-                                                        propertiesInstance2.LastHeartbeat = lastHeartbeatInstance;
-                                                    }
-                                                    
-                                                    JToken discoveryStatusValue = propertiesValue2["discoveryStatus"];
-                                                    if (discoveryStatusValue != null && discoveryStatusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string discoveryStatusInstance = ((string)discoveryStatusValue);
-                                                        propertiesInstance2.DiscoveryStatus = discoveryStatusInstance;
-                                                    }
-                                                    
-                                                    JToken processServerIdValue = propertiesValue2["processServerId"];
-                                                    if (processServerIdValue != null && processServerIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string processServerIdInstance = ((string)processServerIdValue);
-                                                        propertiesInstance2.ProcessServerId = processServerIdInstance;
-                                                    }
-                                                    
-                                                    JToken ipAddressValue = propertiesValue2["ipAddress"];
-                                                    if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
-                                                    {
-                                                        string ipAddressInstance = ((string)ipAddressValue);
-                                                        propertiesInstance2.IpAddress = ipAddressInstance;
-                                                    }
-                                                    
-                                                    JToken infrastructureIdValue = propertiesValue2["infrastructureId"];
-                                                    if (infrastructureIdValue != null && infrastructureIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string infrastructureIdInstance = ((string)infrastructureIdValue);
-                                                        propertiesInstance2.InfrastructureId = infrastructureIdInstance;
-                                                    }
-                                                    
-                                                    JToken portValue = propertiesValue2["port"];
-                                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                                    {
-                                                        string portInstance = ((string)portValue);
-                                                        propertiesInstance2.Port = portInstance;
-                                                    }
-                                                    
-                                                    JToken runAsAccountIdValue = propertiesValue2["runAsAccountId"];
-                                                    if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string runAsAccountIdInstance = ((string)runAsAccountIdValue);
-                                                        propertiesInstance2.RunAsAccountId = runAsAccountIdInstance;
-                                                    }
-                                                    
-                                                    JToken fabricArmResourceNameValue = propertiesValue2["fabricArmResourceName"];
-                                                    if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string fabricArmResourceNameInstance = ((string)fabricArmResourceNameValue);
-                                                        propertiesInstance2.FabricArmResourceName = fabricArmResourceNameInstance;
-                                                    }
-                                                }
-                                                
-                                                JToken idValue = vCentersValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    vCenterInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken nameValue = vCentersValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    vCenterInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken typeValue = vCentersValue["type"];
-                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                                {
-                                                    string typeInstance = ((string)typeValue);
-                                                    vCenterInstance.Type = typeInstance;
-                                                }
-                                                
-                                                JToken locationValue = vCentersValue["location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    vCenterInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken tagsSequenceElement = ((JToken)vCentersValue["tags"]);
-                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JProperty property in tagsSequenceElement)
-                                                    {
-                                                        string tagsKey = ((string)property.Name);
-                                                        string tagsValue = ((string)property.Value);
-                                                        vCenterInstance.Tags.Add(tagsKey, tagsValue);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
                                         JToken processServersArray = customDetailsValue["processServers"];
                                         if (processServersArray != null && processServersArray.Type != JTokenType.Null)
                                         {
@@ -1885,25 +1759,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 ProcessServer processServerInstance = new ProcessServer();
                                                 vMwareFabricDetailsInstance.ProcessServers.Add(processServerInstance);
                                                 
-                                                JToken friendlyNameValue3 = processServersValue["friendlyName"];
-                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                JToken friendlyNameValue2 = processServersValue["friendlyName"];
+                                                if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                                    processServerInstance.FriendlyName = friendlyNameInstance3;
+                                                    string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                    processServerInstance.FriendlyName = friendlyNameInstance2;
                                                 }
                                                 
-                                                JToken idValue2 = processServersValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = processServersValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    processServerInstance.Id = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    processServerInstance.Id = idInstance;
                                                 }
                                                 
-                                                JToken ipAddressValue2 = processServersValue["ipAddress"];
-                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
+                                                JToken ipAddressValue = processServersValue["ipAddress"];
+                                                if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
-                                                    processServerInstance.IpAddress = ipAddressInstance2;
+                                                    string ipAddressInstance = ((string)ipAddressValue);
+                                                    processServerInstance.IpAddress = ipAddressInstance;
                                                 }
                                                 
                                                 JToken osTypeValue = processServersValue["osType"];
@@ -1927,11 +1801,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue2 = processServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
-                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance2;
+                                                    DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
+                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance;
                                                 }
                                                 
                                                 JToken versionStatusValue = processServersValue["versionStatus"];
@@ -2080,25 +1954,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 MasterTargetServer masterTargetServerInstance = new MasterTargetServer();
                                                 vMwareFabricDetailsInstance.MasterTargetServers.Add(masterTargetServerInstance);
                                                 
-                                                JToken idValue3 = masterTargetServersValue["id"];
-                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                JToken idValue2 = masterTargetServersValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance3 = ((string)idValue3);
-                                                    masterTargetServerInstance.Id = idInstance3;
+                                                    string idInstance2 = ((string)idValue2);
+                                                    masterTargetServerInstance.Id = idInstance2;
                                                 }
                                                 
-                                                JToken ipAddressValue3 = masterTargetServersValue["ipAddress"];
-                                                if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
+                                                JToken ipAddressValue2 = masterTargetServersValue["ipAddress"];
+                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance3 = ((string)ipAddressValue3);
-                                                    masterTargetServerInstance.IpAddress = ipAddressInstance3;
+                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
+                                                    masterTargetServerInstance.IpAddress = ipAddressInstance2;
                                                 }
                                                 
-                                                JToken nameValue2 = masterTargetServersValue["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken nameValue = masterTargetServersValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    masterTargetServerInstance.Name = nameInstance2;
+                                                    string nameInstance = ((string)nameValue);
+                                                    masterTargetServerInstance.Name = nameInstance;
                                                 }
                                                 
                                                 JToken osTypeValue3 = masterTargetServersValue["osType"];
@@ -2122,11 +1996,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue3 = masterTargetServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
-                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance3;
+                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
+                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance2;
                                                 }
                                                 
                                                 JToken versionStatusValue2 = masterTargetServersValue["versionStatus"];
@@ -2371,11 +2245,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.CsServiceStatus = csServiceStatusInstance;
                                         }
                                         
-                                        JToken ipAddressValue4 = customDetailsValue["ipAddress"];
-                                        if (ipAddressValue4 != null && ipAddressValue4.Type != JTokenType.Null)
+                                        JToken ipAddressValue3 = customDetailsValue["ipAddress"];
+                                        if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
                                         {
-                                            string ipAddressInstance4 = ((string)ipAddressValue4);
-                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance4;
+                                            string ipAddressInstance3 = ((string)ipAddressValue3);
+                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance3;
                                         }
                                         
                                         JToken agentVersionValue3 = customDetailsValue["agentVersion"];
@@ -2399,11 +2273,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.HostName = hostNameInstance;
                                         }
                                         
-                                        JToken lastHeartbeatValue4 = customDetailsValue["lastHeartbeat"];
-                                        if (lastHeartbeatValue4 != null && lastHeartbeatValue4.Type != JTokenType.Null)
+                                        JToken lastHeartbeatValue3 = customDetailsValue["lastHeartbeat"];
+                                        if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
                                         {
-                                            DateTime lastHeartbeatInstance4 = ((DateTime)lastHeartbeatValue4);
-                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance4;
+                                            DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
+                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance3;
                                         }
                                         
                                         JToken versionStatusValue3 = customDetailsValue["versionStatus"];
@@ -2424,42 +2298,42 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                fabricInstance.Id = idInstance4;
+                                string idInstance3 = ((string)idValue3);
+                                fabricInstance.Id = idInstance3;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                fabricInstance.Name = nameInstance3;
+                                string nameInstance2 = ((string)nameValue2);
+                                fabricInstance.Name = nameInstance2;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                fabricInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                fabricInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                fabricInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                fabricInstance.Location = locationInstance;
                             }
                             
-                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
-                                    fabricInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    fabricInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                             
@@ -2746,132 +2620,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareFabricDetails vMwareFabricDetailsInstance = new VMwareFabricDetails();
                                         
-                                        JToken vCentersArray = customDetailsValue["vCenters"];
-                                        if (vCentersArray != null && vCentersArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken vCentersValue in ((JArray)vCentersArray))
-                                            {
-                                                VCenter vCenterInstance = new VCenter();
-                                                vMwareFabricDetailsInstance.VCenters.Add(vCenterInstance);
-                                                
-                                                JToken propertiesValue2 = vCentersValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                                {
-                                                    VCenterProperties propertiesInstance2 = new VCenterProperties();
-                                                    vCenterInstance.Properties = propertiesInstance2;
-                                                    
-                                                    JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                        propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                                    }
-                                                    
-                                                    JToken internalIdValue = propertiesValue2["internalId"];
-                                                    if (internalIdValue != null && internalIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string internalIdInstance = ((string)internalIdValue);
-                                                        propertiesInstance2.InternalId = internalIdInstance;
-                                                    }
-                                                    
-                                                    JToken lastHeartbeatValue = propertiesValue2["lastHeartbeat"];
-                                                    if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
-                                                        propertiesInstance2.LastHeartbeat = lastHeartbeatInstance;
-                                                    }
-                                                    
-                                                    JToken discoveryStatusValue = propertiesValue2["discoveryStatus"];
-                                                    if (discoveryStatusValue != null && discoveryStatusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string discoveryStatusInstance = ((string)discoveryStatusValue);
-                                                        propertiesInstance2.DiscoveryStatus = discoveryStatusInstance;
-                                                    }
-                                                    
-                                                    JToken processServerIdValue = propertiesValue2["processServerId"];
-                                                    if (processServerIdValue != null && processServerIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string processServerIdInstance = ((string)processServerIdValue);
-                                                        propertiesInstance2.ProcessServerId = processServerIdInstance;
-                                                    }
-                                                    
-                                                    JToken ipAddressValue = propertiesValue2["ipAddress"];
-                                                    if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
-                                                    {
-                                                        string ipAddressInstance = ((string)ipAddressValue);
-                                                        propertiesInstance2.IpAddress = ipAddressInstance;
-                                                    }
-                                                    
-                                                    JToken infrastructureIdValue = propertiesValue2["infrastructureId"];
-                                                    if (infrastructureIdValue != null && infrastructureIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string infrastructureIdInstance = ((string)infrastructureIdValue);
-                                                        propertiesInstance2.InfrastructureId = infrastructureIdInstance;
-                                                    }
-                                                    
-                                                    JToken portValue = propertiesValue2["port"];
-                                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                                    {
-                                                        string portInstance = ((string)portValue);
-                                                        propertiesInstance2.Port = portInstance;
-                                                    }
-                                                    
-                                                    JToken runAsAccountIdValue = propertiesValue2["runAsAccountId"];
-                                                    if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string runAsAccountIdInstance = ((string)runAsAccountIdValue);
-                                                        propertiesInstance2.RunAsAccountId = runAsAccountIdInstance;
-                                                    }
-                                                    
-                                                    JToken fabricArmResourceNameValue = propertiesValue2["fabricArmResourceName"];
-                                                    if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string fabricArmResourceNameInstance = ((string)fabricArmResourceNameValue);
-                                                        propertiesInstance2.FabricArmResourceName = fabricArmResourceNameInstance;
-                                                    }
-                                                }
-                                                
-                                                JToken idValue = vCentersValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    vCenterInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken nameValue = vCentersValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    vCenterInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken typeValue = vCentersValue["type"];
-                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                                {
-                                                    string typeInstance = ((string)typeValue);
-                                                    vCenterInstance.Type = typeInstance;
-                                                }
-                                                
-                                                JToken locationValue = vCentersValue["location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    vCenterInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken tagsSequenceElement = ((JToken)vCentersValue["tags"]);
-                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JProperty property in tagsSequenceElement)
-                                                    {
-                                                        string tagsKey = ((string)property.Name);
-                                                        string tagsValue = ((string)property.Value);
-                                                        vCenterInstance.Tags.Add(tagsKey, tagsValue);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
                                         JToken processServersArray = customDetailsValue["processServers"];
                                         if (processServersArray != null && processServersArray.Type != JTokenType.Null)
                                         {
@@ -2880,25 +2628,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 ProcessServer processServerInstance = new ProcessServer();
                                                 vMwareFabricDetailsInstance.ProcessServers.Add(processServerInstance);
                                                 
-                                                JToken friendlyNameValue3 = processServersValue["friendlyName"];
-                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                JToken friendlyNameValue2 = processServersValue["friendlyName"];
+                                                if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                                    processServerInstance.FriendlyName = friendlyNameInstance3;
+                                                    string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                    processServerInstance.FriendlyName = friendlyNameInstance2;
                                                 }
                                                 
-                                                JToken idValue2 = processServersValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = processServersValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    processServerInstance.Id = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    processServerInstance.Id = idInstance;
                                                 }
                                                 
-                                                JToken ipAddressValue2 = processServersValue["ipAddress"];
-                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
+                                                JToken ipAddressValue = processServersValue["ipAddress"];
+                                                if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
-                                                    processServerInstance.IpAddress = ipAddressInstance2;
+                                                    string ipAddressInstance = ((string)ipAddressValue);
+                                                    processServerInstance.IpAddress = ipAddressInstance;
                                                 }
                                                 
                                                 JToken osTypeValue = processServersValue["osType"];
@@ -2922,11 +2670,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue2 = processServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
-                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance2;
+                                                    DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
+                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance;
                                                 }
                                                 
                                                 JToken versionStatusValue = processServersValue["versionStatus"];
@@ -3075,25 +2823,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 MasterTargetServer masterTargetServerInstance = new MasterTargetServer();
                                                 vMwareFabricDetailsInstance.MasterTargetServers.Add(masterTargetServerInstance);
                                                 
-                                                JToken idValue3 = masterTargetServersValue["id"];
-                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                JToken idValue2 = masterTargetServersValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance3 = ((string)idValue3);
-                                                    masterTargetServerInstance.Id = idInstance3;
+                                                    string idInstance2 = ((string)idValue2);
+                                                    masterTargetServerInstance.Id = idInstance2;
                                                 }
                                                 
-                                                JToken ipAddressValue3 = masterTargetServersValue["ipAddress"];
-                                                if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
+                                                JToken ipAddressValue2 = masterTargetServersValue["ipAddress"];
+                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance3 = ((string)ipAddressValue3);
-                                                    masterTargetServerInstance.IpAddress = ipAddressInstance3;
+                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
+                                                    masterTargetServerInstance.IpAddress = ipAddressInstance2;
                                                 }
                                                 
-                                                JToken nameValue2 = masterTargetServersValue["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken nameValue = masterTargetServersValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    masterTargetServerInstance.Name = nameInstance2;
+                                                    string nameInstance = ((string)nameValue);
+                                                    masterTargetServerInstance.Name = nameInstance;
                                                 }
                                                 
                                                 JToken osTypeValue3 = masterTargetServersValue["osType"];
@@ -3117,11 +2865,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue3 = masterTargetServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
-                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance3;
+                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
+                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance2;
                                                 }
                                                 
                                                 JToken versionStatusValue2 = masterTargetServersValue["versionStatus"];
@@ -3366,11 +3114,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.CsServiceStatus = csServiceStatusInstance;
                                         }
                                         
-                                        JToken ipAddressValue4 = customDetailsValue["ipAddress"];
-                                        if (ipAddressValue4 != null && ipAddressValue4.Type != JTokenType.Null)
+                                        JToken ipAddressValue3 = customDetailsValue["ipAddress"];
+                                        if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
                                         {
-                                            string ipAddressInstance4 = ((string)ipAddressValue4);
-                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance4;
+                                            string ipAddressInstance3 = ((string)ipAddressValue3);
+                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance3;
                                         }
                                         
                                         JToken agentVersionValue3 = customDetailsValue["agentVersion"];
@@ -3394,11 +3142,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.HostName = hostNameInstance;
                                         }
                                         
-                                        JToken lastHeartbeatValue4 = customDetailsValue["lastHeartbeat"];
-                                        if (lastHeartbeatValue4 != null && lastHeartbeatValue4.Type != JTokenType.Null)
+                                        JToken lastHeartbeatValue3 = customDetailsValue["lastHeartbeat"];
+                                        if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
                                         {
-                                            DateTime lastHeartbeatInstance4 = ((DateTime)lastHeartbeatValue4);
-                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance4;
+                                            DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
+                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance3;
                                         }
                                         
                                         JToken versionStatusValue3 = customDetailsValue["versionStatus"];
@@ -3419,50 +3167,50 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                fabricInstance.Id = idInstance4;
+                                string idInstance3 = ((string)idValue3);
+                                fabricInstance.Id = idInstance3;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                fabricInstance.Name = nameInstance3;
+                                string nameInstance2 = ((string)nameValue2);
+                                fabricInstance.Name = nameInstance2;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                fabricInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                fabricInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                fabricInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                fabricInstance.Location = locationInstance;
                             }
                             
-                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
-                                    fabricInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    fabricInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                             
-                            JToken locationValue3 = responseDoc["Location"];
-                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                            JToken locationValue2 = responseDoc["Location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                             {
-                                string locationInstance3 = ((string)locationValue3);
-                                result.Location = locationInstance3;
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
                             }
                             
                             JToken retryAfterValue = responseDoc["RetryAfter"];
@@ -4031,132 +3779,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareFabricDetails vMwareFabricDetailsInstance = new VMwareFabricDetails();
                                         
-                                        JToken vCentersArray = customDetailsValue["vCenters"];
-                                        if (vCentersArray != null && vCentersArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken vCentersValue in ((JArray)vCentersArray))
-                                            {
-                                                VCenter vCenterInstance = new VCenter();
-                                                vMwareFabricDetailsInstance.VCenters.Add(vCenterInstance);
-                                                
-                                                JToken propertiesValue2 = vCentersValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                                {
-                                                    VCenterProperties propertiesInstance2 = new VCenterProperties();
-                                                    vCenterInstance.Properties = propertiesInstance2;
-                                                    
-                                                    JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                        propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                                    }
-                                                    
-                                                    JToken internalIdValue = propertiesValue2["internalId"];
-                                                    if (internalIdValue != null && internalIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string internalIdInstance = ((string)internalIdValue);
-                                                        propertiesInstance2.InternalId = internalIdInstance;
-                                                    }
-                                                    
-                                                    JToken lastHeartbeatValue = propertiesValue2["lastHeartbeat"];
-                                                    if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
-                                                        propertiesInstance2.LastHeartbeat = lastHeartbeatInstance;
-                                                    }
-                                                    
-                                                    JToken discoveryStatusValue = propertiesValue2["discoveryStatus"];
-                                                    if (discoveryStatusValue != null && discoveryStatusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string discoveryStatusInstance = ((string)discoveryStatusValue);
-                                                        propertiesInstance2.DiscoveryStatus = discoveryStatusInstance;
-                                                    }
-                                                    
-                                                    JToken processServerIdValue = propertiesValue2["processServerId"];
-                                                    if (processServerIdValue != null && processServerIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string processServerIdInstance = ((string)processServerIdValue);
-                                                        propertiesInstance2.ProcessServerId = processServerIdInstance;
-                                                    }
-                                                    
-                                                    JToken ipAddressValue = propertiesValue2["ipAddress"];
-                                                    if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
-                                                    {
-                                                        string ipAddressInstance = ((string)ipAddressValue);
-                                                        propertiesInstance2.IpAddress = ipAddressInstance;
-                                                    }
-                                                    
-                                                    JToken infrastructureIdValue = propertiesValue2["infrastructureId"];
-                                                    if (infrastructureIdValue != null && infrastructureIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string infrastructureIdInstance = ((string)infrastructureIdValue);
-                                                        propertiesInstance2.InfrastructureId = infrastructureIdInstance;
-                                                    }
-                                                    
-                                                    JToken portValue = propertiesValue2["port"];
-                                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                                    {
-                                                        string portInstance = ((string)portValue);
-                                                        propertiesInstance2.Port = portInstance;
-                                                    }
-                                                    
-                                                    JToken runAsAccountIdValue = propertiesValue2["runAsAccountId"];
-                                                    if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string runAsAccountIdInstance = ((string)runAsAccountIdValue);
-                                                        propertiesInstance2.RunAsAccountId = runAsAccountIdInstance;
-                                                    }
-                                                    
-                                                    JToken fabricArmResourceNameValue = propertiesValue2["fabricArmResourceName"];
-                                                    if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string fabricArmResourceNameInstance = ((string)fabricArmResourceNameValue);
-                                                        propertiesInstance2.FabricArmResourceName = fabricArmResourceNameInstance;
-                                                    }
-                                                }
-                                                
-                                                JToken idValue = vCentersValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    vCenterInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken nameValue = vCentersValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    vCenterInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken typeValue = vCentersValue["type"];
-                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                                {
-                                                    string typeInstance = ((string)typeValue);
-                                                    vCenterInstance.Type = typeInstance;
-                                                }
-                                                
-                                                JToken locationValue = vCentersValue["location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    vCenterInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken tagsSequenceElement = ((JToken)vCentersValue["tags"]);
-                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JProperty property in tagsSequenceElement)
-                                                    {
-                                                        string tagsKey = ((string)property.Name);
-                                                        string tagsValue = ((string)property.Value);
-                                                        vCenterInstance.Tags.Add(tagsKey, tagsValue);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
                                         JToken processServersArray = customDetailsValue["processServers"];
                                         if (processServersArray != null && processServersArray.Type != JTokenType.Null)
                                         {
@@ -4165,25 +3787,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 ProcessServer processServerInstance = new ProcessServer();
                                                 vMwareFabricDetailsInstance.ProcessServers.Add(processServerInstance);
                                                 
-                                                JToken friendlyNameValue3 = processServersValue["friendlyName"];
-                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                JToken friendlyNameValue2 = processServersValue["friendlyName"];
+                                                if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                                    processServerInstance.FriendlyName = friendlyNameInstance3;
+                                                    string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                    processServerInstance.FriendlyName = friendlyNameInstance2;
                                                 }
                                                 
-                                                JToken idValue2 = processServersValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = processServersValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    processServerInstance.Id = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    processServerInstance.Id = idInstance;
                                                 }
                                                 
-                                                JToken ipAddressValue2 = processServersValue["ipAddress"];
-                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
+                                                JToken ipAddressValue = processServersValue["ipAddress"];
+                                                if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
-                                                    processServerInstance.IpAddress = ipAddressInstance2;
+                                                    string ipAddressInstance = ((string)ipAddressValue);
+                                                    processServerInstance.IpAddress = ipAddressInstance;
                                                 }
                                                 
                                                 JToken osTypeValue = processServersValue["osType"];
@@ -4207,11 +3829,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue2 = processServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
-                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance2;
+                                                    DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
+                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance;
                                                 }
                                                 
                                                 JToken versionStatusValue = processServersValue["versionStatus"];
@@ -4360,25 +3982,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 MasterTargetServer masterTargetServerInstance = new MasterTargetServer();
                                                 vMwareFabricDetailsInstance.MasterTargetServers.Add(masterTargetServerInstance);
                                                 
-                                                JToken idValue3 = masterTargetServersValue["id"];
-                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                JToken idValue2 = masterTargetServersValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance3 = ((string)idValue3);
-                                                    masterTargetServerInstance.Id = idInstance3;
+                                                    string idInstance2 = ((string)idValue2);
+                                                    masterTargetServerInstance.Id = idInstance2;
                                                 }
                                                 
-                                                JToken ipAddressValue3 = masterTargetServersValue["ipAddress"];
-                                                if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
+                                                JToken ipAddressValue2 = masterTargetServersValue["ipAddress"];
+                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance3 = ((string)ipAddressValue3);
-                                                    masterTargetServerInstance.IpAddress = ipAddressInstance3;
+                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
+                                                    masterTargetServerInstance.IpAddress = ipAddressInstance2;
                                                 }
                                                 
-                                                JToken nameValue2 = masterTargetServersValue["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken nameValue = masterTargetServersValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    masterTargetServerInstance.Name = nameInstance2;
+                                                    string nameInstance = ((string)nameValue);
+                                                    masterTargetServerInstance.Name = nameInstance;
                                                 }
                                                 
                                                 JToken osTypeValue3 = masterTargetServersValue["osType"];
@@ -4402,11 +4024,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue3 = masterTargetServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
-                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance3;
+                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
+                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance2;
                                                 }
                                                 
                                                 JToken versionStatusValue2 = masterTargetServersValue["versionStatus"];
@@ -4651,11 +4273,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.CsServiceStatus = csServiceStatusInstance;
                                         }
                                         
-                                        JToken ipAddressValue4 = customDetailsValue["ipAddress"];
-                                        if (ipAddressValue4 != null && ipAddressValue4.Type != JTokenType.Null)
+                                        JToken ipAddressValue3 = customDetailsValue["ipAddress"];
+                                        if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
                                         {
-                                            string ipAddressInstance4 = ((string)ipAddressValue4);
-                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance4;
+                                            string ipAddressInstance3 = ((string)ipAddressValue3);
+                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance3;
                                         }
                                         
                                         JToken agentVersionValue3 = customDetailsValue["agentVersion"];
@@ -4679,11 +4301,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.HostName = hostNameInstance;
                                         }
                                         
-                                        JToken lastHeartbeatValue4 = customDetailsValue["lastHeartbeat"];
-                                        if (lastHeartbeatValue4 != null && lastHeartbeatValue4.Type != JTokenType.Null)
+                                        JToken lastHeartbeatValue3 = customDetailsValue["lastHeartbeat"];
+                                        if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
                                         {
-                                            DateTime lastHeartbeatInstance4 = ((DateTime)lastHeartbeatValue4);
-                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance4;
+                                            DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
+                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance3;
                                         }
                                         
                                         JToken versionStatusValue3 = customDetailsValue["versionStatus"];
@@ -4704,50 +4326,50 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                fabricInstance.Id = idInstance4;
+                                string idInstance3 = ((string)idValue3);
+                                fabricInstance.Id = idInstance3;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                fabricInstance.Name = nameInstance3;
+                                string nameInstance2 = ((string)nameValue2);
+                                fabricInstance.Name = nameInstance2;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                fabricInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                fabricInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                fabricInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                fabricInstance.Location = locationInstance;
                             }
                             
-                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
-                                    fabricInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    fabricInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                             
-                            JToken locationValue3 = responseDoc["Location"];
-                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                            JToken locationValue2 = responseDoc["Location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                             {
-                                string locationInstance3 = ((string)locationValue3);
-                                result.Location = locationInstance3;
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
                             }
                             
                             JToken retryAfterValue = responseDoc["RetryAfter"];
@@ -5316,132 +4938,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareFabricDetails vMwareFabricDetailsInstance = new VMwareFabricDetails();
                                         
-                                        JToken vCentersArray = customDetailsValue["vCenters"];
-                                        if (vCentersArray != null && vCentersArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken vCentersValue in ((JArray)vCentersArray))
-                                            {
-                                                VCenter vCenterInstance = new VCenter();
-                                                vMwareFabricDetailsInstance.VCenters.Add(vCenterInstance);
-                                                
-                                                JToken propertiesValue2 = vCentersValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                                {
-                                                    VCenterProperties propertiesInstance2 = new VCenterProperties();
-                                                    vCenterInstance.Properties = propertiesInstance2;
-                                                    
-                                                    JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                        propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                                    }
-                                                    
-                                                    JToken internalIdValue = propertiesValue2["internalId"];
-                                                    if (internalIdValue != null && internalIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string internalIdInstance = ((string)internalIdValue);
-                                                        propertiesInstance2.InternalId = internalIdInstance;
-                                                    }
-                                                    
-                                                    JToken lastHeartbeatValue = propertiesValue2["lastHeartbeat"];
-                                                    if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
-                                                        propertiesInstance2.LastHeartbeat = lastHeartbeatInstance;
-                                                    }
-                                                    
-                                                    JToken discoveryStatusValue = propertiesValue2["discoveryStatus"];
-                                                    if (discoveryStatusValue != null && discoveryStatusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string discoveryStatusInstance = ((string)discoveryStatusValue);
-                                                        propertiesInstance2.DiscoveryStatus = discoveryStatusInstance;
-                                                    }
-                                                    
-                                                    JToken processServerIdValue = propertiesValue2["processServerId"];
-                                                    if (processServerIdValue != null && processServerIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string processServerIdInstance = ((string)processServerIdValue);
-                                                        propertiesInstance2.ProcessServerId = processServerIdInstance;
-                                                    }
-                                                    
-                                                    JToken ipAddressValue = propertiesValue2["ipAddress"];
-                                                    if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
-                                                    {
-                                                        string ipAddressInstance = ((string)ipAddressValue);
-                                                        propertiesInstance2.IpAddress = ipAddressInstance;
-                                                    }
-                                                    
-                                                    JToken infrastructureIdValue = propertiesValue2["infrastructureId"];
-                                                    if (infrastructureIdValue != null && infrastructureIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string infrastructureIdInstance = ((string)infrastructureIdValue);
-                                                        propertiesInstance2.InfrastructureId = infrastructureIdInstance;
-                                                    }
-                                                    
-                                                    JToken portValue = propertiesValue2["port"];
-                                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                                    {
-                                                        string portInstance = ((string)portValue);
-                                                        propertiesInstance2.Port = portInstance;
-                                                    }
-                                                    
-                                                    JToken runAsAccountIdValue = propertiesValue2["runAsAccountId"];
-                                                    if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string runAsAccountIdInstance = ((string)runAsAccountIdValue);
-                                                        propertiesInstance2.RunAsAccountId = runAsAccountIdInstance;
-                                                    }
-                                                    
-                                                    JToken fabricArmResourceNameValue = propertiesValue2["fabricArmResourceName"];
-                                                    if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string fabricArmResourceNameInstance = ((string)fabricArmResourceNameValue);
-                                                        propertiesInstance2.FabricArmResourceName = fabricArmResourceNameInstance;
-                                                    }
-                                                }
-                                                
-                                                JToken idValue = vCentersValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    vCenterInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken nameValue = vCentersValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    vCenterInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken typeValue = vCentersValue["type"];
-                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                                {
-                                                    string typeInstance = ((string)typeValue);
-                                                    vCenterInstance.Type = typeInstance;
-                                                }
-                                                
-                                                JToken locationValue = vCentersValue["location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    vCenterInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken tagsSequenceElement = ((JToken)vCentersValue["tags"]);
-                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JProperty property in tagsSequenceElement)
-                                                    {
-                                                        string tagsKey = ((string)property.Name);
-                                                        string tagsValue = ((string)property.Value);
-                                                        vCenterInstance.Tags.Add(tagsKey, tagsValue);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
                                         JToken processServersArray = customDetailsValue["processServers"];
                                         if (processServersArray != null && processServersArray.Type != JTokenType.Null)
                                         {
@@ -5450,25 +4946,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 ProcessServer processServerInstance = new ProcessServer();
                                                 vMwareFabricDetailsInstance.ProcessServers.Add(processServerInstance);
                                                 
-                                                JToken friendlyNameValue3 = processServersValue["friendlyName"];
-                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                JToken friendlyNameValue2 = processServersValue["friendlyName"];
+                                                if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                                    processServerInstance.FriendlyName = friendlyNameInstance3;
+                                                    string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                    processServerInstance.FriendlyName = friendlyNameInstance2;
                                                 }
                                                 
-                                                JToken idValue2 = processServersValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = processServersValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    processServerInstance.Id = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    processServerInstance.Id = idInstance;
                                                 }
                                                 
-                                                JToken ipAddressValue2 = processServersValue["ipAddress"];
-                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
+                                                JToken ipAddressValue = processServersValue["ipAddress"];
+                                                if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
-                                                    processServerInstance.IpAddress = ipAddressInstance2;
+                                                    string ipAddressInstance = ((string)ipAddressValue);
+                                                    processServerInstance.IpAddress = ipAddressInstance;
                                                 }
                                                 
                                                 JToken osTypeValue = processServersValue["osType"];
@@ -5492,11 +4988,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue2 = processServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
-                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance2;
+                                                    DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
+                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance;
                                                 }
                                                 
                                                 JToken versionStatusValue = processServersValue["versionStatus"];
@@ -5645,25 +5141,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 MasterTargetServer masterTargetServerInstance = new MasterTargetServer();
                                                 vMwareFabricDetailsInstance.MasterTargetServers.Add(masterTargetServerInstance);
                                                 
-                                                JToken idValue3 = masterTargetServersValue["id"];
-                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                JToken idValue2 = masterTargetServersValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance3 = ((string)idValue3);
-                                                    masterTargetServerInstance.Id = idInstance3;
+                                                    string idInstance2 = ((string)idValue2);
+                                                    masterTargetServerInstance.Id = idInstance2;
                                                 }
                                                 
-                                                JToken ipAddressValue3 = masterTargetServersValue["ipAddress"];
-                                                if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
+                                                JToken ipAddressValue2 = masterTargetServersValue["ipAddress"];
+                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance3 = ((string)ipAddressValue3);
-                                                    masterTargetServerInstance.IpAddress = ipAddressInstance3;
+                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
+                                                    masterTargetServerInstance.IpAddress = ipAddressInstance2;
                                                 }
                                                 
-                                                JToken nameValue2 = masterTargetServersValue["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken nameValue = masterTargetServersValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    masterTargetServerInstance.Name = nameInstance2;
+                                                    string nameInstance = ((string)nameValue);
+                                                    masterTargetServerInstance.Name = nameInstance;
                                                 }
                                                 
                                                 JToken osTypeValue3 = masterTargetServersValue["osType"];
@@ -5687,11 +5183,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue3 = masterTargetServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
-                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance3;
+                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
+                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance2;
                                                 }
                                                 
                                                 JToken versionStatusValue2 = masterTargetServersValue["versionStatus"];
@@ -5936,11 +5432,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.CsServiceStatus = csServiceStatusInstance;
                                         }
                                         
-                                        JToken ipAddressValue4 = customDetailsValue["ipAddress"];
-                                        if (ipAddressValue4 != null && ipAddressValue4.Type != JTokenType.Null)
+                                        JToken ipAddressValue3 = customDetailsValue["ipAddress"];
+                                        if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
                                         {
-                                            string ipAddressInstance4 = ((string)ipAddressValue4);
-                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance4;
+                                            string ipAddressInstance3 = ((string)ipAddressValue3);
+                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance3;
                                         }
                                         
                                         JToken agentVersionValue3 = customDetailsValue["agentVersion"];
@@ -5964,11 +5460,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.HostName = hostNameInstance;
                                         }
                                         
-                                        JToken lastHeartbeatValue4 = customDetailsValue["lastHeartbeat"];
-                                        if (lastHeartbeatValue4 != null && lastHeartbeatValue4.Type != JTokenType.Null)
+                                        JToken lastHeartbeatValue3 = customDetailsValue["lastHeartbeat"];
+                                        if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
                                         {
-                                            DateTime lastHeartbeatInstance4 = ((DateTime)lastHeartbeatValue4);
-                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance4;
+                                            DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
+                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance3;
                                         }
                                         
                                         JToken versionStatusValue3 = customDetailsValue["versionStatus"];
@@ -5989,50 +5485,50 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                fabricInstance.Id = idInstance4;
+                                string idInstance3 = ((string)idValue3);
+                                fabricInstance.Id = idInstance3;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                fabricInstance.Name = nameInstance3;
+                                string nameInstance2 = ((string)nameValue2);
+                                fabricInstance.Name = nameInstance2;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                fabricInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                fabricInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                fabricInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                fabricInstance.Location = locationInstance;
                             }
                             
-                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
-                                    fabricInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    fabricInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                             
-                            JToken locationValue3 = responseDoc["Location"];
-                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                            JToken locationValue2 = responseDoc["Location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                             {
-                                string locationInstance3 = ((string)locationValue3);
-                                result.Location = locationInstance3;
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
                             }
                             
                             JToken retryAfterValue = responseDoc["RetryAfter"];
@@ -6370,132 +5866,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         VMwareFabricDetails vMwareFabricDetailsInstance = new VMwareFabricDetails();
                                         
-                                        JToken vCentersArray = customDetailsValue["vCenters"];
-                                        if (vCentersArray != null && vCentersArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken vCentersValue in ((JArray)vCentersArray))
-                                            {
-                                                VCenter vCenterInstance = new VCenter();
-                                                vMwareFabricDetailsInstance.VCenters.Add(vCenterInstance);
-                                                
-                                                JToken propertiesValue2 = vCentersValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                                {
-                                                    VCenterProperties propertiesInstance2 = new VCenterProperties();
-                                                    vCenterInstance.Properties = propertiesInstance2;
-                                                    
-                                                    JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                                    if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                        propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                                    }
-                                                    
-                                                    JToken internalIdValue = propertiesValue2["internalId"];
-                                                    if (internalIdValue != null && internalIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string internalIdInstance = ((string)internalIdValue);
-                                                        propertiesInstance2.InternalId = internalIdInstance;
-                                                    }
-                                                    
-                                                    JToken lastHeartbeatValue = propertiesValue2["lastHeartbeat"];
-                                                    if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
-                                                    {
-                                                        DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
-                                                        propertiesInstance2.LastHeartbeat = lastHeartbeatInstance;
-                                                    }
-                                                    
-                                                    JToken discoveryStatusValue = propertiesValue2["discoveryStatus"];
-                                                    if (discoveryStatusValue != null && discoveryStatusValue.Type != JTokenType.Null)
-                                                    {
-                                                        string discoveryStatusInstance = ((string)discoveryStatusValue);
-                                                        propertiesInstance2.DiscoveryStatus = discoveryStatusInstance;
-                                                    }
-                                                    
-                                                    JToken processServerIdValue = propertiesValue2["processServerId"];
-                                                    if (processServerIdValue != null && processServerIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string processServerIdInstance = ((string)processServerIdValue);
-                                                        propertiesInstance2.ProcessServerId = processServerIdInstance;
-                                                    }
-                                                    
-                                                    JToken ipAddressValue = propertiesValue2["ipAddress"];
-                                                    if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
-                                                    {
-                                                        string ipAddressInstance = ((string)ipAddressValue);
-                                                        propertiesInstance2.IpAddress = ipAddressInstance;
-                                                    }
-                                                    
-                                                    JToken infrastructureIdValue = propertiesValue2["infrastructureId"];
-                                                    if (infrastructureIdValue != null && infrastructureIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string infrastructureIdInstance = ((string)infrastructureIdValue);
-                                                        propertiesInstance2.InfrastructureId = infrastructureIdInstance;
-                                                    }
-                                                    
-                                                    JToken portValue = propertiesValue2["port"];
-                                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                                    {
-                                                        string portInstance = ((string)portValue);
-                                                        propertiesInstance2.Port = portInstance;
-                                                    }
-                                                    
-                                                    JToken runAsAccountIdValue = propertiesValue2["runAsAccountId"];
-                                                    if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
-                                                    {
-                                                        string runAsAccountIdInstance = ((string)runAsAccountIdValue);
-                                                        propertiesInstance2.RunAsAccountId = runAsAccountIdInstance;
-                                                    }
-                                                    
-                                                    JToken fabricArmResourceNameValue = propertiesValue2["fabricArmResourceName"];
-                                                    if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
-                                                    {
-                                                        string fabricArmResourceNameInstance = ((string)fabricArmResourceNameValue);
-                                                        propertiesInstance2.FabricArmResourceName = fabricArmResourceNameInstance;
-                                                    }
-                                                }
-                                                
-                                                JToken idValue = vCentersValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    vCenterInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken nameValue = vCentersValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    vCenterInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken typeValue = vCentersValue["type"];
-                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                                {
-                                                    string typeInstance = ((string)typeValue);
-                                                    vCenterInstance.Type = typeInstance;
-                                                }
-                                                
-                                                JToken locationValue = vCentersValue["location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    vCenterInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken tagsSequenceElement = ((JToken)vCentersValue["tags"]);
-                                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JProperty property in tagsSequenceElement)
-                                                    {
-                                                        string tagsKey = ((string)property.Name);
-                                                        string tagsValue = ((string)property.Value);
-                                                        vCenterInstance.Tags.Add(tagsKey, tagsValue);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
                                         JToken processServersArray = customDetailsValue["processServers"];
                                         if (processServersArray != null && processServersArray.Type != JTokenType.Null)
                                         {
@@ -6504,25 +5874,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 ProcessServer processServerInstance = new ProcessServer();
                                                 vMwareFabricDetailsInstance.ProcessServers.Add(processServerInstance);
                                                 
-                                                JToken friendlyNameValue3 = processServersValue["friendlyName"];
-                                                if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                JToken friendlyNameValue2 = processServersValue["friendlyName"];
+                                                if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                                    processServerInstance.FriendlyName = friendlyNameInstance3;
+                                                    string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                    processServerInstance.FriendlyName = friendlyNameInstance2;
                                                 }
                                                 
-                                                JToken idValue2 = processServersValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = processServersValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    processServerInstance.Id = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    processServerInstance.Id = idInstance;
                                                 }
                                                 
-                                                JToken ipAddressValue2 = processServersValue["ipAddress"];
-                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
+                                                JToken ipAddressValue = processServersValue["ipAddress"];
+                                                if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
-                                                    processServerInstance.IpAddress = ipAddressInstance2;
+                                                    string ipAddressInstance = ((string)ipAddressValue);
+                                                    processServerInstance.IpAddress = ipAddressInstance;
                                                 }
                                                 
                                                 JToken osTypeValue = processServersValue["osType"];
@@ -6546,11 +5916,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue2 = processServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
-                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance2;
+                                                    DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
+                                                    processServerInstance.LastHeartbeat = lastHeartbeatInstance;
                                                 }
                                                 
                                                 JToken versionStatusValue = processServersValue["versionStatus"];
@@ -6699,25 +6069,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 MasterTargetServer masterTargetServerInstance = new MasterTargetServer();
                                                 vMwareFabricDetailsInstance.MasterTargetServers.Add(masterTargetServerInstance);
                                                 
-                                                JToken idValue3 = masterTargetServersValue["id"];
-                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                JToken idValue2 = masterTargetServersValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance3 = ((string)idValue3);
-                                                    masterTargetServerInstance.Id = idInstance3;
+                                                    string idInstance2 = ((string)idValue2);
+                                                    masterTargetServerInstance.Id = idInstance2;
                                                 }
                                                 
-                                                JToken ipAddressValue3 = masterTargetServersValue["ipAddress"];
-                                                if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
+                                                JToken ipAddressValue2 = masterTargetServersValue["ipAddress"];
+                                                if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance3 = ((string)ipAddressValue3);
-                                                    masterTargetServerInstance.IpAddress = ipAddressInstance3;
+                                                    string ipAddressInstance2 = ((string)ipAddressValue2);
+                                                    masterTargetServerInstance.IpAddress = ipAddressInstance2;
                                                 }
                                                 
-                                                JToken nameValue2 = masterTargetServersValue["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken nameValue = masterTargetServersValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    masterTargetServerInstance.Name = nameInstance2;
+                                                    string nameInstance = ((string)nameValue);
+                                                    masterTargetServerInstance.Name = nameInstance;
                                                 }
                                                 
                                                 JToken osTypeValue3 = masterTargetServersValue["osType"];
@@ -6741,11 +6111,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue3 = masterTargetServersValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
-                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance3;
+                                                    DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
+                                                    masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance2;
                                                 }
                                                 
                                                 JToken versionStatusValue2 = masterTargetServersValue["versionStatus"];
@@ -6990,11 +6360,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.CsServiceStatus = csServiceStatusInstance;
                                         }
                                         
-                                        JToken ipAddressValue4 = customDetailsValue["ipAddress"];
-                                        if (ipAddressValue4 != null && ipAddressValue4.Type != JTokenType.Null)
+                                        JToken ipAddressValue3 = customDetailsValue["ipAddress"];
+                                        if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
                                         {
-                                            string ipAddressInstance4 = ((string)ipAddressValue4);
-                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance4;
+                                            string ipAddressInstance3 = ((string)ipAddressValue3);
+                                            vMwareFabricDetailsInstance.IpAddress = ipAddressInstance3;
                                         }
                                         
                                         JToken agentVersionValue3 = customDetailsValue["agentVersion"];
@@ -7018,11 +6388,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareFabricDetailsInstance.HostName = hostNameInstance;
                                         }
                                         
-                                        JToken lastHeartbeatValue4 = customDetailsValue["lastHeartbeat"];
-                                        if (lastHeartbeatValue4 != null && lastHeartbeatValue4.Type != JTokenType.Null)
+                                        JToken lastHeartbeatValue3 = customDetailsValue["lastHeartbeat"];
+                                        if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
                                         {
-                                            DateTime lastHeartbeatInstance4 = ((DateTime)lastHeartbeatValue4);
-                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance4;
+                                            DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
+                                            vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance3;
                                         }
                                         
                                         JToken versionStatusValue3 = customDetailsValue["versionStatus"];
@@ -7043,50 +6413,50 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                             {
-                                string idInstance4 = ((string)idValue4);
-                                fabricInstance.Id = idInstance4;
+                                string idInstance3 = ((string)idValue3);
+                                fabricInstance.Id = idInstance3;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                fabricInstance.Name = nameInstance3;
+                                string nameInstance2 = ((string)nameValue2);
+                                fabricInstance.Name = nameInstance2;
                             }
                             
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                string typeInstance2 = ((string)typeValue2);
-                                fabricInstance.Type = typeInstance2;
+                                string typeInstance = ((string)typeValue);
+                                fabricInstance.Type = typeInstance;
                             }
                             
-                            JToken locationValue2 = responseDoc["location"];
-                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string locationInstance2 = ((string)locationValue2);
-                                fabricInstance.Location = locationInstance2;
+                                string locationInstance = ((string)locationValue);
+                                fabricInstance.Location = locationInstance;
                             }
                             
-                            JToken tagsSequenceElement2 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in tagsSequenceElement2)
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey2 = ((string)property2.Name);
-                                    string tagsValue2 = ((string)property2.Value);
-                                    fabricInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    fabricInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                             
-                            JToken locationValue3 = responseDoc["Location"];
-                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                            JToken locationValue2 = responseDoc["Location"];
+                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
                             {
-                                string locationInstance3 = ((string)locationValue3);
-                                result.Location = locationInstance3;
+                                string locationInstance2 = ((string)locationValue2);
+                                result.Location = locationInstance2;
                             }
                             
                             JToken retryAfterValue = responseDoc["RetryAfter"];
@@ -7453,132 +6823,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 VMwareFabricDetails vMwareFabricDetailsInstance = new VMwareFabricDetails();
                                                 
-                                                JToken vCentersArray = customDetailsValue["vCenters"];
-                                                if (vCentersArray != null && vCentersArray.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken vCentersValue in ((JArray)vCentersArray))
-                                                    {
-                                                        VCenter vCenterInstance = new VCenter();
-                                                        vMwareFabricDetailsInstance.VCenters.Add(vCenterInstance);
-                                                        
-                                                        JToken propertiesValue2 = vCentersValue["properties"];
-                                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                                        {
-                                                            VCenterProperties propertiesInstance2 = new VCenterProperties();
-                                                            vCenterInstance.Properties = propertiesInstance2;
-                                                            
-                                                            JToken friendlyNameValue2 = propertiesValue2["friendlyName"];
-                                                            if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
-                                                            {
-                                                                string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                                propertiesInstance2.FriendlyName = friendlyNameInstance2;
-                                                            }
-                                                            
-                                                            JToken internalIdValue = propertiesValue2["internalId"];
-                                                            if (internalIdValue != null && internalIdValue.Type != JTokenType.Null)
-                                                            {
-                                                                string internalIdInstance = ((string)internalIdValue);
-                                                                propertiesInstance2.InternalId = internalIdInstance;
-                                                            }
-                                                            
-                                                            JToken lastHeartbeatValue = propertiesValue2["lastHeartbeat"];
-                                                            if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
-                                                            {
-                                                                DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
-                                                                propertiesInstance2.LastHeartbeat = lastHeartbeatInstance;
-                                                            }
-                                                            
-                                                            JToken discoveryStatusValue = propertiesValue2["discoveryStatus"];
-                                                            if (discoveryStatusValue != null && discoveryStatusValue.Type != JTokenType.Null)
-                                                            {
-                                                                string discoveryStatusInstance = ((string)discoveryStatusValue);
-                                                                propertiesInstance2.DiscoveryStatus = discoveryStatusInstance;
-                                                            }
-                                                            
-                                                            JToken processServerIdValue = propertiesValue2["processServerId"];
-                                                            if (processServerIdValue != null && processServerIdValue.Type != JTokenType.Null)
-                                                            {
-                                                                string processServerIdInstance = ((string)processServerIdValue);
-                                                                propertiesInstance2.ProcessServerId = processServerIdInstance;
-                                                            }
-                                                            
-                                                            JToken ipAddressValue = propertiesValue2["ipAddress"];
-                                                            if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
-                                                            {
-                                                                string ipAddressInstance = ((string)ipAddressValue);
-                                                                propertiesInstance2.IpAddress = ipAddressInstance;
-                                                            }
-                                                            
-                                                            JToken infrastructureIdValue = propertiesValue2["infrastructureId"];
-                                                            if (infrastructureIdValue != null && infrastructureIdValue.Type != JTokenType.Null)
-                                                            {
-                                                                string infrastructureIdInstance = ((string)infrastructureIdValue);
-                                                                propertiesInstance2.InfrastructureId = infrastructureIdInstance;
-                                                            }
-                                                            
-                                                            JToken portValue = propertiesValue2["port"];
-                                                            if (portValue != null && portValue.Type != JTokenType.Null)
-                                                            {
-                                                                string portInstance = ((string)portValue);
-                                                                propertiesInstance2.Port = portInstance;
-                                                            }
-                                                            
-                                                            JToken runAsAccountIdValue = propertiesValue2["runAsAccountId"];
-                                                            if (runAsAccountIdValue != null && runAsAccountIdValue.Type != JTokenType.Null)
-                                                            {
-                                                                string runAsAccountIdInstance = ((string)runAsAccountIdValue);
-                                                                propertiesInstance2.RunAsAccountId = runAsAccountIdInstance;
-                                                            }
-                                                            
-                                                            JToken fabricArmResourceNameValue = propertiesValue2["fabricArmResourceName"];
-                                                            if (fabricArmResourceNameValue != null && fabricArmResourceNameValue.Type != JTokenType.Null)
-                                                            {
-                                                                string fabricArmResourceNameInstance = ((string)fabricArmResourceNameValue);
-                                                                propertiesInstance2.FabricArmResourceName = fabricArmResourceNameInstance;
-                                                            }
-                                                        }
-                                                        
-                                                        JToken idValue = vCentersValue["id"];
-                                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                                        {
-                                                            string idInstance = ((string)idValue);
-                                                            vCenterInstance.Id = idInstance;
-                                                        }
-                                                        
-                                                        JToken nameValue = vCentersValue["name"];
-                                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                        {
-                                                            string nameInstance = ((string)nameValue);
-                                                            vCenterInstance.Name = nameInstance;
-                                                        }
-                                                        
-                                                        JToken typeValue = vCentersValue["type"];
-                                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                                        {
-                                                            string typeInstance = ((string)typeValue);
-                                                            vCenterInstance.Type = typeInstance;
-                                                        }
-                                                        
-                                                        JToken locationValue = vCentersValue["location"];
-                                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                        {
-                                                            string locationInstance = ((string)locationValue);
-                                                            vCenterInstance.Location = locationInstance;
-                                                        }
-                                                        
-                                                        JToken tagsSequenceElement = ((JToken)vCentersValue["tags"]);
-                                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JProperty property in tagsSequenceElement)
-                                                            {
-                                                                string tagsKey = ((string)property.Name);
-                                                                string tagsValue = ((string)property.Value);
-                                                                vCenterInstance.Tags.Add(tagsKey, tagsValue);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                
                                                 JToken processServersArray = customDetailsValue["processServers"];
                                                 if (processServersArray != null && processServersArray.Type != JTokenType.Null)
                                                 {
@@ -7587,25 +6831,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         ProcessServer processServerInstance = new ProcessServer();
                                                         vMwareFabricDetailsInstance.ProcessServers.Add(processServerInstance);
                                                         
-                                                        JToken friendlyNameValue3 = processServersValue["friendlyName"];
-                                                        if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
+                                                        JToken friendlyNameValue2 = processServersValue["friendlyName"];
+                                                        if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                                         {
-                                                            string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                                            processServerInstance.FriendlyName = friendlyNameInstance3;
+                                                            string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                            processServerInstance.FriendlyName = friendlyNameInstance2;
                                                         }
                                                         
-                                                        JToken idValue2 = processServersValue["id"];
-                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                        JToken idValue = processServersValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance2 = ((string)idValue2);
-                                                            processServerInstance.Id = idInstance2;
+                                                            string idInstance = ((string)idValue);
+                                                            processServerInstance.Id = idInstance;
                                                         }
                                                         
-                                                        JToken ipAddressValue2 = processServersValue["ipAddress"];
-                                                        if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
+                                                        JToken ipAddressValue = processServersValue["ipAddress"];
+                                                        if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                         {
-                                                            string ipAddressInstance2 = ((string)ipAddressValue2);
-                                                            processServerInstance.IpAddress = ipAddressInstance2;
+                                                            string ipAddressInstance = ((string)ipAddressValue);
+                                                            processServerInstance.IpAddress = ipAddressInstance;
                                                         }
                                                         
                                                         JToken osTypeValue = processServersValue["osType"];
@@ -7629,11 +6873,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
                                                         }
                                                         
-                                                        JToken lastHeartbeatValue2 = processServersValue["lastHeartbeat"];
-                                                        if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
+                                                        JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
+                                                        if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                         {
-                                                            DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
-                                                            processServerInstance.LastHeartbeat = lastHeartbeatInstance2;
+                                                            DateTime lastHeartbeatInstance = ((DateTime)lastHeartbeatValue);
+                                                            processServerInstance.LastHeartbeat = lastHeartbeatInstance;
                                                         }
                                                         
                                                         JToken versionStatusValue = processServersValue["versionStatus"];
@@ -7782,25 +7026,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         MasterTargetServer masterTargetServerInstance = new MasterTargetServer();
                                                         vMwareFabricDetailsInstance.MasterTargetServers.Add(masterTargetServerInstance);
                                                         
-                                                        JToken idValue3 = masterTargetServersValue["id"];
-                                                        if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                        JToken idValue2 = masterTargetServersValue["id"];
+                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance3 = ((string)idValue3);
-                                                            masterTargetServerInstance.Id = idInstance3;
+                                                            string idInstance2 = ((string)idValue2);
+                                                            masterTargetServerInstance.Id = idInstance2;
                                                         }
                                                         
-                                                        JToken ipAddressValue3 = masterTargetServersValue["ipAddress"];
-                                                        if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
+                                                        JToken ipAddressValue2 = masterTargetServersValue["ipAddress"];
+                                                        if (ipAddressValue2 != null && ipAddressValue2.Type != JTokenType.Null)
                                                         {
-                                                            string ipAddressInstance3 = ((string)ipAddressValue3);
-                                                            masterTargetServerInstance.IpAddress = ipAddressInstance3;
+                                                            string ipAddressInstance2 = ((string)ipAddressValue2);
+                                                            masterTargetServerInstance.IpAddress = ipAddressInstance2;
                                                         }
                                                         
-                                                        JToken nameValue2 = masterTargetServersValue["name"];
-                                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                        JToken nameValue = masterTargetServersValue["name"];
+                                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                         {
-                                                            string nameInstance2 = ((string)nameValue2);
-                                                            masterTargetServerInstance.Name = nameInstance2;
+                                                            string nameInstance = ((string)nameValue);
+                                                            masterTargetServerInstance.Name = nameInstance;
                                                         }
                                                         
                                                         JToken osTypeValue3 = masterTargetServersValue["osType"];
@@ -7824,11 +7068,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                         }
                                                         
-                                                        JToken lastHeartbeatValue3 = masterTargetServersValue["lastHeartbeat"];
-                                                        if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
+                                                        JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
+                                                        if (lastHeartbeatValue2 != null && lastHeartbeatValue2.Type != JTokenType.Null)
                                                         {
-                                                            DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
-                                                            masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance3;
+                                                            DateTime lastHeartbeatInstance2 = ((DateTime)lastHeartbeatValue2);
+                                                            masterTargetServerInstance.LastHeartbeat = lastHeartbeatInstance2;
                                                         }
                                                         
                                                         JToken versionStatusValue2 = masterTargetServersValue["versionStatus"];
@@ -8073,11 +7317,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareFabricDetailsInstance.CsServiceStatus = csServiceStatusInstance;
                                                 }
                                                 
-                                                JToken ipAddressValue4 = customDetailsValue["ipAddress"];
-                                                if (ipAddressValue4 != null && ipAddressValue4.Type != JTokenType.Null)
+                                                JToken ipAddressValue3 = customDetailsValue["ipAddress"];
+                                                if (ipAddressValue3 != null && ipAddressValue3.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressInstance4 = ((string)ipAddressValue4);
-                                                    vMwareFabricDetailsInstance.IpAddress = ipAddressInstance4;
+                                                    string ipAddressInstance3 = ((string)ipAddressValue3);
+                                                    vMwareFabricDetailsInstance.IpAddress = ipAddressInstance3;
                                                 }
                                                 
                                                 JToken agentVersionValue3 = customDetailsValue["agentVersion"];
@@ -8101,11 +7345,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareFabricDetailsInstance.HostName = hostNameInstance;
                                                 }
                                                 
-                                                JToken lastHeartbeatValue4 = customDetailsValue["lastHeartbeat"];
-                                                if (lastHeartbeatValue4 != null && lastHeartbeatValue4.Type != JTokenType.Null)
+                                                JToken lastHeartbeatValue3 = customDetailsValue["lastHeartbeat"];
+                                                if (lastHeartbeatValue3 != null && lastHeartbeatValue3.Type != JTokenType.Null)
                                                 {
-                                                    DateTime lastHeartbeatInstance4 = ((DateTime)lastHeartbeatValue4);
-                                                    vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance4;
+                                                    DateTime lastHeartbeatInstance3 = ((DateTime)lastHeartbeatValue3);
+                                                    vMwareFabricDetailsInstance.LastHeartbeat = lastHeartbeatInstance3;
                                                 }
                                                 
                                                 JToken versionStatusValue3 = customDetailsValue["versionStatus"];
@@ -8126,42 +7370,42 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         }
                                     }
                                     
-                                    JToken idValue4 = valueValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue3 = valueValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        fabricInstance.Id = idInstance4;
+                                        string idInstance3 = ((string)idValue3);
+                                        fabricInstance.Id = idInstance3;
                                     }
                                     
-                                    JToken nameValue3 = valueValue["name"];
-                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    JToken nameValue2 = valueValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance3 = ((string)nameValue3);
-                                        fabricInstance.Name = nameInstance3;
+                                        string nameInstance2 = ((string)nameValue2);
+                                        fabricInstance.Name = nameInstance2;
                                     }
                                     
-                                    JToken typeValue2 = valueValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        string typeInstance2 = ((string)typeValue2);
-                                        fabricInstance.Type = typeInstance2;
+                                        string typeInstance = ((string)typeValue);
+                                        fabricInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken locationValue2 = valueValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        fabricInstance.Location = locationInstance2;
+                                        string locationInstance = ((string)locationValue);
+                                        fabricInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken tagsSequenceElement2 = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in tagsSequenceElement2)
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            string tagsKey2 = ((string)property2.Name);
-                                            string tagsValue2 = ((string)property2.Value);
-                                            fabricInstance.Tags.Add(tagsKey2, tagsValue2);
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            fabricInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }

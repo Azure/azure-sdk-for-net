@@ -101,7 +101,7 @@ namespace SiteRecovery.Tests
                 string fabricName = "Vmm;b6d8b350-2ee5-40c0-b777-2158a87c2aee";
                 string containerName = "cloud_b6d8b350-2ee5-40c0-b777-2158a87c2aee";
 
-                Network vmNic = client.Network.List(fabricName, RequestHeaders).NetworksList[0];
+                // Network vmNic = client.Network.List(fabricName, RequestHeaders).NetworksList[0];
 
                 var protectedItem = client.ReplicationProtectedItem.Get(fabricName, containerName, replicationProtectedItemName, RequestHeaders);
 
@@ -215,7 +215,6 @@ namespace SiteRecovery.Tests
                 var vmWareDetails =
                    vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
                 Assert.NotNull(vmWareDetails);
-                Assert.NotEmpty(vmWareDetails.VCenters);
 
                 var runAsAccount = vmWareDetails.RunAsAccounts.First(
                     account => account.AccountName.Equals(
@@ -316,7 +315,6 @@ namespace SiteRecovery.Tests
                 var vmWareDetails =
                    vmWareFabric.Properties.CustomDetails as VMwareFabricDetails;
                 Assert.NotNull(vmWareDetails);
-                Assert.NotEmpty(vmWareDetails.VCenters);
 
                 var runAsAccount = vmWareDetails.RunAsAccounts.First(
                     account => account.AccountName.Equals(
@@ -424,6 +422,8 @@ namespace SiteRecovery.Tests
                     vmWareFabric.Name,
                     vmWareFabric.Name,
                     RequestHeaders);
+
+                Assert.NotNull(response);
             }
         }
 
