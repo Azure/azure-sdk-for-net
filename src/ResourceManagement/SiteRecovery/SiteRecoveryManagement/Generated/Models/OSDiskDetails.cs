@@ -29,17 +29,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class OSDiskDetails
     {
-        private string _oSDiskId;
-        
-        /// <summary>
-        /// Optional. The id of the disk containing the OS.
-        /// </summary>
-        public string OSDiskId
-        {
-            get { return this._oSDiskId; }
-            set { this._oSDiskId = value; }
-        }
-        
         private string _oSType;
         
         /// <summary>
@@ -49,6 +38,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._oSType; }
             set { this._oSType = value; }
+        }
+        
+        private string _oSVhdId;
+        
+        /// <summary>
+        /// Optional. The id of the disk containing the OS.
+        /// </summary>
+        public string OSVhdId
+        {
+            get { return this._oSVhdId; }
+            set { this._oSVhdId = value; }
         }
         
         private string _vhdName;
