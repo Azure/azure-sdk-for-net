@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a IaasVmProtectionContainer object.
     /// </summary>
-    public partial class AzureIaasVmProtectionContainer : ProtectionContainer
+    public partial class AzureIaaSVMProtectionContainer : ProtectionContainer
     {
         private string _resourceGroup;
         
@@ -64,10 +64,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the AzureIaasVmProtectionContainer
+        /// Initializes a new instance of the AzureIaaSVMProtectionContainer
         /// class.
         /// </summary>
-        public AzureIaasVmProtectionContainer()
+        public AzureIaaSVMProtectionContainer()
         {
         }
     }

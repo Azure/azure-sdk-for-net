@@ -276,186 +276,186 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 }
                                 if (typeName == "IaaSVMContainer")
                                 {
-                                    AzureIaasVmProtectionContainer azureIaasVmProtectionContainerInstance = new AzureIaasVmProtectionContainer();
+                                    AzureIaaSVMProtectionContainer azureIaaSVMProtectionContainerInstance = new AzureIaaSVMProtectionContainer();
                                     
                                     JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                        azureIaasVmProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                        azureIaaSVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                     }
                                     
                                     JToken resourceGroupValue = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
                                     {
                                         string resourceGroupInstance = ((string)resourceGroupValue);
-                                        azureIaasVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance;
+                                        azureIaaSVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance;
                                     }
                                     
                                     JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance = ((string)virtualMachineIdValue);
-                                        azureIaasVmProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance;
+                                        azureIaaSVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance;
                                     }
                                     
                                     JToken friendlyNameValue2 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                        azureIaasVmProtectionContainerInstance.FriendlyName = friendlyNameInstance2;
+                                        azureIaaSVMProtectionContainerInstance.FriendlyName = friendlyNameInstance2;
                                     }
                                     
                                     JToken registrationStatusValue2 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue2 != null && registrationStatusValue2.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance2 = ((string)registrationStatusValue2);
-                                        azureIaasVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance2;
+                                        azureIaaSVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance2;
                                     }
                                     
                                     JToken healthStatusValue2 = propertiesValue["healthStatus"];
                                     if (healthStatusValue2 != null && healthStatusValue2.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance2 = ((string)healthStatusValue2);
-                                        azureIaasVmProtectionContainerInstance.HealthStatus = healthStatusInstance2;
+                                        azureIaaSVMProtectionContainerInstance.HealthStatus = healthStatusInstance2;
                                     }
                                     
                                     JToken containerTypeValue2 = propertiesValue["containerType"];
                                     if (containerTypeValue2 != null && containerTypeValue2.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance2 = ((string)containerTypeValue2);
-                                        azureIaasVmProtectionContainerInstance.ContainerType = containerTypeInstance2;
+                                        azureIaaSVMProtectionContainerInstance.ContainerType = containerTypeInstance2;
                                     }
                                     
                                     JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
-                                        azureIaasVmProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance2;
+                                        azureIaaSVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
-                                    itemInstance.Properties = azureIaasVmProtectionContainerInstance;
+                                    itemInstance.Properties = azureIaaSVMProtectionContainerInstance;
                                 }
                                 if (typeName == "Microsoft.ClassicCompute/virtualMachines")
                                 {
-                                    AzureIaasVmClassicComputeProtectionContainer azureIaasVmClassicComputeProtectionContainerInstance = new AzureIaasVmClassicComputeProtectionContainer();
+                                    AzureIaaSClassicComputeVMProtectionContainer azureIaaSClassicComputeVMProtectionContainerInstance = new AzureIaaSClassicComputeVMProtectionContainer();
                                     
                                     JToken virtualMachineVersionValue2 = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue2 != null && virtualMachineVersionValue2.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance2 = ((string)virtualMachineVersionValue2);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
                                     }
                                     
                                     JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
                                     {
                                         string resourceGroupInstance2 = ((string)resourceGroupValue2);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.ResourceGroup = resourceGroupInstance2;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance2;
                                     }
                                     
                                     JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance2;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance2;
                                     }
                                     
                                     JToken friendlyNameValue3 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.FriendlyName = friendlyNameInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.FriendlyName = friendlyNameInstance3;
                                     }
                                     
                                     JToken registrationStatusValue3 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue3 != null && registrationStatusValue3.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance3 = ((string)registrationStatusValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.RegistrationStatus = registrationStatusInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance3;
                                     }
                                     
                                     JToken healthStatusValue3 = propertiesValue["healthStatus"];
                                     if (healthStatusValue3 != null && healthStatusValue3.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance3 = ((string)healthStatusValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.HealthStatus = healthStatusInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.HealthStatus = healthStatusInstance3;
                                     }
                                     
                                     JToken containerTypeValue3 = propertiesValue["containerType"];
                                     if (containerTypeValue3 != null && containerTypeValue3.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance3 = ((string)containerTypeValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.ContainerType = containerTypeInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.ContainerType = containerTypeInstance3;
                                     }
                                     
                                     JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance3;
                                     }
-                                    itemInstance.Properties = azureIaasVmClassicComputeProtectionContainerInstance;
+                                    itemInstance.Properties = azureIaaSClassicComputeVMProtectionContainerInstance;
                                 }
                                 if (typeName == "Microsoft.Compute/virtualMachines")
                                 {
-                                    AzureIaasComputeVmProtectionContainer azureIaasComputeVmProtectionContainerInstance = new AzureIaasComputeVmProtectionContainer();
+                                    AzureIaaSComputeVMProtectionContainer azureIaaSComputeVMProtectionContainerInstance = new AzureIaaSComputeVMProtectionContainer();
                                     
                                     JToken virtualMachineVersionValue3 = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue3 != null && virtualMachineVersionValue3.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance3 = ((string)virtualMachineVersionValue3);
-                                        azureIaasComputeVmProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
+                                        azureIaaSComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
                                     }
                                     
                                     JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
                                     {
                                         string resourceGroupInstance3 = ((string)resourceGroupValue3);
-                                        azureIaasComputeVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance3;
+                                        azureIaaSComputeVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance3;
                                     }
                                     
                                     JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
-                                        azureIaasComputeVmProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance3;
+                                        azureIaaSComputeVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance3;
                                     }
                                     
                                     JToken friendlyNameValue4 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue4 != null && friendlyNameValue4.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance4 = ((string)friendlyNameValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.FriendlyName = friendlyNameInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.FriendlyName = friendlyNameInstance4;
                                     }
                                     
                                     JToken registrationStatusValue4 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue4 != null && registrationStatusValue4.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance4 = ((string)registrationStatusValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance4;
                                     }
                                     
                                     JToken healthStatusValue4 = propertiesValue["healthStatus"];
                                     if (healthStatusValue4 != null && healthStatusValue4.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance4 = ((string)healthStatusValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.HealthStatus = healthStatusInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.HealthStatus = healthStatusInstance4;
                                     }
                                     
                                     JToken containerTypeValue4 = propertiesValue["containerType"];
                                     if (containerTypeValue4 != null && containerTypeValue4.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance4 = ((string)containerTypeValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.ContainerType = containerTypeInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.ContainerType = containerTypeInstance4;
                                     }
                                     
                                     JToken backupManagementTypeValue4 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue4 != null && backupManagementTypeValue4.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance4 = ((string)backupManagementTypeValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance4;
                                     }
-                                    itemInstance.Properties = azureIaasComputeVmProtectionContainerInstance;
+                                    itemInstance.Properties = azureIaaSComputeVMProtectionContainerInstance;
                                 }
                                 if (typeName == "DPMContainer")
                                 {
@@ -874,186 +874,186 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 }
                                 if (typeName == "IaaSVMContainer")
                                 {
-                                    AzureIaasVmProtectionContainer azureIaasVmProtectionContainerInstance = new AzureIaasVmProtectionContainer();
+                                    AzureIaaSVMProtectionContainer azureIaaSVMProtectionContainerInstance = new AzureIaaSVMProtectionContainer();
                                     
                                     JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                        azureIaasVmProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                        azureIaaSVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                     }
                                     
                                     JToken resourceGroupValue = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
                                     {
                                         string resourceGroupInstance = ((string)resourceGroupValue);
-                                        azureIaasVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance;
+                                        azureIaaSVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance;
                                     }
                                     
                                     JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance = ((string)virtualMachineIdValue);
-                                        azureIaasVmProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance;
+                                        azureIaaSVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance;
                                     }
                                     
                                     JToken friendlyNameValue2 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                        azureIaasVmProtectionContainerInstance.FriendlyName = friendlyNameInstance2;
+                                        azureIaaSVMProtectionContainerInstance.FriendlyName = friendlyNameInstance2;
                                     }
                                     
                                     JToken registrationStatusValue2 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue2 != null && registrationStatusValue2.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance2 = ((string)registrationStatusValue2);
-                                        azureIaasVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance2;
+                                        azureIaaSVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance2;
                                     }
                                     
                                     JToken healthStatusValue2 = propertiesValue["healthStatus"];
                                     if (healthStatusValue2 != null && healthStatusValue2.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance2 = ((string)healthStatusValue2);
-                                        azureIaasVmProtectionContainerInstance.HealthStatus = healthStatusInstance2;
+                                        azureIaaSVMProtectionContainerInstance.HealthStatus = healthStatusInstance2;
                                     }
                                     
                                     JToken containerTypeValue2 = propertiesValue["containerType"];
                                     if (containerTypeValue2 != null && containerTypeValue2.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance2 = ((string)containerTypeValue2);
-                                        azureIaasVmProtectionContainerInstance.ContainerType = containerTypeInstance2;
+                                        azureIaaSVMProtectionContainerInstance.ContainerType = containerTypeInstance2;
                                     }
                                     
                                     JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
-                                        azureIaasVmProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance2;
+                                        azureIaaSVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance2;
                                     }
-                                    itemInstance.Properties = azureIaasVmProtectionContainerInstance;
+                                    itemInstance.Properties = azureIaaSVMProtectionContainerInstance;
                                 }
                                 if (typeName == "Microsoft.ClassicCompute/virtualMachines")
                                 {
-                                    AzureIaasVmClassicComputeProtectionContainer azureIaasVmClassicComputeProtectionContainerInstance = new AzureIaasVmClassicComputeProtectionContainer();
+                                    AzureIaaSClassicComputeVMProtectionContainer azureIaaSClassicComputeVMProtectionContainerInstance = new AzureIaaSClassicComputeVMProtectionContainer();
                                     
                                     JToken virtualMachineVersionValue2 = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue2 != null && virtualMachineVersionValue2.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance2 = ((string)virtualMachineVersionValue2);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
                                     }
                                     
                                     JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
                                     {
                                         string resourceGroupInstance2 = ((string)resourceGroupValue2);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.ResourceGroup = resourceGroupInstance2;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance2;
                                     }
                                     
                                     JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance2;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance2;
                                     }
                                     
                                     JToken friendlyNameValue3 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.FriendlyName = friendlyNameInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.FriendlyName = friendlyNameInstance3;
                                     }
                                     
                                     JToken registrationStatusValue3 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue3 != null && registrationStatusValue3.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance3 = ((string)registrationStatusValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.RegistrationStatus = registrationStatusInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance3;
                                     }
                                     
                                     JToken healthStatusValue3 = propertiesValue["healthStatus"];
                                     if (healthStatusValue3 != null && healthStatusValue3.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance3 = ((string)healthStatusValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.HealthStatus = healthStatusInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.HealthStatus = healthStatusInstance3;
                                     }
                                     
                                     JToken containerTypeValue3 = propertiesValue["containerType"];
                                     if (containerTypeValue3 != null && containerTypeValue3.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance3 = ((string)containerTypeValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.ContainerType = containerTypeInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.ContainerType = containerTypeInstance3;
                                     }
                                     
                                     JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
-                                        azureIaasVmClassicComputeProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance3;
+                                        azureIaaSClassicComputeVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance3;
                                     }
-                                    itemInstance.Properties = azureIaasVmClassicComputeProtectionContainerInstance;
+                                    itemInstance.Properties = azureIaaSClassicComputeVMProtectionContainerInstance;
                                 }
                                 if (typeName == "Microsoft.Compute/virtualMachines")
                                 {
-                                    AzureIaasComputeVmProtectionContainer azureIaasComputeVmProtectionContainerInstance = new AzureIaasComputeVmProtectionContainer();
+                                    AzureIaaSComputeVMProtectionContainer azureIaaSComputeVMProtectionContainerInstance = new AzureIaaSComputeVMProtectionContainer();
                                     
                                     JToken virtualMachineVersionValue3 = propertiesValue["virtualMachineVersion"];
                                     if (virtualMachineVersionValue3 != null && virtualMachineVersionValue3.Type != JTokenType.Null)
                                     {
                                         string virtualMachineVersionInstance3 = ((string)virtualMachineVersionValue3);
-                                        azureIaasComputeVmProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
+                                        azureIaaSComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
                                     }
                                     
                                     JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
                                     if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
                                     {
                                         string resourceGroupInstance3 = ((string)resourceGroupValue3);
-                                        azureIaasComputeVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance3;
+                                        azureIaaSComputeVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance3;
                                     }
                                     
                                     JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
-                                        azureIaasComputeVmProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance3;
+                                        azureIaaSComputeVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance3;
                                     }
                                     
                                     JToken friendlyNameValue4 = propertiesValue["friendlyName"];
                                     if (friendlyNameValue4 != null && friendlyNameValue4.Type != JTokenType.Null)
                                     {
                                         string friendlyNameInstance4 = ((string)friendlyNameValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.FriendlyName = friendlyNameInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.FriendlyName = friendlyNameInstance4;
                                     }
                                     
                                     JToken registrationStatusValue4 = propertiesValue["registrationStatus"];
                                     if (registrationStatusValue4 != null && registrationStatusValue4.Type != JTokenType.Null)
                                     {
                                         string registrationStatusInstance4 = ((string)registrationStatusValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance4;
                                     }
                                     
                                     JToken healthStatusValue4 = propertiesValue["healthStatus"];
                                     if (healthStatusValue4 != null && healthStatusValue4.Type != JTokenType.Null)
                                     {
                                         string healthStatusInstance4 = ((string)healthStatusValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.HealthStatus = healthStatusInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.HealthStatus = healthStatusInstance4;
                                     }
                                     
                                     JToken containerTypeValue4 = propertiesValue["containerType"];
                                     if (containerTypeValue4 != null && containerTypeValue4.Type != JTokenType.Null)
                                     {
                                         string containerTypeInstance4 = ((string)containerTypeValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.ContainerType = containerTypeInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.ContainerType = containerTypeInstance4;
                                     }
                                     
                                     JToken backupManagementTypeValue4 = propertiesValue["backupManagementType"];
                                     if (backupManagementTypeValue4 != null && backupManagementTypeValue4.Type != JTokenType.Null)
                                     {
                                         string backupManagementTypeInstance4 = ((string)backupManagementTypeValue4);
-                                        azureIaasComputeVmProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance4;
+                                        azureIaaSComputeVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance4;
                                     }
-                                    itemInstance.Properties = azureIaasComputeVmProtectionContainerInstance;
+                                    itemInstance.Properties = azureIaaSComputeVMProtectionContainerInstance;
                                 }
                                 if (typeName == "DPMContainer")
                                 {
@@ -1886,186 +1886,186 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         }
                                         if (typeName == "IaaSVMContainer")
                                         {
-                                            AzureIaasVmProtectionContainer azureIaasVmProtectionContainerInstance = new AzureIaasVmProtectionContainer();
+                                            AzureIaaSVMProtectionContainer azureIaaSVMProtectionContainerInstance = new AzureIaaSVMProtectionContainer();
                                             
                                             JToken virtualMachineVersionValue = propertiesValue["virtualMachineVersion"];
                                             if (virtualMachineVersionValue != null && virtualMachineVersionValue.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineVersionInstance = ((string)virtualMachineVersionValue);
-                                                azureIaasVmProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
+                                                azureIaaSVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance;
                                             }
                                             
                                             JToken resourceGroupValue = propertiesValue["resourceGroup"];
                                             if (resourceGroupValue != null && resourceGroupValue.Type != JTokenType.Null)
                                             {
                                                 string resourceGroupInstance = ((string)resourceGroupValue);
-                                                azureIaasVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance;
+                                                azureIaaSVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance;
                                             }
                                             
                                             JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
                                             if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineIdInstance = ((string)virtualMachineIdValue);
-                                                azureIaasVmProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance;
+                                                azureIaaSVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance;
                                             }
                                             
                                             JToken friendlyNameValue2 = propertiesValue["friendlyName"];
                                             if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
                                             {
                                                 string friendlyNameInstance2 = ((string)friendlyNameValue2);
-                                                azureIaasVmProtectionContainerInstance.FriendlyName = friendlyNameInstance2;
+                                                azureIaaSVMProtectionContainerInstance.FriendlyName = friendlyNameInstance2;
                                             }
                                             
                                             JToken registrationStatusValue2 = propertiesValue["registrationStatus"];
                                             if (registrationStatusValue2 != null && registrationStatusValue2.Type != JTokenType.Null)
                                             {
                                                 string registrationStatusInstance2 = ((string)registrationStatusValue2);
-                                                azureIaasVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance2;
+                                                azureIaaSVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance2;
                                             }
                                             
                                             JToken healthStatusValue2 = propertiesValue["healthStatus"];
                                             if (healthStatusValue2 != null && healthStatusValue2.Type != JTokenType.Null)
                                             {
                                                 string healthStatusInstance2 = ((string)healthStatusValue2);
-                                                azureIaasVmProtectionContainerInstance.HealthStatus = healthStatusInstance2;
+                                                azureIaaSVMProtectionContainerInstance.HealthStatus = healthStatusInstance2;
                                             }
                                             
                                             JToken containerTypeValue2 = propertiesValue["containerType"];
                                             if (containerTypeValue2 != null && containerTypeValue2.Type != JTokenType.Null)
                                             {
                                                 string containerTypeInstance2 = ((string)containerTypeValue2);
-                                                azureIaasVmProtectionContainerInstance.ContainerType = containerTypeInstance2;
+                                                azureIaaSVMProtectionContainerInstance.ContainerType = containerTypeInstance2;
                                             }
                                             
                                             JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
                                             if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
                                             {
                                                 string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
-                                                azureIaasVmProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance2;
+                                                azureIaaSVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance2;
                                             }
-                                            protectionContainerResourceInstance.Properties = azureIaasVmProtectionContainerInstance;
+                                            protectionContainerResourceInstance.Properties = azureIaaSVMProtectionContainerInstance;
                                         }
                                         if (typeName == "Microsoft.ClassicCompute/virtualMachines")
                                         {
-                                            AzureIaasVmClassicComputeProtectionContainer azureIaasVmClassicComputeProtectionContainerInstance = new AzureIaasVmClassicComputeProtectionContainer();
+                                            AzureIaaSClassicComputeVMProtectionContainer azureIaaSClassicComputeVMProtectionContainerInstance = new AzureIaaSClassicComputeVMProtectionContainer();
                                             
                                             JToken virtualMachineVersionValue2 = propertiesValue["virtualMachineVersion"];
                                             if (virtualMachineVersionValue2 != null && virtualMachineVersionValue2.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineVersionInstance2 = ((string)virtualMachineVersionValue2);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance2;
                                             }
                                             
                                             JToken resourceGroupValue2 = propertiesValue["resourceGroup"];
                                             if (resourceGroupValue2 != null && resourceGroupValue2.Type != JTokenType.Null)
                                             {
                                                 string resourceGroupInstance2 = ((string)resourceGroupValue2);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.ResourceGroup = resourceGroupInstance2;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance2;
                                             }
                                             
                                             JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
                                             if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance2;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance2;
                                             }
                                             
                                             JToken friendlyNameValue3 = propertiesValue["friendlyName"];
                                             if (friendlyNameValue3 != null && friendlyNameValue3.Type != JTokenType.Null)
                                             {
                                                 string friendlyNameInstance3 = ((string)friendlyNameValue3);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.FriendlyName = friendlyNameInstance3;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.FriendlyName = friendlyNameInstance3;
                                             }
                                             
                                             JToken registrationStatusValue3 = propertiesValue["registrationStatus"];
                                             if (registrationStatusValue3 != null && registrationStatusValue3.Type != JTokenType.Null)
                                             {
                                                 string registrationStatusInstance3 = ((string)registrationStatusValue3);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.RegistrationStatus = registrationStatusInstance3;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance3;
                                             }
                                             
                                             JToken healthStatusValue3 = propertiesValue["healthStatus"];
                                             if (healthStatusValue3 != null && healthStatusValue3.Type != JTokenType.Null)
                                             {
                                                 string healthStatusInstance3 = ((string)healthStatusValue3);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.HealthStatus = healthStatusInstance3;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.HealthStatus = healthStatusInstance3;
                                             }
                                             
                                             JToken containerTypeValue3 = propertiesValue["containerType"];
                                             if (containerTypeValue3 != null && containerTypeValue3.Type != JTokenType.Null)
                                             {
                                                 string containerTypeInstance3 = ((string)containerTypeValue3);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.ContainerType = containerTypeInstance3;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.ContainerType = containerTypeInstance3;
                                             }
                                             
                                             JToken backupManagementTypeValue3 = propertiesValue["backupManagementType"];
                                             if (backupManagementTypeValue3 != null && backupManagementTypeValue3.Type != JTokenType.Null)
                                             {
                                                 string backupManagementTypeInstance3 = ((string)backupManagementTypeValue3);
-                                                azureIaasVmClassicComputeProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance3;
+                                                azureIaaSClassicComputeVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance3;
                                             }
-                                            protectionContainerResourceInstance.Properties = azureIaasVmClassicComputeProtectionContainerInstance;
+                                            protectionContainerResourceInstance.Properties = azureIaaSClassicComputeVMProtectionContainerInstance;
                                         }
                                         if (typeName == "Microsoft.Compute/virtualMachines")
                                         {
-                                            AzureIaasComputeVmProtectionContainer azureIaasComputeVmProtectionContainerInstance = new AzureIaasComputeVmProtectionContainer();
+                                            AzureIaaSComputeVMProtectionContainer azureIaaSComputeVMProtectionContainerInstance = new AzureIaaSComputeVMProtectionContainer();
                                             
                                             JToken virtualMachineVersionValue3 = propertiesValue["virtualMachineVersion"];
                                             if (virtualMachineVersionValue3 != null && virtualMachineVersionValue3.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineVersionInstance3 = ((string)virtualMachineVersionValue3);
-                                                azureIaasComputeVmProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
+                                                azureIaaSComputeVMProtectionContainerInstance.VirtualMachineVersion = virtualMachineVersionInstance3;
                                             }
                                             
                                             JToken resourceGroupValue3 = propertiesValue["resourceGroup"];
                                             if (resourceGroupValue3 != null && resourceGroupValue3.Type != JTokenType.Null)
                                             {
                                                 string resourceGroupInstance3 = ((string)resourceGroupValue3);
-                                                azureIaasComputeVmProtectionContainerInstance.ResourceGroup = resourceGroupInstance3;
+                                                azureIaaSComputeVMProtectionContainerInstance.ResourceGroup = resourceGroupInstance3;
                                             }
                                             
                                             JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
                                             if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
-                                                azureIaasComputeVmProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance3;
+                                                azureIaaSComputeVMProtectionContainerInstance.VirtualMachineId = virtualMachineIdInstance3;
                                             }
                                             
                                             JToken friendlyNameValue4 = propertiesValue["friendlyName"];
                                             if (friendlyNameValue4 != null && friendlyNameValue4.Type != JTokenType.Null)
                                             {
                                                 string friendlyNameInstance4 = ((string)friendlyNameValue4);
-                                                azureIaasComputeVmProtectionContainerInstance.FriendlyName = friendlyNameInstance4;
+                                                azureIaaSComputeVMProtectionContainerInstance.FriendlyName = friendlyNameInstance4;
                                             }
                                             
                                             JToken registrationStatusValue4 = propertiesValue["registrationStatus"];
                                             if (registrationStatusValue4 != null && registrationStatusValue4.Type != JTokenType.Null)
                                             {
                                                 string registrationStatusInstance4 = ((string)registrationStatusValue4);
-                                                azureIaasComputeVmProtectionContainerInstance.RegistrationStatus = registrationStatusInstance4;
+                                                azureIaaSComputeVMProtectionContainerInstance.RegistrationStatus = registrationStatusInstance4;
                                             }
                                             
                                             JToken healthStatusValue4 = propertiesValue["healthStatus"];
                                             if (healthStatusValue4 != null && healthStatusValue4.Type != JTokenType.Null)
                                             {
                                                 string healthStatusInstance4 = ((string)healthStatusValue4);
-                                                azureIaasComputeVmProtectionContainerInstance.HealthStatus = healthStatusInstance4;
+                                                azureIaaSComputeVMProtectionContainerInstance.HealthStatus = healthStatusInstance4;
                                             }
                                             
                                             JToken containerTypeValue4 = propertiesValue["containerType"];
                                             if (containerTypeValue4 != null && containerTypeValue4.Type != JTokenType.Null)
                                             {
                                                 string containerTypeInstance4 = ((string)containerTypeValue4);
-                                                azureIaasComputeVmProtectionContainerInstance.ContainerType = containerTypeInstance4;
+                                                azureIaaSComputeVMProtectionContainerInstance.ContainerType = containerTypeInstance4;
                                             }
                                             
                                             JToken backupManagementTypeValue4 = propertiesValue["backupManagementType"];
                                             if (backupManagementTypeValue4 != null && backupManagementTypeValue4.Type != JTokenType.Null)
                                             {
                                                 string backupManagementTypeInstance4 = ((string)backupManagementTypeValue4);
-                                                azureIaasComputeVmProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance4;
+                                                azureIaaSComputeVMProtectionContainerInstance.BackupManagementType = backupManagementTypeInstance4;
                                             }
-                                            protectionContainerResourceInstance.Properties = azureIaasComputeVmProtectionContainerInstance;
+                                            protectionContainerResourceInstance.Properties = azureIaaSComputeVMProtectionContainerInstance;
                                         }
                                         if (typeName == "DPMContainer")
                                         {
@@ -2688,10 +2688,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["backupManagementType"] = derived.BackupManagementType;
                             }
                         }
-                        if (request.Item.Properties is AzureIaasVmProtectionContainer)
+                        if (request.Item.Properties is AzureIaaSVMProtectionContainer)
                         {
                             propertiesValue["containerType"] = "IaaSVMContainer";
-                            AzureIaasVmProtectionContainer derived2 = ((AzureIaasVmProtectionContainer)request.Item.Properties);
+                            AzureIaaSVMProtectionContainer derived2 = ((AzureIaaSVMProtectionContainer)request.Item.Properties);
                             
                             if (derived2.VirtualMachineVersion != null)
                             {
@@ -2733,10 +2733,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["backupManagementType"] = derived2.BackupManagementType;
                             }
                         }
-                        if (request.Item.Properties is AzureIaasVmClassicComputeProtectionContainer)
+                        if (request.Item.Properties is AzureIaaSClassicComputeVMProtectionContainer)
                         {
                             propertiesValue["containerType"] = "Microsoft.ClassicCompute/virtualMachines";
-                            AzureIaasVmClassicComputeProtectionContainer derived3 = ((AzureIaasVmClassicComputeProtectionContainer)request.Item.Properties);
+                            AzureIaaSClassicComputeVMProtectionContainer derived3 = ((AzureIaaSClassicComputeVMProtectionContainer)request.Item.Properties);
                             
                             if (derived3.VirtualMachineVersion != null)
                             {
@@ -2778,10 +2778,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["backupManagementType"] = derived3.BackupManagementType;
                             }
                         }
-                        if (request.Item.Properties is AzureIaasComputeVmProtectionContainer)
+                        if (request.Item.Properties is AzureIaaSComputeVMProtectionContainer)
                         {
                             propertiesValue["containerType"] = "Microsoft.Compute/virtualMachines";
-                            AzureIaasComputeVmProtectionContainer derived4 = ((AzureIaasComputeVmProtectionContainer)request.Item.Properties);
+                            AzureIaaSComputeVMProtectionContainer derived4 = ((AzureIaaSComputeVMProtectionContainer)request.Item.Properties);
                             
                             if (derived4.VirtualMachineVersion != null)
                             {
