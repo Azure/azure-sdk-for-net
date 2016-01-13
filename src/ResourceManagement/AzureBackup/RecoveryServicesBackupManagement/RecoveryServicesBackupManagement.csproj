@@ -71,6 +71,8 @@
     <Compile Include="Generated\Models\AzureIaaSComputeVMProtectableItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSComputeVMProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSComputeVMProtectionContainer.cs" />
+    <Compile Include="Generated\Models\AzureIaasComputeVmProtectionContainer.cs" />
+    <Compile Include="Generated\Models\AzureIaasVmClassicComputeProtectionContainer.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMErrorInfo.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMJob.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMJobExtendedInfo.cs" />
