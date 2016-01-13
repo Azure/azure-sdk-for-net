@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class AzureIaaSVMProtectedItem : ProtectedItem
     {
-        private AzureIaaSVmProtectedItemExtendedInfo _extendedInfo;
+        private AzureIaaSVMProtectedItemExtendedInfo _extendedInfo;
         
         /// <summary>
         /// Optional. ExtendedInfo for the azure iaas vm protected item
         /// </summary>
-        public AzureIaaSVmProtectedItemExtendedInfo ExtendedInfo
+        public AzureIaaSVMProtectedItemExtendedInfo ExtendedInfo
         {
             get { return this._extendedInfo; }
             set { this._extendedInfo = value; }

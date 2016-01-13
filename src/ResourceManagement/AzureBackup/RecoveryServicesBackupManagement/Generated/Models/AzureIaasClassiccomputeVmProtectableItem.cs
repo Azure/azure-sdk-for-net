@@ -28,13 +28,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a classic compute vm object.
     /// </summary>
-    public partial class AzureIaasClassiccomputeVmProtectableItem : AzureIaaSVMProtectableItem
+    public partial class AzureIaaSClassicComputeVMProtectableItem : AzureIaaSVMProtectableItem
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureIaasClassiccomputeVmProtectableItem class.
+        /// AzureIaaSClassicComputeVMProtectableItem class.
         /// </summary>
-        public AzureIaasClassiccomputeVmProtectableItem()
+        public AzureIaaSClassicComputeVMProtectableItem()
         {
         }
     }

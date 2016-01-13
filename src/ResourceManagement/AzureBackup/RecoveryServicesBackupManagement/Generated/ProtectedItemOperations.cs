@@ -1142,7 +1142,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance;
                                         
                                         JToken oldestRecoveryPointValue = extendedInfoValue["oldestRecoveryPoint"];
@@ -1252,7 +1252,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance2;
                                         
                                         JToken oldestRecoveryPointValue2 = extendedInfoValue2["oldestRecoveryPoint"];
@@ -1362,7 +1362,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSClassicComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance3;
                                         
                                         JToken oldestRecoveryPointValue3 = extendedInfoValue3["oldestRecoveryPoint"];
@@ -1851,7 +1851,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance;
                                         
                                         JToken oldestRecoveryPointValue = extendedInfoValue["oldestRecoveryPoint"];
@@ -1961,7 +1961,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance2;
                                         
                                         JToken oldestRecoveryPointValue2 = extendedInfoValue2["oldestRecoveryPoint"];
@@ -2071,7 +2071,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSClassicComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance3;
                                         
                                         JToken oldestRecoveryPointValue3 = extendedInfoValue3["oldestRecoveryPoint"];
@@ -2976,7 +2976,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance;
                                         
                                         JToken oldestRecoveryPointValue = extendedInfoValue["oldestRecoveryPoint"];
@@ -3086,7 +3086,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance2;
                                         
                                         JToken oldestRecoveryPointValue2 = extendedInfoValue2["oldestRecoveryPoint"];
@@ -3196,7 +3196,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                     {
-                                        AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                        AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVMProtectedItemExtendedInfo();
                                         azureIaaSClassicComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance3;
                                         
                                         JToken oldestRecoveryPointValue3 = extendedInfoValue3["oldestRecoveryPoint"];
@@ -3699,7 +3699,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                             {
-                                                AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVmProtectedItemExtendedInfo();
+                                                AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance = new AzureIaaSVMProtectedItemExtendedInfo();
                                                 azureIaaSVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance;
                                                 
                                                 JToken oldestRecoveryPointValue = extendedInfoValue["oldestRecoveryPoint"];
@@ -3809,7 +3809,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                             {
-                                                AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                                AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance2 = new AzureIaaSVMProtectedItemExtendedInfo();
                                                 azureIaaSComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance2;
                                                 
                                                 JToken oldestRecoveryPointValue2 = extendedInfoValue2["oldestRecoveryPoint"];
@@ -3919,7 +3919,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                             {
-                                                AzureIaaSVmProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVmProtectedItemExtendedInfo();
+                                                AzureIaaSVMProtectedItemExtendedInfo extendedInfoInstance3 = new AzureIaaSVMProtectedItemExtendedInfo();
                                                 azureIaaSClassicComputeVMProtectedItemInstance.ExtendedInfo = extendedInfoInstance3;
                                                 
                                                 JToken oldestRecoveryPointValue3 = extendedInfoValue3["oldestRecoveryPoint"];

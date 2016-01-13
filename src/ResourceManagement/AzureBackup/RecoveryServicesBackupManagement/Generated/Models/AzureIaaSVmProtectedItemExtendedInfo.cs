@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a AzureIaaSVmProtectedItemExtendedInfo object.
     /// </summary>
-    public partial class AzureIaaSVmProtectedItemExtendedInfo : ProtectedItemExtendedInfo
+    public partial class AzureIaaSVMProtectedItemExtendedInfo : ProtectedItemExtendedInfo
     {
         private System.DateTime? _oldestRecoveryPoint;
         
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureIaaSVmProtectedItemExtendedInfo class.
+        /// AzureIaaSVMProtectedItemExtendedInfo class.
         /// </summary>
-        public AzureIaaSVmProtectedItemExtendedInfo()
+        public AzureIaaSVMProtectedItemExtendedInfo()
         {
         }
     }

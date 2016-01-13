@@ -28,61 +28,60 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaaSVMJob object.
+    /// The definition of a AzureIaaSVMErrorInfo object.
     /// </summary>
-    public partial class IaaSVMJob : Job
+    public partial class AzureIaaSVMErrorInfo : ErrorInfo
     {
-        private IList<JobSupportedAction> _actionsInfo;
+        private int _errorCode;
         
         /// <summary>
-        /// Optional. Job ActionsInfo
+        /// Optional. Job ErrorCode
         /// </summary>
-        public IList<JobSupportedAction> ActionsInfo
+        public int ErrorCode
         {
-            get { return this._actionsInfo; }
-            set { this._actionsInfo = value; }
+            get { return this._errorCode; }
+            set { this._errorCode = value; }
         }
         
-        private TimeSpan _duration;
+        private string _errorString;
         
         /// <summary>
-        /// Optional. Job Duration
+        /// Optional. Job ErrorString
         /// </summary>
-        public TimeSpan Duration
+        public string ErrorString
         {
-            get { return this._duration; }
-            set { this._duration = value; }
+            get { return this._errorString; }
+            set { this._errorString = value; }
         }
         
-        private IList<IaaSVMErrorInfo> _errorDetails;
+        private string _errorTitle;
         
         /// <summary>
-        /// Optional. Job ErrorDetails
+        /// Optional. Job ErrorTitle
         /// </summary>
-        public IList<IaaSVMErrorInfo> ErrorDetails
+        public string ErrorTitle
         {
-            get { return this._errorDetails; }
-            set { this._errorDetails = value; }
+            get { return this._errorTitle; }
+            set { this._errorTitle = value; }
         }
         
-        private string _virtualMachineVersion;
+        private IList<string> _recommendations;
         
         /// <summary>
-        /// Optional. Job VirtualMachineVersion
+        /// Optional. Job Recommendations
         /// </summary>
-        public string VirtualMachineVersion
+        public IList<string> Recommendations
         {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
+            get { return this._recommendations; }
+            set { this._recommendations = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the IaaSVMJob class.
+        /// Initializes a new instance of the AzureIaaSVMErrorInfo class.
         /// </summary>
-        public IaaSVMJob()
+        public AzureIaaSVMErrorInfo()
         {
-            this.ActionsInfo = new LazyList<JobSupportedAction>();
-            this.ErrorDetails = new LazyList<IaaSVMErrorInfo>();
+            this.Recommendations = new LazyList<string>();
         }
     }
 }

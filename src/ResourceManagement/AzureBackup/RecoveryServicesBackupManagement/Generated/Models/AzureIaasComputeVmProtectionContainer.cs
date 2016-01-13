@@ -28,13 +28,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// The definition of a compute vm object.
     /// </summary>
-    public partial class AzureIaasComputeVmProtectionContainer : AzureIaasVmProtectionContainer
+    public partial class AzureIaaSComputeVMProtectionContainer : AzureIaaSVMProtectionContainer
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// AzureIaasComputeVmProtectionContainer class.
+        /// AzureIaaSComputeVMProtectionContainer class.
         /// </summary>
-        public AzureIaasComputeVmProtectionContainer()
+        public AzureIaaSComputeVMProtectionContainer()
         {
         }
     }
