@@ -306,6 +306,60 @@ namespace SiteRecovery.Tests.ScenarioTests
             }
         }
 
+        public void RecoveryPlan_ValidateGetProtectedItemsInRecoveryPlan()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+                var fabrics = client.Fabrics.List(RequestHeaders).Fabrics.ToList();
+                var containers =
+                    client.ProtectionContainer.List(
+                        fabrics.First().Name,
+                        RequestHeaders)
+                    .ProtectionContainers
+                    .ToList();
+                var vms = 
+                    client.ReplicationProtectedItem.List(
+                        fabrics.First().Name,
+                        containers.First().Name,
+                        RequestHeaders)
+                    .ReplicationProtectedItems
+                    .ToList();
+
+                // Create recovery plans.
+                var rpName1 = "Test-" + Guid.NewGuid().ToString();
+                var input1 = GetE2AInput(fabrics.First().Id, vms.First().Id);
+                client.RecoveryPlan.Create(rpName1, input1, RequestHeaders);
+
+                var rpName2 = "Test-" + Guid.NewGuid().ToString();
+                var input2 = GetE2AInput(fabrics.First().Id, vms.Last().Id);
+                client.RecoveryPlan.Create(rpName2, input2, RequestHeaders);
+
+                // Validate that the correct VMs are returned.
+                var vms1 = client.ReplicationProtectedItem.ListAll(
+                    null,
+                    new ProtectedItemsQueryParameter()
+                    {
+                        RecoveryPlanName = rpName1
+                    },
+                    RequestHeaders);
+                Assert.True(vms1.ReplicationProtectedItems.Count == 1);
+                Assert.True(vms1.ReplicationProtectedItems[0].Id == vms.First().Id);
+
+                var vms2 = client.ReplicationProtectedItem.ListAll(
+                    null,
+                    new ProtectedItemsQueryParameter()
+                    {
+                        RecoveryPlanName = rpName2
+                    },
+                    RequestHeaders);
+                Assert.True(vms2.ReplicationProtectedItems.Count == 1);
+                Assert.True(vms2.ReplicationProtectedItems[0].Id == vms.Last().Id);
+            }
+        }
+
         private static CreateRecoveryPlanInput GetE2AInput(string fabricId, string vmId)
         {
             CreateRecoveryPlanInput input = new CreateRecoveryPlanInput();
