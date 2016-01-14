@@ -46,6 +46,16 @@ Using the command line:
   - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put in "build" target as well. 
         *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
 
+### To on-board new libraries
+Follow existing library and create a new folder under "ResourceManagement". 2 notes
+  - To simplify test discovery, the test folder must be named with ".test" or ".tests"
+  - To workaround the [dnx bug](https://github.com/aspnet/dnx/issues/2216), add a new entry to [global.json](https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/global.json)
+  
+If for platform reasons that your library won't use dnx project system, 2 notes
+  - In your library csproject file, set the msbuild property "AutoRestProjects" to "true"
+  - In your test project files, set both "AutoRestProjects" and "SDKTestProject" to "true"
+  - To simplify test discovery, the test folder must be named with ".tests"
+
 ### Issues with Generated Code
 Much of the SDK code is generated from metadata specs about the REST APIs. Do not submit PRs that modify generated code. Instead, file an issue describing the problem, OR refer to the the [AutoRest project](AutoRest) to view and modify the generator. 
 

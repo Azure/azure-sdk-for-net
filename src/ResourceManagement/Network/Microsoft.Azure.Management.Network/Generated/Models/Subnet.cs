@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the Subnet class.
         /// </summary>
-        public Subnet(string addressPrefix, string name = default(string), string etag = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), string provisioningState = default(string))
+        public Subnet(string name = default(string), string etag = default(string), string addressPrefix = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), string provisioningState = default(string))
         {
             Name = name;
             Etag = etag;
@@ -86,25 +86,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (AddressPrefix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AddressPrefix");
-            }
-            if (this.IpConfigurations != null)
-            {
-                foreach (var element in this.IpConfigurations)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

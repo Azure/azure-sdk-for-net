@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Scheduler
             this.JobCollections = new JobCollectionsOperations(this);
             this.Jobs = new JobsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2014-08-01-preview";
+            this.ApiVersion = "2016-01-01";
             this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
-using Microsoft.Rest.Azure;
 using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
@@ -28,7 +27,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         static MockContext()
         {
-            ServiceClientTracing.AddTracingInterceptor(new TestingTracingInterceptor());
         }
 
         /// <summary>
@@ -57,8 +55,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         /// <typeparam name="T">The type of the service client to return</typeparam>
         /// <returns>A Service client using credentials and base uri from the current environment</returns>
-        public T GetServiceClient<T>(params DelegatingHandler[] handlers)
-            where T : ServiceClient<T>, IAzureClient
+        public T GetServiceClient<T>(params DelegatingHandler[] handlers) where T : class
         {
             return GetServiceClient<T>(TestEnvironmentFactory.GetTestEnvironment(), handlers);
         }
@@ -69,37 +66,87 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="handlers">Delegating existingHandlers</param>
         /// <returns></returns>
-        public T GetServiceClient<T>(TestEnvironment currentEnvironment, params DelegatingHandler[] handlers)
-            where T : ServiceClient<T>, IAzureClient
+        public T GetServiceClient<T>(TestEnvironment currentEnvironment, params DelegatingHandler[] handlers) where T : class
+        {
+            Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
+            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo.AccessToken });
+
+            return GetServiceClientWithCredentials<T>(currentEnvironment, tokenCred, handlers);
+        }
+
+        /// <summary>
+        /// Get a test environment using default options
+        /// </summary>
+        /// <typeparam name="T">The type of the service client to return</typeparam>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="handlers">Delegating existingHandlers</param>
+        /// <returns>A Service client using credentials and base uri from the current environment</returns>
+        public T GetServiceClientWithCredentials<T>(object credentials, params DelegatingHandler[] handlers) where T : class
+        {
+            return GetServiceClientWithCredentials<T>(TestEnvironmentFactory.GetTestEnvironment(), credentials, handlers);
+        }
+
+        /// <summary>
+        /// Get a test environment, allowing the test to customize the creation options
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="handlers">Delegating existingHandlers</param>
+        /// <returns></returns>
+        public T GetServiceClientWithCredentials<T>(TestEnvironment currentEnvironment, object credentials, params DelegatingHandler[] handlers) where T : class
         {
             T client;
             handlers = AddHandlers(currentEnvironment, handlers);
+            var constructors = typeof(T).GetConstructors();
 
+            ConstructorInfo constructor = null;
             if (currentEnvironment.UsesCustomUri())
             {
-                ConstructorInfo constructor = typeof(T).GetConstructor(new Type[]
+                foreach (var c in constructors)
                 {
-                    typeof(Uri),
-                    typeof(ServiceClientCredentials),
-                    typeof(DelegatingHandler[])
-                });
+                    var parameters = c.GetParameters();
+                    if (parameters.Length == 3 &&
+                        parameters[0].ParameterType.Name == "Uri" &&
+                        parameters[1].ParameterType.Name == "ServiceClientCredentials" &&
+                        parameters[2].ParameterType.Name == "DelegatingHandler[]")
+                    {
+                        constructor = c;
+                        break;
+                    }
+                }
+                if (constructor == null)
+                {
+                    throw new InvalidOperationException(
+                        "can't find constructor (uri, ServiceClientCredentials, DelegatingHandler[]) to create client");
+                }
                 client = constructor.Invoke(new object[]
                 {
                     currentEnvironment.BaseUri,
-                    currentEnvironment.Credentials,
+                    credentials,
                     handlers
                 }) as T;
             }
             else
             {
-                ConstructorInfo constructor = typeof(T).GetConstructor(new Type[]
+                foreach (var c in constructors)
                 {
-                    typeof(ServiceClientCredentials),
-                    typeof(DelegatingHandler[])
-                });
+                    var parameters = c.GetParameters();
+                    if (parameters.Length == 2 &&
+                        parameters[0].ParameterType.Name == "ServiceClientCredentials" &&
+                        parameters[1].ParameterType.Name == "DelegatingHandler[]")
+                    {
+                        constructor = c;
+                        break;
+                    }
+                }
+                if (constructor == null)
+                {
+                    throw new InvalidOperationException(
+                        "can't find constructor (ServiceClientCredentials, DelegatingHandler[]) to create client");
+                }
                 client = constructor.Invoke(new object[]
                 {
-                    currentEnvironment.Credentials,
+                    credentials,
                     handlers
                 }) as T;
             }
@@ -153,7 +200,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 handlers.Add(server);
             }
 
-            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.Credentials);
+            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.TokenInfo);
             handlers.Add(cleaner);
             undoHandlers.Add(cleaner);
 

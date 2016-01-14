@@ -24,13 +24,11 @@ namespace Microsoft.Azure.Search.Tests
                 // We need to use a constant GUID so that this test will still work in playback mode.
                 var options = new SearchRequestOptions(new Guid("c4cfce79-eb42-4e61-9909-84510c04706f"));
 
-                AzureOperationResponse<long?> countResponse = 
+                AzureOperationResponse<long> countResponse = 
                     client.Documents.CountWithHttpMessagesAsync(options).Result;
                 Assert.Equal(HttpStatusCode.OK, countResponse.Response.StatusCode);
 
-                Assert.Equal(
-                    options.RequestId.Value.ToString("D", CultureInfo.InvariantCulture), 
-                    countResponse.RequestId);
+                Assert.Equal(options.RequestId.Value.ToString("D"), countResponse.RequestId);
             });
         }
     }

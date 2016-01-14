@@ -1,10 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc17354?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE3MzU0P2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc15242?api-version=2016-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE1MjQyP2FwaS12ZXJzaW9uPTIwMTYtMDEtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"jc17354\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Suspended\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 20,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"Week\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"jc15242\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Suspended\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 20,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"Week\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -13,7 +13,7 @@
           "297"
         ],
         "x-ms-client-request-id": [
-          "35c561fd-6633-4f9b-b066-afe1c15e9b3a"
+          "9db53034-d484-4abc-94fc-f75fec2e13a7"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc17354\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n  \"name\": \"jc17354\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Suspended\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 20,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"week\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc15242\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n  \"name\": \"jc15242\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Suspended\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 20,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"week\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "385"
@@ -37,16 +37,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d0842938-3e49-40e9-a6db-d113d241cbc1"
+          "d68a677a-f5c6-4056-8435-579dee6c2f0a"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "56ab8423-7397-482a-9acc-a633edaa5ab2"
+          "9ab06ae9-576a-4ae0-aaa0-31c3c31fd701"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151113T233047Z:56ab8423-7397-482a-9acc-a633edaa5ab2"
+          "CENTRALUS:20160104T184034Z:9ab06ae9-576a-4ae0-aaa0-31c3c31fd701"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -55,7 +55,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Nov 2015 23:30:46 GMT"
+          "Mon, 04 Jan 2016 18:40:34 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -70,19 +70,19 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc2465?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzI0NjU/YXBpLXZlcnNpb249MjAxNC0wOC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc26542?api-version=2016-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzI2NTQyP2FwaS12ZXJzaW9uPTIwMTYtMDEtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"jc2465\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"department\": \"marketing\"\r\n  },\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Premium\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"Day\",\r\n        \"interval\": 2\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"jc26542\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"department\": \"marketing\"\r\n  },\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Premium\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"Day\",\r\n        \"interval\": 2\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "342"
+          "343"
         ],
         "x-ms-client-request-id": [
-          "fff3d4c6-b22e-4352-8b17-b4dbce7a5981"
+          "5d4bcc36-32ad-4d1b-aae5-e31e1f4ba6b1"
         ],
         "accept-language": [
           "en-US"
@@ -91,10 +91,10 @@
           "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc2465\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n  \"name\": \"jc2465\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"department\": \"marketing\"\r\n  },\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Premium\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"day\",\r\n        \"interval\": 2\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc26542\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n  \"name\": \"jc26542\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"department\": \"marketing\"\r\n  },\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Premium\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"day\",\r\n        \"interval\": 2\r\n      }\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "413"
+          "415"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -106,16 +106,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cfb1a03c-f682-49df-ba81-371efb28022a"
+          "4419a055-c6f3-4436-9e4b-8d04cdaad8ef"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "97ae8621-3ec6-4c35-864a-29644f654a94"
+          "cc32e737-980b-4bb9-b5f7-4c48a5b693bd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151113T233049Z:97ae8621-3ec6-4c35-864a-29644f654a94"
+          "CENTRALUS:20160104T184036Z:cc32e737-980b-4bb9-b5f7-4c48a5b693bd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -124,7 +124,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Nov 2015 23:30:48 GMT"
+          "Mon, 04 Jan 2016 18:40:35 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -139,13 +139,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE0LTA4LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections?api-version=2016-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5f03ec5b-5665-47f1-94a2-7ae7e7954cb4"
+          "1507ae0d-1661-4d17-88ab-fd1dacc07677"
         ],
         "accept-language": [
           "en-US"
@@ -154,10 +154,10 @@
           "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc11097\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc11097\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc11931\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc11931\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc12287\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc12287\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc1234\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc1234\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13238\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc13238\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc13575\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc13575\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc15053\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc15053\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc15256\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc15256\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc15378\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc15378\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16027\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc16027\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc16495\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc16495\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc17007\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc17007\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc17305\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc17305\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc17354\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc17354\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Suspended\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 20,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"week\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc17683\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc17683\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc1807\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc1807\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc18891\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc18891\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc19751\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc19751\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc2465\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc2465\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"department\": \"marketing\"\r\n      },\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Premium\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"day\",\r\n            \"interval\": 2\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/july21414pm\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"july21414pm\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/ScheduledDeployments\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"ScheduledDeployments\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"hour\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/ScheduledDeployments-2\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"ScheduledDeployments-2\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/sdk-test\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"sdk-test\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 25,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/storagemetricscit\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"storagemetricscit\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/InsightsDash\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"InsightsDash\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc15242\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc15242\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Suspended\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 20,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"week\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc26542\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"jc26542\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"department\": \"marketing\"\r\n      },\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Premium\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"day\",\r\n            \"interval\": 2\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/ScheduledDeployments\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"ScheduledDeployments\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"hour\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/ScheduledDeployments-2\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"ScheduledDeployments-2\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/sdk-test\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"sdk-test\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 5,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/storagemetricscit\",\r\n      \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n      \"name\": \"storagemetricscit\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"sku\": {\r\n          \"name\": \"Standard\"\r\n        },\r\n        \"state\": \"Enabled\",\r\n        \"quota\": {\r\n          \"maxJobCount\": 50,\r\n          \"maxRecurrence\": {\r\n            \"frequency\": \"minute\",\r\n            \"interval\": 1\r\n          }\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "9399"
+          "2844"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -169,16 +169,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f5dfcc91-e671-4546-b845-095256a2c67f"
+          "595f180a-7815-41e6-8ad6-cff0685e7cd1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14957"
         ],
         "x-ms-correlation-request-id": [
-          "0b7da79a-4e05-4643-81ee-89f60e033604"
+          "3b984a01-b23f-48c0-b857-33b39767569e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151113T233050Z:0b7da79a-4e05-4643-81ee-89f60e033604"
+          "CENTRALUS:20160104T184036Z:3b984a01-b23f-48c0-b857-33b39767569e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -187,7 +187,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Nov 2015 23:30:50 GMT"
+          "Mon, 04 Jan 2016 18:40:36 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -202,13 +202,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc17354?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE3MzU0P2FwaS12ZXJzaW9uPTIwMTQtMDgtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc15242?api-version=2016-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE1MjQyP2FwaS12ZXJzaW9uPTIwMTYtMDEtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b41f441d-eb1e-4107-8102-ca701604b29a"
+          "d4c49b59-f851-4f41-9df4-c26eacb6746b"
         ],
         "accept-language": [
           "en-US"
@@ -229,16 +229,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5ac06eb6-1ff6-406e-924f-da94f9dbb4dd"
+          "10f5d790-360c-4812-9653-298268f21ac9"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "3e0f6763-7786-481a-87eb-5fb1a5012ce2"
+          "f121a9d5-f11e-426f-9510-a7ca024947e3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151113T233050Z:3e0f6763-7786-481a-87eb-5fb1a5012ce2"
+          "CENTRALUS:20160104T184037Z:f121a9d5-f11e-426f-9510-a7ca024947e3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -247,7 +247,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Nov 2015 23:30:50 GMT"
+          "Mon, 04 Jan 2016 18:40:37 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -262,13 +262,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc2465?api-version=2014-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzI0NjU/YXBpLXZlcnNpb249MjAxNC0wOC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc26542?api-version=2016-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzI2NTQyP2FwaS12ZXJzaW9uPTIwMTYtMDEtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a63c09cd-743c-4f94-a0bf-be280c80bc7c"
+          "cb9881c3-7e75-42e5-8076-dd67073b36b3"
         ],
         "accept-language": [
           "en-US"
@@ -289,16 +289,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1aa47dba-6864-4eb6-93e9-fbf83e10887d"
+          "b313619f-b3b8-419d-9b81-c61cdf1c0d9b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
-          "d25ab5ff-7815-480e-8c19-3833f8db7780"
+          "33e592b2-3942-47b9-85ac-5f5343ba0d55"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151113T233051Z:d25ab5ff-7815-480e-8c19-3833f8db7780"
+          "CENTRALUS:20160104T184038Z:33e592b2-3942-47b9-85ac-5f5343ba0d55"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -307,7 +307,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Nov 2015 23:30:51 GMT"
+          "Mon, 04 Jan 2016 18:40:38 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -324,8 +324,8 @@
   ],
   "Names": {
     "Scenario_JobCollectionListByResourceGroup": [
-      "jc17354",
-      "jc2465"
+      "jc15242",
+      "jc26542"
     ]
   },
   "Variables": {

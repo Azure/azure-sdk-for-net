@@ -121,8 +121,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.ChinaSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.ChinaGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.ChinaTrafficManagerDnsSuffix },
-                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.ChinaKeyVaultDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.ChinaKeyVaultServiceEndpointResourceId }
                         // TODO: DataLakeAnalytics and ADL do not have a China endpoint yet. Once they do, add them here.
                     }
                 }
@@ -335,13 +335,13 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string ChinaServiceEndpoint = "https://management.core.chinacloudapi.cn/";
 
-        public const string USGovernmentServiceEndpoint = "https://management.core.usgovcloudapi.net";
+        public const string USGovernmentServiceEndpoint = "https://management.core.usgovcloudapi.net/";
 
         public const string AzureResourceManagerEndpoint = "https://management.azure.com/";
 
-        public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn";
+        public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn/";
 
-        public const string USGovernmentResourceManagerEndpoint = "https://management.usgovcloudapi.net";
+        public const string USGovernmentResourceManagerEndpoint = "https://management.usgovcloudapi.net/";
 
         public const string GalleryEndpoint = "https://gallery.azure.com/";
 
@@ -391,9 +391,13 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKeyVaultDnsSuffix = "vault.azure.net";
 
+        public const string ChinaKeyVaultDnsSuffix = "vault.azure.cn";
+
         public const string USGovernmentKeyVaultDnsSuffix = "vault.usgovcloudapi.net";
 
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
+
+        public const string ChinaKeyVaultServiceEndpointResourceId = "https://vault.azure.cn";
 
         public const string USGovernmentKeyVaultServiceEndpointResourceId = "https://vault.usgovcloudapi.net";
 

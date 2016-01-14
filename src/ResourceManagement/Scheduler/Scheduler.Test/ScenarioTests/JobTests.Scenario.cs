@@ -81,7 +81,7 @@ namespace Scheduler.Test.ScenarioTests
                                         StorageAccount = "schedulersdktest",
                                         QueueName = "queue1",
                                         Message = "some message!",
-                                        SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                        SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                     }
                                 }
                             },
@@ -111,7 +111,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal("schedulersdktest", result.Properties.Action.ErrorAction.QueueMessage.StorageAccount);
                 Assert.Equal("queue1", result.Properties.Action.ErrorAction.QueueMessage.QueueName);
                 Assert.Equal("some message!", result.Properties.Action.ErrorAction.QueueMessage.Message);
-                Assert.Equal("lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==", result.Properties.Action.ErrorAction.QueueMessage.SasToken);
+                Assert.Null(result.Properties.Action.ErrorAction.QueueMessage.SasToken);
                 Assert.Equal(JobState.Enabled, result.Properties.State);
                 Assert.Equal(RecurrenceFrequency.Day, result.Properties.Recurrence.Frequency);
                 Assert.Equal(100, result.Properties.Recurrence.Count);
@@ -136,7 +136,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal("schedulersdktest", getResult.Properties.Action.ErrorAction.QueueMessage.StorageAccount);
                 Assert.Equal("queue1", getResult.Properties.Action.ErrorAction.QueueMessage.QueueName);
                 Assert.Equal("some message!", getResult.Properties.Action.ErrorAction.QueueMessage.Message);
-                Assert.Equal("lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==", getResult.Properties.Action.ErrorAction.QueueMessage.SasToken);
+                Assert.Null(getResult.Properties.Action.ErrorAction.QueueMessage.SasToken);
                 Assert.Equal(JobState.Enabled, getResult.Properties.State);
                 Assert.Equal(RecurrenceFrequency.Day, getResult.Properties.Recurrence.Frequency);
                 Assert.Equal(100, getResult.Properties.Recurrence.Count);
@@ -182,7 +182,7 @@ namespace Scheduler.Test.ScenarioTests
                                     StorageAccount = "schedulersdktest",
                                     QueueName = "queue1",
                                     Message = "some message!",
-                                    SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                    SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                 },
                                 RetryPolicy = new RetryPolicy()
                                 {
@@ -291,7 +291,7 @@ namespace Scheduler.Test.ScenarioTests
                                     StorageAccount = "schedulersdktest",
                                     QueueName = "queue1",
                                     Message = "some message!",
-                                    SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                    SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                 },
                                 RetryPolicy = new RetryPolicy()
                                 {
@@ -415,7 +415,7 @@ namespace Scheduler.Test.ScenarioTests
                                     StorageAccount = "schedulersdktest",
                                     QueueName = "queue1",
                                     Message = "some message!",
-                                    SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                    SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                 },
                                 RetryPolicy = new RetryPolicy()
                                 {
@@ -578,7 +578,7 @@ namespace Scheduler.Test.ScenarioTests
                                         StorageAccount = "schedulersdktest",
                                         QueueName = "queue1",
                                         Message = "some message!",
-                                        SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                        SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                     }
                                 }
                             },
@@ -608,7 +608,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal("schedulersdktest", result.Properties.Action.ErrorAction.QueueMessage.StorageAccount);
                 Assert.Equal("queue1", result.Properties.Action.ErrorAction.QueueMessage.QueueName);
                 Assert.Equal("some message!", result.Properties.Action.ErrorAction.QueueMessage.Message);
-                Assert.Equal("lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==", result.Properties.Action.ErrorAction.QueueMessage.SasToken);
+                Assert.Null(result.Properties.Action.ErrorAction.QueueMessage.SasToken);
                 Assert.Equal(JobState.Enabled, result.Properties.State);
                 Assert.Equal(RecurrenceFrequency.Week, result.Properties.Recurrence.Frequency);
                 Assert.Equal(1, result.Properties.Recurrence.Interval);
@@ -713,7 +713,7 @@ namespace Scheduler.Test.ScenarioTests
                                         StorageAccount = "schedulersdktest",
                                         QueueName = "queue1",
                                         Message = "some message!",
-                                        SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                        SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                     }
                                 }
                             },
@@ -745,7 +745,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal("schedulersdktest", result.Properties.Action.ErrorAction.QueueMessage.StorageAccount);
                 Assert.Equal("queue1", result.Properties.Action.ErrorAction.QueueMessage.QueueName);
                 Assert.Equal("some message!", result.Properties.Action.ErrorAction.QueueMessage.Message);
-                Assert.Equal("lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==", result.Properties.Action.ErrorAction.QueueMessage.SasToken);
+                Assert.Null(result.Properties.Action.ErrorAction.QueueMessage.SasToken);
                 Assert.Equal(JobState.Enabled, result.Properties.State);
                 Assert.Equal(RecurrenceFrequency.Week, result.Properties.Recurrence.Frequency);
                 Assert.Equal(1, result.Properties.Recurrence.Interval);
@@ -852,7 +852,7 @@ namespace Scheduler.Test.ScenarioTests
                                         StorageAccount = "schedulersdktest",
                                         QueueName = "queue1",
                                         Message = "some message!",
-                                        SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                        SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                     }
                                 }
                             },
@@ -883,7 +883,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal("schedulersdktest", result.Properties.Action.ErrorAction.QueueMessage.StorageAccount);
                 Assert.Equal("queue1", result.Properties.Action.ErrorAction.QueueMessage.QueueName);
                 Assert.Equal("some message!", result.Properties.Action.ErrorAction.QueueMessage.Message);
-                Assert.Equal("lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==", result.Properties.Action.ErrorAction.QueueMessage.SasToken);
+                Assert.Null(result.Properties.Action.ErrorAction.QueueMessage.SasToken);
                 Assert.Equal(JobState.Enabled, result.Properties.State);
                 Assert.Equal(RecurrenceFrequency.Week, result.Properties.Recurrence.Frequency);
                 Assert.Equal(1, result.Properties.Recurrence.Interval);
@@ -988,7 +988,7 @@ namespace Scheduler.Test.ScenarioTests
                                         StorageAccount = "schedulersdktest",
                                         QueueName = "queue1",
                                         Message = "some message!",
-                                        SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                        SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                     }
                                 }
                             },
@@ -1019,7 +1019,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal("schedulersdktest", result.Properties.Action.ErrorAction.QueueMessage.StorageAccount);
                 Assert.Equal("queue1", result.Properties.Action.ErrorAction.QueueMessage.QueueName);
                 Assert.Equal("some message!", result.Properties.Action.ErrorAction.QueueMessage.Message);
-                Assert.Equal("lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==", result.Properties.Action.ErrorAction.QueueMessage.SasToken);
+                Assert.Null(result.Properties.Action.ErrorAction.QueueMessage.SasToken);
                 Assert.Equal(JobState.Enabled, result.Properties.State);
                 Assert.Equal(RecurrenceFrequency.Week, result.Properties.Recurrence.Frequency);
                 Assert.Equal(1, result.Properties.Recurrence.Interval);
@@ -1099,7 +1099,7 @@ namespace Scheduler.Test.ScenarioTests
                                     StorageAccount = "schedulersdktest",
                                     QueueName = "queue1",
                                     Message = "some message!",
-                                    SasToken = "lMyYwRg47zzabQvrL1fl0VtFfFCYi7YV80zAbrqT6H9iyj7N4duNHN0Cf7HecpResRCFtZhoCRrFwTIOwJKLhw==",
+                                    SasToken = "ThIsiSmYtOkeNdoyOusEe",
                                 },
                                 RetryPolicy = new RetryPolicy()
                                 {
@@ -1311,7 +1311,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal(TimeSpan.FromMinutes(1), result.Properties.Action.RetryPolicy.RetryInterval);
 
                 Assert.Equal(JobActionType.ServiceBusTopic, result.Properties.Action.ErrorAction.Type);
-                Assert.Equal(sasKey, result.Properties.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey);
+                Assert.Null(result.Properties.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey);
                 Assert.Equal(sasKeyName, result.Properties.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKeyName);
                 Assert.Equal(ServiceBusAuthenticationType.SharedAccessKey, result.Properties.Action.ErrorAction.ServiceBusTopicMessage.Authentication.Type);
                 Assert.Equal(contentType, result.Properties.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType);
@@ -1484,7 +1484,7 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.Equal(TimeSpan.FromMinutes(1), result.Properties.Action.RetryPolicy.RetryInterval);
 
                 Assert.Equal(JobActionType.ServiceBusQueue, result.Properties.Action.ErrorAction.Type);
-                Assert.Equal(sasKey, result.Properties.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey);
+                Assert.Null(result.Properties.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey);
                 Assert.Equal(sasKeyName, result.Properties.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKeyName);
                 Assert.Equal(ServiceBusAuthenticationType.SharedAccessKey, result.Properties.Action.ErrorAction.ServiceBusQueueMessage.Authentication.Type);
                 Assert.Equal(contentType, result.Properties.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType);
@@ -1661,10 +1661,10 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.True(failedHistories.Count() >= 0);
                 Assert.True(failedHistories.All(history => history.Properties.Status == JobExecutionStatus.Failed));
 
-                var listResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName);
                 var listTopResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, top: 5);
                 var listSkipResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, top: 5, skip: 5);
-                
+                var listResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName);
+
                 Assert.True(listResult.Count() >= 0);
                 Assert.True(listResult.ElementAt(0).Id.Contains(id));
                 Assert.True(listResult.ElementAt(0).Name.Contains(jobDefinitionName));
@@ -1678,8 +1678,6 @@ namespace Scheduler.Test.ScenarioTests
                 Assert.NotNull(listResult.ElementAt(0).Properties.StartTime);
                 
                 Assert.True(listTopResult.Count() == 5);
-                Assert.Equal(listResult.ElementAt(0).Id, listTopResult.ElementAt(0).Id);
-                Assert.Equal(listResult.ElementAt(0).Name, listTopResult.ElementAt(0).Name);
                 Assert.Equal(listResult.ElementAt(0).Type, listTopResult.ElementAt(0).Type);
                 Assert.Equal(listResult.ElementAt(0).Properties.ActionName, listTopResult.ElementAt(0).Properties.ActionName);
                 Assert.Equal(listResult.ElementAt(0).Properties.EndTime, listTopResult.ElementAt(0).Properties.EndTime);
