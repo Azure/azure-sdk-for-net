@@ -73,15 +73,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._protectionStage = value; }
         }
         
-        private double _pSDataInMB;
+        private double _pSDataInMegaBytes;
         
         /// <summary>
         /// Optional. The PS data transit in MB.
         /// </summary>
-        public double PSDataInMB
+        public double PSDataInMegaBytes
         {
-            get { return this._pSDataInMB; }
-            set { this._pSDataInMB = value; }
+            get { return this._pSDataInMegaBytes; }
+            set { this._pSDataInMegaBytes = value; }
         }
         
         private long _resyncDurationInSeconds;
@@ -106,13 +106,13 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._resyncProgressPercentage = value; }
         }
         
-        private bool _resyncRequired;
+        private string _resyncRequired;
         
         /// <summary>
         /// Optional. Gets or sets a value indicating whether resync is
-        /// required for this volume.
+        /// required for this volume. Values from Required/NotRequired.
         /// </summary>
-        public bool ResyncRequired
+        public string ResyncRequired
         {
             get { return this._resyncRequired; }
             set { this._resyncRequired = value; }
@@ -129,26 +129,26 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._rpoInSeconds = value; }
         }
         
-        private double _sourceDataInMB;
+        private double _sourceDataInMegaBytes;
         
         /// <summary>
         /// Optional. The source data transit in MB.
         /// </summary>
-        public double SourceDataInMB
+        public double SourceDataInMegaBytes
         {
-            get { return this._sourceDataInMB; }
-            set { this._sourceDataInMB = value; }
+            get { return this._sourceDataInMegaBytes; }
+            set { this._sourceDataInMegaBytes = value; }
         }
         
-        private double _targetDataInMB;
+        private double _targetDataInMegaBytes;
         
         /// <summary>
         /// Optional. The target data transit in MB.
         /// </summary>
-        public double TargetDataInMB
+        public double TargetDataInMegaBytes
         {
-            get { return this._targetDataInMB; }
-            set { this._targetDataInMB = value; }
+            get { return this._targetDataInMegaBytes; }
+            set { this._targetDataInMegaBytes = value; }
         }
         
         private long _volumeCapacityInBytes;

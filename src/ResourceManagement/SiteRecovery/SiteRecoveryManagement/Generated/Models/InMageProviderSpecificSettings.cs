@@ -65,17 +65,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._consistencyPoints = value; }
         }
         
-        private string _healthErrorCode;
-        
-        /// <summary>
-        /// Optional. The health error code.
-        /// </summary>
-        public string HealthErrorCode
-        {
-            get { return this._healthErrorCode; }
-            set { this._healthErrorCode = value; }
-        }
-        
         private string _ipAddress;
         
         /// <summary>
