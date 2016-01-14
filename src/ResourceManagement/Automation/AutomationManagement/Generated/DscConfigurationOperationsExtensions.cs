@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
 
@@ -84,6 +85,64 @@ namespace Microsoft.Azure.Management.Automation
         public static Task<DscConfigurationCreateOrUpdateResponse> CreateOrUpdateAsync(this IDscConfigurationOperations operations, string resourceGroupName, string automationAccount, DscConfigurationCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Delete the dsc configuration identified by configuration name.
+        /// (see http://aka.ms/azureautomationsdk/configurationoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The configuration name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse Delete(this IDscConfigurationOperations operations, string resourceGroupName, string automationAccount, string configurationName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDscConfigurationOperations)s).DeleteAsync(resourceGroupName, automationAccount, configurationName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Delete the dsc configuration identified by configuration name.
+        /// (see http://aka.ms/azureautomationsdk/configurationoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The configuration name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DeleteAsync(this IDscConfigurationOperations operations, string resourceGroupName, string automationAccount, string configurationName)
+        {
+            return operations.DeleteAsync(resourceGroupName, automationAccount, configurationName, CancellationToken.None);
         }
         
         /// <summary>
