@@ -427,5 +427,18 @@ namespace SiteRecovery.Tests
                 Assert.Equal(alertResponse.StatusCode, HttpStatusCode.NotFound);
             }
         }
+
+        [Fact]
+        public void GetStorageClassificationAndPairingsUnderVault()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                client.StorageClassification.ListAll(RequestHeaders);
+                client.StorageClassificationMapping.ListAll(RequestHeaders);
+            }
+        }
     }
 }
