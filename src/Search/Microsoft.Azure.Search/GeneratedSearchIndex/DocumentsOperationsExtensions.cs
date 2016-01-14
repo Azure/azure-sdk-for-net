@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static long? Count(this IDocumentsOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            public static long Count(this IDocumentsOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             {
                 return Task.Factory.StartNew(s => ((IDocumentsOperations)s).CountAsync(searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<long?> CountAsync( this IDocumentsOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<long> CountAsync( this IDocumentsOperations operations, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.CountWithHttpMessagesAsync(searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
