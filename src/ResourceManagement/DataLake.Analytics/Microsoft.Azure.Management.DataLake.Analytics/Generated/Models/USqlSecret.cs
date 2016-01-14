@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL secret item.
     /// </summary>
-    public partial class USqlSecret
+    public partial class USqlSecret : CatalogItem
     {
         /// <summary>
         /// Initializes a new instance of the USqlSecret class.
@@ -29,15 +29,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlSecret class.
         /// </summary>
-        public USqlSecret(string databaseName = default(string), string secretName = default(string), DateTime? creationTime = default(DateTime?), string uri = default(string), string password = default(string), string computeAccountName = default(string), string version = default(string))
+        public USqlSecret(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string secretName = default(string), DateTime? creationTime = default(DateTime?), string uri = default(string), string password = default(string))
+            : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SecretName = secretName;
             CreationTime = creationTime;
             Uri = uri;
             Password = password;
-            ComputeAccountName = computeAccountName;
-            Version = version;
         }
 
         /// <summary>
@@ -71,18 +70,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the Data Lake Analytics account.
-        /// </summary>
-        [JsonProperty(PropertyName = "computeAccountName")]
-        public string ComputeAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version of the catalog item.
-        /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
 
     }
 }

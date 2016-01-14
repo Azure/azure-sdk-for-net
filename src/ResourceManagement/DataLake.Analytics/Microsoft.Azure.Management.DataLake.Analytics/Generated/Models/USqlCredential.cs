@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL credential item.
     /// </summary>
-    public partial class USqlCredential
+    public partial class USqlCredential : CatalogItem
     {
         /// <summary>
         /// Initializes a new instance of the USqlCredential class.
@@ -29,14 +29,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlCredential class.
         /// </summary>
-        public USqlCredential(string databaseName = default(string), string identity = default(string), string credentialName = default(string), string userName = default(string), string computeAccountName = default(string), string version = default(string))
+        public USqlCredential(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string identity = default(string), string credentialName = default(string), string userName = default(string))
+            : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             Identity = identity;
             CredentialName = credentialName;
             UserName = userName;
-            ComputeAccountName = computeAccountName;
-            Version = version;
         }
 
         /// <summary>
@@ -62,18 +61,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "userName")]
         public string UserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the Data Lake Analytics account.
-        /// </summary>
-        [JsonProperty(PropertyName = "computeAccountName")]
-        public string ComputeAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version of the catalog item.
-        /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
 
     }
 }

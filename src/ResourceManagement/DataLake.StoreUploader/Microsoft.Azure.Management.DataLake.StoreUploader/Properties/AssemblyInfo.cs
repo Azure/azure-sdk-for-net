@@ -21,8 +21,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure DataLakeUploader Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure DataLakeUploader functions for managing the Microsoft Azure DataLakeUploader service.")]
 
-[assembly: AssemblyVersion("0.9.10.0")]
-[assembly: AssemblyFileVersion("0.9.10.0")]
+[assembly: AssemblyVersion("0.9.11.0")]
+[assembly: AssemblyFileVersion("0.9.11.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

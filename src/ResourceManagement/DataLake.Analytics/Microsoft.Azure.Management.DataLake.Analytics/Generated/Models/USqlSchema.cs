@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL schema item.
     /// </summary>
-    public partial class USqlSchema
+    public partial class USqlSchema : CatalogItem
     {
         /// <summary>
         /// Initializes a new instance of the USqlSchema class.
@@ -29,12 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlSchema class.
         /// </summary>
-        public USqlSchema(string databaseName = default(string), string schemaName = default(string), string computeAccountName = default(string), string version = default(string))
+        public USqlSchema(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string))
+            : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SchemaName = schemaName;
-            ComputeAccountName = computeAccountName;
-            Version = version;
         }
 
         /// <summary>
@@ -48,18 +47,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the Data Lake Analytics account.
-        /// </summary>
-        [JsonProperty(PropertyName = "computeAccountName")]
-        public string ComputeAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version of the catalog item.
-        /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
 
     }
 }

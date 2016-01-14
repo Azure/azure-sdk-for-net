@@ -17,29 +17,35 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A Data Lake Analytics catalog U-SQL database item.
+    /// A Data Lake Analytics catalog item list.
     /// </summary>
-    public partial class USqlDatabase : CatalogItem
+    public partial class CatalogItemList
     {
         /// <summary>
-        /// Initializes a new instance of the USqlDatabase class.
+        /// Initializes a new instance of the CatalogItemList class.
         /// </summary>
-        public USqlDatabase() { }
+        public CatalogItemList() { }
 
         /// <summary>
-        /// Initializes a new instance of the USqlDatabase class.
+        /// Initializes a new instance of the CatalogItemList class.
         /// </summary>
-        public USqlDatabase(string computeAccountName = default(string), string version = default(string), string databaseName = default(string))
-            : base(computeAccountName, version)
+        public CatalogItemList(int? count = default(int?), string nextLink = default(string))
         {
-            DatabaseName = databaseName;
+            Count = count;
+            NextLink = nextLink;
         }
 
         /// <summary>
-        /// Gets or sets the name of the database.
+        /// Gets or sets the count of items in the list.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
-        public string DatabaseName { get; set; }
+        [JsonProperty(PropertyName = "count")]
+        public int? Count { get; set; }
+
+        /// <summary>
+        /// Gets or sets the link to the next page of results.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

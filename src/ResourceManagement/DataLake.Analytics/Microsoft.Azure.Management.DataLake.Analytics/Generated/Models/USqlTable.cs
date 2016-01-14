@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL table item.
     /// </summary>
-    public partial class USqlTable
+    public partial class USqlTable : CatalogItem
     {
         /// <summary>
         /// Initializes a new instance of the USqlTable class.
@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlTable class.
         /// </summary>
-        public USqlTable(string databaseName = default(string), string schemaName = default(string), string tableName = default(string), IList<USqlTableColumn> columnList = default(IList<USqlTableColumn>), IList<USqlIndex> indexList = default(IList<USqlIndex>), IList<string> partitionKeyList = default(IList<string>), ExternalTable externalTable = default(ExternalTable), string computeAccountName = default(string), string version = default(string))
+        public USqlTable(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string), string tableName = default(string), IList<USqlTableColumn> columnList = default(IList<USqlTableColumn>), IList<USqlIndex> indexList = default(IList<USqlIndex>), IList<string> partitionKeyList = default(IList<string>), ExternalTable externalTable = default(ExternalTable))
+            : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SchemaName = schemaName;
@@ -38,8 +39,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             IndexList = indexList;
             PartitionKeyList = partitionKeyList;
             ExternalTable = externalTable;
-            ComputeAccountName = computeAccountName;
-            Version = version;
         }
 
         /// <summary>
@@ -84,18 +83,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "externalTable")]
         public ExternalTable ExternalTable { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the Data Lake Analytics account.
-        /// </summary>
-        [JsonProperty(PropertyName = "computeAccountName")]
-        public string ComputeAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version of the catalog item.
-        /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
 
     }
 }

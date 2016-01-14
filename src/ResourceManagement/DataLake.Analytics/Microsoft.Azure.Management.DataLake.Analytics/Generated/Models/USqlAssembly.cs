@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL Assembly.
     /// </summary>
-    public partial class USqlAssembly
+    public partial class USqlAssembly : CatalogItem
     {
         /// <summary>
         /// Initializes a new instance of the USqlAssembly class.
@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlAssembly class.
         /// </summary>
-        public USqlAssembly(string databaseName = default(string), string assemblyName = default(string), string clrName = default(string), bool? isVisible = default(bool?), bool? isUserDefined = default(bool?), IList<USqlAssemblyFileInfo> files = default(IList<USqlAssemblyFileInfo>), IList<USqlAssemblyDependencyInfo> dependencies = default(IList<USqlAssemblyDependencyInfo>), string computeAccountName = default(string), string version = default(string))
+        public USqlAssembly(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string assemblyName = default(string), string clrName = default(string), bool? isVisible = default(bool?), bool? isUserDefined = default(bool?), IList<USqlAssemblyFileInfo> files = default(IList<USqlAssemblyFileInfo>), IList<USqlAssemblyDependencyInfo> dependencies = default(IList<USqlAssemblyDependencyInfo>))
+            : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             AssemblyName = assemblyName;
@@ -38,8 +39,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             IsUserDefined = isUserDefined;
             Files = files;
             Dependencies = dependencies;
-            ComputeAccountName = computeAccountName;
-            Version = version;
         }
 
         /// <summary>
@@ -85,18 +84,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "dependencies")]
         public IList<USqlAssemblyDependencyInfo> Dependencies { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the Data Lake Analytics account.
-        /// </summary>
-        [JsonProperty(PropertyName = "computeAccountName")]
-        public string ComputeAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version of the catalog item.
-        /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
 
     }
 }
