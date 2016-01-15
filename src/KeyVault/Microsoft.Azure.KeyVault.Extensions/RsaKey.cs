@@ -105,8 +105,7 @@ namespace Microsoft.Azure.KeyVault
 
             Kid = kid;
 
-            _csp = new RSACryptoServiceProvider();
-            _csp.ImportParameters( csp.PublicOnly ? csp.ExportParameters( false ) : csp.ExportParameters( true ) );
+            _csp = csp;
         }
 
         // Intentionally excluded.
