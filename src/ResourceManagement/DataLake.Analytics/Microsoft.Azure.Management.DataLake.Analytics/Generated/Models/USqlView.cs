@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL view item.
     /// </summary>
-    public partial class USqlView
+    public partial class USqlView : CatalogItem
     {
         /// <summary>
         /// Initializes a new instance of the USqlView class.
@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlView class.
         /// </summary>
-        public USqlView(string databaseName = default(string), string schemaName = default(string), string viewName = default(string), string definition = default(string))
+        public USqlView(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string), string viewName = default(string), string definition = default(string))
+            : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SchemaName = schemaName;
