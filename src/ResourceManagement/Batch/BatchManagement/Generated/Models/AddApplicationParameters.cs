@@ -20,47 +20,43 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// Parameters for an ApplicationOperations.AddApplication request.
     /// </summary>
-    public partial class BatchAccountUpdateParameters
+    public partial class AddApplicationParameters
     {
-        private AccountBaseProperties _properties;
+        private bool _allowUpdates;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Optional. Gets or sets whether packages within the application may
+        /// be overwritten using the same version string.
         /// </summary>
-        public AccountBaseProperties Properties
+        public bool AllowUpdates
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._allowUpdates; }
+            set { this._allowUpdates = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _displayName;
         
         /// <summary>
-        /// Optional. The user specified tags associated with the account.
+        /// Optional. Gets or sets the display name for the application.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string DisplayName
         {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._displayName; }
+            set { this._displayName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountUpdateParameters
-        /// class.
+        /// Initializes a new instance of the AddApplicationParameters class.
         /// </summary>
-        public BatchAccountUpdateParameters()
+        public AddApplicationParameters()
         {
-            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

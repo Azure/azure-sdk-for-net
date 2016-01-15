@@ -20,58 +20,58 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create operation.
+    /// The auto storage properties.
     /// </summary>
-    public partial class BatchAccountCreateParameters
+    public partial class AutoGetStorage
     {
-        private string _location;
+        private DateTime _lastKeySync;
         
         /// <summary>
-        /// Optional. The region in which the account is created.
+        /// Required. Gets or sets the UTC time at which the last time the key
+        /// was synced.
         /// </summary>
-        public string Location
+        public DateTime LastKeySync
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._lastKeySync; }
+            set { this._lastKeySync = value; }
         }
         
-        private AccountBaseProperties _properties;
+        private string _storageAccountId;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Required. Gets or sets the storage account id.
         /// </summary>
-        public AccountBaseProperties Properties
+        public string StorageAccountId
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._storageAccountId; }
+            set { this._storageAccountId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the AutoGetStorage class.
         /// </summary>
-        public BatchAccountCreateParameters()
+        public AutoGetStorage()
         {
-            this.Tags = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AutoGetStorage class with
+        /// required arguments.
+        /// </summary>
+        public AutoGetStorage(string storageAccountId, DateTime lastKeySync)
+            : this()
+        {
+            if (storageAccountId == null)
+            {
+                throw new ArgumentNullException("storageAccountId");
+            }
+            this.StorageAccountId = storageAccountId;
+            this.LastKeySync = lastKeySync;
         }
     }
 }

@@ -15,9 +15,11 @@
 
 using System;
 using System.Collections.Generic;
-using Xunit;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
+
+using Xunit;
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
 using Batch.Tests.Helpers;
@@ -101,17 +103,24 @@ namespace Microsoft.Azure.Batch.Tests
 
             acceptedResponse.Headers.Add("x-ms-request-id", "1");
             acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
-
+            var utcNow = DateTime.UtcNow.ToString("o");
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(@"{
+                Content = new StringContent(content: @"{
                                 'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
                                 'type' : 'Microsoft.Batch/batchAccounts',
                                 'name': 'acctName',
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' :{
+                                        'storageAccountId' : 'fooId',
+                                        'lastKeySync': '" + utcNow + @"',
+
+
+                                    }                        
+
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -146,12 +155,15 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
             Assert.True(result.Resource.Tags.Count == 2);
+            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "fooId");
+            Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
+
         }
 
         [Fact]
         public void AccountCreateSyncValidateMessage()
         {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
                                 'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
@@ -160,7 +172,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' : {
+                                        'storageAccountId' : 'fooId'
+                                    }       
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -178,7 +193,14 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = client.Accounts.Create("foo", "acctName", new BatchAccountCreateParameters
             {
-                Tags = tags
+                Tags = tags,
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "fooId"
+                    }
+                }
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -189,6 +211,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("South Central US", result.Resource.Location);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
+            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "fooId");
             Assert.True(result.Resource.Tags.Count == 2);
         }
 

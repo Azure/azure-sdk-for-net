@@ -20,47 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// Parameters for an ApplicationOperations.ListApplications request.
     /// </summary>
-    public partial class BatchAccountUpdateParameters
+    public partial class ListApplicationsParameters
     {
-        private AccountBaseProperties _properties;
+        private int? _maxResults;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Optional. Gets or sets the maximum number of items to return in the
+        /// response.
         /// </summary>
-        public AccountBaseProperties Properties
+        public int? MaxResults
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._maxResults; }
+            set { this._maxResults = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountUpdateParameters
-        /// class.
+        /// Initializes a new instance of the ListApplicationsParameters class.
         /// </summary>
-        public BatchAccountUpdateParameters()
+        public ListApplicationsParameters()
         {
-            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

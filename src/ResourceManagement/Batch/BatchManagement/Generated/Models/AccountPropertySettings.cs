@@ -20,58 +20,46 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create operation.
+    /// The properties of a Batch account.
     /// </summary>
-    public partial class BatchAccountCreateParameters
+    public partial class AccountPropertySettings
     {
-        private string _location;
+        private AutoStorage _autoStorage;
         
         /// <summary>
-        /// Optional. The region in which the account is created.
+        /// Required. Gets or sets properties relating to auto storage.
         /// </summary>
-        public string Location
+        public AutoStorage AutoStorage
         {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private AccountBaseProperties _properties;
-        
-        /// <summary>
-        /// Optional. The properties of the account.
-        /// </summary>
-        public AccountBaseProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._autoStorage; }
+            set { this._autoStorage = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the AccountPropertySettings class.
         /// </summary>
-        public BatchAccountCreateParameters()
+        public AccountPropertySettings()
         {
-            this.Tags = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AccountPropertySettings class
+        /// with required arguments.
+        /// </summary>
+        public AccountPropertySettings(AutoStorage autoStorage)
+            : this()
+        {
+            if (autoStorage == null)
+            {
+                throw new ArgumentNullException("autoStorage");
+            }
+            this.AutoStorage = autoStorage;
         }
     }
 }

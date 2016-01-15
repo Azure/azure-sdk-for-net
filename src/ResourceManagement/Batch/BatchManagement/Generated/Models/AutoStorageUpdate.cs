@@ -20,47 +20,45 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// TODO
     /// </summary>
-    public partial class BatchAccountUpdateParameters
+    public partial class AutoStorageUpdate
     {
-        private AccountBaseProperties _properties;
+        private string _storageAccountId;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Required. TODO
         /// </summary>
-        public AccountBaseProperties Properties
+        public string StorageAccountId
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._storageAccountId; }
+            set { this._storageAccountId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountUpdateParameters
-        /// class.
+        /// Initializes a new instance of the AutoStorageUpdate class.
         /// </summary>
-        public BatchAccountUpdateParameters()
+        public AutoStorageUpdate()
         {
-            this.Tags = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AutoStorageUpdate class with
+        /// required arguments.
+        /// </summary>
+        public AutoStorageUpdate(string storageAccountId)
+            : this()
+        {
+            if (storageAccountId == null)
+            {
+                throw new ArgumentNullException("storageAccountId");
+            }
+            this.StorageAccountId = storageAccountId;
         }
     }
 }
