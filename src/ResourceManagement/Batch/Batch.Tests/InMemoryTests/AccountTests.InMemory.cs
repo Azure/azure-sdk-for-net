@@ -353,7 +353,10 @@ namespace Microsoft.Azure.Batch.Tests
                     'location': 'South Central US',
                     'properties': {
                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                        'provisioningState' : 'Succeeded'
+                        'provisioningState' : 'Succeeded',
+                        'coreQuota' : '20',
+                        'poolQuota' : '100',
+                        'activeJobAndJobScheduleQuota' : '200'
                     },
                     'tags' : {
                         'tag1' : 'value for tag1',
@@ -377,6 +380,9 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("acctName", result.Resource.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.Resource.Id);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
+            Assert.Equal(20, result.Resource.Properties.CoreQuota);
+            Assert.Equal(100, result.Resource.Properties.PoolQuota);
+            Assert.Equal(200, result.Resource.Properties.ActiveJobAndJobScheduleQuota);
 
             Assert.True(result.Resource.Tags.ContainsKey("tag1"));
         }
@@ -409,7 +415,10 @@ namespace Microsoft.Azure.Batch.Tests
                                     'location': 'West US',
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                        'provisioningState' : 'Succeeded'
+                                        'provisioningState' : 'Succeeded',
+                                        'coreQuota' : '20',
+                                        'poolQuota' : '100',
+                                        'activeJobAndJobScheduleQuota' : '200'
                                     },
                                     'tags' : {
                                         'tag1' : 'value for tag1',
@@ -423,7 +432,10 @@ namespace Microsoft.Azure.Batch.Tests
                                     'location': 'South Central US',
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                        'provisioningState' : 'Succeeded'
+                                        'provisioningState' : 'Succeeded',
+                                        'coreQuota' : '20',
+                                        'poolQuota' : '100',
+                                        'activeJobAndJobScheduleQuota' : '200'
                                     },
                                     'tags' : {
                                         'tag1' : 'value for tag1',
@@ -448,7 +460,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -462,7 +477,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -489,7 +507,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -503,7 +524,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -536,6 +560,9 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.Accounts[0].Id);
             Assert.Equal("/subscriptions/12345/resourceGroups/bar/providers/Microsoft.Batch/batchAccounts/acctName1", result.Accounts[1].Id);
             Assert.NotEmpty(result.Accounts[0].Properties.AccountEndpoint);
+            Assert.Equal(20, result.Accounts[0].Properties.CoreQuota);
+            Assert.Equal(100, result.Accounts[0].Properties.PoolQuota);
+            Assert.Equal(200, result.Accounts[1].Properties.ActiveJobAndJobScheduleQuota);
 
             Assert.True(result.Accounts[0].Tags.ContainsKey("tag1"));
 
@@ -576,7 +603,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'West US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'coreQuota' : '20',
+                                    'poolQuota' : '100',
+                                    'activeJobAndJobScheduleQuota' : '200'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -590,7 +620,10 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
-                                    'provisioningState' : 'Failed'
+                                    'provisioningState' : 'Failed',
+                                    'coreQuota' : '10',
+                                    'poolQuota' : '50',
+                                    'activeJobAndJobScheduleQuota' : '100'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1'
@@ -622,12 +655,18 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal(result.Accounts[0].Id, @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName" );
             Assert.Equal(result.Accounts[0].Properties.AccountEndpoint, @"http://acctName.batch.core.windows.net/");
             Assert.Equal(result.Accounts[0].Properties.ProvisioningState, AccountProvisioningState.Succeeded);
+            Assert.Equal(20, result.Accounts[0].Properties.CoreQuota);
+            Assert.Equal(100, result.Accounts[0].Properties.PoolQuota);
+            Assert.Equal(200, result.Accounts[0].Properties.ActiveJobAndJobScheduleQuota);
 
             Assert.Equal(result.Accounts[1].Location, "South Central US");
             Assert.Equal(result.Accounts[1].Name, "acctName1");
             Assert.Equal(result.Accounts[1].Id, @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName1");
             Assert.Equal(result.Accounts[1].Properties.AccountEndpoint, @"http://acctName1.batch.core.windows.net/");
             Assert.Equal(result.Accounts[1].Properties.ProvisioningState, AccountProvisioningState.Failed);
+            Assert.Equal(10, result.Accounts[1].Properties.CoreQuota);
+            Assert.Equal(50, result.Accounts[1].Properties.PoolQuota);
+            Assert.Equal(100, result.Accounts[1].Properties.ActiveJobAndJobScheduleQuota);
 
             Assert.True(result.Accounts[0].Tags.Count == 2);
             Assert.True(result.Accounts[0].Tags.ContainsKey("tag2"));

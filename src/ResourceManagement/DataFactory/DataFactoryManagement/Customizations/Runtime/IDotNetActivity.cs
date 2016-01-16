@@ -28,13 +28,13 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
         /// Called to execute an instance of the activity.
         /// </summary>
         /// <param name="linkedServices">Linked services referenced by activity definition.</param>
-        /// <param name="tables">Tables referenced by activity definition.</param>
+        /// <param name="datasets">Datasets referenced by activity definition.</param>
         /// <param name="activity">Activity definition.</param>
         /// <param name="logger">Used to log messages during activity execution.</param>
         /// <returns>Properties that may be passed to down-stream activites.</returns>
         IDictionary<string, string> Execute(
             IEnumerable<LinkedService> linkedServices,
-            IEnumerable<Table> tables,
+            IEnumerable<Dataset> datasets,
             Activity activity,
             IActivityLogger logger);
     }

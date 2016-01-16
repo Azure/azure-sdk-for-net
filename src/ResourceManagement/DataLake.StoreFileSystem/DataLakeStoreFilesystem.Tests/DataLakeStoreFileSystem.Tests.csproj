@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{AF8DA0F4-29F8-4F0E-8571-8BBE59E16913}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>DataLakeStoreFileSystem.Tests</RootNamespace>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\FileSystemOperationTests.cs" />
+    <Compile Include="TestHelpers\ClientManagementUtilities.cs" />
+    <Compile Include="TestHelpers\CommonTestFixture.cs" />
+    <Compile Include="TestHelpers\DataLakeStoreFileSystemTestBase.cs" />
+    <Compile Include="TestHelpers\DataLakeStoreFileSystemManagementHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataLake.Store\DataLakeStoreManagement\DataLakeStoreManagement.csproj">
+      <Project>{f8dde40d-b5b4-4a37-8131-9ef8f18a4a6a}</Project>
+      <Name>DataLakeManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLakeStoreFileSystemManagement\DataLakeStoreFileSystemManagement.csproj">
+      <Project>{cd70673d-5a14-471c-962c-28d5afd0d900}</Project>
+      <Name>DataLakeFileSystemManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemAppendToFile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemConcatenateFiles.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemDeleteFile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemDeleteFolder.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemDirectAppendToFile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemEmptyFileCreate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemEmptyFileDirectCreate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemFileCreateWithContents.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemFileDirectCreateWithContents.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemFolderCreate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemGetAcl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemGetAndSetAcl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemListFolderContents.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMoveFileAndFolder.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMsConcatDeleteDir.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemMsConcatenateFiles.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetAcl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetDeleteAclEntry.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\DataLakeStoreFileSystemSetFileProperties.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeStoreFileSystem.Tests.FileSystemOperationTests\FixtureSetup.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

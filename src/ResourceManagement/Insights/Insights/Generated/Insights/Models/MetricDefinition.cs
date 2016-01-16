@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Insights.Models
         private IList<Dimension> _dimensions;
         
         /// <summary>
-        /// Optional. Collection of availability information defining what
-        /// timeGrains are available to be queried.
+        /// Optional. Gets or sets the collection of availability information
+        /// defining what timeGrains are available to be queried.
         /// </summary>
         public IList<Dimension> Dimensions
         {
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricAvailability> _metricAvailabilities;
         
         /// <summary>
-        /// Optional. Collection of what aggregation intervals are available to
-        /// be queried.
+        /// Optional. Gets or sets the collection of what aggregation intervals
+        /// are available to be queried.
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
         {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
         
         /// <summary>
-        /// Optional. The name and the display name of the metric.
+        /// Optional. Gets or sets the name and the display name of the metric.
         /// </summary>
         public LocalizableString Name
         {
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Insights.Models
         private AggregationType _primaryAggregationType;
         
         /// <summary>
-        /// Optional. The primary aggregation type value defining how to use
-        /// the values for display.
+        /// Optional. Gets or sets the primary aggregation type value defining
+        /// how to use the values for display.
         /// </summary>
         public AggregationType PrimaryAggregationType
         {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Insights.Models
         private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional. Collection of extended properties.
+        /// Optional. Gets or sets the collection of extended properties.
         /// </summary>
         public IDictionary<string, string> Properties
         {
@@ -90,22 +90,22 @@ namespace Microsoft.Azure.Insights.Models
             set { this._properties = value; }
         }
         
-        private string _resourceUri;
+        private string _resourceId;
         
         /// <summary>
-        /// Optional. The resource identifier of the resource that has emitted
-        /// the metric.
+        /// Optional. Gets or sets the resource identifier of the resource that
+        /// has emitted the metric.
         /// </summary>
-        public string ResourceUri
+        public string ResourceId
         {
-            get { return this._resourceUri; }
-            set { this._resourceUri = value; }
+            get { return this._resourceId; }
+            set { this._resourceId = value; }
         }
         
         private Unit _unit;
         
         /// <summary>
-        /// Optional. The unit of the metric.
+        /// Optional. Gets or sets the unit of the metric.
         /// </summary>
         public Unit Unit
         {

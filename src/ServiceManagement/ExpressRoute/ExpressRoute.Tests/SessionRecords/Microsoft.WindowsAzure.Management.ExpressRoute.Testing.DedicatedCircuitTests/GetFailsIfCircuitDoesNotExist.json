@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/00000000-0000-0000-0000-000000000000?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMD9hcGktdmVyc2lvbj0xLjA=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/00000000-0000-0000-0000-000000000000?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMD9hcGktdmVyc2lvbj0xLjA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +10,7 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "<Error xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Code>ResourceNotFound</Code>\r\n  <Message>The specified dedicated circuit with service key '00000000-0000-0000-0000-000000000000' was not found.</Message>\r\n</Error>",
@@ -21,18 +21,21 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "2c025853b8520dfb944474ab8b849781"
+          "9dd3b9bb2404563ca25ebcf0b02d4ea0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:05:41 GMT"
+          "Wed, 23 Dec 2015 22:08:31 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -41,6 +44,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4"
+    "SubscriptionId": "04bc22f5-6269-4309-acc6-fbe9284595cd"
   }
 }

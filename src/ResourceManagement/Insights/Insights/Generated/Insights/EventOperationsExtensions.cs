@@ -117,6 +117,38 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
+        /// The list of event categories.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The response of List Event Categories.
+        /// </returns>
+        public static EventCategoryListResponse ListEventCategories(this IEventOperations operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListEventCategoriesAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The list of event categories.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The response of List Event Categories.
+        /// </returns>
+        public static Task<EventCategoryListResponse> ListEventCategoriesAsync(this IEventOperations operations)
+        {
+            return operations.ListEventCategoriesAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='operations'>
@@ -217,41 +249,191 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
-        /// The status count of events in a subscription.
+        /// The List Tenant Digest Event Values operation lists the
+        /// tenant-level digest events.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string.
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
         /// </param>
         /// <returns>
-        /// The List event status count summary operation response.
+        /// The List Events operation response.
         /// </returns>
-        public static EventStatusCountSummaryListResponse ListEventStatusCountSummaryItems(this IEventOperations operations, string filterString)
+        public static EventDataListResponse ListTenantDigestEvents(this IEventOperations operations, string filterString, string selectedProperties)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IEventOperations)s).ListEventStatusCountSummaryItemsAsync(filterString);
+                return ((IEventOperations)s).ListTenantDigestEventsAsync(filterString, selectedProperties);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The status count of events in a subscription.
+        /// The List Tenant Digest Event Values operation lists the
+        /// tenant-level digest events.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string.
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
         /// </param>
         /// <returns>
-        /// The List event status count summary operation response.
+        /// The List Events operation response.
         /// </returns>
-        public static Task<EventStatusCountSummaryListResponse> ListEventStatusCountSummaryItemsAsync(this IEventOperations operations, string filterString)
+        public static Task<EventDataListResponse> ListTenantDigestEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
         {
-            return operations.ListEventStatusCountSummaryItemsAsync(filterString, CancellationToken.None);
+            return operations.ListTenantDigestEventsAsync(filterString, selectedProperties, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Tenant Digest Event Next operation lists the next set of
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListTenantDigestEventsNext(this IEventOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListTenantDigestEventsNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Tenant Digest Event Next operation lists the next set of
+        /// tenant-level digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListTenantDigestEventsNextAsync(this IEventOperations operations, string nextLink)
+        {
+            return operations.ListTenantDigestEventsNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The list tenant event values operation lists the tenant events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwidth by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListTenantEvents(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListTenantEventsAsync(filterString, selectedProperties);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The list tenant event values operation lists the tenant events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwidth by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListTenantEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return operations.ListTenantEventsAsync(filterString, selectedProperties, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Next operation lists the next set of events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link works as a continuation token when all of
+        /// the events are not returned in the response and a second call is
+        /// required
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListTenantEventsNext(this IEventOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListTenantEventsNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Event Next operation lists the next set of events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link works as a continuation token when all of
+        /// the events are not returned in the response and a second call is
+        /// required
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListTenantEventsNextAsync(this IEventOperations operations, string nextLink)
+        {
+            return operations.ListTenantEventsNextAsync(nextLink, CancellationToken.None);
         }
     }
 }

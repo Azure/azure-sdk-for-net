@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
+    /// <summary>
+    /// Specifies the reason that a storage account name could not be used.
+    /// </summary>
     public enum Reason
     {
         /// <summary>

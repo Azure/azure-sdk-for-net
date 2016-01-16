@@ -8,6 +8,9 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>$(LibraryNugetPackageFolder)\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="xunit.extensions">
       <HintPath>$(LibraryNugetPackageFolder)\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
@@ -28,8 +31,8 @@
     <Compile Include="Framework\JsonSamples\LinkedServiceJsonSamples.cs" />
     <Compile Include="Framework\JsonSamples\RegisteredActivityTypeJsonSamples.cs" />
     <Compile Include="Framework\JsonSamples\RegisteredComputeTypeJsonSamples.cs" />
-    <Compile Include="Framework\JsonSamples\TableJsonSamples.cs" />
-    <Compile Include="Framework\JsonSamples\TableInvalidDateTimeJsonSamples.cs" />
+    <Compile Include="Framework\JsonSamples\DatasetJsonSamples.cs" />
+    <Compile Include="Framework\JsonSamples\DatasetInvalidDateTimeJsonSamples.cs" />
     <Compile Include="Framework\AdfTestLogger.cs" />
     <Compile Include="Framework\JsonUtilities.cs" />
     <Compile Include="Framework\TestCategories.cs" />
@@ -42,18 +45,19 @@
     <Compile Include="UnitTests\ActivityConfigurationTests.cs" />
     <Compile Include="UnitTests\ActivityTypeTests.cs" />
     <Compile Include="UnitTests\ComputeTypeTests.cs" />
+    <Compile Include="UnitTests\DataFactoryManagementClientTests.cs" />
     <Compile Include="UnitTests\LinkedServiceTests.cs" />
     <Compile Include="UnitTests\LinkedServiceTypeRegistrationTests.cs" />
     <Compile Include="UnitTests\PipelineTests.cs" />
     <Compile Include="UnitTests\PipelineTypeRegistrationTests.cs" />
-    <Compile Include="UnitTests\TableTests.cs" />
-    <Compile Include="UnitTests\TableTypeRegistrationTests.cs" />
+    <Compile Include="UnitTests\DatasetTests.cs" />
+    <Compile Include="UnitTests\DatasetTypeRegistrationTests.cs" />
     <Compile Include="UnitTests\TestClasses\MyActivityType.cs" />
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceType.cs" />
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceType2.cs" />
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceTypeWithDictionaryProperty.cs" />
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceTypeWithListProperty.cs" />
-    <Compile Include="UnitTests\TestClasses\MyTableType.cs" />
+    <Compile Include="UnitTests\TestClasses\MyDatasetType.cs" />
     <Compile Include="UnitTests\RegistrationTestUtilities.cs" />
     <Compile Include="UnitTests\TypeRegistrationTestBase.cs" />
     <Compile Include="UnitTests\UnitTestBase.cs" />

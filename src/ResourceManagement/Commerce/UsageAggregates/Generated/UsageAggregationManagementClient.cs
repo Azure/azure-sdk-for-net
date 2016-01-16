@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
     public partial class UsageAggregationGetResponse : AzureOperationResponse
     {
         private string _nextLink;
-        
+
         /// <summary>
         /// Optional. Gets or sets the link to the next set of results.
         /// </summary>
@@ -138,7 +138,19 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
             get { return this._nextLink; }
             set { this._nextLink = value; }
         }
-        
+
+        private string _continuationToken;
+
+        /// <summary>
+        /// Optional.  Gets or sets the continuation token used for success calls to the same set of input
+        /// parameters.  If null or emtpy then there aren't anymore results on the server.
+        /// </summary>
+        public string ContinuationToken
+        {
+            get { return this._continuationToken; }
+            set { this._continuationToken = value; }
+        }
+
         private IList<UsageAggregation> _usageAggregations;
         
         /// <summary>
@@ -827,8 +839,8 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
             url = url + "/providers/Microsoft.Commerce/UsageAggregates";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-06-01-preview");
-            queryParameters.Add("reportedstartTime=" + Uri.EscapeDataString(reportedStartTime.ToString()));
-            queryParameters.Add("reportedEndTime=" + Uri.EscapeDataString(reportedEndTime.ToString()) + ",");
+            queryParameters.Add("reportedstartTime=" + Uri.EscapeDataString(reportedStartTime.ToString("O")));
+            queryParameters.Add("reportedEndTime=" + Uri.EscapeDataString(reportedEndTime.ToString("O")));
             queryParameters.Add("showDetails=" + Uri.EscapeDataString(showDetails.ToString().ToLower()));
             queryParameters.Add("aggregationGranularity=" + Uri.EscapeDataString(UsageAggregationManagementClient.AggregationGranularityToString(aggregationGranularity)));
             if (continuationToken != null)
@@ -954,14 +966,14 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                                         if (usageStartTimeValue != null && usageStartTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTime usageStartTimeInstance = ((DateTime)usageStartTimeValue);
-                                            propertiesInstance.UsageStartTime = usageStartTimeInstance;
+                                            propertiesInstance.UsageStartTime = usageStartTimeInstance.ToUniversalTime();
                                         }
                                         
                                         JToken usageEndTimeValue = propertiesValue["usageEndTime"];
                                         if (usageEndTimeValue != null && usageEndTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTime usageEndTimeInstance = ((DateTime)usageEndTimeValue);
-                                            propertiesInstance.UsageEndTime = usageEndTimeInstance;
+                                            propertiesInstance.UsageEndTime = usageEndTimeInstance.ToUniversalTime();
                                         }
                                         
                                         JToken quantityValue = propertiesValue["quantity"];
@@ -1035,6 +1047,19 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                             {
                                 string nextLinkInstance = ((string)nextLinkValue);
                                 result.NextLink = nextLinkInstance;
+
+                                if (!string.IsNullOrWhiteSpace(nextLinkInstance))
+                                {
+                                    string key = "continuationToken=";
+                                    int startLocation = nextLinkInstance.IndexOf(key, StringComparison.OrdinalIgnoreCase);
+                                    if (startLocation >= 0)
+                                    {
+                                        startLocation = startLocation + key.Length;
+                                        int length = nextLinkInstance.Length - startLocation;
+                                        string token = nextLinkInstance.Substring(startLocation, length);
+                                        result.ContinuationToken = Uri.UnescapeDataString(token);
+                                    }
+                                }
                             }
                         }
                         

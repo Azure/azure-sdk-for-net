@@ -24,7 +24,7 @@ namespace Network.Tests.Gateways
 
     public class LocallNetworkGatewayTests
     {
-        [Fact]
+        [Fact(Skip = "Need re-record")]
         [Trait("Feature", "Gateways")]
         [Trait("Operation", "LocalNetworkGateway")]
         public void LocalNetworkGatewayAPIsTests()

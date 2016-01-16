@@ -72,6 +72,10 @@ namespace Network.Tests
             return operation.InvokeResponse;
         }
 
+        public ApplicationGatewayGetConfiguration GetConfigApplicationGateway(string gatewayName)
+        {
+            return applicationGatewayClient.GetConfig(gatewayName);
+        }
         public ApplicationGatewayOperationResponse StartApplicationGateway(string gatewayName)
         {
             StartApplicationGateway operation = new StartApplicationGateway(applicationGatewayClient, gatewayName);

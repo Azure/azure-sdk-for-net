@@ -58,7 +58,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
         private System.DateTime? _end;
         
         /// <summary>
-        /// Optional. The end time of the pipeline.
+        /// Optional. The end time of the pipeline. The start and end time can
+        /// both be empty to create a pipeline; they must both have values to
+        /// set an active period for the pipeline and one cannot have a value
+        /// if the other does not.
         /// </summary>
         public System.DateTime? End
         {
@@ -125,7 +128,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
         private System.DateTime? _start;
         
         /// <summary>
-        /// Optional. The start time of the pipeline.
+        /// Optional. The start time of the pipeline. The start and end time
+        /// can both be empty to create a pipeline; they must both have values
+        /// to set an active period for the pipeline and one cannot have a
+        /// value if the other does not.
         /// </summary>
         public System.DateTime? Start
         {

@@ -1,0 +1,704 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/catalog/usql/databases?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXM/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#databases\",\r\n  \"value\": [\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"version\": \"99fd5a56-f9d1-4682-b34c-d78456cc35b9\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"testdb17619\",\r\n      \"version\": \"29ea71ba-c616-44ac-b9b4-ad02dbaa9a54\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "98df31ca-3d41-4b14-9fe3-9e3037bf99ae"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:03 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTk/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#databases/$entity\",\r\n  \"computeAccountName\": \"testadlac13926\",\r\n  \"databaseName\": \"testdb17619\",\r\n  \"version\": \"29ea71ba-c616-44ac-b9b4-ad02dbaa9a54\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "aea7e2f5-2b0a-426f-8cbb-384180c863c6"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:03 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/tables?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdGFibGVzP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#tables\",\r\n  \"value\": [\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"testdb17619\",\r\n      \"schemaName\": \"dbo\",\r\n      \"tableName\": \"testtbl19558\",\r\n      \"columnList\": [\r\n        {\r\n          \"name\": \"UserId\",\r\n          \"type\": \"System.Int32\"\r\n        },\r\n        {\r\n          \"name\": \"Start\",\r\n          \"type\": \"System.DateTime\"\r\n        },\r\n        {\r\n          \"name\": \"Region\",\r\n          \"type\": \"System.String\"\r\n        },\r\n        {\r\n          \"name\": \"Query\",\r\n          \"type\": \"System.String\"\r\n        },\r\n        {\r\n          \"name\": \"Duration\",\r\n          \"type\": \"System.Int32\"\r\n        },\r\n        {\r\n          \"name\": \"Urls\",\r\n          \"type\": \"System.String\"\r\n        },\r\n        {\r\n          \"name\": \"ClickedUrls\",\r\n          \"type\": \"System.String\"\r\n        }\r\n      ],\r\n      \"indexList\": [\r\n        {\r\n          \"name\": \"idx1\",\r\n          \"indexKeys\": [\r\n            {\r\n              \"name\": \"Region\",\r\n              \"descending\": false\r\n            }\r\n          ],\r\n          \"columns\": [\r\n            \"Region\"\r\n          ],\r\n          \"distributionInfo\": {\r\n            \"type\": 2,\r\n            \"keys\": [\r\n              {\r\n                \"name\": \"Region\",\r\n                \"descending\": false\r\n              }\r\n            ],\r\n            \"count\": 0,\r\n            \"dynamicCount\": 0\r\n          },\r\n          \"partitionFunction\": \"1ad51a94-2316-455a-b446-a0a1a5ebd2fc\",\r\n          \"partitionKeyList\": [],\r\n          \"streamNames\": [],\r\n          \"distributionGroups\": [],\r\n          \"isColumnstore\": false,\r\n          \"indexId\": 1,\r\n          \"isUnique\": false\r\n        }\r\n      ],\r\n      \"partitionKeyList\": [],\r\n      \"externalTable\": null,\r\n      \"version\": \"333a8e33-5019-437a-abc8-a96156975e95\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "58dc6b33-5ae0-470d-acc6-0a7bff482317"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:03 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/tables/testtbl19558?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdGFibGVzL3Rlc3R0YmwxOTU1OD9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#tables/$entity\",\r\n  \"computeAccountName\": \"testadlac13926\",\r\n  \"databaseName\": \"testdb17619\",\r\n  \"schemaName\": \"dbo\",\r\n  \"tableName\": \"testtbl19558\",\r\n  \"columnList\": [\r\n    {\r\n      \"name\": \"UserId\",\r\n      \"type\": \"System.Int32\"\r\n    },\r\n    {\r\n      \"name\": \"Start\",\r\n      \"type\": \"System.DateTime\"\r\n    },\r\n    {\r\n      \"name\": \"Region\",\r\n      \"type\": \"System.String\"\r\n    },\r\n    {\r\n      \"name\": \"Query\",\r\n      \"type\": \"System.String\"\r\n    },\r\n    {\r\n      \"name\": \"Duration\",\r\n      \"type\": \"System.Int32\"\r\n    },\r\n    {\r\n      \"name\": \"Urls\",\r\n      \"type\": \"System.String\"\r\n    },\r\n    {\r\n      \"name\": \"ClickedUrls\",\r\n      \"type\": \"System.String\"\r\n    }\r\n  ],\r\n  \"indexList\": [\r\n    {\r\n      \"name\": \"idx1\",\r\n      \"indexKeys\": [\r\n        {\r\n          \"name\": \"Region\",\r\n          \"descending\": false\r\n        }\r\n      ],\r\n      \"columns\": [\r\n        \"Region\"\r\n      ],\r\n      \"distributionInfo\": {\r\n        \"type\": 2,\r\n        \"keys\": [\r\n          {\r\n            \"name\": \"Region\",\r\n            \"descending\": false\r\n          }\r\n        ],\r\n        \"count\": 0,\r\n        \"dynamicCount\": 0\r\n      },\r\n      \"partitionFunction\": \"1ad51a94-2316-455a-b446-a0a1a5ebd2fc\",\r\n      \"partitionKeyList\": [],\r\n      \"streamNames\": [],\r\n      \"distributionGroups\": [],\r\n      \"isColumnstore\": false,\r\n      \"indexId\": 1,\r\n      \"isUnique\": false\r\n    }\r\n  ],\r\n  \"partitionKeyList\": [],\r\n  \"externalTable\": null,\r\n  \"version\": \"333a8e33-5019-437a-abc8-a96156975e95\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "0472937b-bf15-4288-a61e-69e483116420"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:04 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/tablevaluedfunctions?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdGFibGV2YWx1ZWRmdW5jdGlvbnM/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#tablevaluedfunctions\",\r\n  \"value\": [\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"testdb17619\",\r\n      \"schemaName\": \"dbo\",\r\n      \"tvfName\": \"testtvf17306\",\r\n      \"definition\": \"//create table weblogs on space-delimited website log data\\nCREATE FUNCTION testdb17619.dbo.testtvf17306()\\nRETURNS @result TABLE\\n(\\n    s_date DateTime,\\n    s_time string,\\n    s_sitename string,\\n    cs_method string, \\n    cs_uristem string,\\n    cs_uriquery string,\\n    s_port int,\\n    cs_username string, \\n    c_ip string,\\n    cs_useragent string,\\n    cs_cookie string,\\n    cs_referer string, \\n    cs_host string,\\n    sc_status int,\\n    sc_substatus int,\\n    sc_win32status int, \\n    sc_bytes int,\\n    cs_bytes int,\\n    s_timetaken int\\n)\\nAS\\nBEGIN\\n\\n    @result = EXTRACT\\n        s_date DateTime,\\n        s_time string,\\n        s_sitename string,\\n        cs_method string,\\n        cs_uristem string,\\n        cs_uriquery string,\\n        s_port int,\\n        cs_username string,\\n        c_ip string,\\n        cs_useragent string,\\n        cs_cookie string,\\n        cs_referer string,\\n        cs_host string,\\n        sc_status int,\\n        sc_substatus int,\\n        sc_win32status int,\\n        sc_bytes int,\\n        cs_bytes int,\\n        s_timetaken int\\n    FROM @\\\"/Samples/Data/WebLog.log\\\"\\n    USING Extractors.Text(delimiter:' ');\\n\\nRETURN;\\nEND;\",\r\n      \"version\": \"93342e4c-48f6-48c3-b6c6-f60c5d62b167\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "800eae64-78a2-4960-be46-1a99f2d96a75"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:04 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/tablevaluedfunctions/testtvf17306?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdGFibGV2YWx1ZWRmdW5jdGlvbnMvdGVzdHR2ZjE3MzA2P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#tablevaluedfunctions/$entity\",\r\n  \"computeAccountName\": \"testadlac13926\",\r\n  \"databaseName\": \"testdb17619\",\r\n  \"schemaName\": \"dbo\",\r\n  \"tvfName\": \"testtvf17306\",\r\n  \"definition\": \"//create table weblogs on space-delimited website log data\\nCREATE FUNCTION testdb17619.dbo.testtvf17306()\\nRETURNS @result TABLE\\n(\\n    s_date DateTime,\\n    s_time string,\\n    s_sitename string,\\n    cs_method string, \\n    cs_uristem string,\\n    cs_uriquery string,\\n    s_port int,\\n    cs_username string, \\n    c_ip string,\\n    cs_useragent string,\\n    cs_cookie string,\\n    cs_referer string, \\n    cs_host string,\\n    sc_status int,\\n    sc_substatus int,\\n    sc_win32status int, \\n    sc_bytes int,\\n    cs_bytes int,\\n    s_timetaken int\\n)\\nAS\\nBEGIN\\n\\n    @result = EXTRACT\\n        s_date DateTime,\\n        s_time string,\\n        s_sitename string,\\n        cs_method string,\\n        cs_uristem string,\\n        cs_uriquery string,\\n        s_port int,\\n        cs_username string,\\n        c_ip string,\\n        cs_useragent string,\\n        cs_cookie string,\\n        cs_referer string,\\n        cs_host string,\\n        sc_status int,\\n        sc_substatus int,\\n        sc_win32status int,\\n        sc_bytes int,\\n        cs_bytes int,\\n        s_timetaken int\\n    FROM @\\\"/Samples/Data/WebLog.log\\\"\\n    USING Extractors.Text(delimiter:' ');\\n\\nRETURN;\\nEND;\",\r\n  \"version\": \"93342e4c-48f6-48c3-b6c6-f60c5d62b167\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "4add8c19-e778-43fa-86a8-ab2dd141754b"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:04 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/views?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdmlld3M/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#views\",\r\n  \"value\": [\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"testdb17619\",\r\n      \"schemaName\": \"dbo\",\r\n      \"viewName\": \"testview12389\",\r\n      \"definition\": \"CREATE VIEW testdb17619.dbo.testview12389 \\nAS \\n    SELECT * FROM \\n    (\\n        VALUES(1,2),(2,4)\\n    ) \\nAS \\nT(a, b);\",\r\n      \"version\": \"a77086a6-edeb-420b-adc6-d4e9c1d930cf\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "3b8f1757-c6c0-44c5-b57d-990c86401fae"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/views/testview12389?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdmlld3MvdGVzdHZpZXcxMjM4OT9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#views/$entity\",\r\n  \"computeAccountName\": \"testadlac13926\",\r\n  \"databaseName\": \"testdb17619\",\r\n  \"schemaName\": \"dbo\",\r\n  \"viewName\": \"testview12389\",\r\n  \"definition\": \"CREATE VIEW testdb17619.dbo.testview12389 \\nAS \\n    SELECT * FROM \\n    (\\n        VALUES(1,2),(2,4)\\n    ) \\nAS \\nT(a, b);\",\r\n  \"version\": \"a77086a6-edeb-420b-adc6-d4e9c1d930cf\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "0c4ee431-2105-4535-a565-5c9c6c17b220"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/procedures?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vcHJvY2VkdXJlcz9hcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#procedures\",\r\n  \"value\": [\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"testdb17619\",\r\n      \"schemaName\": \"dbo\",\r\n      \"procName\": \"testproc18849\",\r\n      \"definition\": \"CREATE PROCEDURE testdb17619.dbo.testproc18849()\\nAS BEGIN\\n  CREATE VIEW testdb17619.dbo.testview12389 \\n  AS \\n    SELECT * FROM \\n    (\\n        VALUES(1,2),(2,4)\\n    ) \\n  AS \\n  T(a, b);\\nEND;\",\r\n      \"version\": \"bf1202bc-24be-49fd-a5d3-b0febab7501e\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "98fe5487-3331-4039-b915-29c627bff843"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/procedures/testproc18849?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vcHJvY2VkdXJlcy90ZXN0cHJvYzE4ODQ5P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#procedures/$entity\",\r\n  \"computeAccountName\": \"testadlac13926\",\r\n  \"databaseName\": \"testdb17619\",\r\n  \"schemaName\": \"dbo\",\r\n  \"procName\": \"testproc18849\",\r\n  \"definition\": \"CREATE PROCEDURE testdb17619.dbo.testproc18849()\\nAS BEGIN\\n  CREATE VIEW testdb17619.dbo.testview12389 \\n  AS \\n    SELECT * FROM \\n    (\\n        VALUES(1,2),(2,4)\\n    ) \\n  AS \\n  T(a, b);\\nEND;\",\r\n  \"version\": \"bf1202bc-24be-49fd-a5d3-b0febab7501e\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "4316877b-e52b-4716-ac52-48b21aec7008"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/types?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdHlwZXM/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#types\",\r\n  \"value\": [\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlArray\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"Microsoft.Analytics.Types.Sql.SqlArray\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlArray\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 334,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"1137ad93-d19b-4d4e-b726-011f76d4d833\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlBinary\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlBinary\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlBinary\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 341,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"b05e4357-12c7-461f-9559-4c39cfae1338\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlBit\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlBit\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlBit\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 339,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"caeb6f59-f027-4348-a3ff-f064531e0ee8\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlByte\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlByte\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlByte\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 338,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f2583736-1f0e-4072-8a04-d83db5e08241\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlDate\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlDate\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlDate\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 343,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"29f9721a-315b-498f-a304-762e0511226d\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlDecimal\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlDecimal\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlDecimal\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 342,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"d6d8f781-23bf-48a6-a462-8946bab23c36\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlDouble\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlDouble\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlDouble\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 344,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"db1bc9a7-f5da-4d64-9baa-399c9f72d6e2\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlGuid\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlGuid\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlGuid\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 345,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"ab6715ed-cfba-4b5a-92e9-f86520b8e711\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlInt16\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlInt16\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlInt16\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 335,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"4ee64682-cbd4-40cc-90e9-c5de1433bbed\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlInt32\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlInt32\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlInt32\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 336,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"9af787e7-9fc0-4819-80ac-0339ce031ab3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlInt64\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlInt64\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlInt64\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 337,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"44d67b27-8bd8-4072-81ca-2d32adfdb17c\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlMap\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"Microsoft.Analytics.Types.Sql.SqlMap\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlMap\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 333,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"18cf5d12-3651-44fe-ad16-cf5068f0b112\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlMoney\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlMoney\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlMoney\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 346,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"861e13ee-e110-4dd2-b0df-f2eb9a6b5bd2\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlSingle\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlSingle\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlSingle\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 347,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"7037d7f1-e3d4-416f-bf81-285b630a75e4\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlString\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlString\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlString\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 340,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"a15306f5-43f5-433b-b795-ce02ee911953\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlStruct\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"Microsoft.Analytics.Types.Sql.SqlStruct\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlStruct\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 332,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f89f413d-bd5f-440a-b069-8fc345643648\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Boolean\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"bool\",\r\n      \"fullCSharpName\": \"System.Boolean\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 300,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"c04b91b8-2b7e-45b3-ada9-db5ede901672\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Boolean?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"bool?\",\r\n      \"fullCSharpName\": \"System.Boolean?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 301,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"42f3147a-ed9b-47ae-a8ad-aa2fbc51e0ad\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Byte\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"byte\",\r\n      \"fullCSharpName\": \"System.Byte\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 302,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"6a048add-f003-4d73-8471-3b0be963d1ac\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Byte?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"byte?\",\r\n      \"fullCSharpName\": \"System.Byte?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 303,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"c2623267-2a86-444a-a773-89783eae5b30\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Byte[]\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"byte[]\",\r\n      \"fullCSharpName\": \"System.Byte[]\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 328,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"84506afa-d9ad-4bef-9e44-cd00f1f54ce3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Char\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"char\",\r\n      \"fullCSharpName\": \"System.Char\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 310,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"bb4bb082-4d9c-4ce4-aa1b-bfaea278ac92\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Char?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"char?\",\r\n      \"fullCSharpName\": \"System.Char?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 311,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"748c6bfa-5a8e-43d4-823b-3b3be0d8b85a\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.DateTime\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"DateTime\",\r\n      \"fullCSharpName\": \"System.DateTime\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 326,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"4e348b46-7218-4c30-b879-ceee5a59e7bb\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.DateTime?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"DateTime?\",\r\n      \"fullCSharpName\": \"System.DateTime?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 327,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"eb486159-acfa-4499-9b1a-e0ecda5d52a2\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Decimal\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"decimal\",\r\n      \"fullCSharpName\": \"System.Decimal\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 324,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f29ebb5f-17e8-4448-8aec-1a6702380e75\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Decimal?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"decimal?\",\r\n      \"fullCSharpName\": \"System.Decimal?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 325,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"b78657ef-955b-4841-805e-bec1e9d11e37\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Double\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"double\",\r\n      \"fullCSharpName\": \"System.Double\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 322,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f3bbcc4e-d872-4bd1-8429-7082199016d3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Double?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"double?\",\r\n      \"fullCSharpName\": \"System.Double?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 323,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"5832365f-70cb-47f9-92db-46cf7903dffc\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Guid\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"Guid\",\r\n      \"fullCSharpName\": \"System.Guid\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 330,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"ccccbe73-770a-4bc8-905f-2eec41e79736\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Guid?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"Guid?\",\r\n      \"fullCSharpName\": \"System.Guid?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 331,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"db4c6514-17fa-4de1-ab25-a22817844593\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int16\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"short\",\r\n      \"fullCSharpName\": \"System.Int16\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 306,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"2cca4ae1-4272-4ca4-832e-5bc22c486299\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int16?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"short?\",\r\n      \"fullCSharpName\": \"System.Int16?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 307,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"cef0bb72-9079-471b-855c-cfb87b1dc11f\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int32\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"int\",\r\n      \"fullCSharpName\": \"System.Int32\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 312,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"2a3f9560-1645-4e60-8ca5-9713f2ef8363\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int32?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"int?\",\r\n      \"fullCSharpName\": \"System.Int32?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 313,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"29fedecb-21d0-4fa8-bf6b-2539bee71bcc\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int64\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"long\",\r\n      \"fullCSharpName\": \"System.Int64\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 316,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"14c67089-ce4d-4770-8425-a0c41788c3cd\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int64?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"long?\",\r\n      \"fullCSharpName\": \"System.Int64?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 317,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"01b8cce9-d5e9-4f38-9f29-d5f3927d7407\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.SByte\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"sbyte\",\r\n      \"fullCSharpName\": \"System.SByte\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 304,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"899a07dd-662c-4cd2-8f98-6ec34d739355\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.SByte?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"sbyte?\",\r\n      \"fullCSharpName\": \"System.SByte?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 305,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f76f7f1a-64d9-4c50-a38c-a6b2578f66d3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Single\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"float\",\r\n      \"fullCSharpName\": \"System.Single\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 320,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"04ae7374-f270-48ba-b429-c7e07bfcde61\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Single?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"float?\",\r\n      \"fullCSharpName\": \"System.Single?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 321,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f8f90902-84a6-449f-96fe-6710accc0f7a\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.String\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"string\",\r\n      \"fullCSharpName\": \"System.String\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 329,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"313664ea-0a0b-4016-8c25-a11052d885ad\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt16\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ushort\",\r\n      \"fullCSharpName\": \"System.UInt16\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 308,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"1ee295be-df81-4f21-a17c-31205884958b\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt16?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ushort?\",\r\n      \"fullCSharpName\": \"System.UInt16?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 309,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"a3228a28-dc3d-42f1-81d7-86899822af91\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt32\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"uint\",\r\n      \"fullCSharpName\": \"System.UInt32\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 314,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"133275dc-ec4b-4662-86ee-f6d13b0e8b7e\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt32?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"uint?\",\r\n      \"fullCSharpName\": \"System.UInt32?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 315,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"7292a0b6-ff2d-4c02-b256-63993c2b270a\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt64\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ulong\",\r\n      \"fullCSharpName\": \"System.UInt64\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 318,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"e80c1a1c-99d9-418c-9f66-097c048095bb\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt64?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ulong?\",\r\n      \"fullCSharpName\": \"System.UInt64?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 319,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"48cbabb8-03fc-4f00-bad6-0641a7f562c7\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "3b380c72-6884-49b4-bdd2-6e900922f5f4"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:06 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/catalog/usql/databases/testdb17619/schemas/dbo/types?$filter=isComplexType%20eq%20false&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L2NhdGFsb2cvdXNxbC9kYXRhYmFzZXMvdGVzdGRiMTc2MTkvc2NoZW1hcy9kYm8vdHlwZXM/JGZpbHRlcj1pc0NvbXBsZXhUeXBlJTIwZXElMjBmYWxzZSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "useragent": [
+          "Azure SDK - Microsoft.Azure.Management.DataLake.AnalyticsCatalog 0.9.3-preview"
+        ],
+        "User-Agent": [
+          "Azure",
+          "SDK",
+          "-",
+          "Microsoft.Azure.Management.DataLake.AnalyticsCatalog",
+          "0.9.3-preview"
+        ],
+        "x-ms-client-resource-group-name": [
+          "abarg18151"
+        ],
+        "x-ms-client-subscription-id": [
+          "0353d26d-e338-469a-a87a-bd3507471155"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://testadlac13926.konaaccountdogfood.net/sqlip/$metadata#types\",\r\n  \"value\": [\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlArray\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"Microsoft.Analytics.Types.Sql.SqlArray\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlArray\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 334,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"1137ad93-d19b-4d4e-b726-011f76d4d833\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlBinary\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlBinary\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlBinary\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 341,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"b05e4357-12c7-461f-9559-4c39cfae1338\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlBit\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlBit\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlBit\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 339,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"caeb6f59-f027-4348-a3ff-f064531e0ee8\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlByte\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlByte\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlByte\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 338,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f2583736-1f0e-4072-8a04-d83db5e08241\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlDate\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlDate\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlDate\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 343,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"29f9721a-315b-498f-a304-762e0511226d\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlDecimal\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlDecimal\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlDecimal\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 342,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"d6d8f781-23bf-48a6-a462-8946bab23c36\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlDouble\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlDouble\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlDouble\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 344,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"db1bc9a7-f5da-4d64-9baa-399c9f72d6e2\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlGuid\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlGuid\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlGuid\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 345,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"ab6715ed-cfba-4b5a-92e9-f86520b8e711\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlInt16\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlInt16\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlInt16\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 335,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"4ee64682-cbd4-40cc-90e9-c5de1433bbed\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlInt32\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlInt32\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlInt32\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 336,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"9af787e7-9fc0-4819-80ac-0339ce031ab3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlInt64\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlInt64\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlInt64\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 337,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"44d67b27-8bd8-4072-81ca-2d32adfdb17c\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlMap\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"Microsoft.Analytics.Types.Sql.SqlMap\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlMap\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 333,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"18cf5d12-3651-44fe-ad16-cf5068f0b112\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlMoney\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlMoney\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlMoney\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 346,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"861e13ee-e110-4dd2-b0df-f2eb9a6b5bd2\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlSingle\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlSingle\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlSingle\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 347,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"7037d7f1-e3d4-416f-bf81-285b630a75e4\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlString\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"SqlString\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlString\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 340,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"a15306f5-43f5-433b-b795-ce02ee911953\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"Microsoft.Analytics.Types.Sql.SqlStruct\",\r\n      \"typeFamily\": \"SQL\",\r\n      \"cSharpName\": \"Microsoft.Analytics.Types.Sql.SqlStruct\",\r\n      \"fullCSharpName\": \"Microsoft.Analytics.Types.Sql.SqlStruct\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 332,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f89f413d-bd5f-440a-b069-8fc345643648\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Boolean\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"bool\",\r\n      \"fullCSharpName\": \"System.Boolean\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 300,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"c04b91b8-2b7e-45b3-ada9-db5ede901672\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Boolean?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"bool?\",\r\n      \"fullCSharpName\": \"System.Boolean?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 301,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"42f3147a-ed9b-47ae-a8ad-aa2fbc51e0ad\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Byte\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"byte\",\r\n      \"fullCSharpName\": \"System.Byte\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 302,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"6a048add-f003-4d73-8471-3b0be963d1ac\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Byte?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"byte?\",\r\n      \"fullCSharpName\": \"System.Byte?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 303,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"c2623267-2a86-444a-a773-89783eae5b30\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Byte[]\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"byte[]\",\r\n      \"fullCSharpName\": \"System.Byte[]\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 328,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"84506afa-d9ad-4bef-9e44-cd00f1f54ce3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Char\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"char\",\r\n      \"fullCSharpName\": \"System.Char\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 310,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"bb4bb082-4d9c-4ce4-aa1b-bfaea278ac92\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Char?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"char?\",\r\n      \"fullCSharpName\": \"System.Char?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 311,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"748c6bfa-5a8e-43d4-823b-3b3be0d8b85a\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.DateTime\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"DateTime\",\r\n      \"fullCSharpName\": \"System.DateTime\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 326,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"4e348b46-7218-4c30-b879-ceee5a59e7bb\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.DateTime?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"DateTime?\",\r\n      \"fullCSharpName\": \"System.DateTime?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 327,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"eb486159-acfa-4499-9b1a-e0ecda5d52a2\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Decimal\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"decimal\",\r\n      \"fullCSharpName\": \"System.Decimal\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 324,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f29ebb5f-17e8-4448-8aec-1a6702380e75\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Decimal?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"decimal?\",\r\n      \"fullCSharpName\": \"System.Decimal?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 325,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"b78657ef-955b-4841-805e-bec1e9d11e37\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Double\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"double\",\r\n      \"fullCSharpName\": \"System.Double\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 322,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f3bbcc4e-d872-4bd1-8429-7082199016d3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Double?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"double?\",\r\n      \"fullCSharpName\": \"System.Double?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 323,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"5832365f-70cb-47f9-92db-46cf7903dffc\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Guid\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"Guid\",\r\n      \"fullCSharpName\": \"System.Guid\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 330,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"ccccbe73-770a-4bc8-905f-2eec41e79736\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Guid?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"Guid?\",\r\n      \"fullCSharpName\": \"System.Guid?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 331,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"db4c6514-17fa-4de1-ab25-a22817844593\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int16\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"short\",\r\n      \"fullCSharpName\": \"System.Int16\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 306,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"2cca4ae1-4272-4ca4-832e-5bc22c486299\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int16?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"short?\",\r\n      \"fullCSharpName\": \"System.Int16?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 307,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"cef0bb72-9079-471b-855c-cfb87b1dc11f\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int32\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"int\",\r\n      \"fullCSharpName\": \"System.Int32\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 312,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"2a3f9560-1645-4e60-8ca5-9713f2ef8363\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int32?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"int?\",\r\n      \"fullCSharpName\": \"System.Int32?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 313,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"29fedecb-21d0-4fa8-bf6b-2539bee71bcc\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int64\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"long\",\r\n      \"fullCSharpName\": \"System.Int64\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 316,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"14c67089-ce4d-4770-8425-a0c41788c3cd\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Int64?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"long?\",\r\n      \"fullCSharpName\": \"System.Int64?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 317,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"01b8cce9-d5e9-4f38-9f29-d5f3927d7407\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.SByte\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"sbyte\",\r\n      \"fullCSharpName\": \"System.SByte\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 304,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"899a07dd-662c-4cd2-8f98-6ec34d739355\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.SByte?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"sbyte?\",\r\n      \"fullCSharpName\": \"System.SByte?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 305,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f76f7f1a-64d9-4c50-a38c-a6b2578f66d3\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Single\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"float\",\r\n      \"fullCSharpName\": \"System.Single\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 320,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"04ae7374-f270-48ba-b429-c7e07bfcde61\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.Single?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"float?\",\r\n      \"fullCSharpName\": \"System.Single?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 321,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"f8f90902-84a6-449f-96fe-6710accc0f7a\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.String\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"string\",\r\n      \"fullCSharpName\": \"System.String\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 329,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"313664ea-0a0b-4016-8c25-a11052d885ad\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt16\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ushort\",\r\n      \"fullCSharpName\": \"System.UInt16\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 308,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"1ee295be-df81-4f21-a17c-31205884958b\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt16?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ushort?\",\r\n      \"fullCSharpName\": \"System.UInt16?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 309,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"a3228a28-dc3d-42f1-81d7-86899822af91\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt32\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"uint\",\r\n      \"fullCSharpName\": \"System.UInt32\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 314,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"133275dc-ec4b-4662-86ee-f6d13b0e8b7e\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt32?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"uint?\",\r\n      \"fullCSharpName\": \"System.UInt32?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 315,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"7292a0b6-ff2d-4c02-b256-63993c2b270a\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt64\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ulong\",\r\n      \"fullCSharpName\": \"System.UInt64\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 318,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"e80c1a1c-99d9-418c-9f66-097c048095bb\"\r\n    },\r\n    {\r\n      \"computeAccountName\": \"testadlac13926\",\r\n      \"databaseName\": \"master\",\r\n      \"schemaName\": \"sys\",\r\n      \"typeName\": \"System.UInt64?\",\r\n      \"typeFamily\": \"C#\",\r\n      \"cSharpName\": \"ulong?\",\r\n      \"fullCSharpName\": \"System.UInt64?\",\r\n      \"systemTypeId\": 100,\r\n      \"userTypeId\": 319,\r\n      \"schemaId\": 0,\r\n      \"principalId\": null,\r\n      \"isNullable\": false,\r\n      \"isUserDefined\": false,\r\n      \"isAssemblyType\": false,\r\n      \"isTableType\": false,\r\n      \"isComplexType\": false,\r\n      \"version\": \"48cbabb8-03fc-4f00-bad6-0641a7f562c7\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; odata.metadata=minimal; odata.streaming=true"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "010852c8-ad13-486a-8c9c-3f96dc44604a"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 11 Dec 2015 18:18:06 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0353d26d-e338-469a-a87a-bd3507471155"
+  }
+}

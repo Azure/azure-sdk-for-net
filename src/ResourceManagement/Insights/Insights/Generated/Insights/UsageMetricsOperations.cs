@@ -233,6 +233,13 @@ namespace Microsoft.Azure.Insights
                                         usageMetricInstance.CurrentValue = currentValueInstance;
                                     }
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        usageMetricInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken limitValue = valueValue["limit"];
                                     if (limitValue != null && limitValue.Type != JTokenType.Null)
                                     {

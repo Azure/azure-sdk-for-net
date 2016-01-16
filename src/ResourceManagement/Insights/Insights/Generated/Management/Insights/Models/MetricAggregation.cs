@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _scheduledTransferPeriod;
         
         /// <summary>
-        /// Optional. Specifies the time grain (aggregation interval or
+        /// Optional. Gets or sets the time grain (aggregation interval or
         /// frequency).
         /// </summary>
         public TimeSpan ScheduledTransferPeriod

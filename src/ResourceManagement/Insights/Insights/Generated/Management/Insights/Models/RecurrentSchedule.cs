@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<string> _days;
         
         /// <summary>
-        /// Optional. A collection of days that the profile takes effect on.
+        /// Optional. Gets or sets the collection of days that the profile
+        /// takes effect on.
         /// </summary>
         public IList<string> Days
         {
@@ -45,8 +46,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<int> _hours;
         
         /// <summary>
-        /// Optional. A collection of hours at which the profile takes effect
-        /// at.
+        /// Optional. Gets or sets the collection of hours at which the profile
+        /// takes effect at.
         /// </summary>
         public IList<int> Hours
         {
@@ -57,8 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<int> _minutes;
         
         /// <summary>
-        /// Optional. A collection of minutes at which the profile takes effect
-        /// at.
+        /// Optional. Gets or sets the collection of minutes at which the
+        /// profile takes effect at.
         /// </summary>
         public IList<int> Minutes
         {
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _timeZone;
         
         /// <summary>
-        /// Optional. The time zone for the hours of the profile.
+        /// Optional. Gets or sets the time zone for the hours of the profile.
         /// </summary>
         public string TimeZone
         {

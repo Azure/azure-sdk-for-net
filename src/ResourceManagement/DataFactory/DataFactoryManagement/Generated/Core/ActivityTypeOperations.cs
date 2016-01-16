@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(activityTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -231,11 +231,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -369,7 +369,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(parameters.ActivityType.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(activityTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -835,7 +835,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -954,7 +954,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(parameters.ActivityTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             queryParameters.Add("scope=" + Uri.EscapeDataString(parameters.RegistrationScope));
             queryParameters.Add("resolved=" + Uri.EscapeDataString(parameters.Resolved.ToString().ToLower()));
             if (queryParameters.Count > 0)
@@ -1178,7 +1178,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/activityTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (parameters.ActivityTypeName != null)
             {
                 queryParameters.Add("name=" + Uri.EscapeDataString(parameters.ActivityTypeName));

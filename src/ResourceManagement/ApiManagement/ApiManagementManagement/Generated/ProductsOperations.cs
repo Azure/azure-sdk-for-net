@@ -218,26 +218,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     productCreateParametersValue["subscriptionsLimit"] = parameters.ProductContract.SubscriptionsLimit.Value;
                 }
                 
-                if (parameters.ProductContract.SubscriptionPeriod != null)
-                {
-                    JObject subscriptionPeriodValue = new JObject();
-                    productCreateParametersValue["subscriptionPeriod"] = subscriptionPeriodValue;
-                    
-                    subscriptionPeriodValue["value"] = parameters.ProductContract.SubscriptionPeriod.Value;
-                    
-                    subscriptionPeriodValue["interval"] = parameters.ProductContract.SubscriptionPeriod.Interval.ToString();
-                }
-                
-                if (parameters.ProductContract.NotificationPeriod != null)
-                {
-                    JObject notificationPeriodValue = new JObject();
-                    productCreateParametersValue["notificationPeriod"] = notificationPeriodValue;
-                    
-                    notificationPeriodValue["value"] = parameters.ProductContract.NotificationPeriod.Value;
-                    
-                    notificationPeriodValue["interval"] = parameters.ProductContract.NotificationPeriod.Interval.ToString();
-                }
-                
                 productCreateParametersValue["state"] = parameters.ProductContract.State.ToString();
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -661,48 +641,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                                 valueInstance.SubscriptionsLimit = subscriptionsLimitInstance;
                             }
                             
-                            JToken subscriptionPeriodValue = responseDoc["subscriptionPeriod"];
-                            if (subscriptionPeriodValue != null && subscriptionPeriodValue.Type != JTokenType.Null)
-                            {
-                                PeriodContract subscriptionPeriodInstance = new PeriodContract();
-                                valueInstance.SubscriptionPeriod = subscriptionPeriodInstance;
-                                
-                                JToken valueValue = subscriptionPeriodValue["value"];
-                                if (valueValue != null && valueValue.Type != JTokenType.Null)
-                                {
-                                    int valueInstance2 = ((int)valueValue);
-                                    subscriptionPeriodInstance.Value = valueInstance2;
-                                }
-                                
-                                JToken intervalValue = subscriptionPeriodValue["interval"];
-                                if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                                {
-                                    PeriodIntervalContract intervalInstance = ((PeriodIntervalContract)Enum.Parse(typeof(PeriodIntervalContract), ((string)intervalValue), true));
-                                    subscriptionPeriodInstance.Interval = intervalInstance;
-                                }
-                            }
-                            
-                            JToken notificationPeriodValue = responseDoc["notificationPeriod"];
-                            if (notificationPeriodValue != null && notificationPeriodValue.Type != JTokenType.Null)
-                            {
-                                PeriodContract notificationPeriodInstance = new PeriodContract();
-                                valueInstance.NotificationPeriod = notificationPeriodInstance;
-                                
-                                JToken valueValue2 = notificationPeriodValue["value"];
-                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                {
-                                    int valueInstance3 = ((int)valueValue2);
-                                    notificationPeriodInstance.Value = valueInstance3;
-                                }
-                                
-                                JToken intervalValue2 = notificationPeriodValue["interval"];
-                                if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
-                                {
-                                    PeriodIntervalContract intervalInstance2 = ((PeriodIntervalContract)Enum.Parse(typeof(PeriodIntervalContract), ((string)intervalValue2), true));
-                                    notificationPeriodInstance.Interval = intervalInstance2;
-                                }
-                            }
-                            
                             JToken stateValue = responseDoc["state"];
                             if (stateValue != null && stateValue.Type != JTokenType.Null)
                             {
@@ -954,48 +892,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         productContractInstance.SubscriptionsLimit = subscriptionsLimitInstance;
                                     }
                                     
-                                    JToken subscriptionPeriodValue = valueValue["subscriptionPeriod"];
-                                    if (subscriptionPeriodValue != null && subscriptionPeriodValue.Type != JTokenType.Null)
-                                    {
-                                        PeriodContract subscriptionPeriodInstance = new PeriodContract();
-                                        productContractInstance.SubscriptionPeriod = subscriptionPeriodInstance;
-                                        
-                                        JToken valueValue2 = subscriptionPeriodValue["value"];
-                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                        {
-                                            int valueInstance = ((int)valueValue2);
-                                            subscriptionPeriodInstance.Value = valueInstance;
-                                        }
-                                        
-                                        JToken intervalValue = subscriptionPeriodValue["interval"];
-                                        if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                                        {
-                                            PeriodIntervalContract intervalInstance = ((PeriodIntervalContract)Enum.Parse(typeof(PeriodIntervalContract), ((string)intervalValue), true));
-                                            subscriptionPeriodInstance.Interval = intervalInstance;
-                                        }
-                                    }
-                                    
-                                    JToken notificationPeriodValue = valueValue["notificationPeriod"];
-                                    if (notificationPeriodValue != null && notificationPeriodValue.Type != JTokenType.Null)
-                                    {
-                                        PeriodContract notificationPeriodInstance = new PeriodContract();
-                                        productContractInstance.NotificationPeriod = notificationPeriodInstance;
-                                        
-                                        JToken valueValue3 = notificationPeriodValue["value"];
-                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
-                                        {
-                                            int valueInstance2 = ((int)valueValue3);
-                                            notificationPeriodInstance.Value = valueInstance2;
-                                        }
-                                        
-                                        JToken intervalValue2 = notificationPeriodValue["interval"];
-                                        if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
-                                        {
-                                            PeriodIntervalContract intervalInstance2 = ((PeriodIntervalContract)Enum.Parse(typeof(PeriodIntervalContract), ((string)intervalValue2), true));
-                                            notificationPeriodInstance.Interval = intervalInstance2;
-                                        }
-                                    }
-                                    
                                     JToken stateValue = valueValue["state"];
                                     if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
@@ -1201,48 +1097,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                                     {
                                         int subscriptionsLimitInstance = ((int)subscriptionsLimitValue);
                                         productContractInstance.SubscriptionsLimit = subscriptionsLimitInstance;
-                                    }
-                                    
-                                    JToken subscriptionPeriodValue = valueValue["subscriptionPeriod"];
-                                    if (subscriptionPeriodValue != null && subscriptionPeriodValue.Type != JTokenType.Null)
-                                    {
-                                        PeriodContract subscriptionPeriodInstance = new PeriodContract();
-                                        productContractInstance.SubscriptionPeriod = subscriptionPeriodInstance;
-                                        
-                                        JToken valueValue2 = subscriptionPeriodValue["value"];
-                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                        {
-                                            int valueInstance = ((int)valueValue2);
-                                            subscriptionPeriodInstance.Value = valueInstance;
-                                        }
-                                        
-                                        JToken intervalValue = subscriptionPeriodValue["interval"];
-                                        if (intervalValue != null && intervalValue.Type != JTokenType.Null)
-                                        {
-                                            PeriodIntervalContract intervalInstance = ((PeriodIntervalContract)Enum.Parse(typeof(PeriodIntervalContract), ((string)intervalValue), true));
-                                            subscriptionPeriodInstance.Interval = intervalInstance;
-                                        }
-                                    }
-                                    
-                                    JToken notificationPeriodValue = valueValue["notificationPeriod"];
-                                    if (notificationPeriodValue != null && notificationPeriodValue.Type != JTokenType.Null)
-                                    {
-                                        PeriodContract notificationPeriodInstance = new PeriodContract();
-                                        productContractInstance.NotificationPeriod = notificationPeriodInstance;
-                                        
-                                        JToken valueValue3 = notificationPeriodValue["value"];
-                                        if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
-                                        {
-                                            int valueInstance2 = ((int)valueValue3);
-                                            notificationPeriodInstance.Value = valueInstance2;
-                                        }
-                                        
-                                        JToken intervalValue2 = notificationPeriodValue["interval"];
-                                        if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
-                                        {
-                                            PeriodIntervalContract intervalInstance2 = ((PeriodIntervalContract)Enum.Parse(typeof(PeriodIntervalContract), ((string)intervalValue2), true));
-                                            notificationPeriodInstance.Interval = intervalInstance2;
-                                        }
                                     }
                                     
                                     JToken stateValue = valueValue["state"];
@@ -1451,26 +1305,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (parameters.SubscriptionsLimit != null)
                 {
                     productUpdateParametersValue["subscriptionsLimit"] = parameters.SubscriptionsLimit.Value;
-                }
-                
-                if (parameters.SubscriptionPeriod != null)
-                {
-                    JObject subscriptionPeriodValue = new JObject();
-                    productUpdateParametersValue["subscriptionPeriod"] = subscriptionPeriodValue;
-                    
-                    subscriptionPeriodValue["value"] = parameters.SubscriptionPeriod.Value;
-                    
-                    subscriptionPeriodValue["interval"] = parameters.SubscriptionPeriod.Interval.ToString();
-                }
-                
-                if (parameters.NotificationPeriod != null)
-                {
-                    JObject notificationPeriodValue = new JObject();
-                    productUpdateParametersValue["notificationPeriod"] = notificationPeriodValue;
-                    
-                    notificationPeriodValue["value"] = parameters.NotificationPeriod.Value;
-                    
-                    notificationPeriodValue["interval"] = parameters.NotificationPeriod.Interval.ToString();
                 }
                 
                 if (parameters.State != null)

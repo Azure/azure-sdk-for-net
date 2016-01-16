@@ -7,8 +7,8 @@
       "properties": {
         "storageAccounts": [
           {
-            "accountName": "$EncryptedStringForTesting",
-            "accountKey": "$EncryptedStringForTesting"
+            "accountName": "exchangeevent",
+            "accountKey": "$TestStringToBeReplaced"
           }
         ],
         "container": "state",

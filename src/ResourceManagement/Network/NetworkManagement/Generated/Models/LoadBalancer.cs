@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._frontendIpConfigurations = value; }
         }
         
+        private IList<InboundNatPool> _inboundNatPools;
+        
+        /// <summary>
+        /// Optional. Gets or sets inbound NAT pools
+        /// </summary>
+        public IList<InboundNatPool> InboundNatPools
+        {
+            get { return this._inboundNatPools; }
+            set { this._inboundNatPools = value; }
+        }
+        
         private IList<InboundNatRule> _inboundNatRules;
         
         /// <summary>
@@ -74,6 +85,17 @@ namespace Microsoft.Azure.Management.Network.Models
         {
             get { return this._loadBalancingRules; }
             set { this._loadBalancingRules = value; }
+        }
+        
+        private IList<OutboundNatRule> _outboundNatRules;
+        
+        /// <summary>
+        /// Optional. Gets or sets outbound NAT rules
+        /// </summary>
+        public IList<OutboundNatRule> OutboundNatRules
+        {
+            get { return this._outboundNatRules; }
+            set { this._outboundNatRules = value; }
         }
         
         private IList<Probe> _probes;
@@ -118,8 +140,10 @@ namespace Microsoft.Azure.Management.Network.Models
         {
             this.BackendAddressPools = new LazyList<BackendAddressPool>();
             this.FrontendIpConfigurations = new LazyList<FrontendIpConfiguration>();
+            this.InboundNatPools = new LazyList<InboundNatPool>();
             this.InboundNatRules = new LazyList<InboundNatRule>();
             this.LoadBalancingRules = new LazyList<LoadBalancingRule>();
+            this.OutboundNatRules = new LazyList<OutboundNatRule>();
             this.Probes = new LazyList<Probe>();
         }
         

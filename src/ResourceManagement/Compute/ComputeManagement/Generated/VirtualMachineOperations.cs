@@ -317,6 +317,32 @@ namespace Microsoft.Azure.Management.Compute
                     {
                         throw new ArgumentNullException("parameters.StorageProfile.OSDisk.CreateOption");
                     }
+                    if (parameters.StorageProfile.OSDisk.EncryptionSettings != null)
+                    {
+                        if (parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey == null)
+                        {
+                            throw new ArgumentNullException("parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey");
+                        }
+                        if (parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey.SecretUrl == null)
+                        {
+                            throw new ArgumentNullException("parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey.SecretUrl");
+                        }
+                        if (parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey.SourceVault == null)
+                        {
+                            throw new ArgumentNullException("parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey.SourceVault");
+                        }
+                        if (parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey != null)
+                        {
+                            if (parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey.KeyUrl == null)
+                            {
+                                throw new ArgumentNullException("parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey.KeyUrl");
+                            }
+                            if (parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey.SourceVault == null)
+                            {
+                                throw new ArgumentNullException("parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey.SourceVault");
+                            }
+                        }
+                    }
                     if (parameters.StorageProfile.OSDisk.Name == null)
                     {
                         throw new ArgumentNullException("parameters.StorageProfile.OSDisk.Name");
@@ -477,6 +503,41 @@ namespace Microsoft.Azure.Management.Compute
                         if (parameters.StorageProfile.OSDisk.OperatingSystemType != null)
                         {
                             osDiskValue["osType"] = parameters.StorageProfile.OSDisk.OperatingSystemType;
+                        }
+                        
+                        if (parameters.StorageProfile.OSDisk.EncryptionSettings != null)
+                        {
+                            JObject encryptionSettingsValue = new JObject();
+                            osDiskValue["encryptionSettings"] = encryptionSettingsValue;
+                            
+                            JObject diskEncryptionKeyValue = new JObject();
+                            encryptionSettingsValue["diskEncryptionKey"] = diskEncryptionKeyValue;
+                            
+                            diskEncryptionKeyValue["secretUrl"] = parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey.SecretUrl;
+                            
+                            JObject sourceVaultValue = new JObject();
+                            diskEncryptionKeyValue["sourceVault"] = sourceVaultValue;
+                            
+                            if (parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey.SourceVault.ReferenceUri != null)
+                            {
+                                sourceVaultValue["id"] = parameters.StorageProfile.OSDisk.EncryptionSettings.DiskEncryptionKey.SourceVault.ReferenceUri;
+                            }
+                            
+                            if (parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey != null)
+                            {
+                                JObject keyEncryptionKeyValue = new JObject();
+                                encryptionSettingsValue["keyEncryptionKey"] = keyEncryptionKeyValue;
+                                
+                                keyEncryptionKeyValue["keyUrl"] = parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey.KeyUrl;
+                                
+                                JObject sourceVaultValue2 = new JObject();
+                                keyEncryptionKeyValue["sourceVault"] = sourceVaultValue2;
+                                
+                                if (parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey.SourceVault.ReferenceUri != null)
+                                {
+                                    sourceVaultValue2["id"] = parameters.StorageProfile.OSDisk.EncryptionSettings.KeyEncryptionKey.SourceVault.ReferenceUri;
+                                }
+                            }
                         }
                         
                         osDiskValue["name"] = parameters.StorageProfile.OSDisk.Name;
@@ -724,12 +785,12 @@ namespace Microsoft.Azure.Management.Compute
                             
                             if (secretsItem.SourceVault != null)
                             {
-                                JObject sourceVaultValue = new JObject();
-                                vaultSecretGroupValue["sourceVault"] = sourceVaultValue;
+                                JObject sourceVaultValue3 = new JObject();
+                                vaultSecretGroupValue["sourceVault"] = sourceVaultValue3;
                                 
                                 if (secretsItem.SourceVault.ReferenceUri != null)
                                 {
-                                    sourceVaultValue["id"] = secretsItem.SourceVault.ReferenceUri;
+                                    sourceVaultValue3["id"] = secretsItem.SourceVault.ReferenceUri;
                                 }
                             }
                             
@@ -1521,6 +1582,69 @@ namespace Microsoft.Azure.Management.Compute
                                             osDiskInstance.OperatingSystemType = osTypeInstance;
                                         }
                                         
+                                        JToken encryptionSettingsValue2 = osDiskValue2["encryptionSettings"];
+                                        if (encryptionSettingsValue2 != null && encryptionSettingsValue2.Type != JTokenType.Null)
+                                        {
+                                            DiskEncryptionSettings encryptionSettingsInstance = new DiskEncryptionSettings();
+                                            osDiskInstance.EncryptionSettings = encryptionSettingsInstance;
+                                            
+                                            JToken diskEncryptionKeyValue2 = encryptionSettingsValue2["diskEncryptionKey"];
+                                            if (diskEncryptionKeyValue2 != null && diskEncryptionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                KeyVaultSecretReference diskEncryptionKeyInstance = new KeyVaultSecretReference();
+                                                encryptionSettingsInstance.DiskEncryptionKey = diskEncryptionKeyInstance;
+                                                
+                                                JToken secretUrlValue = diskEncryptionKeyValue2["secretUrl"];
+                                                if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretUrlInstance = ((string)secretUrlValue);
+                                                    diskEncryptionKeyInstance.SecretUrl = secretUrlInstance;
+                                                }
+                                                
+                                                JToken sourceVaultValue4 = diskEncryptionKeyValue2["sourceVault"];
+                                                if (sourceVaultValue4 != null && sourceVaultValue4.Type != JTokenType.Null)
+                                                {
+                                                    SourceVaultReference sourceVaultInstance = new SourceVaultReference();
+                                                    diskEncryptionKeyInstance.SourceVault = sourceVaultInstance;
+                                                    
+                                                    JToken idValue = sourceVaultValue4["id"];
+                                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance = ((string)idValue);
+                                                        sourceVaultInstance.ReferenceUri = idInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken keyEncryptionKeyValue2 = encryptionSettingsValue2["keyEncryptionKey"];
+                                            if (keyEncryptionKeyValue2 != null && keyEncryptionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                KeyVaultKeyReference keyEncryptionKeyInstance = new KeyVaultKeyReference();
+                                                encryptionSettingsInstance.KeyEncryptionKey = keyEncryptionKeyInstance;
+                                                
+                                                JToken keyUrlValue = keyEncryptionKeyValue2["keyUrl"];
+                                                if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string keyUrlInstance = ((string)keyUrlValue);
+                                                    keyEncryptionKeyInstance.KeyUrl = keyUrlInstance;
+                                                }
+                                                
+                                                JToken sourceVaultValue5 = keyEncryptionKeyValue2["sourceVault"];
+                                                if (sourceVaultValue5 != null && sourceVaultValue5.Type != JTokenType.Null)
+                                                {
+                                                    SourceVaultReference sourceVaultInstance2 = new SourceVaultReference();
+                                                    keyEncryptionKeyInstance.SourceVault = sourceVaultInstance2;
+                                                    
+                                                    JToken idValue2 = sourceVaultValue5["id"];
+                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance2 = ((string)idValue2);
+                                                        sourceVaultInstance2.ReferenceUri = idInstance2;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken nameValue2 = osDiskValue2["name"];
                                         if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
@@ -1836,17 +1960,17 @@ namespace Microsoft.Azure.Management.Compute
                                             VaultSecretGroup vaultSecretGroupInstance = new VaultSecretGroup();
                                             osProfileInstance.Secrets.Add(vaultSecretGroupInstance);
                                             
-                                            JToken sourceVaultValue2 = secretsValue["sourceVault"];
-                                            if (sourceVaultValue2 != null && sourceVaultValue2.Type != JTokenType.Null)
+                                            JToken sourceVaultValue6 = secretsValue["sourceVault"];
+                                            if (sourceVaultValue6 != null && sourceVaultValue6.Type != JTokenType.Null)
                                             {
-                                                SourceVaultReference sourceVaultInstance = new SourceVaultReference();
-                                                vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
+                                                SourceVaultReference sourceVaultInstance3 = new SourceVaultReference();
+                                                vaultSecretGroupInstance.SourceVault = sourceVaultInstance3;
                                                 
-                                                JToken idValue = sourceVaultValue2["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                JToken idValue3 = sourceVaultValue6["id"];
+                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance = ((string)idValue);
-                                                    sourceVaultInstance.ReferenceUri = idInstance;
+                                                    string idInstance3 = ((string)idValue3);
+                                                    sourceVaultInstance3.ReferenceUri = idInstance3;
                                                 }
                                             }
                                             
@@ -1902,11 +2026,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue2 = networkInterfacesValue["id"];
-                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            JToken idValue4 = networkInterfacesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance2 = ((string)idValue2);
-                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
+                                                string idInstance4 = ((string)idValue4);
+                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance4;
                                             }
                                         }
                                     }
@@ -1946,11 +2070,11 @@ namespace Microsoft.Azure.Management.Compute
                                     AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                     virtualMachineInstance.AvailabilitySetReference = availabilitySetInstance;
                                     
-                                    JToken idValue3 = availabilitySetValue2["id"];
-                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    JToken idValue5 = availabilitySetValue2["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance3 = ((string)idValue3);
-                                        availabilitySetInstance.ReferenceUri = idInstance3;
+                                        string idInstance5 = ((string)idValue5);
+                                        availabilitySetInstance.ReferenceUri = idInstance5;
                                     }
                                 }
                                 
@@ -2544,11 +2668,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue4 = resourcesValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue6 = resourcesValue["id"];
+                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        virtualMachineExtensionJsonInstance.Id = idInstance4;
+                                        string idInstance6 = ((string)idValue6);
+                                        virtualMachineExtensionJsonInstance.Id = idInstance6;
                                     }
                                     
                                     JToken nameValue7 = resourcesValue["name"];
@@ -2585,11 +2709,11 @@ namespace Microsoft.Azure.Management.Compute
                                 }
                             }
                             
-                            JToken idValue5 = responseDoc["id"];
-                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                            JToken idValue7 = responseDoc["id"];
+                            if (idValue7 != null && idValue7.Type != JTokenType.Null)
                             {
-                                string idInstance5 = ((string)idValue5);
-                                virtualMachineInstance.Id = idInstance5;
+                                string idInstance7 = ((string)idValue7);
+                                virtualMachineInstance.Id = idInstance7;
                             }
                             
                             JToken nameValue8 = responseDoc["name"];
@@ -2942,11 +3066,11 @@ namespace Microsoft.Azure.Management.Compute
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -3471,7 +3595,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while (result.Status == ComputeOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3531,7 +3655,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while (result.Status == ComputeOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3592,7 +3716,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while (result.Status == ComputeOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3655,7 +3779,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4062,6 +4186,69 @@ namespace Microsoft.Azure.Management.Compute
                                             osDiskInstance.OperatingSystemType = osTypeInstance;
                                         }
                                         
+                                        JToken encryptionSettingsValue = osDiskValue["encryptionSettings"];
+                                        if (encryptionSettingsValue != null && encryptionSettingsValue.Type != JTokenType.Null)
+                                        {
+                                            DiskEncryptionSettings encryptionSettingsInstance = new DiskEncryptionSettings();
+                                            osDiskInstance.EncryptionSettings = encryptionSettingsInstance;
+                                            
+                                            JToken diskEncryptionKeyValue = encryptionSettingsValue["diskEncryptionKey"];
+                                            if (diskEncryptionKeyValue != null && diskEncryptionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                KeyVaultSecretReference diskEncryptionKeyInstance = new KeyVaultSecretReference();
+                                                encryptionSettingsInstance.DiskEncryptionKey = diskEncryptionKeyInstance;
+                                                
+                                                JToken secretUrlValue = diskEncryptionKeyValue["secretUrl"];
+                                                if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretUrlInstance = ((string)secretUrlValue);
+                                                    diskEncryptionKeyInstance.SecretUrl = secretUrlInstance;
+                                                }
+                                                
+                                                JToken sourceVaultValue = diskEncryptionKeyValue["sourceVault"];
+                                                if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                {
+                                                    SourceVaultReference sourceVaultInstance = new SourceVaultReference();
+                                                    diskEncryptionKeyInstance.SourceVault = sourceVaultInstance;
+                                                    
+                                                    JToken idValue = sourceVaultValue["id"];
+                                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance = ((string)idValue);
+                                                        sourceVaultInstance.ReferenceUri = idInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken keyEncryptionKeyValue = encryptionSettingsValue["keyEncryptionKey"];
+                                            if (keyEncryptionKeyValue != null && keyEncryptionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                KeyVaultKeyReference keyEncryptionKeyInstance = new KeyVaultKeyReference();
+                                                encryptionSettingsInstance.KeyEncryptionKey = keyEncryptionKeyInstance;
+                                                
+                                                JToken keyUrlValue = keyEncryptionKeyValue["keyUrl"];
+                                                if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string keyUrlInstance = ((string)keyUrlValue);
+                                                    keyEncryptionKeyInstance.KeyUrl = keyUrlInstance;
+                                                }
+                                                
+                                                JToken sourceVaultValue2 = keyEncryptionKeyValue["sourceVault"];
+                                                if (sourceVaultValue2 != null && sourceVaultValue2.Type != JTokenType.Null)
+                                                {
+                                                    SourceVaultReference sourceVaultInstance2 = new SourceVaultReference();
+                                                    keyEncryptionKeyInstance.SourceVault = sourceVaultInstance2;
+                                                    
+                                                    JToken idValue2 = sourceVaultValue2["id"];
+                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance2 = ((string)idValue2);
+                                                        sourceVaultInstance2.ReferenceUri = idInstance2;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken nameValue2 = osDiskValue["name"];
                                         if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
@@ -4377,17 +4564,17 @@ namespace Microsoft.Azure.Management.Compute
                                             VaultSecretGroup vaultSecretGroupInstance = new VaultSecretGroup();
                                             osProfileInstance.Secrets.Add(vaultSecretGroupInstance);
                                             
-                                            JToken sourceVaultValue = secretsValue["sourceVault"];
-                                            if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                            JToken sourceVaultValue3 = secretsValue["sourceVault"];
+                                            if (sourceVaultValue3 != null && sourceVaultValue3.Type != JTokenType.Null)
                                             {
-                                                SourceVaultReference sourceVaultInstance = new SourceVaultReference();
-                                                vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
+                                                SourceVaultReference sourceVaultInstance3 = new SourceVaultReference();
+                                                vaultSecretGroupInstance.SourceVault = sourceVaultInstance3;
                                                 
-                                                JToken idValue = sourceVaultValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                JToken idValue3 = sourceVaultValue3["id"];
+                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance = ((string)idValue);
-                                                    sourceVaultInstance.ReferenceUri = idInstance;
+                                                    string idInstance3 = ((string)idValue3);
+                                                    sourceVaultInstance3.ReferenceUri = idInstance3;
                                                 }
                                             }
                                             
@@ -4443,11 +4630,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue2 = networkInterfacesValue["id"];
-                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            JToken idValue4 = networkInterfacesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance2 = ((string)idValue2);
-                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
+                                                string idInstance4 = ((string)idValue4);
+                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance4;
                                             }
                                         }
                                     }
@@ -4487,11 +4674,11 @@ namespace Microsoft.Azure.Management.Compute
                                     AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                     virtualMachineInstance.AvailabilitySetReference = availabilitySetInstance;
                                     
-                                    JToken idValue3 = availabilitySetValue["id"];
-                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    JToken idValue5 = availabilitySetValue["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance3 = ((string)idValue3);
-                                        availabilitySetInstance.ReferenceUri = idInstance3;
+                                        string idInstance5 = ((string)idValue5);
+                                        availabilitySetInstance.ReferenceUri = idInstance5;
                                     }
                                 }
                                 
@@ -5085,11 +5272,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue4 = resourcesValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue6 = resourcesValue["id"];
+                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        virtualMachineExtensionJsonInstance.Id = idInstance4;
+                                        string idInstance6 = ((string)idValue6);
+                                        virtualMachineExtensionJsonInstance.Id = idInstance6;
                                     }
                                     
                                     JToken nameValue7 = resourcesValue["name"];
@@ -5126,11 +5313,11 @@ namespace Microsoft.Azure.Management.Compute
                                 }
                             }
                             
-                            JToken idValue5 = responseDoc["id"];
-                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                            JToken idValue7 = responseDoc["id"];
+                            if (idValue7 != null && idValue7.Type != JTokenType.Null)
                             {
-                                string idInstance5 = ((string)idValue5);
-                                virtualMachineInstance.Id = idInstance5;
+                                string idInstance7 = ((string)idValue7);
+                                virtualMachineInstance.Id = idInstance7;
                             }
                             
                             JToken nameValue8 = responseDoc["name"];
@@ -5435,6 +5622,69 @@ namespace Microsoft.Azure.Management.Compute
                                             osDiskInstance.OperatingSystemType = osTypeInstance;
                                         }
                                         
+                                        JToken encryptionSettingsValue = osDiskValue["encryptionSettings"];
+                                        if (encryptionSettingsValue != null && encryptionSettingsValue.Type != JTokenType.Null)
+                                        {
+                                            DiskEncryptionSettings encryptionSettingsInstance = new DiskEncryptionSettings();
+                                            osDiskInstance.EncryptionSettings = encryptionSettingsInstance;
+                                            
+                                            JToken diskEncryptionKeyValue = encryptionSettingsValue["diskEncryptionKey"];
+                                            if (diskEncryptionKeyValue != null && diskEncryptionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                KeyVaultSecretReference diskEncryptionKeyInstance = new KeyVaultSecretReference();
+                                                encryptionSettingsInstance.DiskEncryptionKey = diskEncryptionKeyInstance;
+                                                
+                                                JToken secretUrlValue = diskEncryptionKeyValue["secretUrl"];
+                                                if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretUrlInstance = ((string)secretUrlValue);
+                                                    diskEncryptionKeyInstance.SecretUrl = secretUrlInstance;
+                                                }
+                                                
+                                                JToken sourceVaultValue = diskEncryptionKeyValue["sourceVault"];
+                                                if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                {
+                                                    SourceVaultReference sourceVaultInstance = new SourceVaultReference();
+                                                    diskEncryptionKeyInstance.SourceVault = sourceVaultInstance;
+                                                    
+                                                    JToken idValue = sourceVaultValue["id"];
+                                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance = ((string)idValue);
+                                                        sourceVaultInstance.ReferenceUri = idInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken keyEncryptionKeyValue = encryptionSettingsValue["keyEncryptionKey"];
+                                            if (keyEncryptionKeyValue != null && keyEncryptionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                KeyVaultKeyReference keyEncryptionKeyInstance = new KeyVaultKeyReference();
+                                                encryptionSettingsInstance.KeyEncryptionKey = keyEncryptionKeyInstance;
+                                                
+                                                JToken keyUrlValue = keyEncryptionKeyValue["keyUrl"];
+                                                if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string keyUrlInstance = ((string)keyUrlValue);
+                                                    keyEncryptionKeyInstance.KeyUrl = keyUrlInstance;
+                                                }
+                                                
+                                                JToken sourceVaultValue2 = keyEncryptionKeyValue["sourceVault"];
+                                                if (sourceVaultValue2 != null && sourceVaultValue2.Type != JTokenType.Null)
+                                                {
+                                                    SourceVaultReference sourceVaultInstance2 = new SourceVaultReference();
+                                                    keyEncryptionKeyInstance.SourceVault = sourceVaultInstance2;
+                                                    
+                                                    JToken idValue2 = sourceVaultValue2["id"];
+                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance2 = ((string)idValue2);
+                                                        sourceVaultInstance2.ReferenceUri = idInstance2;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken nameValue2 = osDiskValue["name"];
                                         if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
@@ -5750,17 +6000,17 @@ namespace Microsoft.Azure.Management.Compute
                                             VaultSecretGroup vaultSecretGroupInstance = new VaultSecretGroup();
                                             osProfileInstance.Secrets.Add(vaultSecretGroupInstance);
                                             
-                                            JToken sourceVaultValue = secretsValue["sourceVault"];
-                                            if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                            JToken sourceVaultValue3 = secretsValue["sourceVault"];
+                                            if (sourceVaultValue3 != null && sourceVaultValue3.Type != JTokenType.Null)
                                             {
-                                                SourceVaultReference sourceVaultInstance = new SourceVaultReference();
-                                                vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
+                                                SourceVaultReference sourceVaultInstance3 = new SourceVaultReference();
+                                                vaultSecretGroupInstance.SourceVault = sourceVaultInstance3;
                                                 
-                                                JToken idValue = sourceVaultValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                JToken idValue3 = sourceVaultValue3["id"];
+                                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance = ((string)idValue);
-                                                    sourceVaultInstance.ReferenceUri = idInstance;
+                                                    string idInstance3 = ((string)idValue3);
+                                                    sourceVaultInstance3.ReferenceUri = idInstance3;
                                                 }
                                             }
                                             
@@ -5816,11 +6066,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue2 = networkInterfacesValue["id"];
-                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            JToken idValue4 = networkInterfacesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance2 = ((string)idValue2);
-                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
+                                                string idInstance4 = ((string)idValue4);
+                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance4;
                                             }
                                         }
                                     }
@@ -5860,11 +6110,11 @@ namespace Microsoft.Azure.Management.Compute
                                     AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                     virtualMachineInstance.AvailabilitySetReference = availabilitySetInstance;
                                     
-                                    JToken idValue3 = availabilitySetValue["id"];
-                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    JToken idValue5 = availabilitySetValue["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance3 = ((string)idValue3);
-                                        availabilitySetInstance.ReferenceUri = idInstance3;
+                                        string idInstance5 = ((string)idValue5);
+                                        availabilitySetInstance.ReferenceUri = idInstance5;
                                     }
                                 }
                                 
@@ -6458,11 +6708,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue4 = resourcesValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue6 = resourcesValue["id"];
+                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        virtualMachineExtensionJsonInstance.Id = idInstance4;
+                                        string idInstance6 = ((string)idValue6);
+                                        virtualMachineExtensionJsonInstance.Id = idInstance6;
                                     }
                                     
                                     JToken nameValue7 = resourcesValue["name"];
@@ -6499,11 +6749,11 @@ namespace Microsoft.Azure.Management.Compute
                                 }
                             }
                             
-                            JToken idValue5 = responseDoc["id"];
-                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                            JToken idValue7 = responseDoc["id"];
+                            if (idValue7 != null && idValue7.Type != JTokenType.Null)
                             {
-                                string idInstance5 = ((string)idValue5);
-                                virtualMachineInstance.Id = idInstance5;
+                                string idInstance7 = ((string)idValue7);
+                                virtualMachineInstance.Id = idInstance7;
                             }
                             
                             JToken nameValue8 = responseDoc["name"];
@@ -6800,6 +7050,69 @@ namespace Microsoft.Azure.Management.Compute
                                                 {
                                                     string osTypeInstance = ((string)osTypeValue);
                                                     osDiskInstance.OperatingSystemType = osTypeInstance;
+                                                }
+                                                
+                                                JToken encryptionSettingsValue = osDiskValue["encryptionSettings"];
+                                                if (encryptionSettingsValue != null && encryptionSettingsValue.Type != JTokenType.Null)
+                                                {
+                                                    DiskEncryptionSettings encryptionSettingsInstance = new DiskEncryptionSettings();
+                                                    osDiskInstance.EncryptionSettings = encryptionSettingsInstance;
+                                                    
+                                                    JToken diskEncryptionKeyValue = encryptionSettingsValue["diskEncryptionKey"];
+                                                    if (diskEncryptionKeyValue != null && diskEncryptionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        KeyVaultSecretReference diskEncryptionKeyInstance = new KeyVaultSecretReference();
+                                                        encryptionSettingsInstance.DiskEncryptionKey = diskEncryptionKeyInstance;
+                                                        
+                                                        JToken secretUrlValue = diskEncryptionKeyValue["secretUrl"];
+                                                        if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                        {
+                                                            string secretUrlInstance = ((string)secretUrlValue);
+                                                            diskEncryptionKeyInstance.SecretUrl = secretUrlInstance;
+                                                        }
+                                                        
+                                                        JToken sourceVaultValue = diskEncryptionKeyValue["sourceVault"];
+                                                        if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                        {
+                                                            SourceVaultReference sourceVaultInstance = new SourceVaultReference();
+                                                            diskEncryptionKeyInstance.SourceVault = sourceVaultInstance;
+                                                            
+                                                            JToken idValue = sourceVaultValue["id"];
+                                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance = ((string)idValue);
+                                                                sourceVaultInstance.ReferenceUri = idInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken keyEncryptionKeyValue = encryptionSettingsValue["keyEncryptionKey"];
+                                                    if (keyEncryptionKeyValue != null && keyEncryptionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        KeyVaultKeyReference keyEncryptionKeyInstance = new KeyVaultKeyReference();
+                                                        encryptionSettingsInstance.KeyEncryptionKey = keyEncryptionKeyInstance;
+                                                        
+                                                        JToken keyUrlValue = keyEncryptionKeyValue["keyUrl"];
+                                                        if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                        {
+                                                            string keyUrlInstance = ((string)keyUrlValue);
+                                                            keyEncryptionKeyInstance.KeyUrl = keyUrlInstance;
+                                                        }
+                                                        
+                                                        JToken sourceVaultValue2 = keyEncryptionKeyValue["sourceVault"];
+                                                        if (sourceVaultValue2 != null && sourceVaultValue2.Type != JTokenType.Null)
+                                                        {
+                                                            SourceVaultReference sourceVaultInstance2 = new SourceVaultReference();
+                                                            keyEncryptionKeyInstance.SourceVault = sourceVaultInstance2;
+                                                            
+                                                            JToken idValue2 = sourceVaultValue2["id"];
+                                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance2 = ((string)idValue2);
+                                                                sourceVaultInstance2.ReferenceUri = idInstance2;
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                                 
                                                 JToken nameValue2 = osDiskValue["name"];
@@ -7117,17 +7430,17 @@ namespace Microsoft.Azure.Management.Compute
                                                     VaultSecretGroup vaultSecretGroupInstance = new VaultSecretGroup();
                                                     osProfileInstance.Secrets.Add(vaultSecretGroupInstance);
                                                     
-                                                    JToken sourceVaultValue = secretsValue["sourceVault"];
-                                                    if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                    JToken sourceVaultValue3 = secretsValue["sourceVault"];
+                                                    if (sourceVaultValue3 != null && sourceVaultValue3.Type != JTokenType.Null)
                                                     {
-                                                        SourceVaultReference sourceVaultInstance = new SourceVaultReference();
-                                                        vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
+                                                        SourceVaultReference sourceVaultInstance3 = new SourceVaultReference();
+                                                        vaultSecretGroupInstance.SourceVault = sourceVaultInstance3;
                                                         
-                                                        JToken idValue = sourceVaultValue["id"];
-                                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                                        JToken idValue3 = sourceVaultValue3["id"];
+                                                        if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance = ((string)idValue);
-                                                            sourceVaultInstance.ReferenceUri = idInstance;
+                                                            string idInstance3 = ((string)idValue3);
+                                                            sourceVaultInstance3.ReferenceUri = idInstance3;
                                                         }
                                                     }
                                                     
@@ -7183,11 +7496,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         }
                                                     }
                                                     
-                                                    JToken idValue2 = networkInterfacesValue["id"];
-                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    JToken idValue4 = networkInterfacesValue["id"];
+                                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance2 = ((string)idValue2);
-                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
+                                                        string idInstance4 = ((string)idValue4);
+                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance4;
                                                     }
                                                 }
                                             }
@@ -7227,11 +7540,11 @@ namespace Microsoft.Azure.Management.Compute
                                             AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                             virtualMachineJsonInstance.AvailabilitySetReference = availabilitySetInstance;
                                             
-                                            JToken idValue3 = availabilitySetValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue5 = availabilitySetValue["id"];
+                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                availabilitySetInstance.ReferenceUri = idInstance3;
+                                                string idInstance5 = ((string)idValue5);
+                                                availabilitySetInstance.ReferenceUri = idInstance5;
                                             }
                                         }
                                         
@@ -7825,11 +8138,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue4 = resourcesValue["id"];
-                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            JToken idValue6 = resourcesValue["id"];
+                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                             {
-                                                string idInstance4 = ((string)idValue4);
-                                                virtualMachineExtensionJsonInstance.Id = idInstance4;
+                                                string idInstance6 = ((string)idValue6);
+                                                virtualMachineExtensionJsonInstance.Id = idInstance6;
                                             }
                                             
                                             JToken nameValue7 = resourcesValue["name"];
@@ -7866,11 +8179,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue5 = valueValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue7 = valueValue["id"];
+                                    if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualMachineJsonInstance.Id = idInstance5;
+                                        string idInstance7 = ((string)idValue7);
+                                        virtualMachineJsonInstance.Id = idInstance7;
                                     }
                                     
                                     JToken nameValue8 = valueValue["name"];
@@ -8175,6 +8488,69 @@ namespace Microsoft.Azure.Management.Compute
                                                     osDiskInstance.OperatingSystemType = osTypeInstance;
                                                 }
                                                 
+                                                JToken encryptionSettingsValue = osDiskValue["encryptionSettings"];
+                                                if (encryptionSettingsValue != null && encryptionSettingsValue.Type != JTokenType.Null)
+                                                {
+                                                    DiskEncryptionSettings encryptionSettingsInstance = new DiskEncryptionSettings();
+                                                    osDiskInstance.EncryptionSettings = encryptionSettingsInstance;
+                                                    
+                                                    JToken diskEncryptionKeyValue = encryptionSettingsValue["diskEncryptionKey"];
+                                                    if (diskEncryptionKeyValue != null && diskEncryptionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        KeyVaultSecretReference diskEncryptionKeyInstance = new KeyVaultSecretReference();
+                                                        encryptionSettingsInstance.DiskEncryptionKey = diskEncryptionKeyInstance;
+                                                        
+                                                        JToken secretUrlValue = diskEncryptionKeyValue["secretUrl"];
+                                                        if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                        {
+                                                            string secretUrlInstance = ((string)secretUrlValue);
+                                                            diskEncryptionKeyInstance.SecretUrl = secretUrlInstance;
+                                                        }
+                                                        
+                                                        JToken sourceVaultValue = diskEncryptionKeyValue["sourceVault"];
+                                                        if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                        {
+                                                            SourceVaultReference sourceVaultInstance = new SourceVaultReference();
+                                                            diskEncryptionKeyInstance.SourceVault = sourceVaultInstance;
+                                                            
+                                                            JToken idValue = sourceVaultValue["id"];
+                                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance = ((string)idValue);
+                                                                sourceVaultInstance.ReferenceUri = idInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken keyEncryptionKeyValue = encryptionSettingsValue["keyEncryptionKey"];
+                                                    if (keyEncryptionKeyValue != null && keyEncryptionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        KeyVaultKeyReference keyEncryptionKeyInstance = new KeyVaultKeyReference();
+                                                        encryptionSettingsInstance.KeyEncryptionKey = keyEncryptionKeyInstance;
+                                                        
+                                                        JToken keyUrlValue = keyEncryptionKeyValue["keyUrl"];
+                                                        if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                        {
+                                                            string keyUrlInstance = ((string)keyUrlValue);
+                                                            keyEncryptionKeyInstance.KeyUrl = keyUrlInstance;
+                                                        }
+                                                        
+                                                        JToken sourceVaultValue2 = keyEncryptionKeyValue["sourceVault"];
+                                                        if (sourceVaultValue2 != null && sourceVaultValue2.Type != JTokenType.Null)
+                                                        {
+                                                            SourceVaultReference sourceVaultInstance2 = new SourceVaultReference();
+                                                            keyEncryptionKeyInstance.SourceVault = sourceVaultInstance2;
+                                                            
+                                                            JToken idValue2 = sourceVaultValue2["id"];
+                                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance2 = ((string)idValue2);
+                                                                sourceVaultInstance2.ReferenceUri = idInstance2;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
                                                 JToken nameValue2 = osDiskValue["name"];
                                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
@@ -8490,17 +8866,17 @@ namespace Microsoft.Azure.Management.Compute
                                                     VaultSecretGroup vaultSecretGroupInstance = new VaultSecretGroup();
                                                     osProfileInstance.Secrets.Add(vaultSecretGroupInstance);
                                                     
-                                                    JToken sourceVaultValue = secretsValue["sourceVault"];
-                                                    if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                    JToken sourceVaultValue3 = secretsValue["sourceVault"];
+                                                    if (sourceVaultValue3 != null && sourceVaultValue3.Type != JTokenType.Null)
                                                     {
-                                                        SourceVaultReference sourceVaultInstance = new SourceVaultReference();
-                                                        vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
+                                                        SourceVaultReference sourceVaultInstance3 = new SourceVaultReference();
+                                                        vaultSecretGroupInstance.SourceVault = sourceVaultInstance3;
                                                         
-                                                        JToken idValue = sourceVaultValue["id"];
-                                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                                        JToken idValue3 = sourceVaultValue3["id"];
+                                                        if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance = ((string)idValue);
-                                                            sourceVaultInstance.ReferenceUri = idInstance;
+                                                            string idInstance3 = ((string)idValue3);
+                                                            sourceVaultInstance3.ReferenceUri = idInstance3;
                                                         }
                                                     }
                                                     
@@ -8556,11 +8932,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         }
                                                     }
                                                     
-                                                    JToken idValue2 = networkInterfacesValue["id"];
-                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    JToken idValue4 = networkInterfacesValue["id"];
+                                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance2 = ((string)idValue2);
-                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
+                                                        string idInstance4 = ((string)idValue4);
+                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance4;
                                                     }
                                                 }
                                             }
@@ -8600,11 +8976,11 @@ namespace Microsoft.Azure.Management.Compute
                                             AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                             virtualMachineJsonInstance.AvailabilitySetReference = availabilitySetInstance;
                                             
-                                            JToken idValue3 = availabilitySetValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue5 = availabilitySetValue["id"];
+                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                availabilitySetInstance.ReferenceUri = idInstance3;
+                                                string idInstance5 = ((string)idValue5);
+                                                availabilitySetInstance.ReferenceUri = idInstance5;
                                             }
                                         }
                                         
@@ -9198,11 +9574,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue4 = resourcesValue["id"];
-                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            JToken idValue6 = resourcesValue["id"];
+                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                             {
-                                                string idInstance4 = ((string)idValue4);
-                                                virtualMachineExtensionJsonInstance.Id = idInstance4;
+                                                string idInstance6 = ((string)idValue6);
+                                                virtualMachineExtensionJsonInstance.Id = idInstance6;
                                             }
                                             
                                             JToken nameValue7 = resourcesValue["name"];
@@ -9239,11 +9615,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue5 = valueValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue7 = valueValue["id"];
+                                    if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualMachineJsonInstance.Id = idInstance5;
+                                        string idInstance7 = ((string)idValue7);
+                                        virtualMachineJsonInstance.Id = idInstance7;
                                     }
                                     
                                     JToken nameValue8 = valueValue["name"];
@@ -9741,6 +10117,69 @@ namespace Microsoft.Azure.Management.Compute
                                                     osDiskInstance.OperatingSystemType = osTypeInstance;
                                                 }
                                                 
+                                                JToken encryptionSettingsValue = osDiskValue["encryptionSettings"];
+                                                if (encryptionSettingsValue != null && encryptionSettingsValue.Type != JTokenType.Null)
+                                                {
+                                                    DiskEncryptionSettings encryptionSettingsInstance = new DiskEncryptionSettings();
+                                                    osDiskInstance.EncryptionSettings = encryptionSettingsInstance;
+                                                    
+                                                    JToken diskEncryptionKeyValue = encryptionSettingsValue["diskEncryptionKey"];
+                                                    if (diskEncryptionKeyValue != null && diskEncryptionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        KeyVaultSecretReference diskEncryptionKeyInstance = new KeyVaultSecretReference();
+                                                        encryptionSettingsInstance.DiskEncryptionKey = diskEncryptionKeyInstance;
+                                                        
+                                                        JToken secretUrlValue = diskEncryptionKeyValue["secretUrl"];
+                                                        if (secretUrlValue != null && secretUrlValue.Type != JTokenType.Null)
+                                                        {
+                                                            string secretUrlInstance = ((string)secretUrlValue);
+                                                            diskEncryptionKeyInstance.SecretUrl = secretUrlInstance;
+                                                        }
+                                                        
+                                                        JToken sourceVaultValue = diskEncryptionKeyValue["sourceVault"];
+                                                        if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                        {
+                                                            SourceVaultReference sourceVaultInstance = new SourceVaultReference();
+                                                            diskEncryptionKeyInstance.SourceVault = sourceVaultInstance;
+                                                            
+                                                            JToken idValue = sourceVaultValue["id"];
+                                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance = ((string)idValue);
+                                                                sourceVaultInstance.ReferenceUri = idInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken keyEncryptionKeyValue = encryptionSettingsValue["keyEncryptionKey"];
+                                                    if (keyEncryptionKeyValue != null && keyEncryptionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        KeyVaultKeyReference keyEncryptionKeyInstance = new KeyVaultKeyReference();
+                                                        encryptionSettingsInstance.KeyEncryptionKey = keyEncryptionKeyInstance;
+                                                        
+                                                        JToken keyUrlValue = keyEncryptionKeyValue["keyUrl"];
+                                                        if (keyUrlValue != null && keyUrlValue.Type != JTokenType.Null)
+                                                        {
+                                                            string keyUrlInstance = ((string)keyUrlValue);
+                                                            keyEncryptionKeyInstance.KeyUrl = keyUrlInstance;
+                                                        }
+                                                        
+                                                        JToken sourceVaultValue2 = keyEncryptionKeyValue["sourceVault"];
+                                                        if (sourceVaultValue2 != null && sourceVaultValue2.Type != JTokenType.Null)
+                                                        {
+                                                            SourceVaultReference sourceVaultInstance2 = new SourceVaultReference();
+                                                            keyEncryptionKeyInstance.SourceVault = sourceVaultInstance2;
+                                                            
+                                                            JToken idValue2 = sourceVaultValue2["id"];
+                                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance2 = ((string)idValue2);
+                                                                sourceVaultInstance2.ReferenceUri = idInstance2;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
                                                 JToken nameValue2 = osDiskValue["name"];
                                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
@@ -10056,17 +10495,17 @@ namespace Microsoft.Azure.Management.Compute
                                                     VaultSecretGroup vaultSecretGroupInstance = new VaultSecretGroup();
                                                     osProfileInstance.Secrets.Add(vaultSecretGroupInstance);
                                                     
-                                                    JToken sourceVaultValue = secretsValue["sourceVault"];
-                                                    if (sourceVaultValue != null && sourceVaultValue.Type != JTokenType.Null)
+                                                    JToken sourceVaultValue3 = secretsValue["sourceVault"];
+                                                    if (sourceVaultValue3 != null && sourceVaultValue3.Type != JTokenType.Null)
                                                     {
-                                                        SourceVaultReference sourceVaultInstance = new SourceVaultReference();
-                                                        vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
+                                                        SourceVaultReference sourceVaultInstance3 = new SourceVaultReference();
+                                                        vaultSecretGroupInstance.SourceVault = sourceVaultInstance3;
                                                         
-                                                        JToken idValue = sourceVaultValue["id"];
-                                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                                        JToken idValue3 = sourceVaultValue3["id"];
+                                                        if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance = ((string)idValue);
-                                                            sourceVaultInstance.ReferenceUri = idInstance;
+                                                            string idInstance3 = ((string)idValue3);
+                                                            sourceVaultInstance3.ReferenceUri = idInstance3;
                                                         }
                                                     }
                                                     
@@ -10122,11 +10561,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         }
                                                     }
                                                     
-                                                    JToken idValue2 = networkInterfacesValue["id"];
-                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    JToken idValue4 = networkInterfacesValue["id"];
+                                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance2 = ((string)idValue2);
-                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
+                                                        string idInstance4 = ((string)idValue4);
+                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance4;
                                                     }
                                                 }
                                             }
@@ -10166,11 +10605,11 @@ namespace Microsoft.Azure.Management.Compute
                                             AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                             virtualMachineJsonInstance.AvailabilitySetReference = availabilitySetInstance;
                                             
-                                            JToken idValue3 = availabilitySetValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue5 = availabilitySetValue["id"];
+                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                availabilitySetInstance.ReferenceUri = idInstance3;
+                                                string idInstance5 = ((string)idValue5);
+                                                availabilitySetInstance.ReferenceUri = idInstance5;
                                             }
                                         }
                                         
@@ -10764,11 +11203,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue4 = resourcesValue["id"];
-                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            JToken idValue6 = resourcesValue["id"];
+                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                             {
-                                                string idInstance4 = ((string)idValue4);
-                                                virtualMachineExtensionJsonInstance.Id = idInstance4;
+                                                string idInstance6 = ((string)idValue6);
+                                                virtualMachineExtensionJsonInstance.Id = idInstance6;
                                             }
                                             
                                             JToken nameValue7 = resourcesValue["name"];
@@ -10805,11 +11244,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue5 = valueValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue7 = valueValue["id"];
+                                    if (idValue7 != null && idValue7.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualMachineJsonInstance.Id = idInstance5;
+                                        string idInstance7 = ((string)idValue7);
+                                        virtualMachineJsonInstance.Id = idInstance7;
                                     }
                                     
                                     JToken nameValue8 = valueValue["name"];
@@ -10922,7 +11361,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while (result.Status == ComputeOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10981,7 +11420,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while (result.Status == ComputeOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11040,7 +11479,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.Management.Compute.Models.ComputeOperationStatus.InProgress) == false)
+            while (result.Status == ComputeOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Search
                 key,
                 selectedFields,
                 cancellationToken,
-                s => JsonConvert.DeserializeObject<Document>(s, JsonUtility.DocumentDeserializerSettings));
+                s => JsonUtility.DeserializeObject<Document>(s, JsonUtility.DocumentDeserializerSettings));
         }
 
         public Task<DocumentGetResponse<T>> GetAsync<T>(
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Search
                 key,
                 selectedFields,
                 cancellationToken,
-                s => JsonConvert.DeserializeObject<T>(s, jsonSettings));
+                s => JsonUtility.DeserializeObject<T>(s, jsonSettings));
         }
 
         private async Task<TResponse> DoGetAsync<TResponse, TDoc>(

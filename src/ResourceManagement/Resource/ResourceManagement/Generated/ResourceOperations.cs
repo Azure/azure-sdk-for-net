@@ -31,6 +31,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Newtonsoft.Json.Linq;
 
@@ -155,6 +158,35 @@ namespace Microsoft.Azure.Management.Resources
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject resourcesMoveInfoValue = new JObject();
+                requestDoc = resourcesMoveInfoValue;
+                
+                if (parameters.Resources != null)
+                {
+                    if (parameters.Resources is ILazyCollection == false || ((ILazyCollection)parameters.Resources).IsInitialized)
+                    {
+                        JArray resourcesArray = new JArray();
+                        foreach (string resourcesItem in parameters.Resources)
+                        {
+                            resourcesArray.Add(resourcesItem);
+                        }
+                        resourcesMoveInfoValue["resources"] = resourcesArray;
+                    }
+                }
+                
+                if (parameters.TargetResourceGroup != null)
+                {
+                    resourcesMoveInfoValue["targetResourceGroup"] = parameters.TargetResourceGroup;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -173,7 +205,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -199,6 +231,10 @@ namespace Microsoft.Azure.Management.Resources
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     if (statusCode == HttpStatusCode.Conflict)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -1819,7 +1855,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

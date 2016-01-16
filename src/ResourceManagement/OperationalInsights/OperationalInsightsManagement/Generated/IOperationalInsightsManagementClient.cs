@@ -74,6 +74,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
+        /// Operations for using Operational Insights search.
+        /// </summary>
+        ISearchOperations Search
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing storage insights.
         /// </summary>
         IStorageInsightOperations StorageInsights
