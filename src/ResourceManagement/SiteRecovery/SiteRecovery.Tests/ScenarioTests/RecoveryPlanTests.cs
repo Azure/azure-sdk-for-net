@@ -156,6 +156,7 @@ namespace SiteRecovery.Tests.ScenarioTests
                 {
                     Properties = new RecoveryPlanTestFailoverInputProperties()
                     {
+                        FailoverDirection = "PrimaryToRecovery",
                         NetworkId = "/subscriptions/42195872-7e70-4f8a-837f-84b28ecbb78b/resourceGroups/Default-Networking/providers/Microsoft.ClassicNetwork/virtualNetworks/asrinmagenetwork",
                         NetworkType = "VmNetworkAsInput",
                         ProviderSpecificDetails = new List<RecoveryPlanProviderSpecificFailoverInput>()
@@ -269,6 +270,7 @@ namespace SiteRecovery.Tests.ScenarioTests
                 {
                     Properties = new RecoveryPlanTestFailoverInputProperties()
                     {
+                        FailoverDirection = "PrimaryToRecovery",
                         NetworkType = "NoNetworkAttachAsInput"
                     }
                 };

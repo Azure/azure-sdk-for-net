@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class RecoveryPlanTestFailoverInputProperties
     {
+        private string _failoverDirection;
+        
+        /// <summary>
+        /// Required. Failover direction.
+        /// </summary>
+        public string FailoverDirection
+        {
+            get { return this._failoverDirection; }
+            set { this._failoverDirection = value; }
+        }
+        
         private string _networkId;
         
         /// <summary>
@@ -79,13 +90,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// RecoveryPlanTestFailoverInputProperties class with required
         /// arguments.
         /// </summary>
-        public RecoveryPlanTestFailoverInputProperties(string networkType)
+        public RecoveryPlanTestFailoverInputProperties(string failoverDirection, string networkType)
             : this()
         {
+            if (failoverDirection == null)
+            {
+                throw new ArgumentNullException("failoverDirection");
+            }
             if (networkType == null)
             {
                 throw new ArgumentNullException("networkType");
             }
+            this.FailoverDirection = failoverDirection;
             this.NetworkType = networkType;
         }
     }

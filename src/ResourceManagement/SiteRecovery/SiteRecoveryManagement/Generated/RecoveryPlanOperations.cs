@@ -1413,6 +1413,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("input.Properties");
             }
+            if (input.Properties.FailoverDirection == null)
+            {
+                throw new ArgumentNullException("input.Properties.FailoverDirection");
+            }
             if (input.Properties.NetworkType == null)
             {
                 throw new ArgumentNullException("input.Properties.NetworkType");
@@ -1505,6 +1509,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 JObject propertiesValue = new JObject();
                 recoveryPlanTestFailoverInputValue["properties"] = propertiesValue;
+                
+                propertiesValue["failoverDirection"] = input.Properties.FailoverDirection;
                 
                 propertiesValue["networkType"] = input.Properties.NetworkType;
                 
