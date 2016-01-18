@@ -222,6 +222,51 @@ namespace SiteRecovery.Tests
             }
         }
 
+        public void GetVMwareAzureV2ReplicationProtectedItems()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = this.GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics[1];
+                //var vmWareFabric = responseServers.Fabrics.First(
+                //    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                //Assert.NotNull(vmWareFabric);
+
+                var containersResponse = client.ProtectionContainer.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+                Assert.NotNull(containersResponse);
+                Assert.True(
+                    containersResponse.ProtectionContainers.Count > 0,
+                    "Containers count can't be less than 1.");
+
+                var response = client.ReplicationProtectedItem.List(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    RequestHeaders);
+                Assert.NotNull(response);
+
+                foreach(ReplicationProtectedItem replicatedItem in response.ReplicationProtectedItems)
+                {
+                    var response1 = client.ReplicationProtectedItem.Get(
+                        vmWareFabric.Name,
+                        containersResponse.ProtectionContainers[0].Name,
+                        replicatedItem.Name,
+                        RequestHeaders);
+
+                    Assert.NotNull(response1);
+                }
+            }
+        }
+
         public void GetNetworkTest()
         {
             using (UndoContext context = UndoContext.Current)

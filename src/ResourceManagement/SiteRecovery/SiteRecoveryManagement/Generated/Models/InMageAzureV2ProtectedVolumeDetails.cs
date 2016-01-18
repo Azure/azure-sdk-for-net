@@ -106,13 +106,13 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._resyncProgressPercentage = value; }
         }
         
-        private bool _resyncRequired;
+        private string _resyncRequired;
         
         /// <summary>
         /// Optional. Value indicating whether resync is required for this
         /// volume.
         /// </summary>
-        public bool ResyncRequired
+        public string ResyncRequired
         {
             get { return this._resyncRequired; }
             set { this._resyncRequired = value; }
@@ -162,12 +162,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._volumeCapacityInBytes = value; }
         }
         
-        private bool _volumeResized;
+        private string _volumeResized;
         
         /// <summary>
         /// Optional. Value indicating whether volume is resized.
         /// </summary>
-        public bool VolumeResized
+        public string VolumeResized
         {
             get { return this._volumeResized; }
             set { this._volumeResized = value; }

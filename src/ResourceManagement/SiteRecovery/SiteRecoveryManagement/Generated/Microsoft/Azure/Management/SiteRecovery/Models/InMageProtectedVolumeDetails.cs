@@ -162,12 +162,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._volumeCapacityInBytes = value; }
         }
         
-        private bool _volumeResized;
+        private string _volumeResized;
         
         /// <summary>
         /// Optional. Gets or sets a value indicating whether volume is resized.
         /// </summary>
-        public bool VolumeResized
+        public string VolumeResized
         {
             get { return this._volumeResized; }
             set { this._volumeResized = value; }

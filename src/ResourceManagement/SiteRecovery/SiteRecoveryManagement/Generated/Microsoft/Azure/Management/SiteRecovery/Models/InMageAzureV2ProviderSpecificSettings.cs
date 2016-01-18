@@ -110,25 +110,25 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._ipAddress = value; }
         }
         
-        private bool _isAgentUpdateRequired;
+        private string _isAgentUpdateRequired;
         
         /// <summary>
         /// Optional. Value indicating whether installed agent needs to be
         /// updated.
         /// </summary>
-        public bool IsAgentUpdateRequired
+        public string IsAgentUpdateRequired
         {
             get { return this._isAgentUpdateRequired; }
             set { this._isAgentUpdateRequired = value; }
         }
         
-        private bool _isRebootAfterUpdateRequired;
+        private string _isRebootAfterUpdateRequired;
         
         /// <summary>
         /// Optional. Value indicating whether the source server requires a
         /// restart after update.
         /// </summary>
-        public bool IsRebootAfterUpdateRequired
+        public string IsRebootAfterUpdateRequired
         {
             get { return this._isRebootAfterUpdateRequired; }
             set { this._isRebootAfterUpdateRequired = value; }
@@ -288,12 +288,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._resyncProgressPercentage = value; }
         }
         
-        private bool _resyncRequired;
+        private string _resyncRequired;
         
         /// <summary>
         /// Optional. Value indicating whether resync is required for this VM.
         /// </summary>
-        public bool ResyncRequired
+        public string ResyncRequired
         {
             get { return this._resyncRequired; }
             set { this._resyncRequired = value; }
@@ -387,13 +387,13 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._vMNics = value; }
         }
         
-        private bool _volumeResized;
+        private string _volumeResized;
         
         /// <summary>
         /// Optional. Value indicating whether any volume is resized for this
         /// VM.
         /// </summary>
-        public bool VolumeResized
+        public string VolumeResized
         {
             get { return this._volumeResized; }
             set { this._volumeResized = value; }

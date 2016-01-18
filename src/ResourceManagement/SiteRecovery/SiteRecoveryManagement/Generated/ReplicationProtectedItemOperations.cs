@@ -4389,7 +4389,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -4445,14 +4445,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -4523,7 +4523,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -4579,7 +4579,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -4588,7 +4588,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -5013,7 +5013,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -6150,7 +6150,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -6206,14 +6206,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -6284,7 +6284,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -6340,7 +6340,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -6349,7 +6349,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -6774,7 +6774,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -7970,7 +7970,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -8026,14 +8026,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -8104,7 +8104,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -8160,7 +8160,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -8169,7 +8169,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -8594,7 +8594,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -10021,7 +10021,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -10077,14 +10077,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -10155,7 +10155,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -10211,7 +10211,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -10220,7 +10220,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -10645,7 +10645,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -11841,7 +11841,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -11897,14 +11897,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -11975,7 +11975,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -12031,7 +12031,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -12040,7 +12040,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -12465,7 +12465,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -13892,7 +13892,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -13948,14 +13948,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -14026,7 +14026,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -14082,7 +14082,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -14091,7 +14091,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -14516,7 +14516,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -15712,7 +15712,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -15768,14 +15768,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -15846,7 +15846,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -15902,7 +15902,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -15911,7 +15911,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -16336,7 +16336,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -17532,7 +17532,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -17588,14 +17588,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -17666,7 +17666,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -17722,7 +17722,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -17731,7 +17731,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -18156,7 +18156,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -19352,7 +19352,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -19408,14 +19408,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -19486,7 +19486,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -19542,7 +19542,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -19551,7 +19551,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -19976,7 +19976,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -21172,7 +21172,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -21228,14 +21228,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -21306,7 +21306,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -21362,7 +21362,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -21371,7 +21371,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -21796,7 +21796,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -22992,7 +22992,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                         if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                            string resyncRequiredInstance = ((string)resyncRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                         }
                                         
@@ -23048,14 +23048,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                            string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                         }
                                         
                                         JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                         if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                         {
-                                            bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                            string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                         }
                                         
@@ -23126,7 +23126,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                    string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
@@ -23182,7 +23182,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                 if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                    string volumeResizedInstance = ((string)volumeResizedValue);
                                                     inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                 }
                                             }
@@ -23191,7 +23191,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                         if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                         {
-                                            bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                             inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                         }
                                         
@@ -23616,7 +23616,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                 if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                     inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                 }
                                             }
@@ -24861,7 +24861,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                                 if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                                    string resyncRequiredInstance = ((string)resyncRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                                 }
                                                 
@@ -24917,14 +24917,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                                 if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                                    string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                                 }
                                                 
                                                 JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                                 if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                                    string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                                 }
                                                 
@@ -24995,7 +24995,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                         if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                         {
-                                                            bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                            string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                             inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                         }
                                                         
@@ -25051,7 +25051,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                         if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                         {
-                                                            bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                            string volumeResizedInstance = ((string)volumeResizedValue);
                                                             inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                         }
                                                     }
@@ -25060,7 +25060,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                                 if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                                    string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                                 }
                                                 
@@ -25485,7 +25485,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                         if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                         {
-                                                            bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                            string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                             inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                         }
                                                     }
@@ -26681,7 +26681,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                                 if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                                    string resyncRequiredInstance = ((string)resyncRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                                 }
                                                 
@@ -26737,14 +26737,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                                 if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                                    string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                                 }
                                                 
                                                 JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                                 if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                                    string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                                 }
                                                 
@@ -26815,7 +26815,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                         if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                         {
-                                                            bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                            string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                             inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                         }
                                                         
@@ -26871,7 +26871,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                         if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                         {
-                                                            bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                            string volumeResizedInstance = ((string)volumeResizedValue);
                                                             inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                         }
                                                     }
@@ -26880,7 +26880,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                                 if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                                    string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                                 }
                                                 
@@ -27305,7 +27305,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                         if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                         {
-                                                            bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                            string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                             inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                         }
                                                     }
@@ -28459,7 +28459,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken resyncRequiredValue = providerSpecificDetailsValue["resyncRequired"];
                                                 if (resyncRequiredValue != null && resyncRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool resyncRequiredInstance = ((bool)resyncRequiredValue);
+                                                    string resyncRequiredInstance = ((string)resyncRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.ResyncRequired = resyncRequiredInstance;
                                                 }
                                                 
@@ -28515,14 +28515,14 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                                 if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool isAgentUpdateRequiredInstance = ((bool)isAgentUpdateRequiredValue);
+                                                    string isAgentUpdateRequiredInstance = ((string)isAgentUpdateRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.IsAgentUpdateRequired = isAgentUpdateRequiredInstance;
                                                 }
                                                 
                                                 JToken isRebootAfterUpdateRequiredValue = providerSpecificDetailsValue["isRebootAfterUpdateRequired"];
                                                 if (isRebootAfterUpdateRequiredValue != null && isRebootAfterUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
-                                                    bool isRebootAfterUpdateRequiredInstance = ((bool)isRebootAfterUpdateRequiredValue);
+                                                    string isRebootAfterUpdateRequiredInstance = ((string)isRebootAfterUpdateRequiredValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.IsRebootAfterUpdateRequired = isRebootAfterUpdateRequiredInstance;
                                                 }
                                                 
@@ -28593,7 +28593,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
                                                         if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                         {
-                                                            bool resyncRequiredInstance2 = ((bool)resyncRequiredValue2);
+                                                            string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
                                                             inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                         }
                                                         
@@ -28649,7 +28649,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
                                                         if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
                                                         {
-                                                            bool volumeResizedInstance = ((bool)volumeResizedValue);
+                                                            string volumeResizedInstance = ((string)volumeResizedValue);
                                                             inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
                                                         }
                                                     }
@@ -28658,7 +28658,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
                                                 if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
                                                 {
-                                                    bool volumeResizedInstance2 = ((bool)volumeResizedValue2);
+                                                    string volumeResizedInstance2 = ((string)volumeResizedValue2);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
                                                 }
                                                 
@@ -29083,7 +29083,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
                                                         if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
                                                         {
-                                                            bool volumeResizedInstance3 = ((bool)volumeResizedValue3);
+                                                            string volumeResizedInstance3 = ((string)volumeResizedValue3);
                                                             inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
                                                         }
                                                     }
