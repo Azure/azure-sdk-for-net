@@ -64,6 +64,7 @@
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSetting.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingGetResponse.cs" />
+    <Compile Include="Generated\Management\Insights\Models\AutoscaleNotification.cs" />
     <Compile Include="Generated\Management\Insights\Models\BackupLocationProfile.cs" />
     <Compile Include="Generated\Management\Insights\Models\Capacity.cs" />
     <Compile Include="Generated\Insights\Models\Dimension.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Generated\Management\Insights\Models\DatabaseBackupOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseConsistencyOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseServerCredential.cs" />
+    <Compile Include="Generated\Management\Insights\Models\EmailNotification.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\MetricSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\RetentionPolicy.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Generated\Insights\Models\UsageMetricCollectionDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricListResponseDeprecated.cs" />
+    <Compile Include="Generated\Management\Insights\Models\WebhookNotification.cs" />
     <Compile Include="OnetimeGenerated\Insights\LogOperations.cs" />
     <Compile Include="OnetimeGenerated\Management\AgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperationsExtensions.cs" />
