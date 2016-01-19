@@ -309,10 +309,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             }
                         }
                     }
-                    if (groupsParameterItem.GroupName == null)
-                    {
-                        throw new ArgumentNullException("input.Properties.Groups.GroupName");
-                    }
                     if (groupsParameterItem.GroupType == null)
                     {
                         throw new ArgumentNullException("input.Properties.Groups.GroupType");
@@ -459,8 +455,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         {
                             JObject recoveryPlanGroupValue = new JObject();
                             groupsArray.Add(recoveryPlanGroupValue);
-                            
-                            recoveryPlanGroupValue["groupName"] = groupsItem.GroupName;
                             
                             recoveryPlanGroupValue["groupType"] = groupsItem.GroupType;
                             
@@ -2012,10 +2006,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             }
                         }
                     }
-                    if (groupsParameterItem.GroupName == null)
-                    {
-                        throw new ArgumentNullException("input.Properties.Groups.GroupName");
-                    }
                     if (groupsParameterItem.GroupType == null)
                     {
                         throw new ArgumentNullException("input.Properties.Groups.GroupType");
@@ -2145,8 +2135,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         {
                             JObject recoveryPlanGroupValue = new JObject();
                             groupsArray.Add(recoveryPlanGroupValue);
-                            
-                            recoveryPlanGroupValue["groupName"] = groupsItem.GroupName;
                             
                             recoveryPlanGroupValue["groupType"] = groupsItem.GroupType;
                             
@@ -2888,13 +2876,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
                                         
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
-                                        
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
                                         {
@@ -3510,13 +3491,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
-                                        
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
                                         
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
@@ -4193,13 +4167,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
                                         
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
-                                        
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
                                         {
@@ -4874,13 +4841,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
-                                        
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
                                         
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
@@ -5557,13 +5517,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
                                         
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
-                                        
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
                                         {
@@ -6238,13 +6191,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
-                                        
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
                                         
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
@@ -6921,13 +6867,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
                                         
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
-                                        
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
                                         {
@@ -7603,13 +7542,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
                                         
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
-                                        
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
                                         {
@@ -8284,13 +8216,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     {
                                         RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                         propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
-                                        
-                                        JToken groupNameValue = groupsValue["groupName"];
-                                        if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string groupNameInstance = ((string)groupNameValue);
-                                            recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                        }
                                         
                                         JToken groupTypeValue = groupsValue["groupType"];
                                         if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
@@ -8995,13 +8920,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 RecoveryPlanGroup recoveryPlanGroupInstance = new RecoveryPlanGroup();
                                                 propertiesInstance.Groups.Add(recoveryPlanGroupInstance);
-                                                
-                                                JToken groupNameValue = groupsValue["groupName"];
-                                                if (groupNameValue != null && groupNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string groupNameInstance = ((string)groupNameValue);
-                                                    recoveryPlanGroupInstance.GroupName = groupNameInstance;
-                                                }
                                                 
                                                 JToken groupTypeValue = groupsValue["groupType"];
                                                 if (groupTypeValue != null && groupTypeValue.Type != JTokenType.Null)
