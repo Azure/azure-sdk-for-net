@@ -95,9 +95,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public bool? IsHttpsAllowed { get; set; }
 
         /// <summary>
-        /// Sets query string caching behavior. Possible values for this
-        /// property include: 'IgnoreQueryString', 'BypassCaching',
-        /// 'UseQueryString'.
+        /// Defines the query string caching behavior. Possible values for
+        /// this property include: 'IgnoreQueryString', 'BypassCaching',
+        /// 'UseQueryString', 'NotSet'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.queryStringCachingBehavior")]
         public QueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }

@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Defines the query string caching behavior. Possible values for
         /// this property include: 'IgnoreQueryString', 'BypassCaching',
-        /// 'UseQueryString'.
+        /// 'UseQueryString', 'NotSet'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.queryStringCachingBehavior")]
         public QueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
