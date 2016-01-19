@@ -27,7 +27,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void AddApplicationPackage()
+        public void AddApplicationPackageValidateMessage()
         {
             var utcNow = DateTime.UtcNow.ToString("o");
 
@@ -63,7 +63,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void AddApplication()
+        public void AddApplicationValidateMessage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -90,7 +90,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void ActivateApplicationPackage()
+        public void ActivateApplicationPackageValidateMessage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -117,7 +117,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void DeleteApplication()
+        public void DeleteApplicationValidateMessage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -143,7 +143,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void DeleteApplicationPackage()
+        public void DeleteApplicationPackageValidateMessage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -170,7 +170,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void GetApplication()
+        public void GetApplicationValidateMessage()
         {
             var utcNow = DateTime.UtcNow.ToString("o");
 
@@ -215,7 +215,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void GetApplicationPackage()
+        public void GetApplicationPackageValidateMessage()
         {
             var utcNow = DateTime.UtcNow.ToString("o");
 
@@ -258,7 +258,7 @@ namespace Batch.Tests.InMemoryTests
 
 
         [Fact]
-        public void ListApplication()
+        public void ListApplicationValidateMessage()
         {
             var utcNow = DateTime.UtcNow.ToString("o");
 
@@ -304,7 +304,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void UpdateApplication()
+        public void UpdateApplicationValidateMessage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -331,41 +331,97 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void ApplicationPackageErrorCases()
+        public void ActivateApplicationPackageThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
-            
+
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage(null, "foo", "foo", "foo", new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", null, "foo", "null", new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", null, "foo", new ActivateApplicationPackageParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters())); 
+            
+            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", null, null, null, new ActivateApplicationPackageParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", null, null, new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters()));
+        }
+
+        [Fact]
+        public void AddApplicationThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetBatchManagementClient(handler);
 
             Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication(null, null, null, new AddApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication("foo", null, null, new AddApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication("foo", "foo", null, new AddApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication(null, "foo", "foo", new AddApplicationParameters()));
+        }
+
+        [Fact]
+        public void DeleteApplicationThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetBatchManagementClient(handler);
 
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication(null, "foo", "foo"));
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication("foo", null, "foo"));
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication("foo", "foo", null));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication("foo", null, null));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication(null, null, null));
+        }
 
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage(null, "foo", "foo","foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", null, "foo","foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", null,"foo"));
-            
+        [Fact]
+        public void DeleteApplicationPackageThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetBatchManagementClient(handler);
 
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage(null, "foo", "foo", "foo"));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", null, "foo", "foo"));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", "bar", null));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", null, null));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", null, "foo"));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", null, null, "foo"));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage(null, null, null, "foo"));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage(null, null, null, null));
+        }
+
+        [Fact]
+        public void GetApplicationThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetBatchManagementClient(handler);
+            Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication(null, "foo", "foo"));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication(null, null, "foo"));
             Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication(null, null, null));
             Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication("foo", null, null));
             Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication("foo", "foo", null));
+        }
+
+        [Fact]
+        public void ListThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetBatchManagementClient(handler);
 
             Assert.Throws<ArgumentNullException>(() => client.Applications.List(null, null, new ListApplicationsParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.List(null, "foo", new ListApplicationsParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.List("foo", null, new ListApplicationsParameters()));
+        }
 
+        [Fact]
+        public void UpdateApplicationThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetBatchManagementClient(handler);
+            
             Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication(null, "foo", "foo", new UpdateApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication("foo", null, "foo", new UpdateApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication("foo", "foo", null, new UpdateApplicationParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication("foo", null, null, new UpdateApplicationParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication(null, "foo", null, new UpdateApplicationParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication(null, null, "foo", new UpdateApplicationParameters()));
         }
     }
 }
