@@ -43,17 +43,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._endGroupActions = value; }
         }
         
-        private string _groupName;
-        
-        /// <summary>
-        /// Required. Group name.
-        /// </summary>
-        public string GroupName
-        {
-            get { return this._groupName; }
-            set { this._groupName = value; }
-        }
-        
         private string _groupType;
         
         /// <summary>
@@ -101,18 +90,13 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the RecoveryPlanGroup class with
         /// required arguments.
         /// </summary>
-        public RecoveryPlanGroup(string groupName, string groupType)
+        public RecoveryPlanGroup(string groupType)
             : this()
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException("groupName");
-            }
             if (groupType == null)
             {
                 throw new ArgumentNullException("groupType");
             }
-            this.GroupName = groupName;
             this.GroupType = groupType;
         }
     }

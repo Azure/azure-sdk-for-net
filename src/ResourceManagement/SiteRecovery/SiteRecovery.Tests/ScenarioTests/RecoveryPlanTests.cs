@@ -157,8 +157,7 @@ namespace SiteRecovery.Tests.ScenarioTests
                     Properties = new RecoveryPlanTestFailoverInputProperties()
                     {
                         FailoverDirection = "PrimaryToRecovery",
-                        NetworkId = "/subscriptions/42195872-7e70-4f8a-837f-84b28ecbb78b/resourceGroups/Default-Networking/providers/Microsoft.ClassicNetwork/virtualNetworks/asrinmagenetwork",
-                        NetworkType = "VmNetworkAsInput",
+                        NetworkType = "NoNetworkAttachAsInput",
                         ProviderSpecificDetails = new List<RecoveryPlanProviderSpecificFailoverInput>()
                         {
                             new RecoveryPlanHyperVReplicaAzureFailoverInput()
@@ -372,7 +371,6 @@ namespace SiteRecovery.Tests.ScenarioTests
             input.Properties.Groups = new List<RecoveryPlanGroup>();
             input.Properties.Groups.Add(new RecoveryPlanGroup()
             {
-                GroupName = "G1",
                 GroupType = "Boot",
                 ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
                         {
@@ -395,7 +393,6 @@ namespace SiteRecovery.Tests.ScenarioTests
             input.Properties.Groups = new List<RecoveryPlanGroup>();
             input.Properties.Groups.Add(new RecoveryPlanGroup()
             {
-                GroupName = "G1",
                 GroupType = "Boot",
                 ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
                         {
@@ -418,7 +415,6 @@ namespace SiteRecovery.Tests.ScenarioTests
             input.Properties.Groups = new List<RecoveryPlanGroup>();
             input.Properties.Groups.Add(new RecoveryPlanGroup()
             {
-                GroupName = "G1",
                 GroupType = "Boot",
                 ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
                         {
@@ -471,7 +467,6 @@ namespace SiteRecovery.Tests.ScenarioTests
             input.Properties.Groups = new List<RecoveryPlanGroup>();
             input.Properties.Groups.Add(new RecoveryPlanGroup()
             {
-                GroupName = "G2",
                 GroupType = "Shutdown",
                 ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
                 {
@@ -520,14 +515,11 @@ namespace SiteRecovery.Tests.ScenarioTests
             Assert.True(rp.Properties.RecoveryFabricId == fabricId);
 
             Assert.True(rp.Properties.Groups.Count == 3);
-            Assert.True(rp.Properties.Groups[0].GroupName == "Shutdown");
             Assert.True(rp.Properties.Groups[0].GroupType == "Shutdown");
             Assert.True(rp.Properties.Groups[0].ReplicationProtectedItems.Count == 0);
-            Assert.True(rp.Properties.Groups[1].GroupName == "Failover");
             Assert.True(rp.Properties.Groups[1].GroupType == "Failover");
             Assert.True(rp.Properties.Groups[1].ReplicationProtectedItems.Count == 0);
 
-            Assert.True(rp.Properties.Groups[2].GroupName == "G1");
             Assert.True(rp.Properties.Groups[2].GroupType == "Boot");
             Assert.True(rp.Properties.Groups[2].ReplicationProtectedItems.Count == 1);
             Assert.True(rp.Properties.Groups[2].ReplicationProtectedItems[0].Id == vmId);
@@ -567,11 +559,9 @@ namespace SiteRecovery.Tests.ScenarioTests
             Assert.True(rp.Properties.RecoveryFabricId == fabricId);
 
             Assert.True(rp.Properties.Groups.Count == 2);
-            Assert.True(rp.Properties.Groups[0].GroupName == "Shutdown");
             Assert.True(rp.Properties.Groups[0].GroupType == "Shutdown");
             Assert.True(rp.Properties.Groups[0].ReplicationProtectedItems.Count == 0);
 
-            Assert.True(rp.Properties.Groups[1].GroupName == "Failover");
             Assert.True(rp.Properties.Groups[1].GroupType == "Failover");
             Assert.True(rp.Properties.Groups[1].ReplicationProtectedItems.Count == 0);
 
