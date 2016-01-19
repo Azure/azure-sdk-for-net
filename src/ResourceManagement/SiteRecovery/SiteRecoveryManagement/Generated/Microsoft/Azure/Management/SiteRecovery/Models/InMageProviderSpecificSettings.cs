@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._activeLocation = value; }
         }
         
+        private InMageAgentDetails _agentDetails;
+        
+        /// <summary>
+        /// Optional. The agent details.
+        /// </summary>
+        public InMageAgentDetails AgentDetails
+        {
+            get { return this._agentDetails; }
+            set { this._agentDetails = value; }
+        }
+        
         private double _compressedDataRateInMB;
         
         /// <summary>
@@ -63,6 +74,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._consistencyPoints; }
             set { this._consistencyPoints = value; }
+        }
+        
+        private string _infrastructureVmId;
+        
+        /// <summary>
+        /// Optional. Infrastructure VM Id.
+        /// </summary>
+        public string InfrastructureVmId
+        {
+            get { return this._infrastructureVmId; }
+            set { this._infrastructureVmId = value; }
         }
         
         private string _ipAddress;
@@ -253,6 +275,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._uncompressedDataRateInMB = value; }
         }
         
+        private string _vCenterInfrastructureId;
+        
+        /// <summary>
+        /// Optional. vCenter Infrastructure Id.
+        /// </summary>
+        public string VCenterInfrastructureId
+        {
+            get { return this._vCenterInfrastructureId; }
+            set { this._vCenterInfrastructureId = value; }
+        }
+        
+        private IList<VMNicDetails> _vMNics;
+        
+        /// <summary>
+        /// Optional. Gets or sets the network details.
+        /// </summary>
+        public IList<VMNicDetails> VMNics
+        {
+            get { return this._vMNics; }
+            set { this._vMNics = value; }
+        }
+        
         private string _volumeResized;
         
         /// <summary>
@@ -272,6 +316,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             this.ConsistencyPoints = new LazyDictionary<string, DateTime>();
             this.ProtectedVolumes = new LazyList<InMageProtectedVolumeDetails>();
+            this.VMNics = new LazyList<VMNicDetails>();
         }
     }
 }

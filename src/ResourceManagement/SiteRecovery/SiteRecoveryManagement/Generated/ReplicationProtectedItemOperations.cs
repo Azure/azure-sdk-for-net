@@ -5086,6 +5086,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -5206,68 +5314,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -6847,6 +6955,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -6967,68 +7183,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -8667,6 +8883,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -8787,68 +9111,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -10718,6 +11042,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -10838,68 +11270,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -12538,6 +12970,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -12658,68 +13198,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -14589,6 +15129,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -14709,68 +15357,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -16409,6 +17057,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -16529,68 +17285,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -18229,6 +18985,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -18349,68 +19213,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -20049,6 +20913,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -20169,68 +21141,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -21869,6 +22841,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -21989,68 +23069,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -23689,6 +24769,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                         }
                                         
+                                        JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                        if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                            inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                            
+                                            JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                            if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                            }
+                                            
+                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                            {
+                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                            }
+                                            
+                                            JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                            if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                            {
+                                                string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                            }
+                                        }
+                                        
+                                        JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                        if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                            inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                        }
+                                        
+                                        JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                        if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                            inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                        }
+                                        
+                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                
+                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance4 = ((string)nicIdValue4);
+                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                }
+                                                
+                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                }
+                                                
+                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                }
+                                            }
+                                        }
+                                        
                                         JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                         if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                         {
@@ -23809,68 +24997,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                        if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                        JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                        if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                            foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                             {
-                                                VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                 
-                                                JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string nicIdInstance4 = ((string)nicIdValue4);
-                                                    vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                    string nicIdInstance5 = ((string)nicIdValue5);
+                                                    vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                 }
                                                 
-                                                JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                    string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                    vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                    string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                    vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                    string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                 }
                                                 
-                                                JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                 {
-                                                    string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                    vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                    string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                    vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                 }
                                                 
-                                                JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                    vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                    string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                    vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                 }
                                                 
-                                                JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                 {
-                                                    string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                    vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                    string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                    vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                 }
                                                 
-                                                JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                 {
-                                                    string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                    vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                    string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                    vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                 }
                                             }
                                         }
@@ -25558,6 +26746,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                                 }
                                                 
+                                                JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                                if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                                {
+                                                    InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                                    inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                                    
+                                                    JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                                    if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                        agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                                    }
+                                                    
+                                                    JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                                    if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                        agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                                    }
+                                                    
+                                                    JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                                    if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                                    {
+                                                        string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                        agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                                if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                                    inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                                }
+                                                
+                                                JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                                if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                                    inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                                }
+                                                
+                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    {
+                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                        inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        
+                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nicIdInstance4 = ((string)nicIdValue4);
+                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                        }
+                                                        
+                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                        }
+                                                    }
+                                                }
+                                                
                                                 JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                                 if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                                 {
@@ -25678,68 +26974,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
-                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                                     {
-                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                         
-                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                        if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                         {
-                                                            string nicIdInstance4 = ((string)nicIdValue4);
-                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                            string nicIdInstance5 = ((string)nicIdValue5);
+                                                            vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                         }
                                                         
-                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                        if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                            string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                            vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                         }
                                                         
-                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                        if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                            string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                            vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                         }
                                                         
-                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                         {
-                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                            string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                            vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                         }
                                                         
-                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                            string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                            vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                         }
                                                         
-                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                        if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                         {
-                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                            string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                            vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                         }
                                                         
-                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                         {
-                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                            string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                            vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                         }
                                                         
-                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                        if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                         {
-                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                            string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                            vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                         }
                                                     }
                                                 }
@@ -27378,6 +28674,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                                 }
                                                 
+                                                JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                                if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                                {
+                                                    InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                                    inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                                    
+                                                    JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                                    if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                        agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                                    }
+                                                    
+                                                    JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                                    if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                        agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                                    }
+                                                    
+                                                    JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                                    if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                                    {
+                                                        string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                        agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                                if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                                    inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                                }
+                                                
+                                                JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                                if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                                    inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                                }
+                                                
+                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    {
+                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                        inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        
+                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nicIdInstance4 = ((string)nicIdValue4);
+                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                        }
+                                                        
+                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                        }
+                                                    }
+                                                }
+                                                
                                                 JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                                 if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                                 {
@@ -27498,68 +28902,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
-                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                                     {
-                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                         
-                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                        if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                         {
-                                                            string nicIdInstance4 = ((string)nicIdValue4);
-                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                            string nicIdInstance5 = ((string)nicIdValue5);
+                                                            vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                         }
                                                         
-                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                        if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                            string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                            vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                         }
                                                         
-                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                        if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                            string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                            vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                         }
                                                         
-                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                         {
-                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                            string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                            vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                         }
                                                         
-                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                            string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                            vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                         }
                                                         
-                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                        if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                         {
-                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                            string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                            vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                         }
                                                         
-                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                         {
-                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                            string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                            vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                         }
                                                         
-                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                        if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                         {
-                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                            string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                            vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                         }
                                                     }
                                                 }
@@ -29156,6 +30560,114 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance2;
                                                 }
                                                 
+                                                JToken agentDetailsValue = providerSpecificDetailsValue["agentDetails"];
+                                                if (agentDetailsValue != null && agentDetailsValue.Type != JTokenType.Null)
+                                                {
+                                                    InMageAgentDetails agentDetailsInstance = new InMageAgentDetails();
+                                                    inMageProviderSpecificSettingsInstance.AgentDetails = agentDetailsInstance;
+                                                    
+                                                    JToken agentVersionValue2 = agentDetailsValue["agentVersion"];
+                                                    if (agentVersionValue2 != null && agentVersionValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string agentVersionInstance2 = ((string)agentVersionValue2);
+                                                        agentDetailsInstance.AgentVersion = agentVersionInstance2;
+                                                    }
+                                                    
+                                                    JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
+                                                    if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
+                                                        agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
+                                                    }
+                                                    
+                                                    JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
+                                                    if (agentUpdateStatusValue != null && agentUpdateStatusValue.Type != JTokenType.Null)
+                                                    {
+                                                        string agentUpdateStatusInstance = ((string)agentUpdateStatusValue);
+                                                        agentDetailsInstance.AgentUpdateStatus = agentUpdateStatusInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken infrastructureVmIdValue2 = providerSpecificDetailsValue["infrastructureVmId"];
+                                                if (infrastructureVmIdValue2 != null && infrastructureVmIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string infrastructureVmIdInstance2 = ((string)infrastructureVmIdValue2);
+                                                    inMageProviderSpecificSettingsInstance.InfrastructureVmId = infrastructureVmIdInstance2;
+                                                }
+                                                
+                                                JToken vCenterInfrastructureIdValue2 = providerSpecificDetailsValue["vCenterInfrastructureId"];
+                                                if (vCenterInfrastructureIdValue2 != null && vCenterInfrastructureIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string vCenterInfrastructureIdInstance2 = ((string)vCenterInfrastructureIdValue2);
+                                                    inMageProviderSpecificSettingsInstance.VCenterInfrastructureId = vCenterInfrastructureIdInstance2;
+                                                }
+                                                
+                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    {
+                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
+                                                        inMageProviderSpecificSettingsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        
+                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
+                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string nicIdInstance4 = ((string)nicIdValue4);
+                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                        }
+                                                        
+                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
+                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
+                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
+                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                        }
+                                                        
+                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
+                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                        }
+                                                        
+                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
+                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
+                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                        }
+                                                        
+                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
+                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                        }
+                                                        
+                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
+                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
+                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                        }
+                                                    }
+                                                }
+                                                
                                                 JToken instanceTypeValue4 = providerSpecificDetailsValue["instanceType"];
                                                 if (instanceTypeValue4 != null && instanceTypeValue4.Type != JTokenType.Null)
                                                 {
@@ -29276,68 +30788,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
-                                                JToken vmNicsArray4 = providerSpecificDetailsValue["vmNics"];
-                                                if (vmNicsArray4 != null && vmNicsArray4.Type != JTokenType.Null)
+                                                JToken vmNicsArray5 = providerSpecificDetailsValue["vmNics"];
+                                                if (vmNicsArray5 != null && vmNicsArray5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken vmNicsValue4 in ((JArray)vmNicsArray4))
+                                                    foreach (JToken vmNicsValue5 in ((JArray)vmNicsArray5))
                                                     {
-                                                        VMNicDetails vMNicDetailsInstance4 = new VMNicDetails();
-                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance4);
+                                                        VMNicDetails vMNicDetailsInstance5 = new VMNicDetails();
+                                                        hyperVReplicaAzureReplicationDetailsInstance.VMNics.Add(vMNicDetailsInstance5);
                                                         
-                                                        JToken nicIdValue4 = vmNicsValue4["nicId"];
-                                                        if (nicIdValue4 != null && nicIdValue4.Type != JTokenType.Null)
+                                                        JToken nicIdValue5 = vmNicsValue5["nicId"];
+                                                        if (nicIdValue5 != null && nicIdValue5.Type != JTokenType.Null)
                                                         {
-                                                            string nicIdInstance4 = ((string)nicIdValue4);
-                                                            vMNicDetailsInstance4.NicId = nicIdInstance4;
+                                                            string nicIdInstance5 = ((string)nicIdValue5);
+                                                            vMNicDetailsInstance5.NicId = nicIdInstance5;
                                                         }
                                                         
-                                                        JToken vMSubnetNameValue4 = vmNicsValue4["vMSubnetName"];
-                                                        if (vMSubnetNameValue4 != null && vMSubnetNameValue4.Type != JTokenType.Null)
+                                                        JToken vMSubnetNameValue5 = vmNicsValue5["vMSubnetName"];
+                                                        if (vMSubnetNameValue5 != null && vMSubnetNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string vMSubnetNameInstance4 = ((string)vMSubnetNameValue4);
-                                                            vMNicDetailsInstance4.VMSubnetName = vMSubnetNameInstance4;
+                                                            string vMSubnetNameInstance5 = ((string)vMSubnetNameValue5);
+                                                            vMNicDetailsInstance5.VMSubnetName = vMSubnetNameInstance5;
                                                         }
                                                         
-                                                        JToken vMNetworkNameValue4 = vmNicsValue4["vMNetworkName"];
-                                                        if (vMNetworkNameValue4 != null && vMNetworkNameValue4.Type != JTokenType.Null)
+                                                        JToken vMNetworkNameValue5 = vmNicsValue5["vMNetworkName"];
+                                                        if (vMNetworkNameValue5 != null && vMNetworkNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string vMNetworkNameInstance4 = ((string)vMNetworkNameValue4);
-                                                            vMNicDetailsInstance4.VMNetworkName = vMNetworkNameInstance4;
+                                                            string vMNetworkNameInstance5 = ((string)vMNetworkNameValue5);
+                                                            vMNicDetailsInstance5.VMNetworkName = vMNetworkNameInstance5;
                                                         }
                                                         
-                                                        JToken recoveryVMNetworkIdValue4 = vmNicsValue4["recoveryVMNetworkId"];
-                                                        if (recoveryVMNetworkIdValue4 != null && recoveryVMNetworkIdValue4.Type != JTokenType.Null)
+                                                        JToken recoveryVMNetworkIdValue5 = vmNicsValue5["recoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue5 != null && recoveryVMNetworkIdValue5.Type != JTokenType.Null)
                                                         {
-                                                            string recoveryVMNetworkIdInstance4 = ((string)recoveryVMNetworkIdValue4);
-                                                            vMNicDetailsInstance4.RecoveryVMNetworkId = recoveryVMNetworkIdInstance4;
+                                                            string recoveryVMNetworkIdInstance5 = ((string)recoveryVMNetworkIdValue5);
+                                                            vMNicDetailsInstance5.RecoveryVMNetworkId = recoveryVMNetworkIdInstance5;
                                                         }
                                                         
-                                                        JToken recoveryVMSubnetNameValue4 = vmNicsValue4["recoveryVMSubnetName"];
-                                                        if (recoveryVMSubnetNameValue4 != null && recoveryVMSubnetNameValue4.Type != JTokenType.Null)
+                                                        JToken recoveryVMSubnetNameValue5 = vmNicsValue5["recoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue5 != null && recoveryVMSubnetNameValue5.Type != JTokenType.Null)
                                                         {
-                                                            string recoveryVMSubnetNameInstance4 = ((string)recoveryVMSubnetNameValue4);
-                                                            vMNicDetailsInstance4.RecoveryVMSubnetName = recoveryVMSubnetNameInstance4;
+                                                            string recoveryVMSubnetNameInstance5 = ((string)recoveryVMSubnetNameValue5);
+                                                            vMNicDetailsInstance5.RecoveryVMSubnetName = recoveryVMSubnetNameInstance5;
                                                         }
                                                         
-                                                        JToken ipAddressTypeValue4 = vmNicsValue4["ipAddressType"];
-                                                        if (ipAddressTypeValue4 != null && ipAddressTypeValue4.Type != JTokenType.Null)
+                                                        JToken ipAddressTypeValue5 = vmNicsValue5["ipAddressType"];
+                                                        if (ipAddressTypeValue5 != null && ipAddressTypeValue5.Type != JTokenType.Null)
                                                         {
-                                                            string ipAddressTypeInstance4 = ((string)ipAddressTypeValue4);
-                                                            vMNicDetailsInstance4.IpAddressType = ipAddressTypeInstance4;
+                                                            string ipAddressTypeInstance5 = ((string)ipAddressTypeValue5);
+                                                            vMNicDetailsInstance5.IpAddressType = ipAddressTypeInstance5;
                                                         }
                                                         
-                                                        JToken replicaNicStaticIPAddressValue4 = vmNicsValue4["replicaNicStaticIPAddress"];
-                                                        if (replicaNicStaticIPAddressValue4 != null && replicaNicStaticIPAddressValue4.Type != JTokenType.Null)
+                                                        JToken replicaNicStaticIPAddressValue5 = vmNicsValue5["replicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue5 != null && replicaNicStaticIPAddressValue5.Type != JTokenType.Null)
                                                         {
-                                                            string replicaNicStaticIPAddressInstance4 = ((string)replicaNicStaticIPAddressValue4);
-                                                            vMNicDetailsInstance4.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance4;
+                                                            string replicaNicStaticIPAddressInstance5 = ((string)replicaNicStaticIPAddressValue5);
+                                                            vMNicDetailsInstance5.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance5;
                                                         }
                                                         
-                                                        JToken selectionTypeValue4 = vmNicsValue4["selectionType"];
-                                                        if (selectionTypeValue4 != null && selectionTypeValue4.Type != JTokenType.Null)
+                                                        JToken selectionTypeValue5 = vmNicsValue5["selectionType"];
+                                                        if (selectionTypeValue5 != null && selectionTypeValue5.Type != JTokenType.Null)
                                                         {
-                                                            string selectionTypeInstance4 = ((string)selectionTypeValue4);
-                                                            vMNicDetailsInstance4.SelectionType = selectionTypeInstance4;
+                                                            string selectionTypeInstance5 = ((string)selectionTypeValue5);
+                                                            vMNicDetailsInstance5.SelectionType = selectionTypeInstance5;
                                                         }
                                                     }
                                                 }
