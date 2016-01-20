@@ -28,13 +28,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
-    public partial class RecoveryServicesManagementClient : ServiceClient<RecoveryServicesManagementClient>, IRecoveryServicesManagementClient
+    public partial class SiteRecoveryVaultManagementClient : ServiceClient<SiteRecoveryVaultManagementClient>, ISiteRecoveryVaultManagementClient
     {
         private string _apiVersion;
         
@@ -139,10 +139,10 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryServicesManagementClient
+        /// Initializes a new instance of the SiteRecoveryVaultManagementClient
         /// class.
         /// </summary>
-        public RecoveryServicesManagementClient()
+        public SiteRecoveryVaultManagementClient()
             : base()
         {
             this._resourceGroup = new ResourceGroupsOperations(this);
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryServicesManagementClient
+        /// Initializes a new instance of the SiteRecoveryVaultManagementClient
         /// class.
         /// </summary>
         /// <param name='resourceNamespace'>
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public RecoveryServicesManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public SiteRecoveryVaultManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (resourceNamespace == null)
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryServicesManagementClient
+        /// Initializes a new instance of the SiteRecoveryVaultManagementClient
         /// class.
         /// </summary>
         /// <param name='resourceNamespace'>
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public RecoveryServicesManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials)
+        public SiteRecoveryVaultManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials)
             : this()
         {
             if (resourceNamespace == null)
@@ -239,13 +239,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryServicesManagementClient
+        /// Initializes a new instance of the SiteRecoveryVaultManagementClient
         /// class.
         /// </summary>
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RecoveryServicesManagementClient(HttpClient httpClient)
+        public SiteRecoveryVaultManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._resourceGroup = new ResourceGroupsOperations(this);
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryServicesManagementClient
+        /// Initializes a new instance of the SiteRecoveryVaultManagementClient
         /// class.
         /// </summary>
         /// <param name='resourceNamespace'>
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RecoveryServicesManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public SiteRecoveryVaultManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
             if (resourceNamespace == null)
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryServicesManagementClient
+        /// Initializes a new instance of the SiteRecoveryVaultManagementClient
         /// class.
         /// </summary>
         /// <param name='resourceNamespace'>
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RecoveryServicesManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public SiteRecoveryVaultManagementClient(string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
             if (resourceNamespace == null)
@@ -349,18 +349,18 @@ namespace Microsoft.Azure.Management.RecoveryServices
         
         /// <summary>
         /// Clones properties from current instance to another
-        /// RecoveryServicesManagementClient instance
+        /// SiteRecoveryVaultManagementClient instance
         /// </summary>
         /// <param name='client'>
-        /// Instance of RecoveryServicesManagementClient to clone to
+        /// Instance of SiteRecoveryVaultManagementClient to clone to
         /// </param>
-        protected override void Clone(ServiceClient<RecoveryServicesManagementClient> client)
+        protected override void Clone(ServiceClient<SiteRecoveryVaultManagementClient> client)
         {
             base.Clone(client);
             
-            if (client is RecoveryServicesManagementClient)
+            if (client is SiteRecoveryVaultManagementClient)
             {
-                RecoveryServicesManagementClient clonedClient = ((RecoveryServicesManagementClient)client);
+                SiteRecoveryVaultManagementClient clonedClient = ((SiteRecoveryVaultManagementClient)client);
                 
                 clonedClient._resourceNamespace = this._resourceNamespace;
                 clonedClient._resourceType = this._resourceType;

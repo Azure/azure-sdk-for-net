@@ -17,7 +17,7 @@ using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Security;
-using Microsoft.Azure.Management.RecoveryServices;
+using Microsoft.Azure.Management.SiteRecoveryVault;
 using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Azure.Test
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A recovery services management client, created from the current context (environment variables)</returns>
-        public static RecoveryServicesManagementClient GetRecoveryServicesManagementClient(this TestBase testBase)
+        public static SiteRecoveryVaultManagementClient GetSiteRecoveryVaultManagementClient(this TestBase testBase)
         {
             TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
 
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Test
                     IgnoreCertificateErrorHandler;
             }
 
-            return new RecoveryServicesManagementClient(
+            return new SiteRecoveryVaultManagementClient(
                 "Microsoft.RecoveryServicesBVTD2",
                 "vaults",
                 (SubscriptionCloudCredentials)environment.Credentials,
