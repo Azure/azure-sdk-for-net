@@ -23,6 +23,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         [EnumMember(Value = "BypassCaching")]
         BypassCaching,
         [EnumMember(Value = "UseQueryString")]
-        UseQueryString
+        UseQueryString,
+        [EnumMember(Value = "NotSet")]
+        NotSet
     }
 }
