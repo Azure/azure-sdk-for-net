@@ -15,8 +15,8 @@
 
 using Microsoft.Azure.Management.SiteRecovery.Models;
 using Microsoft.Azure.Management.SiteRecovery;
-using Microsoft.Azure.Management.RecoveryServices.Models;
-using Microsoft.Azure.Management.RecoveryServices;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
 using Microsoft.Azure.Test;
 using System.Net;
 using System.Linq;

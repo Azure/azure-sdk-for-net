@@ -24,12 +24,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
-    public partial interface IRecoveryServicesManagementClient : IDisposable
+    public partial interface ISiteRecoveryVaultManagementClient : IDisposable
     {
         /// <summary>
         /// Gets the API version.

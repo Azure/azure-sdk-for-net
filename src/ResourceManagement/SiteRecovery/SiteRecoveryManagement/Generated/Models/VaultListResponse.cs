@@ -24,9 +24,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Models
+namespace Microsoft.Azure.Management.SiteRecoveryVault.Models
 {
     /// <summary>
     /// The response model for Vault.

@@ -23,12 +23,12 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
-    public static partial class RecoveryServicesManagementClientExtensions
+    public static partial class SiteRecoveryVaultManagementClientExtensions
     {
         /// <summary>
         /// The Get Operation Status operation returns the status of
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IRecoveryServicesManagementClient.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.ISiteRecoveryVaultManagementClient.
         /// </param>
         /// <param name='requestId'>
         /// Required. The request ID for the request you wish to track. The
@@ -58,11 +58,11 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static RecoveryServicesOperationStatusResponse GetOperationStatus(this IRecoveryServicesManagementClient operations, string requestId)
+        public static RecoveryServicesOperationStatusResponse GetOperationStatus(this ISiteRecoveryVaultManagementClient operations, string requestId)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryServicesManagementClient)s).GetOperationStatusAsync(requestId);
+                return ((ISiteRecoveryVaultManagementClient)s).GetOperationStatusAsync(requestId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IRecoveryServicesManagementClient.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.ISiteRecoveryVaultManagementClient.
         /// </param>
         /// <param name='requestId'>
         /// Required. The request ID for the request you wish to track. The
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<RecoveryServicesOperationStatusResponse> GetOperationStatusAsync(this IRecoveryServicesManagementClient operations, string requestId)
+        public static Task<RecoveryServicesOperationStatusResponse> GetOperationStatusAsync(this ISiteRecoveryVaultManagementClient operations, string requestId)
         {
             return operations.GetOperationStatusAsync(requestId, CancellationToken.None);
         }

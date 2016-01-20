@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     public static partial class ResourceGroupsOperationsExtensions
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IResourceGroupsOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IResourceGroupsOperations.
         /// </param>
         /// <returns>
         /// The response model for the list resource group operation.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IResourceGroupsOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IResourceGroupsOperations.
         /// </param>
         /// <returns>
         /// The response model for the list resource group operation.
