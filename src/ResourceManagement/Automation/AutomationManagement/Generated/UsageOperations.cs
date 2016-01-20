@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/usages";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -204,6 +204,13 @@ namespace Microsoft.Azure.Management.Automation
                                     Usage usageInstance = new Usage();
                                     result.Usage.Add(usageInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        usageInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
@@ -235,7 +242,7 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken currentValueValue = valueValue["currentValue"];
                                     if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
                                     {
-                                        long currentValueInstance = ((long)currentValueValue);
+                                        double currentValueInstance = ((double)currentValueValue);
                                         usageInstance.CurrentValue = currentValueInstance;
                                     }
                                     
