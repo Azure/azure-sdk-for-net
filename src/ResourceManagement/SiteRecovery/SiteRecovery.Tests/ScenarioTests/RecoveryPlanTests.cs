@@ -162,7 +162,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                         {
                             new RecoveryPlanHyperVReplicaAzureFailoverInput()
                             {
-                                InstanceType = "HyperVReplicaAzure",
                                 VaultLocation = "Southeast Asia"
                             }
                         }
@@ -180,7 +179,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                         {
                             new RecoveryPlanHyperVReplicaAzureFailoverInput()
                             {
-                                InstanceType = "HyperVReplicaAzure",
                                 VaultLocation = "Southeast Asia"
                             }
                         }
@@ -201,7 +199,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                         {
                             new RecoveryPlanHyperVReplicaAzureFailbackInput()
                             {
-                                InstanceType = "HyperVReplicaAzureFailback",
                                 DataSyncOption = "ForSyncronization",
                                 RecoveryVmCreationOption = "NoAction"
                             }
@@ -227,7 +224,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                         {
                             new RecoveryPlanHyperVReplicaAzureFailoverInput()
                             {
-                                InstanceType = "HyperVReplicaAzure",
                                 VaultLocation = "Southeast Asia"
                             }
                         }
@@ -432,7 +428,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                                 FailoverDirections = new List<string>() { "PrimaryToRecovery" },
                                 CustomDetails = new RecoveryPlanScriptActionDetails()
                                 {
-                                    InstanceType = "ScriptActionDetails",
                                     FabricLocation = "Recovery",
                                     Path = "path1",
                                     Timeout = null
@@ -448,7 +443,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                                 FailoverDirections = new List<string>() { "RecoveryToPrimary" },
                                 CustomDetails = new RecoveryPlanManualActionDetails()
                                 {
-                                    InstanceType = "ManualActionDetails",
                                     Description = "desc1"
                                 }
                             }
@@ -480,7 +474,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                                 FailoverDirections = new List<string>() { "PrimaryToRecovery" },
                                 CustomDetails = new RecoveryPlanScriptActionDetails()
                                 {
-                                    InstanceType = "ScriptActionDetails",
                                     FabricLocation = "Primary",
                                     Path = "path2",
                                     Timeout = null
@@ -493,7 +486,6 @@ namespace SiteRecovery.Tests.ScenarioTests
                                 FailoverDirections = new List<string>() { "RecoveryToPrimary" },
                                 CustomDetails = new RecoveryPlanManualActionDetails()
                                 {
-                                    InstanceType = "ManualActionDetails",
                                     Description = "desc2"
                                 }
                             }

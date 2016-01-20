@@ -295,10 +295,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.CustomDetails");
                             }
-                            if (endGroupActionsParameterItem.CustomDetails.InstanceType == null)
-                            {
-                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.CustomDetails.InstanceType");
-                            }
                             if (endGroupActionsParameterItem.FailoverDirections == null)
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverDirections");
@@ -334,10 +330,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             if (startGroupActionsParameterItem.CustomDetails == null)
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.CustomDetails");
-                            }
-                            if (startGroupActionsParameterItem.CustomDetails.InstanceType == null)
-                            {
-                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.CustomDetails.InstanceType");
                             }
                             if (startGroupActionsParameterItem.FailoverDirections == null)
                             {
@@ -528,7 +520,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue["fabricLocation"] = derived.FabricLocation;
                                             
-                                            customDetailsValue["instanceType"] = derived.InstanceType;
+                                            if (derived.InstanceType != null)
+                                            {
+                                                customDetailsValue["instanceType"] = derived.InstanceType;
+                                            }
                                         }
                                         if (startGroupActionsItem.CustomDetails is RecoveryPlanAutomationRunbookActionDetails)
                                         {
@@ -544,7 +539,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue["fabricLocation"] = derived2.FabricLocation;
                                             
-                                            customDetailsValue["instanceType"] = derived2.InstanceType;
+                                            if (derived2.InstanceType != null)
+                                            {
+                                                customDetailsValue["instanceType"] = derived2.InstanceType;
+                                            }
                                         }
                                         if (startGroupActionsItem.CustomDetails is RecoveryPlanManualActionDetails)
                                         {
@@ -556,7 +554,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 customDetailsValue["description"] = derived3.Description;
                                             }
                                             
-                                            customDetailsValue["instanceType"] = derived3.InstanceType;
+                                            if (derived3.InstanceType != null)
+                                            {
+                                                customDetailsValue["instanceType"] = derived3.InstanceType;
+                                            }
                                         }
                                     }
                                     recoveryPlanGroupValue["startGroupActions"] = startGroupActionsArray;
@@ -617,7 +618,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue2["fabricLocation"] = derived4.FabricLocation;
                                             
-                                            customDetailsValue2["instanceType"] = derived4.InstanceType;
+                                            if (derived4.InstanceType != null)
+                                            {
+                                                customDetailsValue2["instanceType"] = derived4.InstanceType;
+                                            }
                                         }
                                         if (endGroupActionsItem.CustomDetails is RecoveryPlanAutomationRunbookActionDetails)
                                         {
@@ -633,7 +637,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue2["fabricLocation"] = derived5.FabricLocation;
                                             
-                                            customDetailsValue2["instanceType"] = derived5.InstanceType;
+                                            if (derived5.InstanceType != null)
+                                            {
+                                                customDetailsValue2["instanceType"] = derived5.InstanceType;
+                                            }
                                         }
                                         if (endGroupActionsItem.CustomDetails is RecoveryPlanManualActionDetails)
                                         {
@@ -645,7 +652,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 customDetailsValue2["description"] = derived6.Description;
                                             }
                                             
-                                            customDetailsValue2["instanceType"] = derived6.InstanceType;
+                                            if (derived6.InstanceType != null)
+                                            {
+                                                customDetailsValue2["instanceType"] = derived6.InstanceType;
+                                            }
                                         }
                                     }
                                     recoveryPlanGroupValue["endGroupActions"] = endGroupActionsArray;
@@ -960,16 +970,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("input.Properties.FailoverDirection");
             }
-            if (input.Properties.ProviderSpecificDetails != null)
-            {
-                foreach (RecoveryPlanProviderSpecificFailoverInput providerSpecificDetailsParameterItem in input.Properties.ProviderSpecificDetails)
-                {
-                    if (providerSpecificDetailsParameterItem.InstanceType == null)
-                    {
-                        throw new ArgumentNullException("input.Properties.ProviderSpecificDetails.InstanceType");
-                    }
-                }
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1062,7 +1062,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             providerSpecificDetailsArray.Add(recoveryPlanProviderSpecificFailoverInputValue);
                             if (providerSpecificDetailsItem is RecoveryPlanHyperVReplicaAzureFailoverInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "HyperVReplicaAzure";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "HyperVReplicaAzure";
                                 RecoveryPlanHyperVReplicaAzureFailoverInput derived = ((RecoveryPlanHyperVReplicaAzureFailoverInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["vaultLocation"] = derived.VaultLocation;
@@ -1077,29 +1077,38 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     recoveryPlanProviderSpecificFailoverInputValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
                                 }
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived.InstanceType;
+                                if (derived.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived.InstanceType;
+                                }
                             }
                             if (providerSpecificDetailsItem is RecoveryPlanHyperVReplicaAzureFailbackInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "HyperVReplicaAzureFailback";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "HyperVReplicaAzureFailback";
                                 RecoveryPlanHyperVReplicaAzureFailbackInput derived2 = ((RecoveryPlanHyperVReplicaAzureFailbackInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["dataSyncOption"] = derived2.DataSyncOption;
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["recoveryVmCreationOption"] = derived2.RecoveryVmCreationOption;
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived2.InstanceType;
+                                if (derived2.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived2.InstanceType;
+                                }
                             }
                             if (providerSpecificDetailsItem is RecoveryPlanInMageAzureV2FailoverInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "InMageAzureV2";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "InMageAzureV2";
                                 RecoveryPlanInMageAzureV2FailoverInput derived3 = ((RecoveryPlanInMageAzureV2FailoverInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["vaultLocation"] = derived3.VaultLocation;
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["recoveryPointType"] = derived3.RecoveryPointType;
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived3.InstanceType;
+                                if (derived3.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived3.InstanceType;
+                                }
                             }
                         }
                         propertiesValue["providerSpecificDetails"] = providerSpecificDetailsArray;
@@ -1415,16 +1424,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("input.Properties.NetworkType");
             }
-            if (input.Properties.ProviderSpecificDetails != null)
-            {
-                foreach (RecoveryPlanProviderSpecificFailoverInput providerSpecificDetailsParameterItem in input.Properties.ProviderSpecificDetails)
-                {
-                    if (providerSpecificDetailsParameterItem.InstanceType == null)
-                    {
-                        throw new ArgumentNullException("input.Properties.ProviderSpecificDetails.InstanceType");
-                    }
-                }
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1524,7 +1523,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             providerSpecificDetailsArray.Add(recoveryPlanProviderSpecificFailoverInputValue);
                             if (providerSpecificDetailsItem is RecoveryPlanHyperVReplicaAzureFailoverInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "HyperVReplicaAzure";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "HyperVReplicaAzure";
                                 RecoveryPlanHyperVReplicaAzureFailoverInput derived = ((RecoveryPlanHyperVReplicaAzureFailoverInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["vaultLocation"] = derived.VaultLocation;
@@ -1539,29 +1538,38 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     recoveryPlanProviderSpecificFailoverInputValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
                                 }
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived.InstanceType;
+                                if (derived.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived.InstanceType;
+                                }
                             }
                             if (providerSpecificDetailsItem is RecoveryPlanHyperVReplicaAzureFailbackInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "HyperVReplicaAzureFailback";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "HyperVReplicaAzureFailback";
                                 RecoveryPlanHyperVReplicaAzureFailbackInput derived2 = ((RecoveryPlanHyperVReplicaAzureFailbackInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["dataSyncOption"] = derived2.DataSyncOption;
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["recoveryVmCreationOption"] = derived2.RecoveryVmCreationOption;
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived2.InstanceType;
+                                if (derived2.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived2.InstanceType;
+                                }
                             }
                             if (providerSpecificDetailsItem is RecoveryPlanInMageAzureV2FailoverInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "InMageAzureV2";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "InMageAzureV2";
                                 RecoveryPlanInMageAzureV2FailoverInput derived3 = ((RecoveryPlanInMageAzureV2FailoverInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["vaultLocation"] = derived3.VaultLocation;
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["recoveryPointType"] = derived3.RecoveryPointType;
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived3.InstanceType;
+                                if (derived3.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived3.InstanceType;
+                                }
                             }
                         }
                         propertiesValue["providerSpecificDetails"] = providerSpecificDetailsArray;
@@ -1696,16 +1704,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("input.Properties.FailoverDirection");
             }
-            if (input.Properties.ProviderSpecificDetails != null)
-            {
-                foreach (RecoveryPlanProviderSpecificFailoverInput providerSpecificDetailsParameterItem in input.Properties.ProviderSpecificDetails)
-                {
-                    if (providerSpecificDetailsParameterItem.InstanceType == null)
-                    {
-                        throw new ArgumentNullException("input.Properties.ProviderSpecificDetails.InstanceType");
-                    }
-                }
-            }
             if (input.Properties.SourceSiteOperations == null)
             {
                 throw new ArgumentNullException("input.Properties.SourceSiteOperations");
@@ -1804,7 +1802,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             providerSpecificDetailsArray.Add(recoveryPlanProviderSpecificFailoverInputValue);
                             if (providerSpecificDetailsItem is RecoveryPlanHyperVReplicaAzureFailoverInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "HyperVReplicaAzure";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "HyperVReplicaAzure";
                                 RecoveryPlanHyperVReplicaAzureFailoverInput derived = ((RecoveryPlanHyperVReplicaAzureFailoverInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["vaultLocation"] = derived.VaultLocation;
@@ -1819,29 +1817,38 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     recoveryPlanProviderSpecificFailoverInputValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
                                 }
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived.InstanceType;
+                                if (derived.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived.InstanceType;
+                                }
                             }
                             if (providerSpecificDetailsItem is RecoveryPlanHyperVReplicaAzureFailbackInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "HyperVReplicaAzureFailback";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "HyperVReplicaAzureFailback";
                                 RecoveryPlanHyperVReplicaAzureFailbackInput derived2 = ((RecoveryPlanHyperVReplicaAzureFailbackInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["dataSyncOption"] = derived2.DataSyncOption;
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["recoveryVmCreationOption"] = derived2.RecoveryVmCreationOption;
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived2.InstanceType;
+                                if (derived2.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived2.InstanceType;
+                                }
                             }
                             if (providerSpecificDetailsItem is RecoveryPlanInMageAzureV2FailoverInput)
                             {
-                                recoveryPlanProviderSpecificFailoverInputValue["odata.type"] = "InMageAzureV2";
+                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = "InMageAzureV2";
                                 RecoveryPlanInMageAzureV2FailoverInput derived3 = ((RecoveryPlanInMageAzureV2FailoverInput)providerSpecificDetailsItem);
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["vaultLocation"] = derived3.VaultLocation;
                                 
                                 recoveryPlanProviderSpecificFailoverInputValue["recoveryPointType"] = derived3.RecoveryPointType;
                                 
-                                recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived3.InstanceType;
+                                if (derived3.InstanceType != null)
+                                {
+                                    recoveryPlanProviderSpecificFailoverInputValue["instanceType"] = derived3.InstanceType;
+                                }
                             }
                         }
                         propertiesValue["providerSpecificDetails"] = providerSpecificDetailsArray;
@@ -1992,10 +1999,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.CustomDetails");
                             }
-                            if (endGroupActionsParameterItem.CustomDetails.InstanceType == null)
-                            {
-                                throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.CustomDetails.InstanceType");
-                            }
                             if (endGroupActionsParameterItem.FailoverDirections == null)
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.EndGroupActions.FailoverDirections");
@@ -2031,10 +2034,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             if (startGroupActionsParameterItem.CustomDetails == null)
                             {
                                 throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.CustomDetails");
-                            }
-                            if (startGroupActionsParameterItem.CustomDetails.InstanceType == null)
-                            {
-                                throw new ArgumentNullException("input.Properties.Groups.StartGroupActions.CustomDetails.InstanceType");
                             }
                             if (startGroupActionsParameterItem.FailoverDirections == null)
                             {
@@ -2208,7 +2207,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue["fabricLocation"] = derived.FabricLocation;
                                             
-                                            customDetailsValue["instanceType"] = derived.InstanceType;
+                                            if (derived.InstanceType != null)
+                                            {
+                                                customDetailsValue["instanceType"] = derived.InstanceType;
+                                            }
                                         }
                                         if (startGroupActionsItem.CustomDetails is RecoveryPlanAutomationRunbookActionDetails)
                                         {
@@ -2224,7 +2226,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue["fabricLocation"] = derived2.FabricLocation;
                                             
-                                            customDetailsValue["instanceType"] = derived2.InstanceType;
+                                            if (derived2.InstanceType != null)
+                                            {
+                                                customDetailsValue["instanceType"] = derived2.InstanceType;
+                                            }
                                         }
                                         if (startGroupActionsItem.CustomDetails is RecoveryPlanManualActionDetails)
                                         {
@@ -2236,7 +2241,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 customDetailsValue["description"] = derived3.Description;
                                             }
                                             
-                                            customDetailsValue["instanceType"] = derived3.InstanceType;
+                                            if (derived3.InstanceType != null)
+                                            {
+                                                customDetailsValue["instanceType"] = derived3.InstanceType;
+                                            }
                                         }
                                     }
                                     recoveryPlanGroupValue["startGroupActions"] = startGroupActionsArray;
@@ -2297,7 +2305,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue2["fabricLocation"] = derived4.FabricLocation;
                                             
-                                            customDetailsValue2["instanceType"] = derived4.InstanceType;
+                                            if (derived4.InstanceType != null)
+                                            {
+                                                customDetailsValue2["instanceType"] = derived4.InstanceType;
+                                            }
                                         }
                                         if (endGroupActionsItem.CustomDetails is RecoveryPlanAutomationRunbookActionDetails)
                                         {
@@ -2313,7 +2324,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             
                                             customDetailsValue2["fabricLocation"] = derived5.FabricLocation;
                                             
-                                            customDetailsValue2["instanceType"] = derived5.InstanceType;
+                                            if (derived5.InstanceType != null)
+                                            {
+                                                customDetailsValue2["instanceType"] = derived5.InstanceType;
+                                            }
                                         }
                                         if (endGroupActionsItem.CustomDetails is RecoveryPlanManualActionDetails)
                                         {
@@ -2325,7 +2339,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 customDetailsValue2["description"] = derived6.Description;
                                             }
                                             
-                                            customDetailsValue2["instanceType"] = derived6.InstanceType;
+                                            if (derived6.InstanceType != null)
+                                            {
+                                                customDetailsValue2["instanceType"] = derived6.InstanceType;
+                                            }
                                         }
                                     }
                                     recoveryPlanGroupValue["endGroupActions"] = endGroupActionsArray;

@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// RecoveryPlanHyperVReplicaAzureFailbackInput class with required
         /// arguments.
         /// </summary>
-        public RecoveryPlanHyperVReplicaAzureFailbackInput(string dataSyncOption, string recoveryVmCreationOption, string instanceType)
+        public RecoveryPlanHyperVReplicaAzureFailbackInput(string dataSyncOption, string recoveryVmCreationOption)
             : this()
         {
             if (dataSyncOption == null)
@@ -76,13 +76,8 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             {
                 throw new ArgumentNullException("recoveryVmCreationOption");
             }
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
             this.DataSyncOption = dataSyncOption;
             this.RecoveryVmCreationOption = recoveryVmCreationOption;
-            this.InstanceType = instanceType;
         }
     }
 }

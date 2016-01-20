@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _instanceType;
         
         /// <summary>
-        /// Required. Type of recovery plan provider input.
+        /// Optional. Type of recovery plan provider input.
         /// </summary>
         public string InstanceType
         {
@@ -46,21 +46,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public RecoveryPlanProviderSpecificFailoverInput()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// RecoveryPlanProviderSpecificFailoverInput class with required
-        /// arguments.
-        /// </summary>
-        public RecoveryPlanProviderSpecificFailoverInput(string instanceType)
-            : this()
-        {
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
-            this.InstanceType = instanceType;
         }
     }
 }

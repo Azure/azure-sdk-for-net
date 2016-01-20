@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// RecoveryPlanInMageAzureV2FailoverInput class with required
         /// arguments.
         /// </summary>
-        public RecoveryPlanInMageAzureV2FailoverInput(string vaultLocation, string recoveryPointType, string instanceType)
+        public RecoveryPlanInMageAzureV2FailoverInput(string vaultLocation, string recoveryPointType)
             : this()
         {
             if (vaultLocation == null)
@@ -76,13 +76,8 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             {
                 throw new ArgumentNullException("recoveryPointType");
             }
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
             this.VaultLocation = vaultLocation;
             this.RecoveryPointType = recoveryPointType;
-            this.InstanceType = instanceType;
         }
     }
 }

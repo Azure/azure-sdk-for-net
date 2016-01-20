@@ -76,19 +76,14 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// RecoveryPlanHyperVReplicaAzureFailoverInput class with required
         /// arguments.
         /// </summary>
-        public RecoveryPlanHyperVReplicaAzureFailoverInput(string vaultLocation, string instanceType)
+        public RecoveryPlanHyperVReplicaAzureFailoverInput(string vaultLocation)
             : this()
         {
             if (vaultLocation == null)
             {
                 throw new ArgumentNullException("vaultLocation");
             }
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
             this.VaultLocation = vaultLocation;
-            this.InstanceType = instanceType;
         }
     }
 }

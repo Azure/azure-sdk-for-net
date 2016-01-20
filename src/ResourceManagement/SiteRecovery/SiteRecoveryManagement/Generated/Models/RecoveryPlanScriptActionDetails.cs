@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the RecoveryPlanScriptActionDetails
         /// class with required arguments.
         /// </summary>
-        public RecoveryPlanScriptActionDetails(string path, string fabricLocation, string instanceType)
+        public RecoveryPlanScriptActionDetails(string path, string fabricLocation)
             : this()
         {
             if (path == null)
@@ -86,13 +86,8 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             {
                 throw new ArgumentNullException("fabricLocation");
             }
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
             this.Path = path;
             this.FabricLocation = fabricLocation;
-            this.InstanceType = instanceType;
         }
     }
 }
