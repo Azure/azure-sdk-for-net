@@ -50,7 +50,7 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(protectedItem.Properties.ProviderSpecificDetails);
 
                 var vmWareAzureV2Details = protectedItem.Properties.ProviderSpecificDetails
-                    as VMwareAzureV2ProviderSpecificSettings;
+                    as InMageAzureV2ProviderSpecificSettings;
                 Assert.NotNull(vmWareAzureV2Details);                        
 
                 var response =
@@ -193,7 +193,7 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(protectedItem.Properties.ProviderSpecificDetails);
 
                 var vmWareAzureV2Details = protectedItem.Properties.ProviderSpecificDetails
-                    as VMwareAzureV2ProviderSpecificSettings;
+                    as InMageAzureV2ProviderSpecificSettings;
                 Assert.NotNull(vmWareAzureV2Details);
 
                 var response =

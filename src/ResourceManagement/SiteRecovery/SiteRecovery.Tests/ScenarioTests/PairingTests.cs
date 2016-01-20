@@ -265,7 +265,7 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
                 string policyName = "Hitesh-VMwareAzureV2-Profile";
-                VMwareAzureV2PolicyInput input = new VMwareAzureV2PolicyInput
+                var input = new InMageAzureV2PolicyInput
                 {
                     AppConsistentFrequencyInMinutes = 15,
                     CrashConsistentFrequencyInMinutes = 15,
