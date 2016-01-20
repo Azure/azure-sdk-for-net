@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public static StorageListResponse List(this IStorageClassificationOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
+        public static StorageClassificationListResponse List(this IStorageClassificationOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public static Task<StorageListResponse> ListAsync(this IStorageClassificationOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
+        public static Task<StorageClassificationListResponse> ListAsync(this IStorageClassificationOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(fabricName, customRequestHeaders, CancellationToken.None);
         }
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public static StorageListResponse ListAll(this IStorageClassificationOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static StorageClassificationListResponse ListAll(this IStorageClassificationOperations operations, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public static Task<StorageListResponse> ListAllAsync(this IStorageClassificationOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<StorageClassificationListResponse> ListAllAsync(this IStorageClassificationOperations operations, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAllAsync(customRequestHeaders, CancellationToken.None);
         }
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public static StorageListResponse ListNext(this IStorageClassificationOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        public static StorageClassificationListResponse ListNext(this IStorageClassificationOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public static Task<StorageListResponse> ListNextAsync(this IStorageClassificationOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
+        public static Task<StorageClassificationListResponse> ListNextAsync(this IStorageClassificationOperations operations, string nextLink, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListNextAsync(nextLink, customRequestHeaders, CancellationToken.None);
         }

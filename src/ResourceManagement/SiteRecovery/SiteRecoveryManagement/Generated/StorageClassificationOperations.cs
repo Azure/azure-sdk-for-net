@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public async Task<StorageListResponse> ListAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<StorageClassificationListResponse> ListAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (fabricName == null)
@@ -449,13 +449,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     }
                     
                     // Create Result
-                    StorageListResponse result = null;
+                    StorageClassificationListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new StorageListResponse();
+                        result = new StorageClassificationListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public async Task<StorageListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<StorageClassificationListResponse> ListAllAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -715,13 +715,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     }
                     
                     // Create Result
-                    StorageListResponse result = null;
+                    StorageClassificationListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new StorageListResponse();
+                        result = new StorageClassificationListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -890,7 +890,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list storage classification operation.
         /// </returns>
-        public async Task<StorageListResponse> ListNextAsync(string nextLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<StorageClassificationListResponse> ListNextAsync(string nextLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (nextLink == null)
@@ -959,13 +959,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     }
                     
                     // Create Result
-                    StorageListResponse result = null;
+                    StorageClassificationListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new StorageListResponse();
+                        result = new StorageClassificationListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
