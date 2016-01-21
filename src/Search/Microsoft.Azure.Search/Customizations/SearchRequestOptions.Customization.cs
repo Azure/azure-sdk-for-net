@@ -7,9 +7,6 @@ namespace Microsoft.Azure.Search.Models
     using System;
     using Newtonsoft.Json;
 
-    /// <summary>
-    /// Additional parameters for the Count operation.
-    /// </summary>
     public partial class SearchRequestOptions
     {
         private Guid? _requestId;

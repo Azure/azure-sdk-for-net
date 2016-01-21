@@ -4,13 +4,16 @@
 
 namespace Microsoft.Azure.Search
 {
-    using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.Azure;
 
-    public static partial class IndexerOperationsExtensions
+    /// <summary>
+    /// Operations for managing indexers. 
+    /// <see href="https://msdn.microsoft.com/library/azure/dn946891.aspx" />
+    /// </summary>
+    public static partial class IndexersOperationsExtensions
     {
         /// <summary>
         /// Determines whether or not the given indexer exists in the Azure Search service.
