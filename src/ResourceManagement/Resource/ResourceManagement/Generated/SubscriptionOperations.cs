@@ -370,6 +370,13 @@ namespace Microsoft.Azure.Subscriptions
                                     }
                                 }
                             }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
                         }
                         
                     }
@@ -725,6 +732,13 @@ namespace Microsoft.Azure.Subscriptions
                                         subscriptionInstance.State = stateInstance;
                                     }
                                 }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
