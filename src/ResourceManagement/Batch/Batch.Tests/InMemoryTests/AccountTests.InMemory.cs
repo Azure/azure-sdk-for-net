@@ -19,8 +19,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-
 using Xunit;
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
@@ -106,9 +104,10 @@ namespace Microsoft.Azure.Batch.Tests
             acceptedResponse.Headers.Add("x-ms-request-id", "1");
             acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
             var utcNow = DateTime.UtcNow.ToString("o");
+
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(content: @"{
+                Content = new StringContent(@"{
                                 'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
                                 'type' : 'Microsoft.Batch/batchAccounts',
                                 'name': 'acctName',
@@ -120,7 +119,6 @@ namespace Microsoft.Azure.Batch.Tests
                                         'storageAccountId' : 'fooId',
                                         'lastKeySync': '" + utcNow + @"',
                                     }
-
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -163,7 +161,7 @@ namespace Microsoft.Azure.Batch.Tests
         [Fact]
         public void AccountCreateSyncValidateMessage()
         {
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
                                 'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
