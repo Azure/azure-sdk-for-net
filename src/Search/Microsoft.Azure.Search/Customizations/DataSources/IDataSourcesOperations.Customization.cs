@@ -10,9 +10,6 @@ namespace Microsoft.Azure.Search
     using Microsoft.Rest.Azure;
     using Models;
 
-    /// <summary>
-    /// DataSourcesOperations operations.
-    /// </summary>
     public partial interface IDataSourcesOperations
     {
         /// <summary>

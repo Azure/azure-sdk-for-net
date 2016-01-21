@@ -8,6 +8,10 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Defines parameters for an Azure Search index that influence scoring in search queries.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn798928.aspx" />
+    /// </summary>
     public class ScoringProfile
     {
         /// <summary>
