@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Batch.Tests
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
                                     'autoStorage' :{
-                                        'storageAccountId' : 'fooId',
+                                        'storageAccountId' : '//storageAccount1',
                                         'lastKeySync': '" + utcNow + @"',
                                     }
                                 },
@@ -137,7 +137,14 @@ namespace Microsoft.Azure.Batch.Tests
             var result = client.Accounts.Create("foo", "acctName", new BatchAccountCreateParameters
             {
                 Location = "South Central US",
-                Tags = tags
+                Tags = tags,
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//storageAccount1"
+                    }
+                }
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -153,7 +160,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
             Assert.True(result.Resource.Tags.Count == 2);
-            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "fooId");
+            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "//storageAccount1");
             Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
 
         }
@@ -216,6 +223,8 @@ namespace Microsoft.Azure.Batch.Tests
         [Fact]
         public void AccountUpdateValidateMessage()
         {
+            var utcNow = DateTime.UtcNow.ToString("o");
+
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
@@ -225,7 +234,11 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded'
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' : {
+                                        'storageAccountId' : '//StorageAccountId',
+                                        'lastKeySync': '" + utcNow + @"',
+                                    }
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -243,7 +256,14 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = client.Accounts.Update("foo", "acctName", new BatchAccountUpdateParameters
             {
-                Tags = tags
+                Tags = tags,
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//StorageAccountId",
+                    }
+                },
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -254,6 +274,8 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("South Central US", result.Resource.Location);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
+            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "//StorageAccountId");
+            Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
             Assert.True(result.Resource.Tags.Count == 2);
         }
 
