@@ -183,7 +183,7 @@ namespace Batch.Tests.InMemoryTests
                     'displayName' : 'boo',
                     'defaultVersion' : 'beta',
                     'packages':[
-                        {'version':'John', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow + @"'}], 
+                        {'version':'John', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow + @"'}],
 
                     }")
             };
@@ -272,7 +272,7 @@ namespace Batch.Tests.InMemoryTests
                     'defaultVersion' : 'beta',
                     'packages':[
                         {'version':'John', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow + @"'},
-                        {'version':'Smith', 'state':'pending', 'format': 'alpha', 'lastActivationTime': '" + utcNow + @"'}], 
+                        {'version':'Smith', 'state':'pending', 'format': 'alpha', 'lastActivationTime': '" + utcNow + @"'}],
 
                     }]}")
             };
@@ -339,8 +339,7 @@ namespace Batch.Tests.InMemoryTests
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage(null, "foo", "foo", "foo", new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", null, "foo", "null", new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", null, "foo", new ActivateApplicationPackageParameters()));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters())); 
-            
+            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", null, null, null, new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", null, null, new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters()));
@@ -415,7 +414,7 @@ namespace Batch.Tests.InMemoryTests
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
-            
+
             Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication(null, "foo", "foo", new UpdateApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication("foo", null, "foo", new UpdateApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.UpdateApplication("foo", "foo", null, new UpdateApplicationParameters()));

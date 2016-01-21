@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal(result.Actions[1].FriendlyTarget, "Batch Account");
             Assert.True(result.Actions[1].FriendlyDescription.StartsWith("Regenerate the specified"));
         }
-        
+
         [Fact]
         public void AccountCreateThrowsExceptions()
         {
@@ -119,9 +119,7 @@ namespace Microsoft.Azure.Batch.Tests
                                     'autoStorage' :{
                                         'storageAccountId' : 'fooId',
                                         'lastKeySync': '" + utcNow + @"',
-
-
-                                    }                        
+                                    }
 
                                 },
                                 'tags' : {
@@ -177,7 +175,7 @@ namespace Microsoft.Azure.Batch.Tests
                                     'provisioningState' : 'Succeeded',
                                     'autoStorage' : {
                                         'storageAccountId' : 'fooId'
-                                    }       
+                                    }
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -674,7 +672,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             // Validate result
             Assert.True(result.Accounts.Count == 2);
-            
+
             Assert.Equal(result.Accounts[0].Location, "West US");
             Assert.Equal(result.Accounts[0].Name, "acctName");
             Assert.Equal(result.Accounts[0].Id, @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName" );
