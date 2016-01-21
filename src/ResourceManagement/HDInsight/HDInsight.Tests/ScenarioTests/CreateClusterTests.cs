@@ -188,7 +188,7 @@ namespace HDInsight.Tests
         }
 
         [Fact]
-        public void TestCreateHumboldtClusterWithPremiumTier()
+        public void TestCreateLinuxClusterWithPremiumTier()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -202,12 +202,12 @@ namespace HDInsight.Tests
 
                 var cluster = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
                 cluster.Tier= Tier.Premium;
-                const string dnsname = "hdisdk-PremiumClusterTest";
+                const string dnsname = "hdisdk-PremiumLinuxClusterTest";
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
 
-                client.Clusters.Get(resourceGroup, dnsname);
-
+                var clusterResponse = client.Clusters.Get(resourceGroup, dnsname);
+                Assert.Equal(createresponse.Cluster.Properties.ClusterTier , Tier.Premium);
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
                 Assert.Equal(result.StatusCode, HttpStatusCode.OK);
                 Assert.Equal(result.State, AsyncOperationState.Succeeded);
@@ -228,7 +228,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 var cluster = GetClusterSpecHelpers.GetPaasClusterSpec();
-                cluster.Properties.ClusterTier = Tier.Premium;
+                cluster.Properties.ClusterTier = Tier.Standard;
                 const string dnsname = "hdisdk-WindowsPremiumClusterTest";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);

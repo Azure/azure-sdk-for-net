@@ -312,9 +312,13 @@ namespace Microsoft.Azure.Management.HDInsight
                 
                 // Set Headers
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 httpRequest.Headers.Add("User-Agent", "ARM SDK v1.5.6-preview");
 >>>>>>> 02e86bd... Adding Tier parameter to cluster creation
+=======
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.10-preview");
+>>>>>>> dfa2900... Fix test cases, change SDK version
                 httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
