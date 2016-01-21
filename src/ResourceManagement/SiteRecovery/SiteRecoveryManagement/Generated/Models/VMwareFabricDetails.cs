@@ -165,17 +165,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._lastHeartbeat = value; }
         }
         
-        private string _latestUpdateVersion;
-        
-        /// <summary>
-        /// Optional. The latest update version.
-        /// </summary>
-        public string LatestUpdateVersion
-        {
-            get { return this._latestUpdateVersion; }
-            set { this._latestUpdateVersion = value; }
-        }
-        
         private IList<MasterTargetServer> _masterTargetServers;
         
         /// <summary>

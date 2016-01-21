@@ -51,17 +51,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._agentVersion = value; }
         }
         
-        private string _latestUpdateVersion;
-        
-        /// <summary>
-        /// Optional. The latest update version.
-        /// </summary>
-        public string LatestUpdateVersion
-        {
-            get { return this._latestUpdateVersion; }
-            set { this._latestUpdateVersion = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the InMageAgentDetails class.
         /// </summary>

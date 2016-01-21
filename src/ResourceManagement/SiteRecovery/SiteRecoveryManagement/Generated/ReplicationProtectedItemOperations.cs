@@ -4435,13 +4435,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -5097,13 +5090,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -6304,13 +6290,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -6966,13 +6945,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -8232,13 +8204,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -8894,13 +8859,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -10391,13 +10349,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -11053,13 +11004,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -12319,13 +12263,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -12981,13 +12918,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -14478,13 +14408,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -15140,13 +15063,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -16406,13 +16322,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -17068,13 +16977,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -18334,13 +18236,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -18996,13 +18891,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -20262,13 +20150,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -20924,13 +20805,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -22190,13 +22064,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -22852,13 +22719,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -24118,13 +23978,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                         if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                         {
@@ -24780,13 +24633,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string agentVersionInstance2 = ((string)agentVersionValue2);
                                                 agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                            }
-                                            
-                                            JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                            if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                            {
-                                                string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                             }
                                             
                                             JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -26095,13 +25941,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                                 if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
@@ -26757,13 +26596,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         string agentVersionInstance2 = ((string)agentVersionValue2);
                                                         agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                                    }
-                                                    
-                                                    JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                                    if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                        agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                     }
                                                     
                                                     JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -28023,13 +27855,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                                 if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
@@ -28685,13 +28510,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         string agentVersionInstance2 = ((string)agentVersionValue2);
                                                         agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                                    }
-                                                    
-                                                    JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                                    if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                        agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                     }
                                                     
                                                     JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];
@@ -29909,13 +29727,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = providerSpecificDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    inMageAzureV2ProviderSpecificSettingsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken isAgentUpdateRequiredValue = providerSpecificDetailsValue["isAgentUpdateRequired"];
                                                 if (isAgentUpdateRequiredValue != null && isAgentUpdateRequiredValue.Type != JTokenType.Null)
                                                 {
@@ -30571,13 +30382,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     {
                                                         string agentVersionInstance2 = ((string)agentVersionValue2);
                                                         agentDetailsInstance.AgentVersion = agentVersionInstance2;
-                                                    }
-                                                    
-                                                    JToken latestUpdateVersionValue2 = agentDetailsValue["latestUpdateVersion"];
-                                                    if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                        agentDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                     }
                                                     
                                                     JToken agentUpdateStatusValue = agentDetailsValue["agentUpdateStatus"];

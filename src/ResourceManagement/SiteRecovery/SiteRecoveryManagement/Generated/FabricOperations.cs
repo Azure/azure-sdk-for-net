@@ -1794,13 +1794,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = processServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
                                                 if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
@@ -1987,13 +1980,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string agentVersionInstance2 = ((string)agentVersionValue2);
                                                     masterTargetServerInstance.AgentVersion = agentVersionInstance2;
-                                                }
-                                                
-                                                JToken latestUpdateVersionValue2 = masterTargetServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                    masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
                                                 JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
@@ -2257,13 +2243,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string agentVersionInstance3 = ((string)agentVersionValue3);
                                             vMwareFabricDetailsInstance.AgentVersion = agentVersionInstance3;
-                                        }
-                                        
-                                        JToken latestUpdateVersionValue3 = customDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue3 != null && latestUpdateVersionValue3.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance3 = ((string)latestUpdateVersionValue3);
-                                            vMwareFabricDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance3;
                                         }
                                         
                                         JToken hostNameValue = customDetailsValue["hostName"];
@@ -2663,13 +2642,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = processServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
                                                 if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
@@ -2856,13 +2828,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string agentVersionInstance2 = ((string)agentVersionValue2);
                                                     masterTargetServerInstance.AgentVersion = agentVersionInstance2;
-                                                }
-                                                
-                                                JToken latestUpdateVersionValue2 = masterTargetServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                    masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
                                                 JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
@@ -3126,13 +3091,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string agentVersionInstance3 = ((string)agentVersionValue3);
                                             vMwareFabricDetailsInstance.AgentVersion = agentVersionInstance3;
-                                        }
-                                        
-                                        JToken latestUpdateVersionValue3 = customDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue3 != null && latestUpdateVersionValue3.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance3 = ((string)latestUpdateVersionValue3);
-                                            vMwareFabricDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance3;
                                         }
                                         
                                         JToken hostNameValue = customDetailsValue["hostName"];
@@ -3822,13 +3780,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = processServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
                                                 if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
@@ -4015,13 +3966,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string agentVersionInstance2 = ((string)agentVersionValue2);
                                                     masterTargetServerInstance.AgentVersion = agentVersionInstance2;
-                                                }
-                                                
-                                                JToken latestUpdateVersionValue2 = masterTargetServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                    masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
                                                 JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
@@ -4285,13 +4229,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string agentVersionInstance3 = ((string)agentVersionValue3);
                                             vMwareFabricDetailsInstance.AgentVersion = agentVersionInstance3;
-                                        }
-                                        
-                                        JToken latestUpdateVersionValue3 = customDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue3 != null && latestUpdateVersionValue3.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance3 = ((string)latestUpdateVersionValue3);
-                                            vMwareFabricDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance3;
                                         }
                                         
                                         JToken hostNameValue = customDetailsValue["hostName"];
@@ -4981,13 +4918,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = processServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
                                                 if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
@@ -5174,13 +5104,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string agentVersionInstance2 = ((string)agentVersionValue2);
                                                     masterTargetServerInstance.AgentVersion = agentVersionInstance2;
-                                                }
-                                                
-                                                JToken latestUpdateVersionValue2 = masterTargetServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                    masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
                                                 JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
@@ -5444,13 +5367,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string agentVersionInstance3 = ((string)agentVersionValue3);
                                             vMwareFabricDetailsInstance.AgentVersion = agentVersionInstance3;
-                                        }
-                                        
-                                        JToken latestUpdateVersionValue3 = customDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue3 != null && latestUpdateVersionValue3.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance3 = ((string)latestUpdateVersionValue3);
-                                            vMwareFabricDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance3;
                                         }
                                         
                                         JToken hostNameValue = customDetailsValue["hostName"];
@@ -5909,13 +5825,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     processServerInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = processServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
                                                 if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                 {
@@ -6102,13 +6011,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string agentVersionInstance2 = ((string)agentVersionValue2);
                                                     masterTargetServerInstance.AgentVersion = agentVersionInstance2;
-                                                }
-                                                
-                                                JToken latestUpdateVersionValue2 = masterTargetServersValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                    masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                 }
                                                 
                                                 JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
@@ -6372,13 +6274,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string agentVersionInstance3 = ((string)agentVersionValue3);
                                             vMwareFabricDetailsInstance.AgentVersion = agentVersionInstance3;
-                                        }
-                                        
-                                        JToken latestUpdateVersionValue3 = customDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue3 != null && latestUpdateVersionValue3.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance3 = ((string)latestUpdateVersionValue3);
-                                            vMwareFabricDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance3;
                                         }
                                         
                                         JToken hostNameValue = customDetailsValue["hostName"];
@@ -6866,13 +6761,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                             processServerInstance.AgentVersion = agentVersionInstance;
                                                         }
                                                         
-                                                        JToken latestUpdateVersionValue = processServersValue["latestUpdateVersion"];
-                                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                        {
-                                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                            processServerInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                        }
-                                                        
                                                         JToken lastHeartbeatValue = processServersValue["lastHeartbeat"];
                                                         if (lastHeartbeatValue != null && lastHeartbeatValue.Type != JTokenType.Null)
                                                         {
@@ -7059,13 +6947,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         {
                                                             string agentVersionInstance2 = ((string)agentVersionValue2);
                                                             masterTargetServerInstance.AgentVersion = agentVersionInstance2;
-                                                        }
-                                                        
-                                                        JToken latestUpdateVersionValue2 = masterTargetServersValue["latestUpdateVersion"];
-                                                        if (latestUpdateVersionValue2 != null && latestUpdateVersionValue2.Type != JTokenType.Null)
-                                                        {
-                                                            string latestUpdateVersionInstance2 = ((string)latestUpdateVersionValue2);
-                                                            masterTargetServerInstance.LatestUpdateVersion = latestUpdateVersionInstance2;
                                                         }
                                                         
                                                         JToken lastHeartbeatValue2 = masterTargetServersValue["lastHeartbeat"];
@@ -7329,13 +7210,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string agentVersionInstance3 = ((string)agentVersionValue3);
                                                     vMwareFabricDetailsInstance.AgentVersion = agentVersionInstance3;
-                                                }
-                                                
-                                                JToken latestUpdateVersionValue3 = customDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue3 != null && latestUpdateVersionValue3.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance3 = ((string)latestUpdateVersionValue3);
-                                                    vMwareFabricDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance3;
                                                 }
                                                 
                                                 JToken hostNameValue = customDetailsValue["hostName"];

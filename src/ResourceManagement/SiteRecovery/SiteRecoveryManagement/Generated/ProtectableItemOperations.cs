@@ -408,13 +408,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             vMwareVirtualMachineDetailsInstance.AgentVersion = agentVersionInstance;
                                         }
                                         
-                                        JToken latestUpdateVersionValue = customDetailsValue["latestUpdateVersion"];
-                                        if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                        {
-                                            string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                            vMwareVirtualMachineDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                        }
-                                        
                                         JToken ipAddressValue = customDetailsValue["ipAddress"];
                                         if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                         {
@@ -985,13 +978,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     vMwareVirtualMachineDetailsInstance.AgentVersion = agentVersionInstance;
                                                 }
                                                 
-                                                JToken latestUpdateVersionValue = customDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    vMwareVirtualMachineDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
-                                                }
-                                                
                                                 JToken ipAddressValue = customDetailsValue["ipAddress"];
                                                 if (ipAddressValue != null && ipAddressValue.Type != JTokenType.Null)
                                                 {
@@ -1496,13 +1482,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string agentVersionInstance = ((string)agentVersionValue);
                                                     vMwareVirtualMachineDetailsInstance.AgentVersion = agentVersionInstance;
-                                                }
-                                                
-                                                JToken latestUpdateVersionValue = customDetailsValue["latestUpdateVersion"];
-                                                if (latestUpdateVersionValue != null && latestUpdateVersionValue.Type != JTokenType.Null)
-                                                {
-                                                    string latestUpdateVersionInstance = ((string)latestUpdateVersionValue);
-                                                    vMwareVirtualMachineDetailsInstance.LatestUpdateVersion = latestUpdateVersionInstance;
                                                 }
                                                 
                                                 JToken ipAddressValue = customDetailsValue["ipAddress"];
