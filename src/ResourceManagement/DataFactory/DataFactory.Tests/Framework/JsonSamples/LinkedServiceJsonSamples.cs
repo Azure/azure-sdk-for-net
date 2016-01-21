@@ -354,5 +354,41 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string OdbcLinkedService = @"
+{
+    name: ""Test-ODBC-linkedService"",
+    properties:
+    {
+        type: ""OnPremisesOdbc"",
+        typeProperties: {
+            connectionString: ""driver={SQL Server};server=myserver;database=mydb;"",
+            credential: ""uid=myuid;pwd=mypassword"",
+            username: ""microsoft"",
+            password: ""fakepassword"",
+            gatewayName: ""MSourceDemoGateway"",
+            authenticationType: ""Basic""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string HdfsLinkedService = @"
+{
+    name: ""Test-HDFS-linkedService"",
+    properties:
+    {
+        type: ""Hdfs"",
+        typeProperties: {
+            url: ""http://myhost:50070/webhdfs/v1"",
+            username: ""microsoft"",
+            password: ""fakepassword"",
+            gatewayName: ""MSourceDemoGateway"",
+            authenticationType: ""Windows"",
+            encryptedCredential: ""myEncryptedCredential""
+        }
+    }
+}";
     }
 }

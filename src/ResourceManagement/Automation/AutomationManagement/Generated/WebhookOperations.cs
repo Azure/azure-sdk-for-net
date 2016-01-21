@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/webhooks/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -224,6 +224,11 @@ namespace Microsoft.Azure.Management.Automation
                     }
                 }
                 
+                if (parameters.Properties.RunOn != null)
+                {
+                    propertiesValue["runOn"] = parameters.Properties.RunOn;
+                }
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -272,6 +277,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             Webhook webhookInstance = new Webhook();
                             result.Webhook = webhookInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                webhookInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -337,6 +349,13 @@ namespace Microsoft.Azure.Management.Automation
                                         string nameInstance2 = ((string)nameValue2);
                                         runbookInstance.Name = nameInstance2;
                                     }
+                                }
+                                
+                                JToken runOnValue = propertiesValue2["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
@@ -461,7 +480,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/webhooks/";
             url = url + Uri.EscapeDataString(webhookName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -613,7 +632,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/webhooks/generateUri";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -791,7 +810,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/webhooks/";
             url = url + Uri.EscapeDataString(webhookName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -870,6 +889,13 @@ namespace Microsoft.Azure.Management.Automation
                             Webhook webhookInstance = new Webhook();
                             result.Webhook = webhookInstance;
                             
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                webhookInstance.Id = idInstance;
+                            }
+                            
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
@@ -934,6 +960,13 @@ namespace Microsoft.Azure.Management.Automation
                                         string nameInstance2 = ((string)nameValue2);
                                         runbookInstance.Name = nameInstance2;
                                     }
+                                }
+                                
+                                JToken runOnValue = propertiesValue["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue["creationTime"];
@@ -1061,7 +1094,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1146,6 +1179,13 @@ namespace Microsoft.Azure.Management.Automation
                                     Webhook webhookInstance = new Webhook();
                                     result.Webhooks.Add(webhookInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        webhookInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
@@ -1210,6 +1250,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 string nameInstance2 = ((string)nameValue2);
                                                 runbookInstance.Name = nameInstance2;
                                             }
+                                        }
+                                        
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -1386,6 +1433,13 @@ namespace Microsoft.Azure.Management.Automation
                                     Webhook webhookInstance = new Webhook();
                                     result.Webhooks.Add(webhookInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        webhookInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
@@ -1450,6 +1504,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 string nameInstance2 = ((string)nameValue2);
                                                 runbookInstance.Name = nameInstance2;
                                             }
+                                        }
+                                        
+                                        JToken runOnValue = propertiesValue["runOn"];
+                                        if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                        {
+                                            string runOnInstance = ((string)runOnValue);
+                                            propertiesInstance.RunOn = runOnInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -1593,7 +1654,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/webhooks/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1642,6 +1703,11 @@ namespace Microsoft.Azure.Management.Automation
                     webhookPatchParametersValue["properties"] = propertiesValue;
                     
                     propertiesValue["isEnabled"] = parameters.Properties.IsEnabled;
+                    
+                    if (parameters.Properties.RunOn != null)
+                    {
+                        propertiesValue["runOn"] = parameters.Properties.RunOn;
+                    }
                     
                     if (parameters.Properties.Parameters != null)
                     {
@@ -1713,6 +1779,13 @@ namespace Microsoft.Azure.Management.Automation
                             Webhook webhookInstance = new Webhook();
                             result.Webhook = webhookInstance;
                             
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                webhookInstance.Id = idInstance;
+                            }
+                            
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
@@ -1777,6 +1850,13 @@ namespace Microsoft.Azure.Management.Automation
                                         string nameInstance2 = ((string)nameValue2);
                                         runbookInstance.Name = nameInstance2;
                                     }
+                                }
+                                
+                                JToken runOnValue = propertiesValue2["runOn"];
+                                if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                                {
+                                    string runOnInstance = ((string)runOnValue);
+                                    propertiesInstance.RunOn = runOnInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue2["creationTime"];

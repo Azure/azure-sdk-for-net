@@ -16,7 +16,7 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Relational Table location.
+    /// Relational Table dataset.
     /// </summary>
     [AdfTypeName("RelationalTable")]
     public class RelationalTableDataset : DatasetTypeProperties

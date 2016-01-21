@@ -32,7 +32,7 @@ namespace Microsoft.Azure
         /// </summary>
         /// <param name="name">Setting name.</param>
         /// <returns>Setting value or null if not found.</returns>
-        public static string GetSetting(string name)
+        public static string GetSetting(string name, bool outputResultsToTrace = true)
         {
             if (name == null)
             {
@@ -43,6 +43,8 @@ namespace Microsoft.Azure
                 string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentEmptyString, "name");
                 throw new ArgumentException(message);
             }
+
+            AzureApplicationSettings.WriteToTrace = outputResultsToTrace;
 
             return AppSettings.GetSetting(name);
         }

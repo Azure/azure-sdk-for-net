@@ -1,5 +1,14 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.3.0
+Release date: 2015.11.25
+
+### Feature Additions
+
+* The following linked service types haven been added as data sources for copy activities: 
+    * HdfsLinkedService
+    * OnPremisesOdbcLinkedService 
+
 ## Version 4.2.0
 Release date: 2015.11.10
 
