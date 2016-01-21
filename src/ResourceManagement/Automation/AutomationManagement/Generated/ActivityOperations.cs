@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/activities/";
             url = url + Uri.EscapeDataString(activityName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -220,6 +220,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             Activity activityInstance = new Activity();
                             result.Activity = activityInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                activityInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -470,7 +477,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(moduleName);
             url = url + "/activities";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -554,6 +561,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     Activity activityInstance = new Activity();
                                     result.Activities.Add(activityInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        activityInstance.Id = idInstance;
+                                    }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -855,6 +869,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     Activity activityInstance = new Activity();
                                     result.Activities.Add(activityInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        activityInstance.Id = idInstance;
+                                    }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)

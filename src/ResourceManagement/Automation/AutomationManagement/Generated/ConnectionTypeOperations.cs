@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -267,6 +267,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             ConnectionType connectionTypeInstance = new ConnectionType();
                             result.ConnectionType = connectionTypeInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                connectionTypeInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -443,7 +450,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(connectionTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -604,7 +611,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(connectionTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -682,6 +689,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             ConnectionType connectionTypeInstance = new ConnectionType();
                             result.ConnectionType = connectionTypeInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                connectionTypeInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -848,7 +862,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/connectionTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -932,6 +946,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     ConnectionType connectionTypeInstance = new ConnectionType();
                                     result.ConnectionTypes.Add(connectionTypeInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        connectionTypeInstance.Id = idInstance;
+                                    }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -1159,6 +1180,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     ConnectionType connectionTypeInstance = new ConnectionType();
                                     result.ConnectionTypes.Add(connectionTypeInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        connectionTypeInstance.Id = idInstance;
+                                    }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)

@@ -74,6 +74,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._nodeConfiguration = value; }
         }
         
+        private Guid _nodeId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the node id.
+        /// </summary>
+        public Guid NodeId
+        {
+            get { return this._nodeId; }
+            set { this._nodeId = value; }
+        }
+        
         private DateTimeOffset _registrationTime;
         
         /// <summary>
