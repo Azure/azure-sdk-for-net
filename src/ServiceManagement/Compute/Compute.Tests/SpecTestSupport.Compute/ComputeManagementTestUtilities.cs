@@ -62,13 +62,13 @@ namespace Microsoft.Azure.Test
                     if (srcBlob.BlobType == BlobType.PageBlob)
                     {
                         var pageBlob = containerClient.GetPageBlobReference(destBlob);
-                        pageBlob.StartCopyFromBlob(srcBlobUri);
+                        pageBlob.StartCopy(srcBlobUri);
                         blobUri = pageBlob.Uri;
                     }
                     else
                     {
                         var blockBlob = containerClient.GetBlockBlobReference(destBlob);
-                        blockBlob.StartCopyFromBlob(srcBlobUri);
+                        blockBlob.StartCopy(srcBlobUri);
                         blobUri = blockBlob.Uri;
                     }
                 }
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Test
                     });
 
                     var pageBlob = containerClient.GetPageBlobReference(destBlob);
-                    pageBlob.StartCopyFromBlob(srcBlobUri);
+                    pageBlob.StartCopy(srcBlobUri);
                     blobUri = pageBlob.Uri;
                 }
             }
