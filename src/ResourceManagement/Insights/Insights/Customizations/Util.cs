@@ -58,6 +58,10 @@ namespace Microsoft.Azure.Insights
         /// </summary>
         public static int NumberOfParallelCallsForMetricBlobs = 24;
 
+        /// The limit of metric entities to be retrieved.
+        /// </summary>
+        public static int MaxMetricEntities = 5000;
+
         /// <summary>
         /// Check to see if the resourceId is backed by a legacy resouce provider
         /// </summary>

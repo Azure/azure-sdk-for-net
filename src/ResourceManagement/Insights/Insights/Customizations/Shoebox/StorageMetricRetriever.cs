@@ -87,7 +87,11 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
 
         private static async Task<IEnumerable<Metric>> GetCapacityMetricsAsync(MetricFilter filter, CloudTable table, IEnumerable<string> metricNames, string invocationId)
         {
-            IEnumerable<DynamicTableEntity> entities = await SasMetricRetriever.GetEntitiesAsync(table, GetCapacityQuery(filter), invocationId);
+            IEnumerable<DynamicTableEntity> entities = await SasMetricRetriever.GetEntitiesAsync(
+                table: table, 
+                query: GetCapacityQuery(filter), 
+                invocationId: invocationId,
+                maxBatchSize: Util.MaxMetricEntities);
 
             return metricNames.Select(n => new Metric()
             {
@@ -110,10 +114,16 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
             IEnumerable<MetricDimension> metricDimensions = filter.DimensionFilters.Where(df => metricNames.Contains(df.Name));
 
             // Get appropriate entities from table
-            IEnumerable<DynamicTableEntity> entities = await GetEntitiesAsync(table, GetTransactionQuery(filter, GetOperationNameForQuery(
-                metricDimensions,
-                StorageConstants.Dimensions.ApiDimensionName,
-                StorageConstants.Dimensions.ApiDimensionAggregateValue)), invocationId);
+            IEnumerable<DynamicTableEntity> entities = await GetEntitiesAsync(
+                table: table, 
+                query: GetTransactionQuery(
+                           filter: filter, 
+                           operationName: GetOperationNameForQuery(
+                               dimensions:metricDimensions, 
+                               dimensionName: StorageConstants.Dimensions.ApiDimensionName, 
+                               dimensionAggregateValue: StorageConstants.Dimensions.ApiDimensionAggregateValue)), 
+                invocationId: invocationId,
+                maxBatchSize: Util.MaxMetricEntities);
 
             // Construct Metrics and accumulate results
             return metricDimensions
