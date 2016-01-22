@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(deploymentName);
             url = url + "/cancel";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -632,7 +632,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1090,7 +1090,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1175,7 +1175,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1595,7 +1595,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2446,7 +2446,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(deploymentName);
             url = url + "/validate";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
