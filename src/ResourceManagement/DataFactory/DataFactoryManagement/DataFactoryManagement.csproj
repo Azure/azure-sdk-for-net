@@ -16,6 +16,7 @@
     <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLUpdateResourceActivity.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\WebSource.cs" />
     <Compile Include="Customizations\Models\Activities\DataLakeAnalyticsUSQLActivity.cs" />
     <Compile Include="Customizations\Models\Activities\USqlCompilationMode.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\AzureDataLakeStoreSink.cs" />
@@ -27,10 +28,12 @@
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\WebTableDataset.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\WebLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OAuthLinkedServiceBase.cs" />

@@ -430,5 +430,34 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string WebTableDataset = @"
+{
+    name: ""WebTable"",
+    properties:
+    {
+        type: ""WebTable"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties:
+        {
+            index: 4,            
+            path: ""data/{Year}/{Month}/{Day}/{Hour}"",
+            partitionedBy: 
+            [
+                { name: ""Year"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy"" } },
+                { name: ""Month"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""MM"" } }, 
+                { name: ""Day"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""dd"" } }, 
+                { name: ""Hour"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""hh"" } } 
+            ]            
+        },
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour""
+        }
+    }
+}
+";
     }
 }
