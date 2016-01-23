@@ -1,0 +1,314 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/servicePrincipals?api-version=1.42-previewInternal",
+      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9zZXJ2aWNlUHJpbmNpcGFscz9hcGktdmVyc2lvbj0xLjQyLXByZXZpZXdJbnRlcm5hbA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/1273adef-00a3-4086-a51a-dbcce1857d36/$metadata#directoryObjects/Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"0a2376cb-7d34-4b1d-85e1-53f6bd55fce0\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft password reset service\",\r\n      \"appId\": \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"SelfServicePasswordReset\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n        \"SelfServicePasswordReset\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"0c8ec664-5a8b-4851-8965-dd7baf4b352c\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Azure Portal\",\r\n      \"appId\": \"00000013-0000-0000-c000-000000000000\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": \"f8cdef31-a31e-4b4a-93e4-5f571e91255a\",\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.Azure.Portal\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [\r\n        \"https://portal.windowsazure.com\",\r\n        \"https://manage.windowsazure.com\"\r\n      ],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"https://manage.windowsazure.com\",\r\n        \"00000013-0000-0000-c000-000000000000\",\r\n        \"Microsoft.Azure.Portal\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"104dd1dc-1104-4740-aebe-6139c98ccac1\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"mytestapprandom9234\",\r\n      \"appId\": \"544171c2-23ac-4852-8162-93d990653de7\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": \"1273adef-00a3-4086-a51a-dbcce1857d36\",\r\n      \"appPermissions\": [\r\n        {\r\n          \"claimValue\": \"user_impersonation\",\r\n          \"description\": \"Allow the application to access mytestapprandom9234 on behalf of the signed-in user.\",\r\n          \"directAccessGrantTypes\": [],\r\n          \"displayName\": \"Access mytestapprandom9234\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"60b8f128-bbaa-4de4-b8a6-06a79b46aa61\",\r\n          \"resourceScopeType\": \"Personal\",\r\n          \"userConsentDescription\": \"Allow the application to access mytestapprandom9234 on your behalf.\",\r\n          \"userConsentDisplayName\": \"Access mytestapprandom9234\",\r\n          \"lang\": null\r\n        }\r\n      ],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"mytestapprandom9234\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": \"http://mytestapprandom9234/home\",\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": null,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": \"rbacCliTestDirectory\",\r\n      \"replyUrls\": [\r\n        \"http://mytestapprandom9234/home\"\r\n      ],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"http://mytestapprandom9234/home\",\r\n        \"544171c2-23ac-4852-8162-93d990653de7\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"17737b6f-00bf-4bec-8f5c-5ba59523f4f3\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Office 365 Configure\",\r\n      \"appId\": \"aa9ecb1e-fd53-4aaa-a8fe-7a54de2c1334\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.Office365.Configure\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"aa9ecb1e-fd53-4aaa-a8fe-7a54de2c1334/configure.office.net\",\r\n        \"aa9ecb1e-fd53-4aaa-a8fe-7a54de2c1334\",\r\n        \"Microsoft.Office365.Configure\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"24b98af8-b61c-4d26-a5fa-e216607e0a4a\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"testApplication1\",\r\n      \"appId\": \"9c30c7a6-a107-4fc2-836e-16d58acca556\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": \"1273adef-00a3-4086-a51a-dbcce1857d36\",\r\n      \"appPermissions\": [\r\n        {\r\n          \"claimValue\": \"user_impersonation\",\r\n          \"description\": \"Allow the application to access testApplication1 on behalf of the signed-in user.\",\r\n          \"directAccessGrantTypes\": [],\r\n          \"displayName\": \"Access testApplication1\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"549e6ba5-2fcf-4d16-a409-89963175cffa\",\r\n          \"resourceScopeType\": \"Personal\",\r\n          \"userConsentDescription\": \"Allow the application to access testApplication1 on your behalf.\",\r\n          \"userConsentDisplayName\": \"Access testApplication1\",\r\n          \"lang\": null\r\n        }\r\n      ],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"testApplication1\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": \"http://testapplication1\",\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": null,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": \"rbacCliTestDirectory\",\r\n      \"replyUrls\": [\r\n        \"http://testapplication1\"\r\n      ],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"http://testapplication1\",\r\n        \"9c30c7a6-a107-4fc2-836e-16d58acca556\"\r\n      ],\r\n      \"tags\": [\r\n        \"WindowsAzureActiveDirectoryIntegratedApp\"\r\n      ],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"2c6e49a9-ac87-49d8-a840-e22a846b6b0b\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Azure Traffic Manager and DNS\",\r\n      \"appId\": \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"AzureTrafficManagerandDNS\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n        \"AzureTrafficManagerandDNS\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"35c40361-65fe-4f4b-8765-22f4236e52d5\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft App Access Panel\",\r\n      \"appId\": \"0000000c-0000-0000-c000-000000000000\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.Azure.ActiveDirectoryUX\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"0000000c-0000-0000-c000-000000000000/activedirectory.windowsazure.com\",\r\n        \"0000000c-0000-0000-c000-000000000000\",\r\n        \"Microsoft.Azure.ActiveDirectoryUX\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"39f46468-2dea-472f-8cc8-41ca91748437\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft Azure WebSites\",\r\n      \"appId\": \"abfa0a7c-a6b6-4736-8310-5855508787cd\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.Azure.WebSites\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"abfa0a7c-a6b6-4736-8310-5855508787cd\",\r\n        \"Microsoft.Azure.WebSites\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"3d4ab334-8094-4a37-a5ae-34e8060b0b1b\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft AppPlat EMA\",\r\n      \"appId\": \"dee7ba80-6a55-4f3b-a86c-746a9231ae49\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"MicrosoftAppPlatEMA\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"dee7ba80-6a55-4f3b-a86c-746a9231ae49\",\r\n        \"MicrosoftAppPlatEMA\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"505ff466-b071-4c3c-aea4-4dbc351d45b5\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Windows Azure Active Directory\",\r\n      \"appId\": \"00000002-0000-0000-c000-000000000000\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [\r\n        {\r\n          \"claimValue\": \"Device.ReadWrite.All\",\r\n          \"description\": \"Allows the app to read and write all device properties without a signed in user.  Does not allow device creation, device deletion or update of device alternative security identifiers.\",\r\n          \"directAccessGrantTypes\": [\r\n            \"Application\"\r\n          ],\r\n          \"displayName\": \"Read and write devices\",\r\n          \"impersonationAccessGrantTypes\": [],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"1138cb37-bd11-4084-a2b7-9f71582aeddb\",\r\n          \"resourceScopeType\": \"Global\",\r\n          \"userConsentDescription\": \"Allows the app to read and write all device properties without a signed in user.  Does not allow device creation, device deletion or update of device alternative security identifiers.\",\r\n          \"userConsentDisplayName\": \"Read and write devices\",\r\n          \"lang\": null\r\n        },\r\n        {\r\n          \"claimValue\": \"user_impersonation\",\r\n          \"description\": \"Allows the app to have the same access to information in the directory as the signed-in user.\",\r\n          \"directAccessGrantTypes\": [],\r\n          \"displayName\": \"Access the directory as the signed-in user\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"a42657d6-7f20-40e3-b6f0-cee03008a62a\",\r\n          \"resourceScopeType\": \"Personal\",\r\n          \"userConsentDescription\": \"Allows the app to have the same access to information in your work or school directory as you do.\",\r\n          \"userConsentDisplayName\": \"Access the directory as you\",\r\n          \"lang\": null\r\n        },\r\n        {\r\n          \"claimValue\": \"Directory.Write\",\r\n          \"description\": \"Allows the app to read and write data in your organization's directory, such as users, and groups.  Does not allow create, update or delete of applications, service principals or devices. Does not allow user or group deletion.\",\r\n          \"directAccessGrantTypes\": [\r\n            \"Application\"\r\n          ],\r\n          \"displayName\": \"Read and write directory data\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"78c8a3c8-a07e-4b9e-af1b-b5ccab50a175\",\r\n          \"resourceScopeType\": \"Global\",\r\n          \"userConsentDescription\": \"Allows the app to read and write data in your organization's directory, such as other users, groups. Does not allow create, update or delete of applications, service principals or devices. Does not allow user or group deletion on your behalf.\",\r\n          \"userConsentDisplayName\": \"Read and write directory data\",\r\n          \"lang\": null\r\n        },\r\n        {\r\n          \"claimValue\": \"Directory.Read\",\r\n          \"description\": \"Allows the app to read data in your organization's directory, such as users, groups, and apps.\",\r\n          \"directAccessGrantTypes\": [\r\n            \"Application\"\r\n          ],\r\n          \"displayName\": \"Read directory data\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"5778995a-e1bf-45b8-affa-663a9f3f4d04\",\r\n          \"resourceScopeType\": \"Global\",\r\n          \"userConsentDescription\": \"Allows the app to read data in your organization's directory, such as other users, groups and apps.\",\r\n          \"userConsentDisplayName\": \"Read directory data\",\r\n          \"lang\": null\r\n        },\r\n        {\r\n          \"claimValue\": \"UserProfile.Read\",\r\n          \"description\": \"Allows users to sign in to the app, and allows the app to read the profile of signed-in users. It also allow the app to read basic company information of signed-in users.\",\r\n          \"directAccessGrantTypes\": [],\r\n          \"displayName\": \"Sign in and read user profile\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"311a71cc-e848-46a1-bdf8-97ff7156d8e6\",\r\n          \"resourceScopeType\": \"Personal\",\r\n          \"userConsentDescription\": \"Allows you to sign in to the app with your work account and let the app read your profile. It also allows the app to read basic company information.\",\r\n          \"userConsentDisplayName\": \"Sign in as you and read your profile\",\r\n          \"lang\": null\r\n        }\r\n      ],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.Azure.ActiveDirectory\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"https://graph.windows.net\",\r\n        \"00000002-0000-0000-c000-000000000000/graph.windows.net\",\r\n        \"00000002-0000-0000-c000-000000000000/directory.windows.net\",\r\n        \"00000002-0000-0000-c000-000000000000\",\r\n        \"Microsoft.Azure.ActiveDirectory\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"55adcc12-f6b0-4fb2-9107-e44dc877e1e9\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Profile Service Platform Service\",\r\n      \"appId\": \"087a2c70-c89e-463f-8dd3-e3959eabb1a9\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft Profile Service Platform Service\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [\r\n        \"https://profilesservicetest.trafficmanager.net/\",\r\n        \"https://cssprofile.microsoft.com\",\r\n        \"https://profileservice.trafficmanager.net/profiles\",\r\n        \"https://profileservice.trafficmanager.net/profiles/\"\r\n      ],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"https://profileservice.trafficmanager.net/profiles\",\r\n        \"087a2c70-c89e-463f-8dd3-e3959eabb1a9\",\r\n        \"Microsoft Profile Service Platform Service\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"5849a79e-e144-4b3c-b55b-0fca73be9d09\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft.SMIT\",\r\n      \"appId\": \"8fca0a66-c008-4564-a876-ab3ae0fd5cff\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.SMIT\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"8fca0a66-c008-4564-a876-ab3ae0fd5cff/lowlatency.cloudapp.net\",\r\n        \"8fca0a66-c008-4564-a876-ab3ae0fd5cff\",\r\n        \"Microsoft.SMIT\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"7cf6c3b3-07f2-4672-9328-0d789e3091ea\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Policy Administration Service\",\r\n      \"appId\": \"0469d4cd-df37-4d93-8a61-f8c75b809164\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft Policy Administration Service\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [\r\n        \"https://pas.windows.net\"\r\n      ],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"https://pas.windows.net\",\r\n        \"0469d4cd-df37-4d93-8a61-f8c75b809164\",\r\n        \"Microsoft Policy Administration Service\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"7e6de60c-1be9-47c2-91ad-68c685c461e5\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Graph Explorer\",\r\n      \"appId\": \"d3ce4cf8-6810-442d-b42e-375e14710095\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": \"5508eaf2-e7b4-4510-a4fb-9f5970550d80\",\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Graph Explorer\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": \"https://localhost:44328\",\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": null,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": \"graphExplorerMT\",\r\n      \"replyUrls\": [\r\n        \"https://graphexplorer2.cloudapp.net\",\r\n        \"https://localhost:44322/Home/AGS\",\r\n        \"https://graphexplorer2.cloudapp.net/\",\r\n        \"http://localhost:44323/\",\r\n        \"https://localhost:44322/\",\r\n        \"https://graphexplorer.cloudapp.net/\",\r\n        \"https://graphexplorer.cloudapp.net\",\r\n        \"http://localhost:3000/\",\r\n        \"https://graphexplorerbeta.azurewebsites.net/\"\r\n      ],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"https://graphExplorerMT.onmicrosoft.com\",\r\n        \"d3ce4cf8-6810-442d-b42e-375e14710095\"\r\n      ],\r\n      \"tags\": [\r\n        \"WindowsAzureActiveDirectoryIntegratedApp\"\r\n      ],\r\n      \"webApi\": null,\r\n      \"webApp\": false\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"83051fd4-6554-49ea-829b-aa01ca995edb\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Azure Application Insights\",\r\n      \"appId\": \"11c174dc-1945-4a9a-a36b-c79a0f246b9b\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"AzureApplicationInsights\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"11c174dc-1945-4a9a-a36b-c79a0f246b9b\",\r\n        \"AzureApplicationInsights\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"8938a268-4c4a-4992-a3b4-f97a82db3033\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Windows Azure Service Management API\",\r\n      \"appId\": \"797f4846-ba00-4fd7-ba43-dac1f8f63013\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": \"f8cdef31-a31e-4b4a-93e4-5f571e91255a\",\r\n      \"appPermissions\": [\r\n        {\r\n          \"claimValue\": \"user_impersonation\",\r\n          \"description\": \"Allow the application to access the Azure Management Service API on behalf of the signed-in user.\",\r\n          \"directAccessGrantTypes\": [],\r\n          \"displayName\": \"Access Azure Service Management (preview)\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"41094075-9dad-400e-a0bd-54e686782033\",\r\n          \"resourceScopeType\": \"Personal\",\r\n          \"userConsentDescription\": \"Allow the application to access Azure Service Management API on your behalf.\",\r\n          \"userConsentDisplayName\": \"Access Azure Service Management (preview)\",\r\n          \"lang\": null\r\n        }\r\n      ],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Windows Azure Service Management API\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"https://management.core.windows.net/\",\r\n        \"797f4846-ba00-4fd7-ba43-dac1f8f63013\",\r\n        \"Windows Azure Service Management API\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"9e2fcfe7-72c0-4057-8eeb-2d06e173650e\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft.SupportTicketSubmission\",\r\n      \"appId\": \"595d87a1-277b-4c0a-aa7f-44f8a068eafc\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.SupportTicketSubmission\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"595d87a1-277b-4c0a-aa7f-44f8a068eafc\",\r\n        \"Microsoft.SupportTicketSubmission\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"bcf770f3-7af9-4e98-ba39-0ec027a79bc7\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Device Registration Service\",\r\n      \"appId\": \"01cb2876-7ebd-4aa4-9cc9-d28bd4d359a9\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [\r\n        {\r\n          \"claimValue\": \"self_service_device_delete\",\r\n          \"description\": \"Allow the application permissions to delete any device registered to the signed-in user\",\r\n          \"directAccessGrantTypes\": [],\r\n          \"displayName\": \"User can delete devices that belong to them\",\r\n          \"impersonationAccessGrantTypes\": [\r\n            {\r\n              \"impersonated\": \"User\",\r\n              \"impersonator\": \"Application\"\r\n            }\r\n          ],\r\n          \"isDisabled\": false,\r\n          \"origin\": \"Application\",\r\n          \"permissionId\": \"086327cd-9afe-4777-8341-b136a1866bb3\",\r\n          \"resourceScopeType\": \"Personal\",\r\n          \"userConsentDescription\": \"Allow the application to delete your devices on your behalf\",\r\n          \"userConsentDisplayName\": \"Delete devices that belong to me\",\r\n          \"lang\": null\r\n        }\r\n      ],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Windows.Azure.DeviceRegistration\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [\r\n        \"https://enterpriseregistration.windows.net/enrollmentserver/otaprofile/\"\r\n      ],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"urn:ms-drs:enterpriseregistration.windows.net\",\r\n        \"01cb2876-7ebd-4aa4-9cc9-d28bd4d359a9\",\r\n        \"Windows.Azure.DeviceRegistration\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"c81d9c43-4aa2-4242-a7a1-529ecf60897a\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Azure Portal\",\r\n      \"appId\": \"c44b4083-3bb0-49c1-b47d-974e53cbdf3c\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"IbizaPortal\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"c44b4083-3bb0-49c1-b47d-974e53cbdf3c\",\r\n        \"IbizaPortal\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"de65fb7c-bc44-493d-b20c-77713c939a49\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft.Azure.GraphExplorer\",\r\n      \"appId\": \"0000000f-0000-0000-c000-000000000000\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"Microsoft.Azure.GraphExplorer\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"0000000f-0000-0000-c000-000000000000/graphexplorer.windows.net\",\r\n        \"0000000f-0000-0000-c000-000000000000\",\r\n        \"Microsoft.Azure.GraphExplorer\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    },\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"e3ed4780-8613-48a2-80f5-e6df4c64e4d6\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"MicrosoftAzureRedisCache\",\r\n      \"appId\": \"96231a05-34ce-4eb4-aa6a-70759cbb5e83\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"MicrosoftAzureRedisCache\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"96231a05-34ce-4eb4-aa6a-70759cbb5e83\",\r\n        \"MicrosoftAzureRedisCache\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "24980"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "R1+xCOqrBsexJPMxtV0MNJLhsxNKpRCxYbIf34S61pM="
+        ],
+        "request-id": [
+          "c9cfcf44-0e22-4afc-b01b-eaaacac5f733"
+        ],
+        "client-request-id": [
+          "299b06b5-1c78-4f26-844f-a0a6b29e9083"
+        ],
+        "x-ms-gateway-rewrite": [
+          "false"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.42-previewInternal"
+        ],
+        "ocp-aad-session-key": [
+          "A_nbcbKhIE5MiV6RaT3bGwxV-D5KlDzuGbbHNCOs6m-ua5L21yjEnjtKEkZlxQxIk8x6K2WLgcAP0HZ7aGVLFpM43u3ByYTq_pkPuchh-3WEiqNJBpX30sfEcao5pEO6.uRKBTJwX39VEkgDBqfSakmRQ-HEx6f4E0UIKhrO7Nvk"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Duration": [
+          "2969701"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Thu, 17 Sep 2015 19:42:46 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/servicePrincipals?$filter=servicePrincipalNames/any(c:c%20eq%20'93625bc8-bfe2-437a-97e0-3d0060024faa')&api-version=1.42-previewInternal",
+      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9zZXJ2aWNlUHJpbmNpcGFscz8kZmlsdGVyPXNlcnZpY2VQcmluY2lwYWxOYW1lcy9hbnkoYzpjJTIwZXElMjAnOTM2MjViYzgtYmZlMi00MzdhLTk3ZTAtM2QwMDYwMDI0ZmFhJykmYXBpLXZlcnNpb249MS40Mi1wcmV2aWV3SW50ZXJuYWw=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/1273adef-00a3-4086-a51a-dbcce1857d36/$metadata#directoryObjects/Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"0a2376cb-7d34-4b1d-85e1-53f6bd55fce0\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft password reset service\",\r\n      \"appId\": \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"SelfServicePasswordReset\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n        \"SelfServicePasswordReset\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "989"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "+3h+Ymp508o5Yv2+joJ0aHNKxLQZErHQiFUCChRGlLo="
+        ],
+        "request-id": [
+          "915d7afe-55a4-4680-b6e5-6b89edb72422"
+        ],
+        "client-request-id": [
+          "5af64cb4-c264-4728-9872-ea6642ea4c31"
+        ],
+        "x-ms-gateway-rewrite": [
+          "false"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.42-previewInternal"
+        ],
+        "ocp-aad-session-key": [
+          "s1fdI_d_0AM9cPKEIPMTvirtDH_lno_4xwoGNMDoyEBf7wEYbBt_wfj3gK3rZC2OmFDKaNtV16SXLt7oneCgBggFFhEXE8kBtG45bI76oo9vR52vMzyocsPYcSfdfk21jEL49GkeZ-NZ0Y-ZK9MNN6C2VUm-pWnCHwDU09D2sUX0n2c-Sa9VkM-Ck030V9L46SH6O-JVD_tqlSbEZn9HOQ.yp9Y76G8MdxSu2ATtQYgE36juRdUJC3wVnRyc6Xg1KU"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Duration": [
+          "1635187"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Thu, 17 Sep 2015 19:42:46 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/servicePrincipals/0a2376cb-7d34-4b1d-85e1-53f6bd55fce0?api-version=1.42-previewInternal",
+      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9zZXJ2aWNlUHJpbmNpcGFscy8wYTIzNzZjYi03ZDM0LTRiMWQtODVlMS01M2Y2YmQ1NWZjZTA/YXBpLXZlcnNpb249MS40Mi1wcmV2aWV3SW50ZXJuYWw=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/1273adef-00a3-4086-a51a-dbcce1857d36/$metadata#directoryObjects/Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal/@Element\",\r\n  \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n  \"objectType\": \"ServicePrincipal\",\r\n  \"objectId\": \"0a2376cb-7d34-4b1d-85e1-53f6bd55fce0\",\r\n  \"softDeletionTimestamp\": null,\r\n  \"accountEnabled\": true,\r\n  \"appDisplayName\": \"Microsoft password reset service\",\r\n  \"appId\": \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n  \"appMetadata\": null,\r\n  \"appOwnerTenantId\": null,\r\n  \"appPermissions\": [],\r\n  \"authenticationPolicy\": null,\r\n  \"displayName\": \"SelfServicePasswordReset\",\r\n  \"errorUrl\": null,\r\n  \"explicitAccessGrantRequired\": false,\r\n  \"homepage\": null,\r\n  \"keyCredentials\": [],\r\n  \"logoutUrl\": null,\r\n  \"microsoftFirstParty\": true,\r\n  \"passwordCredentials\": [],\r\n  \"publisherName\": null,\r\n  \"replyUrls\": [],\r\n  \"resourceApplicationSet\": null,\r\n  \"samlMetadataUrl\": null,\r\n  \"servicePrincipalNames\": [\r\n    \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n    \"SelfServicePasswordReset\"\r\n  ],\r\n  \"tags\": [],\r\n  \"webApi\": null,\r\n  \"webApp\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "986"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "CdWf+KQ8rNUY6Cs/1EB1P+DV8rlzDKmNZ4X8wEwAsRw="
+        ],
+        "request-id": [
+          "939a809d-c473-48cb-afe6-a46f20a26fde"
+        ],
+        "client-request-id": [
+          "e6c22e7b-ac46-4aca-8cb7-4d6fffb3b104"
+        ],
+        "x-ms-gateway-rewrite": [
+          "false"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.42-previewInternal"
+        ],
+        "ocp-aad-session-key": [
+          "11LH6a0DQvR_nugeVzSBg_BXv6aVz_6pgMULkBQRC31_T2fW9GFPHsVtWJmWPKmZQqGP-mx2ufXEEdgziXSuhO1zN7Y7XBfumkDbJlIwYJK-_OWCzlaNEhMLFQZHWTRwfNcc03lIdh6SuLw-kFDzDwOOceiY89_AyCKTtWErrx7w0MU6V_Lq9i8h86aSzeannB_mu01h0x3NzLOYxDj5LQ.mVN9NlGU90feQbaHA38KixFEzsWiPOmlL20_U_-UfQE"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Duration": [
+          "959420"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Thu, 17 Sep 2015 19:42:46 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/servicePrincipals?$filter=startswith(displayName,'SelfServicePasswordReset')&api-version=1.42-previewInternal",
+      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9zZXJ2aWNlUHJpbmNpcGFscz8kZmlsdGVyPXN0YXJ0c3dpdGgoZGlzcGxheU5hbWUsJ1NlbGZTZXJ2aWNlUGFzc3dvcmRSZXNldCcpJmFwaS12ZXJzaW9uPTEuNDItcHJldmlld0ludGVybmFs",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/1273adef-00a3-4086-a51a-dbcce1857d36/$metadata#directoryObjects/Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.WindowsAzure.ActiveDirectory.ServicePrincipal\",\r\n      \"objectType\": \"ServicePrincipal\",\r\n      \"objectId\": \"0a2376cb-7d34-4b1d-85e1-53f6bd55fce0\",\r\n      \"softDeletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"appDisplayName\": \"Microsoft password reset service\",\r\n      \"appId\": \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n      \"appMetadata\": null,\r\n      \"appOwnerTenantId\": null,\r\n      \"appPermissions\": [],\r\n      \"authenticationPolicy\": null,\r\n      \"displayName\": \"SelfServicePasswordReset\",\r\n      \"errorUrl\": null,\r\n      \"explicitAccessGrantRequired\": false,\r\n      \"homepage\": null,\r\n      \"keyCredentials\": [],\r\n      \"logoutUrl\": null,\r\n      \"microsoftFirstParty\": true,\r\n      \"passwordCredentials\": [],\r\n      \"publisherName\": null,\r\n      \"replyUrls\": [],\r\n      \"resourceApplicationSet\": null,\r\n      \"samlMetadataUrl\": null,\r\n      \"servicePrincipalNames\": [\r\n        \"93625bc8-bfe2-437a-97e0-3d0060024faa\",\r\n        \"SelfServicePasswordReset\"\r\n      ],\r\n      \"tags\": [],\r\n      \"webApi\": null,\r\n      \"webApp\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "989"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "+3h+Ymp508o5Yv2+joJ0aHNKxLQZErHQiFUCChRGlLo="
+        ],
+        "request-id": [
+          "3a1f3616-862b-4144-a56c-58e4066aef56"
+        ],
+        "client-request-id": [
+          "ecf08cbe-ae76-4a2b-9684-cc32b344c358"
+        ],
+        "x-ms-gateway-rewrite": [
+          "false"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.42-previewInternal"
+        ],
+        "ocp-aad-session-key": [
+          "EFex7nhosqrirUJ6D0aoBzxCzQ4RDj1EFpHjX52pEMHrRtNyIsWQakB6_qd0Xx57Pp7Cyko0Xun2ddRJ1MzMD616BdYQTLe3XxI4nYwyMuP5ONTf1G2AJ-NPcDxldaGwc96TxsBp0Hzcwn8wL7BX5Ytaxf0K6u8nY4B5QKW9pb6O9vmRSJml_XxXk2vyBnsgCEA_Eq_xx4wXNtoBeQ27tg.xb_MgatcR1RkjsxQiW5n5vtsKdor9dhpFxQpyOkMGNU"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Duration": [
+          "947607"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Thu, 17 Sep 2015 19:42:46 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4004a9fd-d58e-48dc-aeb2-4a4aec58606f",
+    "TenantId": "1273adef-00a3-4086-a51a-dbcce1857d36",
+    "Domain": "rbacCliTest.onmicrosoft.com"
+  }
+}
