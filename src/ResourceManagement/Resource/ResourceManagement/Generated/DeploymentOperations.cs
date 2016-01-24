@@ -30,6 +30,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Hyak.Common;
 using Hyak.Common.Internals;
 using Microsoft.Azure;
@@ -808,7 +809,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken durationValue = propertiesValue2["duration"];
                                 if (durationValue != null && durationValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                    TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
                                     propertiesInstance.Duration = durationInstance;
                                 }
                                 
@@ -1417,7 +1418,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken durationValue = propertiesValue["duration"];
                                 if (durationValue != null && durationValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                    TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
                                     propertiesInstance.Duration = durationInstance;
                                 }
                                 
@@ -1963,7 +1964,7 @@ namespace Microsoft.Azure.Management.Resources
                                         JToken durationValue = propertiesValue["duration"];
                                         if (durationValue != null && durationValue.Type != JTokenType.Null)
                                         {
-                                            TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                            TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
                                             propertiesInstance.Duration = durationInstance;
                                         }
                                         
@@ -2476,7 +2477,7 @@ namespace Microsoft.Azure.Management.Resources
                                         JToken durationValue = propertiesValue["duration"];
                                         if (durationValue != null && durationValue.Type != JTokenType.Null)
                                         {
-                                            TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                            TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
                                             propertiesInstance.Duration = durationInstance;
                                         }
                                         
@@ -3148,7 +3149,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken durationValue = propertiesValue2["duration"];
                                 if (durationValue != null && durationValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                    TimeSpan durationInstance = XmlConvert.ToTimeSpan(((string)durationValue));
                                     propertiesInstance.Duration = durationInstance;
                                 }
                                 
