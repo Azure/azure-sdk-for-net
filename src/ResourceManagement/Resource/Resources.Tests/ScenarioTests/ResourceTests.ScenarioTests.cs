@@ -146,7 +146,7 @@ namespace ResourceGroups.Tests
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(handler);
-                string websiteLocation = GetWebsiteLocation(client);
+                string websiteLocation = "westus";
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
 
@@ -350,7 +350,7 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(handler);
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
-                string location = this.GetWebsiteLocation(client);
+                string location = "westus";
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
                 {
@@ -398,7 +398,7 @@ namespace ResourceGroups.Tests
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(handler);
-                string location = this.GetWebsiteLocation(client);
+                string location = "westus";
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
                 {
