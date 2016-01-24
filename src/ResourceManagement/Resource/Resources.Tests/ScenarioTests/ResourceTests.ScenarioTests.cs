@@ -211,7 +211,7 @@ namespace ResourceGroups.Tests
                 string resourceNameNoTags = TestUtilities.GenerateName("csmr");
                 string tagName = TestUtilities.GenerateName("csmtn");
                 var client = GetResourceManagementClient(handler);
-                string websiteLocation = GetWebsiteLocation(client);
+                string websiteLocation = "westus";
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
 
@@ -281,7 +281,7 @@ namespace ResourceGroups.Tests
                 string tagName = TestUtilities.GenerateName("csmtn");
                 string tagValue = TestUtilities.GenerateName("csmtv");
                 var client = GetResourceManagementClient(handler);
-                string websiteLocation = GetWebsiteLocation(client);
+                string websiteLocation = "westus";
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
 
