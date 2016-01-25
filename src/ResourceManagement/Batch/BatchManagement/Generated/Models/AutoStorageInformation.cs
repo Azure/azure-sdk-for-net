@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Batch.Models
     /// Contains information about the auto storage associated with a Batch
     /// account.
     /// </summary>
-    public partial class AutoStorageProperties
+    public partial class AutoStorageInformation
     {
         private DateTime _lastKeySync;
         
@@ -55,17 +55,17 @@ namespace Microsoft.Azure.Management.Batch.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutoStorageProperties class.
+        /// Initializes a new instance of the AutoStorageInformation class.
         /// </summary>
-        public AutoStorageProperties()
+        public AutoStorageInformation()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutoStorageProperties class with
+        /// Initializes a new instance of the AutoStorageInformation class with
         /// required arguments.
         /// </summary>
-        public AutoStorageProperties(string storageAccountId, DateTime lastKeySync)
+        public AutoStorageInformation(string storageAccountId, DateTime lastKeySync)
             : this()
         {
             if (storageAccountId == null)

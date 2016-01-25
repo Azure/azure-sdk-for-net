@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.Batch
                                 JToken autoStorageValue2 = propertiesValue2["autoStorage"];
                                 if (autoStorageValue2 != null && autoStorageValue2.Type != JTokenType.Null)
                                 {
-                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                    AutoStorageInformation autoStorageInstance = new AutoStorageInformation();
                                     propertiesInstance.AutoStorage = autoStorageInstance;
                                     
                                     JToken storageAccountIdValue = autoStorageValue2["storageAccountId"];
@@ -1006,7 +1006,7 @@ namespace Microsoft.Azure.Management.Batch
                                 JToken autoStorageValue = propertiesValue["autoStorage"];
                                 if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
                                 {
-                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                    AutoStorageInformation autoStorageInstance = new AutoStorageInformation();
                                     propertiesInstance.AutoStorage = autoStorageInstance;
                                     
                                     JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
@@ -1270,7 +1270,7 @@ namespace Microsoft.Azure.Management.Batch
                                         JToken autoStorageValue = propertiesValue["autoStorage"];
                                         if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
                                         {
-                                            AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                            AutoStorageInformation autoStorageInstance = new AutoStorageInformation();
                                             propertiesInstance.AutoStorage = autoStorageInstance;
                                             
                                             JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
@@ -1887,7 +1887,7 @@ namespace Microsoft.Azure.Management.Batch
                                         JToken autoStorageValue = propertiesValue["autoStorage"];
                                         if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
                                         {
-                                            AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                            AutoStorageInformation autoStorageInstance = new AutoStorageInformation();
                                             propertiesInstance.AutoStorage = autoStorageInstance;
                                             
                                             JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
@@ -2618,7 +2618,7 @@ namespace Microsoft.Azure.Management.Batch
                                 JToken autoStorageValue2 = propertiesValue2["autoStorage"];
                                 if (autoStorageValue2 != null && autoStorageValue2.Type != JTokenType.Null)
                                 {
-                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                    AutoStorageInformation autoStorageInstance = new AutoStorageInformation();
                                     propertiesInstance.AutoStorage = autoStorageInstance;
                                     
                                     JToken storageAccountIdValue = autoStorageValue2["storageAccountId"];

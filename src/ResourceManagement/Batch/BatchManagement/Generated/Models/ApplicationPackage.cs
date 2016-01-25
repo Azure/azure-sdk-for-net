@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         private PackageState _state;
         
         /// <summary>
-        /// Required. Gets or sets the current state of the application package.
+        /// Optional. Gets or sets the current state of the application package.
         /// </summary>
         public PackageState State
         {
@@ -81,16 +81,6 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         public ApplicationPackage()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ApplicationPackage class with
-        /// required arguments.
-        /// </summary>
-        public ApplicationPackage(PackageState state)
-            : this()
-        {
-            this.State = state;
         }
     }
 }

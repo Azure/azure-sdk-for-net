@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.Batch.Models
             set { this._activeJobAndJobScheduleQuota = value; }
         }
         
-        private AutoStorageProperties _autoStorage;
+        private AutoStorageInformation _autoStorage;
         
         /// <summary>
         /// Optional. The properties and status of any auto storage associated
         /// with the account.
         /// </summary>
-        public AutoStorageProperties AutoStorage
+        public AutoStorageInformation AutoStorage
         {
             get { return this._autoStorage; }
             set { this._autoStorage = value; }
