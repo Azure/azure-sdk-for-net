@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/applications";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/applications/";
             url = url + applicationObjectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -564,7 +564,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/applications/";
             url = url + applicationObjectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -773,7 +773,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/applications";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6");
             List<string> odataFilter = new List<string>();
             if (parameters.AppId != null)
             {
@@ -1038,7 +1038,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/applications/";
             url = url + applicationObjectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
