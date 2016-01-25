@@ -1,14 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-
 using Batch.Tests.Helpers;
-
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
@@ -47,7 +57,7 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetBatchManagementClient(handler);
 
-            AddApplicationPackageResponse result = client.Applications.AddApplicationPackage("foo", "acctName", "appId", "beta");
+            AddApplicationPackageResponse result = client.Applications.AddApplicationPackage("resourceGroupName", "acctName", "appId", "beta");
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Put, handler.Method);
@@ -75,7 +85,7 @@ namespace Batch.Tests.InMemoryTests
             var client = GetBatchManagementClient(handler);
 
             AzureOperationResponse result = client.Applications.AddApplication(
-                "foo",
+                "resourceGroupName",
                 "acctName",
                 "appId",
                 new AddApplicationParameters { AllowUpdates = true, DisplayName = "display-name" });
@@ -102,9 +112,9 @@ namespace Batch.Tests.InMemoryTests
             var client = GetBatchManagementClient(handler);
 
             AzureOperationResponse result = client.Applications.ActivateApplicationPackage(
-                "foo",
+                "resourceGroupName",
                 "acctName",
-                "appId", "beta",
+                "appId", "version",
                 new ActivateApplicationPackageParameters("zip"));
 
 
@@ -129,7 +139,7 @@ namespace Batch.Tests.InMemoryTests
             var client = GetBatchManagementClient(handler);
 
             AzureOperationResponse result = client.Applications.DeleteApplication(
-                "foo",
+                "resourceGroupName",
                 "acctName",
                 "appId");
 
@@ -155,10 +165,10 @@ namespace Batch.Tests.InMemoryTests
             var client = GetBatchManagementClient(handler);
 
             AzureOperationResponse result = client.Applications.DeleteApplicationPackage(
-                "foo",
+                "resourceGroupName",
                 "acctName",
                 "appId",
-                "beta");
+                "version");
 
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -180,10 +190,10 @@ namespace Batch.Tests.InMemoryTests
                 Content = new StringContent(@"{
                     'id': 'foo',
                     'allowUpdates': 'true',
-                    'displayName' : 'boo',
+                    'displayName' : 'displayName',
                     'defaultVersion' : 'beta',
                     'packages':[
-                        {'version':'John', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow + @"'}],
+                        {'version':'fooVersion', 'state':'pending', 'format': 'betaFormat', 'lastActivationTime': '" + utcNow + @"'}],
 
                     }")
             };
@@ -193,7 +203,7 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetBatchManagementClient(handler);
 
-            GetApplicationResponse result = client.Applications.GetApplication("foo", "acctName", "id");
+            GetApplicationResponse result = client.Applications.GetApplication("applicationId", "acctName", "id");
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -206,11 +216,11 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(result.Application.Id, "foo");
             Assert.Equal(result.Application.AllowUpdates, true);
             Assert.Equal(result.Application.DefaultVersion, "beta");
-            Assert.Equal(result.Application.DisplayName, "boo");
+            Assert.Equal(result.Application.DisplayName, "displayName");
             Assert.Equal(result.Application.ApplicationPackages.Count, 1);
-            Assert.Equal(result.Application.ApplicationPackages.First().Format, "beta");
+            Assert.Equal(result.Application.ApplicationPackages.First().Format, "betaFormat");
             Assert.Equal(result.Application.ApplicationPackages.First().State, PackageState.Pending);
-            Assert.Equal(result.Application.ApplicationPackages.First().Version, "John");
+            Assert.Equal(result.Application.ApplicationPackages.First().Version, "fooVersion");
             Assert.Equal(result.Application.ApplicationPackages.First().LastActivationTime, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
         }
 
@@ -224,7 +234,7 @@ namespace Batch.Tests.InMemoryTests
                 StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(@"{
                     'id': 'foo',
-                    'storageUrl': '//blah',
+                    'storageUrl': '//storageUrl',
                     'state' : 'Pending',
                     'version' : 'beta',
                     'format':'zip',
@@ -238,7 +248,7 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetBatchManagementClient(handler);
 
-            GetApplicationPackageResponse result = client.Applications.GetApplicationPackage("foo", "acctName", "id", "VER");
+            GetApplicationPackageResponse result = client.Applications.GetApplicationPackage("resourceGroupName", "acctName", "id", "VER");
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -248,7 +258,7 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
             Assert.Equal(result.Id, "foo");
-            Assert.Equal(result.StorageUrl, "//blah");
+            Assert.Equal(result.StorageUrl, "//storageUrl");
             Assert.Equal(result.State, PackageState.Pending);
             Assert.Equal(result.Version, "beta");
             Assert.Equal(result.Format, "zip");
@@ -271,8 +281,8 @@ namespace Batch.Tests.InMemoryTests
                     'displayName' : 'boo',
                     'defaultVersion' : 'beta',
                     'packages':[
-                        {'version':'John', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow + @"'},
-                        {'version':'Smith', 'state':'pending', 'format': 'alpha', 'lastActivationTime': '" + utcNow + @"'}],
+                        {'version':'version1', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow + @"'},
+                        {'version':'version2', 'state':'pending', 'format': 'alpha', 'lastActivationTime': '" + utcNow + @"'}],
 
                     }]}")
             };
@@ -282,7 +292,7 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetBatchManagementClient(handler);
 
-            ListApplicationsResponse result = client.Applications.List("foo", "acctName", new ListApplicationsParameters());
+            ListApplicationsResponse result = client.Applications.List("resourceGroupName", "acctName", new ListApplicationsParameters());
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -299,7 +309,7 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(application.ApplicationPackages.Count, 2);
             Assert.Equal(application.ApplicationPackages.First().Format, "beta");
             Assert.Equal(application.ApplicationPackages.First().State, PackageState.Pending);
-            Assert.Equal(application.ApplicationPackages.First().Version, "John");
+            Assert.Equal(application.ApplicationPackages.First().Version, "version1");
             Assert.Equal(application.ApplicationPackages.First().LastActivationTime, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
         }
 
@@ -316,7 +326,7 @@ namespace Batch.Tests.InMemoryTests
             var client = GetBatchManagementClient(handler);
 
             AzureOperationResponse result = client.Applications.UpdateApplication(
-                "foo",
+                "resourceGroupName",
                 "acctName",
                 "appId", new UpdateApplicationParameters() { AllowUpdates = true, DisplayName = "display-name", DefaultVersion = "blah" }
                 );
