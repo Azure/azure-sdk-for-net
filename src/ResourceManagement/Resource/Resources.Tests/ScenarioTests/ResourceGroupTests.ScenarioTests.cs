@@ -53,7 +53,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
             var client = GetResourceManagementClient(handler);
-            string location = ResourcesManagementTestUtilities.GetResourceLocation(client, "Microsoft.Web/sites");
+            string location = "westus";
             var resourceGroupName = TestUtilities.GenerateName("csmrg");
             var resourceName = TestUtilities.GenerateName("csmr");
             var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
