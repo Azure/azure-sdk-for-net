@@ -2885,6 +2885,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
                                 }
                                 
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
+                                }
+                                
                                 JToken groupsArray = propertiesValue["groups"];
                                 if (groupsArray != null && groupsArray.Type != JTokenType.Null)
                                 {
@@ -3499,6 +3506,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string currentScenarioStatusInstance = ((string)currentScenarioStatusValue);
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
+                                }
+                                
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
                                 }
                                 
                                 JToken groupsArray = propertiesValue["groups"];
@@ -4176,6 +4190,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
                                 }
                                 
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
+                                }
+                                
                                 JToken groupsArray = propertiesValue["groups"];
                                 if (groupsArray != null && groupsArray.Type != JTokenType.Null)
                                 {
@@ -4849,6 +4870,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string currentScenarioStatusInstance = ((string)currentScenarioStatusValue);
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
+                                }
+                                
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
                                 }
                                 
                                 JToken groupsArray = propertiesValue["groups"];
@@ -5526,6 +5554,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
                                 }
                                 
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
+                                }
+                                
                                 JToken groupsArray = propertiesValue["groups"];
                                 if (groupsArray != null && groupsArray.Type != JTokenType.Null)
                                 {
@@ -6199,6 +6234,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string currentScenarioStatusInstance = ((string)currentScenarioStatusValue);
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
+                                }
+                                
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
                                 }
                                 
                                 JToken groupsArray = propertiesValue["groups"];
@@ -6876,6 +6918,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
                                 }
                                 
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
+                                }
+                                
                                 JToken groupsArray = propertiesValue["groups"];
                                 if (groupsArray != null && groupsArray.Type != JTokenType.Null)
                                 {
@@ -7551,6 +7600,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
                                 }
                                 
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
+                                }
+                                
                                 JToken groupsArray = propertiesValue["groups"];
                                 if (groupsArray != null && groupsArray.Type != JTokenType.Null)
                                 {
@@ -8224,6 +8280,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     string currentScenarioStatusInstance = ((string)currentScenarioStatusValue);
                                     propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
+                                }
+                                
+                                JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                    propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
                                 }
                                 
                                 JToken groupsArray = propertiesValue["groups"];
@@ -8928,6 +8991,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string currentScenarioStatusInstance = ((string)currentScenarioStatusValue);
                                             propertiesInstance.CurrentScenarioStatus = currentScenarioStatusInstance;
+                                        }
+                                        
+                                        JToken currentScenarioStatusDescriptionValue = propertiesValue["currentScenarioStatusDescription"];
+                                        if (currentScenarioStatusDescriptionValue != null && currentScenarioStatusDescriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string currentScenarioStatusDescriptionInstance = ((string)currentScenarioStatusDescriptionValue);
+                                            propertiesInstance.CurrentScenarioStatusDescription = currentScenarioStatusDescriptionInstance;
                                         }
                                         
                                         JToken groupsArray = propertiesValue["groups"];

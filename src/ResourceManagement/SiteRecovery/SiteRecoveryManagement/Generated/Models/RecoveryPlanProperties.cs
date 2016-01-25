@@ -65,6 +65,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._currentScenarioStatus = value; }
         }
         
+        private string _currentScenarioStatusDescription;
+        
+        /// <summary>
+        /// Optional. Current scenario status description.
+        /// </summary>
+        public string CurrentScenarioStatusDescription
+        {
+            get { return this._currentScenarioStatusDescription; }
+            set { this._currentScenarioStatusDescription = value; }
+        }
+        
         private string _failoverDeploymentModel;
         
         /// <summary>
