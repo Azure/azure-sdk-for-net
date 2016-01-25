@@ -6,6 +6,9 @@ namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Provides parameter values to a magnitude scoring function. 
+    /// </summary>
     public class MagnitudeScoringParameters
     {
         /// <summary>

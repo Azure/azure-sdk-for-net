@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private const string TokenWithOnlyLinkJson =
  @"{
-  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&api-version=2015-02-28"",
+  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2015-02-28"",
   ""@search.nextPageParameters"": null
 }";
 
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
         private SearchContinuationToken _tokenWithOnlyLink =
-            new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&api-version=2015-02-28", null);
+            new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2015-02-28", null);
 
         private TokenComparer _tokenComparer = new TokenComparer();
 

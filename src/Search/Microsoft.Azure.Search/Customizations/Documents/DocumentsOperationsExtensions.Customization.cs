@@ -10,6 +10,10 @@ namespace Microsoft.Azure.Search
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Operations for querying an index and uploading, merging, and deleting documents.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn800962.aspx" />
+    /// </summary>
     public static partial class DocumentsOperationsExtensions
     {
         /// <summary>

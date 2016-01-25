@@ -16,6 +16,7 @@
   </PropertyGroup>
   <Import Project="..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\UserAgentHelper.cs" />
     <Compile Include="Generated\**\*.cs" />
     <Compile Include="Tests\AdminKeyTests.cs" />
     <Compile Include="Tests\QueryKeyTests.cs" />

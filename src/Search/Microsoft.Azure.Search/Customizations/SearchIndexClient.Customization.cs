@@ -100,8 +100,30 @@ namespace Microsoft.Azure.Search
 
         private static Uri BuildBaseUriForIndex(string searchServiceName, string indexName)
         {
-            return TypeConversion.TryParseUri(
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException(
+                    "Invalid search service name. Name cannot be an empty string.",
+                    "searchServiceName");
+            }
+
+            if (indexName.Length == 0)
+            {
+                throw new ArgumentException("Invalid index name. Name cannot be an empty string.", "indexName");
+            }
+
+            Uri uri = TypeConversion.TryParseUri(
                 "https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/");
+
+            if (uri == null)
+            {
+                // Parsing will still succeed for index names with weird characters.
+                throw new ArgumentException(
+                    "Invalid search service name. Name contains characters that are not valid in a URL.",
+                    "searchServiceName");
+            }
+
+            return uri;
         }
     }
 }
