@@ -18,7 +18,6 @@ using System;
 using System.Linq;
 using System.Security;
 using Hyak.Common;
-using Microsoft.Azure.Common.Authentication.Authentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
