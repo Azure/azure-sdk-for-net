@@ -38,7 +38,7 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void AccountCreateWithApplicationPackagesAsyncValidateMessage()
+        public void CreateAccountWithAutoStorageAsyncValidateMessage()
         {
             var acceptedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
             {
@@ -47,7 +47,7 @@ namespace Batch.Tests.InMemoryTests
 
             acceptedResponse.Headers.Add("x-ms-request-id", "1");
             acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
-            var utcNow = DateTime.UtcNow.ToString("o");
+            var utcNow = DateTime.UtcNow;
 
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -61,27 +61,19 @@ namespace Batch.Tests.InMemoryTests
                                     'provisioningState' : 'Succeeded',
                                     'autoStorage' :{
                                         'storageAccountId' : '//storageAccount1',
-                                        'lastKeySync': '" + utcNow + @"',
+                                        'lastKeySync': '" + utcNow.ToString("o") + @"',
                                     }
                                 },
-                                'tags' : {
-                                    'tag1' : 'value for tag1',
-                                    'tag2' : 'value for tag2',
-                                }
                             }")
             };
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
 
             var client = GetBatchManagementClient(handler);
-            var tags = new Dictionary<string, string>();
-            tags.Add("tag1", "value for tag1");
-            tags.Add("tag2", "value for tag2");
 
-            var result = client.Accounts.Create("foo", "acctName", new BatchAccountCreateParameters
+            var result = client.Accounts.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
             {
                 Location = "South Central US",
-                Tags = tags,
                 Properties = new AccountBaseProperties
                 {
                     AutoStorage = new AutoStorageBaseProperties
@@ -91,22 +83,9 @@ namespace Batch.Tests.InMemoryTests
                 }
             });
 
-            // Validate headers - User-Agent for certs, Authorization for tokens
-            Assert.Equal(HttpMethod.Put, handler.Requests[0].Method);
-            Assert.NotNull(handler.Requests[0].Headers.GetValues("User-Agent"));
-
-            // op status is a get
-            Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
-            Assert.NotNull(handler.Requests[1].Headers.GetValues("User-Agent"));
-
             // Validate result
-            Assert.Equal("South Central US", result.Resource.Location);
-            Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
-            Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
-            Assert.True(result.Resource.Tags.Count == 2);
-            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "//storageAccount1");
-            Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
-
+            Assert.Equal("//storageAccount1", result.Resource.Properties.AutoStorage.StorageAccountId);
+            Assert.Equal(utcNow, result.Resource.Properties.AutoStorage.LastKeySync);
         }
 
 
@@ -131,10 +110,10 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void GetAccountWithApplicationPackagesAsyncValidateMessage()
+        public void GetAccountWithAutoStorageAsyncValidateMessage()
         {
 
-            var utcNow = DateTime.UtcNow.ToString("o");
+            var utcNow = DateTime.UtcNow;
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -151,7 +130,7 @@ namespace Batch.Tests.InMemoryTests
                         'activeJobAndJobScheduleQuota' : '200',
                         'autoStorage':{
                             'storageAccountId':'//StorageAccountId',
-                            'lastKeySync': '" + utcNow + @"',
+                            'lastKeySync': '" + utcNow.ToString("o") + @"'
                         }
                     },
                     'tags' : {
@@ -165,7 +144,7 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetBatchManagementClient(handler);
 
-            var result = client.Accounts.Get("foo", "acctName");
+            var result = client.Accounts.Get("resourceGroupName", "acctName");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -181,19 +160,74 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(200, result.Resource.Properties.ActiveJobAndJobScheduleQuota);
 
             AutoStorageProperties autoStorageInformation = result.Resource.Properties.AutoStorage;
-            Assert.Equal(autoStorageInformation.StorageAccountId, "//StorageAccountId");
-            Assert.Equal(autoStorageInformation.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
-            Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
-
+            Assert.Equal("//StorageAccountId", autoStorageInformation.StorageAccountId);
+            Assert.Equal(utcNow, autoStorageInformation.LastKeySync);
             Assert.True(result.Resource.Tags.ContainsKey("tag1"));
-
         }
 
+        [Fact]
+        public void AccountUpdateWithAutoStorageValidateMessage()
+        {
+            var utcNow = DateTime.UtcNow;
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'type' : 'Microsoft.Batch/batchAccounts',
+                                'name': 'acctName',
+                                'location': 'South Central US',
+                                'properties': {
+                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' : {
+                                        'storageAccountId' : '//StorageAccountId',
+                                        'lastKeySync': '" + utcNow.ToString("o") + @"',
+                                    }
+                                },
+                                'tags' : {
+                                    'tag1' : 'value for tag1',
+                                    'tag2' : 'value for tag2',
+                                }
+                            }")
+            };
+
+            var handler = new RecordedDelegatingHandler(response);
+
+            var client = GetBatchManagementClient(handler);
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag1", "value for tag1");
+            tags.Add("tag2", "value for tag2");
+
+            var result = client.Accounts.Update("foo", "acctName", new BatchAccountUpdateParameters
+            {
+                Tags = tags,
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//StorageAccountId",
+                    }
+                },
+            });
+
+            // Validate headers - User-Agent for certs, Authorization for tokens
+            //Assert.Equal(HttpMethod.Patch, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            // Validate result
+            Assert.Equal("South Central US", result.Resource.Location);
+            Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
+            Assert.Equal(AccountProvisioningState.Succeeded, result.Resource.Properties.ProvisioningState);
+            Assert.Equal("//StorageAccountId", result.Resource.Properties.AutoStorage.StorageAccountId);
+            Assert.Equal(utcNow, result.Resource.Properties.AutoStorage.LastKeySync);
+            Assert.Equal(result.Resource.Tags.Count, 2);
+        }
 
         [Fact]
         public void AddApplicationPackageValidateMessage()
         {
-            var utcNow = DateTime.UtcNow.ToString("o");
+            var utcNow = DateTime.UtcNow;
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -202,7 +236,7 @@ namespace Batch.Tests.InMemoryTests
                     'id': 'foo',
                     'storageUrl': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
                     'version' : 'beta',
-                    'storageUrlExpiry' : '" + utcNow + @"',
+                    'storageUrlExpiry' : '" + utcNow.ToString("o") + @"',
                     }")
             };
 
@@ -220,10 +254,10 @@ namespace Batch.Tests.InMemoryTests
             // Validate result
             Assert.Equal(HttpStatusCode.Created, result.StatusCode);
 
-            Assert.Equal(result.StorageUrlExpiry, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
-            Assert.Equal(result.Id, "foo");
-            Assert.Equal(result.Version, "beta");
-            Assert.Equal(result.StorageUrl, "/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName");
+            Assert.Equal(utcNow, result.StorageUrlExpiry);
+            Assert.Equal("foo", result.Id);
+            Assert.Equal("beta", result.Version);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.StorageUrl);
         }
 
         [Fact]
@@ -336,7 +370,7 @@ namespace Batch.Tests.InMemoryTests
         [Fact]
         public void GetApplicationValidateMessage()
         {
-            var utcNow = DateTime.UtcNow.ToString("o");
+            var utcNow = DateTime.UtcNow;
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -347,7 +381,7 @@ namespace Batch.Tests.InMemoryTests
                     'displayName' : 'displayName',
                     'defaultVersion' : 'beta',
                     'packages':[
-                        {'version':'fooVersion', 'state':'pending', 'format': 'betaFormat', 'lastActivationTime': '" + utcNow + @"'}],
+                        {'version':'fooVersion', 'state':'pending', 'format': 'betaFormat', 'lastActivationTime': '" + utcNow.ToString("o") + @"'}],
 
                     }")
             };
@@ -367,21 +401,21 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
 
-            Assert.Equal(result.Application.Id, "foo");
-            Assert.Equal(result.Application.AllowUpdates, true);
-            Assert.Equal(result.Application.DefaultVersion, "beta");
-            Assert.Equal(result.Application.DisplayName, "displayName");
-            Assert.Equal(result.Application.ApplicationPackages.Count, 1);
-            Assert.Equal(result.Application.ApplicationPackages.First().Format, "betaFormat");
-            Assert.Equal(result.Application.ApplicationPackages.First().State, PackageState.Pending);
-            Assert.Equal(result.Application.ApplicationPackages.First().Version, "fooVersion");
-            Assert.Equal(result.Application.ApplicationPackages.First().LastActivationTime, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
+            Assert.Equal("foo", result.Application.Id);
+            Assert.Equal(true, result.Application.AllowUpdates);
+            Assert.Equal("beta", result.Application.DefaultVersion);
+            Assert.Equal("displayName", result.Application.DisplayName);
+            Assert.Equal(1, result.Application.ApplicationPackages.Count);
+            Assert.Equal("betaFormat", result.Application.ApplicationPackages.First().Format);
+            Assert.Equal(PackageState.Pending, result.Application.ApplicationPackages.First().State);
+            Assert.Equal("fooVersion", result.Application.ApplicationPackages.First().Version);
+            Assert.Equal(utcNow, result.Application.ApplicationPackages.First().LastActivationTime);
         }
 
         [Fact]
         public void GetApplicationPackageValidateMessage()
         {
-            var utcNow = DateTime.UtcNow.ToString("o");
+            var utcNow = DateTime.UtcNow;
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -392,8 +426,8 @@ namespace Batch.Tests.InMemoryTests
                     'state' : 'Pending',
                     'version' : 'beta',
                     'format':'zip',
-                    'storageUrlExpiry':'" + utcNow + @"',
-                    'lastActivationTime':'" + utcNow + @"',
+                    'storageUrlExpiry':'" + utcNow.ToString("o") + @"',
+                    'lastActivationTime':'" + utcNow.ToString("o") + @"',
                     }")
             };
 
@@ -411,20 +445,20 @@ namespace Batch.Tests.InMemoryTests
             // Validate result
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
-            Assert.Equal(result.Id, "foo");
-            Assert.Equal(result.StorageUrl, "//storageUrl");
-            Assert.Equal(result.State, PackageState.Pending);
-            Assert.Equal(result.Version, "beta");
-            Assert.Equal(result.Format, "zip");
-            Assert.Equal(result.LastActivationTime, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
-            Assert.Equal(result.StorageUrlExpiry, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
+            Assert.Equal("foo", result.Id);
+            Assert.Equal("//storageUrl", result.StorageUrl);
+            Assert.Equal(PackageState.Pending, result.State);
+            Assert.Equal("beta", result.Version);
+            Assert.Equal("zip", result.Format);
+            Assert.Equal(utcNow, result.LastActivationTime);
+            Assert.Equal(utcNow, result.StorageUrlExpiry);
         }
 
 
         [Fact]
         public void ListApplicationValidateMessage()
         {
-            var utcNow = DateTime.UtcNow.ToString("o");
+            var utcNow = DateTime.UtcNow;
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
@@ -432,11 +466,11 @@ namespace Batch.Tests.InMemoryTests
                 Content = new StringContent(@"{ 'value':[{
                     'id': 'foo',
                     'allowUpdates': 'true',
-                    'displayName' : 'boo',
+                    'displayName' : 'DisplayName',
                     'defaultVersion' : 'beta',
                     'packages':[
-                        {'version':'version1', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow + @"'},
-                        {'version':'version2', 'state':'pending', 'format': 'alpha', 'lastActivationTime': '" + utcNow + @"'}],
+                        {'version':'version1', 'state':'pending', 'format': 'beta', 'lastActivationTime': '" + utcNow.ToString("o") + @"'},
+                        {'version':'version2', 'state':'pending', 'format': 'alpha', 'lastActivationTime': '" + utcNow.ToString("o") + @"'}],
 
                     }]}")
             };
@@ -456,15 +490,15 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
             Application application = result.Applications.First();
-            Assert.Equal(application.Id, "foo");
-            Assert.Equal(application.AllowUpdates, true);
-            Assert.Equal(application.DefaultVersion, "beta");
-            Assert.Equal(application.DisplayName, "boo");
+            Assert.Equal("foo", application.Id);
+            Assert.Equal(true, application.AllowUpdates);
+            Assert.Equal("beta", application.DefaultVersion);
+            Assert.Equal("DisplayName", application.DisplayName);
             Assert.Equal(application.ApplicationPackages.Count, 2);
-            Assert.Equal(application.ApplicationPackages.First().Format, "beta");
-            Assert.Equal(application.ApplicationPackages.First().State, PackageState.Pending);
-            Assert.Equal(application.ApplicationPackages.First().Version, "version1");
-            Assert.Equal(application.ApplicationPackages.First().LastActivationTime, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
+            Assert.Equal("beta", application.ApplicationPackages.First().Format);
+            Assert.Equal(PackageState.Pending, application.ApplicationPackages.First().State);
+            Assert.Equal("version1", application.ApplicationPackages.First().Version);
+            Assert.Equal(utcNow, application.ApplicationPackages.First().LastActivationTime);
         }
 
         [Fact]
@@ -495,34 +529,33 @@ namespace Batch.Tests.InMemoryTests
         }
 
         [Fact]
-        public void ActivateApplicationPackageThrowsExceptions()
+        public void CannotPassNullArgumentsToActivateApplicationPackage()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
 
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage(null, "foo", "foo", "foo", new ActivateApplicationPackageParameters()));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", null, "foo", "null", new ActivateApplicationPackageParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", null, "foo", "foo", new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", null, "foo", new ActivateApplicationPackageParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters()));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", null, null, null, new ActivateApplicationPackageParameters()));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", null, null, new ActivateApplicationPackageParameters()));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.ActivateApplicationPackage("foo", "foo", "foo", "foo", null));
+
         }
 
         [Fact]
-        public void AddApplicationThrowsExceptions()
+        public void CannotPassNullArgumentsToAddApplication()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication(null, null, null, new AddApplicationParameters()));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication("foo", null, null, new AddApplicationParameters()));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication("foo", "foo", null, new AddApplicationParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication(null, "foo", "foo", new AddApplicationParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication("foo", null, "foo", new AddApplicationParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication("foo", "foo", null, new AddApplicationParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.AddApplication("foo", "foo", "foo", null));
         }
 
         [Fact]
-        public void DeleteApplicationThrowsExceptions()
+        public void CannotPassNullArgumentsToDeleteApplication()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
@@ -530,40 +563,32 @@ namespace Batch.Tests.InMemoryTests
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication(null, "foo", "foo"));
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication("foo", null, "foo"));
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication("foo", "foo", null));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication("foo", null, null));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplication(null, null, null));
         }
 
         [Fact]
-        public void DeleteApplicationPackageThrowsExceptions()
+        public void CannotPassNullArgumentsToDeleteApplicationPackage()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
 
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage(null, "foo", "foo", "foo"));
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", null, "foo", "foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", "bar", null));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", null, null));
             Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", null, "foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", null, null, "foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage(null, null, null, "foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage(null, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.DeleteApplicationPackage("foo", "foo", "bar", null));
         }
 
         [Fact]
-        public void GetApplicationThrowsExceptions()
+        public void CannotPassNullArgumentsToGetApplication()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
             Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication(null, "foo", "foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication(null, null, "foo"));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication(null, null, null));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication("foo", null, null));
-            Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication("foo", "foo", null));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.GetApplication("foo", null, "foo"));
+
         }
 
         [Fact]
-        public void ListThrowsExceptions()
+        public void CannotPassNullArgumentsToListApplications()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
@@ -571,10 +596,11 @@ namespace Batch.Tests.InMemoryTests
             Assert.Throws<ArgumentNullException>(() => client.Applications.List(null, null, new ListApplicationsParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.List(null, "foo", new ListApplicationsParameters()));
             Assert.Throws<ArgumentNullException>(() => client.Applications.List("foo", null, new ListApplicationsParameters()));
+            Assert.Throws<ArgumentNullException>(() => client.Applications.List("foo", "foo", null));
         }
 
         [Fact]
-        public void UpdateApplicationThrowsExceptions()
+        public void CannotPassNullArgumentsToUpdateApplication()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
