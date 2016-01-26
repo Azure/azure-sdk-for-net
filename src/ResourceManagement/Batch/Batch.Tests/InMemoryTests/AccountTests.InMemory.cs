@@ -92,8 +92,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => client.Accounts.Create("rg", "s", new BatchAccountCreateParameters()));
             Assert.Throws<ArgumentOutOfRangeException>(() => client.Accounts.Create("rg", "account_name_that_is_too_long", new BatchAccountCreateParameters()));
         }
-
-
+        
         [Fact]
         public void AccountCreateAsyncValidateMessage()
         {
