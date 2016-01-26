@@ -14,6 +14,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -35,6 +36,159 @@ namespace Batch.Tests.InMemoryTests
             handler.IsPassThrough = false;
             return new BatchManagementClient(certCreds).WithHandler(handler);
         }
+
+        [Fact]
+        public void AccountCreateWithApplicationPackagesAsyncValidateMessage()
+        {
+            var acceptedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+
+            acceptedResponse.Headers.Add("x-ms-request-id", "1");
+            acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
+            var utcNow = DateTime.UtcNow.ToString("o");
+
+            var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'type' : 'Microsoft.Batch/batchAccounts',
+                                'name': 'acctName',
+                                'location': 'South Central US',
+                                'properties': {
+                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' :{
+                                        'storageAccountId' : '//storageAccount1',
+                                        'lastKeySync': '" + utcNow + @"',
+                                    }
+                                },
+                                'tags' : {
+                                    'tag1' : 'value for tag1',
+                                    'tag2' : 'value for tag2',
+                                }
+                            }")
+            };
+
+            var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
+
+            var client = GetBatchManagementClient(handler);
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag1", "value for tag1");
+            tags.Add("tag2", "value for tag2");
+
+            var result = client.Accounts.Create("foo", "acctName", new BatchAccountCreateParameters
+            {
+                Location = "South Central US",
+                Tags = tags,
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//storageAccount1"
+                    }
+                }
+            });
+
+            // Validate headers - User-Agent for certs, Authorization for tokens
+            Assert.Equal(HttpMethod.Put, handler.Requests[0].Method);
+            Assert.NotNull(handler.Requests[0].Headers.GetValues("User-Agent"));
+
+            // op status is a get
+            Assert.Equal(HttpMethod.Get, handler.Requests[1].Method);
+            Assert.NotNull(handler.Requests[1].Headers.GetValues("User-Agent"));
+
+            // Validate result
+            Assert.Equal("South Central US", result.Resource.Location);
+            Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
+            Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
+            Assert.True(result.Resource.Tags.Count == 2);
+            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "//storageAccount1");
+            Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
+
+        }
+
+
+        [Fact]
+        public void IfAnAccountIsCreatedWithAutoStorage_ThenTheAutoStorageAccountIdMustNotBeNull()
+        {
+            var handler = new RecordedDelegatingHandler();
+
+            var client = GetBatchManagementClient(handler);
+
+            // If storageId is not set this will throw an ArgumentNullException
+            var ex = Assert.Throws<ArgumentNullException>(() => client.Accounts.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
+            {
+                Location = "South Central US",
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties()
+                }
+            }));
+
+            Assert.Equal("parameters.Properties.AutoStorage.StorageAccountId", ex.ParamName);
+        }
+
+        [Fact]
+        public void GetAccountWithApplicationPackagesAsyncValidateMessage()
+        {
+
+            var utcNow = DateTime.UtcNow.ToString("o");
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                    'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                    'type' : 'Microsoft.Batch/batchAccounts',
+                    'name': 'acctName',
+                    'location': 'South Central US',
+                    'properties': {
+                        'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                        'provisioningState' : 'Succeeded',
+                        'coreQuota' : '20',
+                        'poolQuota' : '100',
+                        'activeJobAndJobScheduleQuota' : '200',
+                        'autoStorage':{
+                            'storageAccountId':'//StorageAccountId',
+                            'lastKeySync': '" + utcNow + @"',
+                        }
+                    },
+                    'tags' : {
+                        'tag1' : 'value for tag1',
+                        'tag2' : 'value for tag2'
+                    }
+                }")
+            };
+
+            response.Headers.Add("x-ms-request-id", "1");
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetBatchManagementClient(handler);
+
+            var result = client.Accounts.Get("foo", "acctName");
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Get, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            // Validate result
+            Assert.Equal("South Central US", result.Resource.Location);
+            Assert.Equal("acctName", result.Resource.Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.Resource.Id);
+            Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
+            Assert.Equal(20, result.Resource.Properties.CoreQuota);
+            Assert.Equal(100, result.Resource.Properties.PoolQuota);
+            Assert.Equal(200, result.Resource.Properties.ActiveJobAndJobScheduleQuota);
+
+            AutoStorageProperties autoStorageInformation = result.Resource.Properties.AutoStorage;
+            Assert.Equal(autoStorageInformation.StorageAccountId, "//StorageAccountId");
+            Assert.Equal(autoStorageInformation.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
+            Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
+
+            Assert.True(result.Resource.Tags.ContainsKey("tag1"));
+
+        }
+
 
         [Fact]
         public void AddApplicationPackageValidateMessage()

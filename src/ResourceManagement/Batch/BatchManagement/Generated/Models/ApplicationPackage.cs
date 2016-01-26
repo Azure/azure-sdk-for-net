@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.Batch.Models
             set { this._format = value; }
         }
         
-        private DateTime _lastActivationTime;
+        private System.DateTime? _lastActivationTime;
         
         /// <summary>
         /// Optional. Gets or sets the time at which the package was last
         /// activated, if the package is active.
         /// </summary>
-        public DateTime LastActivationTime
+        public System.DateTime? LastActivationTime
         {
             get { return this._lastActivationTime; }
             set { this._lastActivationTime = value; }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         private PackageState _state;
         
         /// <summary>
-        /// Optional. Gets or sets the current state of the application package.
+        /// Required. Gets or sets the current state of the application package.
         /// </summary>
         public PackageState State
         {
@@ -81,6 +81,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         public ApplicationPackage()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ApplicationPackage class with
+        /// required arguments.
+        /// </summary>
+        public ApplicationPackage(PackageState state)
+            : this()
+        {
+            this.State = state;
         }
     }
 }

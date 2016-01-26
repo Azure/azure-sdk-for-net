@@ -93,6 +93,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => client.Accounts.Create("rg", "account_name_that_is_too_long", new BatchAccountCreateParameters()));
         }
 
+
         [Fact]
         public void AccountCreateAsyncValidateMessage()
         {
@@ -103,7 +104,6 @@ namespace Microsoft.Azure.Batch.Tests
 
             acceptedResponse.Headers.Add("x-ms-request-id", "1");
             acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
-            var utcNow = DateTime.UtcNow.ToString("o");
 
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -114,11 +114,7 @@ namespace Microsoft.Azure.Batch.Tests
                                 'location': 'South Central US',
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
-                                    'provisioningState' : 'Succeeded',
-                                    'autoStorage' :{
-                                        'storageAccountId' : '//storageAccount1',
-                                        'lastKeySync': '" + utcNow + @"',
-                                    }
+                                    'provisioningState' : 'Succeeded'
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -137,14 +133,7 @@ namespace Microsoft.Azure.Batch.Tests
             var result = client.Accounts.Create("foo", "acctName", new BatchAccountCreateParameters
             {
                 Location = "South Central US",
-                Tags = tags,
-                Properties = new AccountBaseProperties
-                {
-                    AutoStorage = new AutoStorageBaseProperties
-                    {
-                        StorageAccountId = "//storageAccount1"
-                    }
-                }
+                Tags = tags
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -160,9 +149,6 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
             Assert.True(result.Resource.Tags.Count == 2);
-            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "//storageAccount1");
-            Assert.Equal(result.Resource.Properties.AutoStorage.LastKeySync, DateTime.Parse(utcNow, null, DateTimeStyles.RoundtripKind));
-
         }
 
         [Fact]
@@ -178,9 +164,6 @@ namespace Microsoft.Azure.Batch.Tests
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
-                                    'autoStorage' : {
-                                        'storageAccountId' : 'fooId'
-                                    }
                                 },
                                 'tags' : {
                                     'tag1' : 'value for tag1',
@@ -199,13 +182,6 @@ namespace Microsoft.Azure.Batch.Tests
             var result = client.Accounts.Create("foo", "acctName", new BatchAccountCreateParameters
             {
                 Tags = tags,
-                Properties = new AccountBaseProperties
-                {
-                    AutoStorage = new AutoStorageBaseProperties
-                    {
-                        StorageAccountId = "fooId"
-                    }
-                }
             });
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -216,7 +192,6 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("South Central US", result.Resource.Location);
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(result.Resource.Properties.ProvisioningState, AccountProvisioningState.Succeeded);
-            Assert.Equal(result.Resource.Properties.AutoStorage.StorageAccountId, "fooId");
             Assert.True(result.Resource.Tags.Count == 2);
         }
 

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         private AutoStorageBaseProperties _autoStorage;
         
         /// <summary>
-        /// Required. Gets or sets properties relating to auto storage.
+        /// Optional. Gets or sets properties relating to auto storage.
         /// </summary>
         public AutoStorageBaseProperties AutoStorage
         {
@@ -46,20 +46,6 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         public AccountBaseProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AccountBaseProperties class with
-        /// required arguments.
-        /// </summary>
-        public AccountBaseProperties(AutoStorageBaseProperties autoStorage)
-            : this()
-        {
-            if (autoStorage == null)
-            {
-                throw new ArgumentNullException("autoStorage");
-            }
-            this.AutoStorage = autoStorage;
         }
     }
 }

@@ -499,7 +499,7 @@ namespace Microsoft.Azure.Management.Batch
                                 JToken autoStorageValue = propertiesValue["autoStorage"];
                                 if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
                                 {
-                                    AutoStorageInformation autoStorageInstance = new AutoStorageInformation();
+                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
                                     propertiesInstance.AutoStorage = autoStorageInstance;
                                     
                                     JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
