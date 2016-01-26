@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Policy assignment.
     /// </summary>
-    public partial class PolicyAssignment : IResource
+    public partial class PolicyAssignment
     {
         /// <summary>
         /// Initializes a new instance of the PolicyAssignment class.
@@ -29,37 +29,23 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Initializes a new instance of the PolicyAssignment class.
         /// </summary>
-        public PolicyAssignment(string name = default(string), string scope = default(string), string displayName = default(string), string policyDefinitionId = default(string))
+        public PolicyAssignment(PolicyAssignmentProperties properties = default(PolicyAssignmentProperties), string name = default(string))
         {
+            Properties = properties;
             Name = name;
-            Scope = scope;
-            DisplayName = displayName;
-            PolicyDefinitionId = policyDefinitionId;
         }
+
+        /// <summary>
+        /// Gets or sets the policy assignment properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public PolicyAssignmentProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the policy assignment name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the policy assignment scope.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.scope")]
-        public string Scope { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy assignment display name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.displayName")]
-        public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy definition Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.policyDefinitionId")]
-        public string PolicyDefinitionId { get; set; }
 
     }
 }

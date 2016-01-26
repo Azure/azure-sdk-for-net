@@ -78,8 +78,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListForResourceAsync( this IRoleAssignmentsOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListForResourceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -116,8 +118,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListForResourceGroupAsync( this IRoleAssignmentsOperations operations, string resourceGroupName, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListForResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -154,8 +158,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleAssignment> DeleteAsync( this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.DeleteWithHttpMessagesAsync(scope, roleAssignmentName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, roleAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -198,8 +204,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleAssignment> CreateAsync( this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, RoleAssignmentProperties properties = default(RoleAssignmentProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(scope, roleAssignmentName, properties, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(scope, roleAssignmentName, properties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -236,8 +244,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleAssignment> GetAsync( this IRoleAssignmentsOperations operations, string scope, string roleAssignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(scope, roleAssignmentName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, roleAssignmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -268,8 +278,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleAssignment> DeleteByIdAsync( this IRoleAssignmentsOperations operations, string roleAssignmentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.DeleteByIdWithHttpMessagesAsync(roleAssignmentId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.DeleteByIdWithHttpMessagesAsync(roleAssignmentId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -306,8 +318,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleAssignment> CreateByIdAsync( this IRoleAssignmentsOperations operations, string roleAssignmentId, RoleAssignmentProperties properties = default(RoleAssignmentProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateByIdWithHttpMessagesAsync(roleAssignmentId, properties, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateByIdWithHttpMessagesAsync(roleAssignmentId, properties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -338,8 +352,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleAssignment> GetByIdAsync( this IRoleAssignmentsOperations operations, string roleAssignmentId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetByIdWithHttpMessagesAsync(roleAssignmentId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleAssignmentId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -370,8 +386,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListAsync( this IRoleAssignmentsOperations operations, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -408,8 +426,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListForScopeAsync( this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -440,8 +460,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListForResourceNextAsync( this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListForResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListForResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -472,8 +494,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListForResourceGroupNextAsync( this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -504,8 +528,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListNextAsync( this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -536,8 +562,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleAssignment>> ListForScopeNextAsync( this IRoleAssignmentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListForScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListForScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

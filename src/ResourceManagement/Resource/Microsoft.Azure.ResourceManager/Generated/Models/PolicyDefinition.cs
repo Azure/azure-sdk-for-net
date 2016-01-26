@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Policy definition.
     /// </summary>
-    public partial class PolicyDefinition : IResource
+    public partial class PolicyDefinition
     {
         /// <summary>
         /// Initializes a new instance of the PolicyDefinition class.
@@ -29,37 +29,23 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Initializes a new instance of the PolicyDefinition class.
         /// </summary>
-        public PolicyDefinition(string name = default(string), string description = default(string), string displayName = default(string), object policyRule = default(object))
+        public PolicyDefinition(PolicyDefinitionProperties properties = default(PolicyDefinitionProperties), string name = default(string))
         {
+            Properties = properties;
             Name = name;
-            Description = description;
-            DisplayName = displayName;
-            PolicyRule = policyRule;
         }
+
+        /// <summary>
+        /// Gets or sets the policy definition properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public PolicyDefinitionProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the policy definition name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy definition description.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy definition display name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.displayName")]
-        public string DisplayName { get; set; }
-
-        /// <summary>
-        /// The policy rule json.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.policyRule")]
-        public object PolicyRule { get; set; }
 
     }
 }

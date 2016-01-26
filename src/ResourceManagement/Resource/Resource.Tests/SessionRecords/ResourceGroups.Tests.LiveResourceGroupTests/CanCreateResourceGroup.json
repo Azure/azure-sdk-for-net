@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7413?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzQxMz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg5632?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNTYzMj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"department\": \"finance\",\r\n    \"tagname\": \"tagvalue\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "114"
         ],
         "x-ms-client-request-id": [
-          "46191449-375d-4a61-8d33-d933b3e4c1a8"
+          "5847f9e1-3723-4460-830e-fab97013c035"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7413\",\r\n  \"name\": \"csmrg7413\",\r\n  \"location\": \"southcentralus\",\r\n  \"tags\": {\r\n    \"department\": \"finance\",\r\n    \"tagname\": \"tagvalue\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg5632\",\r\n  \"name\": \"csmrg5632\",\r\n  \"location\": \"southcentralus\",\r\n  \"tags\": {\r\n    \"department\": \"finance\",\r\n    \"tagname\": \"tagvalue\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -37,22 +37,22 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:17:38 GMT"
+          "Tue, 26 Jan 2016 22:34:33 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-request-id": [
-          "98d09572-3b27-4670-a9fe-42ceac74636b"
+          "661f4522-0046-474d-b1e8-296cfc1c5da3"
         ],
         "x-ms-correlation-request-id": [
-          "98d09572-3b27-4670-a9fe-42ceac74636b"
+          "661f4522-0046-474d-b1e8-296cfc1c5da3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T001738Z:98d09572-3b27-4670-a9fe-42ceac74636b"
+          "CENTRALUS:20160126T223433Z:661f4522-0046-474d-b1e8-296cfc1c5da3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,13 +61,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "090a4d83-5e3c-4307-88bf-080775a48de9"
+          "d9d6b2d9-52d4-4540-b81d-0d884d8b7594"
         ],
         "accept-language": [
           "en-US"
@@ -76,7 +76,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7413\",\r\n      \"name\": \"csmrg7413\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"department\": \"finance\",\r\n        \"tagname\": \"tagvalue\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg8496\",\r\n      \"name\": \"csmrg8496\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg8964\",\r\n      \"name\": \"csmrg8964\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg2338\",\r\n      \"name\": \"csmrg2338\",\r\n      \"location\": \"westeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg5632\",\r\n      \"name\": \"csmrg5632\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"department\": \"finance\",\r\n        \"tagname\": \"tagvalue\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7529\",\r\n      \"name\": \"csmrg7529\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -88,7 +88,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:17:38 GMT"
+          "Tue, 26 Jan 2016 22:34:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -100,13 +100,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "8bb8d1d4-164b-404b-a1c4-0318a345be9e"
+          "809e2eec-d7f3-4147-86f3-2d6b251f2620"
         ],
         "x-ms-correlation-request-id": [
-          "8bb8d1d4-164b-404b-a1c4-0318a345be9e"
+          "809e2eec-d7f3-4147-86f3-2d6b251f2620"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T001738Z:8bb8d1d4-164b-404b-a1c4-0318a345be9e"
+          "CENTRALUS:20160126T223433Z:809e2eec-d7f3-4147-86f3-2d6b251f2620"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -115,13 +115,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7413?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzQxMz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg5632?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNTYzMj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "865a3b8b-753f-4653-9a0f-45af7975647c"
+          "48b8e559-f02f-449e-bc6d-79e36f0499b4"
         ],
         "accept-language": [
           "en-US"
@@ -130,7 +130,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7413\",\r\n  \"name\": \"csmrg7413\",\r\n  \"location\": \"southcentralus\",\r\n  \"tags\": {\r\n    \"department\": \"finance\",\r\n    \"tagname\": \"tagvalue\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg5632\",\r\n  \"name\": \"csmrg5632\",\r\n  \"location\": \"southcentralus\",\r\n  \"tags\": {\r\n    \"department\": \"finance\",\r\n    \"tagname\": \"tagvalue\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -142,7 +142,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:17:38 GMT"
+          "Tue, 26 Jan 2016 22:34:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -154,13 +154,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "4b967d8e-dc08-4d5a-99cc-e9b3d5bce085"
+          "209b2840-24f9-44f7-a17f-e82417cf2fb9"
         ],
         "x-ms-correlation-request-id": [
-          "4b967d8e-dc08-4d5a-99cc-e9b3d5bce085"
+          "209b2840-24f9-44f7-a17f-e82417cf2fb9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T001738Z:4b967d8e-dc08-4d5a-99cc-e9b3d5bce085"
+          "CENTRALUS:20160126T223433Z:209b2840-24f9-44f7-a17f-e82417cf2fb9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -171,7 +171,7 @@
   ],
   "Names": {
     "CanCreateResourceGroup": [
-      "csmrg7413"
+      "csmrg5632"
     ]
   },
   "Variables": {
