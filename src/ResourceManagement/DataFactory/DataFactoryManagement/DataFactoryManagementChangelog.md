@@ -1,5 +1,12 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 
+Release date: 
+
+### Feature Additions
+
+* Adding List operations for Activity Windows
+
 ## Version 4.4.0
 Release date: 2016.01.28
 
