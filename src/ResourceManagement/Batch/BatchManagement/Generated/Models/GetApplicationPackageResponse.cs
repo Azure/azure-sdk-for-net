@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.Batch.Models
             set { this._id = value; }
         }
         
-        private DateTime _lastActivationTime;
+        private System.DateTime? _lastActivationTime;
         
         /// <summary>
         /// Optional. Gets or sets the time at which the package was last
         /// activated, if the package is active.
         /// </summary>
-        public DateTime LastActivationTime
+        public System.DateTime? LastActivationTime
         {
             get { return this._lastActivationTime; }
             set { this._lastActivationTime = value; }
