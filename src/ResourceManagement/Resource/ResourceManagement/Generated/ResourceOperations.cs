@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(sourceResourceGroupName);
             url = url + "/moveResources";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -230,11 +230,11 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -1351,7 +1351,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2014-04-01-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
