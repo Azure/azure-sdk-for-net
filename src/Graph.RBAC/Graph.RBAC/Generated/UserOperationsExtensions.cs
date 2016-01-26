@@ -167,17 +167,18 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Graph.RBAC.IUserOperations.
         /// </param>
-        /// <param name='signInName'>
-        /// Required. filter based on sign in name
+        /// <param name='userPrincipalName'>
+        /// Required. Filter based on userPrincipalName. This works well with
+        /// guest users upn.
         /// </param>
         /// <returns>
         /// Server response for Get tenant users API call
         /// </returns>
-        public static UserListResult GetBySignInName(this IUserOperations operations, string signInName)
+        public static UserListResult GetByUserPrincipalName(this IUserOperations operations, string userPrincipalName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IUserOperations)s).GetBySignInNameAsync(signInName);
+                return ((IUserOperations)s).GetByUserPrincipalNameAsync(userPrincipalName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -188,15 +189,16 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Graph.RBAC.IUserOperations.
         /// </param>
-        /// <param name='signInName'>
-        /// Required. filter based on sign in name
+        /// <param name='userPrincipalName'>
+        /// Required. Filter based on userPrincipalName. This works well with
+        /// guest users upn.
         /// </param>
         /// <returns>
         /// Server response for Get tenant users API call
         /// </returns>
-        public static Task<UserListResult> GetBySignInNameAsync(this IUserOperations operations, string signInName)
+        public static Task<UserListResult> GetByUserPrincipalNameAsync(this IUserOperations operations, string userPrincipalName)
         {
-            return operations.GetBySignInNameAsync(signInName, CancellationToken.None);
+            return operations.GetByUserPrincipalNameAsync(userPrincipalName, CancellationToken.None);
         }
         
         /// <summary>

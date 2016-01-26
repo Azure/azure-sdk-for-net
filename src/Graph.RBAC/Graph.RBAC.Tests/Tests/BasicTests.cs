@@ -105,15 +105,15 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 var client = graphTestBase.GraphClient;
 
                 // Add this user through management portal before recording mocks
-                string testLiveId  = "auxtm596@live.com";
-                var usersByLiveId = client.User.GetBySignInName(testLiveId);
+                string testLiveId = "auxtm596_live.com#EXT#@rbacCliTest.onmicrosoft.com";
+                var usersByLiveId = client.User.GetByUserPrincipalName(testLiveId);
                 Assert.NotNull(usersByLiveId);
                 Assert.NotNull(usersByLiveId.StatusCode == HttpStatusCode.OK);
                 Assert.NotNull(usersByLiveId.Users);
                 Assert.Equal(1, usersByLiveId.Users.Count());
 
                 string testOrgId = "test2@" + graphTestBase.Domain;
-                var usersByOrgId = client.User.GetBySignInName(testOrgId);
+                var usersByOrgId = client.User.GetByUserPrincipalName(testOrgId);
                 Assert.NotNull(usersByOrgId);
                 Assert.NotNull(usersByOrgId.StatusCode == HttpStatusCode.OK);
                 Assert.NotNull(usersByOrgId.Users);

@@ -73,17 +73,6 @@ namespace Microsoft.Azure.Graph.RBAC.Models
             set { this._objectType = value; }
         }
         
-        private string _signInName;
-        
-        /// <summary>
-        /// Optional. Gets or sets user signIn name
-        /// </summary>
-        public string SignInName
-        {
-            get { return this._signInName; }
-            set { this._signInName = value; }
-        }
-        
         private string _userPrincipalName;
         
         /// <summary>
