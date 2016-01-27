@@ -2,7 +2,6 @@
   "Entries": [
     {
       "RequestUri": "/providers/Microsoft.Web/sourcecontrols/GitHub?api-version=2015-08-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NvdXJjZWNvbnRyb2xzL0dpdEh1Yj9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"name\": \"GitHub\",\r\n    \"token\": \"myToken\",\r\n    \"tokenSecret\": \"myTokenSecret\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -77,7 +76,6 @@
     },
     {
       "RequestUri": "/providers/Microsoft.Web/sourcecontrols/GitHub?api-version=2015-08-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NvdXJjZWNvbnRyb2xzL0dpdEh1Yj9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -146,7 +144,6 @@
     },
     {
       "RequestUri": "/providers/Microsoft.Web/sourcecontrols?api-version=2015-08-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NvdXJjZWNvbnRyb2xzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
