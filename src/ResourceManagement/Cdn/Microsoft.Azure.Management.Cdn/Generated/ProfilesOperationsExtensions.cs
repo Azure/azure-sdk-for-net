@@ -47,8 +47,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<IEnumerable<Profile>> ListByResourceGroupAsync( this IProfilesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -85,8 +87,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<Profile> GetAsync( this IProfilesOperations operations, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -129,8 +133,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<Profile> CreateAsync( this IProfilesOperations operations, string profileName, ProfileCreateParameters profileProperties, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(profileName, profileProperties, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(profileName, profileProperties, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -173,8 +179,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<Profile> BeginCreateAsync( this IProfilesOperations operations, string profileName, ProfileCreateParameters profileProperties, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.BeginCreateWithHttpMessagesAsync(profileName, profileProperties, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(profileName, profileProperties, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -217,8 +225,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<Profile> UpdateAsync( this IProfilesOperations operations, string profileName, string resourceGroupName, IDictionary<string, string> tags, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.UpdateWithHttpMessagesAsync(profileName, resourceGroupName, tags, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(profileName, resourceGroupName, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -343,8 +353,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<SsoUri> GenerateSsoUriAsync( this IProfilesOperations operations, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GenerateSsoUriWithHttpMessagesAsync(profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GenerateSsoUriWithHttpMessagesAsync(profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }
