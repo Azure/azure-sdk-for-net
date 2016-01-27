@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// The management credentials for Azure.
+        /// Gets Azure subscription credentials.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
@@ -73,9 +73,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// The retry timeout for Long Running Operations.
+        /// Gets or sets the retry timeout in seconds for Long Running Operations.
+        /// Default value is 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
+
+        /// <summary>
+        /// When set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
+        /// </summary>
+        public bool? GenerateClientRequestId { get; set; }
 
         public virtual IJobOperations Job { get; private set; }
 
@@ -147,12 +154,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Initializes a new instance of the DataLakeAnalyticsJobManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The management credentials for Azure.
+        /// Required. Gets Azure subscription credentials.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        internal DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -169,7 +176,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Initializes a new instance of the DataLakeAnalyticsJobManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The management credentials for Azure.
+        /// Required. Gets Azure subscription credentials.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -177,7 +184,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        internal DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -197,12 +204,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. The management credentials for Azure.
+        /// Required. Gets Azure subscription credentials.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsJobManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        internal DataLakeAnalyticsJobManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -227,7 +234,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. The management credentials for Azure.
+        /// Required. Gets Azure subscription credentials.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -235,7 +242,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsJobManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        internal DataLakeAnalyticsJobManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -263,6 +270,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             this.ApiVersion = "2015-11-01-preview";
             this.Jobserviceuri = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
+            this.LongRunningOperationRetryTimeout = 30;
+            this.GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

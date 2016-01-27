@@ -38,6 +38,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
         /// </param>
+        /// <param name='appendMode'>
+        /// Indicates the concurrent append call should create the file if it
+        /// doesn't exist or just open the existing file for append
+        /// </param>
         /// <param name='op'>
         /// This is the REQUIRED value for this parameter and method
         /// combination. Changing the value will result in unexpected
@@ -49,7 +53,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, object appendMode = default(object), string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks if the specified access is available at the given path.
         /// </summary>

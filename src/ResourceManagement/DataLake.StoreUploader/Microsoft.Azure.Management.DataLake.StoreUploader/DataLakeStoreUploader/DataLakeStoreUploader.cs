@@ -112,12 +112,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             //begin (or resume) uploading the file
             UploadFile(metadata);
 
-            if (_frontEnd.StreamExists(metadata.SegmentStreamDirectory))
-            {
-                // delete the folder that contained the intermediate segments, if there was one (for single segment uploads there will not be)
-                _frontEnd.DeleteStream(metadata.SegmentStreamDirectory, true);
-            }
-
             //clean up metadata after a successful upload
             metadata.DeleteFile();
         }

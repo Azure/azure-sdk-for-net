@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? ExecutedStatementCount { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public override void Validate()
         {

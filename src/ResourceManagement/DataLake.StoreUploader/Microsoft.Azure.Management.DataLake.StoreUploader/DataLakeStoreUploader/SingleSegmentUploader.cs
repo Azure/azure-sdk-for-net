@@ -257,11 +257,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 {
                     if (targetStreamOffset == 0)
                     {
-                        _frontEnd.CreateStream(_segmentMetadata.Path, true, buffer, bytesToCopy);
+                        _frontEnd.CreateStream(_segmentMetadata.Path, true, new MemoryStream(buffer), bytesToCopy);
                     }
                     else
                     {
-                        _frontEnd.AppendToStream(_segmentMetadata.Path, buffer, targetStreamOffset, bytesToCopy);
+                        _frontEnd.AppendToStream(_segmentMetadata.Path, new MemoryStream(buffer), targetStreamOffset, bytesToCopy);
                         
                     }
                     

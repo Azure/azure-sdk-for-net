@@ -160,9 +160,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -229,9 +229,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -304,9 +304,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -379,9 +379,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -454,9 +454,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -535,9 +535,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -643,9 +643,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -712,9 +712,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -781,9 +781,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count
@@ -844,9 +844,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// Gets or sets the OrderBy clause. One or more comma-separated
-        /// expressions with an optional â€œascâ€ (the default) or
-        /// â€œdescâ€ depending on the order youâ€™d like the values sorted,
-        /// e.g. Categories?$orderby=CategoryName desc. Optional.
+        /// expressions with an optional "asc" (the default) or "desc"
+        /// depending on the order youâ€™d like the values sorted, e.g.
+        /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
         /// Gets or sets a Boolean value of true or false to request a count

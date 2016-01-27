@@ -68,8 +68,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlSecret> CreateSecretAsync( this ICatalogOperations operations, string accountname, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateSecretWithHttpMessagesAsync(accountname, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateSecretWithHttpMessagesAsync(accountname, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -120,8 +122,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlSecret> UpdateSecretAsync( this ICatalogOperations operations, string accountname, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.UpdateSecretWithHttpMessagesAsync(accountname, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(accountname, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -164,8 +168,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlSecret> GetSecretAsync( this ICatalogOperations operations, string accountname, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetSecretWithHttpMessagesAsync(accountname, databaseName, secretName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountname, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -253,8 +259,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlExternalDataSource> GetExternalDataSourceAsync( this ICatalogOperations operations, string accountname, string databaseName, string externalDataSourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetExternalDataSourceWithHttpMessagesAsync(accountname, databaseName, externalDataSourceName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetExternalDataSourceWithHttpMessagesAsync(accountname, databaseName, externalDataSourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -292,9 +300,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -341,9 +349,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -355,8 +363,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync( this ICatalogOperations operations, string accountname, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -401,8 +411,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlCredential> GetCredentialAsync( this ICatalogOperations operations, string accountname, string databaseName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetCredentialWithHttpMessagesAsync(accountname, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetCredentialWithHttpMessagesAsync(accountname, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -440,9 +452,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -489,9 +501,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -503,8 +515,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlCredential>> ListCredentialsAsync( this ICatalogOperations operations, string accountname, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListCredentialsWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -555,8 +569,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlProcedure> GetProcedureAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string procedureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetProcedureWithHttpMessagesAsync(accountname, databaseName, schemaName, procedureName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetProcedureWithHttpMessagesAsync(accountname, databaseName, schemaName, procedureName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -597,9 +613,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -649,9 +665,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -663,8 +679,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlProcedure>> ListProceduresAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListProceduresWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListProceduresWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -713,8 +731,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlTable> GetTableAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetTableWithHttpMessagesAsync(accountname, databaseName, schemaName, tableName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetTableWithHttpMessagesAsync(accountname, databaseName, schemaName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -754,9 +774,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -805,9 +825,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -819,8 +839,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlTable>> ListTablesAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTablesWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTablesWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -869,8 +891,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlView> GetViewAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetViewWithHttpMessagesAsync(accountname, databaseName, schemaName, viewName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetViewWithHttpMessagesAsync(accountname, databaseName, schemaName, viewName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -910,9 +934,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -961,9 +985,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -975,8 +999,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlView>> ListViewsAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListViewsWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListViewsWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1031,8 +1057,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlTableStatistics> GetTableStatisticAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string tableName, string statisticsName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetTableStatisticWithHttpMessagesAsync(accountname, databaseName, schemaName, tableName, statisticsName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetTableStatisticWithHttpMessagesAsync(accountname, databaseName, schemaName, tableName, statisticsName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1075,9 +1103,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1129,9 +1157,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1143,8 +1171,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountname, databaseName, schemaName, tableName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountname, databaseName, schemaName, tableName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1215,8 +1245,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlType>> ListTypesAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTypesWithHttpMessagesAsync(accountname, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTypesWithHttpMessagesAsync(accountname, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1267,8 +1299,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlTableValuedFunction> GetTableValuedFunctionAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string tableValuedFunctionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetTableValuedFunctionWithHttpMessagesAsync(accountname, databaseName, schemaName, tableValuedFunctionName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetTableValuedFunctionWithHttpMessagesAsync(accountname, databaseName, schemaName, tableValuedFunctionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1309,9 +1343,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1361,9 +1395,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1375,8 +1409,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountname, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1421,8 +1457,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlAssembly> GetAssemblyAsync( this ICatalogOperations operations, string accountname, string databaseName, string assemblyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetAssemblyWithHttpMessagesAsync(accountname, databaseName, assemblyName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetAssemblyWithHttpMessagesAsync(accountname, databaseName, assemblyName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1460,9 +1498,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1509,9 +1547,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1523,8 +1561,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync( this ICatalogOperations operations, string accountname, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAssembliesWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAssembliesWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1567,8 +1607,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlSchema> GetSchemaAsync( this ICatalogOperations operations, string accountname, string databaseName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetSchemaWithHttpMessagesAsync(accountname, databaseName, schemaName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetSchemaWithHttpMessagesAsync(accountname, databaseName, schemaName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1605,9 +1647,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1653,9 +1695,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1667,8 +1709,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlSchema>> ListSchemasAsync( this ICatalogOperations operations, string accountname, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListSchemasWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListSchemasWithHttpMessagesAsync(accountname, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1707,8 +1751,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<USqlDatabase> GetDatabaseAsync( this ICatalogOperations operations, string accountname, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetDatabaseWithHttpMessagesAsync(accountname, databaseName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetDatabaseWithHttpMessagesAsync(accountname, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1743,9 +1789,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1789,9 +1835,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// Gets or sets the OrderBy clause. One or more comma-separated expressions
-            /// with an optional â€œascâ€ (the default) or â€œdescâ€ depending on the
-            /// order youâ€™d like the values sorted, e.g.
-            /// Categories?$orderby=CategoryName desc. Optional.
+            /// with an optional "asc" (the default) or "desc" depending on the order
+            /// youâ€™d like the values sorted, e.g. Categories?$orderby=CategoryName
+            /// desc. Optional.
             /// </param>
             /// <param name='count'>
             /// Gets or sets a Boolean value of true or false to request a count of the
@@ -1803,8 +1849,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlDatabase>> ListDatabasesAsync( this ICatalogOperations operations, string accountname, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListDatabasesWithHttpMessagesAsync(accountname, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListDatabasesWithHttpMessagesAsync(accountname, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1837,8 +1885,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListExternalDataSourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListExternalDataSourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1871,8 +1921,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlCredential>> ListCredentialsNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListCredentialsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListCredentialsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1905,8 +1957,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlProcedure>> ListProceduresNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListProceduresNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListProceduresNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1937,8 +1991,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlTable>> ListTablesNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTablesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTablesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1969,8 +2025,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlView>> ListViewsNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListViewsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListViewsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -2001,8 +2059,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTableStatisticsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTableStatisticsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -2035,8 +2095,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlType>> ListTypesNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTypesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTypesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -2069,8 +2131,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTableValuedFunctionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTableValuedFunctionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -2103,8 +2167,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlAssemblyClr>> ListAssembliesNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAssembliesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAssembliesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -2135,8 +2201,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlSchema>> ListSchemasNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListSchemasNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListSchemasNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -2169,8 +2237,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<USqlDatabase>> ListDatabasesNextAsync( this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListDatabasesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListDatabasesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

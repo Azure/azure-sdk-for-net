@@ -54,8 +54,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<JobStatistics> GetStatisticsAsync( this IJobOperations operations, string accountname, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetStatisticsWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetStatisticsWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -92,8 +94,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<JobDataPath> GetDebugDataPathAsync( this IJobOperations operations, string accountname, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetDebugDataPathWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetDebugDataPathWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -132,8 +136,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<JobInformation> BuildAsync( this IJobOperations operations, string accountname, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.BuildWithHttpMessagesAsync(accountname, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.BuildWithHttpMessagesAsync(accountname, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -178,8 +184,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<JobInformation> CreateAsync( this IJobOperations operations, string accountname, string jobId, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(accountname, jobId, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(accountname, jobId, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -253,8 +261,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<JobInformation> GetAsync( this IJobOperations operations, string accountname, string jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(accountname, jobIdentity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -333,8 +343,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<JobInformation>> ListAsync( this IJobOperations operations, string accountname, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(accountname, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(accountname, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -367,8 +379,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static async Task<IPage<JobInformation>> ListNextAsync( this IJobOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

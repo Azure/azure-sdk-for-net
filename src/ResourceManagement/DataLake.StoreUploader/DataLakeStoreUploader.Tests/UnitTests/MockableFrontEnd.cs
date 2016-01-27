@@ -6,6 +6,9 @@
 //   Completely overridable FrontEnd.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.IO;
+
 namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 {
     using System;
@@ -46,12 +49,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             this.StreamExistsImplementation = baseAdapter.StreamExists;
         }
 
-        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
+        public void CreateStream(string streamPath, bool overwrite, Stream data, int byteCount)
         {
             this.CreateStreamImplementation(streamPath, overwrite, data, byteCount);
         }
 
-        public Action<string, bool, byte[], int> CreateStreamImplementation { get; set; }
+        public Action<string, bool, Stream, int> CreateStreamImplementation { get; set; }
 
 
         public void DeleteStream(string streamPath, bool recurse = false)
@@ -61,12 +64,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         public Action<string, bool> DeleteStreamImplementation { get; set; }
 
-        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
+        public void AppendToStream(string streamPath, Stream data, long offset, int byteCount)
         {
             this.AppendToStreamImplementation(streamPath, data, offset, byteCount);
         }
 
-        public Action<string, byte[], long, int> AppendToStreamImplementation { get; set; }
+        public Action<string, Stream, long, int> AppendToStreamImplementation { get; set; }
 
         public bool StreamExists(string streamPath)
         {

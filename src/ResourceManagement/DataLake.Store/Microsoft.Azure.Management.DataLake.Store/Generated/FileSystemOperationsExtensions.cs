@@ -37,14 +37,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='streamContents'>
             /// The file contents to include when appending to the file.
             /// </param>
+            /// <param name='appendMode'>
+            /// Indicates the concurrent append call should create the file if it doesn't
+            /// exist or just open the existing file for append
+            /// </param>
             /// <param name='op'>
             /// This is the REQUIRED value for this parameter and method combination.
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void ConcurrentAppend(this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND")
+            public static void ConcurrentAppend(this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, object appendMode = default(object), string op = "CONCURRENTAPPEND")
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(filePath, accountname, streamContents, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(filePath, accountname, streamContents, appendMode, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -65,6 +69,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='streamContents'>
             /// The file contents to include when appending to the file.
             /// </param>
+            /// <param name='appendMode'>
+            /// Indicates the concurrent append call should create the file if it doesn't
+            /// exist or just open the existing file for append
+            /// </param>
             /// <param name='op'>
             /// This is the REQUIRED value for this parameter and method combination.
             /// Changing the value will result in unexpected behavior, please do not do
@@ -73,9 +81,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcurrentAppendAsync( this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, string op = "CONCURRENTAPPEND", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConcurrentAppendAsync( this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, object appendMode = default(object), string op = "CONCURRENTAPPEND", CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ConcurrentAppendWithHttpMessagesAsync(filePath, accountname, streamContents, op, null, cancellationToken).ConfigureAwait(false);
+                await operations.ConcurrentAppendWithHttpMessagesAsync(filePath, accountname, streamContents, appendMode, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -183,8 +191,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<FileOperationResult> MkdirsAsync( this IFileSystemOperations operations, string path, string accountname, string permission = default(string), string op = "MKDIRS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.MkdirsWithHttpMessagesAsync(path, accountname, permission, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.MkdirsWithHttpMessagesAsync(path, accountname, permission, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -383,8 +393,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<FileStatusesResult> ListFileStatusAsync( this IFileSystemOperations operations, string listFilePath, string accountname, int? top = default(int?), int? skip = default(int?), string op = "LISTSTATUS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListFileStatusWithHttpMessagesAsync(listFilePath, accountname, top, skip, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListFileStatusWithHttpMessagesAsync(listFilePath, accountname, top, skip, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -431,8 +443,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<ContentSummaryResult> GetContentSummaryAsync( this IFileSystemOperations operations, string getContentSummaryFilePath, string accountname, string op = "GETCONTENTSUMMARY", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetContentSummaryWithHttpMessagesAsync(getContentSummaryFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetContentSummaryWithHttpMessagesAsync(getContentSummaryFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -479,8 +493,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<FileStatusResult> GetFileStatusAsync( this IFileSystemOperations operations, string getFilePath, string accountname, string op = "GETFILESTATUS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetFileStatusWithHttpMessagesAsync(getFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetFileStatusWithHttpMessagesAsync(getFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -726,6 +742,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task<System.IO.Stream> OpenAsync( this IFileSystemOperations operations, string directFilePath, string accountname, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), string op = "OPEN", bool? read = true, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.OpenWithHttpMessagesAsync(directFilePath, accountname, length, offset, buffersize, op, read, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
                 return _result.Body;
             }
 
@@ -1032,8 +1049,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<AclStatusResult> GetAclStatusAsync( this IFileSystemOperations operations, string aclFilePath, string accountname, string op = "GETACLSTATUS", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetAclStatusWithHttpMessagesAsync(aclFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetAclStatusWithHttpMessagesAsync(aclFilePath, accountname, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1086,8 +1105,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<FileOperationResult> DeleteAsync( this IFileSystemOperations operations, string filePath, string accountname, bool? recursive = default(bool?), string op = "DELETE", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.DeleteWithHttpMessagesAsync(filePath, accountname, recursive, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(filePath, accountname, recursive, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1201,8 +1222,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<FileOperationResult> RenameAsync( this IFileSystemOperations operations, string renameFilePath, string accountname, string destination, string op = "RENAME", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.RenameWithHttpMessagesAsync(renameFilePath, accountname, destination, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.RenameWithHttpMessagesAsync(renameFilePath, accountname, destination, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1373,8 +1396,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<FileOperationResult> SetReplicationAsync( this IFileSystemOperations operations, string setReplicationFilePath, string accountname, int? replication = default(int?), string op = "SETREPLICATION", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.SetReplicationWithHttpMessagesAsync(setReplicationFilePath, accountname, replication, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.SetReplicationWithHttpMessagesAsync(setReplicationFilePath, accountname, replication, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1474,8 +1499,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static async Task<HomeDirectoryResult> GetHomeDirectoryAsync( this IFileSystemOperations operations, string accountname, string op = "GETHOMEDIRECTORY", CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetHomeDirectoryWithHttpMessagesAsync(accountname, op, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetHomeDirectoryWithHttpMessagesAsync(accountname, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }
