@@ -88,9 +88,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _state;
             
             /// <summary>
-            /// Optional. Specifies the state of the extension.This element
-            /// only applies to JSON configured extensions.Possible values are
-            /// Enable, Disable, and Uninstall.
+            /// Optional. Specifies the state of the extension. This element
+            /// only applies to JSON configured extensions. Possible values
+            /// are Enable, Disable, and Uninstall.
             /// </summary>
             public string State
             {
