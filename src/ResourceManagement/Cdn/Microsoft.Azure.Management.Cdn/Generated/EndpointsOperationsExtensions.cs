@@ -53,8 +53,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<IEnumerable<Endpoint>> ListByProfileAsync( this IEndpointsOperations operations, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListByProfileWithHttpMessagesAsync(profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListByProfileWithHttpMessagesAsync(profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -97,8 +99,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<Endpoint> GetAsync( this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -147,8 +151,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<TrackedResource> CreateAsync( this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -197,8 +203,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<TrackedResource> BeginCreateAsync( this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.BeginCreateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -253,8 +261,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<Endpoint> UpdateAsync( this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.UpdateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -763,8 +773,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<ValidateCustomDomainOutput> ValidateCustomDomainAsync( this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ValidateCustomDomainWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ValidateCustomDomainWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

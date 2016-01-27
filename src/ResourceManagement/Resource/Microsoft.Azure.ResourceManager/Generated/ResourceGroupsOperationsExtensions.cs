@@ -54,8 +54,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<GenericResource>> ListResourcesAsync( this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -86,8 +88,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<bool?> CheckExistenceAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -126,8 +130,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroup> CreateOrUpdateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -224,8 +230,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroup> GetAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -270,8 +278,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroup> PatchAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -302,8 +312,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ResourceGroup>> ListAsync( this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilter> odataQuery = default(ODataQuery<ResourceGroupFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -334,8 +346,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<GenericResource>> ListResourcesNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -366,8 +380,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ResourceGroup>> ListNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

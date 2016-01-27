@@ -83,7 +83,23 @@ namespace Microsoft.Azure.Search
 
         private static Uri BuildBaseUriForService(string searchServiceName)
         {
-            return TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/");
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException(
+                    "Invalid search service name. Name cannot be an empty string.",
+                    "searchServiceName");
+            }
+
+            Uri uri = TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/");
+
+            if (uri == null)
+            {
+                throw new ArgumentException(
+                    "Invalid search service name. Name contains characters that are not valid in a URL.",
+                    "searchServiceName");
+            }
+
+            return uri;
         }
     }
 }

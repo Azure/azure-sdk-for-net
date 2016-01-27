@@ -41,8 +41,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<IEnumerable<Operation>> ListAsync( this IOperationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

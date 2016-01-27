@@ -59,8 +59,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<CheckNameAvailabilityOutput> CheckNameAvailabilityAsync( this INameAvailabilityOperations operations, string name, ResourceType? type, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, type, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, type, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

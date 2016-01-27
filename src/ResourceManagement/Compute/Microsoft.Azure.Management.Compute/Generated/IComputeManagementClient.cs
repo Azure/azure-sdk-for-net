@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// The management credentials for Azure.
+        /// Gets Azure subscription credentials.
         /// </summary>
         ServiceClientCredentials Credentials { get; }
 
@@ -61,9 +61,16 @@ namespace Microsoft.Azure.Management.Compute
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// The retry timeout for Long Running Operations.
+        /// Gets or sets the retry timeout in seconds for Long Running
+        /// Operations. Default value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
+
+        /// <summary>
+        /// When set to true a unique x-ms-client-request-id value is
+        /// generated and included in each request. Default is true.
+        /// </summary>
+        bool? GenerateClientRequestId { get; set; }
 
 
         IAvailabilitySetsOperations AvailabilitySets { get; }

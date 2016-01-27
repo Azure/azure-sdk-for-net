@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/279b0675-cf67-467f-98f0-67ae31eb540f/resourcegroups/csmrg17?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/279b0675-cf67-467f-98f0-67ae31eb540f/resourcegroups/csmrg17?api-version=2015-11-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {

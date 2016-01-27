@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         public string ContentVersion { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {

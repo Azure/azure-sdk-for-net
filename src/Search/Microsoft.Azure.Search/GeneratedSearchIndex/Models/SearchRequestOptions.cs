@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Additional parameters for the Count operation.
+    /// Additional parameters for the Search operations.
     /// </summary>
     public partial class SearchRequestOptions
     {

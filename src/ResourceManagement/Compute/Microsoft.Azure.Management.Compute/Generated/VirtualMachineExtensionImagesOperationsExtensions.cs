@@ -58,8 +58,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineExtensionImage> GetAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, string version, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(location, publisherName, type, version, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(location, publisherName, type, version, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -92,8 +94,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IList<VirtualMachineImageResource>> ListTypesAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListTypesWithHttpMessagesAsync(location, publisherName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListTypesWithHttpMessagesAsync(location, publisherName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -136,8 +140,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IList<VirtualMachineImageResource>> ListVersionsAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, ODataQuery<VirtualMachineImageResource> odataQuery = default(ODataQuery<VirtualMachineImageResource>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListVersionsWithHttpMessagesAsync(location, publisherName, type, odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListVersionsWithHttpMessagesAsync(location, publisherName, type, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

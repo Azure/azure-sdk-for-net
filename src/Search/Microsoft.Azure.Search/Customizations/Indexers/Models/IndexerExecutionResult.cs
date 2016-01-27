@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Search.Models
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Represents the result of an individual indexer execution.
+    /// </summary>
     public class IndexerExecutionResult
     {
         /// <summary>

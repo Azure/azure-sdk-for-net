@@ -59,7 +59,8 @@
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
     <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
-    <ZipExe>$(LibraryToolsFolder)\7-Zip\7z.exe</ZipExe>
+    <ZipExeFolder>$(LibraryToolsFolder)\7-Zip</ZipExeFolder>
+    <ZipExe>$(ZipExeFolder)\7z.exe</ZipExe>
   </PropertyGroup>
 
   <ItemGroup>
@@ -103,6 +104,11 @@
                             Condition=" '$(Scope)' == 'all' or '$(Scope)' == 'Authentication' " />
     </ItemGroup>
     <Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />
+     
+    <Message Text="Ensure 7zip is available" />
+    <Exec
+      Command="$(LibraryToolsFolder)\AzCopy\AzCopy.exe /Source:https://azuresdktools.blob.core.windows.net/7-zip  /S /Dest:$(ZipExeFolder) /Y"
+      Condition="!Exists('$(ZipExe)')" />
   </Target>
   
   <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">

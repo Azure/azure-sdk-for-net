@@ -48,8 +48,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<ServicePrincipal> CreateAsync( this IServicePrincipalOperations operations, ServicePrincipalCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -80,8 +82,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<IPage<ServicePrincipal>> ListAsync( this IServicePrincipalOperations operations, ODataQuery<ServicePrincipal> odataQuery = default(ODataQuery<ServicePrincipal>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -143,8 +147,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<ServicePrincipal> GetAsync( this IServicePrincipalOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -175,8 +181,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<IPage<ServicePrincipal>> ListNextAsync( this IServicePrincipalOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }
