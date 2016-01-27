@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/me";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/getObjectsByObjectIds";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

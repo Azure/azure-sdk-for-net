@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/applications";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/applications/";
             url = url + applicationObjectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -564,7 +564,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/applications/";
             url = url + applicationObjectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -773,11 +773,11 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/applications";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             List<string> odataFilter = new List<string>();
             if (parameters.AppId != null)
             {
-                odataFilter.Add("appId eq guid'" + Uri.EscapeDataString(parameters.AppId.Value.ToString()) + "'");
+                odataFilter.Add("appId eq '" + Uri.EscapeDataString(parameters.AppId.Value.ToString()) + "'");
             }
             if (odataFilter.Count > 0)
             {
@@ -1038,7 +1038,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/applications/";
             url = url + applicationObjectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

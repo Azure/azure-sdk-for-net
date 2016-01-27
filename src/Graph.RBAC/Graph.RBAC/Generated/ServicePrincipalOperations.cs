@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/servicePrincipals";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/servicePrincipals/";
             url = url + objectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/servicePrincipals/";
             url = url + objectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -822,7 +822,7 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1019,7 +1019,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/";
             url = url + nextLink;
-            url = url + "&api-version=1.42-previewInternal";
+            url = url + "&api-version=1.6-internal";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

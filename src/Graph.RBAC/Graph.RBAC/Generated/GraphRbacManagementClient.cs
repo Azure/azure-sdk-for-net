@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Graph.RBAC
             this._objects = new ObjectOperations(this);
             this._servicePrincipal = new ServicePrincipalOperations(this);
             this._user = new UserOperations(this);
-            this._apiVersion = "1.42-previewInternal";
+            this._apiVersion = "1.6-internal";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Graph.RBAC
             this._objects = new ObjectOperations(this);
             this._servicePrincipal = new ServicePrincipalOperations(this);
             this._user = new UserOperations(this);
-            this._apiVersion = "1.42-previewInternal";
+            this._apiVersion = "1.6-internal";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
