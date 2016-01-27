@@ -281,6 +281,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -311,6 +318,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -592,6 +606,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -622,6 +643,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -925,6 +953,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -955,6 +990,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -3811,6 +3853,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -3841,6 +3890,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -4169,6 +4225,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                 idElement.Value = allRolesItem.Id;
                                 extensionElement.Add(idElement);
+                                
+                                if (allRolesItem.State != null)
+                                {
+                                    XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    stateElement.Value = allRolesItem.State;
+                                    extensionElement.Add(stateElement);
+                                }
                             }
                             extensionConfigurationElement.Add(allRolesSequenceElement);
                         }
@@ -4199,6 +4262,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement idElement2 = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                                         idElement2.Value = extensionsItem.Id;
                                         extensionElement2.Add(idElement2);
+                                        
+                                        if (extensionsItem.State != null)
+                                        {
+                                            XElement stateElement2 = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                            stateElement2.Value = extensionsItem.State;
+                                            extensionElement2.Add(stateElement2);
+                                        }
                                     }
                                     roleElement.Add(extensionsSequenceElement);
                                 }
@@ -4730,7 +4800,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4836,7 +4906,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4942,7 +5012,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5048,7 +5118,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5147,7 +5217,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5246,7 +5316,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5345,7 +5415,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7313,6 +7383,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             string idInstance = idElement.Value;
                                             extensionInstance.Id = idInstance;
                                         }
+                                        
+                                        XElement stateElement2 = allRolesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement2 != null)
+                                        {
+                                            string stateInstance2 = stateElement2.Value;
+                                            extensionInstance.State = stateInstance2;
+                                        }
                                     }
                                 }
                                 
@@ -7344,6 +7421,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 {
                                                     string idInstance2 = idElement2.Value;
                                                     extensionInstance2.Id = idInstance2;
+                                                }
+                                                
+                                                XElement stateElement3 = extensionsElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                                if (stateElement3 != null)
+                                                {
+                                                    string stateInstance3 = stateElement3.Value;
+                                                    extensionInstance2.State = stateInstance3;
                                                 }
                                             }
                                         }
@@ -9352,6 +9436,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             string idInstance = idElement.Value;
                                             extensionInstance.Id = idInstance;
                                         }
+                                        
+                                        XElement stateElement2 = allRolesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement2 != null)
+                                        {
+                                            string stateInstance2 = stateElement2.Value;
+                                            extensionInstance.State = stateInstance2;
+                                        }
                                     }
                                 }
                                 
@@ -9383,6 +9474,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 {
                                                     string idInstance2 = idElement2.Value;
                                                     extensionInstance2.Id = idInstance2;
+                                                }
+                                                
+                                                XElement stateElement3 = extensionsElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                                if (stateElement3 != null)
+                                                {
+                                                    string stateInstance3 = stateElement3.Value;
+                                                    extensionInstance2.State = stateInstance3;
                                                 }
                                             }
                                         }
@@ -9532,7 +9630,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -9637,7 +9735,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10160,7 +10258,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10265,7 +10363,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10376,7 +10474,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10487,7 +10585,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10592,7 +10690,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -10697,7 +10795,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11161,7 +11259,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11268,7 +11366,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11375,7 +11473,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11507,7 +11605,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11639,7 +11737,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11769,7 +11867,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -11899,7 +11997,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
