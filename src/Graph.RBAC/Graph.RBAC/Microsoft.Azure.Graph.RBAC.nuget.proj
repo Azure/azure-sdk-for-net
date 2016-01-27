@@ -5,7 +5,7 @@
     Microsoft.Azure.Graph.RBAC
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Graph.RBAC">
-      <PackageVersion>1.8.0-preview</PackageVersion>
+      <PackageVersion>1.9.0-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
       <Publish>true</Publish>
     </SdkNuGetPackage>

@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/users";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -255,13 +255,6 @@ namespace Microsoft.Azure.Graph.RBAC
                                 userInstance.DisplayName = displayNameInstance;
                             }
                             
-                            JToken signInNameValue = responseDoc["signInName"];
-                            if (signInNameValue != null && signInNameValue.Type != JTokenType.Null)
-                            {
-                                string signInNameInstance = ((string)signInNameValue);
-                                userInstance.SignInName = signInNameInstance;
-                            }
-                            
                             JToken mailValue = responseDoc["mail"];
                             if (mailValue != null && mailValue.Type != JTokenType.Null)
                             {
@@ -341,7 +334,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/users/";
             url = url + user;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -473,7 +466,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/users/";
             url = url + upnOrObjectId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -578,13 +571,6 @@ namespace Microsoft.Azure.Graph.RBAC
                                 userInstance.DisplayName = displayNameInstance;
                             }
                             
-                            JToken signInNameValue = responseDoc["signInName"];
-                            if (signInNameValue != null && signInNameValue.Type != JTokenType.Null)
-                            {
-                                string signInNameInstance = ((string)signInNameValue);
-                                userInstance.SignInName = signInNameInstance;
-                            }
-                            
                             JToken mailValue = responseDoc["mail"];
                             if (mailValue != null && mailValue.Type != JTokenType.Null)
                             {
@@ -626,8 +612,9 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <summary>
         /// Gets user information from the directory.
         /// </summary>
-        /// <param name='signInName'>
-        /// Required. filter based on sign in name
+        /// <param name='userPrincipalName'>
+        /// Required. Filter based on userPrincipalName. This works well with
+        /// guest users upn.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -635,12 +622,12 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <returns>
         /// Server response for Get tenant users API call
         /// </returns>
-        public async Task<UserListResult> GetBySignInNameAsync(string signInName, CancellationToken cancellationToken)
+        public async Task<UserListResult> GetByUserPrincipalNameAsync(string userPrincipalName, CancellationToken cancellationToken)
         {
             // Validate
-            if (signInName == null)
+            if (userPrincipalName == null)
             {
-                throw new ArgumentNullException("signInName");
+                throw new ArgumentNullException("userPrincipalName");
             }
             
             // Tracing
@@ -650,8 +637,8 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("signInName", signInName);
-                TracingAdapter.Enter(invocationId, this, "GetBySignInNameAsync", tracingParameters);
+                tracingParameters.Add("userPrincipalName", userPrincipalName);
+                TracingAdapter.Enter(invocationId, this, "GetByUserPrincipalNameAsync", tracingParameters);
             }
             
             // Construct URL
@@ -661,12 +648,12 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + "/users";
             List<string> queryParameters = new List<string>();
             List<string> odataFilter = new List<string>();
-            odataFilter.Add("signInName eq '" + Uri.EscapeDataString(signInName) + "'");
+            odataFilter.Add("userPrincipalName eq '" + Uri.EscapeDataString(userPrincipalName) + "'");
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -776,13 +763,6 @@ namespace Microsoft.Azure.Graph.RBAC
                                         userInstance.DisplayName = displayNameInstance;
                                     }
                                     
-                                    JToken signInNameValue = valueValue["signInName"];
-                                    if (signInNameValue != null && signInNameValue.Type != JTokenType.Null)
-                                    {
-                                        string signInNameInstance = ((string)signInNameValue);
-                                        userInstance.SignInName = signInNameInstance;
-                                    }
-                                    
                                     JToken mailValue = valueValue["mail"];
                                     if (mailValue != null && mailValue.Type != JTokenType.Null)
                                     {
@@ -874,7 +854,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + parameters.ObjectId;
             url = url + "/getMemberGroups";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1056,7 +1036,7 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
             }
-            queryParameters.Add("api-version=1.42-previewInternal");
+            queryParameters.Add("api-version=1.6-internal");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1166,13 +1146,6 @@ namespace Microsoft.Azure.Graph.RBAC
                                         userInstance.DisplayName = displayNameInstance;
                                     }
                                     
-                                    JToken signInNameValue = valueValue["signInName"];
-                                    if (signInNameValue != null && signInNameValue.Type != JTokenType.Null)
-                                    {
-                                        string signInNameInstance = ((string)signInNameValue);
-                                        userInstance.SignInName = signInNameInstance;
-                                    }
-                                    
                                     JToken mailValue = valueValue["mail"];
                                     if (mailValue != null && mailValue.Type != JTokenType.Null)
                                     {
@@ -1258,7 +1231,7 @@ namespace Microsoft.Azure.Graph.RBAC
             url = url + Uri.EscapeDataString(this.Client.TenantID);
             url = url + "/";
             url = url + nextLink;
-            url = url + "&api-version=1.42-previewInternal";
+            url = url + "&api-version=1.6-internal";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1362,13 +1335,6 @@ namespace Microsoft.Azure.Graph.RBAC
                                     {
                                         string displayNameInstance = ((string)displayNameValue);
                                         userInstance.DisplayName = displayNameInstance;
-                                    }
-                                    
-                                    JToken signInNameValue = valueValue["signInName"];
-                                    if (signInNameValue != null && signInNameValue.Type != JTokenType.Null)
-                                    {
-                                        string signInNameInstance = ((string)signInNameValue);
-                                        userInstance.SignInName = signInNameInstance;
                                     }
                                     
                                     JToken mailValue = valueValue["mail"];

@@ -87,8 +87,9 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <summary>
         /// Gets user information from the directory.
         /// </summary>
-        /// <param name='signInName'>
-        /// filter based on sign in name
+        /// <param name='userPrincipalName'>
+        /// Filter based on userPrincipalName. This works well with guest users
+        /// upn.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -96,7 +97,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <returns>
         /// Server response for Get tenant users API call
         /// </returns>
-        Task<UserListResult> GetBySignInNameAsync(string signInName, CancellationToken cancellationToken);
+        Task<UserListResult> GetByUserPrincipalNameAsync(string userPrincipalName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets a collection that contains the Object IDs of the groups of
