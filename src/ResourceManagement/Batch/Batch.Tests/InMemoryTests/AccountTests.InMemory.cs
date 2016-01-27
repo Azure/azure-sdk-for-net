@@ -70,7 +70,6 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("List Batch Account Keys",result.Actions[0].FriendlyName);
             Assert.Equal("Batch Account",result.Actions[0].FriendlyTarget);
             Assert.True(result.Actions[0].FriendlyDescription.StartsWith("List Batch account keys"));
-
             Assert.Equal("Microsoft.Batch/RegenerateKeys",result.Actions[1].Action);
             Assert.Equal("Regenerate Batch account key",result.Actions[1].FriendlyName);
             Assert.Equal("Batch Account",result.Actions[1].FriendlyTarget);
@@ -148,6 +147,116 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
             Assert.Equal(AccountProvisioningState.Succeeded, result.Resource.Properties.ProvisioningState);
             Assert.Equal(2, result.Resource.Tags.Count);
+        }
+
+        [Fact]
+        public void CreateAccountWithAutoStorageAsyncValidateMessage()
+        {
+            var acceptedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"")
+            };
+
+            acceptedResponse.Headers.Add("x-ms-request-id", "1");
+            acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
+            var utcNow = DateTime.UtcNow;
+
+            var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'type' : 'Microsoft.Batch/batchAccounts',
+                                'name': 'acctName',
+                                'location': 'South Central US',
+                                'properties': {
+                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' :{
+                                        'storageAccountId' : '//storageAccount1',
+                                        'lastKeySync': '" + utcNow.ToString("o") + @"',
+                                    }
+                                },
+                            }")
+            };
+
+            var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
+
+            var client = GetBatchManagementClient(handler);
+
+            var result = client.Accounts.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
+            {
+                Location = "South Central US",
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//storageAccount1"
+                    }
+                }
+            });
+
+            // Validate result
+            Assert.Equal("//storageAccount1", result.Resource.Properties.AutoStorage.StorageAccountId);
+            Assert.Equal(utcNow, result.Resource.Properties.AutoStorage.LastKeySync);
+        }
+
+        [Fact]
+        public void AccountUpdateWithAutoStorageValidateMessage()
+        {
+            var utcNow = DateTime.UtcNow;
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'type' : 'Microsoft.Batch/batchAccounts',
+                                'name': 'acctName',
+                                'location': 'South Central US',
+                                'properties': {
+                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'provisioningState' : 'Succeeded',
+                                    'autoStorage' : {
+                                        'storageAccountId' : '//StorageAccountId',
+                                        'lastKeySync': '" + utcNow.ToString("o") + @"',
+                                    }
+                                },
+                                'tags' : {
+                                    'tag1' : 'value for tag1',
+                                    'tag2' : 'value for tag2',
+                                }
+                            }")
+            };
+
+            var handler = new RecordedDelegatingHandler(response);
+
+            var client = GetBatchManagementClient(handler);
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag1", "value for tag1");
+            tags.Add("tag2", "value for tag2");
+
+            var result = client.Accounts.Update("foo", "acctName", new BatchAccountUpdateParameters
+            {
+                Tags = tags,
+                Properties = new AccountBaseProperties
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = "//StorageAccountId",
+                    }
+                },
+            });
+
+            // Validate headers - User-Agent for certs, Authorization for tokens
+            //Assert.Equal(HttpMethod.Patch, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
+
+            // Validate result
+            Assert.Equal("South Central US", result.Resource.Location);
+            Assert.NotEmpty(result.Resource.Properties.AccountEndpoint);
+            Assert.Equal(AccountProvisioningState.Succeeded, result.Resource.Properties.ProvisioningState);
+            Assert.Equal("//StorageAccountId", result.Resource.Properties.AutoStorage.StorageAccountId);
+            Assert.Equal(utcNow, result.Resource.Properties.AutoStorage.LastKeySync);
+            Assert.Equal(result.Resource.Tags.Count, 2);
         }
 
         [Fact]
@@ -694,14 +803,14 @@ namespace Microsoft.Azure.Batch.Tests
         [Fact]
         public void AccountKeysListValidateMessage()
         {
-            var primaryKeyString = "primary key string which is alot longer than this";
-            var secondaryKeyString = "secondary key string which is alot longer than this";
+            var primaryKeyString = "primaryKeyString";
+            var secondaryKeyString = "secondaryKeyString";
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                    'primary' : 'primary key string which is alot longer than this',
-                    'secondary' : 'secondary key string which is alot longer than this',
+                    'primary' : 'primaryKeyString',
+                    'secondary' : 'secondaryKeyString',
                 }")
             };
 
