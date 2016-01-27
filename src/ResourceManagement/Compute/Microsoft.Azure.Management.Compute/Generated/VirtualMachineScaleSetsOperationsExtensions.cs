@@ -59,8 +59,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineScaleSet> CreateOrUpdateAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string name, VirtualMachineScaleSet parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -103,8 +105,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineScaleSet> BeginCreateOrUpdateAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string name, VirtualMachineScaleSet parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -305,8 +309,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineScaleSet> GetAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -429,8 +435,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineScaleSetInstanceView> GetInstanceViewAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetInstanceViewWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetInstanceViewWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -461,8 +469,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSet>> ListAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -493,8 +503,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSet>> ListAllAsync( this IVirtualMachineScaleSetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -531,8 +543,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSetSku>> ListSkusAsync( this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListSkusWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListSkusWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -915,8 +929,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSet>> ListNextAsync( this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -953,8 +969,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSet>> ListAllNextAsync( this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -985,8 +1003,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSetSku>> ListSkusNextAsync( this IVirtualMachineScaleSetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

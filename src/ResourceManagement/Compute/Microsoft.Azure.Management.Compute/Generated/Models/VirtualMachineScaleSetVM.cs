@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public override void Validate()
         {

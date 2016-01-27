@@ -64,7 +64,7 @@ namespace Compute.Tests
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
-                    
+
 
                     var vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet);
 
