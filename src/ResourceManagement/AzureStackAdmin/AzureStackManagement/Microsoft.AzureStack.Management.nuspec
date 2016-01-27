@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="AzureStack\AzureStackManagement\**\*.cs" target="src" />
+    <file src="ResourceManagement\AzureStackAdmin\AzureStackManagement\**\*.cs" target="src" />
     <file src="..\binaries\portable\Microsoft.AzureStack.Management.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.AzureStack.Management.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\portable\Microsoft.AzureStack.Management.xml" target="lib\portable-net45+sl50+wp80+win" />
