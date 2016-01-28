@@ -122,14 +122,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="byteCount">The byte count.</param>
         public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {
-            //adjust the buffer to the right size if necessary
-            if (byteCount < data.Length)
-            {
-                var newBuffer = new byte[byteCount];
-                Array.Copy(data, newBuffer, byteCount);
-                data = newBuffer;
-            }
-
             using (var stream = new MemoryStream(data, 0, byteCount))
             {
                 var task = _client.FileSystem.AppendAsync(streamPath, _accountName, stream, null, cancellationToken: _token);
