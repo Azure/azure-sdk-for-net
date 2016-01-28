@@ -138,7 +138,7 @@ namespace HDInsight.Tests.Helpers
         {
             var cluster = new ClusterCreateParametersExtended
             {
-                Location = "East US",
+                Location = "West US",
                 Properties = new ClusterCreateProperties
                 {
                     ClusterDefinition = new ClusterDefinition
