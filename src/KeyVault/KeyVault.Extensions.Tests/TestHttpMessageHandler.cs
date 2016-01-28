@@ -15,30 +15,22 @@
 // See the Apache License, Version 2.0 for the specific language
 // governing permissions and limitations under the License.
 
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Test.HttpRecorder;
 
-namespace Microsoft.Azure.KeyVault.Internal
+namespace KeyVault.Extensions.Tests
 {
-    public class TestKeyVaultCredential : KeyVaultCredential
+    public class TestHttpMessageHandler : DelegatingHandler
     {
-        public TestKeyVaultCredential(KeyVaultClient.AuthenticationCallback authenticationCallback) : base(authenticationCallback)
+        protected override Task<HttpResponseMessage> SendAsync( HttpRequestMessage request, CancellationToken cancellationToken )
         {
+            return base.SendAsync( request, cancellationToken ).ContinueWith<HttpResponseMessage>( response =>
+            {
+                return response.Result;
+            } );
         }
 
-        public override Task ProcessHttpRequestAsync(HttpRequestMessage request,
-            CancellationToken cancellationToken)
-        {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                return base.ProcessHttpRequestAsync(request, cancellationToken);
-            }
-            else
-            {
-                return Task.Run(() => { return; });
-            }
-        }
     }
 }
