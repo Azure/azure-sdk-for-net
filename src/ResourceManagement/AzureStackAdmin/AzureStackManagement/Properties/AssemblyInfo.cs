@@ -16,7 +16,7 @@ using System.Reflection;
 using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft Azure Stack Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Stack manangement functions for managing the administrative resources")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Stack management functions for managing the administrative resources")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
