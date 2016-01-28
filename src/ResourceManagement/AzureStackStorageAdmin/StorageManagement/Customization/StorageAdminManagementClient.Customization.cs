@@ -762,7 +762,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin
     /// <summary>
     /// Your documentation here.
     /// </summary>
-    public partial class EventModel : ResourceBase
+    public partial class EventModel : Microsoft.AzureStack.Management.StorageAdmin.Models.ResourceBase
     {
         /// <summary>
         /// Optional. Your documentation here
