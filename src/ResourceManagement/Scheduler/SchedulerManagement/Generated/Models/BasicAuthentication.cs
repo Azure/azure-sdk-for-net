@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// <summary>
         /// Initializes a new instance of the BasicAuthentication class.
         /// </summary>
-        public BasicAuthentication(string username = default(string), string password = default(string))
+        public BasicAuthentication(HttpAuthenticationType? type = default(HttpAuthenticationType?), string username = default(string), string password = default(string))
+            : base(type)
         {
             Username = username;
             Password = password;

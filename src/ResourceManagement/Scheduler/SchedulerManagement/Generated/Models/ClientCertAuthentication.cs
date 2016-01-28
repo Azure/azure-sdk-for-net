@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// <summary>
         /// Initializes a new instance of the ClientCertAuthentication class.
         /// </summary>
-        public ClientCertAuthentication(string password = default(string), string pfx = default(string), string certificateThumbprint = default(string), DateTime? certificateExpirationDate = default(DateTime?), string certificateSubjectName = default(string))
+        public ClientCertAuthentication(HttpAuthenticationType? type = default(HttpAuthenticationType?), string password = default(string), string pfx = default(string), string certificateThumbprint = default(string), DateTime? certificateExpirationDate = default(DateTime?), string certificateSubjectName = default(string))
+            : base(type)
         {
             Password = password;
             Pfx = pfx;

@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// <summary>
         /// Initializes a new instance of the ServiceBusQueueMessage class.
         /// </summary>
-        public ServiceBusQueueMessage(string queueName = default(string))
+        public ServiceBusQueueMessage(ServiceBusAuthentication authentication = default(ServiceBusAuthentication), ServiceBusBrokeredMessageProperties brokeredMessageProperties = default(ServiceBusBrokeredMessageProperties), IDictionary<string, string> customMessageProperties = default(IDictionary<string, string>), string message = default(string), string namespaceProperty = default(string), ServiceBusTransportType? transportType = default(ServiceBusTransportType?), string queueName = default(string))
+            : base(authentication, brokeredMessageProperties, customMessageProperties, message, namespaceProperty, transportType)
         {
             QueueName = queueName;
         }
