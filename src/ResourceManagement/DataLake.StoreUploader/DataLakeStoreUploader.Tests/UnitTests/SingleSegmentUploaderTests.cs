@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
             //load up an existing stream
             fe.CreateStream(StreamPath, true, null, 0);
-            var data = new MemoryStream(Encoding.UTF8.GetBytes("random"));
+            var data = Encoding.UTF8.GetBytes("random");
             fe.AppendToStream(StreamPath, data, 0, (int)data.Length);
 
             //force a re-upload of the stream

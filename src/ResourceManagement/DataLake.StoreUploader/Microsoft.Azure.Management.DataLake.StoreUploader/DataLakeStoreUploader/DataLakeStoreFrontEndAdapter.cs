@@ -82,16 +82,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="overwrite">Whether to overwrite an existing stream.</param>
         /// <param name="data"></param>
         /// <param name="byteCount"></param>
-        public void CreateStream(string streamPath, bool overwrite, Stream data, int byteCount)
+        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
-            if (data == null)
+            using (var toAppend = data != null ? new MemoryStream(data, 0, byteCount) : new MemoryStream())
             {
-                data = new MemoryStream();
-            }
-
-            using (data)
-            {
-                var task =_client.FileSystem.CreateAsync(streamPath, _accountName, data, overwrite: overwrite, cancellationToken: _token);
+                var task = _client.FileSystem.CreateAsync(streamPath, _accountName, toAppend, overwrite: overwrite, cancellationToken: _token);
 
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
@@ -125,19 +120,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="data">The data.</param>
         /// <param name="offset">The offset.</param>
         /// <param name="byteCount">The byte count.</param>
-        public void AppendToStream(string streamPath, Stream data, long offset, int byteCount)
+        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {
             //adjust the buffer to the right size if necessary
             if (byteCount < data.Length)
             {
-                var newBuffer = new MemoryStream();
-                data.CopyTo(newBuffer, byteCount);
+                var newBuffer = new byte[byteCount];
+                Array.Copy(data, newBuffer, byteCount);
                 data = newBuffer;
             }
 
-            using (data)
+            using (var stream = new MemoryStream(data, 0, byteCount))
             {
-                var task = _client.FileSystem.AppendAsync(streamPath, _accountName, data, null, cancellationToken: _token);
+                var task = _client.FileSystem.AppendAsync(streamPath, _accountName, stream, null, cancellationToken: _token);
                 
                 if (!task.Wait(PerRequestTimeoutMs))
                 {

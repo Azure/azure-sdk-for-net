@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
         private readonly Dictionary<string, StreamData> _streams = new Dictionary<string, StreamData>();
 
-        public void CreateStream(string streamPath, bool overwrite, Stream data, int byteCount)
+        public void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount)
         {
             if (overwrite)
             {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
                 //always make a copy of the original buffer since it is reused
                 byte[] toAppend = new byte[byteCount];
-                data.Read(toAppend, 0, byteCount);
+                Array.Copy(data, toAppend, byteCount);
 
                 stream.Append(toAppend);
             }
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             _streams.Remove(streamPath);
         }
 
-        public void AppendToStream(string streamPath, Stream data, long offset, int byteCount)
+        public void AppendToStream(string streamPath, byte[] data, long offset, int byteCount)
         {
             if (!StreamExists(streamPath))
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
 
             //always make a copy of the original buffer since it is reused
             byte[] toAppend = new byte[byteCount];
-            data.Read(toAppend, 0, byteCount);
+            Array.Copy(data, toAppend, byteCount);
 
             stream.Append(toAppend);
         }

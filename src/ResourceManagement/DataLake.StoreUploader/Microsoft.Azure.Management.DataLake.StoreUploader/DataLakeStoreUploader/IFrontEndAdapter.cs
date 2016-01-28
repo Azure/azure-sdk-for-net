@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="streamPath">The relative path to the stream.</param>
         /// <param name="overwrite">Whether to overwrite an existing stream.</param>
-        void CreateStream(string streamPath, bool overwrite, Stream data, int byteCount);
+        void CreateStream(string streamPath, bool overwrite, byte[] data, int byteCount);
 
         /// <summary>
         /// Deletes an existing stream at the given path.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="offset">The offset at which to append to the stream.</param>
         /// <param name="length">The number of bytes to append (starting at 0).</param>
         /// <exception cref="System.ArgumentNullException">If the data to be appended is null or empty.</exception>
-        void AppendToStream(string streamPath, Stream data, long offset, int length);
+        void AppendToStream(string streamPath, byte[] data, long offset, int length);
         
         /// <summary>
         /// Determines if the stream with given path exists.
