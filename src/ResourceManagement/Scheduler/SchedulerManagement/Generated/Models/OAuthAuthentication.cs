@@ -21,7 +21,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         /// <summary>
         /// Initializes a new instance of the OAuthAuthentication class.
         /// </summary>
-        public OAuthAuthentication(string secret = default(string), string tenant = default(string), string audience = default(string), string clientId = default(string))
+        public OAuthAuthentication(HttpAuthenticationType? type = default(HttpAuthenticationType?), string secret = default(string), string tenant = default(string), string audience = default(string), string clientId = default(string))
+            : base(type)
         {
             Secret = secret;
             Tenant = tenant;

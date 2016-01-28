@@ -208,8 +208,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc19321/jobs?api-version=2016-01-01&$top=5&$filter=state%20eq%20Disabled",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE5MzIxL2pvYnM/YXBpLXZlcnNpb249MjAxNi0wMS0wMSYkdG9wPTUmJGZpbHRlcj1zdGF0ZSUyMGVxJTIwRGlzYWJsZWQ=",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc19321/jobs?$filter=state%20eq%20Disabled&$top=5&api-version=2016-01-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -271,8 +270,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc19321/jobs?api-version=2016-01-01&$top=5&$filter=state%20eq%20Enabled",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmM1NWE2ZjAtNjU5My00NzJmLTliM2UtYTUxYTlhNzU3YjQwL3Jlc291cmNlR3JvdXBzL0NTLVNvdXRoQ2VudHJhbFVTLXNjaGVkdWxlci9wcm92aWRlcnMvTWljcm9zb2Z0LlNjaGVkdWxlci9qb2JDb2xsZWN0aW9ucy9qYzE5MzIxL2pvYnM/YXBpLXZlcnNpb249MjAxNi0wMS0wMSYkdG9wPTUmJGZpbHRlcj1zdGF0ZSUyMGVxJTIwRW5hYmxlZA==",
+      "RequestUri": "/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc19321/jobs?$filter=state%20eq%20Enabled&$top=5&api-version=2016-01-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

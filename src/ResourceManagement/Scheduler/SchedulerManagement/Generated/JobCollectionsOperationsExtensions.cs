@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -35,8 +34,10 @@ namespace Microsoft.Azure.Management.Scheduler
             /// </param>
             public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionAsync( this IJobCollectionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -67,8 +68,10 @@ namespace Microsoft.Azure.Management.Scheduler
             /// </param>
             public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupAsync( this IJobCollectionsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -105,8 +108,10 @@ namespace Microsoft.Azure.Management.Scheduler
             /// </param>
             public static async Task<JobCollectionDefinition> GetAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobCollectionDefinition> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -149,8 +154,10 @@ namespace Microsoft.Azure.Management.Scheduler
             /// </param>
             public static async Task<JobCollectionDefinition> CreateOrUpdateAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, JobCollectionDefinition jobCollection, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobCollectionDefinition> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobCollection, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobCollection, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -193,8 +200,10 @@ namespace Microsoft.Azure.Management.Scheduler
             /// </param>
             public static async Task<JobCollectionDefinition> PatchAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, JobCollectionDefinition jobCollection, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<JobCollectionDefinition> result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobCollection, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobCollection, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -336,8 +345,10 @@ namespace Microsoft.Azure.Management.Scheduler
             /// </param>
             public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionNextAsync( this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -368,8 +379,10 @@ namespace Microsoft.Azure.Management.Scheduler
             /// </param>
             public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupNextAsync( this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IPage<JobCollectionDefinition>> result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }
