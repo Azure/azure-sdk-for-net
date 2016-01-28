@@ -26,25 +26,15 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a task object.
+    /// The definition of recovery plan shutdown group task details object.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class RecoveryPlanShutdownGroupTaskDetailsChild : RecoveryPlanGroupTaskDetailsChild
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
-        
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Initializes a new instance of the
+        /// RecoveryPlanShutdownGroupTaskDetailsChild class.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
-        {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AsrTask class.
-        /// </summary>
-        public AsrTask()
+        public RecoveryPlanShutdownGroupTaskDetailsChild()
         {
         }
     }

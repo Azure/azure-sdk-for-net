@@ -26,25 +26,48 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a task object.
+    /// The definition of VM NIC updates task details object.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class VmNicUpdatesTaskDetailsChild : TaskTypeDetailsChild
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
+        private string _name;
         
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Required. Name of the task.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
+        public string Name
         {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _nicId;
+        
+        /// <summary>
+        /// Required. ID of VM NIC.
+        /// </summary>
+        public string NicId
+        {
+            get { return this._nicId; }
+            set { this._nicId = value; }
+        }
+        
+        private string _vmId;
+        
+        /// <summary>
+        /// Required. ID of the VM.
+        /// </summary>
+        public string VmId
+        {
+            get { return this._vmId; }
+            set { this._vmId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AsrTask class.
+        /// Initializes a new instance of the VmNicUpdatesTaskDetailsChild
+        /// class.
         /// </summary>
-        public AsrTask()
+        public VmNicUpdatesTaskDetailsChild()
         {
         }
     }

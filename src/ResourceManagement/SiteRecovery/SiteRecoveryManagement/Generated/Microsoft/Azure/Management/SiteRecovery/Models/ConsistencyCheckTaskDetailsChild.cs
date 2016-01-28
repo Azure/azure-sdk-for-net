@@ -28,51 +28,47 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of inline workflow task details object.
+    /// The definition of consistency check task details object.
     /// </summary>
-    public partial class InlineWorkflowTaskDetails : GroupTaskDetails
+    public partial class ConsistencyCheckTaskDetailsChild : TaskTypeDetailsChild
     {
-        private IList<string> _workflowIds;
+        private IList<InconsistentVmDetails> _vmDetails;
         
         /// <summary>
-        /// Required. List of child workflow Ids.
+        /// Required. List of inconsistent VM details.
         /// </summary>
-        public IList<string> WorkflowIds
+        public IList<InconsistentVmDetails> VmDetails
         {
-            get { return this._workflowIds; }
-            set { this._workflowIds = value; }
+            get { return this._vmDetails; }
+            set { this._vmDetails = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the InlineWorkflowTaskDetails class.
+        /// Initializes a new instance of the ConsistencyCheckTaskDetailsChild
+        /// class.
         /// </summary>
-        public InlineWorkflowTaskDetails()
+        public ConsistencyCheckTaskDetailsChild()
         {
-            this.WorkflowIds = new LazyList<string>();
+            this.VmDetails = new LazyList<InconsistentVmDetails>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the InlineWorkflowTaskDetails class
-        /// with required arguments.
+        /// Initializes a new instance of the ConsistencyCheckTaskDetailsChild
+        /// class with required arguments.
         /// </summary>
-        public InlineWorkflowTaskDetails(List<string> workflowIds, string type, List<AsrTaskBase> childTasks)
+        public ConsistencyCheckTaskDetailsChild(List<InconsistentVmDetails> vmDetails, string type)
             : this()
         {
-            if (workflowIds == null)
+            if (vmDetails == null)
             {
-                throw new ArgumentNullException("workflowIds");
+                throw new ArgumentNullException("vmDetails");
             }
             if (type == null)
             {
                 throw new ArgumentNullException("type");
             }
-            if (childTasks == null)
-            {
-                throw new ArgumentNullException("childTasks");
-            }
-            this.WorkflowIds = workflowIds;
+            this.VmDetails = vmDetails;
             this.Type = type;
-            this.ChildTasks = childTasks;
         }
     }
 }

@@ -28,51 +28,46 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of inline workflow task details object.
+    /// The definition of group task details object.
     /// </summary>
-    public partial class InlineWorkflowTaskDetails : GroupTaskDetails
+    public partial class GroupTaskDetailsChild : TaskTypeDetailsChild
     {
-        private IList<string> _workflowIds;
+        private IList<AsrTaskBase> _childTasks;
         
         /// <summary>
-        /// Required. List of child workflow Ids.
+        /// Required. List of child tasks.
         /// </summary>
-        public IList<string> WorkflowIds
+        public IList<AsrTaskBase> ChildTasks
         {
-            get { return this._workflowIds; }
-            set { this._workflowIds = value; }
+            get { return this._childTasks; }
+            set { this._childTasks = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the InlineWorkflowTaskDetails class.
+        /// Initializes a new instance of the GroupTaskDetailsChild class.
         /// </summary>
-        public InlineWorkflowTaskDetails()
+        public GroupTaskDetailsChild()
         {
-            this.WorkflowIds = new LazyList<string>();
+            this.ChildTasks = new LazyList<AsrTaskBase>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the InlineWorkflowTaskDetails class
-        /// with required arguments.
+        /// Initializes a new instance of the GroupTaskDetailsChild class with
+        /// required arguments.
         /// </summary>
-        public InlineWorkflowTaskDetails(List<string> workflowIds, string type, List<AsrTaskBase> childTasks)
+        public GroupTaskDetailsChild(List<AsrTaskBase> childTasks, string type)
             : this()
         {
-            if (workflowIds == null)
+            if (childTasks == null)
             {
-                throw new ArgumentNullException("workflowIds");
+                throw new ArgumentNullException("childTasks");
             }
             if (type == null)
             {
                 throw new ArgumentNullException("type");
             }
-            if (childTasks == null)
-            {
-                throw new ArgumentNullException("childTasks");
-            }
-            this.WorkflowIds = workflowIds;
-            this.Type = type;
             this.ChildTasks = childTasks;
+            this.Type = type;
         }
     }
 }

@@ -26,26 +26,45 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a task object.
+    /// Model class for job task details object which is actually a job.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class JobTaskDetailsChild : TaskTypeDetailsChild
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
+        private JobEntity _jobTask;
         
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Required. Job task.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
+        public JobEntity JobTask
         {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
+            get { return this._jobTask; }
+            set { this._jobTask = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AsrTask class.
+        /// Initializes a new instance of the JobTaskDetailsChild class.
         /// </summary>
-        public AsrTask()
+        public JobTaskDetailsChild()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobTaskDetailsChild class with
+        /// required arguments.
+        /// </summary>
+        public JobTaskDetailsChild(JobEntity jobTask, string type)
+            : this()
+        {
+            if (jobTask == null)
+            {
+                throw new ArgumentNullException("jobTask");
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.JobTask = jobTask;
+            this.Type = type;
         }
     }
 }

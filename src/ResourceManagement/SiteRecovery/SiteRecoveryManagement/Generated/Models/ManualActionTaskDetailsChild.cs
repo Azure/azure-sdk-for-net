@@ -26,25 +26,48 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a task object.
+    /// The definition of manual action task details object.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class ManualActionTaskDetailsChild : TaskTypeDetailsChild
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
+        private string _instructions;
         
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Required. Instructions for the task.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
+        public string Instructions
         {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
+            get { return this._instructions; }
+            set { this._instructions = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Required. Name of the task.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _observation;
+        
+        /// <summary>
+        /// Required. Observation in the task.
+        /// </summary>
+        public string Observation
+        {
+            get { return this._observation; }
+            set { this._observation = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AsrTask class.
+        /// Initializes a new instance of the ManualActionTaskDetailsChild
+        /// class.
         /// </summary>
-        public AsrTask()
+        public ManualActionTaskDetailsChild()
         {
         }
     }

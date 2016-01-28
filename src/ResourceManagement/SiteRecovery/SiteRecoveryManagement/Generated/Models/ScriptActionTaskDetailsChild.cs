@@ -20,65 +20,66 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of group task details object.
+    /// The definition of script action task details object.
     /// </summary>
-    public partial class GroupTaskDetails
+    public partial class ScriptActionTaskDetailsChild : TaskTypeDetailsChild
     {
-        private IList<AsrTaskBase> _childTasks;
+        private bool _isPrimarySideScript;
         
         /// <summary>
-        /// Required. List of child tasks.
+        /// Required. Indicates whether it is a primary side script or not.
         /// </summary>
-        public IList<AsrTaskBase> ChildTasks
+        public bool IsPrimarySideScript
         {
-            get { return this._childTasks; }
-            set { this._childTasks = value; }
+            get { return this._isPrimarySideScript; }
+            set { this._isPrimarySideScript = value; }
         }
         
-        private string _type;
+        private string _name;
         
         /// <summary>
-        /// Required. The task type. Overriden in derived classes.
+        /// Required. Name of the task.
         /// </summary>
-        public string Type
+        public string Name
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _output;
+        
+        /// <summary>
+        /// Required. Output of the task.
+        /// </summary>
+        public string Output
+        {
+            get { return this._output; }
+            set { this._output = value; }
+        }
+        
+        private string _path;
+        
+        /// <summary>
+        /// Required. Path for script.
+        /// </summary>
+        public string Path
+        {
+            get { return this._path; }
+            set { this._path = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GroupTaskDetails class.
+        /// Initializes a new instance of the ScriptActionTaskDetailsChild
+        /// class.
         /// </summary>
-        public GroupTaskDetails()
+        public ScriptActionTaskDetailsChild()
         {
-            this.ChildTasks = new LazyList<AsrTaskBase>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the GroupTaskDetails class with
-        /// required arguments.
-        /// </summary>
-        public GroupTaskDetails(string type, List<AsrTaskBase> childTasks)
-            : this()
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-            if (childTasks == null)
-            {
-                throw new ArgumentNullException("childTasks");
-            }
-            this.Type = type;
-            this.ChildTasks = childTasks;
         }
     }
 }

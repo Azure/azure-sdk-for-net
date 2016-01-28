@@ -26,25 +26,48 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a task object.
+    /// The definition of recovery plan group task details object.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class RecoveryPlanGroupTaskDetailsChild : GroupTaskDetailsChild
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
+        private string _groupId;
         
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Required. Group Identifier.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
+        public string GroupId
         {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
+            get { return this._groupId; }
+            set { this._groupId = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Required. Name of recovery plan group task.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _rpGroupType;
+        
+        /// <summary>
+        /// Required. Group type.
+        /// </summary>
+        public string RpGroupType
+        {
+            get { return this._rpGroupType; }
+            set { this._rpGroupType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AsrTask class.
+        /// Initializes a new instance of the RecoveryPlanGroupTaskDetailsChild
+        /// class.
         /// </summary>
-        public AsrTask()
+        public RecoveryPlanGroupTaskDetailsChild()
         {
         }
     }

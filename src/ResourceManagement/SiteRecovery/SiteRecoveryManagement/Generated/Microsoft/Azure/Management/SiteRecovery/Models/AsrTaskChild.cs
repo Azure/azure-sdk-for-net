@@ -28,23 +28,23 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The definition of a task object.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class AsrTaskChild : AsrTaskBase
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
+        private TaskTypeDetailsChild _customDetails;
         
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Required. The custom task details based on the task type.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
+        public TaskTypeDetailsChild CustomDetails
         {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
+            get { return this._customDetails; }
+            set { this._customDetails = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AsrTask class.
+        /// Initializes a new instance of the AsrTaskChild class.
         /// </summary>
-        public AsrTask()
+        public AsrTaskChild()
         {
         }
     }

@@ -21,31 +21,44 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a task object.
+    /// Model class for task specific details based on the task type.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class TaskTypeDetailsChild
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
+        private string _type;
         
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Required. The task type. Overriden in derived classes.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
+        public string Type
         {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AsrTask class.
+        /// Initializes a new instance of the TaskTypeDetailsChild class.
         /// </summary>
-        public AsrTask()
+        public TaskTypeDetailsChild()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the TaskTypeDetailsChild class with
+        /// required arguments.
+        /// </summary>
+        public TaskTypeDetailsChild(string type)
+            : this()
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.Type = type;
         }
     }
 }

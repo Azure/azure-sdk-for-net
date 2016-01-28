@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// <summary>
     /// The definition of inline workflow task details object.
     /// </summary>
-    public partial class InlineWorkflowTaskDetails : GroupTaskDetails
+    public partial class InlineWorkflowTaskDetailsChild : GroupTaskDetailsChild
     {
         private IList<string> _workflowIds;
         
@@ -44,35 +44,36 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the InlineWorkflowTaskDetails class.
+        /// Initializes a new instance of the InlineWorkflowTaskDetailsChild
+        /// class.
         /// </summary>
-        public InlineWorkflowTaskDetails()
+        public InlineWorkflowTaskDetailsChild()
         {
             this.WorkflowIds = new LazyList<string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the InlineWorkflowTaskDetails class
-        /// with required arguments.
+        /// Initializes a new instance of the InlineWorkflowTaskDetailsChild
+        /// class with required arguments.
         /// </summary>
-        public InlineWorkflowTaskDetails(List<string> workflowIds, string type, List<AsrTaskBase> childTasks)
+        public InlineWorkflowTaskDetailsChild(List<string> workflowIds, List<AsrTaskBase> childTasks, string type)
             : this()
         {
             if (workflowIds == null)
             {
                 throw new ArgumentNullException("workflowIds");
             }
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
             if (childTasks == null)
             {
                 throw new ArgumentNullException("childTasks");
             }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
             this.WorkflowIds = workflowIds;
-            this.Type = type;
             this.ChildTasks = childTasks;
+            this.Type = type;
         }
     }
 }

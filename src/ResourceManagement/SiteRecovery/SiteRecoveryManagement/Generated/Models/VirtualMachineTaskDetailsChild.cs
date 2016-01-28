@@ -26,25 +26,37 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a task object.
+    /// The definition of virtual machine task details object.
     /// </summary>
-    public partial class AsrTask : AsrTaskBase
+    public partial class VirtualMachineTaskDetailsChild : JobTaskDetailsChild
     {
-        private GroupTaskDetails _groupTaskCustomDetails;
+        private string _skippedReason;
         
         /// <summary>
-        /// Required. The custom task details for GroupTaskDetails task type.
+        /// Required. Skipped reason.
         /// </summary>
-        public GroupTaskDetails GroupTaskCustomDetails
+        public string SkippedReason
         {
-            get { return this._groupTaskCustomDetails; }
-            set { this._groupTaskCustomDetails = value; }
+            get { return this._skippedReason; }
+            set { this._skippedReason = value; }
+        }
+        
+        private string _skippedReasonString;
+        
+        /// <summary>
+        /// Required. Skipped reason string.
+        /// </summary>
+        public string SkippedReasonString
+        {
+            get { return this._skippedReasonString; }
+            set { this._skippedReasonString = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AsrTask class.
+        /// Initializes a new instance of the VirtualMachineTaskDetailsChild
+        /// class.
         /// </summary>
-        public AsrTask()
+        public VirtualMachineTaskDetailsChild()
         {
         }
     }
