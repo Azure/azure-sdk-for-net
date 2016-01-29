@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Get a list of deployments.
+        /// Get a list of resources.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Get a list of deployments.
+        /// Get a list of resources.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

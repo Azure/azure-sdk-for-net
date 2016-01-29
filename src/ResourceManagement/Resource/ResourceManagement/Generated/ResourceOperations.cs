@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(sourceResourceGroupName);
             url = url + "/moveResources";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2014-04-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1351,7 +1351,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2014-04-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1573,7 +1573,7 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Get a list of deployments.
+        /// Get a list of resources.
         /// </summary>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List

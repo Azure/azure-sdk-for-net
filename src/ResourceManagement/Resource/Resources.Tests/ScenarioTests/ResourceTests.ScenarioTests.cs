@@ -146,7 +146,7 @@ namespace ResourceGroups.Tests
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(handler);
-                string websiteLocation = "westus";
+                string websiteLocation = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
 
@@ -211,7 +211,7 @@ namespace ResourceGroups.Tests
                 string resourceNameNoTags = TestUtilities.GenerateName("csmr");
                 string tagName = TestUtilities.GenerateName("csmtn");
                 var client = GetResourceManagementClient(handler);
-                string websiteLocation = "westus";
+                string websiteLocation = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
 
@@ -281,7 +281,7 @@ namespace ResourceGroups.Tests
                 string tagName = TestUtilities.GenerateName("csmtn");
                 string tagValue = TestUtilities.GenerateName("csmtv");
                 var client = GetResourceManagementClient(handler);
-                string websiteLocation = "westus";
+                string websiteLocation = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
 
@@ -350,7 +350,7 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(handler);
 
                 client.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(1));
-                string location = "westus";
+                string location = this.GetWebsiteLocation(client);
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
                 {
@@ -398,7 +398,7 @@ namespace ResourceGroups.Tests
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(handler);
-                string location = "westus";
+                string location = this.GetWebsiteLocation(client);
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, new ResourceIdentity
                 {
