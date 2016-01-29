@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='resourceGroupName'>
             /// Name of the resource group within the Azure subscription
             /// </param>
-            public static TrackedResource Create(this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName)
+            public static Endpoint Create(this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IEndpointsOperations)s).CreateAsync(endpointName, endpointProperties, profileName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TrackedResource> CreateAsync( this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Endpoint> CreateAsync( this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.CreateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='resourceGroupName'>
             /// Name of the resource group within the Azure subscription
             /// </param>
-            public static TrackedResource BeginCreate(this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName)
+            public static Endpoint BeginCreate(this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginCreateAsync(endpointName, endpointProperties, profileName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TrackedResource> BeginCreateAsync( this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Endpoint> BeginCreateAsync( this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.BeginCreateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return _result.Body;

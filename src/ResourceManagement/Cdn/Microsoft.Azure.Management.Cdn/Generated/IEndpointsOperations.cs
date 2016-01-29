@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<TrackedResource>> CreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Endpoint>> CreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new CDN endpoint with the specified parameters
         /// </summary>
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<TrackedResource>> BeginCreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Endpoint>> BeginCreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing CDN endpoint with the specified parameters.
         /// Only tags and OriginHostHeader can be updated after creating an
