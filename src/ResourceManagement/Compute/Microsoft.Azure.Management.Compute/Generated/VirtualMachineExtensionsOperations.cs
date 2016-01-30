@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)_statusCode != 201 && (int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Compute
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 201)
+            if ((int)_statusCode == 200)
             {
                 try
                 {
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Compute
                 }
             }
             // Deserialize Response
-            if ((int)_statusCode == 200)
+            if ((int)_statusCode == 201)
             {
                 try
                 {
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)_statusCode != 202 && (int)_statusCode != 204 && (int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 ex.Request = _httpRequest;
@@ -457,7 +457,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine extension.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation.
+        /// Name of the property to expand. Allowed value is null or 'instanceView'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

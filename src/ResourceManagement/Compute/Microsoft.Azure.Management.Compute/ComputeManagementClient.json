@@ -3521,6 +3521,10 @@
           "$ref": "#/definitions/VirtualMachineInstanceView",
           "readOnly": true,
           "description": "Gets the virtual machine instance view."
+        },
+        "licenseType": {
+          "type": "string",
+          "description": "Gets or sets the license type, which is for bring your own license scenario."
         }
       },
       "description": "Describes the properties of a Virtual Machine."
@@ -4164,6 +4168,10 @@
         "provisioningState": {
           "type": "string",
           "description": "Gets or sets the provisioning state, which only appears in the response."
+        },
+        "licenseType": {
+          "type": "string",
+          "description": "Gets or sets the license type, which is for bring your own license scenario."
         }
       },
       "description": "Describes the properties of a virtual machine scale set virtual machine."
