@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FileInfoProperties class.
         /// </summary>
+        public FileInfoProperties(string id = default(string), string name = default(string), long? length = default(long?), long? modificationTime = default(long?), long? creationTime = default(long?), long? expirationTime = default(long?))
         {
             Id = id;
             Name = name;
@@ -39,8 +40,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
+        /// Gets or sets the file unique identifier (as a GUID).
         /// </summary>
         [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the file name.
