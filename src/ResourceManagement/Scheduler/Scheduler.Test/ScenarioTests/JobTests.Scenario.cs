@@ -27,6 +27,7 @@ using System.Linq;
 using System.Net;
 using Xunit;
 using SchedulerDayOfWeek = Microsoft.Azure.Management.Scheduler.Models.DayOfWeek;
+using Microsoft.Rest.Azure.OData;
 
 namespace Scheduler.Test.ScenarioTests
 {
@@ -42,7 +43,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForDay()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -155,7 +156,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForWeek()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -264,7 +265,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForMonth()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -388,7 +389,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateWithScheduleForMonthlyOccurrence()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -532,7 +533,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateUpdateDeleteHttpJob()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -661,7 +662,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateHttpJobWithBasicAuth()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -798,7 +799,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateHttpJobWithOAuth()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -936,7 +937,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateHttpJobWithClientCertAuth()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1072,7 +1073,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreatePatchDeleteStorageJob()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1200,7 +1201,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateUpdateDeleteServiceBusQueueJob()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1373,7 +1374,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobCreateUpdateDeleteServiceBusTopicJob()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName = TestUtilities.GenerateName("j1");
@@ -1546,7 +1547,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobList()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string jobName1 = TestUtilities.GenerateName("j1");
@@ -1603,12 +1604,12 @@ namespace Scheduler.Test.ScenarioTests
                         }
                     });
 
-                var disabledJob = client.Jobs.List(resourceGroupName, jobCollectionName, top: 5, filter: filter => filter.State == JobState.Disabled);
+                var disabledJob = client.Jobs.List(resourceGroupName, jobCollectionName, new ODataQuery<JobStateFilter>(filter => filter.State == JobState.Disabled) { Top = 5 });
 
                 Assert.Equal(1, disabledJob.Count());
                 Assert.True(disabledJob.All(job => job.Properties.State == JobState.Disabled));
 
-                var enabledJob = client.Jobs.List(resourceGroupName, jobCollectionName, top: 5, filter: filter => filter.State == JobState.Enabled);
+                var enabledJob = client.Jobs.List(resourceGroupName, jobCollectionName, new ODataQuery<JobStateFilter>(filter => filter.State == JobState.Enabled) { Top = 5 });
 
                 Assert.Equal(1, enabledJob.Count());
                 Assert.True(enabledJob.All(job => job.Properties.State == JobState.Enabled));
@@ -1641,7 +1642,7 @@ namespace Scheduler.Test.ScenarioTests
         [Fact]
         public void Scenario_JobHistoryList()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Scheduler.Test.ScenarioTests.JobTests"))
             {
                 const string existingJobCollectionName = "sdk-test";
                 const string existingJobName = "http_job";
@@ -1651,18 +1652,18 @@ namespace Scheduler.Test.ScenarioTests
 
                 var client = context.GetServiceClient<SchedulerManagementClient>();
 
-                var completedHistories = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, filter: filter => filter.Status == JobExecutionStatus.Completed);
+                var completedHistories = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, new ODataQuery<JobHistoryFilter>(filter => filter.Status == JobExecutionStatus.Completed));
 
                 Assert.True(completedHistories.Count() >= 0);
                 Assert.True(completedHistories.All(history => history.Properties.Status == null));
 
-                var failedHistories = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, filter: filter => filter.Status == JobExecutionStatus.Failed);
+                var failedHistories = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, new ODataQuery<JobHistoryFilter>(filter => filter.Status == JobExecutionStatus.Failed));
 
                 Assert.True(failedHistories.Count() >= 0);
                 Assert.True(failedHistories.All(history => history.Properties.Status == JobExecutionStatus.Failed));
 
-                var listTopResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, top: 5);
-                var listSkipResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, top: 5, skip: 5);
+                var listTopResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, new ODataQuery<JobHistoryFilter> { Top = 5 });
+                var listSkipResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, new ODataQuery<JobHistoryFilter> { Top = 5, Skip = 5 });
                 var listResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName);
 
                 Assert.True(listResult.Count() >= 0);
