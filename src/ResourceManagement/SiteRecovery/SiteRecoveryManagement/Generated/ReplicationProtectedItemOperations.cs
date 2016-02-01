@@ -1740,7 +1740,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='fabricName'>
@@ -1761,7 +1761,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginRepairVMReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<LongRunningOperationResponse> BeginRepairReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (fabricName == null)
@@ -1788,7 +1788,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 tracingParameters.Add("protectionContainerName", protectionContainerName);
                 tracingParameters.Add("replicationProtectedItemName", replicationProtectedItemName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "BeginRepairVMReplicationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginRepairReplicationAsync", tracingParameters);
             }
             
             // Construct URL
@@ -1812,7 +1812,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(protectionContainerName);
             url = url + "/ReplicationProtectedItems/";
             url = url + Uri.EscapeDataString(replicationProtectedItemName);
-            url = url + "/resyncVm";
+            url = url + "/repairReplication";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-11-10");
             if (queryParameters.Count > 0)
@@ -13701,7 +13701,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// Service response for replication protected items operation.
         /// </returns>
-        public async Task<ReplicationProtectedItemOperationResponse> GetRepairVMReplicationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<ReplicationProtectedItemOperationResponse> GetRepairReplicationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -13717,7 +13717,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                TracingAdapter.Enter(invocationId, this, "GetRepairVMReplicationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetRepairReplicationStatusAsync", tracingParameters);
             }
             
             // Construct URL
@@ -31303,7 +31303,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Executes repair VM replication for the given Replication protected
+        /// Executes repair replication for the given Replication protected
         /// item.
         /// </summary>
         /// <param name='fabricName'>
@@ -31324,7 +31324,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public async Task<LongRunningOperationResponse> RepairVMReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<LongRunningOperationResponse> RepairReplicationAsync(string fabricName, string protectionContainerName, string replicationProtectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             SiteRecoveryManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -31337,17 +31337,17 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 tracingParameters.Add("protectionContainerName", protectionContainerName);
                 tracingParameters.Add("replicationProtectedItemName", replicationProtectedItemName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "RepairVMReplicationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RepairReplicationAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.ReplicationProtectedItem.BeginRepairVMReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            LongRunningOperationResponse response = await client.ReplicationProtectedItem.BeginRepairReplicationAsync(fabricName, protectionContainerName, replicationProtectedItemName, customRequestHeaders, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
             }
             cancellationToken.ThrowIfCancellationRequested();
-            ReplicationProtectedItemOperationResponse result = await client.ReplicationProtectedItem.GetRepairVMReplicationStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            ReplicationProtectedItemOperationResponse result = await client.ReplicationProtectedItem.GetRepairReplicationStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 30;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
@@ -31358,7 +31358,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.ReplicationProtectedItem.GetRepairVMReplicationStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+                result = await client.ReplicationProtectedItem.GetRepairReplicationStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 30;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
