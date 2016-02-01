@@ -50,6 +50,208 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public DataLakeStoreFileSystemManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Get the file information object used to check file expiration time for the
+        /// specified by the file path.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to retrieve expiration information for.
+        /// </param>
+        /// <param name='accountname'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='op'>
+        /// This is the REQUIRED value for this parameter and method combination.
+        /// Changing the value will result in unexpected behavior, please do not do
+        /// so.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<FileInfoResult>> GetFileInfoWithHttpMessagesAsync(string filePath, string accountname, string op = "GETFILEINFO", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (filePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
+            }
+            if (accountname == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filePath", filePath);
+                tracingParameters.Add("accountname", accountname);
+                tracingParameters.Add("op", op);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetFileInfo", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "WebHdfsExt/{filePath}").ToString();
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
+            if (op != null)
+            {
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.SubscriptionId != null)
+            {
+                if (_httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    _httpRequest.Headers.Remove("subscriptionId");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<FileInfoResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileInfoResult>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Appends to the file specified. This method supports multiple concurrent
         /// appends to the file. NOTE: that concurrent append and serial append
         /// CANNOT be used interchangeably. Once a file has been appended to using
@@ -66,7 +268,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='appendMode'>
         /// Indicates the concurrent append call should create the file if it doesn't
-        /// exist or just open the existing file for append
+        /// exist or just open the existing file for append. Possible values for this
+        /// parameter include: 'autocreate'
         /// </param>
         /// <param name='op'>
         /// This is the REQUIRED value for this parameter and method combination.
@@ -79,7 +282,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, object appendMode = default(object), string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
@@ -186,6 +389,203 @@ namespace Microsoft.Azure.Management.DataLake.Store
             StreamContent _fileStreamContent = new StreamContent(streamContents);
             _httpRequest.Content = _fileStreamContent;
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Sets or removes the expiration time on the specified file. This operation
+        /// can only be executed against files. Folders are not supported.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to set or removes the expiration time on.
+        /// </param>
+        /// <param name='accountname'>
+        /// The name of the data lake account that the file lives in.
+        /// </param>
+        /// <param name='expiryOption'>
+        /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+        /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+        /// milliseconds. 3. RelativeToCreationDate: ExpireTime is an integer in
+        /// milliseconds. 4. Absolute: ExpireTime is an integer in milliseconds, as a
+        /// unix timestamp relative to 1/1/1970 00:00:00. Possible values for this
+        /// parameter include: 'NeverExpire', 'RelativeToNow',
+        /// 'RelativeToCreationDate', 'Absolute'
+        /// </param>
+        /// <param name='expireTime'>
+        /// The time, in seconds, that the file will expire relative to the expiry
+        /// option that was set.
+        /// </param>
+        /// <param name='op'>
+        /// This is the REQUIRED value for this parameter and method combination.
+        /// Changing the value will result in unexpected behavior, please do not do
+        /// so.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> SetFileExpiryWithHttpMessagesAsync(string filePath, string accountname, ExpiryOptionType? expiryOption, long? expireTime = default(long?), string op = "SETEXPIRY", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (filePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
+            }
+            if (accountname == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
+            }
+            if (expiryOption == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "expiryOption");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.Datalakeserviceuri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Datalakeserviceuri");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filePath", filePath);
+                tracingParameters.Add("accountname", accountname);
+                tracingParameters.Add("expiryOption", expiryOption);
+                tracingParameters.Add("expireTime", expireTime);
+                tracingParameters.Add("op", op);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "SetFileExpiry", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "WebHdfsExt/{filePath}").ToString();
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
+            _url = _url.Replace("accountname", Uri.EscapeDataString(accountname));
+            _url = _url.Replace("datalakeserviceuri", Uri.EscapeDataString(this.Client.Datalakeserviceuri));
+            List<string> _queryParameters = new List<string>();
+            if (expiryOption != null)
+            {
+                _queryParameters.Add(string.Format("expiryOption={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(expiryOption, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (expireTime != null)
+            {
+                _queryParameters.Add(string.Format("expireTime={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(expireTime, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (op != null)
+            {
+                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.SubscriptionId != null)
+            {
+                if (_httpRequest.Headers.Contains("subscriptionId"))
+                {
+                    _httpRequest.Headers.Remove("subscriptionId");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -652,7 +1052,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, string accountname, string sources = default(string), string op = "CONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, string accountname, IList<string> sources, string op = "CONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (destinationPath == null)
             {
@@ -661,6 +1061,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (accountname == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
+            }
+            if (sources == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sources");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -697,7 +1101,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             List<string> _queryParameters = new List<string>();
             if (sources != null)
             {
-                _queryParameters.Add(string.Format("sources={0}", Uri.EscapeDataString(sources)));
+                _queryParameters.Add(string.Format("sources={0}", Uri.EscapeDataString(string.Join(",", sources))));
             }
             if (op != null)
             {

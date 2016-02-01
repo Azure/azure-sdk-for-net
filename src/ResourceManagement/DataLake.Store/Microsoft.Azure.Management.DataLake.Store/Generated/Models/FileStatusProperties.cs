@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets the last access time.
+        /// Gets or sets the last access time as ticks since the epoch.
         /// </summary>
         [JsonProperty(PropertyName = "accessTime")]
         public long? AccessTime { get; set; }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public long? Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the modification time.
+        /// Gets or sets the modification time as ticks since the epoch.
         /// </summary>
         [JsonProperty(PropertyName = "modificationTime")]
         public long? ModificationTime { get; set; }

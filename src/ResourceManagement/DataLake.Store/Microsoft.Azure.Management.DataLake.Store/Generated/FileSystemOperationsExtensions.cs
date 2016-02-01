@@ -20,6 +20,58 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class FileSystemOperationsExtensions
     {
             /// <summary>
+            /// Get the file information object used to check file expiration time for the
+            /// specified by the file path.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filePath'>
+            /// The path to the file to retrieve expiration information for.
+            /// </param>
+            /// <param name='accountname'>
+            /// The name of the account to use
+            /// </param>
+            /// <param name='op'>
+            /// This is the REQUIRED value for this parameter and method combination.
+            /// Changing the value will result in unexpected behavior, please do not do
+            /// so.
+            /// </param>
+            public static FileInfoResult GetFileInfo(this IFileSystemOperations operations, string filePath, string accountname, string op = "GETFILEINFO")
+            {
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetFileInfoAsync(filePath, accountname, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the file information object used to check file expiration time for the
+            /// specified by the file path.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filePath'>
+            /// The path to the file to retrieve expiration information for.
+            /// </param>
+            /// <param name='accountname'>
+            /// The name of the account to use
+            /// </param>
+            /// <param name='op'>
+            /// This is the REQUIRED value for this parameter and method combination.
+            /// Changing the value will result in unexpected behavior, please do not do
+            /// so.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FileInfoResult> GetFileInfoAsync( this IFileSystemOperations operations, string filePath, string accountname, string op = "GETFILEINFO", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFileInfoWithHttpMessagesAsync(filePath, accountname, op, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Appends to the file specified. This method supports multiple concurrent
             /// appends to the file. NOTE: that concurrent append and serial append
             /// CANNOT be used interchangeably. Once a file has been appended to using
@@ -39,14 +91,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             /// <param name='appendMode'>
             /// Indicates the concurrent append call should create the file if it doesn't
-            /// exist or just open the existing file for append
+            /// exist or just open the existing file for append. Possible values for this
+            /// parameter include: 'autocreate'
             /// </param>
             /// <param name='op'>
             /// This is the REQUIRED value for this parameter and method combination.
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void ConcurrentAppend(this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, object appendMode = default(object), string op = "CONCURRENTAPPEND")
+            public static void ConcurrentAppend(this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), string op = "CONCURRENTAPPEND")
             {
                 Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(filePath, accountname, streamContents, appendMode, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -71,7 +124,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             /// <param name='appendMode'>
             /// Indicates the concurrent append call should create the file if it doesn't
-            /// exist or just open the existing file for append
+            /// exist or just open the existing file for append. Possible values for this
+            /// parameter include: 'autocreate'
             /// </param>
             /// <param name='op'>
             /// This is the REQUIRED value for this parameter and method combination.
@@ -81,9 +135,84 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcurrentAppendAsync( this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, object appendMode = default(object), string op = "CONCURRENTAPPEND", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConcurrentAppendAsync( this IFileSystemOperations operations, string filePath, string accountname, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), string op = "CONCURRENTAPPEND", CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.ConcurrentAppendWithHttpMessagesAsync(filePath, accountname, streamContents, appendMode, op, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Sets or removes the expiration time on the specified file. This operation
+            /// can only be executed against files. Folders are not supported.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filePath'>
+            /// The path to the file to set or removes the expiration time on.
+            /// </param>
+            /// <param name='accountname'>
+            /// The name of the data lake account that the file lives in.
+            /// </param>
+            /// <param name='expiryOption'>
+            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+            /// milliseconds. 3. RelativeToCreationDate: ExpireTime is an integer in
+            /// milliseconds. 4. Absolute: ExpireTime is an integer in milliseconds, as a
+            /// unix timestamp relative to 1/1/1970 00:00:00. Possible values for this
+            /// parameter include: 'NeverExpire', 'RelativeToNow',
+            /// 'RelativeToCreationDate', 'Absolute'
+            /// </param>
+            /// <param name='expireTime'>
+            /// The time, in seconds, that the file will expire relative to the expiry
+            /// option that was set.
+            /// </param>
+            /// <param name='op'>
+            /// This is the REQUIRED value for this parameter and method combination.
+            /// Changing the value will result in unexpected behavior, please do not do
+            /// so.
+            /// </param>
+            public static void SetFileExpiry(this IFileSystemOperations operations, string filePath, string accountname, ExpiryOptionType? expiryOption, long? expireTime = default(long?), string op = "SETEXPIRY")
+            {
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetFileExpiryAsync(filePath, accountname, expiryOption, expireTime, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets or removes the expiration time on the specified file. This operation
+            /// can only be executed against files. Folders are not supported.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='filePath'>
+            /// The path to the file to set or removes the expiration time on.
+            /// </param>
+            /// <param name='accountname'>
+            /// The name of the data lake account that the file lives in.
+            /// </param>
+            /// <param name='expiryOption'>
+            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+            /// milliseconds. 3. RelativeToCreationDate: ExpireTime is an integer in
+            /// milliseconds. 4. Absolute: ExpireTime is an integer in milliseconds, as a
+            /// unix timestamp relative to 1/1/1970 00:00:00. Possible values for this
+            /// parameter include: 'NeverExpire', 'RelativeToNow',
+            /// 'RelativeToCreationDate', 'Absolute'
+            /// </param>
+            /// <param name='expireTime'>
+            /// The time, in seconds, that the file will expire relative to the expiry
+            /// option that was set.
+            /// </param>
+            /// <param name='op'>
+            /// This is the REQUIRED value for this parameter and method combination.
+            /// Changing the value will result in unexpected behavior, please do not do
+            /// so.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SetFileExpiryAsync( this IFileSystemOperations operations, string filePath, string accountname, ExpiryOptionType? expiryOption, long? expireTime = default(long?), string op = "SETEXPIRY", CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.SetFileExpiryWithHttpMessagesAsync(filePath, accountname, expiryOption, expireTime, op, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -218,7 +347,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// Changing the value will result in unexpected behavior, please do not do
             /// so.
             /// </param>
-            public static void Concat(this IFileSystemOperations operations, string destinationPath, string accountname, string sources = default(string), string op = "CONCAT")
+            public static void Concat(this IFileSystemOperations operations, string destinationPath, string accountname, IList<string> sources, string op = "CONCAT")
             {
                 Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcatAsync(destinationPath, accountname, sources, op), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -247,7 +376,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcatAsync( this IFileSystemOperations operations, string destinationPath, string accountname, string sources = default(string), string op = "CONCAT", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ConcatAsync( this IFileSystemOperations operations, string destinationPath, string accountname, IList<string> sources, string op = "CONCAT", CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.ConcatWithHttpMessagesAsync(destinationPath, accountname, sources, op, null, cancellationToken).ConfigureAwait(false);
             }

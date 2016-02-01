@@ -23,6 +23,28 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public partial interface IFileSystemOperations
     {
         /// <summary>
+        /// Get the file information object used to check file expiration time
+        /// for the specified by the file path.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to retrieve expiration information for.
+        /// </param>
+        /// <param name='accountname'>
+        /// The name of the account to use
+        /// </param>
+        /// <param name='op'>
+        /// This is the REQUIRED value for this parameter and method
+        /// combination. Changing the value will result in unexpected
+        /// behavior, please do not do so.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<FileInfoResult>> GetFileInfoWithHttpMessagesAsync(string filePath, string accountname, string op = "GETFILEINFO", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Appends to the file specified. This method supports multiple
         /// concurrent appends to the file. NOTE: that concurrent append and
         /// serial append CANNOT be used interchangeably. Once a file has
@@ -40,7 +62,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='appendMode'>
         /// Indicates the concurrent append call should create the file if it
-        /// doesn't exist or just open the existing file for append
+        /// doesn't exist or just open the existing file for append. Possible
+        /// values for this parameter include: 'autocreate'
         /// </param>
         /// <param name='op'>
         /// This is the REQUIRED value for this parameter and method
@@ -53,7 +76,44 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, object appendMode = default(object), string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), string op = "CONCURRENTAPPEND", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Sets or removes the expiration time on the specified file. This
+        /// operation can only be executed against files. Folders are not
+        /// supported.
+        /// </summary>
+        /// <param name='filePath'>
+        /// The path to the file to set or removes the expiration time on.
+        /// </param>
+        /// <param name='accountname'>
+        /// The name of the data lake account that the file lives in.
+        /// </param>
+        /// <param name='expiryOption'>
+        /// Indicates the type of expiration to use for the file: 1.
+        /// NeverExpire: ExpireTime is ignored. 2. RelativeToNow: ExpireTime
+        /// is an integer in milliseconds. 3. RelativeToCreationDate:
+        /// ExpireTime is an integer in milliseconds. 4. Absolute: ExpireTime
+        /// is an integer in milliseconds, as a unix timestamp relative to
+        /// 1/1/1970 00:00:00. Possible values for this parameter include:
+        /// 'NeverExpire', 'RelativeToNow', 'RelativeToCreationDate',
+        /// 'Absolute'
+        /// </param>
+        /// <param name='expireTime'>
+        /// The time, in seconds, that the file will expire relative to the
+        /// expiry option that was set.
+        /// </param>
+        /// <param name='op'>
+        /// This is the REQUIRED value for this parameter and method
+        /// combination. Changing the value will result in unexpected
+        /// behavior, please do not do so.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> SetFileExpiryWithHttpMessagesAsync(string filePath, string accountname, ExpiryOptionType? expiryOption, long? expireTime = default(long?), string op = "SETEXPIRY", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks if the specified access is available at the given path.
         /// </summary>
@@ -127,7 +187,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, string accountname, string sources = default(string), string op = "CONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, string accountname, IList<string> sources, string op = "CONCAT", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Concatenates the list of files into the target file. This API is
         /// NOT webhdfs compliant, however supports a much larger list of
