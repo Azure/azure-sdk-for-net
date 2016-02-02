@@ -202,17 +202,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='protectedItemName'>
         /// Required.
         /// </param>
+        /// <param name='queryFilter'>
+        /// Optional.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public static ProtectedItemResponse Get(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, CustomRequestHeaders customRequestHeaders)
+        public static ProtectedItemResponse Get(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, GetProtectedItemQueryParam queryFilter, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectedItemOperations)s).GetAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, customRequestHeaders);
+                return ((IProtectedItemOperations)s).GetAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, queryFilter, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -239,15 +242,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='protectedItemName'>
         /// Required.
         /// </param>
+        /// <param name='queryFilter'>
+        /// Optional.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public static Task<ProtectedItemResponse> GetAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectedItemResponse> GetAsync(this IProtectedItemOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, GetProtectedItemQueryParam queryFilter, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, customRequestHeaders, CancellationToken.None);
+            return operations.GetAsync(resourceGroupName, resourceName, fabricName, containerName, protectedItemName, queryFilter, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
