@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Search
             Func<Document, string> getKey = d => d[keyFieldName].ToString();
             IEnumerable<IndexAction> failedActions = 
                 this.DoFindFailedActionsToRetry<IndexBatch, IndexAction, Document>(originalBatch, getKey);
-            return new IndexBatch(failedActions);
+            return IndexBatch.New(failedActions);
         }
 
         /// <summary>
