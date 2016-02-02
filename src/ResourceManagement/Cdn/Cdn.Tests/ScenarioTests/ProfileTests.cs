@@ -456,6 +456,7 @@ namespace Cdn.Tests.ScenarioTests
                 // Generate Sso Uri on created profile should succeed
                 var ssoUri = cdnMgmtClient.Profiles.GenerateSsoUri(profileName, resourceGroupName);
                 Assert.NotNull(ssoUri);
+                Assert.False(string.IsNullOrWhiteSpace(ssoUri.SsoUriValue));
 
                 // Create a cdn profile and don't wait for creation to finish
                 profileName = TestUtilities.GenerateName("profile");
