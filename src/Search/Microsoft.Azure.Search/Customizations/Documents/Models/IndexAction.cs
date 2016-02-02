@@ -25,15 +25,8 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction Delete(string keyName, string keyValue)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException("keyName");
-            }
-
-            if (keyValue == null)
-            {
-                throw new ArgumentNullException("keyValue");
-            }
+            Throw.IfArgumentNull(keyName, "keyName");
+            Throw.IfArgumentNull(keyValue, "keyValue");
 
             return new IndexAction(IndexActionType.Delete, new Document() { { keyName, keyValue } });
         }

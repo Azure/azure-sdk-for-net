@@ -77,10 +77,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A DataType instance with the given name.</returns>
         public static DataType Create(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            Throw.IfArgumentNull(name, "name");
 
             // Data types are purposefully open-ended. If we get one we don't recognize, just create a new object.
             DataType dataType;
@@ -101,11 +98,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new DataType for a collection.</returns>
         public static DataType Collection(DataType elementType)
         {
-            if (elementType == null)
-            {
-                throw new ArgumentNullException("elementType");
-            }
-
+            Throw.IfArgumentNull(elementType, "elementType");
             return new DataType(System.String.Format("Collection({0})", elementType.ToString()));
         }
 

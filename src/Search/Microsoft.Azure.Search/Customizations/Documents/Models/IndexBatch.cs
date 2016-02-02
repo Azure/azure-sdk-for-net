@@ -30,15 +30,8 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch Delete(string keyName, IEnumerable<string> keyValues)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException("keyName");
-            }
-
-            if (keyValues == null)
-            {
-                throw new ArgumentNullException("keyValues");
-            }
+            Throw.IfArgumentNull(keyName, "keyName");
+            Throw.IfArgumentNull(keyValues, "keyValues");
 
             return IndexBatch.New(keyValues.Select(v => IndexAction.Delete(keyName, v)));
         }
@@ -50,10 +43,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch Delete(IEnumerable<Document> documents)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.Delete(d)));
         }
@@ -68,10 +58,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch<T> Delete<T>(IEnumerable<T> documents) where T : class
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.Delete(d)));
         }
@@ -83,10 +70,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch Merge(IEnumerable<Document> documents)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.Merge(d)));
         }
@@ -108,10 +92,7 @@ namespace Microsoft.Azure.Search.Models
         /// </remarks>
         public static IndexBatch<T> Merge<T>(IEnumerable<T> documents) where T : class
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.Merge(d)));
         }
@@ -124,10 +105,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch MergeOrUpload(IEnumerable<Document> documents)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.MergeOrUpload(d)));
         }
@@ -150,10 +128,7 @@ namespace Microsoft.Azure.Search.Models
         /// </remarks>
         public static IndexBatch<T> MergeOrUpload<T>(IEnumerable<T> documents) where T : class
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.MergeOrUpload(d)));
         }
@@ -192,10 +167,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch Upload(IEnumerable<Document> documents)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.Upload(d)));
         }
@@ -210,10 +182,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch<T> Upload<T>(IEnumerable<T> documents) where T : class
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException("documents");
-            }
+            Throw.IfArgumentNull(documents, "documents");
 
             return IndexBatch.New(documents.Select(d => IndexAction.Upload(d)));
         }

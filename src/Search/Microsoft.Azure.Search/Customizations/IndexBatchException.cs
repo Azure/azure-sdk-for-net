@@ -92,10 +92,7 @@ namespace Microsoft.Azure.Search
 
         private static string CreateMessage(DocumentIndexResult documentIndexResult)
         {
-            if (documentIndexResult == null)
-            {
-                throw new ArgumentNullException("documentIndexResult");
-            }
+            Throw.IfArgumentNull(documentIndexResult, "documentIndexResult");
 
             return String.Format(
                 MessageFormat, 
