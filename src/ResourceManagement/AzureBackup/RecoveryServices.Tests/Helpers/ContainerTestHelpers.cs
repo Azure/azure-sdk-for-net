@@ -12,7 +12,7 @@ namespace RecoveryServices.Tests.Helpers
 {
     public class ContainerTestHelper
     {
-        RecoveryServicesBackupManagementClient Client { get; private set; }
+        RecoveryServicesBackupManagementClient Client { get; set; }
 
         public ContainerTestHelper(RecoveryServicesBackupManagementClient client)
         {
