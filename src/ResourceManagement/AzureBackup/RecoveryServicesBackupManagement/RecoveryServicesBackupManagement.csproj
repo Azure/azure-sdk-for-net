@@ -95,6 +95,7 @@
     <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
+    <Compile Include="Generated\Models\GetProtectedItemQueryParam.cs" />
     <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
     <Compile Include="Generated\Models\Job.cs" />
     <Compile Include="Generated\Models\JobBase.cs" />

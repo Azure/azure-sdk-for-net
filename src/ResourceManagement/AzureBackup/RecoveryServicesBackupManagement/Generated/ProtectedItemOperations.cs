@@ -899,6 +899,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='protectedItemName'>
         /// Required.
         /// </param>
+        /// <param name='queryFilter'>
+        /// Optional.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -908,7 +911,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectedItemResponse.
         /// </returns>
-        public async Task<ProtectedItemResponse> GetAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectedItemResponse> GetAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, GetProtectedItemQueryParam queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -944,6 +947,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("protectedItemName", protectedItemName);
+                tracingParameters.Add("queryFilter", queryFilter);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
@@ -971,6 +975,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + Uri.EscapeDataString(protectedItemName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
+            List<string> odataFilter = new List<string>();
+            if (queryFilter != null && queryFilter.Expand != null)
+            {
+                odataFilter.Add("expand eq '" + Uri.EscapeDataString(queryFilter.Expand) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

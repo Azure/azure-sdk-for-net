@@ -29,6 +29,28 @@ namespace RecoveryServices.Tests
 {
     public class RecoveryServicesTestsBase : TestBase
     {
+        public static string GetSetting(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
+        }
+
+        public static void ExecuteTest(Action<RecoveryServicesBackupManagementClient> action, string resourceNamespace = null)
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                if (string.IsNullOrEmpty(resourceNamespace))
+                {
+                    resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"]; 
+                }
+
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+
+                action(client);
+            }
+        }
+
         public static T GetServiceClient<T>(string resourceNamespace) where T : class
         {
             var factory = (TestEnvironmentFactory)new CSMTestEnvironmentFactory();
