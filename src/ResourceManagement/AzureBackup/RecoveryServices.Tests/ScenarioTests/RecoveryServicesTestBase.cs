@@ -29,11 +29,6 @@ namespace RecoveryServices.Tests
 {
     public class RecoveryServicesTestsBase : TestBase
     {
-        public static string GetSetting(string key)
-        {
-            return ConfigurationManager.AppSettings[key];
-        }
-
         public static void ExecuteTest(Action<RecoveryServicesBackupManagementClient> action, string resourceNamespace = null)
         {
             using (UndoContext context = UndoContext.Current)
@@ -123,14 +118,6 @@ namespace RecoveryServices.Tests
            SslPolicyErrors sslPolicyErrors)
         {
             return true;
-        }
-
-        public static CustomRequestHeaders GetCustomRequestHeaders()
-        {
-            return new CustomRequestHeaders()
-            {
-                ClientRequestId = Guid.NewGuid().ToString(),
-            };
         }
     }
 }

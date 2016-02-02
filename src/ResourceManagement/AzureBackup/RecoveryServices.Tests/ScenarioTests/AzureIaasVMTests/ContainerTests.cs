@@ -37,19 +37,13 @@ namespace RecoveryServices.Tests
             ExecuteTest(
                 client =>
                 {
-                    string rsVaultRgName = GetSetting(TestConstants.RsVaultRgName);
-                    string rsVaultName = GetSetting(TestConstants.RsVaultName);
-
                     ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+                    queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
 
-                    ProtectionContainerListResponse response = client.Container.List(rsVaultRgName, rsVaultName, queryParams, GetCustomRequestHeaders());
+                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                    ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
 
-                    Assert.NotNull(response);
-                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                    Assert.NotNull(response.ItemList);
-
-                    string containerUniqueName = GetSetting(TestConstants.RsVaultIaasV1ContainerUniqueName);
+                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultIaasV1ContainerUniqueName);
                     Assert.True(
                         response.ItemList.ProtectionContainers.Any(
                             protectionContainer =>
