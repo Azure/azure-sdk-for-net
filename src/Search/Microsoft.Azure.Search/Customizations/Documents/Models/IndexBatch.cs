@@ -40,7 +40,40 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("keyValues");
             }
 
-            return new IndexBatch(keyValues.Select(v => IndexAction.Delete(keyName, v)));
+            return IndexBatch.New(keyValues.Select(v => IndexAction.Delete(keyName, v)));
+        }
+
+        /// <summary>
+        /// Creates a new IndexBatch for deleting a batch of documents.
+        /// </summary>
+        /// <param name="documents">The documents to delete; Fields other than the key are ignored.</param>
+        /// <returns>A new IndexBatch.</returns>
+        public static IndexBatch Delete(IEnumerable<Document> documents)
+        {
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return IndexBatch.New(documents.Select(d => IndexAction.Delete(d)));
+        }
+
+        /// <summary>
+        /// Creates a new IndexBatch for deleting a batch of documents.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to delete; Fields other than the key are ignored.</param>
+        /// <returns>A new IndexBatch.</returns>
+        public static IndexBatch<T> Delete<T>(IEnumerable<T> documents) where T : class
+        {
+            if (documents == null)
+            {
+                throw new ArgumentNullException("documents");
+            }
+
+            return IndexBatch.New(documents.Select(d => IndexAction.Delete(d)));
         }
 
         /// <summary>
@@ -55,12 +88,15 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("documents");
             }
 
-            return new IndexBatch(documents.Select(d => IndexAction.Merge(d)));
+            return IndexBatch.New(documents.Select(d => IndexAction.Merge(d)));
         }
 
         /// <summary>
         /// Creates a new IndexBatch for merging documents into existing documents in the index.
         /// </summary>
+        /// <typeparam name="T">
+        /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
+        /// </typeparam>
         /// <param name="documents">The documents to merge; Set only the properties that you want to change.</param>
         /// <returns>A new IndexBatch.</returns>
         /// <remarks>
@@ -77,7 +113,7 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("documents");
             }
 
-            return new IndexBatch<T>(documents.Select(d => IndexAction.Merge(d)));
+            return IndexBatch.New(documents.Select(d => IndexAction.Merge(d)));
         }
 
         /// <summary>
@@ -93,13 +129,16 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("documents");
             }
 
-            return new IndexBatch(documents.Select(d => IndexAction.MergeOrUpload(d)));
+            return IndexBatch.New(documents.Select(d => IndexAction.MergeOrUpload(d)));
         }
 
         /// <summary>
         /// Creates a new IndexBatch for uploading documents to the index, or merging them into existing documents
         /// for those that already exist in the index.
         /// </summary>
+        /// <typeparam name="T">
+        /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
+        /// </typeparam>
         /// <param name="documents">The documents to merge or upload.</param>
         /// <returns>A new IndexBatch.</returns>
         /// <remarks>
@@ -116,7 +155,17 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("documents");
             }
 
-            return new IndexBatch<T>(documents.Select(d => IndexAction.MergeOrUpload(d)));
+            return IndexBatch.New(documents.Select(d => IndexAction.MergeOrUpload(d)));
+        }
+
+        /// <summary>
+        /// Creates a new instance of the IndexBatch class.
+        /// </summary>
+        /// <param name="actions">The index actions to include in the batch.</param>
+        /// <returns>A new IndexBatch.</returns>
+        public static IndexBatch New(IEnumerable<IndexAction> actions)
+        {
+            return new IndexBatch(actions);
         }
 
         /// <summary>
@@ -148,12 +197,15 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("documents");
             }
 
-            return new IndexBatch(documents.Select(d => IndexAction.Upload(d)));
+            return IndexBatch.New(documents.Select(d => IndexAction.Upload(d)));
         }
 
         /// <summary>
         /// Creates a new IndexBatch for uploading documents to the index.
         /// </summary>
+        /// <typeparam name="T">
+        /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
+        /// </typeparam>
         /// <param name="documents">The documents to upload.</param>
         /// <returns>A new IndexBatch.</returns>
         public static IndexBatch<T> Upload<T>(IEnumerable<T> documents) where T : class
@@ -163,7 +215,7 @@ namespace Microsoft.Azure.Search.Models
                 throw new ArgumentNullException("documents");
             }
 
-            return new IndexBatch<T>(documents.Select(d => IndexAction.Upload(d)));
+            return IndexBatch.New(documents.Select(d => IndexAction.Upload(d)));
         }
     }
 }

@@ -249,6 +249,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexerTests\GetIndexerThrowsOnNotFound.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanDeleteBatchByKeys.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\CanIndexAndRetrieveModelWithExtraProperties.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -286,6 +289,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\IndexDoesNotThrowWhenAllActionsSucceed.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\IndexDoesNotThrowWhenDeletingDocumentWithExtraFields.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\IndexDoesNotThrowWhenDeletingDynamicDocumentWithExtraFields.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.IndexingTests\IndexWithInvalidDocumentThrowsException.json">
