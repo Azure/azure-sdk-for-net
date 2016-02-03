@@ -80,6 +80,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
             set { this._errorMessage = value; }
         }
         
+        private TimeSpan? _expirationTime;
+        
+        /// <summary>
+        /// Optional. Period for which the Pipeline is valid starting from the
+        /// time of Creation. The Pipeline would be deleted automatically once
+        /// it reaches the expiration time if it does not have any
+        /// active/pending runs
+        /// </summary>
+        public TimeSpan? ExpirationTime
+        {
+            get { return this._expirationTime; }
+            set { this._expirationTime = value; }
+        }
+        
         private string _hubName;
         
         /// <summary>
@@ -101,6 +115,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
         {
             get { return this._isPaused; }
             set { this._isPaused = value; }
+        }
+        
+        private string _pipelineMode;
+        
+        /// <summary>
+        /// Optional. The method of scheduling runs for the pipeline. Must be
+        /// one of <see cref="PipelineMode"/>.
+        /// </summary>
+        public string PipelineMode
+        {
+            get { return this._pipelineMode; }
+            set { this._pipelineMode = value; }
         }
         
         private string _provisioningState;

@@ -431,6 +431,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         propertiesValue["runtimeInfo"] = runtimeInfoValue;
                         
                         runtimeInfoValue["deploymentTime"] = parameters.Pipeline.Properties.RuntimeInfo.DeploymentTime;
+                        
+                        if (parameters.Pipeline.Properties.RuntimeInfo.PipelineState != null)
+                        {
+                            runtimeInfoValue["pipelineState"] = parameters.Pipeline.Properties.RuntimeInfo.PipelineState;
+                        }
                     }
                     
                     if (parameters.Pipeline.Properties.ProvisioningState != null)
@@ -446,6 +451,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     if (parameters.Pipeline.Properties.HubName != null)
                     {
                         propertiesValue["hubName"] = parameters.Pipeline.Properties.HubName;
+                    }
+                    
+                    if (parameters.Pipeline.Properties.PipelineMode != null)
+                    {
+                        propertiesValue["pipelineMode"] = parameters.Pipeline.Properties.PipelineMode;
+                    }
+                    
+                    if (parameters.Pipeline.Properties.ExpirationTime != null)
+                    {
+                        propertiesValue["expirationTime"] = parameters.Pipeline.Properties.ExpirationTime.Value.ToString();
                     }
                 }
                 
@@ -749,6 +764,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue2["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue2["provisioningState"];
@@ -770,6 +792,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue2["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue2["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
                                 }
                             }
                         }
@@ -1236,6 +1272,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -1257,6 +1300,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
                                 }
                             }
                         }
@@ -2116,6 +2173,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -2137,6 +2201,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
                                 }
                             }
                         }
@@ -2516,6 +2594,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -2537,6 +2622,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
                                 }
                             }
                         }
@@ -2983,6 +3082,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                                 runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                             }
+                                            
+                                            JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                            if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                            {
+                                                string pipelineStateInstance = ((string)pipelineStateValue);
+                                                runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                            }
                                         }
                                         
                                         JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -3004,6 +3110,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string hubNameInstance = ((string)hubNameValue);
                                             propertiesInstance.HubName = hubNameInstance;
+                                        }
+                                        
+                                        JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                        if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                        {
+                                            string pipelineModeInstance = ((string)pipelineModeValue);
+                                            propertiesInstance.PipelineMode = pipelineModeInstance;
+                                        }
+                                        
+                                        JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                        if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                            propertiesInstance.ExpirationTime = expirationTimeInstance;
                                         }
                                     }
                                 }
@@ -3400,6 +3520,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                                 runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                             }
+                                            
+                                            JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                            if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                            {
+                                                string pipelineStateInstance = ((string)pipelineStateValue);
+                                                runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                            }
                                         }
                                         
                                         JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -3421,6 +3548,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string hubNameInstance = ((string)hubNameValue);
                                             propertiesInstance.HubName = hubNameInstance;
+                                        }
+                                        
+                                        JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                        if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                        {
+                                            string pipelineModeInstance = ((string)pipelineModeValue);
+                                            propertiesInstance.PipelineMode = pipelineModeInstance;
+                                        }
+                                        
+                                        JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                        if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                            propertiesInstance.ExpirationTime = expirationTimeInstance;
                                         }
                                     }
                                 }

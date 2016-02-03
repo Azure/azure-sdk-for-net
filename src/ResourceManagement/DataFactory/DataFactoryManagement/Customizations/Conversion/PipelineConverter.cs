@@ -56,7 +56,9 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                     IsPaused = properties.IsPaused, 
                     ProvisioningState = properties.ProvisioningState,
                     RuntimeInfo = properties.RuntimeInfo, 
-                    Start = properties.Start
+                    Start = properties.Start,
+                    PipelineMode = properties.PipelineMode,
+                    ExpirationTime = properties.ExpirationTime
                 }
             };
 
@@ -93,7 +95,9 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                     IsPaused = properties.IsPaused,
                     ProvisioningState = properties.ProvisioningState,
                     RuntimeInfo = properties.RuntimeInfo,
-                    Start = properties.Start
+                    Start = properties.Start,
+                    ExpirationTime = properties.ExpirationTime,
+                    PipelineMode = properties.PipelineMode
                 }
             };
 

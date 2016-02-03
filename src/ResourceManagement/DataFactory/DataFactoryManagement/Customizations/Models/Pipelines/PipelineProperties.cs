@@ -79,12 +79,26 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfReadonly]
 #endif
         public string ErrorMessage { get; set; }
-
+        
         /// <summary>
         /// The name of the Hub that this pipeline belongs to.
         /// </summary>
         public string HubName { get; set; }
+        
+        /// <summary>
+        /// Optional. Period for which the Pipeline is valid starting from the
+        /// time of Creation. The Pipeline would be deleted automatically once
+        /// it reaches the expiration time if it does not have any
+        /// active/pending runs
+        /// </summary>
+        public TimeSpan? ExpirationTime { get; set; }
 
+        /// <summary>
+        /// Optional. The method of scheduling runs for the pipeline. Must be
+        /// one of <see cref="PipelineMode"/>.
+        /// </summary>
+        public string PipelineMode { get; set; }
+        
         public PipelineProperties()
         {
         }
