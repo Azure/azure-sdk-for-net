@@ -4,9 +4,7 @@
 
 namespace Microsoft.Azure.Search
 {
-    using System;
     using System.Net.Http;
-    using Microsoft.Rest;
 
     public partial class SearchServiceClient
     {
@@ -32,11 +30,11 @@ namespace Microsoft.Azure.Search
             HttpClientHandler rootHandler, 
             params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
-            Throw.IfInvalidSearchServiceName(searchServiceName);
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
             Throw.IfArgumentNull(credentials, "credentials");
 
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForService(searchServiceName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUri();
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -51,11 +49,11 @@ namespace Microsoft.Azure.Search
         public SearchServiceClient(string searchServiceName, SearchCredentials credentials)
             : this()
         {
-            Throw.IfInvalidSearchServiceName(searchServiceName);
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
             Throw.IfArgumentNull(credentials, "credentials");
 
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForService(searchServiceName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUri();
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -64,13 +62,6 @@ namespace Microsoft.Azure.Search
         public SearchCredentials SearchCredentials
         {
             get { return (SearchCredentials)this.Credentials; }
-        }
-
-        private static Uri BuildBaseUriForService(string searchServiceName)
-        {
-            Uri uri = TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/");
-            Throw.IfSearchServiceNameInvalidInUri(uri);
-            return uri;
         }
     }
 }

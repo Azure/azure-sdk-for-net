@@ -4,9 +4,7 @@
 
 namespace Microsoft.Azure.Search
 {
-    using System;
     using System.Net.Http;
-    using Microsoft.Rest;
 
     public partial class SearchIndexClient
     {
@@ -23,12 +21,12 @@ namespace Microsoft.Azure.Search
         public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials)
             : this()
         {
-            Throw.IfInvalidSearchServiceName(searchServiceName);
-            ThrowIfInvalidIndexName(indexName);
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
+            var validatedIndexName = new IndexName(indexName);
             Throw.IfArgumentNull(credentials, "credentials");
 
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName);
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -56,12 +54,13 @@ namespace Microsoft.Azure.Search
             params DelegatingHandler[] handlers)
             : this(rootHandler, handlers)
         {
-            Throw.IfInvalidSearchServiceName(searchServiceName);
-            ThrowIfInvalidIndexName(indexName);
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
+            var validatedIndexName = new IndexName(indexName);
+
             Throw.IfArgumentNull(credentials, "credentials");
 
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName);
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -74,23 +73,5 @@ namespace Microsoft.Azure.Search
 
         /// <inheritdoc />
         public bool UseHttpGetForQueries { get; set; }
-
-        private static Uri BuildBaseUriForIndex(string searchServiceName, string indexName)
-        {
-            Uri uri = TypeConversion.TryParseUri(
-                "https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/");
-
-            // Parsing will still succeed for index names with weird characters.
-            Throw.IfSearchServiceNameInvalidInUri(uri);
-            return uri;
-        }
-
-        private static void ThrowIfInvalidIndexName(string indexName)
-        {
-            Throw.IfArgumentNullOrEmpty(
-                indexName,
-                "indexName",
-                "Invalid index name. Name cannot be null or an empty string.");
-        }
     }
 }

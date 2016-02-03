@@ -39,21 +39,5 @@ namespace Microsoft.Azure.Search
             message = message ?? "Argument cannot be an empty string.";
             Throw.IfArgument(value.Length == 0, paramName, message);
         }
-
-        public static void IfInvalidSearchServiceName(string searchServiceName)
-        {
-            Throw.IfArgumentNullOrEmpty(
-                searchServiceName,
-                "searchServiceName",
-                "Invalid search service name. Name cannot be null or an empty string.");
-        }
-
-        public static void IfSearchServiceNameInvalidInUri(Uri uri)
-        {
-            Throw.IfArgument(
-                uri == null,
-                "searchServiceName", 
-                "Invalid search service name. Name contains characters that are not valid in a URL.");
-        }
     }
 }
