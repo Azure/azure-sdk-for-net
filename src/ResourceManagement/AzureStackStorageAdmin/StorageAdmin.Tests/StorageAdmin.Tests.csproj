@@ -3,18 +3,18 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <ProjectGuid>{F312ED2D-D97E-4C8E-8BE6-3049F839FDDF}</ProjectGuid>
-	<AssemblyName>StorageAdmin.Tests</AssemblyName>
-    <RootNamespace>Microsoft.AzureStack.Management.StorageAdmin.Tests</RootNamespace>    
-	<OutputType>Library</OutputType>
-	<AppDesignerFolder>Properties</AppDesignerFolder>
-	<FileAlignment>512</FileAlignment>
-	<RestorePackages>true</RestorePackages>
-	<SDKTestProject>true</SDKTestProject>
+    <AssemblyName>StorageAdmin.Tests</AssemblyName>
+    <RootNamespace>Microsoft.AzureStack.Management.StorageAdmin.Tests</RootNamespace>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RestorePackages>true</RestorePackages>
+    <SDKTestProject>true</SDKTestProject>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.3\lib\net45\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.dll</HintPath>
@@ -45,7 +45,7 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.ConfigurationManager.3.2.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.Storage.6.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\WindowsAzure.Storage.6.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -76,9 +76,6 @@
     <Compile Include="EventQueryResultValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hyak.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
@@ -86,11 +83,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
       <SubType>Designer</SubType>
-    </None>  
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ExpectedResults.resx">
@@ -98,7 +95,7 @@
       <LastGenOutput>ExpectedResults.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>    
+  <ItemGroup>
     <ProjectReference Include="..\StorageManagement\StorageManagement.csproj">
       <Project>{0f495f37-c031-4827-9ea6-3e19a4930a70}</Project>
       <Name>StorageManagement</Name>
