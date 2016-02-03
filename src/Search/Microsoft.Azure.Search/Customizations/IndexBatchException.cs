@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Search
             Func<Document, string> getKey = d => d[keyFieldName].ToString();
             IEnumerable<IndexAction> failedActions = 
                 this.DoFindFailedActionsToRetry<IndexBatch, IndexAction, Document>(originalBatch, getKey);
-            return new IndexBatch(failedActions);
+            return IndexBatch.New(failedActions);
         }
 
         /// <summary>
@@ -92,10 +92,7 @@ namespace Microsoft.Azure.Search
 
         private static string CreateMessage(DocumentIndexResult documentIndexResult)
         {
-            if (documentIndexResult == null)
-            {
-                throw new ArgumentNullException("documentIndexResult");
-            }
+            Throw.IfArgumentNull(documentIndexResult, "documentIndexResult");
 
             return String.Format(
                 MessageFormat, 

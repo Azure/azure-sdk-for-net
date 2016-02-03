@@ -23,6 +23,16 @@ namespace Microsoft.Azure.Management.Cdn
     public partial interface IProfilesOperations
     {
         /// <summary>
+        /// Lists the CDN Profiles within an Azure subscitption
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IEnumerable<Profile>>> ListBySubscriptionIdWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the CDN Profiles within a resource group
         /// </summary>
         /// <param name='resourceGroupName'>

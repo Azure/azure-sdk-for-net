@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,7 +22,6 @@ using Microsoft.Azure.Management.Cdn.Models;
 using Cdn.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Threading;
 
 namespace Cdn.Tests.ScenarioTests
 {
@@ -338,7 +336,92 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        
+        [Fact]
+        public void ProfileListBySubcriptionTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                // Create clients
+                var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
+                var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
+
+                // List profiles should return none
+                var profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                Assert.Equal(0, profiles.Count());
+
+                // Create resource group
+                var resourceGroupName1 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create a standard cdn profile
+                string profileName = TestUtilities.GenerateName("profile");
+                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                {
+                    Location = "WestUs",
+                    Sku = new Sku { Name = SkuName.Standard },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key1","value1"},
+                            {"key2","value2"}
+                        }
+                };
+
+                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName1);
+                VerifyProfileCreated(profile, createParameters);
+
+                // Get profile returns the created profile
+                var existingProfile = cdnMgmtClient.Profiles.Get(profileName, resourceGroupName1);
+                VerifyProfilesEqual(profile, existingProfile);
+
+                // List profiles should return one profile
+                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                Assert.Equal(1, profiles.Count());
+
+                // Create another resource group
+                var resourceGroupName2 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create a second cdn profile and don't wait for creation to finish
+                var profileName2 = TestUtilities.GenerateName("profile");
+                createParameters = new ProfileCreateParameters
+                {
+                    Location = "WestUs",
+                    Sku = new Sku { Name = SkuName.Standard },
+                    Tags = new Dictionary<string, string>
+                        {
+                            {"key1","value1"},
+                            {"key2","value2"}
+                        }
+                };
+
+                profile = cdnMgmtClient.Profiles.Create(profileName2, createParameters, resourceGroupName2);
+                VerifyProfileCreated(profile, createParameters);
+
+                // List profiles should return two profiles
+                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                Assert.Equal(2, profiles.Count());
+
+                // Delete first profile
+                cdnMgmtClient.Profiles.DeleteIfExists(profileName, resourceGroupName1);
+
+                // List profiles should return only one profile
+                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                Assert.Equal(1, profiles.Count());
+
+                // Delete second profile
+                cdnMgmtClient.Profiles.DeleteIfExists(profileName2, resourceGroupName2);
+
+                // List profiles should none
+                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                Assert.Equal(0, profiles.Count());
+
+                // Delete resource groups
+                CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName1);
+                CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName2);
+            }
+        }
+
         [Fact]
         public void GenerateSsoUriTest()
         {
@@ -373,6 +456,7 @@ namespace Cdn.Tests.ScenarioTests
                 // Generate Sso Uri on created profile should succeed
                 var ssoUri = cdnMgmtClient.Profiles.GenerateSsoUri(profileName, resourceGroupName);
                 Assert.NotNull(ssoUri);
+                Assert.False(string.IsNullOrWhiteSpace(ssoUri.SsoUriValue));
 
                 // Create a cdn profile and don't wait for creation to finish
                 profileName = TestUtilities.GenerateName("profile");

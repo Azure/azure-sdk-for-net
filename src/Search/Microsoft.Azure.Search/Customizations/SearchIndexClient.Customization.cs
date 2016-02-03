@@ -4,10 +4,7 @@
 
 namespace Microsoft.Azure.Search
 {
-    using System;
     using System.Net.Http;
-    using System.Net.Http.Headers;
-    using Microsoft.Rest;
 
     public partial class SearchIndexClient
     {
@@ -24,23 +21,12 @@ namespace Microsoft.Azure.Search
         public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials)
             : this()
         {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
+            var validatedIndexName = new IndexName(indexName);
+            Throw.IfArgumentNull(credentials, "credentials");
 
-            if (indexName == null)
-            {
-                throw new ArgumentNullException("indexName");
-            }
-            
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName);
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -68,23 +54,13 @@ namespace Microsoft.Azure.Search
             params DelegatingHandler[] handlers)
             : this(rootHandler, handlers)
         {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
-            
-            if (indexName == null)
-            {
-                throw new ArgumentNullException("indexName");
-            }
-            
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
+            var validatedIndexName = new IndexName(indexName);
+
+            Throw.IfArgumentNull(credentials, "credentials");
+
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForIndex(searchServiceName, indexName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName);
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -97,33 +73,5 @@ namespace Microsoft.Azure.Search
 
         /// <inheritdoc />
         public bool UseHttpGetForQueries { get; set; }
-
-        private static Uri BuildBaseUriForIndex(string searchServiceName, string indexName)
-        {
-            if (searchServiceName.Length == 0)
-            {
-                throw new ArgumentException(
-                    "Invalid search service name. Name cannot be an empty string.",
-                    "searchServiceName");
-            }
-
-            if (indexName.Length == 0)
-            {
-                throw new ArgumentException("Invalid index name. Name cannot be an empty string.", "indexName");
-            }
-
-            Uri uri = TypeConversion.TryParseUri(
-                "https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/");
-
-            if (uri == null)
-            {
-                // Parsing will still succeed for index names with weird characters.
-                throw new ArgumentException(
-                    "Invalid search service name. Name contains characters that are not valid in a URL.",
-                    "searchServiceName");
-            }
-
-            return uri;
-        }
     }
 }
