@@ -17,10 +17,7 @@ namespace Microsoft.Azure.Search.Models
     {
         internal SearchContinuationToken(string nextLink, SearchParametersPayload nextPageParameters)
         {
-            if (String.IsNullOrEmpty(nextLink))
-            {
-                throw new ArgumentException("Parameter cannot be null or empty.", "nextLink");
-            }
+            Throw.IfArgumentNullOrEmpty(nextLink, "nextLink");
 
             this.NextLink = nextLink;
             this.NextPageParameters = nextPageParameters;    // Will be null for GET responses.

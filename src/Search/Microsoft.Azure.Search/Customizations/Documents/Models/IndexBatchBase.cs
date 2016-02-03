@@ -27,10 +27,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="actions">The index actions to include in the batch.</param>
         protected IndexBatchBase(IEnumerable<TAction> actions)
         {
-            if (actions == null)
-            {
-                throw new ArgumentNullException("actions");
-            }
+            Throw.IfArgumentNull(actions, "actions");
 
             Actions = actions;
         }
