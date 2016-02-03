@@ -399,10 +399,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<TrackedResource>> CreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Endpoint>> CreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<TrackedResource> _response = await BeginCreateWithHttpMessagesAsync(
+            AzureOperationResponse<Endpoint> _response = await BeginCreateWithHttpMessagesAsync(
                 endpointName, endpointProperties, profileName, resourceGroupName, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<TrackedResource>> BeginCreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Endpoint>> BeginCreateWithHttpMessagesAsync(string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (endpointName == null)
             {
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Management.Cdn
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TrackedResource>();
+            var _result = new AzureOperationResponse<Endpoint>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -593,7 +593,7 @@ namespace Microsoft.Azure.Management.Cdn
                 try
                 {
                     string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    _result.Body = SafeJsonConvert.DeserializeObject<Profile>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Endpoint>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
