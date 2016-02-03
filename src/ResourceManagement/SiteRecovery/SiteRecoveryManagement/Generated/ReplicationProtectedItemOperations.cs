@@ -1051,6 +1051,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 providerSpecificDetailsValue["multiVmGroupName"] = derived2.MultiVmGroupName;
                             }
+                            
+                            if (derived2.DisksToExclude != null)
+                            {
+                                if (derived2.DisksToExclude is ILazyCollection == false || ((ILazyCollection)derived2.DisksToExclude).IsInitialized)
+                                {
+                                    JArray disksToExcludeArray = new JArray();
+                                    foreach (string disksToExcludeItem in derived2.DisksToExclude)
+                                    {
+                                        disksToExcludeArray.Add(disksToExcludeItem);
+                                    }
+                                    providerSpecificDetailsValue["disksToExclude"] = disksToExcludeArray;
+                                }
+                            }
                         }
                         if (input.Properties.ProviderSpecificDetails is InMageEnableProtectionInput)
                         {
@@ -1095,6 +1108,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             if (derived3.DatastoreName != null)
                             {
                                 providerSpecificDetailsValue["datastoreName"] = derived3.DatastoreName;
+                            }
+                            
+                            if (derived3.DisksToExclude != null)
+                            {
+                                if (derived3.DisksToExclude is ILazyCollection == false || ((ILazyCollection)derived3.DisksToExclude).IsInitialized)
+                                {
+                                    JArray disksToExcludeArray2 = new JArray();
+                                    foreach (string disksToExcludeItem2 in derived3.DisksToExclude)
+                                    {
+                                        disksToExcludeArray2.Add(disksToExcludeItem2);
+                                    }
+                                    providerSpecificDetailsValue["disksToExclude"] = disksToExcludeArray2;
+                                }
                             }
                             
                             if (derived3.DiskExclusionInput != null)
@@ -2135,6 +2161,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 providerSpecificDetailsValue["storageAccountId"] = derived2.StorageAccountId;
                             }
+                            
+                            if (derived2.DisksToExclude != null)
+                            {
+                                if (derived2.DisksToExclude is ILazyCollection == false || ((ILazyCollection)derived2.DisksToExclude).IsInitialized)
+                                {
+                                    JArray disksToExcludeArray = new JArray();
+                                    foreach (string disksToExcludeItem in derived2.DisksToExclude)
+                                    {
+                                        disksToExcludeArray.Add(disksToExcludeItem);
+                                    }
+                                    providerSpecificDetailsValue["disksToExclude"] = disksToExcludeArray;
+                                }
+                            }
                         }
                         if (input.Properties.ProviderSpecificDetails is InMageReprotectInput)
                         {
@@ -2164,6 +2203,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             if (derived3.DatastoreName != null)
                             {
                                 providerSpecificDetailsValue["datastoreName"] = derived3.DatastoreName;
+                            }
+                            
+                            if (derived3.DisksToExclude != null)
+                            {
+                                if (derived3.DisksToExclude is ILazyCollection == false || ((ILazyCollection)derived3.DisksToExclude).IsInitialized)
+                                {
+                                    JArray disksToExcludeArray2 = new JArray();
+                                    foreach (string disksToExcludeItem2 in derived3.DisksToExclude)
+                                    {
+                                        disksToExcludeArray2.Add(disksToExcludeItem2);
+                                    }
+                                    providerSpecificDetailsValue["disksToExclude"] = disksToExcludeArray2;
+                                }
                             }
                             
                             if (derived3.DiskExclusionInput != null)
@@ -4477,112 +4529,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -4911,103 +4970,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -5051,11 +5117,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -5461,11 +5527,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -6332,112 +6398,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -6766,103 +6839,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -6906,11 +6986,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -7316,11 +7396,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -8246,112 +8326,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -8680,103 +8767,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -8820,11 +8914,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -9230,11 +9324,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -10391,112 +10485,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -10825,103 +10926,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -10965,11 +11073,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -11375,11 +11483,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -12305,112 +12413,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -12739,103 +12854,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -12879,11 +13001,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -13289,11 +13411,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -14450,112 +14572,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -14884,103 +15013,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -15024,11 +15160,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -15434,11 +15570,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -16364,112 +16500,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -16798,103 +16941,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -16938,11 +17088,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -17348,11 +17498,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -18278,112 +18428,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -18712,103 +18869,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -18852,11 +19016,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -19262,11 +19426,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -20192,112 +20356,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -20626,103 +20797,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -20766,11 +20944,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -21176,11 +21354,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -22106,112 +22284,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -22540,103 +22725,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -22680,11 +22872,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -23090,11 +23282,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -24020,112 +24212,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                         }
                                         
-                                        JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                        if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                        JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                        if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                            foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                             {
-                                                InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue = protectedVolumesValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                JToken diskIdValue = protectedDisksValue["diskId"];
+                                                if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                    string diskIdInstance = ((string)diskIdValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                 }
                                                 
-                                                JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                JToken diskNameValue = protectedDisksValue["diskName"];
+                                                if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance = ((string)diskNameValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                }
+                                                
+                                                JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                 if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                 if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                 if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                 }
                                                 
-                                                JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                 if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                    long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                 }
                                                 
-                                                JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                 if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                 if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                 if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance = ((string)volumeResizedValue);
-                                                    inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                    string diskResizedInstance = ((string)diskResizedValue);
+                                                    inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                        JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                            inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                            string diskResizedInstance2 = ((string)diskResizedValue2);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                         }
                                         
                                         JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -24454,103 +24653,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                         }
                                         
-                                        JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                        if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                        JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                        if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                            foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                             {
-                                                InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                 
-                                                JToken nameValue2 = protectedVolumesValue2["name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
-                                                    inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                    string diskIdInstance2 = ((string)diskIdValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                 }
                                                 
-                                                JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string diskNameInstance2 = ((string)diskNameValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                }
+                                                
+                                                JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                 if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                 {
                                                     string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                    inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                    inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                 }
                                                 
-                                                JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                 if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                 {
                                                     string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                    inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                    inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                 }
                                                 
-                                                JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                 if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                 {
                                                     long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                    inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                    inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                 }
                                                 
-                                                JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                 if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                 {
                                                     string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                 }
                                                 
-                                                JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                 if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                 {
                                                     int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                    inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                 }
                                                 
-                                                JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                 if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                 {
                                                     long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                    inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                    inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                 }
                                                 
-                                                JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
-                                                    long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                    long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                    inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                 if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                 {
                                                     long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                    inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                    inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                 }
                                                 
-                                                JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                 if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                 }
                                                 
-                                                JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                 if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double psDataInMBInstance = ((double)psDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                 }
                                                 
-                                                JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                 if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                 {
                                                     double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                    inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                    inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                 }
                                                 
-                                                JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                    inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                    string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                    inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                 }
                                             }
                                         }
@@ -24594,11 +24800,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                        if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                        JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                        if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                         {
-                                            string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                            inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                            string diskResizedInstance4 = ((string)diskResizedValue4);
+                                            inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                         }
                                         
                                         JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -25004,11 +25210,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 replicationProtectedItemInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue3 = responseDoc["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = ((string)nameValue3);
-                                replicationProtectedItemInstance.Name = nameInstance3;
+                                string nameInstance = ((string)nameValue);
+                                replicationProtectedItemInstance.Name = nameInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
@@ -25983,112 +26189,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                                 }
                                                 
-                                                JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                                if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                                JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                                if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                                    foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                                     {
-                                                        InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                        inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                        InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                        inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                         
-                                                        JToken nameValue = protectedVolumesValue["name"];
-                                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                        JToken diskIdValue = protectedDisksValue["diskId"];
+                                                        if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                         {
-                                                            string nameInstance = ((string)nameValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                            string diskIdInstance = ((string)diskIdValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                         }
                                                         
-                                                        JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                        JToken diskNameValue = protectedDisksValue["diskName"];
+                                                        if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string diskNameInstance = ((string)diskNameValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                        }
+                                                        
+                                                        JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                         if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                         {
                                                             string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                         }
                                                         
-                                                        JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                        JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                         if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                         {
                                                             string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                         }
                                                         
-                                                        JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                        JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                         if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                         {
                                                             long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                         }
                                                         
-                                                        JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                        JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                         if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                         {
                                                             string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                         }
                                                         
-                                                        JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                        JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                         if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                         {
                                                             int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                         }
                                                         
-                                                        JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                        JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                         if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                         {
                                                             long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                         }
                                                         
-                                                        JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                        if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                        JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                        if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                         {
-                                                            long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                            long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                         }
                                                         
-                                                        JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                        JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                         if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                         {
                                                             long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                         }
                                                         
-                                                        JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                        JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                         if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                        JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                         if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                        JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                         if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                        if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                        JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                        if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                         {
-                                                            string volumeResizedInstance = ((string)volumeResizedValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                            string diskResizedInstance = ((string)diskResizedValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                         }
                                                     }
                                                 }
                                                 
-                                                JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                                if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                                JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                                if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                                    inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                                    string diskResizedInstance2 = ((string)diskResizedValue2);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                                 }
                                                 
                                                 JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -26417,103 +26630,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                                 }
                                                 
-                                                JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                                if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                                JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                                if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                                    foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                                     {
-                                                        InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                        inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                        InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                        inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                         
-                                                        JToken nameValue2 = protectedVolumesValue2["name"];
-                                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                        JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                        if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                         {
-                                                            string nameInstance2 = ((string)nameValue2);
-                                                            inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                            string diskIdInstance2 = ((string)diskIdValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                         }
                                                         
-                                                        JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                        JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                        if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string diskNameInstance2 = ((string)diskNameValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                        }
+                                                        
+                                                        JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                         if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                         {
                                                             string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                            inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                            inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                         }
                                                         
-                                                        JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                        JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                         if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                         {
                                                             string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                            inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                            inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                         }
                                                         
-                                                        JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                        JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                         if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                         {
                                                             long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                            inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                            inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                         }
                                                         
-                                                        JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                        JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                         if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                         {
                                                             string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                            inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                         }
                                                         
-                                                        JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                        JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                         if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                         {
                                                             int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                            inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                         }
                                                         
-                                                        JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                        JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                         if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                         {
                                                             long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                            inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                         }
                                                         
-                                                        JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                        if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                        JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                        if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                         {
-                                                            long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                            inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                            long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                         }
                                                         
-                                                        JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                        JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                         if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                         {
                                                             long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                            inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                            inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                         }
                                                         
-                                                        JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                        JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                         if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                         }
                                                         
-                                                        JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                        JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                         if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double psDataInMBInstance = ((double)psDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                         }
                                                         
-                                                        JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                        JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                         if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                         }
                                                         
-                                                        JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                        if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                        JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                        if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                         {
-                                                            string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                            inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                            string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                            inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                         }
                                                     }
                                                 }
@@ -26557,11 +26777,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
-                                                JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                                if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                                JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                                if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                                    inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                                    string diskResizedInstance4 = ((string)diskResizedValue4);
+                                                    inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                                 }
                                                 
                                                 JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -26967,11 +27187,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         replicationProtectedItemInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue3 = valueValue["name"];
-                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance3 = ((string)nameValue3);
-                                        replicationProtectedItemInstance.Name = nameInstance3;
+                                        string nameInstance = ((string)nameValue);
+                                        replicationProtectedItemInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -27897,112 +28117,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                                 }
                                                 
-                                                JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                                if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                                JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                                if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                                    foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                                     {
-                                                        InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                        inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                        InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                        inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                         
-                                                        JToken nameValue = protectedVolumesValue["name"];
-                                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                        JToken diskIdValue = protectedDisksValue["diskId"];
+                                                        if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                         {
-                                                            string nameInstance = ((string)nameValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                            string diskIdInstance = ((string)diskIdValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                         }
                                                         
-                                                        JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                        JToken diskNameValue = protectedDisksValue["diskName"];
+                                                        if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string diskNameInstance = ((string)diskNameValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                        }
+                                                        
+                                                        JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                         if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                         {
                                                             string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                         }
                                                         
-                                                        JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                        JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                         if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                         {
                                                             string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                         }
                                                         
-                                                        JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                        JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                         if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                         {
                                                             long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                         }
                                                         
-                                                        JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                        JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                         if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                         {
                                                             string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                         }
                                                         
-                                                        JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                        JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                         if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                         {
                                                             int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                         }
                                                         
-                                                        JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                        JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                         if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                         {
                                                             long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                         }
                                                         
-                                                        JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                        if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                        JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                        if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                         {
-                                                            long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                            long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                         }
                                                         
-                                                        JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                        JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                         if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                         {
                                                             long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                         }
                                                         
-                                                        JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                        JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                         if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                        JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                         if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                        JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                         if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                        if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                        JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                        if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                         {
-                                                            string volumeResizedInstance = ((string)volumeResizedValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                            string diskResizedInstance = ((string)diskResizedValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                         }
                                                     }
                                                 }
                                                 
-                                                JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                                if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                                JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                                if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                                    inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                                    string diskResizedInstance2 = ((string)diskResizedValue2);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                                 }
                                                 
                                                 JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -28331,103 +28558,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                                 }
                                                 
-                                                JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                                if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                                JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                                if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                                    foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                                     {
-                                                        InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                        inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                        InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                        inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                         
-                                                        JToken nameValue2 = protectedVolumesValue2["name"];
-                                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                        JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                        if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                         {
-                                                            string nameInstance2 = ((string)nameValue2);
-                                                            inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                            string diskIdInstance2 = ((string)diskIdValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                         }
                                                         
-                                                        JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                        JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                        if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string diskNameInstance2 = ((string)diskNameValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                        }
+                                                        
+                                                        JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                         if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                         {
                                                             string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                            inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                            inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                         }
                                                         
-                                                        JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                        JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                         if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                         {
                                                             string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                            inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                            inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                         }
                                                         
-                                                        JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                        JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                         if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                         {
                                                             long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                            inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                            inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                         }
                                                         
-                                                        JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                        JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                         if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                         {
                                                             string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                            inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                         }
                                                         
-                                                        JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                        JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                         if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                         {
                                                             int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                            inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                         }
                                                         
-                                                        JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                        JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                         if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                         {
                                                             long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                            inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                         }
                                                         
-                                                        JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                        if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                        JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                        if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                         {
-                                                            long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                            inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                            long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                         }
                                                         
-                                                        JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                        JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                         if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                         {
                                                             long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                            inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                            inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                         }
                                                         
-                                                        JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                        JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                         if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                         }
                                                         
-                                                        JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                        JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                         if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double psDataInMBInstance = ((double)psDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                         }
                                                         
-                                                        JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                        JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                         if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                         }
                                                         
-                                                        JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                        if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                        JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                        if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                         {
-                                                            string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                            inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                            string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                            inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                         }
                                                     }
                                                 }
@@ -28471,11 +28705,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
-                                                JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                                if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                                JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                                if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                                    inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                                    string diskResizedInstance4 = ((string)diskResizedValue4);
+                                                    inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                                 }
                                                 
                                                 JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -28881,11 +29115,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         replicationProtectedItemInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue3 = valueValue["name"];
-                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance3 = ((string)nameValue3);
-                                        replicationProtectedItemInstance.Name = nameInstance3;
+                                        string nameInstance = ((string)nameValue);
+                                        replicationProtectedItemInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
@@ -29769,112 +30003,119 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.MultiVmGroupName = multiVmGroupNameInstance;
                                                 }
                                                 
-                                                JToken protectedVolumesArray = providerSpecificDetailsValue["protectedVolumes"];
-                                                if (protectedVolumesArray != null && protectedVolumesArray.Type != JTokenType.Null)
+                                                JToken protectedDisksArray = providerSpecificDetailsValue["protectedDisks"];
+                                                if (protectedDisksArray != null && protectedDisksArray.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken protectedVolumesValue in ((JArray)protectedVolumesArray))
+                                                    foreach (JToken protectedDisksValue in ((JArray)protectedDisksArray))
                                                     {
-                                                        InMageAzureV2ProtectedVolumeDetails inMageAzureV2ProtectedVolumeDetailsInstance = new InMageAzureV2ProtectedVolumeDetails();
-                                                        inMageAzureV2ProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageAzureV2ProtectedVolumeDetailsInstance);
+                                                        InMageAzureV2ProtectedDiskDetails inMageAzureV2ProtectedDiskDetailsInstance = new InMageAzureV2ProtectedDiskDetails();
+                                                        inMageAzureV2ProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageAzureV2ProtectedDiskDetailsInstance);
                                                         
-                                                        JToken nameValue = protectedVolumesValue["name"];
-                                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                        JToken diskIdValue = protectedDisksValue["diskId"];
+                                                        if (diskIdValue != null && diskIdValue.Type != JTokenType.Null)
                                                         {
-                                                            string nameInstance = ((string)nameValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.Name = nameInstance;
+                                                            string diskIdInstance = ((string)diskIdValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskId = diskIdInstance;
                                                         }
                                                         
-                                                        JToken protectionStageValue2 = protectedVolumesValue["protectionStage"];
+                                                        JToken diskNameValue = protectedDisksValue["diskName"];
+                                                        if (diskNameValue != null && diskNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string diskNameInstance = ((string)diskNameValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskName = diskNameInstance;
+                                                        }
+                                                        
+                                                        JToken protectionStageValue2 = protectedDisksValue["protectionStage"];
                                                         if (protectionStageValue2 != null && protectionStageValue2.Type != JTokenType.Null)
                                                         {
                                                             string protectionStageInstance2 = ((string)protectionStageValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance2;
                                                         }
                                                         
-                                                        JToken healthErrorCodeValue2 = protectedVolumesValue["healthErrorCode"];
+                                                        JToken healthErrorCodeValue2 = protectedDisksValue["healthErrorCode"];
                                                         if (healthErrorCodeValue2 != null && healthErrorCodeValue2.Type != JTokenType.Null)
                                                         {
                                                             string healthErrorCodeInstance2 = ((string)healthErrorCodeValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance2;
                                                         }
                                                         
-                                                        JToken rpoInSecondsValue2 = protectedVolumesValue["rpoInSeconds"];
+                                                        JToken rpoInSecondsValue2 = protectedDisksValue["rpoInSeconds"];
                                                         if (rpoInSecondsValue2 != null && rpoInSecondsValue2.Type != JTokenType.Null)
                                                         {
                                                             long rpoInSecondsInstance2 = ((long)rpoInSecondsValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance2;
                                                         }
                                                         
-                                                        JToken resyncRequiredValue2 = protectedVolumesValue["resyncRequired"];
+                                                        JToken resyncRequiredValue2 = protectedDisksValue["resyncRequired"];
                                                         if (resyncRequiredValue2 != null && resyncRequiredValue2.Type != JTokenType.Null)
                                                         {
                                                             string resyncRequiredInstance2 = ((string)resyncRequiredValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance2;
                                                         }
                                                         
-                                                        JToken resyncProgressPercentageValue2 = protectedVolumesValue["resyncProgressPercentage"];
+                                                        JToken resyncProgressPercentageValue2 = protectedDisksValue["resyncProgressPercentage"];
                                                         if (resyncProgressPercentageValue2 != null && resyncProgressPercentageValue2.Type != JTokenType.Null)
                                                         {
                                                             int resyncProgressPercentageInstance2 = ((int)resyncProgressPercentageValue2);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance2;
                                                         }
                                                         
-                                                        JToken resyncDurationInSecondsValue = protectedVolumesValue["resyncDurationInSeconds"];
+                                                        JToken resyncDurationInSecondsValue = protectedDisksValue["resyncDurationInSeconds"];
                                                         if (resyncDurationInSecondsValue != null && resyncDurationInSecondsValue.Type != JTokenType.Null)
                                                         {
                                                             long resyncDurationInSecondsInstance = ((long)resyncDurationInSecondsValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance;
                                                         }
                                                         
-                                                        JToken volumeCapacityInBytesValue = protectedVolumesValue["volumeCapacityInBytes"];
-                                                        if (volumeCapacityInBytesValue != null && volumeCapacityInBytesValue.Type != JTokenType.Null)
+                                                        JToken diskCapacityInBytesValue = protectedDisksValue["diskCapacityInBytes"];
+                                                        if (diskCapacityInBytesValue != null && diskCapacityInBytesValue.Type != JTokenType.Null)
                                                         {
-                                                            long volumeCapacityInBytesInstance = ((long)volumeCapacityInBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance;
+                                                            long diskCapacityInBytesInstance = ((long)diskCapacityInBytesValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance;
                                                         }
                                                         
-                                                        JToken fileSystemCapacityInBytesValue = protectedVolumesValue["fileSystemCapacityInBytes"];
+                                                        JToken fileSystemCapacityInBytesValue = protectedDisksValue["fileSystemCapacityInBytes"];
                                                         if (fileSystemCapacityInBytesValue != null && fileSystemCapacityInBytesValue.Type != JTokenType.Null)
                                                         {
                                                             long fileSystemCapacityInBytesInstance = ((long)fileSystemCapacityInBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance;
                                                         }
                                                         
-                                                        JToken sourceDataInMegaBytesValue = protectedVolumesValue["sourceDataInMegaBytes"];
+                                                        JToken sourceDataInMegaBytesValue = protectedDisksValue["sourceDataInMegaBytes"];
                                                         if (sourceDataInMegaBytesValue != null && sourceDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double sourceDataInMegaBytesInstance = ((double)sourceDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.SourceDataInMB = sourceDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken psDataInMegaBytesValue = protectedVolumesValue["psDataInMegaBytes"];
+                                                        JToken psDataInMegaBytesValue = protectedDisksValue["psDataInMegaBytes"];
                                                         if (psDataInMegaBytesValue != null && psDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double psDataInMegaBytesInstance = ((double)psDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.PSDataInMB = psDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken targetDataInMegaBytesValue = protectedVolumesValue["targetDataInMegaBytes"];
+                                                        JToken targetDataInMegaBytesValue = protectedDisksValue["targetDataInMegaBytes"];
                                                         if (targetDataInMegaBytesValue != null && targetDataInMegaBytesValue.Type != JTokenType.Null)
                                                         {
                                                             double targetDataInMegaBytesInstance = ((double)targetDataInMegaBytesValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.TargetDataInMB = targetDataInMegaBytesInstance;
                                                         }
                                                         
-                                                        JToken volumeResizedValue = protectedVolumesValue["volumeResized"];
-                                                        if (volumeResizedValue != null && volumeResizedValue.Type != JTokenType.Null)
+                                                        JToken diskResizedValue = protectedDisksValue["diskResized"];
+                                                        if (diskResizedValue != null && diskResizedValue.Type != JTokenType.Null)
                                                         {
-                                                            string volumeResizedInstance = ((string)volumeResizedValue);
-                                                            inMageAzureV2ProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance;
+                                                            string diskResizedInstance = ((string)diskResizedValue);
+                                                            inMageAzureV2ProtectedDiskDetailsInstance.DiskResized = diskResizedInstance;
                                                         }
                                                     }
                                                 }
                                                 
-                                                JToken volumeResizedValue2 = providerSpecificDetailsValue["volumeResized"];
-                                                if (volumeResizedValue2 != null && volumeResizedValue2.Type != JTokenType.Null)
+                                                JToken diskResizedValue2 = providerSpecificDetailsValue["diskResized"];
+                                                if (diskResizedValue2 != null && diskResizedValue2.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance2 = ((string)volumeResizedValue2);
-                                                    inMageAzureV2ProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance2;
+                                                    string diskResizedInstance2 = ((string)diskResizedValue2);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.DiskResized = diskResizedInstance2;
                                                 }
                                                 
                                                 JToken masterTargetIdValue = providerSpecificDetailsValue["masterTargetId"];
@@ -30203,103 +30444,110 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.RpoInSeconds = rpoInSecondsInstance3;
                                                 }
                                                 
-                                                JToken protectedVolumesArray2 = providerSpecificDetailsValue["ProtectedVolumes"];
-                                                if (protectedVolumesArray2 != null && protectedVolumesArray2.Type != JTokenType.Null)
+                                                JToken protectedDisksArray2 = providerSpecificDetailsValue["ProtectedDisks"];
+                                                if (protectedDisksArray2 != null && protectedDisksArray2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken protectedVolumesValue2 in ((JArray)protectedVolumesArray2))
+                                                    foreach (JToken protectedDisksValue2 in ((JArray)protectedDisksArray2))
                                                     {
-                                                        InMageProtectedVolumeDetails inMageProtectedVolumeDetailsInstance = new InMageProtectedVolumeDetails();
-                                                        inMageProviderSpecificSettingsInstance.ProtectedVolumes.Add(inMageProtectedVolumeDetailsInstance);
+                                                        InMageProtectedDiskDetails inMageProtectedDiskDetailsInstance = new InMageProtectedDiskDetails();
+                                                        inMageProviderSpecificSettingsInstance.ProtectedDisks.Add(inMageProtectedDiskDetailsInstance);
                                                         
-                                                        JToken nameValue2 = protectedVolumesValue2["name"];
-                                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                        JToken diskIdValue2 = protectedDisksValue2["diskId"];
+                                                        if (diskIdValue2 != null && diskIdValue2.Type != JTokenType.Null)
                                                         {
-                                                            string nameInstance2 = ((string)nameValue2);
-                                                            inMageProtectedVolumeDetailsInstance.Name = nameInstance2;
+                                                            string diskIdInstance2 = ((string)diskIdValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskId = diskIdInstance2;
                                                         }
                                                         
-                                                        JToken protectionStageValue4 = protectedVolumesValue2["protectionStage"];
+                                                        JToken diskNameValue2 = protectedDisksValue2["diskName"];
+                                                        if (diskNameValue2 != null && diskNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string diskNameInstance2 = ((string)diskNameValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskName = diskNameInstance2;
+                                                        }
+                                                        
+                                                        JToken protectionStageValue4 = protectedDisksValue2["protectionStage"];
                                                         if (protectionStageValue4 != null && protectionStageValue4.Type != JTokenType.Null)
                                                         {
                                                             string protectionStageInstance4 = ((string)protectionStageValue4);
-                                                            inMageProtectedVolumeDetailsInstance.ProtectionStage = protectionStageInstance4;
+                                                            inMageProtectedDiskDetailsInstance.ProtectionStage = protectionStageInstance4;
                                                         }
                                                         
-                                                        JToken healthErrorCodeValue3 = protectedVolumesValue2["healthErrorCode"];
+                                                        JToken healthErrorCodeValue3 = protectedDisksValue2["healthErrorCode"];
                                                         if (healthErrorCodeValue3 != null && healthErrorCodeValue3.Type != JTokenType.Null)
                                                         {
                                                             string healthErrorCodeInstance3 = ((string)healthErrorCodeValue3);
-                                                            inMageProtectedVolumeDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
+                                                            inMageProtectedDiskDetailsInstance.HealthErrorCode = healthErrorCodeInstance3;
                                                         }
                                                         
-                                                        JToken rpoInSecondsValue4 = protectedVolumesValue2["rpoInSeconds"];
+                                                        JToken rpoInSecondsValue4 = protectedDisksValue2["rpoInSeconds"];
                                                         if (rpoInSecondsValue4 != null && rpoInSecondsValue4.Type != JTokenType.Null)
                                                         {
                                                             long rpoInSecondsInstance4 = ((long)rpoInSecondsValue4);
-                                                            inMageProtectedVolumeDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
+                                                            inMageProtectedDiskDetailsInstance.RpoInSeconds = rpoInSecondsInstance4;
                                                         }
                                                         
-                                                        JToken resyncRequiredValue3 = protectedVolumesValue2["resyncRequired"];
+                                                        JToken resyncRequiredValue3 = protectedDisksValue2["resyncRequired"];
                                                         if (resyncRequiredValue3 != null && resyncRequiredValue3.Type != JTokenType.Null)
                                                         {
                                                             string resyncRequiredInstance3 = ((string)resyncRequiredValue3);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncRequired = resyncRequiredInstance3;
+                                                            inMageProtectedDiskDetailsInstance.ResyncRequired = resyncRequiredInstance3;
                                                         }
                                                         
-                                                        JToken resyncProgressPercentageValue3 = protectedVolumesValue2["resyncProgressPercentage"];
+                                                        JToken resyncProgressPercentageValue3 = protectedDisksValue2["resyncProgressPercentage"];
                                                         if (resyncProgressPercentageValue3 != null && resyncProgressPercentageValue3.Type != JTokenType.Null)
                                                         {
                                                             int resyncProgressPercentageInstance3 = ((int)resyncProgressPercentageValue3);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
+                                                            inMageProtectedDiskDetailsInstance.ResyncProgressPercentage = resyncProgressPercentageInstance3;
                                                         }
                                                         
-                                                        JToken resyncDurationInSecondsValue2 = protectedVolumesValue2["resyncDurationInSeconds"];
+                                                        JToken resyncDurationInSecondsValue2 = protectedDisksValue2["resyncDurationInSeconds"];
                                                         if (resyncDurationInSecondsValue2 != null && resyncDurationInSecondsValue2.Type != JTokenType.Null)
                                                         {
                                                             long resyncDurationInSecondsInstance2 = ((long)resyncDurationInSecondsValue2);
-                                                            inMageProtectedVolumeDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
+                                                            inMageProtectedDiskDetailsInstance.ResyncDurationInSeconds = resyncDurationInSecondsInstance2;
                                                         }
                                                         
-                                                        JToken volumeCapacityInBytesValue2 = protectedVolumesValue2["volumeCapacityInBytes"];
-                                                        if (volumeCapacityInBytesValue2 != null && volumeCapacityInBytesValue2.Type != JTokenType.Null)
+                                                        JToken diskCapacityInBytesValue2 = protectedDisksValue2["diskCapacityInBytes"];
+                                                        if (diskCapacityInBytesValue2 != null && diskCapacityInBytesValue2.Type != JTokenType.Null)
                                                         {
-                                                            long volumeCapacityInBytesInstance2 = ((long)volumeCapacityInBytesValue2);
-                                                            inMageProtectedVolumeDetailsInstance.VolumeCapacityInBytes = volumeCapacityInBytesInstance2;
+                                                            long diskCapacityInBytesInstance2 = ((long)diskCapacityInBytesValue2);
+                                                            inMageProtectedDiskDetailsInstance.DiskCapacityInBytes = diskCapacityInBytesInstance2;
                                                         }
                                                         
-                                                        JToken fileSystemCapacityInBytesValue2 = protectedVolumesValue2["fileSystemCapacityInBytes"];
+                                                        JToken fileSystemCapacityInBytesValue2 = protectedDisksValue2["fileSystemCapacityInBytes"];
                                                         if (fileSystemCapacityInBytesValue2 != null && fileSystemCapacityInBytesValue2.Type != JTokenType.Null)
                                                         {
                                                             long fileSystemCapacityInBytesInstance2 = ((long)fileSystemCapacityInBytesValue2);
-                                                            inMageProtectedVolumeDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
+                                                            inMageProtectedDiskDetailsInstance.FileSystemCapacityInBytes = fileSystemCapacityInBytesInstance2;
                                                         }
                                                         
-                                                        JToken sourceDataInMBValue = protectedVolumesValue2["sourceDataInMB"];
+                                                        JToken sourceDataInMBValue = protectedDisksValue2["sourceDataInMB"];
                                                         if (sourceDataInMBValue != null && sourceDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double sourceDataInMBInstance = ((double)sourceDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.SourceDataInMegaBytes = sourceDataInMBInstance;
                                                         }
                                                         
-                                                        JToken psDataInMBValue = protectedVolumesValue2["psDataInMB"];
+                                                        JToken psDataInMBValue = protectedDisksValue2["psDataInMB"];
                                                         if (psDataInMBValue != null && psDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double psDataInMBInstance = ((double)psDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.PSDataInMegaBytes = psDataInMBInstance;
                                                         }
                                                         
-                                                        JToken targetDataInMBValue = protectedVolumesValue2["targetDataInMB"];
+                                                        JToken targetDataInMBValue = protectedDisksValue2["targetDataInMB"];
                                                         if (targetDataInMBValue != null && targetDataInMBValue.Type != JTokenType.Null)
                                                         {
                                                             double targetDataInMBInstance = ((double)targetDataInMBValue);
-                                                            inMageProtectedVolumeDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
+                                                            inMageProtectedDiskDetailsInstance.TargetDataInMegaBytes = targetDataInMBInstance;
                                                         }
                                                         
-                                                        JToken volumeResizedValue3 = protectedVolumesValue2["volumeResized"];
-                                                        if (volumeResizedValue3 != null && volumeResizedValue3.Type != JTokenType.Null)
+                                                        JToken diskResizedValue3 = protectedDisksValue2["diskResized"];
+                                                        if (diskResizedValue3 != null && diskResizedValue3.Type != JTokenType.Null)
                                                         {
-                                                            string volumeResizedInstance3 = ((string)volumeResizedValue3);
-                                                            inMageProtectedVolumeDetailsInstance.VolumeResized = volumeResizedInstance3;
+                                                            string diskResizedInstance3 = ((string)diskResizedValue3);
+                                                            inMageProtectedDiskDetailsInstance.DiskResized = diskResizedInstance3;
                                                         }
                                                     }
                                                 }
@@ -30343,11 +30591,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     }
                                                 }
                                                 
-                                                JToken volumeResizedValue4 = providerSpecificDetailsValue["volumeResized"];
-                                                if (volumeResizedValue4 != null && volumeResizedValue4.Type != JTokenType.Null)
+                                                JToken diskResizedValue4 = providerSpecificDetailsValue["diskResized"];
+                                                if (diskResizedValue4 != null && diskResizedValue4.Type != JTokenType.Null)
                                                 {
-                                                    string volumeResizedInstance4 = ((string)volumeResizedValue4);
-                                                    inMageProviderSpecificSettingsInstance.VolumeResized = volumeResizedInstance4;
+                                                    string diskResizedInstance4 = ((string)diskResizedValue4);
+                                                    inMageProviderSpecificSettingsInstance.DiskResized = diskResizedInstance4;
                                                 }
                                                 
                                                 JToken rebootAfterUpdateStatusValue = providerSpecificDetailsValue["rebootAfterUpdateStatus"];
@@ -30753,11 +31001,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         replicationProtectedItemInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue3 = valueValue["name"];
-                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string nameInstance3 = ((string)nameValue3);
-                                        replicationProtectedItemInstance.Name = nameInstance3;
+                                        string nameInstance = ((string)nameValue);
+                                        replicationProtectedItemInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];

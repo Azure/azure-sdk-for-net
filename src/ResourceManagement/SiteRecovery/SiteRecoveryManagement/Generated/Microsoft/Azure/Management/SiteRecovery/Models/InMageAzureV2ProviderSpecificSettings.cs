@@ -77,6 +77,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._discoveryType = value; }
         }
         
+        private string _diskResized;
+        
+        /// <summary>
+        /// Optional. Value indicating whether any disk is resized for this VM.
+        /// </summary>
+        public string DiskResized
+        {
+            get { return this._diskResized; }
+            set { this._diskResized = value; }
+        }
+        
         private string _healthErrorCode;
         
         /// <summary>
@@ -211,15 +222,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._processServerId = value; }
         }
         
-        private IList<InMageAzureV2ProtectedVolumeDetails> _protectedVolumes;
+        private IList<InMageAzureV2ProtectedDiskDetails> _protectedDisks;
         
         /// <summary>
         /// Optional. List of protected volumes.
         /// </summary>
-        public IList<InMageAzureV2ProtectedVolumeDetails> ProtectedVolumes
+        public IList<InMageAzureV2ProtectedDiskDetails> ProtectedDisks
         {
-            get { return this._protectedVolumes; }
-            set { this._protectedVolumes = value; }
+            get { return this._protectedDisks; }
+            set { this._protectedDisks = value; }
         }
         
         private string _protectionStage;
@@ -376,18 +387,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._vMNics = value; }
         }
         
-        private string _volumeResized;
-        
-        /// <summary>
-        /// Optional. Value indicating whether any volume is resized for this
-        /// VM.
-        /// </summary>
-        public string VolumeResized
-        {
-            get { return this._volumeResized; }
-            set { this._volumeResized = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the
         /// InMageAzureV2ProviderSpecificSettings class.
@@ -395,7 +394,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         public InMageAzureV2ProviderSpecificSettings()
         {
             this.AzureVMDiskDetails = new LazyList<AzureVmDiskDetails>();
-            this.ProtectedVolumes = new LazyList<InMageAzureV2ProtectedVolumeDetails>();
+            this.ProtectedDisks = new LazyList<InMageAzureV2ProtectedDiskDetails>();
             this.VMNics = new LazyList<VMNicDetails>();
         }
     }

@@ -76,6 +76,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._consistencyPoints = value; }
         }
         
+        private string _diskResized;
+        
+        /// <summary>
+        /// Optional. Indicates whether any disk is resized for this VM.
+        /// </summary>
+        public string DiskResized
+        {
+            get { return this._diskResized; }
+            set { this._diskResized = value; }
+        }
+        
         private string _infrastructureVmId;
         
         /// <summary>
@@ -164,15 +175,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._processServerId = value; }
         }
         
-        private IList<InMageProtectedVolumeDetails> _protectedVolumes;
+        private IList<InMageProtectedDiskDetails> _protectedDisks;
         
         /// <summary>
-        /// Optional. The list of protected volumes.
+        /// Optional. The list of protected disks.
         /// </summary>
-        public IList<InMageProtectedVolumeDetails> ProtectedVolumes
+        public IList<InMageProtectedDiskDetails> ProtectedDisks
         {
-            get { return this._protectedVolumes; }
-            set { this._protectedVolumes = value; }
+            get { return this._protectedDisks; }
+            set { this._protectedDisks = value; }
         }
         
         private string _protectionStage;
@@ -297,17 +308,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._vMNics = value; }
         }
         
-        private string _volumeResized;
-        
-        /// <summary>
-        /// Optional. Indicates whether any volume is resized for this VM.
-        /// </summary>
-        public string VolumeResized
-        {
-            get { return this._volumeResized; }
-            set { this._volumeResized = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the InMageProviderSpecificSettings
         /// class.
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         public InMageProviderSpecificSettings()
         {
             this.ConsistencyPoints = new LazyDictionary<string, DateTime>();
-            this.ProtectedVolumes = new LazyList<InMageProtectedVolumeDetails>();
+            this.ProtectedDisks = new LazyList<InMageProtectedDiskDetails>();
             this.VMNics = new LazyList<VMNicDetails>();
         }
     }

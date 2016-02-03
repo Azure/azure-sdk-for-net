@@ -20,16 +20,29 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// InMageAzureV2 reprotection input.
+    /// InMageAzureV2 reprotect input.
     /// </summary>
     public partial class InMageAzureV2ReprotectInput : ReverseReplicationProviderSpecificInput
     {
+        private IList<string> _disksToExclude;
+        
+        /// <summary>
+        /// Optional. The disk exclusion list.
+        /// </summary>
+        public IList<string> DisksToExclude
+        {
+            get { return this._disksToExclude; }
+            set { this._disksToExclude = value; }
+        }
+        
         private string _masterTargetId;
         
         /// <summary>
@@ -90,6 +103,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public InMageAzureV2ReprotectInput()
         {
+            this.DisksToExclude = new LazyList<string>();
         }
     }
 }

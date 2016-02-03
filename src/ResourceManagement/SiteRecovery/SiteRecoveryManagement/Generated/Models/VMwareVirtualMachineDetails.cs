@@ -78,12 +78,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._discoveryType = value; }
         }
         
-        private IList<DiskDiscoveryDetails> _diskDetails;
+        private IList<InMageDiskDetails> _diskDetails;
         
         /// <summary>
         /// Optional. Disk Details.
         /// </summary>
-        public IList<DiskDiscoveryDetails> DiskDetails
+        public IList<InMageDiskDetails> DiskDetails
         {
             get { return this._diskDetails; }
             set { this._diskDetails = value; }
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public VMwareVirtualMachineDetails()
         {
-            this.DiskDetails = new LazyList<DiskDiscoveryDetails>();
+            this.DiskDetails = new LazyList<InMageDiskDetails>();
         }
     }
 }

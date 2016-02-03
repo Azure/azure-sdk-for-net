@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -30,6 +32,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class InMageAzureV2EnableProtectionInput : EnableProtectionProviderSpecificInput
     {
+        private IList<string> _disksToExclude;
+        
+        /// <summary>
+        /// Optional. The disk exclusion list.
+        /// </summary>
+        public IList<string> DisksToExclude
+        {
+            get { return this._disksToExclude; }
+            set { this._disksToExclude = value; }
+        }
+        
         private string _masterTargetId;
         
         /// <summary>
@@ -114,6 +127,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public InMageAzureV2EnableProtectionInput()
         {
+            this.DisksToExclude = new LazyList<string>();
         }
     }
 }
