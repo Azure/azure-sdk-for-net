@@ -24,7 +24,7 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
-      <dependency id="WindowsAzure.Storage" version="6.1.0" />
+      <dependency id="WindowsAzure.Storage" version="[6.1.0,7.0)" />
     </dependencies>
   </metadata>
   <files>
