@@ -54,8 +54,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleDefinition> DeleteAsync( this IRoleDefinitionsOperations operations, string scope, string roleDefinitionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.DeleteWithHttpMessagesAsync(scope, roleDefinitionId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, roleDefinitionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -92,8 +94,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleDefinition> GetAsync( this IRoleDefinitionsOperations operations, string scope, string roleDefinitionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(scope, roleDefinitionId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, roleDefinitionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -136,8 +140,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleDefinition> CreateOrUpdateAsync( this IRoleDefinitionsOperations operations, string scope, string roleDefinitionId, RoleDefinition roleDefinition, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, roleDefinitionId, roleDefinition, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, roleDefinitionId, roleDefinition, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -168,8 +174,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<RoleDefinition> GetByIdAsync( this IRoleDefinitionsOperations operations, string roleDefinitionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetByIdWithHttpMessagesAsync(roleDefinitionId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleDefinitionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -208,8 +216,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleDefinition>> ListAsync( this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinitionFilter> odataQuery = default(ODataQuery<RoleDefinitionFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -242,8 +252,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<RoleDefinition>> ListNextAsync( this IRoleDefinitionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

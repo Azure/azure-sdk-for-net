@@ -97,7 +97,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             T client;
             handlers = AddHandlers(currentEnvironment, handlers);
-            var constructors = typeof(T).GetConstructors();
+            var constructors = typeof(T).GetConstructors(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
 
             ConstructorInfo constructor = null;
             if (currentEnvironment.UsesCustomUri())

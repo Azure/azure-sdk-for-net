@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
     /// <summary>
     /// Test class for Intune Policy operations: Create/get/patch/delete
     /// </summary>
+    [Collection("Intune Tests")]
     public class PolicyScenarioTests:TestBase
     {
         static PolicyScenarioTests()
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldCreateAndroidPolicyWithDefaults()
         {            
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldCreateiOSPolicyWithDefaults()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
@@ -134,7 +135,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldPatchAndroidPolicy()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
@@ -188,7 +189,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldPatchiOSPolicy()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string policyName = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy").ToString();
@@ -241,7 +242,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetMultipleAndroidPolicies()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string policyName1 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy1").ToString();
@@ -282,7 +283,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetMultipleiOSPolicies()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.PolicyScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string policyName1 = TestContextHelper.GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "IntunePolicy1").ToString();

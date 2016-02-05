@@ -59,8 +59,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<IEnumerable<CustomDomain>> ListByEndpointAsync( this ICustomDomainsOperations operations, string endpointName, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListByEndpointWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListByEndpointWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -109,8 +111,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<CustomDomain> GetAsync( this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -165,8 +169,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<CustomDomain> CreateAsync( this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -221,8 +227,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<CustomDomain> BeginCreateAsync( this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.BeginCreateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -277,8 +285,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<ErrorResponse> UpdateAsync( this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.UpdateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -327,8 +337,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<CustomDomain> DeleteIfExistsAsync( this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.DeleteIfExistsWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.DeleteIfExistsWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -377,8 +389,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             public static async Task<CustomDomain> BeginDeleteIfExistsAsync( this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.BeginDeleteIfExistsWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.BeginDeleteIfExistsWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

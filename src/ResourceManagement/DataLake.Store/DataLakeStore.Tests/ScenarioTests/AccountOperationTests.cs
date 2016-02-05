@@ -114,7 +114,13 @@ namespace DataLakeStore.Tests
 
                 clientToUse.DataLakeStoreAccount.Create(commonData.ResourceGroupName, accountToChange.Name, accountToChange);
 
-                var listResponse = clientToUse.DataLakeStoreAccount.List(commonData.ResourceGroupName, null);
+                var listResponse = clientToUse.DataLakeStoreAccount.List();
+
+                // Assert that there are at least two accounts in the list
+                Assert.True(listResponse.Count() > 1);
+
+                // now list by resource group:
+                listResponse = clientToUse.DataLakeStoreAccount.ListByResourceGroup(commonData.ResourceGroupName);
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);

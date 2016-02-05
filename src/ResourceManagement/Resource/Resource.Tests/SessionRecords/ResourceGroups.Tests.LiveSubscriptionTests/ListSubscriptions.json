@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fff21d49-f6df-4aed-a2e9-e80676026e2f"
+          "925abbe7-b517-4da7-af05-897099aede72"
         ],
         "accept-language": [
           "en-US"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:26:34 GMT"
+          "Tue, 26 Jan 2016 22:37:58 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,13 +43,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "83419a55-7ff9-4a46-813d-7fbece7aad1d"
+          "239a2628-bc96-46c2-9e30-92353c473b57"
         ],
         "x-ms-correlation-request-id": [
-          "83419a55-7ff9-4a46-813d-7fbece7aad1d"
+          "239a2628-bc96-46c2-9e30-92353c473b57"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T002635Z:83419a55-7ff9-4a46-813d-7fbece7aad1d"
+          "CENTRALUS:20160126T223758Z:239a2628-bc96-46c2-9e30-92353c473b57"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
