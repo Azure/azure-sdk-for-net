@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='location'>
             /// The location upon which resource usage is queried.
             /// </param>
-            public static IEnumerable<Usage> List(this IUsageOperations operations, string location)
+            public static IPage<Usage> List(this IUsageOperations operations, string location)
             {
                 return Task.Factory.StartNew(s => ((IUsageOperations)s).ListAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -45,9 +45,43 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Usage>> ListAsync( this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Usage>> ListAsync( this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists compute usages for a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Usage> ListNext(this IUsageOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IUsageOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists compute usages for a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Usage>> ListNextAsync( this IUsageOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

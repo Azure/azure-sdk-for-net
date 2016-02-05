@@ -96,10 +96,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           }
         }
@@ -173,7 +173,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -215,7 +215,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -475,10 +475,10 @@
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "204": {
             "description": ""
           }
         },
@@ -816,7 +816,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -852,7 +852,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -895,14 +895,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": ""
-          },
-          "200": {
+		  "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineCaptureResult"
             }
+          },
+          "202": {
+            "description": ""
           }
         },
         "x-ms-long-running-operation": true
@@ -994,10 +994,10 @@
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "204": {
             "description": ""
           }
         },
@@ -1222,7 +1222,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -1471,10 +1471,10 @@
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "204": {
             "description": ""
           }
         },
@@ -1634,7 +1634,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -1704,7 +1704,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         }
       }
     },
@@ -1976,10 +1976,10 @@
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           },
-          "202": {
+          "204": {
             "description": ""
           }
         },
@@ -2135,7 +2135,7 @@
           }
         },
         "x-ms-pageable": {
-          "nextLinkName": null
+          "nextLinkName": "nextLink"
         },
         "x-ms-odata": "#/definitions/VirtualMachineScaleSetVM"
       }
@@ -2290,7 +2290,7 @@
           ],
           "x-ms-enum": {
             "name": "StatusLevelTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "displayStatus": {
@@ -2614,7 +2614,7 @@
           ],
           "x-ms-enum": {
             "name": "OperatingSystemTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         }
       },
@@ -2709,7 +2709,7 @@
           ],
           "x-ms-enum": {
             "name": "UsageUnit",
-            "modelAsString": "False"
+            "modelAsString": false
           }
         },
         "currentValue": {
@@ -2873,7 +2873,7 @@
           ],
           "x-ms-enum": {
             "name": "VirtualMachineSizeTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         }
       },
@@ -2970,7 +2970,7 @@
           ],
           "x-ms-enum": {
             "name": "OperatingSystemTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "encryptionSettings": {
@@ -2999,7 +2999,7 @@
           ],
           "x-ms-enum": {
             "name": "CachingTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "createOption": {
@@ -3012,7 +3012,7 @@
           ],
           "x-ms-enum": {
             "name": "DiskCreateOptionTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "diskSizeGB": {
@@ -3057,7 +3057,7 @@
           ],
           "x-ms-enum": {
             "name": "CachingTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "createOption": {
@@ -3070,7 +3070,7 @@
           ],
           "x-ms-enum": {
             "name": "DiskCreateOptionTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "diskSizeGB": {
@@ -3117,7 +3117,7 @@
           ],
           "x-ms-enum": {
             "name": "PassNames",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "componentName": {
@@ -3128,7 +3128,7 @@
           ],
           "x-ms-enum": {
             "name": "ComponentNames",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "settingName": {
@@ -3140,7 +3140,7 @@
           ],
           "x-ms-enum": {
             "name": "SettingNames",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "content": {
@@ -3161,7 +3161,7 @@
           ],
           "x-ms-enum": {
             "name": "ProtocolTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "certificateUrl": {
@@ -3599,7 +3599,7 @@
           ],
           "x-ms-enum": {
             "name": "UpgradeMode",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         }
       },
@@ -3657,7 +3657,7 @@
           ],
           "x-ms-enum": {
             "name": "CachingTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "createOption": {
@@ -3670,7 +3670,7 @@
           ],
           "x-ms-enum": {
             "name": "DiskCreateOptionTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "osType": {
@@ -3682,7 +3682,7 @@
           ],
           "x-ms-enum": {
             "name": "OperatingSystemTypes",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         },
         "image": {
@@ -4090,7 +4090,7 @@
           ],
           "x-ms-enum": {
             "name": "VirtualMachineScaleSetSkuScaleType",
-            "modelAsString": "True"
+            "modelAsString": true
           }
         }
       },
@@ -4345,7 +4345,7 @@
           ],
           "x-ms-enum": {
             "name": "OperationStatus",
-            "modelAsString": "False"
+            "modelAsString": false
           }
         },
         "startTime": {
@@ -4396,7 +4396,7 @@
           ],
           "x-ms-enum": {
             "name": "ComputeOperationStatus",
-            "modelAsString": "False"
+            "modelAsString": false
           }
         },
         "startTime": {
