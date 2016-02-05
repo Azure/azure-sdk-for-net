@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7213?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzIxMz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg2713?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnMjcxMz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "38"
         ],
         "x-ms-client-request-id": [
-          "27b2e44e-4e4f-49b4-9493-3e4ab5f7f245"
+          "70cdb2a9-8afb-44d2-bda6-d5f99d1bb71c"
         ],
         "accept-language": [
           "en-US"
@@ -22,7 +22,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7213\",\r\n  \"name\": \"csmrg7213\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg2713\",\r\n  \"name\": \"csmrg2713\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "179"
@@ -37,7 +37,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:27:12 GMT"
+          "Tue, 26 Jan 2016 22:29:47 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -46,13 +46,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "31384147-7069-45be-9124-dd458db72d38"
+          "16272f2e-44f7-4a4b-8f2f-45912878cfcb"
         ],
         "x-ms-correlation-request-id": [
-          "31384147-7069-45be-9124-dd458db72d38"
+          "16272f2e-44f7-4a4b-8f2f-45912878cfcb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T002712Z:31384147-7069-45be-9124-dd458db72d38"
+          "WESTUS:20160126T222947Z:16272f2e-44f7-4a4b-8f2f-45912878cfcb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,10 +61,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7213/providers/Microsoft.Web//sites/csmr6572?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzIxMy9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvY3NtcjY1NzI/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg2713/providers/Microsoft.Web//sites/csmr3706?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnMjcxMy9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvY3NtcjM3MDY/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"name\": \"csmr6572\",\r\n    \"siteMode\": \"Limited\",\r\n    \"computeMode\": \"Shared\",\r\n    \"sku\": \"Free\",\r\n    \"workerSize\": 0\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"name\": \"csmr3706\",\r\n    \"siteMode\": \"Limited\",\r\n    \"computeMode\": \"Shared\",\r\n    \"sku\": \"Free\",\r\n    \"workerSize\": 0\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -73,7 +73,7 @@
           "177"
         ],
         "x-ms-client-request-id": [
-          "d1034826-8903-49ec-aa54-69468a7fe878"
+          "e3e155e5-9980-4d34-b164-ac44f6115263"
         ],
         "accept-language": [
           "en-US"
@@ -82,7 +82,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7213/providers/Microsoft.Web/sites/csmr6572\",\r\n  \"name\": \"csmr6572\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"location\": \"WestUS\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"name\": \"csmr6572\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmr6572.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg7213-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-bay-033.api.azurewebsites.windows.net:454/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/webspaces/csmrg7213-WestUSwebspace/sites/csmr6572\",\r\n    \"repositorySiteName\": \"csmr6572\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmr6572.azurewebsites.net\",\r\n      \"csmr6572.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmr6572.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      },\r\n      {\r\n        \"name\": \"csmr6572.scm.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": \"Default1\",\r\n    \"serverFarmId\": null,\r\n    \"lastModifiedTimeUtc\": \"2015-12-04T00:27:18.06\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmr6572\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Free\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": null,\r\n    \"outboundIpAddresses\": \"40.112.137.127,40.112.139.85,40.112.142.204,40.112.139.188\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg2713/providers/Microsoft.Web/sites/csmr3706\",\r\n  \"name\": \"csmr3706\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"location\": \"WestUS\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"name\": \"csmr3706\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmr3706.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg2713-WestUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-bay-047.api.azurewebsites.windows.net:454/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/webspaces/csmrg2713-WestUSwebspace/sites/csmr3706\",\r\n    \"repositorySiteName\": \"csmr3706\",\r\n    \"owner\": null,\r\n    \"usageState\": 0,\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmr3706.azurewebsites.net\",\r\n      \"csmr3706.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": 0,\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmr3706.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 0\r\n      },\r\n      {\r\n        \"name\": \"csmr3706.scm.azurewebsites.net\",\r\n        \"sslState\": 0,\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": 0,\r\n        \"hostType\": 1\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": \"Default1\",\r\n    \"serverFarmId\": null,\r\n    \"lastModifiedTimeUtc\": \"2016-01-26T22:29:52.55\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": 0,\r\n    \"runtimeAvailabilityState\": 0,\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmr3706\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Free\",\r\n    \"premiumAppDeployed\": null,\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"microService\": \"WebSites\",\r\n    \"gatewaySiteName\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": null,\r\n    \"outboundIpAddresses\": \"104.40.28.42,104.40.26.133,104.40.25.66,104.40.24.165\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -94,7 +94,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:27:20 GMT"
+          "Tue, 26 Jan 2016 22:30:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -112,7 +112,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b7c1ef90-433d-424b-9ec5-4f2601e60504"
+          "d05f0422-4695-436a-b08e-eeebd54adc76"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -124,22 +124,22 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "0e89519f-b65d-43dd-b651-2d2ef8ec4c7e"
+          "255df13d-bf15-4287-b776-7833ffd1bc1e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T002721Z:0e89519f-b65d-43dd-b651-2d2ef8ec4c7e"
+          "WESTUS:20160126T223003Z:255df13d-bf15-4287-b776-7833ffd1bc1e"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7213/resources?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlR3JvdXBzL2NzbXJnNzIxMy9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg2713/resources?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlR3JvdXBzL2NzbXJnMjcxMy9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "77e5814f-4cb8-4d3e-a210-1bb332382760"
+          "bb72c89a-6bf7-401b-b79d-f2d1cb500ebf"
         ],
         "accept-language": [
           "en-US"
@@ -148,7 +148,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7213/providers/Microsoft.Web/sites/csmr6572\",\r\n      \"name\": \"csmr6572\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg2713/providers/Microsoft.Web/sites/csmr3706\",\r\n      \"name\": \"csmr3706\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -160,7 +160,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:27:20 GMT"
+          "Tue, 26 Jan 2016 22:30:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -172,13 +172,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "6a257cdc-af5a-456a-9f64-2f6a47389d4e"
+          "983c5a84-d114-4a69-a450-1fb83dc3e52c"
         ],
         "x-ms-correlation-request-id": [
-          "6a257cdc-af5a-456a-9f64-2f6a47389d4e"
+          "983c5a84-d114-4a69-a450-1fb83dc3e52c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T002721Z:6a257cdc-af5a-456a-9f64-2f6a47389d4e"
+          "WESTUS:20160126T223003Z:983c5a84-d114-4a69-a450-1fb83dc3e52c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -187,13 +187,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7213/resources?$top=10&api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlR3JvdXBzL2NzbXJnNzIxMy9yZXNvdXJjZXM/JHRvcD0xMCZhcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg2713/resources?$top=10&api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlR3JvdXBzL2NzbXJnMjcxMy9yZXNvdXJjZXM/JHRvcD0xMCZhcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "65bfe017-4913-4637-b86f-aaa7f2ef588d"
+          "6d259eb6-d13c-4760-9d9b-2d9b9a40a759"
         ],
         "accept-language": [
           "en-US"
@@ -202,7 +202,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7213/providers/Microsoft.Web/sites/csmr6572\",\r\n      \"name\": \"csmr6572\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg2713/providers/Microsoft.Web/sites/csmr3706\",\r\n      \"name\": \"csmr3706\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -214,7 +214,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:27:20 GMT"
+          "Tue, 26 Jan 2016 22:30:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -226,13 +226,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "cf968017-5ddc-4dea-a4a0-db5f619522b8"
+          "7ed38215-b281-4e41-8e1c-4d72608390b7"
         ],
         "x-ms-correlation-request-id": [
-          "cf968017-5ddc-4dea-a4a0-db5f619522b8"
+          "7ed38215-b281-4e41-8e1c-4d72608390b7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T002721Z:cf968017-5ddc-4dea-a4a0-db5f619522b8"
+          "WESTUS:20160126T223003Z:7ed38215-b281-4e41-8e1c-4d72608390b7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -243,8 +243,8 @@
   ],
   "Names": {
     "CreatedResourceIsAvailableInList": [
-      "csmrg7213",
-      "csmr6572"
+      "csmrg2713",
+      "csmr3706"
     ]
   },
   "Variables": {

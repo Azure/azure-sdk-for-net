@@ -51,8 +51,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ResourceProviderOperationDefinition>> ListAsync( this IResourceProviderOperationDetailsOperations operations, string resourceProviderNamespace, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, apiVersion, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -83,8 +85,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<ResourceProviderOperationDefinition>> ListNextAsync( this IResourceProviderOperationDetailsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

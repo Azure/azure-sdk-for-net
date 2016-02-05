@@ -232,8 +232,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineScaleSetVM> GetAsync( this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -276,8 +278,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineScaleSetVMInstanceView> GetInstanceViewAsync( this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetInstanceViewWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetInstanceViewWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -326,8 +330,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSetVM>> ListAsync( this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVM> odataQuery = default(ODataQuery<VirtualMachineScaleSetVM>), string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, odataQuery, select, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualMachineScaleSetName, odataQuery, select, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -616,8 +622,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineScaleSetVM>> ListNextAsync( this IVirtualMachineScaleSetVMsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

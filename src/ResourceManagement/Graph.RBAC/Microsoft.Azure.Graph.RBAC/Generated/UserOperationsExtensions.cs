@@ -79,8 +79,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<User> CreateAsync( this IUserOperations operations, UserCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -111,8 +113,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<IPage<User>> ListAsync( this IUserOperations operations, ODataQuery<User> odataQuery = default(ODataQuery<User>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -143,8 +147,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<User> GetAsync( this IUserOperations operations, string upnOrObjectId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(upnOrObjectId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(upnOrObjectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -183,8 +189,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<IEnumerable<string>> GetMemberGroupsAsync( this IUserOperations operations, string objectId, UserGetMemberGroupsParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetMemberGroupsWithHttpMessagesAsync(objectId, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetMemberGroupsWithHttpMessagesAsync(objectId, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -215,8 +223,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<IPage<User>> ListNextAsync( this IUserOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

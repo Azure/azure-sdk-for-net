@@ -103,22 +103,6 @@ namespace DataLakeStore.Tests
         }
 
         [Fact]
-        public void DataLakeStoreFileSystemEmptyFileDirectCreate()
-        {
-            using (var context = MockContext.Start(this.GetType().FullName))
-            {
-                commonData = new CommonTestFixture(context);
-                using (
-                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
-                {
-                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true,
-                        useDirectCreate: true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
-                }
-            }
-        }
-
-        [Fact]
         public void DataLakeStoreFileSystemFileCreateWithContents()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -137,25 +121,6 @@ namespace DataLakeStore.Tests
         }
 
         [Fact]
-        public void DataLakeStoreFileSystemFileDirectCreateWithContents()
-        {
-            using (var context = MockContext.Start(this.GetType().FullName))
-            {
-                commonData = new CommonTestFixture(context);
-                using (
-                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
-                {
-                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true,
-                        useDirectCreate: true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
-                        fileContentsToAdd.Length);
-                    CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath,
-                        fileContentsToAdd, true);
-                }
-            }
-        }
-
-        [Fact]
         public void DataLakeStoreFileSystemAppendToFile()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -168,33 +133,7 @@ namespace DataLakeStore.Tests
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
 
                     // Append to the file that we created
-                    var beginAppendResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginAppend(filePath,
-                        commonData.DataLakeStoreFileSystemAccountName, null);
-                    Assert.True(!string.IsNullOrEmpty(beginAppendResponse.Location));
-
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.Append(beginAppendResponse.Location,
-                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)));
-                    
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
-                        fileContentsToAppend.Length);
-                }
-            }
-        }
-
-        [Fact]
-        public void DataLakeStoreFileSystemDirectAppendToFile()
-        {
-            using (var context = MockContext.Start(this.GetType().FullName))
-            {
-                commonData = new CommonTestFixture(context);
-                using (
-                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
-                {
-                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
-
-                    // Append to the file that we created
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.DirectAppend(filePath,
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.Append(filePath,
                         commonData.DataLakeStoreFileSystemAccountName,
                         new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)));
 
@@ -695,46 +634,27 @@ namespace DataLakeStore.Tests
             return folderPath;
         }
 
-        internal string CreateFile(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, bool withContents, bool randomName = false, string folderName = folderToCreate, bool useDirectCreate = false)
+        internal string CreateFile(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, bool withContents, bool randomName = false, string folderName = folderToCreate)
         {
             var filePath = randomName ? TestUtilities.GenerateName(string.Format("{0}/{1}", folderName, fileToCreate)) : string.Format("{0}/{1}", folderName, fileToCreate);
 
-            if (useDirectCreate)
-            {
-                if (!withContents)
-                {
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.DirectCreate(
-                        filePath,
-                        caboAccountName,
-                        new MemoryStream(),
-                        null);
-                }
-                else
-                {
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.DirectCreate(
-                        filePath,
-                        caboAccountName,
-                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)),
-                        null);
-                }
-
-                return filePath;
-            }
-
-            var beginCreateFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginCreate(filePath,
-                caboAccountName);
-            Assert.True(!string.IsNullOrEmpty(beginCreateFileResponse.Location));
-
             if (!withContents)
             {
-                commonData.DataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location,
-                    new MemoryStream());
+                commonData.DataLakeStoreFileSystemClient.FileSystem.Create(
+                    filePath,
+                    caboAccountName,
+                    new MemoryStream(),
+                    null);
             }
             else
             {
-                commonData.DataLakeStoreFileSystemClient.FileSystem.Create(beginCreateFileResponse.Location,
-                    new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)));
+                commonData.DataLakeStoreFileSystemClient.FileSystem.Create(
+                    filePath,
+                    caboAccountName,
+                    new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)),
+                    null);
             }
+
             return filePath;
         }
 
@@ -747,26 +667,13 @@ namespace DataLakeStore.Tests
             return getResponse;
         }
 
-        internal void CompareFileContents(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, string filePath, string expectedContents, bool useDirectOpen = false)
+        internal void CompareFileContents(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string caboAccountName, string filePath, string expectedContents)
         {
             // download a file and ensure they are equal
-            byte[] openResponse;
-            if (useDirectOpen)
-            {
-                openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.DirectOpen(filePath, caboAccountName, null);
-                Assert.NotNull(openResponse);
-            }
-            else
-            {
-                var beginOpenResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.BeginOpen(filePath, caboAccountName, null);
-                Assert.True(!string.IsNullOrEmpty(beginOpenResponse.Location));
-
-                openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
-                Assert.NotNull(openResponse);
-
-            }
-
-            string toCompare = Encoding.UTF8.GetString(openResponse);
+            Stream openResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Open(filePath, caboAccountName, null);
+            Assert.NotNull(openResponse);
+            
+            string toCompare = new StreamReader(openResponse).ReadToEnd();
             Assert.Equal(expectedContents, toCompare);
         }
 

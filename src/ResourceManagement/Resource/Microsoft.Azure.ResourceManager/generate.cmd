@@ -5,13 +5,13 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.14.0-Nightly20151223
+set autoRestVersion=0.14.0-Nightly20160125
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
-set resSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/resources/2014-04-01-preview/swagger/resources.json"
+set resSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/resources/2015-11-01/swagger/resources.json"
 set authSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/authorization/2015-01-01/swagger/authorization.json"
-set featureSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/features/2014-08-01-preview/swagger/features.json"
-set subscriptionSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/subscriptions/2014-04-01-preview/swagger/subscriptions.json"
+set featureSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/features/2015-12-01/swagger/features.json"
+set subscriptionSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/subscriptions/2015-11-01/swagger/subscriptions.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated

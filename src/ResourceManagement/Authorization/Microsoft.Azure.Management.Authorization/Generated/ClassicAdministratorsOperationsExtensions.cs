@@ -45,8 +45,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<ClassicAdministrator>> ListAsync( this IClassicAdministratorsOperations operations, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(apiVersion, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(apiVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -77,8 +79,10 @@ namespace Microsoft.Azure.Management.Authorization
             /// </param>
             public static async Task<IPage<ClassicAdministrator>> ListNextAsync( this IClassicAdministratorsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

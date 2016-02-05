@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string OperatingSystem { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {

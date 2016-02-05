@@ -12,7 +12,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[2.5.4, 3.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.0.2,4.0)"
   },
 
   "frameworks": {
@@ -25,12 +25,12 @@
         "System.Threading.Tasks": { "type": "build" }
       },
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime": "1.8.2"
+        "Microsoft.Rest.ClientRuntime": "2.0"
       }
     },
     "dnxcore50": {
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime": "1.8.2",
+        "Microsoft.Rest.ClientRuntime": "2.0",
         "System.Diagnostics.Tools": "4.0.1-beta-23516",
         "System.Net.Http": "4.0.1-beta-23516",
         "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",

@@ -47,8 +47,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<Usage>> ListAsync( this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -79,8 +81,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<Usage>> ListNextAsync( this IUsageOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

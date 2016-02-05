@@ -28,12 +28,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Gets information about the associated HTTP request.
         /// </summary>
-        public HttpRequestMessage Request { get; set; }
+        public HttpRequestMessageWrapper Request { get; set; }
 
         /// <summary>
         /// Gets information about the associated HTTP response.
         /// </summary>
-        public HttpResponseMessage Response { get; set; }
+        public HttpResponseMessageWrapper Response { get; set; }
 
         /// <summary>
         /// Gets or sets the body object.

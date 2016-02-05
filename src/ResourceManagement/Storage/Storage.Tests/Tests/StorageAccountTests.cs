@@ -424,9 +424,9 @@ namespace Storage.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var ops = resourcesClient.ProviderOperationsMetadata.Get("Microsoft.Storage", "2015-06-15");
+                var ops = resourcesClient.ResourceProviderOperationDetails.List("Microsoft.Storage", "2015-06-15");
 
-                Assert.Equal(ops.Operations.Count, 7);
+                Assert.Equal(ops.Count(), 7);
             }
         }
     }

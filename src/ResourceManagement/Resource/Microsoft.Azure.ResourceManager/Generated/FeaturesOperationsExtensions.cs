@@ -43,8 +43,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<FeatureResult>> ListAllAsync( this IFeaturesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -75,8 +77,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<FeatureResult>> ListAsync( this IFeaturesOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -113,8 +117,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureResult> GetAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -151,8 +157,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureResult> RegisterAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -185,8 +193,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<FeatureResult>> ListAllNextAsync( this IFeaturesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -217,8 +227,10 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<IPage<FeatureResult>> ListNextAsync( this IFeaturesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

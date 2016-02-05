@@ -59,8 +59,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<AvailabilitySet> CreateOrUpdateAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -134,8 +136,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<AvailabilitySet> GetAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -166,8 +170,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<AvailabilitySet>> ListAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -204,8 +210,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineSize>> ListAvailableSizesAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -236,8 +244,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<AvailabilitySet>> ListNextAsync( this IAvailabilitySetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -268,8 +278,10 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<IPage<VirtualMachineSize>> ListAvailableSizesNextAsync( this IAvailabilitySetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListAvailableSizesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.ListAvailableSizesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

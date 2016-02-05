@@ -47,8 +47,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<Application> CreateAsync( this IApplicationOperations operations, ApplicationCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.CreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.CreateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -110,8 +112,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<Application> GetAsync( this IApplicationOperations operations, string applicationObjectId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetWithHttpMessagesAsync(applicationObjectId, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetWithHttpMessagesAsync(applicationObjectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
