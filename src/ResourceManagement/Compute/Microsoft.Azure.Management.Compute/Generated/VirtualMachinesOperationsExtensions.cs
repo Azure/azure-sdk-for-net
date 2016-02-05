@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// Name of the property to expand. Allowed value is null or 'instanceView'.
+            /// The expand expression to apply on the operation.
             /// </param>
             public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, string expand = default(string))
             {
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// Name of the property to expand. Allowed value is null or 'instanceView'.
+            /// The expand expression to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

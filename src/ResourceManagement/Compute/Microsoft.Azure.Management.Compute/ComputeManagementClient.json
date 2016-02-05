@@ -517,7 +517,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
+            "description": "The expand expression to apply on the operation."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -1029,7 +1029,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
+            "description": "The expand expression to apply on the operation."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -2117,7 +2117,7 @@
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "The list parameters."
+            "description": "The expand expression to apply on the operation."
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"

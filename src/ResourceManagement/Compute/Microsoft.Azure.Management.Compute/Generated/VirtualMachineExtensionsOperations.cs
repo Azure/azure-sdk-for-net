@@ -498,7 +498,7 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine extension.
         /// </param>
         /// <param name='expand'>
-        /// Name of the property to expand. Allowed value is null or 'instanceView'.
+        /// The expand expression to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
