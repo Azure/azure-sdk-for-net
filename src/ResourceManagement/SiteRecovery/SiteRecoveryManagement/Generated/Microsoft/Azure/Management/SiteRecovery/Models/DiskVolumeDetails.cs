@@ -25,51 +25,37 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Recovery plan protected item.
+    /// Onprem disk volume details.
     /// </summary>
-    public partial class RecoveryPlanProtectedItem
+    public partial class DiskVolumeDetails
     {
-        private string _id;
+        private string _label;
         
         /// <summary>
-        /// Required. ARM Id of the protected item.
+        /// Optional. Volume Label.
         /// </summary>
-        public string Id
+        public string Label
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._label; }
+            set { this._label = value; }
         }
         
-        private string _virtualMachineId;
+        private string _name;
         
         /// <summary>
-        /// Optional. Virtual machine Id.
+        /// Optional. Volume Name.
         /// </summary>
-        public string VirtualMachineId
+        public string Name
         {
-            get { return this._virtualMachineId; }
-            set { this._virtualMachineId = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecoveryPlanProtectedItem class.
-        /// </summary>
-        public RecoveryPlanProtectedItem()
-        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryPlanProtectedItem class
-        /// with required arguments.
+        /// Initializes a new instance of the DiskVolumeDetails class.
         /// </summary>
-        public RecoveryPlanProtectedItem(string id)
-            : this()
+        public DiskVolumeDetails()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException("id");
-            }
-            this.Id = id;
         }
     }
 }

@@ -153,6 +153,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._sourceVmRAMSizeInMB = value; }
         }
         
+        private string _vmId;
+        
+        /// <summary>
+        /// Optional. Virtual machine Id.
+        /// </summary>
+        public string VmId
+        {
+            get { return this._vmId; }
+            set { this._vmId = value; }
+        }
+        
         private IList<VMNicDetails> _vMNics;
         
         /// <summary>

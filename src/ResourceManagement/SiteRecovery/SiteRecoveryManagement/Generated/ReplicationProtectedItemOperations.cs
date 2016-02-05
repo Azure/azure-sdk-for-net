@@ -4129,6 +4129,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -4271,6 +4278,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -4429,6 +4443,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -4914,6 +4935,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -5343,6 +5371,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -5998,6 +6033,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -6140,6 +6182,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -6298,6 +6347,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -6783,6 +6839,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -7212,6 +7275,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -7926,6 +7996,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -8068,6 +8145,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -8226,6 +8310,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -8711,6 +8802,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -9140,6 +9238,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -10085,6 +10190,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -10227,6 +10339,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -10385,6 +10504,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -10870,6 +10996,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -11299,6 +11432,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -12013,6 +12153,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -12155,6 +12302,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -12313,6 +12467,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -12798,6 +12959,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -13227,6 +13395,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -14172,6 +14347,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -14314,6 +14496,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -14472,6 +14661,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -14957,6 +15153,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -15386,6 +15589,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -16100,6 +16310,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -16242,6 +16459,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -16400,6 +16624,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -16885,6 +17116,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -17314,6 +17552,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -18028,6 +18273,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -18170,6 +18422,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -18328,6 +18587,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -18813,6 +19079,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -19242,6 +19515,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -19956,6 +20236,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -20098,6 +20385,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -20256,6 +20550,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -20741,6 +21042,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -21170,6 +21478,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -21884,6 +22199,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -22026,6 +22348,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -22184,6 +22513,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -22669,6 +23005,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -23098,6 +23441,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -23812,6 +24162,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                         }
                                         
+                                        JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance = ((string)vmIdValue);
+                                            hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                        }
+                                        
                                         JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                         if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                         {
@@ -23954,6 +24311,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                             hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                        }
+                                        
+                                        JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance2 = ((string)vmIdValue2);
+                                            hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                         }
                                         
                                         JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -24112,6 +24476,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string protectionStageInstance = ((string)protectionStageValue);
                                             inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                        }
+                                        
+                                        JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance3 = ((string)vmIdValue3);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                         }
                                         
                                         JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -24597,6 +24968,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                         }
                                         
+                                        JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance4 = ((string)vmIdValue4);
+                                            inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                        }
+                                        
                                         JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                         if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                         {
@@ -25026,6 +25404,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                        }
+                                        
+                                        JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                        if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                        {
+                                            string vmIdInstance5 = ((string)vmIdValue5);
+                                            hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                         }
                                         
                                         JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -25789,6 +26174,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                                 }
                                                 
+                                                JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance = ((string)vmIdValue);
+                                                    hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                                }
+                                                
                                                 JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                                 if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                                 {
@@ -25931,6 +26323,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                                     hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                                }
+                                                
+                                                JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance2 = ((string)vmIdValue2);
+                                                    hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                                 }
                                                 
                                                 JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -26089,6 +26488,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string protectionStageInstance = ((string)protectionStageValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                                }
+                                                
+                                                JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance3 = ((string)vmIdValue3);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                                 }
                                                 
                                                 JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -26574,6 +26980,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                                 }
                                                 
+                                                JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance4 = ((string)vmIdValue4);
+                                                    inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                                }
+                                                
                                                 JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                                 if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                                 {
@@ -27003,6 +27416,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                                }
+                                                
+                                                JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance5 = ((string)vmIdValue5);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                                 }
                                                 
                                                 JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -27717,6 +28137,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                                 }
                                                 
+                                                JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance = ((string)vmIdValue);
+                                                    hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                                }
+                                                
                                                 JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                                 if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                                 {
@@ -27859,6 +28286,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                                     hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                                }
+                                                
+                                                JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance2 = ((string)vmIdValue2);
+                                                    hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                                 }
                                                 
                                                 JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -28017,6 +28451,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string protectionStageInstance = ((string)protectionStageValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                                }
+                                                
+                                                JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance3 = ((string)vmIdValue3);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                                 }
                                                 
                                                 JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -28502,6 +28943,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                                 }
                                                 
+                                                JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance4 = ((string)vmIdValue4);
+                                                    inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                                }
+                                                
                                                 JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                                 if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                                 {
@@ -28931,6 +29379,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                                }
+                                                
+                                                JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance5 = ((string)vmIdValue5);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                                 }
                                                 
                                                 JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];
@@ -29603,6 +30058,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     hyperVReplica2012ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance;
                                                 }
                                                 
+                                                JToken vmIdValue = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue != null && vmIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance = ((string)vmIdValue);
+                                                    hyperVReplica2012ReplicationDetailsInstance.VmId = vmIdInstance;
+                                                }
+                                                
                                                 JToken vmNicsArray = providerSpecificDetailsValue["vmNics"];
                                                 if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
                                                 {
@@ -29745,6 +30207,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     DateTime lastReplicatedTimeInstance2 = ((DateTime)lastReplicatedTimeValue2);
                                                     hyperVReplica2012R2ReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance2;
+                                                }
+                                                
+                                                JToken vmIdValue2 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue2 != null && vmIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance2 = ((string)vmIdValue2);
+                                                    hyperVReplica2012R2ReplicationDetailsInstance.VmId = vmIdInstance2;
                                                 }
                                                 
                                                 JToken vmNicsArray2 = providerSpecificDetailsValue["vmNics"];
@@ -29903,6 +30372,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string protectionStageInstance = ((string)protectionStageValue);
                                                     inMageAzureV2ProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance;
+                                                }
+                                                
+                                                JToken vmIdValue3 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue3 != null && vmIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance3 = ((string)vmIdValue3);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.VmId = vmIdInstance3;
                                                 }
                                                 
                                                 JToken healthErrorCodeValue = providerSpecificDetailsValue["healthErrorCode"];
@@ -30388,6 +30864,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageProviderSpecificSettingsInstance.ProtectionStage = protectionStageInstance3;
                                                 }
                                                 
+                                                JToken vmIdValue4 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue4 != null && vmIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance4 = ((string)vmIdValue4);
+                                                    inMageProviderSpecificSettingsInstance.VmId = vmIdInstance4;
+                                                }
+                                                
                                                 JToken resyncDetailsValue = providerSpecificDetailsValue["resyncDetails"];
                                                 if (resyncDetailsValue != null && resyncDetailsValue.Type != JTokenType.Null)
                                                 {
@@ -30817,6 +31300,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     DateTime lastReplicatedTimeInstance3 = ((DateTime)lastReplicatedTimeValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.LastReplicatedTime = lastReplicatedTimeInstance3;
+                                                }
+                                                
+                                                JToken vmIdValue5 = providerSpecificDetailsValue["vmId"];
+                                                if (vmIdValue5 != null && vmIdValue5.Type != JTokenType.Null)
+                                                {
+                                                    string vmIdInstance5 = ((string)vmIdValue5);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.VmId = vmIdInstance5;
                                                 }
                                                 
                                                 JToken initialReplicationDetailsValue3 = providerSpecificDetailsValue["initialReplicationDetails"];

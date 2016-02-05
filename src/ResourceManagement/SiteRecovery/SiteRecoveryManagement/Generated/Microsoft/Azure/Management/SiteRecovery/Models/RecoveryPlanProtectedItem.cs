@@ -40,6 +40,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._id = value; }
         }
         
+        private string _virtualMachineId;
+        
+        /// <summary>
+        /// Optional. Virtual machine Id.
+        /// </summary>
+        public string VirtualMachineId
+        {
+            get { return this._virtualMachineId; }
+            set { this._virtualMachineId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the RecoveryPlanProtectedItem class.
         /// </summary>

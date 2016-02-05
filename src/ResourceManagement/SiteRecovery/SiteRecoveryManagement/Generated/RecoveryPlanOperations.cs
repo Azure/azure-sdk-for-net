@@ -461,6 +461,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         replicationProtectedItemsArray.Add(recoveryPlanProtectedItemValue);
                                         
                                         recoveryPlanProtectedItemValue["id"] = replicationProtectedItemsItem.Id;
+                                        
+                                        if (replicationProtectedItemsItem.VirtualMachineId != null)
+                                        {
+                                            recoveryPlanProtectedItemValue["virtualMachineId"] = replicationProtectedItemsItem.VirtualMachineId;
+                                        }
                                     }
                                     recoveryPlanGroupValue["replicationProtectedItems"] = replicationProtectedItemsArray;
                                 }
@@ -2148,6 +2153,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         replicationProtectedItemsArray.Add(recoveryPlanProtectedItemValue);
                                         
                                         recoveryPlanProtectedItemValue["id"] = replicationProtectedItemsItem.Id;
+                                        
+                                        if (replicationProtectedItemsItem.VirtualMachineId != null)
+                                        {
+                                            recoveryPlanProtectedItemValue["virtualMachineId"] = replicationProtectedItemsItem.VirtualMachineId;
+                                        }
                                     }
                                     recoveryPlanGroupValue["replicationProtectedItems"] = replicationProtectedItemsArray;
                                 }
@@ -2921,6 +2931,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
                                                 }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
+                                                }
                                             }
                                         }
                                         
@@ -3543,6 +3560,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
                                                 }
                                             }
                                         }
@@ -4226,6 +4250,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
                                                 }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
+                                                }
                                             }
                                         }
                                         
@@ -4907,6 +4938,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
                                                 }
                                             }
                                         }
@@ -5590,6 +5628,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
                                                 }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
+                                                }
                                             }
                                         }
                                         
@@ -6271,6 +6316,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
                                                 }
                                             }
                                         }
@@ -6954,6 +7006,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
                                                 }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
+                                                }
                                             }
                                         }
                                         
@@ -7636,6 +7695,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
                                                 }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
+                                                }
                                             }
                                         }
                                         
@@ -8317,6 +8383,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     string idInstance = ((string)idValue);
                                                     recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                }
+                                                
+                                                JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                    recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
                                                 }
                                             }
                                         }
@@ -9028,6 +9101,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         {
                                                             string idInstance = ((string)idValue);
                                                             recoveryPlanProtectedItemInstance.Id = idInstance;
+                                                        }
+                                                        
+                                                        JToken virtualMachineIdValue = replicationProtectedItemsValue["virtualMachineId"];
+                                                        if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
+                                                        {
+                                                            string virtualMachineIdInstance = ((string)virtualMachineIdValue);
+                                                            recoveryPlanProtectedItemInstance.VirtualMachineId = virtualMachineIdInstance;
                                                         }
                                                     }
                                                 }
