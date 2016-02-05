@@ -620,9 +620,10 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(doc.IntValue, response.Results[0].Document.IntValue);
         }
 
-        protected void TestCanSearchWithMismatchedPropertyCase()
+        protected void TestCanSearchWithCustomContractResolver()
         {
             SearchIndexClient client = GetClientForQuery();
+            client.DeserializationSettings.ContractResolver = new MyCustomContractResolver();
 
             DocumentSearchResult<LoudHotel> response = client.Documents.Search<LoudHotel>("Best");
 
@@ -632,13 +633,34 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestCanSearchWithCustomConverter()
         {
+            TestCanSearchWithCustomConverter<CustomBookWithConverter>();
+        }
+
+        protected void TestCanSearchWithCustomConverterViaSettings()
+        {
+            Action<SearchIndexClient> customizeSettings =
+                client =>
+                {
+                    var converter = new CustomBookConverter<CustomBook>();
+                    converter.Install(client);
+                };
+
+            TestCanSearchWithCustomConverter<CustomBook>(customizeSettings);
+        }
+
+        private void TestCanSearchWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
+            where T : CustomBook, new()
+        {
+            customizeSettings = customizeSettings ?? (client => { });
+
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
             Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            customizeSettings(indexClient);
 
-            var doc = new CustomBook()
+            var doc = new T()
             {
                 InternationalStandardBookNumber = "123",
                 Name = "Lord of the Rings",
@@ -651,8 +673,8 @@ namespace Microsoft.Azure.Search.Tests
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
 
-            DocumentSearchResult<CustomBook> response = 
-                indexClient.Documents.Search<CustomBook>("*");
+            DocumentSearchResult<T> response = indexClient.Documents.Search<T>("*");
+
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc, response.Results[0].Document);
         }

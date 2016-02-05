@@ -5,8 +5,8 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
-    using System.Globalization;
     using System.Net;
+    using System.Net.Http;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
@@ -24,12 +24,78 @@ namespace Microsoft.Azure.Search.Tests
                 // We need to use a constant GUID so that this test will still work in playback mode.
                 var options = new SearchRequestOptions(new Guid("c4cfce79-eb42-4e61-9909-84510c04706f"));
 
-                AzureOperationResponse<long?> countResponse = 
+                AzureOperationResponse<long> countResponse = 
                     client.Documents.CountWithHttpMessagesAsync(options).Result;
                 Assert.Equal(HttpStatusCode.OK, countResponse.Response.StatusCode);
 
                 Assert.Equal(options.RequestId.Value.ToString("D"), countResponse.RequestId);
             });
+        }
+
+        [Fact]
+        public void ConstructorThrowsForBadParameters()
+        {
+            var creds = new SearchCredentials("abc");
+            var searchServiceName = "abc";
+            var indexName = "xyz";
+            var handler = new HttpClientHandler();
+            var uri = new Uri("http://tempuri.org");
+            var invalidName = ")#%&/?''+&@)#*@%#";
+
+            Assert.Throws<ArgumentNullException>("credentials", () => new SearchIndexClient(credentials: null));
+            Assert.Throws<ArgumentNullException>(
+                "searchServiceName",
+                () => new SearchIndexClient(searchServiceName: null, indexName: indexName, credentials: creds));
+            Assert.Throws<ArgumentException>(
+                "searchServiceName",
+                () => new SearchIndexClient(searchServiceName: String.Empty, indexName: indexName, credentials: creds));
+            Assert.Throws<ArgumentException>(
+                "searchServiceName",
+                () => new SearchIndexClient(searchServiceName: invalidName, indexName: indexName, credentials: creds));
+            Assert.Throws<ArgumentNullException>(
+                "indexName",
+                () => new SearchIndexClient(searchServiceName, indexName: null, credentials: creds));
+            Assert.Throws<ArgumentException>(
+                "indexName",
+                () => new SearchIndexClient(searchServiceName, indexName: String.Empty, credentials: creds));
+            Assert.Throws<ArgumentNullException>(
+                "credentials",
+                () => new SearchIndexClient(searchServiceName, indexName, credentials: null));
+            Assert.Throws<ArgumentNullException>(
+                "credentials",
+                () => new SearchIndexClient(credentials: null, rootHandler: handler));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(credentials: creds, rootHandler: null));
+            Assert.Throws<ArgumentNullException>(
+                "baseUri",
+                () => new SearchIndexClient(baseUri: null, credentials: creds));
+            Assert.Throws<ArgumentNullException>("credentials", () => new SearchIndexClient(uri, credentials: null));
+            Assert.Throws<ArgumentNullException>(
+                "searchServiceName",
+                () => new SearchIndexClient(searchServiceName: null, indexName: indexName, credentials: creds, rootHandler: handler));
+            Assert.Throws<ArgumentException>(
+                "searchServiceName",
+                () => new SearchIndexClient(searchServiceName: String.Empty, indexName: indexName, credentials: creds, rootHandler: handler));
+            Assert.Throws<ArgumentException>(
+                "searchServiceName",
+                () => new SearchIndexClient(searchServiceName: invalidName, indexName: indexName, credentials: creds, rootHandler: handler));
+            Assert.Throws<ArgumentNullException>(
+                "indexName",
+                () => new SearchIndexClient(searchServiceName, indexName: null, credentials: creds, rootHandler: handler));
+            Assert.Throws<ArgumentException>(
+                "indexName",
+                () => new SearchIndexClient(searchServiceName, indexName: String.Empty, credentials: creds, rootHandler: handler));
+            Assert.Throws<ArgumentNullException>(
+                "credentials",
+                () => new SearchIndexClient(searchServiceName, indexName, credentials: null, rootHandler: handler));
+            Assert.Throws<ArgumentNullException>(
+                () => new SearchIndexClient(searchServiceName, indexName, creds, rootHandler: null));
+            Assert.Throws<ArgumentNullException>(
+                "baseUri",
+                () => new SearchIndexClient(baseUri: null, credentials: creds, rootHandler: handler));
+            Assert.Throws<ArgumentNullException>(
+                "credentials",
+                () => new SearchIndexClient(uri, credentials: null, rootHandler: handler));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(uri, creds, rootHandler: null));
         }
     }
 }

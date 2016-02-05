@@ -4,10 +4,7 @@
 
 namespace Microsoft.Azure.Search
 {
-    using System;
     using System.Net.Http;
-    using System.Net.Http.Headers;
-    using Microsoft.Rest;
 
     public partial class SearchServiceClient
     {
@@ -33,18 +30,11 @@ namespace Microsoft.Azure.Search
             HttpClientHandler rootHandler, 
             params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
-            
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
+            Throw.IfArgumentNull(credentials, "credentials");
 
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForService(searchServiceName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUri();
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -59,18 +49,11 @@ namespace Microsoft.Azure.Search
         public SearchServiceClient(string searchServiceName, SearchCredentials credentials)
             : this()
         {
-            if (searchServiceName == null)
-            {
-                throw new ArgumentNullException("searchServiceName");
-            }
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
+            Throw.IfArgumentNull(credentials, "credentials");
 
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            
             this.Credentials = credentials;
-            this.BaseUri = BuildBaseUriForService(searchServiceName);
+            this.BaseUri = validatedSearchServiceName.BuildBaseUri();
 
             this.Credentials.InitializeServiceClient(this);
         }
@@ -79,11 +62,6 @@ namespace Microsoft.Azure.Search
         public SearchCredentials SearchCredentials
         {
             get { return (SearchCredentials)this.Credentials; }
-        }
-
-        private static Uri BuildBaseUriForService(string searchServiceName)
-        {
-            return TypeConversion.TryParseUri("https://" + searchServiceName + ".search.windows.net/");
         }
     }
 }

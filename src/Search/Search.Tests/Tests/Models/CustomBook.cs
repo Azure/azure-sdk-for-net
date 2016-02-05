@@ -5,9 +5,7 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
-    using Newtonsoft.Json;
 
-    [JsonConverter(typeof(CustomBookConverter))]
     internal class CustomBook
     {
         public string InternationalStandardBookNumber { get; set; }
@@ -36,7 +34,7 @@ namespace Microsoft.Azure.Search.Tests
 
         public override int GetHashCode()
         {
-            return (this.InternationalStandardBookNumber != null) ?
+            return (this.InternationalStandardBookNumber != null) ? 
                 this.InternationalStandardBookNumber.GetHashCode() : 0;
         }
 

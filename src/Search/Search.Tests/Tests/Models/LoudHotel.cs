@@ -10,28 +10,40 @@ namespace Microsoft.Azure.Search.Tests
 
     public class LoudHotel
     {
+        [CustomField("hotelId")]
         public string HOTELID { get; set; }
 
+        [CustomField("baseRate")]
         public double BASERATE { get; set; }
 
+        [CustomField("description")]
         public string DESCRIPTION { get; set; }
 
-        public string DESCRIPTIONFR { get; set; }
+        [CustomField("descriptionFr")]
+        public string DESCRIPTIONFRENCH { get; set; }   // Intentionally different name, not just different case.
 
+        [CustomField("hotelName")]
         public string HOTELNAME { get; set; }
 
+        [CustomField("category")]
         public string CATEGORY { get; set; }
 
+        [CustomField("tags")]
         public string[] TAGS { get; set; }
 
+        [CustomField("parkingIncluded")]
         public bool PARKINGINCLUDED { get; set; }
 
+        [CustomField("smokingAllowed")]
         public bool SMOKINGALLOWED { get; set; }
 
+        [CustomField("lastRenovationDate")]
         public DateTimeOffset LASTRENOVATIONDATE { get; set; }
 
+        [CustomField("rating")]
         public int RATING { get; set; }
 
+        [CustomField("location")]
         public GeographyPoint LOCATION { get; set; }
 
         public override bool Equals(object obj)
@@ -47,7 +59,7 @@ namespace Microsoft.Azure.Search.Tests
                 this.HOTELID == other.HOTELID &&
                 this.BASERATE == other.BASERATE &&
                 this.DESCRIPTION == other.DESCRIPTION &&
-                this.DESCRIPTIONFR == other.DESCRIPTIONFR &&
+                this.DESCRIPTIONFRENCH == other.DESCRIPTIONFRENCH &&
                 this.HOTELNAME == other.HOTELNAME &&
                 this.CATEGORY == other.CATEGORY &&
                 ((this.TAGS == null) ? (other.TAGS == null || other.TAGS.Length == 0) : this.TAGS.SequenceEqual(other.TAGS ?? new string[0])) &&
@@ -75,7 +87,7 @@ namespace Microsoft.Azure.Search.Tests
                 this.HOTELID,
                 this.BASERATE,
                 this.DESCRIPTION,
-                this.DESCRIPTIONFR,
+                this.DESCRIPTIONFRENCH,
                 this.HOTELNAME,
                 this.CATEGORY,
                 (this.TAGS != null) ? String.Join(",", this.TAGS) : "null",
@@ -94,7 +106,7 @@ namespace Microsoft.Azure.Search.Tests
                 BaseRate = BASERATE,
                 Category = CATEGORY,
                 Description = DESCRIPTION,
-                DescriptionFr = DESCRIPTIONFR,
+                DescriptionFr = DESCRIPTIONFRENCH,
                 HotelId = HOTELID,
                 HotelName = HOTELNAME,
                 LastRenovationDate = LASTRENOVATIONDATE,

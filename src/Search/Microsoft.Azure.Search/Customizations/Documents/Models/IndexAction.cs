@@ -25,17 +25,20 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new IndexAction.</returns>
         public static IndexAction Delete(string keyName, string keyValue)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException("keyName");
-            }
-
-            if (keyValue == null)
-            {
-                throw new ArgumentNullException("keyValue");
-            }
+            Throw.IfArgumentNull(keyName, "keyName");
+            Throw.IfArgumentNull(keyValue, "keyValue");
 
             return new IndexAction(IndexActionType.Delete, new Document() { { keyName, keyValue } });
+        }
+
+        /// <summary>
+        /// Creates a new IndexAction for deleting a document.
+        /// </summary>
+        /// <param name="document">The document to delete; Fields other than the key are ignored.</param>
+        /// <returns>A new IndexAction.</returns>
+        public static IndexAction Delete(Document document)
+        {
+            return new IndexAction(IndexActionType.Delete, document);
         }
 
         /// <summary>
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Search.Models
         /// <typeparam name="T">
         /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
         /// </typeparam>
-        /// <param name="document">The document to delete; Only its key field may be set.</param>
+        /// <param name="document">The document to delete; Fields other than the key are ignored.</param>
         /// <returns>A new IndexAction.</returns>
         public static IndexAction<T> Delete<T>(T document) where T : class
         {

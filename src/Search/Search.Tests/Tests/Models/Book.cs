@@ -18,19 +18,22 @@ namespace Microsoft.Azure.Search.Tests
 
         public DateTime? PublishDate { get; set; }
 
-        public static Index DefineIndex()
+        public static Index DefineIndex(bool useCamelCase = false)
         {
             return new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
                 {
-                    new Field("ISBN", DataType.String) { IsKey = true },
-                    new Field("Title", DataType.String) { IsSearchable = true },
-                    new Field("Author", DataType.String),
-                    new Field("PublishDate", DataType.DateTimeOffset)
+                    new Field(useCamelCase ? "isbn" : "ISBN", DataType.String) { IsKey = true },
+                    new Field(useCamelCase ? "title" : "Title", DataType.String) { IsSearchable = true },
+                    new Field(useCamelCase ? "author" : "Author", DataType.String),
+                    new Field(useCamelCase ? "publishDate" : "PublishDate", DataType.DateTimeOffset)
                 },
-                Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
+                Suggesters = new[] 
+                {
+                    new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, useCamelCase ? "title" : "Title")
+                }
             };
         }
 

@@ -9,6 +9,10 @@ namespace Microsoft.Azure.Search
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Operations for managing datasources. 
+    /// <see href="https://msdn.microsoft.com/library/azure/dn946891.aspx" />
+    /// </summary>
     public static partial class DataSourcesOperationsExtensions
     {
         /// <summary>

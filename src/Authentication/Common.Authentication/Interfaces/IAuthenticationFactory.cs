@@ -63,5 +63,8 @@ namespace Microsoft.Azure.Common.Authentication
         SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context, AzureEnvironment.Endpoint targetEndpoint);
        
         ServiceClientCredentials GetServiceClientCredentials(AzureContext context);
+
+        ServiceClientCredentials GetServiceClientCredentials(AzureContext context,
+            AzureEnvironment.Endpoint targetEndpoint);
     }
 }

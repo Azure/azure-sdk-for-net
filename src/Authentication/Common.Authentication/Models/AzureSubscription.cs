@@ -28,6 +28,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public string Account { get; set; }
 
+        public string State { get; set; }
+
         public Dictionary<Property, string> Properties { get; set; }
 
         public enum Property

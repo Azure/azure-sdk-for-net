@@ -15,8 +15,6 @@ namespace Microsoft.Azure.Management.Scheduler
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Linq.Expressions;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -40,7 +38,7 @@ namespace Microsoft.Azure.Management.Scheduler
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// The management credentials for Azure.
+        /// Gets Azure subscription credentials.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
@@ -60,9 +58,16 @@ namespace Microsoft.Azure.Management.Scheduler
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// The retry timeout for Long Running Operations.
+        /// Gets or sets the retry timeout in seconds for Long Running Operations.
+        /// Default value is 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
+
+        /// <summary>
+        /// When set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
+        /// </summary>
+        public bool? GenerateClientRequestId { get; set; }
 
         public virtual IJobCollectionsOperations JobCollections { get; private set; }
 
@@ -71,19 +76,10 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerManagementClient class.
         /// </summary>
-        public SchedulerManagementClient() : base()
-        {
-            this.Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SchedulerManagementClient class.
-        /// </summary>
         /// <param name='handlers'>
-        /// Optional. The set of delegating handlers to insert in the http
-        /// client pipeline.
+        /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SchedulerManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected SchedulerManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
@@ -95,10 +91,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// Optional. The http client handler used to handle http transport.
         /// </param>
         /// <param name='handlers'>
-        /// Optional. The set of delegating handlers to insert in the http
-        /// client pipeline.
+        /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SchedulerManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected SchedulerManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
@@ -110,10 +105,30 @@ namespace Microsoft.Azure.Management.Scheduler
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='handlers'>
-        /// Optional. The set of delegating handlers to insert in the http
-        /// client pipeline.
+        /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SchedulerManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected SchedulerManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this.BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SchedulerManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        protected SchedulerManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -126,13 +141,37 @@ namespace Microsoft.Azure.Management.Scheduler
         /// Initializes a new instance of the SchedulerManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The management credentials for Azure.
+        /// Required. Gets Azure subscription credentials.
         /// </param>
         /// <param name='handlers'>
-        /// Optional. The set of delegating handlers to insert in the http
-        /// client pipeline.
+        /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
         public SchedulerManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this.Credentials = credentials;
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SchedulerManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets Azure subscription credentials.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        public SchedulerManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -152,13 +191,45 @@ namespace Microsoft.Azure.Management.Scheduler
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. The management credentials for Azure.
+        /// Required. Gets Azure subscription credentials.
         /// </param>
         /// <param name='handlers'>
-        /// Optional. The set of delegating handlers to insert in the http
-        /// client pipeline.
+        /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
         public SchedulerManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this.BaseUri = baseUri;
+            this.Credentials = credentials;
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SchedulerManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Gets Azure subscription credentials.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        public SchedulerManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -184,8 +255,10 @@ namespace Microsoft.Azure.Management.Scheduler
             this.JobCollections = new JobCollectionsOperations(this);
             this.Jobs = new JobsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2014-08-01-preview";
+            this.ApiVersion = "2016-01-01";
             this.AcceptLanguage = "en-US";
+            this.LongRunningOperationRetryTimeout = 30;
+            this.GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
@@ -202,7 +275,8 @@ namespace Microsoft.Azure.Management.Scheduler
                 ////    }
             };
             SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings = new JsonSerializerSettings{
+            DeserializationSettings = new JsonSerializerSettings
+            {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,

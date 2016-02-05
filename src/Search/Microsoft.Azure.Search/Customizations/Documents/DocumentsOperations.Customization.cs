@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Search
                 searchRequestOptions,
                 customHeaders,
                 cancellationToken,
-                JsonUtility.DocumentDeserializerSettings);
+                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
         }
 
         public Task<AzureOperationResponse<T>> GetWithHttpMessagesAsync<T>(
@@ -102,7 +102,8 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
-            JsonSerializerSettings jsonSerializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>();
+            JsonSerializerSettings jsonSerializerSettings = 
+                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings);
             return DoGetWithHttpMessagesAsync<T>(
                 key,
                 selectedFields,
@@ -123,7 +124,9 @@ namespace Microsoft.Azure.Search
                 throw new ArgumentNullException("batch");
             }
 
-            string payload = SafeJsonConvert.SerializeObject(batch, JsonUtility.DocumentSerializerSettings);
+            JsonSerializerSettings jsonSettings = 
+                JsonUtility.CreateDocumentSerializerSettings(this.Client.SerializationSettings);
+            string payload = SafeJsonConvert.SerializeObject(batch, jsonSettings);
             return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
         }
 
@@ -139,7 +142,9 @@ namespace Microsoft.Azure.Search
             }
 
             bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType<T>();
-            string payload = SafeJsonConvert.SerializeObject(batch, JsonUtility.CreateSerializerSettings<T>(useCamelCase));
+            JsonSerializerSettings jsonSettings =
+                JsonUtility.CreateTypedSerializerSettings<T>(this.Client.SerializationSettings, useCamelCase);
+            string payload = SafeJsonConvert.SerializeObject(batch, jsonSettings);
 
             return DoIndexWithHttpMessagesAsync(payload, searchRequestOptions, customHeaders, cancellationToken);
         }
@@ -212,34 +217,34 @@ namespace Microsoft.Azure.Search
                 DeserializeForSuggest<T>);
         }
 
-        private static DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload)
+        private DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload)
             where T : class
         {
             return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
                 payload,
-                JsonUtility.CreateTypedDeserializerSettings<T>());
+                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings));
         }
 
-        private static DocumentSearchResponsePayload<SearchResult, Document> DeserializeForSearch(string payload)
+        private DocumentSearchResponsePayload<SearchResult, Document> DeserializeForSearch(string payload)
         {
             return SafeJsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
                 payload,
-                JsonUtility.DocumentDeserializerSettings);
+                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
         }
 
-        private static DocumentSuggestResponsePayload<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload)
+        private DocumentSuggestResponsePayload<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload)
             where T : class
         {
             return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
                 payload,
-                JsonUtility.CreateTypedDeserializerSettings<T>());
+                JsonUtility.CreateTypedDeserializerSettings<T>(this.Client.DeserializationSettings));
         }
 
-        private static DocumentSuggestResponsePayload<SuggestResult, Document> DeserializeForSuggest(string payload)
+        private DocumentSuggestResponsePayload<SuggestResult, Document> DeserializeForSuggest(string payload)
         {
             return SafeJsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
                 payload,
-                JsonUtility.DocumentDeserializerSettings);
+                JsonUtility.CreateDocumentDeserializerSettings(this.Client.DeserializationSettings));
         }
 
         private async Task<AzureOperationResponse<TSearchResult>> DoContinueSearchWithHttpMessagesAsync<TSearchResult, TDocResult, TDoc>(
@@ -1060,7 +1065,7 @@ namespace Microsoft.Azure.Search
             return shouldTrace;
         }
 
-        private class DocumentSearchResponsePayload<TResult, TDoc>
+        private class DocumentSearchResponsePayload<TResult, TDoc> : SearchContinuationTokenPayload
             where TResult : SearchResultBase<TDoc>
             where TDoc : class
         {
@@ -1075,12 +1080,6 @@ namespace Microsoft.Azure.Search
 
             [JsonProperty("value")]
             public List<TResult> Documents { get; set; }
-
-            [JsonProperty("@odata.nextLink")]
-            public string NextLink { get; set; }
-
-            [JsonProperty("@search.nextPageParameters")]
-            public SearchParametersPayload NextPageParameters { get; set; }
         }
 
         private class DocumentSuggestResponsePayload<TResult, TDoc>
