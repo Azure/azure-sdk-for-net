@@ -128,7 +128,7 @@ namespace Compute.Tests
                     Action<VirtualMachine> useVMMImage = vm =>
                     {
                         vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = userImageUrl };
-                        vm.StorageProfile.OsDisk.Vhd = new VirtualHardDisk { Uri = userImageUrl + "dbaa090497414b20ba10567c4cd71c45.vhd" };
+                        vm.StorageProfile.OsDisk.Vhd = new VirtualHardDisk { Uri = ComputeManagementTestUtilities.GenerateName(userImageUrl) + ".vhd"};
                         vm.StorageProfile.OsDisk.OsType = "Windows";
                         vm.LicenseType = "Windows_Server";
                     };
