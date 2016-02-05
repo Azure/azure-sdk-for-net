@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Search.Models
         public IndexActionType ActionType { get; private set; }
 
         /// <summary>
-        /// Gets the document on which the action will be performed; Must contain only a key for delete actions.
+        /// Gets the document on which the action will be performed; Fields other than the key are ignored for
+        /// delete actions.
         /// </summary>
         public T Document { get; private set; }
     }
