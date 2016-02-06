@@ -17,10 +17,11 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using Xunit;
 using Microsoft.Rest.Azure;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace Compute.Tests
 {
@@ -76,7 +77,7 @@ namespace Compute.Tests
             }
         }
 
-        public void ValidateListUsageResponse(IPage<Usage> luResponse)
+        public void ValidateListUsageResponse(IEnumerable<Usage> luResponse)
         {
             Assert.NotNull(luResponse);
             Assert.True(luResponse.Count() > 0);

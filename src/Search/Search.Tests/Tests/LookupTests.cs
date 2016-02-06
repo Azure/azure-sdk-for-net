@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Search.Tests
                         Tags = new[] { "motel", "budget" },
                         ParkingIncluded = true,
                         SmokingAllowed = true,
-                        LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),
+                        LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                         Rating = 1,
                         Location = GeographyPoint.Create(49.678581, -122.131577)
                     };
