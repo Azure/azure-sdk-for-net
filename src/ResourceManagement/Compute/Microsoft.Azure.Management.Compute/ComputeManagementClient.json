@@ -895,7 +895,7 @@
           }
         ],
         "responses": {
-		  "200": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineCaptureResult"
