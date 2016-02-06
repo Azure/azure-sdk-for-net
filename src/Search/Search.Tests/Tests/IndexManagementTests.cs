@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Search.Tests
                             new FreshnessScoringFunction(
                                 "lastRenovationDate", 
                                 boost: 1.1, 
-                                boostingDuration: TimeSpan.FromDays(365), 
+                                boostingDuration: TimeSpan.FromDays(365),   //aka.ms/sre-codescan/disable
                                 interpolation: ScoringFunctionInterpolation.Logarithmic)
                         },
                         TextWeights = new TextWeights()
