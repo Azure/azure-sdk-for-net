@@ -18,6 +18,7 @@ using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -99,6 +100,56 @@ namespace Compute.Tests
                     // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with 
                     // the resources from this test.
                     // m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                }
+            }
+        }
+
+        [Fact]
+        public void TestVMBYOL()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                EnsureClientsInitialized(context);
+
+                var userImageUrl = "https://mybyolosimage.blob.core.windows.net/vhdsrc/win2012-tag0.vhd";
+                ImageReference dummyImageRef = null;
+
+                // Create resource group
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                VirtualMachine inputVM;
+
+                // Create Storage Account, so that both the VMs can share it
+                var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                try
+                {
+                    Action<VirtualMachine> useVMMImage = vm =>
+                    {
+                        vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = userImageUrl };
+                        vm.StorageProfile.OsDisk.Vhd = new VirtualHardDisk { Uri = ComputeManagementTestUtilities.GenerateName(userImageUrl) + ".vhd"};
+                        vm.StorageProfile.OsDisk.OsType = "Windows";
+                        vm.LicenseType = "Windows_Server";
+                    };
+
+                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+
+                    var getResponse = m_CrpClient.VirtualMachines.GetWithHttpMessagesAsync(rgName, vm1.Name).GetAwaiter().GetResult();
+                    Assert.True(getResponse.Response.StatusCode == HttpStatusCode.OK);
+                    ValidateVM(inputVM, getResponse.Body,
+                        Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
+
+                    var lroResponse = m_CrpClient.VirtualMachines.DeleteWithHttpMessagesAsync(rgName, inputVM.Name).GetAwaiter().GetResult();
+                    Assert.True(lroResponse.Response.StatusCode == HttpStatusCode.OK);
+                }
+                finally
+                {
+                    // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with
+                    // the resources from this test.
+                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rgName);
+                    Assert.True(deleteResourceGroupResponse.Result.Response.StatusCode == HttpStatusCode.Accepted ||
+                        deleteResourceGroupResponse.Result.Response.StatusCode == HttpStatusCode.NotFound);
                 }
             }
         }
