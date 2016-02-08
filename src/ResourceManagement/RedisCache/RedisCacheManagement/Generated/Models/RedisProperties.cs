@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Optional. The exact ARM resource ID of the virtual network to
         /// deploy the redis cache in. Example format:
-        /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.ClassicNetwork/VirtualNetworks/vnet1
+        /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/providers/Microsoft.ClassicNetwork/VirtualNetworks/{vnetName}
         /// </summary>
         public string VirtualNetwork
         {
