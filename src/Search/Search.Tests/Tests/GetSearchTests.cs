@@ -76,6 +76,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanSearchWithLuceneSyntax()
+        {
+            Run(TestCanSearchWithLuceneSyntax);
+        }
+
+        [Fact]
         public void CanUseTopAndSkipForClientSidePaging()
         {
             Run(TestCanUseTopAndSkipForClientSidePaging);

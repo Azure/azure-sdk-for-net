@@ -29,13 +29,20 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the SearchServiceResource class.
         /// </summary>
-        public SearchServiceResource(string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SearchServiceReadableProperties properties = default(SearchServiceReadableProperties))
+        public SearchServiceResource(string id = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SearchServiceReadableProperties properties = default(SearchServiceReadableProperties))
         {
+            Id = id;
             Name = name;
             Location = location;
             Tags = tags;
             Properties = properties;
         }
+
+        /// <summary>
+        /// Resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the Search service.
