@@ -28,24 +28,24 @@ namespace Microsoft.Azure.Search.Models
         /// use the <c cref="SearchParameters.Top">Top</c> or <c cref="SearchParameters.Skip">Skip</c> parameters, or
         /// if Azure Search can't return all the requested documents in a single Search response.
         /// </remarks>
-        public long? Count { get; internal set; }
+        public long? Count { get; set; }
 
         /// <summary>
         /// Gets a value indicating the percentage of the index that was included in the query, or null if
         /// MinimumCoverage was not set in the <c cref="SearchParameters">SearchParameters</c>.
         /// </summary>
-        public double? Coverage { get; internal set; }
+        public double? Coverage { get; set; }
 
         /// <summary>
         /// Gets the facet query results for the search operation, or null if the query did not include any facet
         /// expressions.
         /// </summary>
-        public FacetResults Facets { get; internal set; }
+        public FacetResults Facets { get; set; }
 
         /// <summary>
         /// Gets the sequence of results returned by the query.
         /// </summary>
-        public IList<TResult> Results { get; internal set; }
+        public IList<TResult> Results { get; set; }
 
         /// <summary>
         /// Gets a continuation token that is used to continue fetching search results. This is necessary when Azure
@@ -67,6 +67,6 @@ namespace Microsoft.Azure.Search.Models
         /// search parameters.
         /// </para>
         /// </remarks>
-        public SearchContinuationToken ContinuationToken { get; internal set; }
+        public SearchContinuationToken ContinuationToken { get; set; }
     }
 }
