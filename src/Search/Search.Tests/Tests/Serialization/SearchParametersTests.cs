@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void AllOptionsUnsetGivesDefaultQueryString()
         {
-            Assert.Equal("$count=false&searchMode=any", new SearchParameters().ToString());
+            Assert.Equal("$count=false&queryType=simple&searchMode=any", new SearchParameters().ToString());
         }
 
         [Fact]
@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Search.Tests
                     HighlightPostTag = "</b>",
                     MinimumCoverage = 66.67,
                     OrderBy = new[] { "field1 asc", "field2 desc" },
+                    QueryType = QueryType.Full,
                     ScoringParameters = new[] 
                     { 
                         new ScoringParameter("name", "value"), 
@@ -49,9 +50,9 @@ namespace Microsoft.Azure.Search.Tests
             const string ExpectedQueryString =
                 "$count=true&facet=field%2Coption%3Avalue&$filter=field%20eq%20value&highlight=field1,field2&" +
                 "highlightPreTag=%3Cb%3E&highlightPostTag=%3C%2Fb%3E&minimumCoverage=66.67&" +
-                "$orderby=field1 asc,field2 desc&scoringParameter=name:value&scoringParameter=point:-120.1,48.5&" +
-                "scoringProfile=myprofile&searchFields=field1,field2&searchMode=all&$select=field1,field2&$skip=10&" +
-                "$top=5";
+                "$orderby=field1 asc,field2 desc&queryType=full&scoringParameter=name:value&" +
+                "scoringParameter=point:-120.1,48.5&scoringProfile=myprofile&searchFields=field1,field2&" +
+                "searchMode=all&$select=field1,field2&$skip=10&$top=5";
 
             Assert.Equal(ExpectedQueryString, parameters.ToString());
         }
@@ -67,7 +68,7 @@ namespace Microsoft.Azure.Search.Tests
                 };
 
             const string ExpectedQueryString =
-                "$count=false&facet=field%2Coption%3Avalue&facet=field2%2Coption2%3Avalue2&" +
+                "$count=false&facet=field%2Coption%3Avalue&facet=field2%2Coption2%3Avalue2&queryType=simple&" +
                 "scoringParameter=name:value&scoringParameter=name2:value2&searchMode=any";
 
             Assert.Equal(ExpectedQueryString, parameters.ToString());
@@ -77,7 +78,7 @@ namespace Microsoft.Azure.Search.Tests
         public void SelectStarPropagatesToQueryString()
         {
             var parameters = new SearchParameters() { Select = new[] { "*" } };
-            Assert.Equal("$count=false&searchMode=any&$select=*", parameters.ToString());
+            Assert.Equal("$count=false&queryType=simple&searchMode=any&$select=*", parameters.ToString());
         }
 
         [Fact]
@@ -96,7 +97,8 @@ namespace Microsoft.Azure.Search.Tests
                 };
 
             const string ExpectedQueryStringFormat =
-                "$count=false&facet={0}&$filter={0}&highlightPreTag={0}&highlightPostTag={0}&searchMode=any";
+                "$count=false&facet={0}&$filter={0}&highlightPreTag={0}&highlightPostTag={0}&queryType=simple&" +
+                "searchMode=any";
 
             Assert.Equal(String.Format(ExpectedQueryStringFormat, EscapedString), parameters.ToString());
         }
@@ -115,6 +117,7 @@ namespace Microsoft.Azure.Search.Tests
                     IncludeTotalResultCount = true,
                     MinimumCoverage = 33.3,
                     OrderBy = new[] { "a", "b desc" },
+                    QueryType = QueryType.Full,
                     ScoringParameters = new[] 
                     { 
                         new ScoringParameter("a", "b"), 
@@ -138,6 +141,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(parameters.IncludeTotalResultCount, payload.Count);
             Assert.Equal(parameters.MinimumCoverage, payload.MinimumCoverage);
             Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), payload.OrderBy);
+            Assert.Equal(parameters.QueryType, payload.QueryType);
             Assert.True(parameters.ScoringParameters.Select(p => p.ToString()).SequenceEqual(payload.ScoringParameters));
             Assert.Equal(parameters.ScoringProfile, payload.ScoringProfile);
             Assert.Equal("find me", payload.Search);
@@ -166,6 +170,8 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Null(payload.HighlightPreTag);
             Assert.Null(payload.MinimumCoverage);
             Assert.Null(payload.OrderBy);
+            Assert.True(payload.QueryType.HasValue);
+            Assert.Equal(QueryType.Simple, payload.QueryType.Value); // QueryType is non-nullable in the client contract.
             Assert.NotNull(payload.ScoringParameters);
             Assert.False(payload.ScoringParameters.Any());
             Assert.Null(payload.ScoringProfile);

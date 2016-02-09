@@ -33,6 +33,9 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty("orderby")]
         public string OrderBy { get; set; }
 
+        [JsonProperty("queryType")]
+        public QueryType? QueryType { get; set; }
+
         [JsonProperty("scoringParameters")]
         public IList<string> ScoringParameters { get; set; }
 

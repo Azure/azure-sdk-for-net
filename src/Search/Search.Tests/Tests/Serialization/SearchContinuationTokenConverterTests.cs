@@ -26,13 +26,14 @@ namespace Microsoft.Azure.Search.Tests
     ""highlightPreTag"": ""<b>"",
     ""minimumCoverage"": 50.0,
     ""orderby"": ""testorderby"",
+    ""queryType"": ""full"",
     ""scoringParameters"": [
       ""testscoringparameter""
     ],
     ""scoringProfile"": ""testscoringprofile"",
     ""search"": ""some words"",
     ""searchFields"": ""somefields"",
-    ""searchMode"": ""any"",
+    ""searchMode"": ""all"",
     ""select"": ""*"",
     ""skip"": 100,
     ""top"": 10
@@ -58,11 +59,12 @@ namespace Microsoft.Azure.Search.Tests
                     HighlightPreTag = "<b>",
                     MinimumCoverage = 50,
                     OrderBy = "testorderby",
+                    QueryType = QueryType.Full,
                     ScoringParameters = new[] { "testscoringparameter" },
                     ScoringProfile = "testscoringprofile",
                     Search = "some words",
                     SearchFields = "somefields",
-                    SearchMode = SearchMode.Any,
+                    SearchMode = SearchMode.All,
                     Select = "*",
                     Skip = 100,
                     Top = 10
@@ -207,6 +209,7 @@ namespace Microsoft.Azure.Search.Tests
                     x.HighlightPreTag == y.HighlightPreTag &&
                     x.MinimumCoverage == y.MinimumCoverage &&
                     x.OrderBy == y.OrderBy &&
+                    x.QueryType == y.QueryType &&
                     ((x.ScoringParameters == null && y.ScoringParameters == null) ||
                       x.ScoringParameters.SequenceEqual(y.ScoringParameters)) &&
                     x.ScoringProfile == y.ScoringProfile &&

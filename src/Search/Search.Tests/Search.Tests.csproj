@@ -126,6 +126,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanSearchWithDateTimeInStaticModel.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanSearchWithLuceneSyntax.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.GetSearchTests\CanSearchWithMinimumCoverage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -412,6 +415,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanSearchWithCustomConverterViaSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanSearchWithLuceneSyntax.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.PostSearchTests\CanSearchWithMinimumCoverage.json">
