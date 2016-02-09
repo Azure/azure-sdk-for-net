@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private FabricDeletionInputProperties _properties;
         
         /// <summary>
-        /// Required. Properties of the fabric deletion input.
+        /// Optional. Properties of the fabric deletion input.
         /// </summary>
         public FabricDeletionInputProperties Properties
         {
@@ -46,20 +46,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public FabricDeletionInput()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the FabricDeletionInput class with
-        /// required arguments.
-        /// </summary>
-        public FabricDeletionInput(FabricDeletionInputProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

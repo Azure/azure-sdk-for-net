@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private RecoveryServicesProviderDeletionInputProperties _properties;
         
         /// <summary>
-        /// Required. Properties of the recovery services provider deletion
+        /// Optional. Properties of the recovery services provider deletion
         /// input.
         /// </summary>
         public RecoveryServicesProviderDeletionInputProperties Properties
@@ -48,21 +48,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public RecoveryServicesProviderDeletionInput()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// RecoveryServicesProviderDeletionInput class with required
-        /// arguments.
-        /// </summary>
-        public RecoveryServicesProviderDeletionInput(RecoveryServicesProviderDeletionInputProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

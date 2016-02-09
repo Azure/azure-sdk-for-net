@@ -101,10 +101,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("input");
             }
-            if (input.Properties == null)
-            {
-                throw new ArgumentNullException("input.Properties");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -184,7 +180,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 JObject recoveryServicesProviderDeletionInputValue = new JObject();
                 requestDoc = recoveryServicesProviderDeletionInputValue;
                 
-                recoveryServicesProviderDeletionInputValue["properties"] = input.Properties.ToString();
+                if (input.Properties != null)
+                {
+                    recoveryServicesProviderDeletionInputValue["properties"] = input.Properties.ToString();
+                }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

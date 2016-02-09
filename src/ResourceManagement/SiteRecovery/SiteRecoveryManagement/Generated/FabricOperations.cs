@@ -306,10 +306,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("input");
             }
-            if (input.Properties == null)
-            {
-                throw new ArgumentNullException("input.Properties");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -386,7 +382,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 JObject fabricDeletionInputValue = new JObject();
                 requestDoc = fabricDeletionInputValue;
                 
-                fabricDeletionInputValue["properties"] = input.Properties.ToString();
+                if (input.Properties != null)
+                {
+                    fabricDeletionInputValue["properties"] = input.Properties.ToString();
+                }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
