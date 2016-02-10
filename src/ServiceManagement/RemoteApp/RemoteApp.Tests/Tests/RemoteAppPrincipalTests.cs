@@ -92,6 +92,69 @@ namespace RemoteApp.Tests
         }
 
         /// <summary>
+        /// Testing of querying the assigned users from a collection
+        /// </summary>
+        [Fact]
+        public void CanGetRemoteAppPrincipalListWithToken()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                var client = GetRemoteAppManagementClient();
+                client.RdfeNamespace = "rdsm54westus";
+
+                string collectionName = "testd750";
+
+                SecurityPrincipalInfoListWithTokenResult principalListWithToken = null;
+                string continuationToken = null;
+
+                do
+                {
+                    principalListWithToken = client.Principals.ListWithToken(collectionName, continuationToken);
+                    Assert.NotNull(principalListWithToken);
+                    Assert.NotNull(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList);
+                    Assert.True(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList.Count > 0, "No user assigned to the collection with name: " + collectionName + ".");
+
+                    continuationToken = principalListWithToken.SecurityPrincipalInfoListWithToken.NewContinuationToken;
+                }
+                while (continuationToken != null);
+            }
+        }
+
+        /// <summary>
+        /// Testing of querying the assigned users from a collection
+        /// </summary>
+        [Fact]
+        public void CanGetRemoteAppPrincipalListForAppWithToken()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                var client = GetRemoteAppManagementClient();
+                client.RdfeNamespace = "rdsm54westus";
+
+                string collectionName = "testd269";
+                string appAlias = "92190bcd-7a6e-4e15-a2b2-c69eaf762f03";
+
+                SecurityPrincipalInfoListWithTokenResult principalListWithToken = null;
+                string continuationToken = null;
+
+                do
+                {
+                    principalListWithToken = client.Principals.ListForAppWithToken(collectionName, appAlias, continuationToken);
+                    Assert.NotNull(principalListWithToken);
+                    Assert.NotNull(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList);
+                    Assert.True(principalListWithToken.SecurityPrincipalInfoListWithToken.SecurityPrincipalInfoList.Count > 0, "No user assigned to the collection with name: " + collectionName + ".");
+
+                    continuationToken = principalListWithToken.SecurityPrincipalInfoListWithToken.NewContinuationToken;
+                }
+                while (continuationToken != null);
+            }
+        }
+
+        /// <summary>
         /// Testing of negetive case of adding a user to a collection
         /// </summary>
         [Fact]
