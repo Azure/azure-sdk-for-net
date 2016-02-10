@@ -51,6 +51,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._agentVersion = value; }
         }
         
+        private string _postUpdateRebootStatus;
+        
+        /// <summary>
+        /// Optional. Indicates whether reboot is required after update is
+        /// applied.
+        /// </summary>
+        public string PostUpdateRebootStatus
+        {
+            get { return this._postUpdateRebootStatus; }
+            set { this._postUpdateRebootStatus = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the InMageAgentDetails class.
         /// </summary>

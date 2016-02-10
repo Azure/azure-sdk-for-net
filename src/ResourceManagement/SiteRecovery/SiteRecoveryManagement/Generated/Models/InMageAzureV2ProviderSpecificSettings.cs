@@ -88,17 +88,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._diskResized = value; }
         }
         
-        private string _healthErrorCode;
-        
-        /// <summary>
-        /// Optional. Health error code.
-        /// </summary>
-        public string HealthErrorCode
-        {
-            get { return this._healthErrorCode; }
-            set { this._healthErrorCode = value; }
-        }
-        
         private string _infrastructureVmId;
         
         /// <summary>
@@ -286,17 +275,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._resyncProgressPercentage; }
             set { this._resyncProgressPercentage = value; }
-        }
-        
-        private string _resyncRequired;
-        
-        /// <summary>
-        /// Optional. Value indicating whether resync is required for this VM.
-        /// </summary>
-        public string ResyncRequired
-        {
-            get { return this._resyncRequired; }
-            set { this._resyncRequired = value; }
         }
         
         private long? _rpoInSeconds;

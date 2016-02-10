@@ -76,6 +76,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._consistencyPoints = value; }
         }
         
+        private string _discoveryType;
+        
+        /// <summary>
+        /// Optional. Gets or sets a value inidicating the discovery type of
+        /// the machine.
+        /// </summary>
+        public string DiscoveryType
+        {
+            get { return this._discoveryType; }
+            set { this._discoveryType = value; }
+        }
+        
         private string _diskResized;
         
         /// <summary>
