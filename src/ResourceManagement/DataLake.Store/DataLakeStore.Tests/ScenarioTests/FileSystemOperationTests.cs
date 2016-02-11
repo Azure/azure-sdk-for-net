@@ -810,7 +810,7 @@ namespace DataLakeStore.Tests
 
         internal void VerifyTimeInAcceptableRange(long expected, long actual)
         {
-            // We give a +- 300 ticks range due to timing constraints in the service.
+            // We give a +- 100 ticks range due to timing constraints in the service.
             Assert.InRange<long>(actual, expected - 100, expected + 100);
         }
 
