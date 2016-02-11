@@ -200,6 +200,27 @@ namespace Microsoft.Azure.Subscriptions
                                 string stateInstance = ((string)stateValue);
                                 subscriptionInstance.State = stateInstance;
                             }
+                            
+                            JToken subscriptionPoliciesValue = responseDoc["subscriptionPolicies"];
+                            if (subscriptionPoliciesValue != null && subscriptionPoliciesValue.Type != JTokenType.Null)
+                            {
+                                SubscriptionPolicies subscriptionPoliciesInstance = new SubscriptionPolicies();
+                                subscriptionInstance.SubscriptionPolicies = subscriptionPoliciesInstance;
+                                
+                                JToken locationPlacementIdValue = subscriptionPoliciesValue["locationPlacementId"];
+                                if (locationPlacementIdValue != null && locationPlacementIdValue.Type != JTokenType.Null)
+                                {
+                                    string locationPlacementIdInstance = ((string)locationPlacementIdValue);
+                                    subscriptionPoliciesInstance.LocationPlacementId = locationPlacementIdInstance;
+                                }
+                                
+                                JToken quotaIdValue = subscriptionPoliciesValue["quotaId"];
+                                if (quotaIdValue != null && quotaIdValue.Type != JTokenType.Null)
+                                {
+                                    string quotaIdInstance = ((string)quotaIdValue);
+                                    subscriptionPoliciesInstance.QuotaId = quotaIdInstance;
+                                }
+                            }
                         }
                         
                     }
@@ -367,6 +388,27 @@ namespace Microsoft.Azure.Subscriptions
                                     {
                                         string stateInstance = ((string)stateValue);
                                         subscriptionInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken subscriptionPoliciesValue = valueValue["subscriptionPolicies"];
+                                    if (subscriptionPoliciesValue != null && subscriptionPoliciesValue.Type != JTokenType.Null)
+                                    {
+                                        SubscriptionPolicies subscriptionPoliciesInstance = new SubscriptionPolicies();
+                                        subscriptionInstance.SubscriptionPolicies = subscriptionPoliciesInstance;
+                                        
+                                        JToken locationPlacementIdValue = subscriptionPoliciesValue["locationPlacementId"];
+                                        if (locationPlacementIdValue != null && locationPlacementIdValue.Type != JTokenType.Null)
+                                        {
+                                            string locationPlacementIdInstance = ((string)locationPlacementIdValue);
+                                            subscriptionPoliciesInstance.LocationPlacementId = locationPlacementIdInstance;
+                                        }
+                                        
+                                        JToken quotaIdValue = subscriptionPoliciesValue["quotaId"];
+                                        if (quotaIdValue != null && quotaIdValue.Type != JTokenType.Null)
+                                        {
+                                            string quotaIdInstance = ((string)quotaIdValue);
+                                            subscriptionPoliciesInstance.QuotaId = quotaIdInstance;
+                                        }
                                     }
                                 }
                             }
@@ -730,6 +772,27 @@ namespace Microsoft.Azure.Subscriptions
                                     {
                                         string stateInstance = ((string)stateValue);
                                         subscriptionInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken subscriptionPoliciesValue = valueValue["subscriptionPolicies"];
+                                    if (subscriptionPoliciesValue != null && subscriptionPoliciesValue.Type != JTokenType.Null)
+                                    {
+                                        SubscriptionPolicies subscriptionPoliciesInstance = new SubscriptionPolicies();
+                                        subscriptionInstance.SubscriptionPolicies = subscriptionPoliciesInstance;
+                                        
+                                        JToken locationPlacementIdValue = subscriptionPoliciesValue["locationPlacementId"];
+                                        if (locationPlacementIdValue != null && locationPlacementIdValue.Type != JTokenType.Null)
+                                        {
+                                            string locationPlacementIdInstance = ((string)locationPlacementIdValue);
+                                            subscriptionPoliciesInstance.LocationPlacementId = locationPlacementIdInstance;
+                                        }
+                                        
+                                        JToken quotaIdValue = subscriptionPoliciesValue["quotaId"];
+                                        if (quotaIdValue != null && quotaIdValue.Type != JTokenType.Null)
+                                        {
+                                            string quotaIdInstance = ((string)quotaIdValue);
+                                            subscriptionPoliciesInstance.QuotaId = quotaIdInstance;
+                                        }
                                     }
                                 }
                             }
