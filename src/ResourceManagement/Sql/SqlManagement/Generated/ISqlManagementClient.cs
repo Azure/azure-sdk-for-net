@@ -217,6 +217,26 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for operating on Azure SQL Server
+        /// communication links.  Contains operations to: Create, Retrieve,
+        /// Update, and Delete.
+        /// </summary>
+        IServerCommunicationLinkOperations CommunicationLinks
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Server
+        /// disaster recovery configurations.  Contains operations to: Create,
+        /// Retrieve, Update, and Delete.
+        /// </summary>
+        IServerDisasterRecoveryConfigurationOperations ServerDisasterRecoveryConfigurations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// Servers.  Contains operations to: Create, Retrieve, Update, and
         /// Delete servers.
@@ -261,15 +281,6 @@ namespace Microsoft.Azure.Management.Sql
         ITransparentDataEncryptionOperations TransparentDataEncryption
         {
             get; 
-        }
-
-        /// <summary>
-        /// Represents all the operations of Azure SQL Database Server
-        /// Communication links.  Contains operations to: Create, Retrieve, and Delete.
-        /// </summary>
-        IServerCommunicationLinkOperations CommunicationLinks
-        {
-            get;
         }
     }
 }
