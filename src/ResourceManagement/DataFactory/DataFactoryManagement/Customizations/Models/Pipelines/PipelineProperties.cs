@@ -86,10 +86,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string HubName { get; set; }
         
         /// <summary>
-        /// Optional. Period for which the Pipeline is valid starting from the
-        /// time of Creation. The Pipeline would be deleted automatically once
-        /// it reaches the expiration time if it does not have any
-        /// active/pending runs
+        /// Optional. Duration of time after creation for which the pipeline is valid
+        /// and should remain provisioned. The pipeline will be deleted automatically
+        /// once it reaches the expiration time if it does not have any active or pending runs        
         /// </summary>
         public TimeSpan? ExpirationTime { get; set; }
 
@@ -98,7 +97,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// one of <see cref="PipelineMode"/>.
         /// </summary>
         public string PipelineMode { get; set; }
+
+        /// <summary>
+        /// Optional. List of datasets to be used by activities defined in the
+        /// pipeline. This can be used to define datasets that are specific to
+        /// this pipeline and not defined within the datafactory. Datasets
+        /// defined within this pipeline can only be used by this pipeline and
+        /// cannot be shared.
+        /// </summary>
+        public IList<Dataset> Datasets { get; set; }
         
+
         public PipelineProperties()
         {
         }

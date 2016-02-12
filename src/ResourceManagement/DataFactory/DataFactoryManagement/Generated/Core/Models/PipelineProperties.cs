@@ -44,6 +44,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
             set { this._activities = value; }
         }
         
+        private IList<Dataset> _datasets;
+        
+        /// <summary>
+        /// Optional. List of datasets to be used by activities defined in the
+        /// pipeline. This can be used to define datasets that are specific to
+        /// this pipeline and not defined within the datafactory. Datasets
+        /// defined within this pipeline can only be used by this pipeline and
+        /// cannot be shared.
+        /// </summary>
+        public IList<Dataset> Datasets
+        {
+            get { return this._datasets; }
+            set { this._datasets = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -80,15 +95,15 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
             set { this._errorMessage = value; }
         }
         
-        private TimeSpan? _expirationTime;
+        private System.TimeSpan? _expirationTime;
         
         /// <summary>
-        /// Optional. Period for which the Pipeline is valid starting from the
-        /// time of Creation. The Pipeline would be deleted automatically once
-        /// it reaches the expiration time if it does not have any
-        /// active/pending runs
+        /// Optional. Duration of time after creation for which the pipeline is
+        /// valid and should remain provisioned. The pipeline will be deleted
+        /// automatically once it reaches the expiration time if it does not
+        /// have any active or pending runs.
         /// </summary>
-        public TimeSpan? ExpirationTime
+        public System.TimeSpan? ExpirationTime
         {
             get { return this._expirationTime; }
             set { this._expirationTime = value; }
@@ -121,7 +136,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
         
         /// <summary>
         /// Optional. The method of scheduling runs for the pipeline. Must be
-        /// one of <see cref="PipelineMode"/>.
+        /// one of <see
+        /// cref="Microsoft.Azure.Management.DataFactories.Models.PipelineMode"/>.
         /// </summary>
         public string PipelineMode
         {
@@ -171,6 +187,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
         public PipelineProperties()
         {
             this.Activities = new LazyList<Activity>();
+            this.Datasets = new LazyList<Dataset>();
         }
         
         /// <summary>

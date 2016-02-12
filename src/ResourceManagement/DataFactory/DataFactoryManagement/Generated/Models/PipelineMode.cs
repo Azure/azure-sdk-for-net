@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The method of scheduling runs for the pipeline.
+    /// The method of scheduling runs for a pipeline.
     /// </summary>
     public static partial class PipelineMode
     {

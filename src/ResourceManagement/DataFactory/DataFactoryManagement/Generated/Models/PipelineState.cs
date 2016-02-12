@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Current state of the Pipeline.
+    /// Current state of the pipeline.
     /// </summary>
     public static partial class PipelineState
     {
@@ -35,38 +35,39 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public const string NotSpecified = "NotSpecified";
         
         /// <summary>
-        /// Pipeline has pending initialization task.
+        /// The pipeline has a pending initialization task.
         /// </summary>
         public const string Initializing = "Initializing";
         
         /// <summary>
-        /// Pipeline has pending updation task.
+        /// The pipeline has a pending update task.
         /// </summary>
         public const string Updating = "Updating";
         
         /// <summary>
-        /// Pipeline has pending deletion task.
+        /// The pipeline has a pending deletion task.
         /// </summary>
         public const string Deleting = "Deleting";
         
         /// <summary>
-        /// Pipeline is not active. No Active Period is set or Active period in
-        /// future.
+        /// The pipeline is not active. No active period is set or active
+        /// period is in future.
         /// </summary>
         public const string Inactive = "Inactive";
         
         /// <summary>
-        /// Pipeline is active and executing runs.
+        /// The pipeline is active and executing activities.
         /// </summary>
         public const string Running = "Running";
         
         /// <summary>
-        /// Pipeline has completed all the scheduled runs for its activities.
+        /// The pipeline has completed all the scheduled runs for its
+        /// activities.
         /// </summary>
         public const string Completed = "Completed";
         
         /// <summary>
-        /// Pipeline is paused.
+        /// The pipeline is paused.
         /// </summary>
         public const string Paused = "Paused";
     }
