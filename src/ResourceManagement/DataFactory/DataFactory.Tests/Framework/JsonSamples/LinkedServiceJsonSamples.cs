@@ -75,6 +75,21 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureStorageSasLinkedService = @"
+{
+    name: ""Test-Windows-Azure-storage-Sas-linkedService"",
+    properties:
+    {
+        type: ""AzureStorageSas"",
+        hubName: ""testHub"",
+        typeProperties:
+        {
+            sasUri: ""SasUri""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string HDISLinkedService = @"
 {
     name: ""Test-HDIS-LinkedService"",

@@ -1,5 +1,13 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.4.0
+Release date: 2016.01.28
+
+### Feature Additions
+
+* The following linked service type has been added as data sources and sinks for copy activities: 
+    * AzureStorageSasLinkedService
+
 ## Version 4.3.0
 Release date: 2015.11.25
 

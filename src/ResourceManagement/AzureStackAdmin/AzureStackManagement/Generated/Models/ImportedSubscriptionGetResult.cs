@@ -21,40 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.AzureStack.Management.Models;
 
-namespace Microsoft.WindowsAzure.Management.Compute.Models
+namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// The replication progress information of VM images.
+    /// Your documentation here.
     /// </summary>
-    public partial class ReplicationProgressElement
+    public partial class ImportedSubscriptionGetResult : AzureOperationResponse
     {
-        private string _location;
+        private ImportedSubscriptionDefinition _importedSubscription;
         
         /// <summary>
-        /// Optional. The location of the replication of VM image.
+        /// Optional. Your documentation here.
         /// </summary>
-        public string Location
+        public ImportedSubscriptionDefinition ImportedSubscription
         {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private string _progress;
-        
-        /// <summary>
-        /// Optional. The progress of the replication of VM image.
-        /// </summary>
-        public string Progress
-        {
-            get { return this._progress; }
-            set { this._progress = value; }
+            get { return this._importedSubscription; }
+            set { this._importedSubscription = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ReplicationProgressElement class.
+        /// Initializes a new instance of the ImportedSubscriptionGetResult
+        /// class.
         /// </summary>
-        public ReplicationProgressElement()
+        public ImportedSubscriptionGetResult()
         {
         }
     }

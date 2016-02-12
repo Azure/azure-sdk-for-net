@@ -2236,7 +2236,45 @@ namespace Microsoft.Azure.Management.OperationalInsights
                     // Create Result
                     WorkspaceListIntelligencePacksResponse result = null;
                     // Deserialize Response
-                    result = new WorkspaceListIntelligencePacksResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WorkspaceListIntelligencePacksResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken intelligencePacksArray = responseDoc;
+                            if (intelligencePacksArray != null && intelligencePacksArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken intelligencePacksValue in ((JArray)intelligencePacksArray))
+                                {
+                                    IntelligencePack intelligencePackInstance = new IntelligencePack();
+                                    result.IntelligencePacks.Add(intelligencePackInstance);
+                                    
+                                    JToken nameValue = intelligencePacksValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        intelligencePackInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken enabledValue = intelligencePacksValue["enabled"];
+                                    if (enabledValue != null && enabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool enabledInstance = ((bool)enabledValue);
+                                        intelligencePackInstance.Enabled = enabledInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

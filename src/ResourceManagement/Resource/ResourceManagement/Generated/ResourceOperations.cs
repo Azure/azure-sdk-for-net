@@ -230,11 +230,11 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -1573,7 +1573,7 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Get a list of deployments.
+        /// Get a list of resources.
         /// </summary>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List

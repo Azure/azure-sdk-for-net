@@ -25,6 +25,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
     using Microsoft.WindowsAzure.Management.Storage.Models;
     using Microsoft.Azure.Test;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -53,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             TestUtilities.EndTest();
         }
 
-        [Fact(Skip = "TODO: Re-record the entire fixture")]
+        [Fact]
         public void CanGetHostedServiceList()
         {
             TestUtilities.StartTest();
@@ -196,6 +197,44 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             Assert.NotNull(deploymentResult.ExtensionConfiguration);
             Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles.Count, 1);
             Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles[0].Id, "RDPExtensionTest");
+            TestUtilities.EndTest();
+        }
+
+        [Fact]
+        public void DeploymentUpgradeWithUninstallExtension()
+        {
+            TestUtilities.StartTest();
+            var computeMgmtClient = fixture.GetComputeManagementClient();
+            var deploymentResult = computeMgmtClient.Deployments.GetByName(fixture.NewServiceName, string.Format(fixture.DeploymentNameTemplate, fixture.NewServiceName));
+            Assert.NotNull(deploymentResult.ExtensionConfiguration);
+            Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles.Count, 1);
+            Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles[0].Id, "RDPExtensionTest");
+
+            var extension = new ExtensionConfiguration.Extension
+            {
+                Id = "RDPExtensionTest",
+                State = "Uninstall"
+            };
+
+            var extensionList = new List<ExtensionConfiguration.Extension>();
+            extensionList.Add(extension);
+            var _blobUri = StorageTestUtilities.UploadFileToBlobStorage(fixture.NewStorageAccountName,
+                        "deployments", @"SampleService\SMNetTestAppProject.cspkg");
+
+            computeMgmtClient.Deployments.UpgradeBySlot(fixture.NewServiceName, DeploymentSlot.Production,
+                new DeploymentUpgradeParameters
+                {
+                    Configuration = File.ReadAllText(@"SampleService\ServiceConfiguration.Cloud.cscfg"),
+                    PackageUri = _blobUri,
+                    Label = "UpgradeBySlot",
+                    Force = true,
+                    Mode = DeploymentUpgradeMode.Auto,
+                    ExtensionConfiguration = new ExtensionConfiguration
+                    {
+                        AllRoles = extensionList
+                    }
+                });
+            deploymentResult = computeMgmtClient.Deployments.GetBySlot(fixture.NewServiceName, DeploymentSlot.Production);
             TestUtilities.EndTest();
         }
 
