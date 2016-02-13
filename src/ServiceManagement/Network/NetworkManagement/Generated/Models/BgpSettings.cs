@@ -20,44 +20,50 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class UpdateLocalNetworkGatewayParameters
+    public partial class BgpSettings
     {
-        private IList<string> _addressSpace;
+        private uint _asn;
         
         /// <summary>
-        /// Optional. Address space of local network gateway
+        /// Optional. Autonomous System Number
         /// </summary>
-        public IList<string> AddressSpace
+        public uint Asn
         {
-            get { return this._addressSpace; }
-            set { this._addressSpace = value; }
+            get { return this._asn; }
+            set { this._asn = value; }
         }
         
-        private BgpSettings _bgpSettings;
+        private string _bgpPeeringAddress;
         
         /// <summary>
-        /// Optional. Local network gateway's BGP speaker settings
+        /// Optional. IP address/BGP identifier
         /// </summary>
-        public BgpSettings BgpSettings
+        public string BgpPeeringAddress
         {
-            get { return this._bgpSettings; }
-            set { this._bgpSettings = value; }
+            get { return this._bgpPeeringAddress; }
+            set { this._bgpPeeringAddress = value; }
+        }
+        
+        private int _peerWeight;
+        
+        /// <summary>
+        /// Optional. Weight for routes learned from this peer
+        /// </summary>
+        public int PeerWeight
+        {
+            get { return this._peerWeight; }
+            set { this._peerWeight = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// UpdateLocalNetworkGatewayParameters class.
+        /// Initializes a new instance of the BgpSettings class.
         /// </summary>
-        public UpdateLocalNetworkGatewayParameters()
+        public BgpSettings()
         {
-            this.AddressSpace = new LazyList<string>();
         }
     }
 }
