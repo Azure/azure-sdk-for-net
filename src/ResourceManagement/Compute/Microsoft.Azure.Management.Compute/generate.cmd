@@ -6,7 +6,7 @@
 @echo off
 set autoRestVersion=0.15.0-Nightly20160212
 if  "%1" == "" (
-    set specFile="ComputeCompositeClient.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/2015-06-15/swagger/compositeComputeClient.json"
 ) else (
     set specFile="%1"
 )
