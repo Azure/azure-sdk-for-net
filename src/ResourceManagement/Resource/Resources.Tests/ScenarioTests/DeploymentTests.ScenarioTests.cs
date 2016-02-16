@@ -111,10 +111,10 @@ namespace ResourceGroups.Tests
                     {
                         TemplateLink = new TemplateLink
                         {
-                            Uri = new Uri(GoodWebsiteTemplateUri),
+                            Uri = new Uri("https://raw.githubusercontent.com/vivsriaus/armtemplates/master/test3light.json"),
                         },
                         Parameters =
-                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                            @"{ 'hostingPlanName': {'value': 'mctest0101'},'siteLocation': {'value': 'West US'}}",
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -134,8 +134,8 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(deploymentListResult.Deployments);
                 Assert.Equal(deploymentName, deploymentGetResult.Deployment.Name);
                 Assert.Equal(deploymentName, deploymentListResult.Deployments[0].Name);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Deployment.Properties.TemplateLink.Uri.AbsoluteUri);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Deployments[0].Properties.TemplateLink.Uri.AbsoluteUri);
+                Assert.Equal("https://raw.githubusercontent.com/vivsriaus/armtemplates/master/test3light.json", deploymentGetResult.Deployment.Properties.TemplateLink.Uri.AbsoluteUri);
+                Assert.Equal("https://raw.githubusercontent.com/vivsriaus/armtemplates/master/test3light.json", deploymentListResult.Deployments[0].Properties.TemplateLink.Uri.AbsoluteUri);
                 Assert.NotNull(deploymentGetResult.Deployment.Properties.ProvisioningState);
                 Assert.NotNull(deploymentListResult.Deployments[0].Properties.ProvisioningState);
                 Assert.NotNull(deploymentGetResult.Deployment.Properties.CorrelationId);
@@ -144,7 +144,10 @@ namespace ResourceGroups.Tests
                 Assert.True(deploymentListResult.Deployments[0].Properties.Parameters.Contains("mctest0101"));
 
                 //stop the deployment
-                client.Deployments.Cancel(groupName, deploymentName);
+                if(deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Running"))
+                {
+                    client.Deployments.Cancel(groupName, deploymentName);
+                }
                 TestUtilities.Wait(2000);
 
                 //Delete deployment
