@@ -6,7 +6,7 @@
 @echo off
 setlocal
 
-set autoRestVersion=0.12.0-Nightly20151022
+set autoRestVersion=0.15.0-Nightly20160212
 set repoRoot=%~dp0..\..\..\..
 set generatedFolder=%~dp0Generated
 

@@ -352,8 +352,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs?api-version=2015-02-01-preview&$top=1&$filter=status%20eq%20'Failed'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cy9sb2dpY3dmMjAxMy9ydW5zP2FwaS12ZXJzaW9uPTIwMTUtMDItMDEtcHJldmlldyYkdG9wPTEmJGZpbHRlcj1zdGF0dXMlMjBlcSUyMCdGYWlsZWQn",
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs?$filter=status%20eq%20'Failed'&$top=1&api-version=2015-02-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

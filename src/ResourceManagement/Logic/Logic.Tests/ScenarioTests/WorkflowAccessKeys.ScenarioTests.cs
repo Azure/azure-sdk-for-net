@@ -18,7 +18,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndDelete()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
 				string accessKeyName = TestUtilities.GenerateName("accesskey");
@@ -65,7 +65,7 @@ namespace Test.Azure.Management.Logic
 		[Fact]
         public void CreateAndList()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string accessKeyName = TestUtilities.GenerateName("accesskey");
@@ -109,7 +109,7 @@ namespace Test.Azure.Management.Logic
 		[Fact]
 		public void RegenerateAndListSecretKeys()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string accessKeyName = TestUtilities.GenerateName("accesskey");
