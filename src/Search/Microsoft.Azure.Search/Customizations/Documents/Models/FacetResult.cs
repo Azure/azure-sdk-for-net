@@ -37,26 +37,26 @@ namespace Microsoft.Azure.Search.Models
         /// no lower bound (i.e. -- for the first bucket).
         /// </summary>
         [JsonProperty("from")]
-        public object From { get; private set; }
+        public object From { get; set; }
 
         /// <summary>
         /// Gets a value indicating the exclusive upper bound of the facet's range, or null to indicate that there is
         /// no upper bound (i.e. -- for the last bucket).
         /// </summary>
         [JsonProperty("to")]
-        public object To { get; private set; }
+        public object To { get; set; }
 
         /// <summary>
         /// Gets the value of the facet, or the inclusive lower bound if it's an interval facet.
         /// </summary>
         [JsonProperty("value")]
-        public object Value { get; private set; }
+        public object Value { get; set; }
 
         /// <summary>
         /// Gets the approximate count of documents falling within the bucket described by this facet.
         /// </summary>
         [JsonProperty("count")]
-        public long? Count { get; private set; }
+        public long? Count { get; set; }
 
         /// <summary>
         /// Attempts to convert the facet to a range facet of the given type.

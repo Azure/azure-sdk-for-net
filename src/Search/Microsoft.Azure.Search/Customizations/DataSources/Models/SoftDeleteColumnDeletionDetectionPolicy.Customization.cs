@@ -4,8 +4,6 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using System;
-
     public partial class SoftDeleteColumnDeletionDetectionPolicy
     {
         /// <summary>
@@ -19,21 +17,17 @@ namespace Microsoft.Azure.Search.Models
         /// </param>
         public SoftDeleteColumnDeletionDetectionPolicy(string softDeleteColumnName, object softDeleteMarkerValue)
         {
-            if (softDeleteColumnName == null)
-            {
-                throw new ArgumentNullException("softDeleteColumnName");
-            }
-            if (softDeleteMarkerValue == null)
-            {
-                throw new ArgumentNullException("softDeleteMarkerValue");
-            } 
+            Throw.IfArgumentNull(softDeleteColumnName, "softDeleteColumnName");
+            Throw.IfArgumentNull(softDeleteMarkerValue, "softDeleteMarkerValue");
 
-            if (!(softDeleteMarkerValue is int || softDeleteMarkerValue is long || softDeleteMarkerValue is byte || 
-                  softDeleteMarkerValue is short || softDeleteMarkerValue is string || softDeleteMarkerValue is bool))
-            {
-                throw new ArgumentException(
-                    "Soft-delete marker value must be an integer, string, or bool value.", "softDeleteMarkerValue");
-            }
+            bool isValidType =
+                softDeleteMarkerValue is int || softDeleteMarkerValue is long || softDeleteMarkerValue is byte ||
+                softDeleteMarkerValue is short || softDeleteMarkerValue is string || softDeleteMarkerValue is bool;
+
+            Throw.IfArgument(
+                !isValidType, 
+                "softDeleteMarkerValue", 
+                "Soft-delete marker value must be an integer, string, or bool value.");
 
             this.SoftDeleteColumnName = softDeleteColumnName;
             this.SoftDeleteMarkerValue = softDeleteMarkerValue.ToString();

@@ -6,19 +6,21 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Compute.Models
+namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for UsageUnit.
+    /// Defines values for QueryType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum UsageUnit
+    public enum QueryType
     {
-        [EnumMember(Value = "Count")]
-        Count
+        [EnumMember(Value = "simple")]
+        Simple,
+        [EnumMember(Value = "full")]
+        Full
     }
 }

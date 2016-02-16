@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.1-preview",
+  "version": "1.0.3-preview",
   "description": "Microsoft Azure CDN Management Library",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure CDN management", "CDN", "Cdn management", "REST HTTP client", "windowsazureofficial" ],
@@ -12,7 +12,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.0.1,4.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.0.2,4.0)"
   },
 
   "frameworks": {

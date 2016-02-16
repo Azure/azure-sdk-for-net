@@ -82,6 +82,13 @@ namespace Microsoft.Azure.Search.Models
         public IList<string> OrderBy { get; set; }
 
         /// <summary>
+        /// Gets or sets a value that specifies the syntax of the search query.
+        /// The default is 'simple'. Use 'full' if your query uses the Lucene
+        /// query syntax. Possible values for this property include: 'simple', 'full'.
+        /// </summary>
+        public QueryType QueryType { get; set; }
+
+        /// <summary>
         /// Gets or sets the list of parameter values to be used in scoring
         /// functions (for example, referencePointParameter) using the format
         /// name:value. For example, if the scoring profile defines a
@@ -165,6 +172,7 @@ namespace Microsoft.Azure.Search.Models
                 HighlightPreTag = this.HighlightPreTag,
                 MinimumCoverage = this.MinimumCoverage,
                 OrderBy = this.OrderBy.ToCommaSeparatedString(),
+                QueryType = this.QueryType,
                 ScoringParameters = this.ScoringParameterStrings,
                 ScoringProfile = this.ScoringProfile,
                 Search = searchText,
@@ -214,6 +222,8 @@ namespace Microsoft.Azure.Search.Models
             {
                 yield return new QueryOption("$orderby", this.OrderBy);
             }
+
+            yield return new QueryOption("queryType", (this.QueryType == Models.QueryType.Simple) ? "simple" : "full");
 
             foreach (string scoringParameterExpr in this.ScoringParameterStrings)
             {

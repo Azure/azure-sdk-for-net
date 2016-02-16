@@ -122,7 +122,7 @@ namespace Cdn.Tests.Helpers
         public static void WaitIfNotInPlaybackMode()
         {
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") != null && 
-                Environment.GetEnvironmentVariable("AZURE_TEST_MODE").
+                !Environment.GetEnvironmentVariable("AZURE_TEST_MODE").
                 Equals("Playback", StringComparison.CurrentCultureIgnoreCase))
             {
                 Thread.Sleep(TimeSpan.FromMinutes(1));

@@ -21,6 +21,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
 {
+    [Collection("Intune Tests")]
     public class FlaggedUserScenarioTests : TestBase
     {
         /// <summary>
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetDefaultStatuses()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 var defaultStatus = client.GetMAMStatuses(IntuneClientHelper.AsuHostName);
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetFlaggedUsers()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 var flaggedUsers = client.GetMAMFlaggedUsers(IntuneClientHelper.AsuHostName).ToList();
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetFlaggedUserByName()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 var flaggedUsers = client.GetMAMFlaggedUsers(IntuneClientHelper.AsuHostName).ToList();
@@ -92,7 +93,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetFlaggedEnrolledApps()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.FlaggedUserScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 var flaggedUsers = client.GetMAMFlaggedUsers(IntuneClientHelper.AsuHostName).ToList();

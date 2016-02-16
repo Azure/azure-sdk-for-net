@@ -34,6 +34,6 @@ namespace Microsoft.Azure.Search
         public const string TargetApiVersion = "2015-02-28";
 
         // Making this a constant so we can use it to set the UserAgent header.
-        public const string AssemblyFileVersion = "1.0.1.0";
+        public const string AssemblyFileVersion = "1.1.0.0";
     }
 }

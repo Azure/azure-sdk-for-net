@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the SsoUri class.
         /// </summary>
-        public SsoUri(string ssoUriProperty = default(string))
+        public SsoUri(string ssoUriValue = default(string))
         {
-            SsoUriProperty = ssoUriProperty;
+            SsoUriValue = ssoUriValue;
         }
 
         /// <summary>
         /// The uri used to login to third party web portal
         /// </summary>
-        [JsonProperty(PropertyName = "ssoUri")]
-        public string SsoUriProperty { get; set; }
+        [JsonProperty(PropertyName = "ssoUriValue")]
+        public string SsoUriValue { get; set; }
 
     }
 }

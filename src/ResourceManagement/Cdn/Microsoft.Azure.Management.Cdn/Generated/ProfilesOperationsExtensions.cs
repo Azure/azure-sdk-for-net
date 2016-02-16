@@ -20,6 +20,34 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class ProfilesOperationsExtensions
     {
             /// <summary>
+            /// Lists the CDN Profiles within an Azure subscitption
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IEnumerable<Profile> ListBySubscriptionId(this IProfilesOperations operations)
+            {
+                return Task.Factory.StartNew(s => ((IProfilesOperations)s).ListBySubscriptionIdAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the CDN Profiles within an Azure subscitption
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<Profile>> ListBySubscriptionIdAsync( this IProfilesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionIdWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the CDN Profiles within a resource group
             /// </summary>
             /// <param name='operations'>
