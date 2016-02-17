@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourcegroups/csm-sql-rg-8863?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlZ3JvdXBzL2NzbS1zcWwtcmctODg2Mz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourcegroups/csm-sql-rg-6675?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlZ3JvdXBzL2NzbS1zcWwtcmctNjY3NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"North Europe\"\r\n}",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863\",\r\n  \"name\": \"csm-sql-rg-8863\",\r\n  \"location\": \"northeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675\",\r\n  \"name\": \"csm-sql-rg-6675\",\r\n  \"location\": \"northeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "188"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1169"
+          "1197"
         ],
         "x-ms-request-id": [
-          "c99d5450-b977-41cc-8db3-8918777c0875"
+          "75c4d08e-4d7d-4373-bb93-ae2a87dc8cf8"
         ],
         "x-ms-correlation-request-id": [
-          "c99d5450-b977-41cc-8db3-8918777c0875"
+          "75c4d08e-4d7d-4373-bb93-ae2a87dc8cf8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185001Z:c99d5450-b977-41cc-8db3-8918777c0875"
+          "CENTRALUS:20160217T012631Z:75c4d08e-4d7d-4373-bb93-ae2a87dc8cf8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,68 +49,14 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:50:01 GMT"
+          "Wed, 17 Feb 2016 01:26:30 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourcegroups/csm-sql-rg-3622?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlZ3JvdXBzL2NzbS1zcWwtcmctMzYyMj9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"Southeast Asia\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "36"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622\",\r\n  \"name\": \"csm-sql-rg-3622\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "190"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1168"
-        ],
-        "x-ms-request-id": [
-          "1a8c3244-5200-4fe7-b528-a0e24e45ca6f"
-        ],
-        "x-ms-correlation-request-id": [
-          "1a8c3244-5200-4fe7-b528-a0e24e45ca6f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185001Z:1a8c3244-5200-4fe7-b528-a0e24e45ca6f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 10 Feb 2016 18:50:01 GMT"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDM/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTg/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"version\": \"12.0\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"testp@ssMakingIt1007Longer\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
@@ -124,7 +70,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943\",\r\n  \"name\": \"csm-sql-server-5943\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"csm-sql-server-5943.sqltest-eg1.mscds.com\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"testp@ssMakingIt1007Longer\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818\",\r\n  \"name\": \"csm-sql-server-4818\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"North Europe\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"csm-sql-server-4818.sqltest-eg1.mscds.com\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"testp@ssMakingIt1007Longer\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "530"
@@ -133,7 +79,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "d0b1a702-dcd6-4ec9-801d-f8479688417d"
+          "0b2119d5-2ce7-4afa-b3ad-7144ad383f39"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -145,13 +91,13 @@
           "3.0;"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1167"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "0ab4a7e3-0f36-4f5c-bb1b-4acced415bbb"
+          "1aeeae28-0e79-4cba-a6e6-e11295b8ae25"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185045Z:0ab4a7e3-0f36-4f5c-bb1b-4acced415bbb"
+          "CENTRALUS:20160217T012745Z:1aeeae28-0e79-4cba-a6e6-e11295b8ae25"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -160,17 +106,17 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:50:45 GMT"
+          "Wed, 17 Feb 2016 01:27:44 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ]
       },
-      "StatusCode": 201
+      "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzA/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTk/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"version\": \"12.0\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"testp@ssMakingIt1007Longer\"\r\n  },\r\n  \"location\": \"Southeast Asia\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
@@ -184,7 +130,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930\",\r\n  \"name\": \"csm-sql-server-6930\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Southeast Asia\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"csm-sql-server-6930.sqltest-eg1.mscds.com\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"testp@ssMakingIt1007Longer\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799\",\r\n  \"name\": \"csm-sql-server-3799\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Southeast Asia\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"csm-sql-server-3799.sqltest-eg1.mscds.com\",\r\n    \"administratorLogin\": \"testlogin\",\r\n    \"administratorLoginPassword\": \"testp@ssMakingIt1007Longer\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "532"
@@ -193,7 +139,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "e5472220-2463-49dc-b30b-15f642a19392"
+          "ed5cb2b8-67bd-4421-8d08-feaf4f632768"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -205,13 +151,13 @@
           "3.0;"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1166"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "05927fc6-1a90-4b88-af4a-8210621f7f8b"
+          "aaad7dad-103e-41a9-a08b-73cb63223947"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185144Z:05927fc6-1a90-4b88-af4a-8210621f7f8b"
+          "CENTRALUS:20160217T012829Z:aaad7dad-103e-41a9-a08b-73cb63223947"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -220,7 +166,7 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:51:44 GMT"
+          "Wed, 17 Feb 2016 01:28:29 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -229,8 +175,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -238,7 +184,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-1255' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
+      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-7150' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -247,7 +193,7 @@
           "application/json"
         ],
         "x-ms-request-id": [
-          "77c07571-60aa-4cb3-87e7-7afb4f13be56"
+          "44131501-82ab-4a46-bb50-8e80b018b8f3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -259,19 +205,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14908"
+          "14743"
         ],
         "x-ms-correlation-request-id": [
-          "7ad1713c-c71f-48f0-970b-e625a637f2af"
+          "56eaca92-413b-4590-bc63-1e0036989540"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185145Z:7ad1713c-c71f-48f0-970b-e625a637f2af"
+          "CENTRALUS:20160217T012830Z:56eaca92-413b-4590-bc63-1e0036989540"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:51:45 GMT"
+          "Wed, 17 Feb 2016 01:28:30 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -280,8 +226,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -289,7 +235,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n  \"name\": \"csm-sql-drc-alias-1255\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"North Europe\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-6930\",\r\n    \"role\": \"Primary\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n  \"name\": \"csm-sql-drc-alias-7150\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"North Europe\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-3799\",\r\n    \"role\": \"Primary\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "479"
@@ -298,7 +244,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "b759fa50-1eee-42e3-981a-23a1d1b85857"
+          "97feb8c7-c771-4d9f-89fc-c5270e5d531a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -310,19 +256,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14904"
+          "14739"
         ],
         "x-ms-correlation-request-id": [
-          "797d38a1-a0b2-4b1a-9629-c05511c3b8d7"
+          "f6eba5da-113c-4103-96a6-4242bd20d788"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185225Z:797d38a1-a0b2-4b1a-9629-c05511c3b8d7"
+          "CENTRALUS:20160217T012911Z:f6eba5da-113c-4103-96a6-4242bd20d788"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:24 GMT"
+          "Wed, 17 Feb 2016 01:29:10 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -331,8 +277,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -340,7 +286,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n  \"name\": \"csm-sql-drc-alias-1255\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"North Europe\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-6930\",\r\n    \"role\": \"Secondary\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n  \"name\": \"csm-sql-drc-alias-7150\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"North Europe\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-3799\",\r\n    \"role\": \"Secondary\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "481"
@@ -349,7 +295,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "c4c56d1d-bcb1-4dc4-8b74-28467235d46b"
+          "15691e23-3cfc-4401-ba34-62105798498b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -361,19 +307,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14898"
+          "14733"
         ],
         "x-ms-correlation-request-id": [
-          "3102f2d2-8322-48fe-8c34-b89740635889"
+          "a4d4dc65-593c-47f0-a384-caa4f295726a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185236Z:3102f2d2-8322-48fe-8c34-b89740635889"
+          "CENTRALUS:20160217T012923Z:a4d4dc65-593c-47f0-a384-caa4f295726a"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:36 GMT"
+          "Wed, 17 Feb 2016 01:29:22 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -382,8 +328,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -391,7 +337,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-1255' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
+      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-7150' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -400,7 +346,7 @@
           "application/json"
         ],
         "x-ms-request-id": [
-          "61bc708d-3ba8-4d35-a4a8-c5545937fa35"
+          "9f033519-af4b-473f-884e-8d58905675bf"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -412,19 +358,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14894"
+          "14729"
         ],
         "x-ms-correlation-request-id": [
-          "8e9efe95-afe9-4f02-8a25-43f6f0007ee4"
+          "c58406f8-b0ed-46a5-864f-00e25a5d65d4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185246Z:8e9efe95-afe9-4f02-8a25-43f6f0007ee4"
+          "CENTRALUS:20160217T012933Z:c58406f8-b0ed-46a5-864f-00e25a5d65d4"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:46 GMT"
+          "Wed, 17 Feb 2016 01:29:33 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -433,8 +379,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzAvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTkvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -442,7 +388,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-1255' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
+      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-7150' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -451,7 +397,7 @@
           "application/json"
         ],
         "x-ms-request-id": [
-          "db9c66ff-f37c-4d75-825c-f9d7818af3df"
+          "9fffab63-5915-4d31-b913-10573d66e280"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -463,19 +409,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14907"
+          "14742"
         ],
         "x-ms-correlation-request-id": [
-          "4d27c34e-b586-435d-b072-ea632cd1d4ee"
+          "885b3166-81a8-4ac5-80ff-57e79c0908b8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185147Z:4d27c34e-b586-435d-b072-ea632cd1d4ee"
+          "CENTRALUS:20160217T012831Z:885b3166-81a8-4ac5-80ff-57e79c0908b8"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:51:46 GMT"
+          "Wed, 17 Feb 2016 01:28:31 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -484,8 +430,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzAvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTkvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -493,7 +439,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n  \"name\": \"csm-sql-drc-alias-1255\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-5943\",\r\n    \"role\": \"Secondary\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n  \"name\": \"csm-sql-drc-alias-7150\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-4818\",\r\n    \"role\": \"Secondary\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "483"
@@ -502,7 +448,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "3e0f5435-d238-4bae-b942-d1ae7b27729a"
+          "2c7ebbfc-c9f6-4445-8c76-7eada08f9c3e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -514,19 +460,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14902"
+          "14735"
         ],
         "x-ms-correlation-request-id": [
-          "ddbda92d-8add-46f6-8f5b-9060cb49455e"
+          "e690704e-7d9c-42a1-a1ab-b91e4e8c617f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185227Z:ddbda92d-8add-46f6-8f5b-9060cb49455e"
+          "CENTRALUS:20160217T012913Z:e690704e-7d9c-42a1-a1ab-b91e4e8c617f"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:26 GMT"
+          "Wed, 17 Feb 2016 01:29:12 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -535,8 +481,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzAvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTkvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -544,7 +490,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n  \"name\": \"csm-sql-drc-alias-1255\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-5943\",\r\n    \"role\": \"Primary\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n  \"name\": \"csm-sql-drc-alias-7150\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": \"SouthEast Asia\",\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-4818\",\r\n    \"role\": \"Primary\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "481"
@@ -553,7 +499,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "407226ee-3e08-4cc4-9ac7-294ce2c5eed2"
+          "6d33b7db-be34-42c5-a24a-a2ee3fe649cc"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -565,19 +511,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14896"
+          "14731"
         ],
         "x-ms-correlation-request-id": [
-          "138a1d05-3f70-47d5-ab51-e9ecd6481962"
+          "c27d5a28-e230-45f1-986c-4ab1d362f113"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185238Z:138a1d05-3f70-47d5-ab51-e9ecd6481962"
+          "CENTRALUS:20160217T012925Z:c27d5a28-e230-45f1-986c-4ab1d362f113"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:38 GMT"
+          "Wed, 17 Feb 2016 01:29:24 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -586,8 +532,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzAvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTkvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -595,7 +541,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-1255' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
+      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Disaster Recovery Configuration with name 'csm-sql-drc-alias-7150' does not exist. To continue, specify a valid DisasterRecoveryConfiguration name.\",\r\n  \"target\": null,\r\n  \"details\": [],\r\n  \"innererror\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -604,7 +550,7 @@
           "application/json"
         ],
         "x-ms-request-id": [
-          "9a978496-22eb-4036-8a00-dcadb069fc82"
+          "cb90e200-f482-4fc0-bf8e-ff4b2e3536d3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -616,19 +562,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14893"
+          "14728"
         ],
         "x-ms-correlation-request-id": [
-          "45a1965c-52d6-4524-a969-2e671e5663d6"
+          "0d0c1c4d-f787-442e-99f6-94dc308a5cd6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185247Z:45a1965c-52d6-4524-a969-2e671e5663d6"
+          "CENTRALUS:20160217T012934Z:0d0c1c4d-f787-442e-99f6-94dc308a5cd6"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:47 GMT"
+          "Wed, 17 Feb 2016 01:29:34 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -637,10 +583,10 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799\"\r\n  },\r\n  \"location\": \"North Europe\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -664,7 +610,7 @@
           "30"
         ],
         "x-ms-request-id": [
-          "3e0d33e2-bcc6-4de2-b0b8-61981c282f13"
+          "d3be5b37-5613-4aea-a3f1-2037f1bc1111"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -679,22 +625,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1165"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "efa5eb2a-5bae-43b3-82c1-3690d84f9510"
+          "fc0f62db-c90e-494f-bc1f-040306486661"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185148Z:efa5eb2a-5bae-43b3-82c1-3690d84f9510"
+          "CENTRALUS:20160217T012833Z:fc0f62db-c90e-494f-bc1f-040306486661"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:51:47 GMT"
+          "Wed, 17 Feb 2016 01:28:33 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255/disasterRecoveryConfigurationOperationResults/3e0d33e2-bcc6-4de2-b0b8-61981c282f13?api-version=2014-04-01-Preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150/disasterRecoveryConfigurationOperationResults/d3be5b37-5613-4aea-a3f1-2037f1bc1111?api-version=2014-04-01-Preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -703,8 +649,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255/disasterRecoveryConfigurationOperationResults/3e0d33e2-bcc6-4de2-b0b8-61981c282f13?api-version=2014-04-01-Preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NS9kaXNhc3RlclJlY292ZXJ5Q29uZmlndXJhdGlvbk9wZXJhdGlvblJlc3VsdHMvM2UwZDMzZTItYmNjNi00ZGUyLWIwYjgtNjE5ODFjMjgyZjEzP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtUHJldmlldw==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150/disasterRecoveryConfigurationOperationResults/d3be5b37-5613-4aea-a3f1-2037f1bc1111?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MC9kaXNhc3RlclJlY292ZXJ5Q29uZmlndXJhdGlvbk9wZXJhdGlvblJlc3VsdHMvZDNiZTViMzctNTYxMy00YWVhLWEzZjEtMjAzN2YxYmMxMTExP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtUHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -712,7 +658,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"AddFailoverPartner\",\r\n  \"startTime\": \"2016-02-10T18:51:47.37Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"operation\": \"AddFailoverPartner\",\r\n  \"startTime\": \"2016-02-17T01:28:32.463Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "72"
@@ -724,7 +670,7 @@
           "30"
         ],
         "x-ms-request-id": [
-          "01bb7b92-1aeb-4f89-b498-2cd312007b0f"
+          "edf62761-fbbe-42a9-a3f8-a847b02a6006"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -736,22 +682,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14906"
+          "14741"
         ],
         "x-ms-correlation-request-id": [
-          "6a6cbb30-f951-401f-820e-9d5e4cab15f2"
+          "a3a7ba7e-4f8d-47de-ad88-8a16739527c2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185148Z:6a6cbb30-f951-401f-820e-9d5e4cab15f2"
+          "CENTRALUS:20160217T012834Z:a3a7ba7e-4f8d-47de-ad88-8a16739527c2"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:51:48 GMT"
+          "Wed, 17 Feb 2016 01:28:33 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255/disasterRecoveryConfigurationOperationResults/3e0d33e2-bcc6-4de2-b0b8-61981c282f13?api-version=2014-04-01-Preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150/disasterRecoveryConfigurationOperationResults/d3be5b37-5613-4aea-a3f1-2037f1bc1111?api-version=2014-04-01-Preview"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -760,8 +706,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255/disasterRecoveryConfigurationOperationResults/3e0d33e2-bcc6-4de2-b0b8-61981c282f13?api-version=2014-04-01-Preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NS9kaXNhc3RlclJlY292ZXJ5Q29uZmlndXJhdGlvbk9wZXJhdGlvblJlc3VsdHMvM2UwZDMzZTItYmNjNi00ZGUyLWIwYjgtNjE5ODFjMjgyZjEzP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtUHJldmlldw==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150/disasterRecoveryConfigurationOperationResults/d3be5b37-5613-4aea-a3f1-2037f1bc1111?api-version=2014-04-01-Preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MC9kaXNhc3RlclJlY292ZXJ5Q29uZmlndXJhdGlvbk9wZXJhdGlvblJlc3VsdHMvZDNiZTViMzctNTYxMy00YWVhLWEzZjEtMjAzN2YxYmMxMTExP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtUHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -769,7 +715,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n  \"name\": \"csm-sql-drc-alias-1255\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": null,\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-6930\",\r\n    \"role\": \"Primary\"\r\n  },\r\n  \"operationId\": \"3e0d33e2-bcc6-4de2-b0b8-61981c282f13\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n  \"name\": \"csm-sql-drc-alias-7150\",\r\n  \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n  \"location\": null,\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"type\": \"AutoDR\",\r\n    \"autoFailover\": \"Off\",\r\n    \"failoverPolicy\": \"Off\",\r\n    \"partnerServerId\": null,\r\n    \"partnerLogicalServerName\": \"csm-sql-server-3799\",\r\n    \"role\": \"Primary\"\r\n  },\r\n  \"operationId\": \"d3be5b37-5613-4aea-a3f1-2037f1bc1111\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "534"
@@ -778,7 +724,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "93ed70b0-8685-4503-932a-75eac0eb5e08"
+          "5518eabe-776e-4506-ab0b-7eecdce2fb9e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -790,19 +736,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14905"
+          "14740"
         ],
         "x-ms-correlation-request-id": [
-          "14270611-9fd5-4420-bc3e-8824c686196d"
+          "b86574a0-6be1-4aa7-85c5-9c6c1ce7e481"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185219Z:14270611-9fd5-4420-bc3e-8824c686196d"
+          "CENTRALUS:20160217T012905Z:b86574a0-6be1-4aa7-85c5-9c6c1ce7e481"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:19 GMT"
+          "Wed, 17 Feb 2016 01:29:04 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -811,8 +757,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -820,7 +766,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n      \"name\": \"csm-sql-drc-alias-1255\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"North Europe\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-6930\",\r\n        \"role\": \"Primary\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n      \"name\": \"csm-sql-drc-alias-7150\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"North Europe\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-3799\",\r\n        \"role\": \"Primary\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "491"
@@ -829,7 +775,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "243f54ab-6b0d-4944-a0ba-bf0a7c403331"
+          "381ce8e4-419e-44a3-a0a4-c9b078982e92"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -841,19 +787,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14903"
+          "14738"
         ],
         "x-ms-correlation-request-id": [
-          "9af14683-efb9-45a1-8daa-05e0771cb80e"
+          "94cce640-8f63-4d9b-b037-7eb9be9138cc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185226Z:9af14683-efb9-45a1-8daa-05e0771cb80e"
+          "CENTRALUS:20160217T012912Z:94cce640-8f63-4d9b-b037-7eb9be9138cc"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:25 GMT"
+          "Wed, 17 Feb 2016 01:29:11 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -862,8 +808,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -871,7 +817,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n      \"name\": \"csm-sql-drc-alias-1255\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"North Europe\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-6930\",\r\n        \"role\": \"Secondary\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n      \"name\": \"csm-sql-drc-alias-7150\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"North Europe\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-3799\",\r\n        \"role\": \"Secondary\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "493"
@@ -880,7 +826,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "00dfab5a-d8ee-4639-a933-f6cc93e0b688"
+          "6975cebe-be91-431f-873a-8306ed37c3c2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -892,19 +838,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14897"
+          "14732"
         ],
         "x-ms-correlation-request-id": [
-          "274e65c9-cf84-41db-8c01-e60721f0a726"
+          "6a925e52-b7fc-407a-b476-5089c6a6933f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185237Z:274e65c9-cf84-41db-8c01-e60721f0a726"
+          "CENTRALUS:20160217T012923Z:6a925e52-b7fc-407a-b476-5089c6a6933f"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:37 GMT"
+          "Wed, 17 Feb 2016 01:29:23 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -913,8 +859,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzAvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTkvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -922,7 +868,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n      \"name\": \"csm-sql-drc-alias-1255\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"SouthEast Asia\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-5943\",\r\n        \"role\": \"Secondary\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n      \"name\": \"csm-sql-drc-alias-7150\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"SouthEast Asia\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-4818\",\r\n        \"role\": \"Secondary\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "495"
@@ -931,7 +877,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "19002d11-7596-4cfb-bfcc-3a561ff9f030"
+          "06c1397e-c730-45d1-9fb9-be343aebea8a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -943,19 +889,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14901"
+          "14734"
         ],
         "x-ms-correlation-request-id": [
-          "65796309-dfb1-451c-b3a9-643e47aa5ed7"
+          "c3d868ad-9660-460c-8b69-5281219c439c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185228Z:65796309-dfb1-451c-b3a9-643e47aa5ed7"
+          "CENTRALUS:20160217T012914Z:c3d868ad-9660-460c-8b69-5281219c439c"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:27 GMT"
+          "Wed, 17 Feb 2016 01:29:13 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -964,8 +910,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzAvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTkvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -973,7 +919,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255\",\r\n      \"name\": \"csm-sql-drc-alias-1255\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"SouthEast Asia\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-5943\",\r\n        \"role\": \"Primary\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150\",\r\n      \"name\": \"csm-sql-drc-alias-7150\",\r\n      \"type\": \"Microsoft.Sql/servers/disasterRecoveryConfiguration\",\r\n      \"location\": \"SouthEast Asia\",\r\n      \"properties\": {\r\n        \"type\": \"AutoDR\",\r\n        \"autoFailover\": \"Off\",\r\n        \"failoverPolicy\": \"Off\",\r\n        \"partnerServerId\": null,\r\n        \"partnerLogicalServerName\": \"csm-sql-server-4818\",\r\n        \"role\": \"Primary\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "493"
@@ -982,7 +928,7 @@
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "b1d91b13-5954-4e74-8e51-79317b3981ba"
+          "d00a6bc0-5176-4eda-8d3e-a7fce611a381"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -994,19 +940,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14895"
+          "14730"
         ],
         "x-ms-correlation-request-id": [
-          "2f45d3f8-4502-412c-af6f-16d55f2eed1b"
+          "5d924f04-97c0-4cda-b8bb-8eb6cd886fcf"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185240Z:2f45d3f8-4502-412c-af6f-16d55f2eed1b"
+          "CENTRALUS:20160217T012926Z:5d924f04-97c0-4cda-b8bb-8eb6cd886fcf"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:39 GMT"
+          "Wed, 17 Feb 2016 01:29:25 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1015,8 +961,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255/failover?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NS9mYWlsb3Zlcj9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150/failover?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MC9mYWlsb3Zlcj9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1033,7 +979,7 @@
           "application/json"
         ],
         "x-ms-request-id": [
-          "929cd119-3f8c-4fc1-804e-06963e6e321c"
+          "3eb828a2-07df-41de-921a-0e1bc0fb6a8b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1045,19 +991,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1164"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
-          "2c943408-3c4c-4d87-948e-7fd0161b2aa8"
+          "887aedf2-5406-43bf-bb00-780f3f52a91e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185229Z:2c943408-3c4c-4d87-948e-7fd0161b2aa8"
+          "CENTRALUS:20160217T012915Z:887aedf2-5406-43bf-bb00-780f3f52a91e"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:28 GMT"
+          "Wed, 17 Feb 2016 01:29:14 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1066,8 +1012,8 @@
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-3622/providers/Microsoft.Sql/servers/csm-sql-server-6930/disasterRecoveryConfiguration/csm-sql-drc-alias-1255/failover?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctMzYyMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTY5MzAvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NS9mYWlsb3Zlcj9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-3799/disasterRecoveryConfiguration/csm-sql-drc-alias-7150/failover?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTM3OTkvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MC9mYWlsb3Zlcj9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1084,7 +1030,7 @@
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "e9f6fac2-2f66-4e9b-92cd-2f9de5a3375b"
+          "4ecd7f92-c2ae-477f-ae01-0eededb8ab03"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1099,19 +1045,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1163"
+          "1191"
         ],
         "x-ms-correlation-request-id": [
-          "469cb20d-d1e5-4383-be98-4e4c5ae56582"
+          "73c78e5e-c22b-4fd2-b9c2-e48f22c080c0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185231Z:469cb20d-d1e5-4383-be98-4e4c5ae56582"
+          "CENTRALUS:20160217T012917Z:73c78e5e-c22b-4fd2-b9c2-e48f22c080c0"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:30 GMT"
+          "Wed, 17 Feb 2016 01:29:16 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1120,8 +1066,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-8863/providers/Microsoft.Sql/servers/csm-sql-server-5943/disasterRecoveryConfiguration/csm-sql-drc-alias-1255?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctODg2My9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTU5NDMvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtMTI1NT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/65d96361-b9df-4b18-9055-ea05d43e4c4f/resourceGroups/csm-sql-rg-6675/providers/Microsoft.Sql/servers/csm-sql-server-4818/disasterRecoveryConfiguration/csm-sql-drc-alias-7150?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjVkOTYzNjEtYjlkZi00YjE4LTkwNTUtZWEwNWQ0M2U0YzRmL3Jlc291cmNlR3JvdXBzL2NzbS1zcWwtcmctNjY3NS9wcm92aWRlcnMvTWljcm9zb2Z0LlNxbC9zZXJ2ZXJzL2NzbS1zcWwtc2VydmVyLTQ4MTgvZGlzYXN0ZXJSZWNvdmVyeUNvbmZpZ3VyYXRpb24vY3NtLXNxbC1kcmMtYWxpYXMtNzE1MD9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1138,7 +1084,7 @@
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "a47e7ffe-19a4-44e1-9bdd-2661166c53be"
+          "f9245e31-0662-44d2-a4ac-25af88fa2def"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1150,19 +1096,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1162"
+          "1190"
         ],
         "x-ms-correlation-request-id": [
-          "e1cb5044-1a3b-459d-90bf-ffced529ef72"
+          "dab7b961-21c9-46f2-b991-e59486ddb6bb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160210T185240Z:e1cb5044-1a3b-459d-90bf-ffced529ef72"
+          "CENTRALUS:20160217T012927Z:dab7b961-21c9-46f2-b991-e59486ddb6bb"
         ],
         "Cache-Control": [
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 10 Feb 2016 18:52:40 GMT"
+          "Wed, 17 Feb 2016 01:29:26 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1173,13 +1119,12 @@
   ],
   "Names": {
     "ServerDisasterRecoveryConfigurationCrud": [
-      "csm-sql-drc-alias-1255"
+      "csm-sql-drc-alias-7150"
     ],
     "RunTwoServersTestInEnvironment": [
-      "csm-sql-rg-8863",
-      "csm-sql-rg-3622",
-      "csm-sql-server-5943",
-      "csm-sql-server-6930"
+      "csm-sql-rg-6675",
+      "csm-sql-server-4818",
+      "csm-sql-server-3799"
     ]
   },
   "Variables": {

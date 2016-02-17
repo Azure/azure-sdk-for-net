@@ -43,7 +43,7 @@ namespace Sql2.Tests.ScenarioTests
                     handler,
                     "12.0",
                     false,
-                    (sqlClient, resGroupName, dummyResGroupName, server1, server2) =>
+                    (sqlClient, resGroupName, server1, server2) =>
                     {
                         //////////////////////////////////////////////////////////////////////
                         // Create Test

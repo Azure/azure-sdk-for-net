@@ -47,41 +47,40 @@ namespace Sql2.Tests.ScenarioTests
                     handler,
                     "12.0",
                     true,
-                    (sqlClient, resGroup1Name, resGroup2Name, server1, server2) =>
+                    (sqlClient, resGroupName, server1, server2) =>
                     {
-                        validateDrcNotExist(sqlClient, resGroup1Name, server1.Name, failoverAliasName);
-                        validateDrcNotExist(sqlClient, resGroup2Name, server2.Name, failoverAliasName);
+                        validateDrcNotExist(sqlClient, resGroupName, server1.Name, failoverAliasName);
+                        validateDrcNotExist(sqlClient, resGroupName, server2.Name, failoverAliasName);
 
                         // Create and verify
                         //
-                        ServerDisasterRecoveryConfigurationCreateOrUpdateResponse createResponse = CreateDrc(sqlClient, resGroup1Name, resGroup2Name,
-                            server1, server2, failoverAliasName);
+                        ServerDisasterRecoveryConfigurationCreateOrUpdateResponse createResponse = CreateDrc(sqlClient, resGroupName, server1, server2, failoverAliasName);
                         TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
 
-                        GetAndValidateDrc(sqlClient, resGroup1Name, server1.Name, failoverAliasName, server2.Name, true);
-                        GetAndValidateDrc(sqlClient, resGroup2Name, server2.Name, failoverAliasName, server1.Name, false);
+                        GetAndValidateDrc(sqlClient, resGroupName, server1.Name, failoverAliasName, server2.Name, true);
+                        GetAndValidateDrc(sqlClient, resGroupName, server2.Name, failoverAliasName, server1.Name, false);
 
                         // Invalid failover, then valid failover and verify
                         // 
-                        Assert.Throws<Hyak.Common.CloudException>(() => sqlClient.ServerDisasterRecoveryConfigurations.Failover(resGroup1Name, server1.Name, failoverAliasName));
-                        AzureOperationResponse failoverResponse = sqlClient.ServerDisasterRecoveryConfigurations.Failover(resGroup2Name, server2.Name, failoverAliasName);
+                        Assert.Throws<Hyak.Common.CloudException>(() => sqlClient.ServerDisasterRecoveryConfigurations.Failover(resGroupName, server1.Name, failoverAliasName));
+                        AzureOperationResponse failoverResponse = sqlClient.ServerDisasterRecoveryConfigurations.Failover(resGroupName, server2.Name, failoverAliasName);
                         TestUtilities.ValidateOperationResponse(failoverResponse);
 
-                        GetAndValidateDrc(sqlClient, resGroup1Name, server1.Name, failoverAliasName, server2.Name, false);
-                        GetAndValidateDrc(sqlClient, resGroup2Name, server2.Name, failoverAliasName, server1.Name, true);
+                        GetAndValidateDrc(sqlClient, resGroupName, server1.Name, failoverAliasName, server2.Name, false);
+                        GetAndValidateDrc(sqlClient, resGroupName, server2.Name, failoverAliasName, server1.Name, true);
 
                         // Delete and verify
                         //
-                        AzureOperationResponse deleteResponse = sqlClient.ServerDisasterRecoveryConfigurations.Delete(resGroup1Name, server1.Name, failoverAliasName);
+                        AzureOperationResponse deleteResponse = sqlClient.ServerDisasterRecoveryConfigurations.Delete(resGroupName, server1.Name, failoverAliasName);
                         TestUtilities.ValidateOperationResponse(deleteResponse);
 
-                        validateDrcNotExist(sqlClient, resGroup1Name, server1.Name, failoverAliasName);
-                        validateDrcNotExist(sqlClient, resGroup2Name, server2.Name, failoverAliasName);
+                        validateDrcNotExist(sqlClient, resGroupName, server1.Name, failoverAliasName);
+                        validateDrcNotExist(sqlClient, resGroupName, server2.Name, failoverAliasName);
                     });
             }
         }
 
-        private ServerDisasterRecoveryConfigurationCreateOrUpdateResponse CreateDrc(SqlManagementClient sqlClient, string resGroup1Name, string resGroup2Name, Server server1, Server server2, string failoverAliasName)
+        private ServerDisasterRecoveryConfigurationCreateOrUpdateResponse CreateDrc(SqlManagementClient sqlClient, string resGroupName, Server server1, Server server2, string failoverAliasName)
         {
             ServerDisasterRecoveryConfigurationCreateOrUpdateParameters p = new ServerDisasterRecoveryConfigurationCreateOrUpdateParameters();
             p.Properties = new ServerDisasterRecoveryConfigurationCreateOrUpdateProperties
@@ -90,11 +89,11 @@ namespace Sql2.Tests.ScenarioTests
                 FailoverPolicy = "Off",
                 PartnerServerId = string.Format(CultureInfo.InvariantCulture,
                         "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}",
-                        sqlClient.Credentials.SubscriptionId, resGroup2Name, server2.Name)
+                        sqlClient.Credentials.SubscriptionId, resGroupName, server2.Name)
             };
             p.Location = server1.Location;
 
-            return sqlClient.ServerDisasterRecoveryConfigurations.CreateOrUpdate(resGroup1Name, server1.Name, failoverAliasName, p);
+            return sqlClient.ServerDisasterRecoveryConfigurations.CreateOrUpdate(resGroupName, server1.Name, failoverAliasName, p);
         }
 
         /// <summary>
