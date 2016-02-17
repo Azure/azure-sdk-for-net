@@ -52,8 +52,12 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             IList<Core.Models.Activity> internalActivities =
                 this.ConvertActivitiesToCoreActivities(pipeline.Properties.Activities);
 
-            IList<Core.Models.Dataset> internalDatasets =
-                this.ConvertDatasetsToCoreDatasets(pipeline.Properties.Datasets);
+            IList<Core.Models.Dataset> internalDatasets = null;
+
+            if (pipeline.Properties.Datasets != null)
+            {
+                internalDatasets = this.ConvertDatasetsToCoreDatasets(pipeline.Properties.Datasets);
+            }
 
             Core.Models.Pipeline internalPipeline = new Core.Models.Pipeline()
             {
@@ -95,8 +99,12 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             IList<Activity> activities =
                 this.ConvertCoreActivitiesToWrapperActivities(internalPipeline.Properties.Activities);
 
-            IList<Dataset> datasets =
-                this.ConvertCoreDatasetsToWrapperDatasets(internalPipeline.Properties.Datasets);
+            IList<Dataset> datasets = null;
+
+            if (internalPipeline.Properties.Datasets != null)
+            {
+                datasets = this.ConvertCoreDatasetsToWrapperDatasets(internalPipeline.Properties.Datasets);
+            }
 
             Pipeline pipeline = new Pipeline()
             {
@@ -138,13 +146,11 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
         private IList<Core.Models.Dataset> ConvertDatasetsToCoreDatasets(IList<Dataset> datasets)
         {
-            Ensure.IsNotNull(datasets, "datasets");
             return datasets.Select(dataSetConvertor.ToCoreType).ToList();
         }
 
         private IList<Dataset> ConvertCoreDatasetsToWrapperDatasets(IList<Core.Models.Dataset> internalDatasets)
         {
-            Ensure.IsNotNull(internalDatasets, "internalDatasets");
             return internalDatasets.Select(dataSetConvertor.ToWrapperType).ToList();
         }
 
