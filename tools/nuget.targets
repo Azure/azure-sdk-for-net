@@ -90,36 +90,7 @@
       <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
     <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
-    <ItemGroup>
-      <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
-    </ItemGroup>    
-    <CallTarget Targets="RenameResourceManagementPackage" Condition=" @(ResourcePackages) != '' " />
-    
     <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
-  </Target>
-
-  <!--TODO: remove this target and its utilities by the end of aspnet-rc2 which exposes the support to configure different assembly name -->
-  <Target Name="RenameResourceManagementPackage" DependsOnTargets="PrepareForAutoRestLibraries">
-    <ItemGroup>
-      <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
-      <_NewResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.Management.Resources.*.nupkg" ></_NewResourcePackages>
-    </ItemGroup>
-    <RemoveDir Directories="@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)')" />
-    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)') %(ResourcePackages.Identity)" />
-    <Delete Files="@(ResourcePackages)" />
-    <Delete Files="@(_NewResourcePackages)" />
-    <ItemGroup>
-      <_NuspecFiles Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*\*.nuspec" />
-    </ItemGroup>    
-    <UpdateNuspecFiles NuspecFilePath="%(_NuspecFiles.Identity)" RelFilePath="%(_NuspecFiles.RootDir)%(_NuspecFiles.Directory)_rels\.rels" />
-    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(ResourcePackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(ResourcePackages.Filename)" />
-    <RenameResourcePackages PackageDirectory="$(PackageOutputDir)"></RenameResourcePackages>
-    <!--Now adjust metadatas for other targets to pick up the new name-->
-    <ItemGroup>
-      <Dnx_AutoRestLibraries Condition="'%(Dnx_AutoRestLibraries.PackageName)'=='Microsoft.Azure.ResourceManager'">
-        <PackageName>Microsoft.Azure.Management.Resources</PackageName>
-      </Dnx_AutoRestLibraries>
-    </ItemGroup>
   </Target>
 
   <UsingTask
