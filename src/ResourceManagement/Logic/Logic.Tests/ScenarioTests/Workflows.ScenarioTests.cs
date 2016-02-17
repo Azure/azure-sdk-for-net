@@ -9,6 +9,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json.Linq;
     using Xunit;
@@ -19,7 +20,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndDeleteWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
@@ -53,7 +54,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndEnableDisableWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
@@ -99,7 +100,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string workflowName2 = TestUtilities.GenerateName("logicwf");
@@ -140,7 +141,7 @@ namespace Test.Azure.Management.Logic
                     });
 
                 // List the workflow in resource group
-                var lists = client.Workflows.ListByResourceGroup(this.resourceGroupName, 1, f => f.State == WorkflowState.Disabled);
+                var lists = client.Workflows.ListByResourceGroup(this.resourceGroupName, new ODataQuery<WorkflowFilter>(f => f.State == WorkflowState.Disabled) { Top = 1 });
 
                 Assert.Equal(1, lists.Count());
 
@@ -169,7 +170,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ValidateAndRunWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
@@ -232,7 +233,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void DeleteAllWorkflows()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 var client = this.GetLogicManagementClient(context);
 
@@ -262,7 +263,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void UpdateAndRunWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);

@@ -17,7 +17,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListHistory()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
@@ -54,7 +54,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void GetHistory()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);

@@ -121,8 +121,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows?api-version=2015-02-01-preview&$top=1&$filter=state%20eq%20'Disabled'",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cz9hcGktdmVyc2lvbj0yMDE1LTAyLTAxLXByZXZpZXcmJHRvcD0xJiRmaWx0ZXI9c3RhdGUlMjBlcSUyMCdEaXNhYmxlZCc=",
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows?$filter=state%20eq%20'Disabled'&$top=1&api-version=2015-02-01-preview",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

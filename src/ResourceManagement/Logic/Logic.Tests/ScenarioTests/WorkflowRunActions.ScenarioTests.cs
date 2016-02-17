@@ -17,7 +17,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListAndGetActions()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowRunActionsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
