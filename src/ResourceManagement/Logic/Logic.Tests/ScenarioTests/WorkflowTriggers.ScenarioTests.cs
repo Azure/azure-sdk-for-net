@@ -17,7 +17,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListNoTrigger()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
@@ -49,7 +49,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void GetAndListTriggers()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
@@ -86,7 +86,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void RunTrigger()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);

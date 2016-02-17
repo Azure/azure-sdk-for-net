@@ -90,85 +90,9 @@
       <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
     <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
-    <ItemGroup>
-      <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
-    </ItemGroup>    
-    <CallTarget Targets="RenameResourceManagementPackage" Condition=" @(ResourcePackages) != '' " />
-    
     <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
   </Target>
-
-  <!--TODO: remove this target and its utilities by the end of aspnet-rc2 which exposes the support to configure different assembly name -->
-  <Target Name="RenameResourceManagementPackage" DependsOnTargets="PrepareForAutoRestLibraries">
-    <ItemGroup>
-      <ResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*.nupkg" ></ResourcePackages>
-      <_NewResourcePackages Include="$(PackageOutputDir)\Microsoft.Azure.Management.Resources.*.nupkg" ></_NewResourcePackages>
-    </ItemGroup>
-    <RemoveDir Directories="@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)')" />
-    <Exec Command="$(ZipExe) x -y -scsUTF-8 -o@(ResourcePackages->'%(RootDir)%(Directory)\%(Filename)') %(ResourcePackages.Identity)" />
-    <Delete Files="@(ResourcePackages)" />
-    <Delete Files="@(_NewResourcePackages)" />
-    <ItemGroup>
-      <_NuspecFiles Include="$(PackageOutputDir)\Microsoft.Azure.ResourceManager.*\*.nuspec" />
-    </ItemGroup>    
-    <UpdateNuspecFiles NuspecFilePath="%(_NuspecFiles.Identity)" RelFilePath="%(_NuspecFiles.RootDir)%(_NuspecFiles.Directory)_rels\.rels" />
-    <Exec Command="$(ZipExe) a -tzip -mx9 -r -y $(PackageOutputDir)\%(ResourcePackages.Filename).nupkg" WorkingDirectory="$(PackageOutputDir)\%(ResourcePackages.Filename)" />
-    <RenameResourcePackages PackageDirectory="$(PackageOutputDir)"></RenameResourcePackages>
-    <!--Now adjust metadatas for other targets to pick up the new name-->
-    <ItemGroup>
-      <Dnx_AutoRestLibraries Condition="'%(Dnx_AutoRestLibraries.PackageName)'=='Microsoft.Azure.ResourceManager'">
-        <PackageName>Microsoft.Azure.Management.Resources</PackageName>
-      </Dnx_AutoRestLibraries>
-    </ItemGroup>
-  </Target>
-
-  <UsingTask
-      TaskName="UpdateNuspecFiles"
-      TaskFactory="CodeTaskFactory"
-      AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-    <ParameterGroup>
-      <NuspecFilePath ParameterType="System.String" Required="true" />
-      <RelFilePath ParameterType="System.String" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="System" />
-      <Using Namespace="System.IO" />
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
-          var contents = File.ReadAllText(NuspecFilePath);
-          contents = contents.Replace("<id>Microsoft.Azure.ResourceManager</id>", "<id>Microsoft.Azure.Management.Resources</id>");
-          File.WriteAllText(NuspecFilePath, contents);
-          contents = File.ReadAllText(RelFilePath);
-          contents = contents.Replace("/Microsoft.Azure.ResourceManager.nuspec", "/Microsoft.Azure.Management.Resources.nuspec");
-          File.WriteAllText(RelFilePath, contents);
-          File.Move(NuspecFilePath, Path.Combine(Path.GetDirectoryName(NuspecFilePath), "Microsoft.Azure.Management.Resources.nuspec"));
-          ]]>
-      </Code>
-    </Task>
-  </UsingTask>
-
-  <UsingTask
-    TaskName="RenameResourcePackages"
-    TaskFactory="CodeTaskFactory"
-    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-    <ParameterGroup>
-      <PackageDirectory ParameterType="System.String" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="System" />
-      <Using Namespace="System.IO" />
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
-            string[] resourcePackages = Directory.GetFiles(PackageDirectory, "Microsoft.Azure.ResourceManager*.nupkg", SearchOption.TopDirectoryOnly);
-            foreach( string p in resourcePackages)
-            {
-                File.Move(p, Path.Combine(Path.GetDirectoryName(p), Path.GetFileName(p).Replace("Microsoft.Azure.ResourceManager", "Microsoft.Azure.Management.Resources")));
-            }
-          ]]>
-      </Code>
-    </Task>
-  </UsingTask>
-  
+ 
   <Target Name="Publish" DependsOnTargets="PrepareForAutoRestLibraries">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 
