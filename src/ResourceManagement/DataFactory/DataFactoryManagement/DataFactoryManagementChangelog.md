@@ -5,7 +5,9 @@ Release date:
 
 ### Feature Additions
 
-* Adding List operations for Activity Windows
+Added list operations for activity window.
+
+  * Added methods to retrieve activity windows with filters based on the entity types (i.e. data factories, datasets, pipelines and activities).
 
 ## Version 4.4.0
 Release date: 2016.01.28

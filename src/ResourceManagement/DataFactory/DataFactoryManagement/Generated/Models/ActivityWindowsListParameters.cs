@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Activity windows list optional filter parameters.
+    /// Activity windows list filter parameters.
     /// </summary>
     public abstract partial class ActivityWindowsListParameters
     {
@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _filter;
         
         /// <summary>
-        /// Optional. The activity window filter grammar.
+        /// Optional. The activity window filter based on Azure Search filter
+        /// grammar. For more information see
+        /// <cref="https://msdn.microsoft.com/en-us/library/azure/dn798921.aspx"/>.
         /// </summary>
         public string Filter
         {

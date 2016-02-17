@@ -27,8 +27,10 @@ using Hyak.Common;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// An activity window represents an execution of an activity as per the
-    /// schedule of the activity defined in the pipeline.
+    /// Specifying a schedule for the activity creates a series of tumbling
+    /// windows. Tumbling windows are series of fixed-sized, non-overlapping
+    /// and contiguous time intervals. Activity window is an instance of
+    /// these logical tumbling windows for the activity.
     /// </summary>
     public partial class ActivityWindow
     {
@@ -113,7 +115,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private int? _percentComplete;
         
         /// <summary>
-        /// Optional. Pecent complete.
+        /// Optional. Pecent completion of activity window execution.
         /// </summary>
         public int? PercentComplete
         {
