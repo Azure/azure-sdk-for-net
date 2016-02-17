@@ -146,7 +146,7 @@ namespace Sql2.Tests.ScenarioTests
             var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
             var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
-            // Variables for server create. Only create second resource group if the locations are different
+            // Variables for server create.
             string resGroupName = TestUtilities.GenerateName("csm-sql-rg-");
             string server1Name = TestUtilities.GenerateName("csm-sql-server-");
             string server2Name = TestUtilities.GenerateName("csm-sql-server-");
