@@ -27,27 +27,41 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a get server communication link request.
+    /// Represents an Azure SQL Database restorable deleted database.
     /// </summary>
-    public partial class ServerCommunicationLinkGetResponse : AzureOperationResponse
+    public partial class DeletedDatabaseBackup : ResourceBaseExtended
     {
-        private ServerCommunicationLink _serverCommunicationLink;
+        private DeletedDatabaseBackupProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Server communication link.
+        /// Optional. Gets or sets the properties representing the deleted
+        /// database.
         /// </summary>
-        public ServerCommunicationLink ServerCommunicationLink
+        public DeletedDatabaseBackupProperties Properties
         {
-            get { return this._serverCommunicationLink; }
-            set { this._serverCommunicationLink = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ServerCommunicationLinkGetResponse class.
+        /// Initializes a new instance of the DeletedDatabaseBackup class.
         /// </summary>
-        public ServerCommunicationLinkGetResponse()
+        public DeletedDatabaseBackup()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DeletedDatabaseBackup class with
+        /// required arguments.
+        /// </summary>
+        public DeletedDatabaseBackup(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }
