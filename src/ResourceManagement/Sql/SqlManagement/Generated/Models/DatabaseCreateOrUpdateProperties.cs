@@ -114,12 +114,12 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._requestedServiceObjectiveName = value; }
         }
         
-        private DateTime _restorePointInTime;
+        private System.DateTime? _restorePointInTime;
         
         /// <summary>
         /// Optional. Gets or sets the point in time for the restore request
         /// </summary>
-        public DateTime RestorePointInTime
+        public System.DateTime? RestorePointInTime
         {
             get { return this._restorePointInTime; }
             set { this._restorePointInTime = value; }

@@ -234,7 +234,10 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["createMode"] = parameters.Properties.CreateMode;
                 }
                 
-                propertiesValue["restorePointInTime"] = parameters.Properties.RestorePointInTime;
+                if (parameters.Properties.RestorePointInTime != null)
+                {
+                    propertiesValue["restorePointInTime"] = parameters.Properties.RestorePointInTime.Value;
+                }
                 
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
