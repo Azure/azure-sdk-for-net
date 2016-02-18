@@ -90,10 +90,8 @@ namespace Network.Tests.Gateways
                 listLocalNetworkGatewaysResponse = networkTestClient.Gateways.ListLocalNetworkGateways();
                 Assert.NotNull(listLocalNetworkGatewaysResponse);
                 Assert.Equal(HttpStatusCode.OK, listLocalNetworkGatewaysResponse.StatusCode);
-                Assert.Equal(0, listLocalNetworkGatewaysResponse.LocalNetworkGateways.Count);
                 Assert.False(listLocalNetworkGatewaysResponse.LocalNetworkGateways.Any(localnetGateway => localnetGateway.GatewayName.Equals(localnetGatewayName)),
                 "Local network gateway: " + localnetGatewayName + " is not deleted even after DeleteLocalNetworkGateway API call!");
-
             }
         }
 
@@ -128,20 +126,33 @@ namespace Network.Tests.Gateways
                 Assert.Equal(HttpStatusCode.OK, localNetworkGatewayCreateResponse.StatusCode);
                 Assert.NotNull(localNetworkGatewayCreateResponse.LocalNetworkGatewayId);
                 
-                // Call GetLocalNetworkGateway to get the gateway
-                LocalNetworkGatewayGetResponse lngGetResponse = networkTestClient.Gateways.GetLocalNetworkGateway(localNetworkGatewayCreateResponse.LocalNetworkGatewayId);
-                Assert.NotNull(lngGetResponse);
-                Assert.NotNull(lngGetResponse.BgpSettings);
+                // Call ListLocalNetworkGateways, find one with a matching name to get the ID
+                ListLocalNetworkGatewaysResponse lngListResponse = networkTestClient.Gateways.ListLocalNetworkGateways();
+                ListLocalNetworkGatewaysResponse.LocalNetworkGateway localNetworkGateway = null;
 
-                // If generated code would generate an equals method, that would have been convenient. Anyways the BgpSettings we provide should be respected
-                Assert.Equal(lngGetResponse.BgpSettings.Asn, localNetworkGatewayAsn);
-                Assert.True(lngGetResponse.BgpSettings.BgpPeeringAddress.Equals(localNetworkGatewayBgpPeeringAddress));
-                Assert.Equal(lngGetResponse.BgpSettings.PeerWeight, localNetworkGatewayPeerWeight);
+                foreach (ListLocalNetworkGatewaysResponse.LocalNetworkGateway lng in lngListResponse.LocalNetworkGateways)
+                {
+                    if (lng.GatewayName.Equals(localNetworkGatewayName))
+                    {
+                        localNetworkGateway = lng;
+                        break;
+                    }
+                }
+
+                Assert.NotNull(localNetworkGateway);
+                string localNetworkGatewayId = localNetworkGateway.Id.ToString();
+
+                // BgpSettings should be respected
+                // If generated code would generate an equals method, that would have been convenient. 
+                Assert.Equal(localNetworkGateway.BgpSettings.Asn, localNetworkGatewayAsn);
+                Assert.True(localNetworkGateway.BgpSettings.BgpPeeringAddress.Equals(localNetworkGatewayBgpPeeringAddress));
+                Assert.Equal(localNetworkGateway.BgpSettings.PeerWeight, localNetworkGatewayPeerWeight);
 
                 // Try an update, with different BgpSettings
                 localNetworkGatewayAsn = 5678;
                 UpdateLocalNetworkGatewayParameters updateParameters = new UpdateLocalNetworkGatewayParameters()
                 {
+                    AddressSpace = new List<string>(new string[] { addressSpace }),
                     BgpSettings = new BgpSettings() 
                     {
                         Asn = localNetworkGatewayAsn,
@@ -150,24 +161,35 @@ namespace Network.Tests.Gateways
                     }
                 };
 
-                AzureOperationResponse updateLocalNetworkGatewayResponse = networkTestClient.Gateways.UpdateLocalNetworkGateway(localNetworkGatewayCreateResponse.LocalNetworkGatewayId, updateParameters);
+                AzureOperationResponse updateLocalNetworkGatewayResponse = networkTestClient.Gateways.UpdateLocalNetworkGateway(localNetworkGatewayId, updateParameters);
                 Assert.NotNull(updateLocalNetworkGatewayResponse);
                 Assert.Equal(HttpStatusCode.OK, updateLocalNetworkGatewayResponse.StatusCode);
 
                 // Call GetLocalNetworkGateway again, and make sure the updated ASN shows up
-                lngGetResponse = networkTestClient.Gateways.GetLocalNetworkGateway(localNetworkGatewayCreateResponse.LocalNetworkGatewayId);
+                LocalNetworkGatewayGetResponse lngGetResponse = networkTestClient.Gateways.GetLocalNetworkGateway(localNetworkGatewayId);
                 Assert.NotNull(lngGetResponse);
                 Assert.NotNull(lngGetResponse.BgpSettings);
                 Assert.Equal(lngGetResponse.BgpSettings.Asn, localNetworkGatewayAsn);
 
                 // Delete
-                AzureOperationResponse deleteLocalNetworkGatewayResponse = networkTestClient.Gateways.DeleteLocalNetworkGateway(localNetworkGatewayCreateResponse.LocalNetworkGatewayId);
+                AzureOperationResponse deleteLocalNetworkGatewayResponse = networkTestClient.Gateways.DeleteLocalNetworkGateway(localNetworkGatewayId);
                 Assert.NotNull(deleteLocalNetworkGatewayResponse);
                 Assert.Equal(HttpStatusCode.OK, deleteLocalNetworkGatewayResponse.StatusCode);
 
-                // Call GET again. It better be not found
-                lngGetResponse = networkTestClient.Gateways.GetLocalNetworkGateway(localNetworkGatewayCreateResponse.LocalNetworkGatewayId);
-                Assert.Null(lngGetResponse);
+                // Call list again and make sure the local network gateway isn't there anymore
+                lngListResponse = networkTestClient.Gateways.ListLocalNetworkGateways();
+                localNetworkGateway = null;
+
+                foreach (ListLocalNetworkGatewaysResponse.LocalNetworkGateway lng in lngListResponse.LocalNetworkGateways)
+                {
+                    if (lng.GatewayName.Equals(localNetworkGatewayName))
+                    {
+                        localNetworkGateway = lng;
+                        break;
+                    }
+                }
+
+                Assert.Null(localNetworkGateway);
             }
         }
     }
