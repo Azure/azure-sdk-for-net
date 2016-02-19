@@ -34,49 +34,6 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IDatabaseBackupOperations
     {
         /// <summary>
-        /// Returns an Azure SQL Database restorable dropped database.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the server belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the Azure SQL Database Server to retrieve dropped
-        /// databases for.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the Azure SQL Database Database to retrieve dropped
-        /// databases for.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents an Azure SQL Database restorable deleted database.
-        /// </returns>
-        Task<DeletedDatabaseBackup> GetDeletedDatabaseBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Returns a list of Azure SQL Database geo backups.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the server belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the Azure SQL Database Server to retrieve geo backups
-        /// for.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the Azure SQL Database to retrieve geo backups for.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Represents an Azure SQL Database geo backup.
-        /// </returns>
-        Task<GeoBackup> GetGeoBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Returns a list of Azure SQL Database restorable dropped databases.
         /// </summary>
         /// <param name='resourceGroupName'>
