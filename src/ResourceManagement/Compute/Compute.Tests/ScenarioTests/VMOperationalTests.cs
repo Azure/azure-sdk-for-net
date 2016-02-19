@@ -99,6 +99,7 @@ namespace Compute.Tests
                     VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, as1Name, storageAccountOutput, imageRef, out inputVM1);
 
                     m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
+                    m_CrpClient.VirtualMachines.Redeploy(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);

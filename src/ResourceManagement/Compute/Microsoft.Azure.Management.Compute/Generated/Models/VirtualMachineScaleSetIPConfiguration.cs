@@ -32,12 +32,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetIPConfiguration class.
         /// </summary>
-        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, string id = default(string), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, string id = default(string), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
             Name = name;
             Subnet = subnet;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
+            LoadBalancerInboundNatPools = loadBalancerInboundNatPools;
         }
 
         /// <summary>
@@ -57,6 +58,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
         public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
+
+        /// <summary>
+        /// Gets or sets the load balancer inbound address pools.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
+        public IList<SubResource> LoadBalancerInboundNatPools { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

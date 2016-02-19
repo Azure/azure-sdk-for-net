@@ -17,6 +17,9 @@ namespace Microsoft.Azure.Management.Compute
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Extension methods for VirtualMachineScaleSetsOperations.
+    /// </summary>
     public static partial class VirtualMachineScaleSetsOperationsExtensions
     {
             /// <summary>
