@@ -428,7 +428,7 @@ namespace Sql2.Tests.ScenarioTests
                     string databaseId = createDbResponse.Database.Id;
 
                     // If first run on a live cluster, wait 10 minutes for backup to be taken
-                    DateTime restorePointInTime = DateTime.Now.AddMinutes(-10);
+                    DateTime restorePointInTime = DateTime.Parse("2016-02-12T13:37:59.5082626-08:00");
 
                     var restoreDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_" + restorePointInTime.ToString("o"), new DatabaseCreateOrUpdateParameters()
                     {
