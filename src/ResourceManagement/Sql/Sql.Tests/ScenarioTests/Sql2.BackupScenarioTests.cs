@@ -170,19 +170,24 @@ namespace Sql2.Tests.ScenarioTests
                 var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
                 var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
+                // Using a preconfigured runner server/db in order to test this
                 // Variables for server creation.
-                string serverName = "csm-sql-backup-geo31415seasia";
-                string resGroupName = "csm-rg-backup-geo31415seasia";
-
+                /*
+                string serverName = "restorerunnerserverstageseas1";
+                string databaseName = "PreConfiguredStandardDB";
                 string serverLocation = "Southeast Asia";
+                string resGroupName = "Default-SQL-SoutheastAsia";
+                */
+
+                string serverName = "csm-sql-backup-geo31415seasia";  
+                string resGroupName = "csm-rg-backup-geo31415seasia";  
+                string serverLocation = "Southeast Asia";  
+                string standardDatabaseName = "csm-sql-backup-geo-db31415";
                 string adminLogin = "testlogin";
                 string adminPass = "NotYukon!9";
                 string version = "12.0";
-
-                // Constants for Azure SQL standard database creation.
                 var standardDefaultDatabaseSize = 1L * 1024L * 1024L * 1024L; // 1 GB
                 Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
-                var standardDatabaseName = "csm-sql-backup-geo-db31415";
                 string standardDatabaseEdition = "Standard";
 
                 // Create the resource group.
@@ -191,43 +196,30 @@ namespace Sql2.Tests.ScenarioTests
                     Location = serverLocation,
                 });
 
+                var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+                {
+                    Location = serverLocation,
+                    Properties = new ServerCreateOrUpdateProperties()
+                    {
+                        AdministratorLogin = adminLogin,
+                        AdministratorLoginPassword = adminPass,
+                        Version = version,
+                    }
+                });
+
+                var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
+                {
+                    Location = serverLocation,
+                    Properties = new DatabaseCreateOrUpdateProperties()
+                    {
+                        MaxSizeBytes = standardDefaultDatabaseSize,
+                        Edition = standardDatabaseEdition,
+                        RequestedServiceObjectiveId = dbSloS0,
+                    },
+                });
+
                 try
                 {
-                    //////////////////////////////////////////////////////////////////////
-                    // Create server for test.
-                    var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new ServerCreateOrUpdateProperties()
-                        {
-                            AdministratorLogin = adminLogin,
-                            AdministratorLoginPassword = adminPass,
-                            Version = version,
-                        }
-                    });
-
-                    // Verify the the response from the service contains the right information
-                    TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
-                    //////////////////////////////////////////////////////////////////////
-
-                    //////////////////////////////////////////////////////////////////////
-                    // Create database test.
-
-                    // Create standard database
-                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            MaxSizeBytes = standardDefaultDatabaseSize,
-                            Edition = standardDatabaseEdition,
-                            RequestedServiceObjectiveId = dbSloS0,
-                        },
-                    });
-
-                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
-                    //////////////////////////////////////////////////////////////////////
-
                     // If first run on a live cluster, wait several hours for the geo pair to be created
                     GeoBackupListResponse geoBackups = sqlClient.DatabaseBackup.ListGeoBackups(resGroupName, serverName);
 
