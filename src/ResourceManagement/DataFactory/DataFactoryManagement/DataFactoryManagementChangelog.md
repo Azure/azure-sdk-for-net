@@ -1,5 +1,14 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version _
+_Release date:_
+
+### Feature Additions
+* The following linked service types have been added: 
+    * ODataLinkedService
+* The following dataset types have been added: 
+    * ODataResourceDataset
+
 ## Version 4.4.0
 Release date: 2016.01.28
 
