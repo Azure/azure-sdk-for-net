@@ -83,6 +83,9 @@
     <Compile Include="VirtualIPs\MultivipTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestData\GatewayNetworkConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\WideVNetNetworkConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
