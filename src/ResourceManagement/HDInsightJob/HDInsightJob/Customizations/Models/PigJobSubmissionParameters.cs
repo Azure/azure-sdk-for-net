@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.HDInsight.Job.Models
@@ -29,88 +30,61 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     /// </summary>
     public partial class PigJobSubmissionParameters
     {
-        private string _arguments;
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Arguments { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Arguments
-        {
-            get { return this._arguments; }
-            set { this._arguments = value; }
-        }
-        
-        private string _enableLog;
+        public string EnableLog { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string EnableLog
-        {
-            get { return this._enableLog; }
-            set { this._enableLog = value; }
-        }
-        
-        private string _file;
+        public string File { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Files { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string File
-        {
-            get { return this._file; }
-            set { this._file = value; }
-        }
-        
-        private string _files;
+        public string Query { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Files
-        {
-            get { return this._files; }
-            set { this._files = value; }
-        }
-        
-        private string _query;
+        public string StatusDir { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Query
-        {
-            get { return this._query; }
-            set { this._query = value; }
-        }
-        
-        private string _statusDir;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string StatusDir
-        {
-            get { return this._statusDir; }
-            set { this._statusDir = value; }
-        }
-        
-        private string _userName;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserName
-        {
-            get { return this._userName; }
-            set { this._userName = value; }
-        }
+        public string UserName { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the PigJobSubmissionParameters class.
         /// </summary>
         public PigJobSubmissionParameters()
         {
+        }
+
+        internal string GetJobPostRequestContent()
+        {
+            // Check input parameters and transform them to required format before sending request to templeton.
+            string content = string.Empty;
+            content += !string.IsNullOrEmpty(this.UserName) ? string.Format("user.name={0}", this.UserName) : string.Empty;
+            content += !string.IsNullOrEmpty(this.Query) ? string.Format("&execute={0}", this.Query) : string.Empty;
+            content += !string.IsNullOrEmpty(this.File) ? string.Format("&file={0}", this.File) : string.Empty;
+            content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
+            content += ModelHelper.ConvertListToString(this.Files, "&files=", ",");
+            content += ModelHelper.GetStatusDirectory(this.StatusDir);
+            content += !string.IsNullOrEmpty(this.EnableLog) ? string.Format("&errorlog={0}", this.EnableLog) : string.Empty;
+
+            return content;
         }
     }
 }

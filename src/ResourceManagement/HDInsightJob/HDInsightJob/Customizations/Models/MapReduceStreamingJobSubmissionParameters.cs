@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.HDInsight.Job.Models
@@ -29,126 +30,60 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     /// </summary>
     public partial class MapReduceStreamingJobSubmissionParameters
     {
-        private string _arguments;
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Arguments { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IDictionary<string, string> CmdEnv { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IDictionary<string, string> Defines { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Arguments
-        {
-            get { return this._arguments; }
-            set { this._arguments = value; }
-        }
-        
-        private string _cmdEnv;
+        public string EnableLog { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string CmdEnv
-        {
-            get { return this._cmdEnv; }
-            set { this._cmdEnv = value; }
-        }
-        
-        private string _defines;
+        public string File { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Defines
-        {
-            get { return this._defines; }
-            set { this._defines = value; }
-        }
-        
-        private string _enableLog;
+        public string Input { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string EnableLog
-        {
-            get { return this._enableLog; }
-            set { this._enableLog = value; }
-        }
-        
-        private string _file;
+        public string Mapper { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string File
-        {
-            get { return this._file; }
-            set { this._file = value; }
-        }
-        
-        private string _input;
+        public string Output { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Input
-        {
-            get { return this._input; }
-            set { this._input = value; }
-        }
-        
-        private string _mapper;
+        public string Reducer { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Mapper
-        {
-            get { return this._mapper; }
-            set { this._mapper = value; }
-        }
-        
-        private string _output;
+        public string StatusDir { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Output
-        {
-            get { return this._output; }
-            set { this._output = value; }
-        }
-        
-        private string _reducer;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Reducer
-        {
-            get { return this._reducer; }
-            set { this._reducer = value; }
-        }
-        
-        private string _statusDir;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string StatusDir
-        {
-            get { return this._statusDir; }
-            set { this._statusDir = value; }
-        }
-        
-        private string _userName;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserName
-        {
-            get { return this._userName; }
-            set { this._userName = value; }
-        }
+        public string UserName { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the
@@ -156,6 +91,25 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// </summary>
         public MapReduceStreamingJobSubmissionParameters()
         {
+        }
+
+        internal string GetJobPostRequestContent()
+        {
+            // Check input parameters and transform them to required format before sending request to templeton.
+            string content = string.Empty;
+            content += !string.IsNullOrEmpty(this.UserName) ? string.Format("user.name={0}", this.UserName) : string.Empty;
+            content += !string.IsNullOrEmpty(this.Input) ? string.Format("&input={0}", this.Input) : string.Empty;
+            content += !string.IsNullOrEmpty(this.Mapper) ? string.Format("&mapper={0}", this.Mapper) : string.Empty;
+            content += !string.IsNullOrEmpty(this.Reducer) ? string.Format("&reducer={0}", this.Reducer) : string.Empty;
+            content += !string.IsNullOrEmpty(this.Output) ? string.Format("&output={0}", this.Output) : string.Empty;
+            content += !string.IsNullOrEmpty(this.File) ? string.Format("&file={0}", this.File) : string.Empty;
+            content += ModelHelper.ConvertDictionaryToString(this.Defines, "&define=");
+            content += ModelHelper.ConvertDictionaryToString(this.CmdEnv, "&cmdenv=");
+            content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
+            content += ModelHelper.GetStatusDirectory(this.StatusDir);
+            content += !string.IsNullOrEmpty(this.EnableLog) ? string.Format("&errorlog={0}", this.EnableLog) : string.Empty;
+
+            return content;
         }
     }
 }

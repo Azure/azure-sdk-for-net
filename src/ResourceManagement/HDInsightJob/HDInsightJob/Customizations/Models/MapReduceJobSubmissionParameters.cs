@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.HDInsight.Job.Models
@@ -29,104 +30,50 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     /// </summary>
     public partial class MapReduceJobSubmissionParameters
     {
-        private string _arguments;
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Arguments { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IDictionary<string, string> Defines { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Arguments
-        {
-            get { return this._arguments; }
-            set { this._arguments = value; }
-        }
-        
-        private string _defines;
+        public string EnableLog { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Files { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Defines
-        {
-            get { return this._defines; }
-            set { this._defines = value; }
-        }
-        
-        private string _enableLog;
+        public string JarClass { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string EnableLog
-        {
-            get { return this._enableLog; }
-            set { this._enableLog = value; }
-        }
-        
-        private string _files;
+        public string JarFile { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> LibJars { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Files
-        {
-            get { return this._files; }
-            set { this._files = value; }
-        }
-        
-        private string _jarClass;
+        public string StatusDir { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string JarClass
-        {
-            get { return this._jarClass; }
-            set { this._jarClass = value; }
-        }
-        
-        private string _jarFile;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string JarFile
-        {
-            get { return this._jarFile; }
-            set { this._jarFile = value; }
-        }
-        
-        private string _libJars;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string LibJars
-        {
-            get { return this._libJars; }
-            set { this._libJars = value; }
-        }
-        
-        private string _statusDir;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string StatusDir
-        {
-            get { return this._statusDir; }
-            set { this._statusDir = value; }
-        }
-        
-        private string _userName;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserName
-        {
-            get { return this._userName; }
-            set { this._userName = value; }
-        }
+        public string UserName { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the MapReduceJobSubmissionParameters
@@ -134,6 +81,23 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// </summary>
         public MapReduceJobSubmissionParameters()
         {
+        }
+
+        internal string GetJobPostRequestContent()
+        {
+            // Check input parameters and transform them to required format before sending request to templeton.
+            string content = string.Empty;
+            content += !string.IsNullOrEmpty(this.UserName) ? string.Format("user.name={0}", this.UserName) : string.Empty;
+            content += !string.IsNullOrEmpty(this.JarFile) ? string.Format("&jar={0}", this.JarFile) : string.Empty;
+            content += !string.IsNullOrEmpty(this.JarClass) ? string.Format("&class={0}", this.JarClass) : string.Empty;
+            content += ModelHelper.ConvertListToString(this.LibJars, "&libjars=", ",");
+            content += ModelHelper.ConvertListToString(this.Files, "&files=", ",");
+            content += ModelHelper.ConvertDictionaryToString(this.Defines, "&define=");
+            content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
+            content += ModelHelper.GetStatusDirectory(this.StatusDir);
+            content += !string.IsNullOrEmpty(this.EnableLog) ? string.Format("&errorlog={0}", this.EnableLog) : string.Empty;
+
+            return content;
         }
     }
 }

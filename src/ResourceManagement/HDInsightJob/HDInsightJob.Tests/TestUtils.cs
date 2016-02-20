@@ -29,6 +29,7 @@ namespace HDInsightJob.Tests
         public static string StorageAccountName = "giyerwestus1";
         public static string StorageAccountKey = "";
         public static string DefaultContainer = "defaultcontainer";
+        public static string SQLServerConnectionString = "";
 
         public static HDInsightJobManagementClient GetHDInsightJobManagementClient(string dnsName, BasicAuthenticationCloudCredentials creds)
         {

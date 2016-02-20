@@ -14,9 +14,11 @@
 // limitations under the License.
 // 
 
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.HDInsight.Job.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
 {
@@ -25,6 +27,96 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     /// </summary>
     public partial class JobOperationsExtensions
     {
+        /// <summary>
+        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Hive job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitHiveJob(this IJobOperations operations, HiveJobSubmissionParameters parameters)
+        {
+            return operations.SubmitHiveJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
+        /// <summary>
+        /// Submits a MapReduce job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitMapReduceJob(this IJobOperations operations, MapReduceJobSubmissionParameters parameters)
+        {
+            return operations.SubmitMapReduceJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
+        /// <summary>
+        /// Submits a MapReduce streaming job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitMapReduceStreamingJob(this IJobOperations operations, MapReduceStreamingJobSubmissionParameters parameters)
+        {
+            return operations.SubmitMapReduceStreamingJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
+        /// <summary>
+        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Pig job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitPigJob(this IJobOperations operations, PigJobSubmissionParameters parameters)
+        {
+            return operations.SubmitPigJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
+        /// <summary>
+        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitSqoopJob(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        {
+            return operations.SubmitSqoopJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
         /// <summary>
         /// Gets the task log summary from execution of a jobDetails.
         /// </summary>

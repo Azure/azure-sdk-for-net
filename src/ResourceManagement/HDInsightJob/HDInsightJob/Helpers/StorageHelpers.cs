@@ -67,7 +67,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
 
         private CloudBlobClient GetStorageClient()
         {
-            var storageCredentials = new StorageCredentials(StorageAccountName, StorageAccountKey);
+            var accountName = StorageAccountName.Contains(".") ? StorageAccountName.Substring(0, StorageAccountName.IndexOf('.')) : StorageAccountName;
+            var storageCredentials = new StorageCredentials(accountName, StorageAccountKey);
             var storageAccount = new CloudStorageAccount(storageCredentials, true);
             return storageAccount.CreateCloudBlobClient();
             //return new CloudBlobClient(this.StorageAccountUri, storageCredentials);

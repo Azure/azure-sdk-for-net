@@ -9,9 +9,7 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScenarioTests\GetJobTests.cs" />
     <Compile Include="ScenarioTests\JobsEnumerationTests.cs" />
-    <Compile Include="ScenarioTests\StorageHelperTests.cs" />
     <Compile Include="ScenarioTests\SubmitJobTests.cs" />
     <Compile Include="TestUtils.cs" />
   </ItemGroup>

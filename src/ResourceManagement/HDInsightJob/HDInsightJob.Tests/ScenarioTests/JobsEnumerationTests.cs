@@ -26,6 +26,31 @@ namespace HDInsightJob.Tests.ScenarioTests
     public class JobsEnumerationTests
     {
         [Fact]
+        public void ListJobs()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var username = TestUtils.UserName;
+                var password = TestUtils.Password;
+                var clustername = TestUtils.ClusterName;
+
+                var credentials = new BasicAuthenticationCloudCredentials
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+
+                var response = client.JobManagement.ListJobs();
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+            }
+        }
+
+        [Fact]
         public void GetJobsPagination()
         {
             using (var context = UndoContext.Current)
@@ -55,7 +80,7 @@ namespace HDInsightJob.Tests.ScenarioTests
                 int numOfEntries = 3;
                 int index = -1;
                 string jobid = string.Empty;
-                while(true)
+                while (true)
                 {
                     var t = client.JobManagement.ListJobsAfterJobId(jobid, numOfEntries);
                     jobid = t.JobList.Last().Id;
@@ -64,7 +89,7 @@ namespace HDInsightJob.Tests.ScenarioTests
                     var expectedJobId = allJobsResp.JobList.ElementAt(index).Id;
                     Assert.Equal(expectedJobId, jobid);
 
-                    if (t.JobList.Count != numOfEntries)
+                    if (t.JobList.Count != numOfEntries || allJobsResp.JobList.Count <= index)
                     {
                         break;
                     }
