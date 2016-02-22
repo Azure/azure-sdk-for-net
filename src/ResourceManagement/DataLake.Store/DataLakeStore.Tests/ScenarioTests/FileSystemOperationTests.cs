@@ -79,24 +79,24 @@ namespace DataLakeStore.Tests
 
                     // set the expiration time as an absolute value
                     var toSetAbsolute = ToUnixTimeStampMs(DateTime.Now.AddSeconds(120));
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, commonData.DataLakeStoreFileSystemAccountName, ExpiryOptionType.Absolute, toSetAbsolute);
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     VerifyTimeInAcceptableRange(toSetAbsolute, fileInfo.FileInfo.ExpirationTime.Value);
 
                     // set the expiration time relative to now
                     var toSetRelativeToNow = ToUnixTimeStampMs(DateTime.Now.AddSeconds(120));
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, commonData.DataLakeStoreFileSystemAccountName, ExpiryOptionType.RelativeToNow, 120 * 1000);
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.RelativeToNow, commonData.DataLakeStoreFileSystemAccountName, 120 * 1000);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     VerifyTimeInAcceptableRange(toSetRelativeToNow, fileInfo.FileInfo.ExpirationTime.Value);
 
                     // set expiration time relative to the creation time
                     var toSetRelativeCreationTime = ToUnixTimeStampMs(FromUnixTimestampMs(fileInfo.FileInfo.CreationTime.Value).AddSeconds(120));
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, commonData.DataLakeStoreFileSystemAccountName, ExpiryOptionType.RelativeToCreationDate, 120 * 1000);
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.RelativeToCreationDate, commonData.DataLakeStoreFileSystemAccountName, 120 * 1000);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     VerifyTimeInAcceptableRange(toSetRelativeCreationTime, fileInfo.FileInfo.ExpirationTime.Value);
 
                     // reset expiration time to never
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, commonData.DataLakeStoreFileSystemAccountName, ExpiryOptionType.NeverExpire);
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.NeverExpire, commonData.DataLakeStoreFileSystemAccountName);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     Assert.True(fileInfo.FileInfo.ExpirationTime <= 0 || fileInfo.FileInfo.ExpirationTime == maxTimeInMilliseconds, "Expiration time was not equal to 0 or DateTime.MaxValue.Ticks! Actual value reported: " + fileInfo.FileInfo.ExpirationTime);
                 }
@@ -121,14 +121,14 @@ namespace DataLakeStore.Tests
 
                     // set the expiration time as an absolute value that is less than the creation time
                     var toSetAbsolute = ToUnixTimeStampMs(DateTime.Now.AddSeconds(-120));
-                    Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, commonData.DataLakeStoreFileSystemAccountName, ExpiryOptionType.Absolute, toSetAbsolute));
+                    Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
 
                     // set the expiration time as an absolute value that is greater than max allowed time
                     toSetAbsolute = ToUnixTimeStampMs(DateTime.MaxValue) + 1000;
-                    Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, commonData.DataLakeStoreFileSystemAccountName, ExpiryOptionType.Absolute, toSetAbsolute));
+                    Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
 
                     // reset expiration time to never with a value and confirm the value is not honored
-                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, commonData.DataLakeStoreFileSystemAccountName, ExpiryOptionType.NeverExpire, 400);
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.NeverExpire, commonData.DataLakeStoreFileSystemAccountName, 400);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     Assert.True(fileInfo.FileInfo.ExpirationTime <= 0 || fileInfo.FileInfo.ExpirationTime == maxTimeInMilliseconds, "Expiration time was not equal to 0 or DateTime.MaxValue.Ticks! Actual value reported: " + fileInfo.FileInfo.ExpirationTime);
                 }
@@ -208,8 +208,8 @@ namespace DataLakeStore.Tests
 
                     // Append to the file that we created
                     commonData.DataLakeStoreFileSystemClient.FileSystem.Append(filePath,
-                        commonData.DataLakeStoreFileSystemAccountName,
-                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)));
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)),
+                        commonData.DataLakeStoreFileSystemAccountName);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
                         fileContentsToAppend.Length);
@@ -238,8 +238,8 @@ namespace DataLakeStore.Tests
 
                     commonData.DataLakeStoreFileSystemClient.FileSystem.Concat(
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
-                        commonData.DataLakeStoreFileSystemAccountName,
-                        new List<string> { filePath1, filePath2 });
+                        new List<string> { filePath1, filePath2 },
+                        commonData.DataLakeStoreFileSystemAccountName);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
@@ -280,8 +280,8 @@ namespace DataLakeStore.Tests
 
                     commonData.DataLakeStoreFileSystemClient.FileSystem.MsConcat(
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
-                        commonData.DataLakeStoreFileSystemAccountName,
-                        new MemoryStream(Encoding.UTF8.GetBytes(string.Format("sources={0},{1}", filePath1, filePath2))));
+                        new MemoryStream(Encoding.UTF8.GetBytes(string.Format("sources={0},{1}", filePath1, filePath2))),
+                        commonData.DataLakeStoreFileSystemAccountName);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
@@ -326,8 +326,8 @@ namespace DataLakeStore.Tests
 
                     commonData.DataLakeStoreFileSystemClient.FileSystem.MsConcat(
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
-                        commonData.DataLakeStoreFileSystemAccountName,
-                        new MemoryStream(Encoding.UTF8.GetBytes(string.Format("sources={0},{1}", filePath1, filePath2))), deletesourcedirectory: true);
+                        new MemoryStream(Encoding.UTF8.GetBytes(string.Format("sources={0},{1}", filePath1, filePath2))),
+                        commonData.DataLakeStoreFileSystemAccountName, deletesourcedirectory: true);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
@@ -371,8 +371,7 @@ namespace DataLakeStore.Tests
 
                     // Move file first
                     var moveFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Rename(filePath,
-                        commonData.DataLakeStoreFileSystemAccountName,
-                        string.Format("{0}/{1}", targetFolder1, fileToMove));
+                        string.Format("{0}/{1}", targetFolder1, fileToMove), commonData.DataLakeStoreFileSystemAccountName);
                     Assert.True(moveFileResponse.Boolean);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder1, fileToMove),
@@ -387,7 +386,7 @@ namespace DataLakeStore.Tests
 
                     // Now move folder completely.
                     var moveFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Rename(targetFolder1,
-                        commonData.DataLakeStoreFileSystemAccountName, targetFolder2);
+                        targetFolder2, commonData.DataLakeStoreFileSystemAccountName);
                     Assert.True(moveFolderResponse.Boolean);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, targetFolder2,
@@ -494,8 +493,8 @@ namespace DataLakeStore.Tests
 
                     // Set the other acl to RWX
                     commonData.DataLakeStoreFileSystemClient.FileSystem.SetAcl("/",
-                        commonData.DataLakeStoreFileSystemAccountName,
-                        string.Join(",", aclToReplaceWith));
+                        string.Join(",", aclToReplaceWith),
+                        commonData.DataLakeStoreFileSystemAccountName);
 
                     var newAcl = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
                         commonData.DataLakeStoreFileSystemAccountName);
@@ -517,7 +516,7 @@ namespace DataLakeStore.Tests
 
                     // Set it back using specific entry
                     commonData.DataLakeStoreFileSystemClient.FileSystem.ModifyAclEntries("/",
-                        commonData.DataLakeStoreFileSystemAccountName, originalOther);
+                        originalOther, commonData.DataLakeStoreFileSystemAccountName);
 
                     // Now confirm that it equals the original ACL
                     var finalEntries = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
@@ -550,10 +549,12 @@ namespace DataLakeStore.Tests
                         commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath,
                             commonData.DataLakeStoreFileSystemAccountName)
                             .FileStatus;
-                    // Set replication on file
+                    // TODO: Set replication on file, this has been removed until it is confirmed as a supported API.
+                    /*
                     var replicationResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.SetReplication(filePath,
                         commonData.DataLakeStoreFileSystemAccountName, 3);
                     Assert.True(replicationResponse.Boolean);
+                    */
 
                     /*
                  * This API is available but all values put into it are ignored. Commenting this out until this API is fully functional.
@@ -579,10 +580,12 @@ namespace DataLakeStore.Tests
                     fileStatusAfterTime.ModificationTime == timeToSet && fileStatusAfterTime.AccessTime == timeToSet);
                 */
 
-                    // Symlink creation is explicitly not supported.
+                    // TODO: Symlink creation is explicitly not supported, but when it is this should be enabled.
+                    /*
                     var symLinkName = TestUtilities.GenerateName("testPath/symlinktest1");
                     Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.CreateSymLink(filePath,
                         commonData.DataLakeStoreFileSystemAccountName, symLinkName, true));
+                    */
 
                     // Once symlinks are available, remove the throws test and uncomment out this code.
                     // Assert.True(createSymLinkResponse.StatusCode == HttpStatusCode.OK);
@@ -631,7 +634,7 @@ namespace DataLakeStore.Tests
                     newAcls += string.Format(",user:{0}:rwx", commonData.AclUserId);
 
                     commonData.DataLakeStoreFileSystemClient.FileSystem.SetAcl("/",
-                        commonData.DataLakeStoreFileSystemAccountName, newAcls);
+                        newAcls, commonData.DataLakeStoreFileSystemAccountName);
                     
                     // retrieve the ACL again and confirm the new entry is present
                     aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
@@ -664,7 +667,7 @@ namespace DataLakeStore.Tests
                     var newAce = string.Format("user:{0}:rwx", commonData.AclUserId);
 
                     commonData.DataLakeStoreFileSystemClient.FileSystem.ModifyAclEntries("/",
-                        commonData.DataLakeStoreFileSystemAccountName, newAce);
+                         newAce, commonData.DataLakeStoreFileSystemAccountName);
 
                     // retrieve the ACL again and confirm the new entry is present
                     aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
@@ -678,7 +681,7 @@ namespace DataLakeStore.Tests
                     // now remove the entry
                     var aceToRemove = string.Format(",user:{0}", commonData.AclUserId);
                     commonData.DataLakeStoreFileSystemClient.FileSystem.RemoveAclEntries("/",
-                        commonData.DataLakeStoreFileSystemAccountName, aceToRemove);
+                        aceToRemove, commonData.DataLakeStoreFileSystemAccountName);
 
                     // retrieve the ACL again and confirm the new entry is present
                     aclGetResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus("/",
@@ -717,16 +720,14 @@ namespace DataLakeStore.Tests
                 commonData.DataLakeStoreFileSystemClient.FileSystem.Create(
                     filePath,
                     caboAccountName,
-                    new MemoryStream(),
-                    null);
+                    new MemoryStream());
             }
             else
             {
                 commonData.DataLakeStoreFileSystemClient.FileSystem.Create(
                     filePath,
                     caboAccountName,
-                    new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)),
-                    null);
+                    new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)));
             }
 
             return filePath;
