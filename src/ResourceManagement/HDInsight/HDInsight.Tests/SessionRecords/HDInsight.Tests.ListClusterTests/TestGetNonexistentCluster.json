@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/243b67d4-60ca-4dfd-a556-216ee06f77a1/resourcegroups/hdi1022?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjQzYjY3ZDQtNjBjYS00ZGZkLWE1NTYtMjE2ZWUwNmY3N2ExL3Jlc291cmNlZ3JvdXBzL2hkaTEwMjI/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/243b67d4-60ca-4dfd-a556-216ee06f77a1/resourcegroups/hdi8655?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjQzYjY3ZDQtNjBjYS00ZGZkLWE1NTYtMjE2ZWUwNmY3N2ExL3Jlc291cmNlZ3JvdXBzL2hkaTg2NTU/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/243b67d4-60ca-4dfd-a556-216ee06f77a1/resourceGroups/hdi1022\",\r\n  \"name\": \"hdi1022\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/243b67d4-60ca-4dfd-a556-216ee06f77a1/resourceGroups/hdi8655\",\r\n  \"name\": \"hdi8655\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "167"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1197"
         ],
         "x-ms-request-id": [
-          "e293ac33-3d9d-481a-8c44-580d87d6a82e"
+          "9f46b5fa-9a87-4f40-9c14-bda8bd2966be"
         ],
         "x-ms-correlation-request-id": [
-          "e293ac33-3d9d-481a-8c44-580d87d6a82e"
+          "9f46b5fa-9a87-4f40-9c14-bda8bd2966be"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151006T111747Z:e293ac33-3d9d-481a-8c44-580d87d6a82e"
+          "CENTRALUS:20160126T013348Z:9f46b5fa-9a87-4f40-9c14-bda8bd2966be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,24 +49,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 06 Oct 2015 11:17:46 GMT"
+          "Tue, 26 Jan 2016 01:33:48 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/243b67d4-60ca-4dfd-a556-216ee06f77a1/resourceGroups/hdi1022/providers/Microsoft.HDInsight/clusters/nonexistentcluster?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjQzYjY3ZDQtNjBjYS00ZGZkLWE1NTYtMjE2ZWUwNmY3N2ExL3Jlc291cmNlR3JvdXBzL2hkaTEwMjIvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvbm9uZXhpc3RlbnRjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/243b67d4-60ca-4dfd-a556-216ee06f77a1/resourceGroups/hdi8655/providers/Microsoft.HDInsight/clusters/nonexistentcluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjQzYjY3ZDQtNjBjYS00ZGZkLWE1NTYtMjE2ZWUwNmY3N2ExL3Jlc291cmNlR3JvdXBzL2hkaTg2NTUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvbm9uZXhpc3RlbnRjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.7-preview"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.HDInsight/clusters/nonexistentcluster' under resource group 'hdi1022' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.HDInsight/clusters/nonexistentcluster' under resource group 'hdi8655' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "158"
@@ -84,13 +82,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "03e2b52c-7026-4248-a989-c3b7e74fe49b"
+          "4922979a-75d2-46ed-8aa1-401ed3977fb3"
         ],
         "x-ms-correlation-request-id": [
-          "03e2b52c-7026-4248-a989-c3b7e74fe49b"
+          "4922979a-75d2-46ed-8aa1-401ed3977fb3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151006T111747Z:03e2b52c-7026-4248-a989-c3b7e74fe49b"
+          "CENTRALUS:20160126T013348Z:4922979a-75d2-46ed-8aa1-401ed3977fb3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -99,7 +97,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 06 Oct 2015 11:17:46 GMT"
+          "Tue, 26 Jan 2016 01:33:48 GMT"
         ]
       },
       "StatusCode": 404
@@ -107,7 +105,7 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "hdi1022"
+      "hdi8655"
     ]
   },
   "Variables": {

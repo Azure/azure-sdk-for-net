@@ -130,7 +130,7 @@ namespace HDInsight.Tests
                 var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
 
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
-                const string dnsname = "hdisdk-httptest3";
+                const string dnsname = "hdisdk-httptest";
 
                 var spec = GetClusterSpecHelpers.GetPaasClusterSpec();
 
@@ -170,7 +170,7 @@ namespace HDInsight.Tests
                 var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
 
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
-                const string dnsname = "hdisdk-httptest3";
+                const string dnsname = "hdisdk-httptest2";
 
                 var spec = GetClusterSpecHelpers.GetPaasClusterSpec();
 

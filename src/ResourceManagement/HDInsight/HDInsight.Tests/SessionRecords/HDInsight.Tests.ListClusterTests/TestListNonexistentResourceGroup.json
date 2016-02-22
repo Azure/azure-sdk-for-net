@@ -7,9 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.7-preview"
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'nonexistentrg' could not be found.\"\r\n  }\r\n}",
@@ -30,13 +28,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "e03dde72-208c-42cf-bddc-fec93e678799"
+          "8cf3f312-bbec-41fb-b584-3cc12367da1f"
         ],
         "x-ms-correlation-request-id": [
-          "e03dde72-208c-42cf-bddc-fec93e678799"
+          "8cf3f312-bbec-41fb-b584-3cc12367da1f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151006T111629Z:e03dde72-208c-42cf-bddc-fec93e678799"
+          "CENTRALUS:20160126T013338Z:8cf3f312-bbec-41fb-b584-3cc12367da1f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +43,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 06 Oct 2015 11:16:29 GMT"
+          "Tue, 26 Jan 2016 01:33:38 GMT"
         ]
       },
       "StatusCode": 404
