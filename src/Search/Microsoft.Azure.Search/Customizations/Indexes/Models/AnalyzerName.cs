@@ -440,10 +440,7 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>An AnalyzerName instance with the given name.</returns>
         public static AnalyzerName Create(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            Throw.IfArgumentNull(name, "name");
 
             // Analyzer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
             AnalyzerName analyzerName;

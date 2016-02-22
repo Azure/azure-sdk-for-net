@@ -59,15 +59,15 @@ namespace DataLakeAnalytics.Tests
                     }
                 };
 
-                var jobCreateResponse = clientToUse.Jobs.Create(commonData.SecondDataLakeAnalyticsAccountName, jobId.ToString(), jobToSubmit);
+                var jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, jobId.ToString(), jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Cancel the job
-                clientToUse.Jobs.Cancel(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                clientToUse.Job.Cancel(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
 
                 // Get the job and ensure that it says it was cancelled.
-                var getCancelledJobResponse = clientToUse.Jobs.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                var getCancelledJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
 
                 Assert.Equal(JobResult.Cancelled, getCancelledJobResponse.Result);
                 Assert.NotNull(getCancelledJobResponse.ErrorMessage);
@@ -75,12 +75,12 @@ namespace DataLakeAnalytics.Tests
 
                 // Resubmit the job
                 jobToSubmit.JobId = secondId.ToString();
-                jobCreateResponse = clientToUse.Jobs.Create(commonData.SecondDataLakeAnalyticsAccountName, secondId.ToString(), jobToSubmit);
+                jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, secondId.ToString(), jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Poll the job until it finishes
-                var getJobResponse = clientToUse.Jobs.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                var getJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
                 Assert.NotNull(getJobResponse);
 
                 int maxWaitInSeconds = 180; // 3 minutes should be long enough
@@ -90,7 +90,7 @@ namespace DataLakeAnalytics.Tests
                     // wait 5 seconds before polling again
                     TestUtilities.Wait(5000);
                     curWaitInSeconds += 5;
-                    getJobResponse = clientToUse.Jobs.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
+                    getJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId);
                     Assert.NotNull(getJobResponse);
                 }
 
@@ -102,23 +102,23 @@ namespace DataLakeAnalytics.Tests
                     string.Format("Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                         getJobResponse.JobId, getJobResponse.State, getJobResponse.Result, getJobResponse.ErrorMessage));
 
-                var listJobResponse = clientToUse.Jobs.List(commonData.SecondDataLakeAnalyticsAccountName, null);
+                var listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, null);
                 Assert.NotNull(listJobResponse);
 
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
 
                 // Just compile the job
-                var compileResponse = clientToUse.Jobs.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
+                var compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
                 Assert.NotNull(compileResponse);
 
                 // list the jobs both with a hand crafted query string and using the parameters
-                listJobResponse = clientToUse.Jobs.List(commonData.SecondDataLakeAnalyticsAccountName, select:  "jobId" );
+                listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, select:  "jobId" );
                 Assert.NotNull(listJobResponse);
 
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
                 
                 /* TODO: re-enable if we can figure out a way to include this
-                listJobResponse = clientToUse.Jobs.ListWithQueryString(commonData.SecondDataLakeAnalyticsAccountName, "$select=jobId");
+                listJobResponse = clientToUse.Job.ListWithQueryString(commonData.SecondDataLakeAnalyticsAccountName, "$select=jobId");
                 Assert.NotNull(listJobResponse);
                 
                 Assert.True(listJobResponse.Value.Any(job => job.JobId == getJobResponse.JobId));

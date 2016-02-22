@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg8943?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnODk0Mz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7269?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzI2OT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "696b41d8-493a-4ea3-80fb-9c89fef32d14"
+          "0e989a86-62f6-4ef6-b5a6-92e4735b2ef7"
         ],
         "accept-language": [
           "en-US"
@@ -31,7 +31,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:19:32 GMT"
+          "Tue, 26 Jan 2016 22:36:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,13 +43,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "083d4547-53ea-47e8-92d4-40a71d181b90"
+          "eff9a507-0ee9-44b3-8250-f62de5363c4d"
         ],
         "x-ms-correlation-request-id": [
-          "083d4547-53ea-47e8-92d4-40a71d181b90"
+          "eff9a507-0ee9-44b3-8250-f62de5363c4d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T001932Z:083d4547-53ea-47e8-92d4-40a71d181b90"
+          "CENTRALUS:20160126T223648Z:eff9a507-0ee9-44b3-8250-f62de5363c4d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -58,13 +58,13 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg8943?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnODk0Mz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7269?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzI2OT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "134a1db0-1426-4262-8daa-e5f04d7fa8be"
+          "54b8ed51-d41c-43ae-9da6-12beca48aebe"
         ],
         "accept-language": [
           "en-US"
@@ -85,7 +85,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:19:33 GMT"
+          "Tue, 26 Jan 2016 22:36:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -94,13 +94,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "85b8bc47-8edc-454a-ba2f-a318af4a4e61"
+          "39cc0fc5-f23c-4eb0-add7-d420b22c34c0"
         ],
         "x-ms-correlation-request-id": [
-          "85b8bc47-8edc-454a-ba2f-a318af4a4e61"
+          "39cc0fc5-f23c-4eb0-add7-d420b22c34c0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T001933Z:85b8bc47-8edc-454a-ba2f-a318af4a4e61"
+          "CENTRALUS:20160126T223649Z:39cc0fc5-f23c-4eb0-add7-d420b22c34c0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -109,8 +109,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg8943?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnODk0Mz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7269?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NhNDkwNDItNzgyYS00Y2M5LTg5YjUtZWUxYjQ4N2ZlMTE1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNzI2OT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
@@ -121,7 +121,7 @@
           "38"
         ],
         "x-ms-client-request-id": [
-          "545ab35c-ffc1-4434-9949-6297313868c6"
+          "8bf61ef2-16c4-45e6-942d-f7f6a066ea99"
         ],
         "accept-language": [
           "en-US"
@@ -130,7 +130,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg8943\",\r\n  \"name\": \"csmrg8943\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7269\",\r\n  \"name\": \"csmrg7269\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "179"
@@ -145,22 +145,22 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 04 Dec 2015 00:19:33 GMT"
+          "Tue, 26 Jan 2016 22:36:49 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-request-id": [
-          "b8309b62-796c-4672-8e9b-a9faeab67bc6"
+          "07288a48-f92b-4f79-beee-47514b9a360c"
         ],
         "x-ms-correlation-request-id": [
-          "b8309b62-796c-4672-8e9b-a9faeab67bc6"
+          "07288a48-f92b-4f79-beee-47514b9a360c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20151204T001933Z:b8309b62-796c-4672-8e9b-a9faeab67bc6"
+          "CENTRALUS:20160126T223649Z:07288a48-f92b-4f79-beee-47514b9a360c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -171,7 +171,7 @@
   ],
   "Names": {
     "CheckExistenceReturnsCorrectValue": [
-      "csmrg8943"
+      "csmrg7269"
     ]
   },
   "Variables": {

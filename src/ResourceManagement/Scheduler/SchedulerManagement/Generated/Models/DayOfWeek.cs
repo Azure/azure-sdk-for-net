@@ -11,6 +11,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DayOfWeek
     {
+        [EnumMember(Value = "Sunday")]
+        Sunday,
         [EnumMember(Value = "Monday")]
         Monday,
         [EnumMember(Value = "Tuesday")]
@@ -22,8 +24,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         [EnumMember(Value = "Friday")]
         Friday,
         [EnumMember(Value = "Saturday")]
-        Saturday,
-        [EnumMember(Value = "Sunday")]
-        Sunday
+        Saturday
     }
 }

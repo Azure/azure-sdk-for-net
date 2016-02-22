@@ -47,8 +47,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<IPage<AADObject>> GetObjectsByObjectIdsAsync( this IObjectsOperations operations, GetObjectsParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetObjectsByObjectIdsWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetObjectsByObjectIdsWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -79,8 +81,10 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             public static async Task<IPage<AADObject>> GetObjectsByObjectIdsNextAsync( this IObjectsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetObjectsByObjectIdsNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
-                return _result.Body;
+                using (var _result = await operations.GetObjectsByObjectIdsNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

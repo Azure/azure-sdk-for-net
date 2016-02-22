@@ -17,21 +17,17 @@
     <tags>Microsoft Azure "logic app" management "logic app management" "logic apps" workflow automation integration REST HTTP client azureofficial windowsazureofficial</tags>
     <dependencies>
       <group targetFramework="net45">
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.1,3.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[3.0.1,4.0)" />
       </group>
       <group targetFramework="portable-net45+win8+wpa81">
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.1,3.0)" />
-      </group>
-      <group targetFramework="dotnet">
-        <dependency id="System.Runtime.Serialization.Primitives" version="4.0.10" />
-        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[2.1,3.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[3.0.1,4.0)" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="ResourceManagement\Logic\LogicManagement\**\*.cs" target="src" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Logic.dll" target="lib\dotnet" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Logic.pdb" target="lib\dotnet" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Logic.xml" target="lib\dotnet" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Logic.dll" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Logic.pdb" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Logic.xml" target="lib\portable-net45+win8+wpa81" />
   </files>
 </package>

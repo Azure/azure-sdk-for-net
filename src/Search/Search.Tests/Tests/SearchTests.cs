@@ -89,7 +89,13 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchIndexClient client = GetClientForQuery();
 
-            var searchParameters = new SearchParameters() { SearchMode = SearchMode.All };
+            var searchParameters = 
+                new SearchParameters()
+                {
+                    QueryType = QueryType.Simple,   // Set explicitly at least once for test coverage.
+                    SearchMode = SearchMode.All
+                };
+
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("Cheapest hotel", searchParameters);
 
@@ -210,6 +216,27 @@ namespace Microsoft.Azure.Search.Tests
                 client.Documents.Search<Hotel>("fancy luxury", searchParameters);
 
             var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
+
+            Assert.NotNull(response.Results);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(expectedDoc, response.Results.First().Document);
+        }
+
+        protected void TestCanSearchWithLuceneSyntax()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var searchParameters = 
+                new SearchParameters()
+                {
+                    QueryType = QueryType.Full,
+                    Select = new[] { "hotelName", "baseRate" }
+                };
+
+            DocumentSearchResult<Hotel> response =
+                client.Documents.Search<Hotel>("hotelName:roch~", searchParameters);
+
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);

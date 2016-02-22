@@ -439,6 +439,8 @@ namespace Compute.Tests
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId)
         {
+            Assert.True(vmOut.LicenseType == vm.LicenseType);
+
             Assert.True(!string.IsNullOrEmpty(vmOut.ProvisioningState));
 
             Assert.True(vmOut.HardwareProfile.VmSize

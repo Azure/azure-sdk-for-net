@@ -12,5 +12,9 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public class Document : Dictionary<string, object>
     {
+        /// <summary>
+        /// Initializes a new instance of the Document class.
+        /// </summary>
+        public Document() { }
     }
 }

@@ -28,16 +28,7 @@ namespace Microsoft.Azure.Search
         /// </remarks>
         public SearchCredentials(string apiKey)
         {
-            if (apiKey == null)
-            {
-                throw new ArgumentNullException("apiKey");
-            }
-
-            if (apiKey.Length == 0)
-            {
-                throw new ArgumentException("apiKey");
-            }
-
+            Throw.IfArgumentNullOrEmpty(apiKey, "apiKey");
             this.ApiKey = apiKey;
         }
         
@@ -55,10 +46,7 @@ namespace Microsoft.Azure.Search
         /// <returns>A Task to track the progress of the async operation.</returns>
         public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            Throw.IfArgumentNull(request, "request");
 
             request.Headers.Add("api-key", ApiKey);
 

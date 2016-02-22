@@ -106,6 +106,7 @@ namespace Common.Authentication.Test
       ""Name"": ""Contoso Test Subscription"",
       ""Environment"": ""testCloud"",
       ""Account"": ""me@contoso.com"",
+      ""State"": ""Enabled"",
       ""Properties"": {
         ""Tenants"": ""3c0ff8a7-e8bb-40e8-ae66-271343379af6""
       }
@@ -146,6 +147,7 @@ namespace Common.Authentication.Test
                 Environment = environment.Name,
                 Id = new Guid(),
                 Name = "Contoso Test Subscription",
+                State = "Enabled",
                 Properties = { { AzureSubscription.Property.Tenants, tenantId.ToString() } }
             };
             var tenant = new AzureTenant

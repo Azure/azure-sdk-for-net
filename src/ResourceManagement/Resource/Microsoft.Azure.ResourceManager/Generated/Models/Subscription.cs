@@ -29,12 +29,13 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Initializes a new instance of the Subscription class.
         /// </summary>
-        public Subscription(string id = default(string), string subscriptionId = default(string), string displayName = default(string), string state = default(string))
+        public Subscription(string id = default(string), string subscriptionId = default(string), string displayName = default(string), string state = default(string), SubscriptionPolicies subscriptionPolicies = default(SubscriptionPolicies))
         {
             Id = id;
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
             State = state;
+            SubscriptionPolicies = subscriptionPolicies;
         }
 
         /// <summary>
@@ -61,6 +62,12 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subscription policies.
+        /// </summary>
+        [JsonProperty(PropertyName = "subscriptionPolicies")]
+        public SubscriptionPolicies SubscriptionPolicies { get; set; }
 
     }
 }

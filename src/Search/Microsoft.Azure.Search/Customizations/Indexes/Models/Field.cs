@@ -8,6 +8,11 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest;
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Represents a field in an index definition in Azure Search, which describes the name, data type, and search
+    /// behavior of a field.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
+    /// </summary>
     public class Field
     {
         [JsonProperty("type")]

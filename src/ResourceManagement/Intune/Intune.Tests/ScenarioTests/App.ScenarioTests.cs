@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
     /// <summary>
     /// Test class for linking/Unlinking Apps to an Intune Policy
     /// </summary>
+    [Collection("Intune Tests")]
     public class AppScenarioTests:TestBase
     {
         static AppScenarioTests()
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetiOSMAMApps()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string filter = string.Format(IntuneConstants.PlatformTypeQuery, PlatformType.iOS.ToString().ToLower());
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldGetAndroidMAMApps()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 string filter = string.Format(IntuneConstants.PlatformTypeQuery, PlatformType.Android.ToString().ToLower());
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldAddAndRemoveAndroidMAMAppForPolicy()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 
@@ -115,7 +116,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldAddAndRemoveiOSMAMAppForPolicy()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.AppScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
 

@@ -16,7 +16,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndGetWorkflowVersion()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowVersionsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);

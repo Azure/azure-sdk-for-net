@@ -7,6 +7,7 @@ namespace Test.Azure.Management.Logic
     using System.Linq;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json.Linq;
     using Xunit;
@@ -17,7 +18,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void RunGetAndListRuns()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowRunsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 var client = this.GetLogicManagementClient(context);
@@ -43,7 +44,7 @@ namespace Test.Azure.Management.Logic
                 var run = client.WorkflowRuns.Get(this.resourceGroupName, workflowName, secondRun.Name);
                 Assert.Equal(secondRun.Name, run.Name);
 
-                var list = client.WorkflowRuns.List(this.resourceGroupName, workflowName, 1, r => r.Status == WorkflowStatus.Failed);
+                var list = client.WorkflowRuns.List(this.resourceGroupName, workflowName, new ODataQuery<WorkflowRunFilter>(r => r.Status == WorkflowStatus.Failed) { Top = 1 });
                 Assert.Equal(1, list.Count());
 
                 var list2 = client.WorkflowRuns.List(this.resourceGroupName, workflowName);

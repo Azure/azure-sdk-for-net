@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Rest.Serialization;
     using Xunit;
@@ -27,7 +26,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
 
-                var batch = new IndexBatch(new[]
+                var batch = IndexBatch.New(new[]
                 {
                     IndexAction.Upload(
                         new Document()
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.Search.Tests
                             { "tags", new[] { "motel", "budget" } },
                             { "parkingIncluded", true },
                             { "smokingAllowed", true },
-                            { "lastRenovationDate", new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero) },
+                            { "lastRenovationDate", new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero) },  //aka.ms/sre-codescan/disable
                             { "rating", 1 },
                             { "location", GeographyPoint.Create(49.678581, -122.131577) }
                         }),
@@ -135,7 +134,7 @@ namespace Microsoft.Azure.Search.Tests
                             Tags = new[] { "motel", "budget" },
                             ParkingIncluded = true,
                             SmokingAllowed = true,
-                            LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),
+                            LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                             Rating = 1,
                             Location = GeographyPoint.Create(49.678581, -122.131577)
                         }),
@@ -188,6 +187,95 @@ namespace Microsoft.Azure.Search.Tests
 
                 Assert.Equal(1, documentIndexResult.Results.Count);
                 AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
+            });
+        }
+
+        [Fact]
+        public void IndexDoesNotThrowWhenDeletingDocumentWithExtraFields()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var document = new Hotel() { HotelId = "1", Category = "Luxury" };
+                var batch = IndexBatch.Upload(new[] { document });
+
+                client.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(1, client.Documents.Count());
+
+                document.Category = "ignored";
+                batch = IndexBatch.Delete(new[] { document });
+
+                DocumentIndexResult documentIndexResult = client.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(1, documentIndexResult.Results.Count);
+                AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
+
+                Assert.Equal(0, client.Documents.Count());
+            });
+        }
+
+        [Fact]
+        public void IndexDoesNotThrowWhenDeletingDynamicDocumentWithExtraFields()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var document = new Document() { { "hotelId", "1" }, { "category", "Luxury" } };
+                var batch = IndexBatch.Upload(new[] { document });
+
+                client.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(1, client.Documents.Count());
+
+                document["category"] = "ignored";
+                batch = IndexBatch.Delete(new[] { document });
+
+                DocumentIndexResult documentIndexResult = client.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(1, documentIndexResult.Results.Count);
+                AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
+
+                Assert.Equal(0, client.Documents.Count());
+            });
+        }
+
+        [Fact]
+        public void CanDeleteBatchByKeys()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var uploadBatch = 
+                    IndexBatch.Upload(
+                        new[]
+                        {
+                            new Hotel() { HotelId = "1" },
+                            new Hotel() { HotelId = "2" }
+                        });
+
+                client.Documents.Index(uploadBatch);
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(2, client.Documents.Count());
+
+                var deleteBatch = IndexBatch.Delete("hotelId", new[] { "1", "2" });
+
+                DocumentIndexResult documentIndexResult = client.Documents.Index(deleteBatch);
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(2, documentIndexResult.Results.Count);
+                AssertIndexActionSucceeded("1", documentIndexResult.Results[0]);
+                AssertIndexActionSucceeded("2", documentIndexResult.Results[1]);
+
+                Assert.Equal(0, client.Documents.Count());
             });
         }
 
@@ -332,7 +420,7 @@ namespace Microsoft.Azure.Search.Tests
                         { "parkingIncluded", false },
                         { "smokingAllowed", false },
                         { "lastRenovationDate", new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)) },
-                        { "rating", 5 },
+                        { "rating", 5L },
                         { "location", GeographyPoint.Create(47.678581, -122.131577) }
                     };
 
@@ -346,7 +434,7 @@ namespace Microsoft.Azure.Search.Tests
                         { "tags", new[] { "pool", "view", "wifi" } },
                         { "parkingIncluded", true },
                         { "lastRenovationDate", null },
-                        { "rating", 4 },
+                        { "rating", 4L },
                         { "location", null }
                     };
 
@@ -367,7 +455,7 @@ namespace Microsoft.Azure.Search.Tests
                         { "location", null }
                     };
 
-                client.Documents.Index(IndexBatch.Upload(new[] { originalDoc }));
+                client.Documents.Index(IndexBatch.MergeOrUpload(new[] { originalDoc }));
                 SearchTestUtilities.WaitForIndexing();
 
                 client.Documents.Index(IndexBatch.Merge(new[] { updatedDoc }));
@@ -376,6 +464,13 @@ namespace Microsoft.Azure.Search.Tests
                 Document actualDoc = client.Documents.Get("1");
 
                 SearchAssert.DocumentsEqual(expectedDoc, actualDoc);
+
+                client.Documents.Index(IndexBatch.MergeOrUpload(new[] { originalDoc }));
+                SearchTestUtilities.WaitForIndexing();
+
+                actualDoc = client.Documents.Get("1");
+
+                SearchAssert.DocumentsEqual(originalDoc, actualDoc);
             });
         }
 
@@ -435,7 +530,7 @@ namespace Microsoft.Azure.Search.Tests
                         Location = GeographyPoint.Create(47.678581, -122.131577)
                     };
 
-                client.Documents.Index(IndexBatch.Upload(new[] { originalDoc }));
+                client.Documents.Index(IndexBatch.MergeOrUpload(new[] { originalDoc }));
                 SearchTestUtilities.WaitForIndexing();
 
                 client.Documents.Index(IndexBatch.Merge(new[] { updatedDoc }));
@@ -444,6 +539,13 @@ namespace Microsoft.Azure.Search.Tests
                 Hotel actualDoc = client.Documents.Get<Hotel>("1");
 
                 Assert.Equal(expectedDoc, actualDoc);
+
+                client.Documents.Index(IndexBatch.MergeOrUpload(new[] { originalDoc }));
+                SearchTestUtilities.WaitForIndexing();
+
+                actualDoc = client.Documents.Get<Hotel>("1");
+
+                Assert.Equal(originalDoc, actualDoc);
             });
         }
 

@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Management.Scheduler
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq.Expressions;
     using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
@@ -127,15 +126,8 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='jobCollectionName'>
         /// The job collection name.
         /// </param>
-        /// <param name='top'>
-        /// The number of jobs to request, in the of range [1..100].
-        /// </param>
-        /// <param name='skip'>
-        /// The (0-based) index of the job history list from which to begin
-        /// requesting entries.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the job state.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -143,7 +135,7 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobStateFilter, bool>> filter = default(Expression<Func<JobStateFilter, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, ODataQuery<JobStateFilter> odataQuery = default(ODataQuery<JobStateFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists job history.
         /// </summary>
@@ -156,15 +148,8 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='jobName'>
         /// The job name.
         /// </param>
-        /// <param name='top'>
-        /// the number of job history to request, in the of range [1..100].
-        /// </param>
-        /// <param name='skip'>
-        /// The (0-based) index of the job history list from which to begin
-        /// requesting entries.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the job state.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -172,7 +157,7 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, int? top = default(int?), int? skip = default(int?), Expression<Func<JobHistoryFilter, bool>> filter = default(Expression<Func<JobHistoryFilter, bool>>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, ODataQuery<JobHistoryFilter> odataQuery = default(ODataQuery<JobHistoryFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all jobs under the specified job collection.
         /// </summary>
