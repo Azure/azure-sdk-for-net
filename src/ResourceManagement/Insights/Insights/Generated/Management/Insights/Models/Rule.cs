@@ -32,18 +32,6 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// </summary>
     public partial class Rule
     {
-        private RuleAction _action;
-        
-        /// <summary>
-        /// Optional. Gets or sets the action that is performed when the alert
-        /// rule becomes active, and when an alert condition is resolved.
-        /// </summary>
-        public RuleAction Action
-        {
-            get { return this._action; }
-            set { this._action = value; }
-        }
-        
         private IList<RuleAction> _actions;
         
         /// <summary>
