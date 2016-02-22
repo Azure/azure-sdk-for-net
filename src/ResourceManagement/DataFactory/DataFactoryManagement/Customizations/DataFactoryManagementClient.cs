@@ -325,6 +325,7 @@ namespace Microsoft.Azure.Management.DataFactories
         private void PreInitialize()
         {
             this.ActivityTypes = new ActivityTypeOperations(this);
+            this.ActivityWindows = new ActivityWindowOperations(this);
             this.ComputeTypes = new ComputeTypeOperations(this);
             this.DataFactories = new DataFactoryOperations(this);
             this.DataSlices = new DataSliceOperations(this);
