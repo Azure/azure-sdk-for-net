@@ -24,5 +24,5 @@ call "%repoRoot%\tools\autorest.gen.cmd" %catalogSpecFile% Microsoft.Azure.Manag
 :: TODO: This should be removed once all the manual fixes are part of the generation functionality.
 :: Current manual fix up list:
 ::  Fix the dynamic host parameters (accountname and datalakejob and catalog service uri)
-call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeAnalytics"
+:: call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeAnalytics"
 endlocal

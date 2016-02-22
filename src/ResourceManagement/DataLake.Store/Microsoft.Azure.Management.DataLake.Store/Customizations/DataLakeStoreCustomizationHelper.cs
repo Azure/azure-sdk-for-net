@@ -19,7 +19,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// It should mirror the package version in the project.json file.
         /// </summary>
         internal const string PackageVersion = "0.10.0-preview";
-        
+
+        internal const string DefaultAdlsFileSystemDnsSuffix = "azuredatalakestore.net";
+
         /// <summary>
         /// Get the assembly version of a service client.
         /// </summary>

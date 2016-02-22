@@ -24,6 +24,6 @@ call "%repoRoot%\tools\autorest.gen.cmd" %filesystemSpecFile% Microsoft.Azure.Ma
 ::  Fix the dynamic host parameters. (accountname and datalakeserviceuri)
 ::  Add redirect logic into all the constructors by default.
 ::  Fix redirect URIs to be full paths (Create, Open and Append)
-call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeStore"
+:: call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeStore"
 
 endlocal

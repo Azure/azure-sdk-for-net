@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string jobServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(credentials, handlers)
+        public DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string adlaJobDnsSuffix = DataLakeAnalyticsCustomizationHelper.DefaultAdlaDnsSuffix, params DelegatingHandler[] handlers) : this(credentials, handlers)
         {
-            this.Jobserviceuri = jobServiceUri;
+            this.AdlaJobDnsSuffix = adlaJobDnsSuffix;
             DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         }
 
@@ -57,48 +57,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string jobServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
+        public DataLakeAnalyticsJobManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string adlaJobDnsSuffix = DataLakeAnalyticsCustomizationHelper.DefaultAdlaDnsSuffix, params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
         {
-            this.Jobserviceuri = jobServiceUri;
-            DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DataLakeStoreFileSystemManagementClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public DataLakeAnalyticsJobManagementClient(Uri baseUri, ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string jobServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(baseUri, credentials, handlers)
-        {
-            this.Jobserviceuri = jobServiceUri;
-            DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DataLakeStoreFileSystemManagementClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public DataLakeAnalyticsJobManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string jobServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(baseUri, credentials, rootHandler, handlers)
-        {
-            this.Jobserviceuri = jobServiceUri;
+            this.AdlaJobDnsSuffix = adlaJobDnsSuffix;
             DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         }
     }
