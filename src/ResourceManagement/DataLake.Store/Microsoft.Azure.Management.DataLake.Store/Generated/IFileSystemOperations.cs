@@ -52,9 +52,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The Data Lake Store path (starting with '/') of the file to which
         /// to append using concurrent append.
         /// </param>
-        /// <param name='accountname'>
-        /// The name of the Data Lake Store account that the file lives in.
-        /// </param>
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
         /// </param>
@@ -72,7 +69,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, string accountName, string appendMode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, System.IO.Stream streamContents, string accountName, string appendMode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Sets or removes the expiration time on the specified file. This
         /// operation can only be executed against files. Folders are not
@@ -142,16 +139,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The Azure Data Lake Store account to execute filesystem operations
         /// on.
         /// </param>
-        /// <param name='permission'>
-        /// The optional permission to set on the directory.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string path, string accountName, string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string path, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Concatenates the list of source files into the destination file.
         /// </summary>
@@ -293,16 +287,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The Azure Data Lake Store account to execute filesystem operations
         /// on.
         /// </param>
-        /// <param name='buffersize'>
-        /// The optional buffer size to use when appending data
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string directFilePath, System.IO.Stream streamContents, string accountName, long? buffersize = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string directFilePath, System.IO.Stream streamContents, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a file with optionally specified content.
         /// </summary>
@@ -318,20 +309,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// parameter is optional, resulting in an empty file if not
         /// specified.
         /// </param>
-        /// <param name='buffersize'>
-        /// The size of the buffer used in transferring data.
-        /// </param>
         /// <param name='overwrite'>
         /// The indication of if the file should be overwritten.
-        /// </param>
-        /// <param name='blocksize'>
-        /// The block size of a file, in bytes.
-        /// </param>
-        /// <param name='replication'>
-        /// The number of replications of a file.
-        /// </param>
-        /// <param name='permission'>
-        /// The permissions of a file or directory.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -339,7 +318,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string directFilePath, string accountName, System.IO.Stream streamContents = default(System.IO.Stream), long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string directFilePath, string accountName, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Opens and reads from the specified file.
         /// </summary>
@@ -354,15 +333,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='offset'>
         /// </param>
-        /// <param name='buffersize'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Sets the Access Control List (ACL) for a file or folder.
         /// </summary>
@@ -431,25 +408,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string removeAclFilePath, string aclspec, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Removes default Access Control List (ACL) entries of the specified
-        /// directory.
-        /// </summary>
-        /// <param name='removeDefaultAclFilePath'>
-        /// The Data Lake Store path (starting with '/') of the directory with
-        /// the default ACL being removed.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations
-        /// on.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> RemoveDefaultAclWithHttpMessagesAsync(string removeDefaultAclFilePath, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Removes the existing Access Control List (ACL) of the specified
         /// file or directory.
@@ -579,37 +537,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         Task<AzureOperationResponse> SetPermissionWithHttpMessagesAsync(string setPermissionFilePath, string accountName, string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Sets the access or modification time on a file or directory.
-        /// </summary>
-        /// <param name='sourcePath'>
-        /// The Data Lake Store path (starting with '/') of the file or
-        /// directory for which to set the modification time.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations
-        /// on.
-        /// </param>
-        /// <param name='modificationtime'>
-        /// The modification time of the file or directory. If -1, this
-        /// property remains unchanged
-        /// </param>
-        /// <param name='accesstime'>
-        /// The access time of the file or directory. If -1, this property
-        /// remains unchanged
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse> SetTimesWithHttpMessagesAsync(string sourcePath, string accountName, long? modificationtime = default(long?), long? accesstime = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get the home directory for the specified account.
         /// </summary>
-        /// <param name='accountname'>
-        /// The name of the Data Lake Store account to use.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations
         /// on.
@@ -620,6 +549,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<HomeDirectoryResult>> GetHomeDirectoryWithHttpMessagesAsync(string accountname, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HomeDirectoryResult>> GetHomeDirectoryWithHttpMessagesAsync(string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

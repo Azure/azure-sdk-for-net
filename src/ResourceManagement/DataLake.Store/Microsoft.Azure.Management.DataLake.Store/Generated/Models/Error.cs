@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Data Lake error information
+    /// Data Lake Store error information
     /// </summary>
     public partial class Error
     {

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Models;
 
     /// <summary>
-    /// Creates a Data Lake Store account management client.
+    /// Creates an Azure Data Lake Store account management client.
     /// </summary>
     public partial class DataLakeStoreManagementClient : ServiceClient<DataLakeStoreManagementClient>, IDataLakeStoreManagementClient, IAzureClient
     {

@@ -70,8 +70,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties defined by Data Lake all properties
-        /// are specific to each resource provider.
+        /// Gets or sets the Data Lake Store account properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DataLakeStoreAccountProperties Properties { get; set; }

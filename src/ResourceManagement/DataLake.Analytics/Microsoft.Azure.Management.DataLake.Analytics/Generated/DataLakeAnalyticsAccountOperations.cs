@@ -51,17 +51,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public DataLakeAnalyticsManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the specified Azure storage account details in the specified Data
-        /// Lake Analytics account.
+        /// Gets the specified Azure Storage account linked to the given Data Lake
+        /// Analytics account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to retrieve the Azure storage account details from
+        /// The name of the Data Lake Analytics account from which to retrieve Azure
+        /// storage account details.
         /// </param>
         /// <param name='storageAccountName'>
-        /// The name of the account to retrieve
+        /// The name of the Azure Storage account for which to retrieve the details.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -243,15 +245,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Updates the Data Lake Analytics account specified to remove the specified
-        /// Azure Storage account.
+        /// Updates the specified Data Lake Analytics account to remove an Azure
+        /// Storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The Data Lake Analytics account name to remove the Azure Storage account
-        /// from
+        /// The name of the Data Lake Analytics account from which to remove the Azure
+        /// Storage account.
         /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure Storage account to remove
@@ -404,14 +407,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Updates the specified storage account. This is currently only supported
-        /// for Azure blob accounts to update their access keys and suffix.
+        /// Updates the Data Lake Analytics account to replace Azure Storage blob
+        /// account details, such as the access key and/or suffix.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The Data Lake Analytics account name to modify storage accounts in
+        /// The name of the Data Lake Analytics account to modify storage accounts in
         /// </param>
         /// <param name='storageAccountName'>
         /// The Azure Storage account to modify
@@ -576,14 +580,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Updates the Data Lake Analytics account specified to include the
-        /// additional Azure Storage account.
+        /// Updates the specified Data Lake Analytics account to add an Azure Storage
+        /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The Data Lake Analytics account name to add the Azure Storage account to
+        /// The name of the Data Lake Analytics account to which to add the Azure
+        /// Storage account.
         /// </param>
         /// <param name='storageAccountName'>
         /// The name of the Azure Storage account to add
@@ -748,17 +754,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the specified Azure Storage container object associated with the
-        /// specified Data Lake Analytics and Azure Storage accounts.
+        /// Gets the specified Azure Storage container associated with the given Data
+        /// Lake Analytics and Azure Storage accounts.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to retrieve blob container for
+        /// The name of the Data Lake Analytics account for which to retrieve blob
+        /// container.
         /// </param>
         /// <param name='storageAccountName'>
-        /// The name of the Azure storage account to retrieve the blob container from
+        /// The name of the Azure storage account from which to retrieve the blob
+        /// container.
         /// </param>
         /// <param name='containerName'>
         /// The name of the Azure storage container to retrieve
@@ -949,17 +958,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the Azure Storage containers object associated with the specified
-        /// Data Lake Analytics and Azure Storage accounts.
+        /// Lists the Azure Storage containers, if any, associated with the specified
+        /// Data Lake Analytics and Azure Storage account combination. The response
+        /// includes a link to the next page of results, if any.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to retrieve blob containers for
+        /// The name of the Data Lake Analytics account for which to list Azure
+        /// Storage blob containers.
         /// </param>
         /// <param name='storageAccountName'>
-        /// The name of the Azure storage account to retrieve blob containers from
+        /// The name of the Azure storage account from which to list blob containers.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1141,11 +1153,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the next page of the Azure Storage Container objects within the
-        /// specified Azure Storage account, if any.
+        /// Gets the next page of Azure Storage containers, if any, within the
+        /// specified Azure Storage account. The response includes a link to the next
+        /// page of results, if any.
         /// </summary>
         /// <param name='nextLink'>
-        /// The url to the next Azure Storage Container page.
+        /// The URL to the next Azure Storage Container page.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1311,7 +1324,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Storage account and container, if any.
         /// </summary>
         /// <param name='nextLink'>
-        /// The url to the next Azure Storage Container SAS token page.
+        /// The URL to the next Azure Storage Container SAS token page.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1474,19 +1487,23 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
         /// <summary>
         /// Gets the SAS token associated with the specified Data Lake Analytics and
-        /// WASB storage account and container combination.
+        /// Azure Storage account and container combination.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to get the SAS token for
+        /// The name of the Data Lake Analytics account from which an Azure Storage
+        /// account's SAS token is being requested.
         /// </param>
         /// <param name='storageAccountName'>
-        /// The name of the Azure storage account to retrieve the blob container from
+        /// The name of the Azure storage account for which the SAS token is being
+        /// requested.
         /// </param>
         /// <param name='containerName'>
-        /// The name of the Azure storage container to retrieve
+        /// The name of the Azure storage container for which the SAS token is being
+        /// requested.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1678,14 +1695,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Lake Analytics account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to retrieve the Data Lake Store account details
-        /// from
+        /// The name of the Data Lake Analytics account from which to retrieve the
+        /// Data Lake Store account details.
         /// </param>
         /// <param name='dataLakeStoreAccountName'>
-        /// The name of the account to retrieve
+        /// The name of the Data Lake Store account to retrieve
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1871,11 +1889,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Data Lake Store account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The Data Lake Analytics account name to remove the Data Lake Store account
-        /// from
+        /// The name of the Data Lake Analytics account from which to remove the Data
+        /// Lake Store account.
         /// </param>
         /// <param name='dataLakeStoreAccountName'>
         /// The name of the Data Lake Store account to remove
@@ -2028,21 +2047,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Updates the Data Lake Analytics account specified to include the
+        /// Updates the specified Data Lake Analytics account to include the
         /// additional Data Lake Store account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The Data Lake Analytics account name to add the Data Lake Store account to
+        /// The name of the Data Lake Analytics account to which to add the Data Lake
+        /// Store account.
         /// </param>
         /// <param name='dataLakeStoreAccountName'>
-        /// The name of the Data Lake Store account to add
+        /// The name of the Data Lake Store account to add.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters containing the optional properties associated with the
-        /// named Data Lake account.
+        /// The details of the Data Lake Store account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2200,38 +2220,39 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics account objects within the
-        /// subscription or within a specific resource group. This includes a link to
+        /// Gets the first page of Azure Storage accounts, if any, linked to the
+        /// specified Data Lake Analytics account. The response includes a link to
         /// the next page, if any.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to list Storage accounts for.
+        /// The name of the Data Lake Analytics account for which to list Azure
+        /// Storage accounts.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
-        /// Gets or sets OData Select statement. Limits the properties on each entry
-        /// to just those requested, e.g.
-        /// Categories?$select=CategoryName,Description. Optional.
+        /// OData Select statement. Limits the properties on each entry to just those
+        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
         /// </param>
         /// <param name='count'>
-        /// Gets or sets a Boolean value of true or false to request a count of the
-        /// matching resources included with the resources in the response, e.g.
+        /// The Boolean value of true or false to request a count of the matching
+        /// resources included with the resources in the response, e.g.
         /// Categories?$count=true. Optional.
         /// </param>
         /// <param name='search'>
-        /// Gets or sets a free form search. A free-text search expression to match
-        /// for whether a particular entry should be included in the feed, e.g.
+        /// A free form search. A free-text search expression to match for whether a
+        /// particular entry should be included in the feed, e.g.
         /// Categories?$search=blue OR green. Optional.
         /// </param>
         /// <param name='format'>
-        /// Gets or sets the return format. Return the response in particular
-        /// formatxii without access to request headers for standard content-type
-        /// negotiation (e.g Orders?$format=json). Optional.
+        /// The desired return format. Return the response in particular formatxii
+        /// without access to request headers for standard content-type negotiation
+        /// (e.g Orders?$format=json). Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2436,39 +2457,39 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Store account objects within the
-        /// specified Data Lake Analytics account. This includes a link to the next
+        /// Gets the first page of Data Lake Store accounts linked to the specified
+        /// Data Lake Analytics account. The response includes a link to the next
         /// page, if any.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Analytics account to list Data Lake Store
-        /// accounts for.
+        /// The name of the Data Lake Analytics account for which to list Data Lake
+        /// Store accounts.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
-        /// Gets or sets OData Select statement. Limits the properties on each entry
-        /// to just those requested, e.g.
-        /// Categories?$select=CategoryName,Description. Optional.
+        /// OData Select statement. Limits the properties on each entry to just those
+        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
         /// </param>
         /// <param name='count'>
-        /// Gets or sets a Boolean value of true or false to request a count of the
-        /// matching resources included with the resources in the response, e.g.
+        /// The Boolean value of true or false to request a count of the matching
+        /// resources included with the resources in the response, e.g.
         /// Categories?$count=true. Optional.
         /// </param>
         /// <param name='search'>
-        /// Gets or sets a free form search. A free-text search expression to match
-        /// for whether a particular entry should be included in the feed, e.g.
+        /// A free form search. A free-text search expression to match for whether a
+        /// particular entry should be included in the feed, e.g.
         /// Categories?$search=blue OR green. Optional.
         /// </param>
         /// <param name='format'>
-        /// Gets or sets the return format. Return the response in particular
-        /// formatxii without access to request headers for standard content-type
-        /// negotiation (e.g Orders?$format=json). Optional.
+        /// The desired return format. Return the response in particular formatxii
+        /// without access to request headers for standard content-type negotiation
+        /// (e.g Orders?$format=json). Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2673,34 +2694,34 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics account objects within a
+        /// Gets the first page of Data Lake Analytics accounts, if any, within a
         /// specific resource group. This includes a link to the next page, if any.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
-        /// Gets or sets OData Select statement. Limits the properties on each entry
-        /// to just those requested, e.g.
-        /// Categories?$select=CategoryName,Description. Optional.
+        /// OData Select statement. Limits the properties on each entry to just those
+        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
         /// </param>
         /// <param name='count'>
-        /// Gets or sets a Boolean value of true or false to request a count of the
-        /// matching resources included with the resources in the response, e.g.
+        /// The Boolean value of true or false to request a count of the matching
+        /// resources included with the resources in the response, e.g.
         /// Categories?$count=true. Optional.
         /// </param>
         /// <param name='search'>
-        /// Gets or sets a free form search. A free-text search expression to match
-        /// for whether a particular entry should be included in the feed, e.g.
+        /// A free form search. A free-text search expression to match for whether a
+        /// particular entry should be included in the feed, e.g.
         /// Categories?$search=blue OR green. Optional.
         /// </param>
         /// <param name='format'>
-        /// Gets or sets the return format. Return the response in particular
-        /// formatxii without access to request headers for standard content-type
-        /// negotiation (e.g Orders?$format=json). Optional.
+        /// The return format. Return the response in particular formatxii without
+        /// access to request headers for standard content-type negotiation (e.g
+        /// Orders?$format=json). Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2899,31 +2920,30 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics account objects within the
+        /// Gets the first page of Data Lake Analytics accounts, if any, within the
         /// current subscription. This includes a link to the next page, if any.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
-        /// Gets or sets OData Select statement. Limits the properties on each entry
-        /// to just those requested, e.g.
-        /// Categories?$select=CategoryName,Description. Optional.
+        /// OData Select statement. Limits the properties on each entry to just those
+        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
         /// </param>
         /// <param name='count'>
-        /// Gets or sets a Boolean value of true or false to request a count of the
-        /// matching resources included with the resources in the response, e.g.
+        /// The Boolean value of true or false to request a count of the matching
+        /// resources included with the resources in the response, e.g.
         /// Categories?$count=true. Optional.
         /// </param>
         /// <param name='search'>
-        /// Gets or sets a free form search. A free-text search expression to match
-        /// for whether a particular entry should be included in the feed, e.g.
+        /// A free form search. A free-text search expression to match for whether a
+        /// particular entry should be included in the feed, e.g.
         /// Categories?$search=blue OR green. Optional.
         /// </param>
         /// <param name='format'>
-        /// Gets or sets the return format. Return the response in particular
-        /// formatxii without access to request headers for standard content-type
-        /// negotiation (e.g Orders?$format=json). Optional.
+        /// The desired return format. Return the response in particular formatxii
+        /// without access to request headers for standard content-type negotiation
+        /// (e.g Orders?$format=json). Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3116,13 +3136,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the Data Lake Analytics account object specified by the account name.
+        /// Gets details of the specified Data Lake Analytics account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to retrieve
+        /// The name of the Data Lake Analytics account to retrieve.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3302,10 +3323,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// object specified by the account name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to delete
+        /// The name of the Data Lake Analytics account to delete
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -3326,10 +3348,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// object specified by the account name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to delete
+        /// The name of the Data Lake Analytics account to delete
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3478,7 +3501,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics workloads
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group the account will be associated with.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.the account will be associated with.
         /// </param>
         /// <param name='name'>
         /// The name of the Data Lake Analytics account to create.
@@ -3508,7 +3532,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Analytics workloads
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group the account will be associated with.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.the account will be associated with.
         /// </param>
         /// <param name='name'>
         /// The name of the Data Lake Analytics account to create.
@@ -3720,7 +3745,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// accountName with the contents of the account object.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='name'>
         /// The name of the Data Lake Analytics account to update.
@@ -3749,7 +3775,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// accountName with the contents of the account object.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Azure resource group that contains the Data Lake Analytics
+        /// account.
         /// </param>
         /// <param name='name'>
         /// The name of the Data Lake Analytics account to update.
@@ -3957,8 +3984,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the Azure Storage containers object associated with the specified
-        /// Data Lake Analytics and Azure Storage accounts.
+        /// Lists the Azure Storage containers, if any, associated with the specified
+        /// Data Lake Analytics and Azure Storage account combination. The response
+        /// includes a link to the next page of results, if any.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -4117,8 +4145,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the next page of the Azure Storage Container objects within the
-        /// specified Azure Storage account, if any.
+        /// Gets the next page of Azure Storage containers, if any, within the
+        /// specified Azure Storage account. The response includes a link to the next
+        /// page of results, if any.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -4438,7 +4467,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
         /// <summary>
         /// Gets the SAS token associated with the specified Data Lake Analytics and
-        /// WASB storage account and container combination.
+        /// Azure Storage account and container combination.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -4597,8 +4626,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics account objects within the
-        /// subscription or within a specific resource group. This includes a link to
+        /// Gets the first page of Azure Storage accounts, if any, linked to the
+        /// specified Data Lake Analytics account. The response includes a link to
         /// the next page, if any.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -4758,8 +4787,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Store account objects within the
-        /// specified Data Lake Analytics account. This includes a link to the next
+        /// Gets the first page of Data Lake Store accounts linked to the specified
+        /// Data Lake Analytics account. The response includes a link to the next
         /// page, if any.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -4919,7 +4948,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics account objects within a
+        /// Gets the first page of Data Lake Analytics accounts, if any, within a
         /// specific resource group. This includes a link to the next page, if any.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -5079,7 +5108,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics account objects within the
+        /// Gets the first page of Data Lake Analytics accounts, if any, within the
         /// current subscription. This includes a link to the next page, if any.
         /// </summary>
         /// <param name='nextPageLink'>

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets the job's unique identifier.
+        /// Gets or sets the job's unique identifier (a GUID).
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
         public string JobId { get; set; }
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the job type of the current job (i.e. Hive or U-SQL).
+        /// Gets or sets the job type of the current job (Hive or USql).
         /// Possible values include: 'USql', 'Hive'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
@@ -73,21 +73,23 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Submitter { get; set; }
 
         /// <summary>
-        /// Gets or sets the error message details for the job, if it failed.
+        /// Gets or sets the error message details for the job, if the job
+        /// failed.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public IList<JobErrorDetails> ErrorMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the degree of parallelism used for this job. This
-        /// must have a minimum value of 2
+        /// must be greater than 0.
         /// </summary>
         [JsonProperty(PropertyName = "degreeOfParallelism")]
         public int? DegreeOfParallelism { get; set; }
 
         /// <summary>
-        /// Gets or sets the priority value for the current job which must be
-        /// greater than 1.
+        /// Gets or sets the priority value for the current job. Lower numbers
+        /// have a higher priority. By default, a job has a priority of 1000.
+        /// This must be greater than 0.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
@@ -105,16 +107,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the completion time of the job
+        /// Gets or sets the completion time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets a more detailed state of the job than the result.
-        /// Especially used for intermediate states and errors. Possible
-        /// values include: 'Accepted', 'Compiling', 'Ended', 'New',
-        /// 'Queued', 'Running', 'Scheduling', 'Starting', 'Paused',
+        /// Gets or sets the job state. When the job is in the Ended state,
+        /// refer to Result and ErrorMessage for details. Possible values
+        /// include: 'Accepted', 'Compiling', 'Ended', 'New', 'Queued',
+        /// 'Running', 'Scheduling', 'Starting', 'Paused',
         /// 'WaitingForCapacity'
         /// </summary>
         [JsonProperty(PropertyName = "state")]

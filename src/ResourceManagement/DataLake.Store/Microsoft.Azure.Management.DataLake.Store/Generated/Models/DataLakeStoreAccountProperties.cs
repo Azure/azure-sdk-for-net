@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public DataLakeStoreAccountStatus? ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the status of the Data Lake Account after provisioning has
-        /// completed. Possible values include: 'active', 'suspended'
+        /// Gets the status of the Data Lake Store account after provisioning
+        /// has completed. Possible values include: 'active', 'suspended'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public DataLakeStoreAccountState? State { get; private set; }
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
 
         /// <summary>
         /// Gets or sets the default owner group for all new folders and files
-        /// created in the DataLake.
+        /// created in the Data Lake Store account.
         /// </summary>
         [JsonProperty(PropertyName = "defaultGroup")]
         public string DefaultGroup { get; set; }

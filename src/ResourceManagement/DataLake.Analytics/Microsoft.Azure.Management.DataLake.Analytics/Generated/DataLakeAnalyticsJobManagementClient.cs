@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// Creates an Azure Data Lake Analytics job management client.
+    /// Creates an Azure Data Lake Analytics job client.
     /// </summary>
     public partial class DataLakeAnalyticsJobManagementClient : ServiceClient<DataLakeAnalyticsJobManagementClient>, IDataLakeAnalyticsJobManagementClient, IAzureClient
     {

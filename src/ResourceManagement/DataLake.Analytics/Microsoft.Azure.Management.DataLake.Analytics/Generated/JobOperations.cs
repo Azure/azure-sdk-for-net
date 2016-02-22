@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public DataLakeAnalyticsJobManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the job statistics object specified by the job ID.
+        /// Gets statistics of the specified job.
         /// </summary>
         /// <param name='jobIdentity'>
         /// JobInfo ID.
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// account for job correctness and validation.
         /// </summary>
         /// <param name='parameters'>
-        /// The parameters to build a job, which simulates submission.
+        /// The parameters to build a job.
         /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute job operations on.
@@ -640,11 +640,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Submits the specified job to the specified Data Lake Analytics account for
-        /// computation.
+        /// Submits a job to the specified Data Lake Analytics account.
         /// </summary>
         /// <param name='jobId'>
-        /// The parameters to submit a job.
+        /// The job ID (a GUID) for the job being submitted.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to submit a job.
@@ -1012,7 +1011,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the JobInfo object specified by the job ID.
+        /// Gets the job information for the specified job ID.
         /// </summary>
         /// <param name='jobIdentity'>
         /// JobInfo ID.
@@ -1206,8 +1205,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics JobInformation objects
-        /// within the specified resource group with a link to the next page, if any.
+        /// Lists the jobs, if any, associated with the specified Data Lake Analytics
+        /// account. The response includes a link to the next page of results, if any.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute job operations on.
@@ -1216,24 +1215,23 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
-        /// Gets or sets OData Select statement. Limits the properties on each entry
-        /// to just those requested, e.g.
-        /// Categories?$select=CategoryName,Description. Optional.
+        /// OData Select statement. Limits the properties on each entry to just those
+        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
         /// </param>
         /// <param name='count'>
-        /// Gets or sets a Boolean value of true or false to request a count of the
-        /// matching resources included with the resources in the response, e.g.
+        /// The Boolean value of true or false to request a count of the matching
+        /// resources included with the resources in the response, e.g.
         /// Categories?$count=true. Optional.
         /// </param>
         /// <param name='search'>
-        /// Gets or sets a free form search. A free-text search expression to match
-        /// for whether a particular entry should be included in the feed, e.g.
+        /// A free form search. A free-text search expression to match for whether a
+        /// particular entry should be included in the feed, e.g.
         /// Categories?$search=blue OR green. Optional.
         /// </param>
         /// <param name='format'>
-        /// Gets or sets the return format. Return the response in particular
-        /// formatxii without access to request headers for standard content-type
-        /// negotiation (e.g Orders?$format=json). Optional.
+        /// The return format. Return the response in particular formatxii without
+        /// access to request headers for standard content-type negotiation (e.g
+        /// Orders?$format=json). Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1444,8 +1442,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets the first page of the Data Lake Analytics JobInformation objects
-        /// within the specified resource group with a link to the next page, if any.
+        /// Lists the jobs, if any, associated with the specified Data Lake Analytics
+        /// account. The response includes a link to the next page of results, if any.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

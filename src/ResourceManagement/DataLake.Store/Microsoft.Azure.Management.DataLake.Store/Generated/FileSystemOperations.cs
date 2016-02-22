@@ -261,9 +261,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The Data Lake Store path (starting with '/') of the file to which to
         /// append using concurrent append.
         /// </param>
-        /// <param name='accountname'>
-        /// The name of the Data Lake Store account that the file lives in.
-        /// </param>
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
         /// </param>
@@ -283,15 +280,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, string accountname, System.IO.Stream streamContents, string accountName, string appendMode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, System.IO.Stream streamContents, string accountName, string appendMode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (filePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
-            }
-            if (accountname == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
             }
             if (streamContents == null)
             {
@@ -322,7 +315,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filePath", filePath);
-                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("appendMode", appendMode);
                 tracingParameters.Add("op", op);
@@ -334,7 +326,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "WebHdfsExt/{filePath}";
             _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            _url = _url.Replace("{accountname}", Uri.EscapeDataString(accountname));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
             List<string> _queryParameters = new List<string>();
@@ -833,9 +824,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
-        /// <param name='permission'>
-        /// The optional permission to set on the directory.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -845,7 +833,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string path, string accountName, string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string path, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (path == null)
             {
@@ -876,7 +864,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("path", path);
-                tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -889,10 +876,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
             List<string> _queryParameters = new List<string>();
-            if (permission != null)
-            {
-                _queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
-            }
             if (op != null)
             {
                 _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
@@ -2058,9 +2041,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
-        /// <param name='buffersize'>
-        /// The optional buffer size to use when appending data
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2070,7 +2050,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string directFilePath, System.IO.Stream streamContents, string accountName, long? buffersize = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string directFilePath, System.IO.Stream streamContents, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
@@ -2107,7 +2087,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
-                tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
                 tracingParameters.Add("accountName", accountName);
@@ -2121,10 +2100,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
             List<string> _queryParameters = new List<string>();
-            if (buffersize != null)
-            {
-                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
-            }
             if (op != null)
             {
                 _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
@@ -2252,20 +2227,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The file contents to include when creating the file. This parameter is
         /// optional, resulting in an empty file if not specified.
         /// </param>
-        /// <param name='buffersize'>
-        /// The size of the buffer used in transferring data.
-        /// </param>
         /// <param name='overwrite'>
         /// The indication of if the file should be overwritten.
-        /// </param>
-        /// <param name='blocksize'>
-        /// The block size of a file, in bytes.
-        /// </param>
-        /// <param name='replication'>
-        /// The number of replications of a file.
-        /// </param>
-        /// <param name='permission'>
-        /// The permissions of a file or directory.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2276,7 +2239,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string directFilePath, string accountName, System.IO.Stream streamContents = default(System.IO.Stream), long? buffersize = default(long?), bool? overwrite = default(bool?), long? blocksize = default(long?), int? replication = default(int?), string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string directFilePath, string accountName, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
@@ -2309,11 +2272,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
-                tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("overwrite", overwrite);
-                tracingParameters.Add("blocksize", blocksize);
-                tracingParameters.Add("replication", replication);
-                tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("write", write);
                 tracingParameters.Add("accountName", accountName);
@@ -2327,25 +2286,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
             List<string> _queryParameters = new List<string>();
-            if (buffersize != null)
-            {
-                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
-            }
             if (overwrite != null)
             {
                 _queryParameters.Add(string.Format("overwrite={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(overwrite, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (blocksize != null)
-            {
-                _queryParameters.Add(string.Format("blocksize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(blocksize, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (replication != null)
-            {
-                _queryParameters.Add(string.Format("replication={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(replication, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (permission != null)
-            {
-                _queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
             }
             if (op != null)
             {
@@ -2474,8 +2417,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='offset'>
         /// </param>
-        /// <param name='buffersize'>
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2485,7 +2426,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), long? buffersize = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (directFilePath == null)
             {
@@ -2519,7 +2460,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("length", length);
                 tracingParameters.Add("offset", offset);
-                tracingParameters.Add("buffersize", buffersize);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("read", read);
                 tracingParameters.Add("accountName", accountName);
@@ -2540,10 +2480,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (offset != null)
             {
                 _queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (buffersize != null)
-            {
-                _queryParameters.Add(string.Format("buffersize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(buffersize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
@@ -3114,176 +3050,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
             }
-            if (op != null)
-            {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
-            }
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Removes default Access Control List (ACL) entries of the specified
-        /// directory.
-        /// </summary>
-        /// <param name='removeDefaultAclFilePath'>
-        /// The Data Lake Store path (starting with '/') of the directory with the
-        /// default ACL being removed.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse> RemoveDefaultAclWithHttpMessagesAsync(string removeDefaultAclFilePath, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (removeDefaultAclFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "removeDefaultAclFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
-            string op = "REMOVEDEFAULTACL";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("removeDefaultAclFilePath", removeDefaultAclFilePath);
-                tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RemoveDefaultAcl", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{removeDefaultAclFilePath}";
-            _url = _url.Replace("{removeDefaultAclFilePath}", Uri.EscapeDataString(removeDefaultAclFilePath));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            List<string> _queryParameters = new List<string>();
             if (op != null)
             {
                 _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
@@ -4550,198 +4316,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Sets the access or modification time on a file or directory.
-        /// </summary>
-        /// <param name='sourcePath'>
-        /// The Data Lake Store path (starting with '/') of the file or directory for
-        /// which to set the modification time.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
-        /// </param>
-        /// <param name='modificationtime'>
-        /// The modification time of the file or directory. If -1, this property
-        /// remains unchanged
-        /// </param>
-        /// <param name='accesstime'>
-        /// The access time of the file or directory. If -1, this property remains
-        /// unchanged
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse> SetTimesWithHttpMessagesAsync(string sourcePath, string accountName, long? modificationtime = default(long?), long? accesstime = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (sourcePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sourcePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
-            string op = "SETTIMES";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("sourcePath", sourcePath);
-                tracingParameters.Add("modificationtime", modificationtime);
-                tracingParameters.Add("accesstime", accesstime);
-                tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SetTimes", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{sourcePath}";
-            _url = _url.Replace("{sourcePath}", Uri.EscapeDataString(sourcePath));
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            List<string> _queryParameters = new List<string>();
-            if (modificationtime != null)
-            {
-                _queryParameters.Add(string.Format("modificationtime={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(modificationtime, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (accesstime != null)
-            {
-                _queryParameters.Add(string.Format("accesstime={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(accesstime, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (op != null)
-            {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
-            }
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
         /// Get the home directory for the specified account.
         /// </summary>
-        /// <param name='accountname'>
-        /// The name of the Data Lake Store account to use.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
@@ -4754,12 +4330,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HomeDirectoryResult>> GetHomeDirectoryWithHttpMessagesAsync(string accountname, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HomeDirectoryResult>> GetHomeDirectoryWithHttpMessagesAsync(string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (accountname == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountname");
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -4784,7 +4356,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("accountname", accountname);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -4793,7 +4364,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/";
-            _url = _url.Replace("{accountname}", Uri.EscapeDataString(accountname));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
             List<string> _queryParameters = new List<string>();

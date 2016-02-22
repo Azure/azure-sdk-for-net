@@ -29,19 +29,17 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FileStatusProperties class.
         /// </summary>
-        public FileStatusProperties(long? accessTime = default(long?), long? blockSize = default(long?), long? childrenNum = default(long?), long? fileId = default(long?), string group = default(string), long? length = default(long?), long? modificationTime = default(long?), string owner = default(string), string pathSuffix = default(string), string permission = default(string), int? replication = default(int?), FileType? type = default(FileType?))
+        public FileStatusProperties(long? accessTime = default(long?), long? blockSize = default(long?), long? childrenNum = default(long?), string group = default(string), long? length = default(long?), long? modificationTime = default(long?), string owner = default(string), string pathSuffix = default(string), string permission = default(string), FileType? type = default(FileType?))
         {
             AccessTime = accessTime;
             BlockSize = blockSize;
             ChildrenNum = childrenNum;
-            FileId = fileId;
             Group = group;
             Length = length;
             ModificationTime = modificationTime;
             Owner = owner;
             PathSuffix = pathSuffix;
             Permission = permission;
-            Replication = replication;
             Type = type;
         }
 
@@ -62,12 +60,6 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "childrenNum")]
         public long? ChildrenNum { get; set; }
-
-        /// <summary>
-        /// Gets or sets the file identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "fileId")]
-        public long? FileId { get; set; }
 
         /// <summary>
         /// Gets or sets the group owner.
@@ -104,12 +96,6 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "permission")]
         public string Permission { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of replications of a file.
-        /// </summary>
-        [JsonProperty(PropertyName = "replication")]
-        public int? Replication { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the path object. Possible values include:

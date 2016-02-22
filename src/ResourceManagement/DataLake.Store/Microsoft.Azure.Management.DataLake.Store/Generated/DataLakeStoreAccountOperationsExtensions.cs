@@ -31,13 +31,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to delete the firewall rule from
+            /// The name of the Data Lake Store account from which to delete the firewall
+            /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to delete
+            /// The name of the firewall rule to delete.
             /// </param>
             public static void DeleteFirewallRule(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
             {
@@ -52,13 +54,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to delete the firewall rule from
+            /// The name of the Data Lake Store account from which to delete the firewall
+            /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to delete
+            /// The name of the firewall rule to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -69,19 +73,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the specified Data Lake firewall rules.
+            /// Gets the specified Data Lake Store firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account is in.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to get the firewall rules from
+            /// The name of the Data Lake Store account from which to get the firewall
+            /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// the name of the firewall rule to retrieve.
+            /// The name of the firewall rule to retrieve.
             /// </param>
             public static FirewallRule GetFirewallRule(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
             {
@@ -89,19 +95,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the specified Data Lake firewall rules.
+            /// Gets the specified Data Lake Store firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account is in.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to get the firewall rules from
+            /// The name of the Data Lake Store account from which to get the firewall
+            /// rule.
             /// </param>
             /// <param name='firewallRuleName'>
-            /// the name of the firewall rule to retrieve.
+            /// The name of the firewall rule to retrieve.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -115,17 +123,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake firewall rules objects within the specified Data Lake
+            /// Lists the Data Lake Store firewall rules within the specified Data Lake
             /// Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to get the firewall rules from
+            /// The name of the Data Lake Store account from which to get the firewall
+            /// rules.
             /// </param>
             public static IPage<FirewallRule> ListFirewallRules(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -133,17 +143,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake firewall rules objects within the specified Data Lake
+            /// Lists the Data Lake Store firewall rules within the specified Data Lake
             /// Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to get the firewall rules from
+            /// The name of the Data Lake Store account from which to get the firewall
+            /// rules.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -157,14 +169,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the next page of the Data Lake firewall rule objects within the
-            /// specified account, if any.
+            /// Gets the next page of Data Lake Store firewall rules, if any, for the
+            /// specified account. The response includes a link to the next page of
+            /// results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='nextLink'>
-            /// The url to the next firewall rule page.
+            /// The URL to the next page of the firewall rules list.
             /// </param>
             public static IPage<FirewallRule> FirewallRulesListNext(this IDataLakeStoreAccountOperations operations, string nextLink)
             {
@@ -172,14 +185,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the next page of the Data Lake firewall rule objects within the
-            /// specified account, if any.
+            /// Gets the next page of Data Lake Store firewall rules, if any, for the
+            /// specified account. The response includes a link to the next page of
+            /// results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='nextLink'>
-            /// The url to the next firewall rule page.
+            /// The URL to the next page of the firewall rules list.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -193,23 +207,23 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Creates or updates the specified Data Lake Store account with the
-            /// specified firewall rules.
+            /// Creates or updates the specified firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account is in.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to add the firewall rule to
+            /// The name of the Data Lake Store account to which to add the firewall rule.
             /// </param>
             /// <param name='name'>
-            /// The new of the firewall rule to create or update.
+            /// The name of the firewall rule to create or update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create firewall rule operation.
+            /// Parameters supplied to create the create firewall rule.
             /// </param>
             public static FirewallRule CreateOrUpdateFirewallRule(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName, string name, FirewallRule parameters)
             {
@@ -217,23 +231,23 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Creates or updates the specified Data Lake Store account with the
-            /// specified firewall rules.
+            /// Creates or updates the specified firewall rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account is in.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to add the firewall rule to
+            /// The name of the Data Lake Store account to which to add the firewall rule.
             /// </param>
             /// <param name='name'>
-            /// The new of the firewall rule to create or update.
+            /// The name of the firewall rule to create or update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create firewall rule operation.
+            /// Parameters supplied to create the create firewall rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -253,13 +267,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account will be associated with.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to create.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create Data Lake Store account operation.
+            /// Parameters supplied to create the Data Lake Store account.
             /// </param>
             public static DataLakeStoreAccount Create(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
@@ -273,13 +288,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account will be associated with.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to create.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create Data Lake Store account operation.
+            /// Parameters supplied to create the Data Lake Store account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -299,13 +315,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account will be associated with.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to create.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create Data Lake Store account operation.
+            /// Parameters supplied to create the Data Lake Store account.
             /// </param>
             public static DataLakeStoreAccount BeginCreate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
@@ -319,13 +336,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group the account will be associated with.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to create.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create Data Lake Store account operation.
+            /// Parameters supplied to create the Data Lake Store account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -339,20 +357,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Updates the Data Lake Store account object specified by the account name
-            /// with the contents of the account object.
+            /// Updates the specified Data Lake Store account information.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Store account operation.
+            /// Parameters supplied to update the Data Lake Store account.
             /// </param>
             public static DataLakeStoreAccount Update(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
@@ -360,20 +378,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Updates the Data Lake Store account object specified by the account name
-            /// with the contents of the account object.
+            /// Updates the specified Data Lake Store account information.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Store account operation.
+            /// Parameters supplied to update the Data Lake Store account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -387,20 +405,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Updates the Data Lake Store account object specified by the account name
-            /// with the contents of the account object.
+            /// Updates the specified Data Lake Store account information.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Store account operation.
+            /// Parameters supplied to update the Data Lake Store account.
             /// </param>
             public static DataLakeStoreAccount BeginUpdate(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string name, DataLakeStoreAccount parameters)
             {
@@ -408,20 +426,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Updates the Data Lake Store account object specified by the account name
-            /// with the contents of the account object.
+            /// Updates the specified Data Lake Store account information.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='name'>
             /// The name of the Data Lake Store account to update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update Data Lake Store account operation.
+            /// Parameters supplied to update the Data Lake Store account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -435,16 +453,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Deletes the Data Lake Store account object specified by the account name.
+            /// Deletes the specified Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to delete
+            /// The name of the Data Lake Store account to delete.
             /// </param>
             public static void Delete(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -452,16 +471,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Deletes the Data Lake Store account object specified by the account name.
+            /// Deletes the specified Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to delete
+            /// The name of the Data Lake Store account to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -472,16 +492,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Deletes the Data Lake Store account object specified by the account name.
+            /// Deletes the specified Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to delete
+            /// The name of the Data Lake Store account to delete.
             /// </param>
             public static void BeginDelete(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -489,16 +510,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Deletes the Data Lake Store account object specified by the account name.
+            /// Deletes the specified Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to delete
+            /// The name of the Data Lake Store account to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -509,16 +531,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the Data Lake Store account object specified by the account name.
+            /// Gets the specified Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to retrieve
+            /// The name of the Data Lake Store account to retrieve.
             /// </param>
             public static DataLakeStoreAccount Get(this IDataLakeStoreAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -526,16 +549,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the Data Lake Store account object specified by the account name.
+            /// Gets the specified Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to retrieve
+            /// The name of the Data Lake Store account to retrieve.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -549,37 +573,37 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within a specific resource
-            /// group. This includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within a specific resource group. The
+            /// response includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account(s).
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// Gets or sets OData Select statement. Limits the properties on each entry
-            /// to just those requested, e.g.
-            /// Categories?$select=CategoryName,Description. Optional.
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Gets or sets a Boolean value of true or false to request a count of the
-            /// matching resources included with the resources in the response, e.g.
+            /// A Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Gets or sets a free form search. A free-text search expression to match
-            /// for whether a particular entry should be included in the feed, e.g.
+            /// A free form search. A free-text search expression to match for whether a
+            /// particular entry should be included in the feed, e.g.
             /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Gets or sets the return format. Return the response in particular
-            /// formatxii without access to request headers for standard content-type
-            /// negotiation (e.g Orders?$format=json). Optional.
+            /// The desired return format. Return the response in particular formatxii
+            /// without access to request headers for standard content-type negotiation
+            /// (e.g Orders?$format=json). Optional.
             /// </param>
             public static IPage<DataLakeStoreAccount> ListByResourceGroup(this IDataLakeStoreAccountOperations operations, string resourceGroupName, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
@@ -587,37 +611,37 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within a specific resource
-            /// group. This includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within a specific resource group. The
+            /// response includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account(s).
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// Gets or sets OData Select statement. Limits the properties on each entry
-            /// to just those requested, e.g.
-            /// Categories?$select=CategoryName,Description. Optional.
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Gets or sets a Boolean value of true or false to request a count of the
-            /// matching resources included with the resources in the response, e.g.
+            /// A Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Gets or sets a free form search. A free-text search expression to match
-            /// for whether a particular entry should be included in the feed, e.g.
+            /// A free form search. A free-text search expression to match for whether a
+            /// particular entry should be included in the feed, e.g.
             /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Gets or sets the return format. Return the response in particular
-            /// formatxii without access to request headers for standard content-type
-            /// negotiation (e.g Orders?$format=json). Optional.
+            /// The desired return format. Return the response in particular formatxii
+            /// without access to request headers for standard content-type negotiation
+            /// (e.g Orders?$format=json). Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -631,8 +655,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription. This
-            /// includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within the subscription. The response
+            /// includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -641,24 +665,23 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// Gets or sets OData Select statement. Limits the properties on each entry
-            /// to just those requested, e.g.
-            /// Categories?$select=CategoryName,Description. Optional.
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Gets or sets a Boolean value of true or false to request a count of the
-            /// matching resources included with the resources in the response, e.g.
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Gets or sets a free form search. A free-text search expression to match
-            /// for whether a particular entry should be included in the feed, e.g.
+            /// A free form search. A free-text search expression to match for whether a
+            /// particular entry should be included in the feed, e.g.
             /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Gets or sets the return format. Return the response in particular
-            /// formatxii without access to request headers for standard content-type
-            /// negotiation (e.g Orders?$format=json). Optional.
+            /// The desired return format. Return the response in particular formatxii
+            /// without access to request headers for standard content-type negotiation
+            /// (e.g Orders?$format=json). Optional.
             /// </param>
             public static IPage<DataLakeStoreAccount> List(this IDataLakeStoreAccountOperations operations, ODataQuery<DataLakeStoreAccount> odataQuery = default(ODataQuery<DataLakeStoreAccount>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
@@ -666,8 +689,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription. This
-            /// includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within the subscription. The response
+            /// includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -676,24 +699,23 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// Gets or sets OData Select statement. Limits the properties on each entry
-            /// to just those requested, e.g.
-            /// Categories?$select=CategoryName,Description. Optional.
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
             /// </param>
             /// <param name='count'>
-            /// Gets or sets a Boolean value of true or false to request a count of the
-            /// matching resources included with the resources in the response, e.g.
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
             /// <param name='search'>
-            /// Gets or sets a free form search. A free-text search expression to match
-            /// for whether a particular entry should be included in the feed, e.g.
+            /// A free form search. A free-text search expression to match for whether a
+            /// particular entry should be included in the feed, e.g.
             /// Categories?$search=blue OR green. Optional.
             /// </param>
             /// <param name='format'>
-            /// Gets or sets the return format. Return the response in particular
-            /// formatxii without access to request headers for standard content-type
-            /// negotiation (e.g Orders?$format=json). Optional.
+            /// The desired return format. Return the response in particular formatxii
+            /// without access to request headers for standard content-type negotiation
+            /// (e.g Orders?$format=json). Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -707,7 +729,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake firewall rules objects within the specified Data Lake
+            /// Lists the Data Lake Store firewall rules within the specified Data Lake
             /// Store account.
             /// </summary>
             /// <param name='operations'>
@@ -722,7 +744,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake firewall rules objects within the specified Data Lake
+            /// Lists the Data Lake Store firewall rules within the specified Data Lake
             /// Store account.
             /// </summary>
             /// <param name='operations'>
@@ -743,8 +765,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the next page of the Data Lake firewall rule objects within the
-            /// specified account, if any.
+            /// Gets the next page of Data Lake Store firewall rules, if any, for the
+            /// specified account. The response includes a link to the next page of
+            /// results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -758,8 +781,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Gets the next page of the Data Lake firewall rule objects within the
-            /// specified account, if any.
+            /// Gets the next page of Data Lake Store firewall rules, if any, for the
+            /// specified account. The response includes a link to the next page of
+            /// results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -779,8 +803,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within a specific resource
-            /// group. This includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within a specific resource group. The
+            /// response includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -794,8 +818,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within a specific resource
-            /// group. This includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within a specific resource group. The
+            /// response includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -815,8 +839,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription. This
-            /// includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within the subscription. The response
+            /// includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -830,8 +854,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Lists the Data Lake Store account objects within the subscription. This
-            /// includes a link to the next page, if any.
+            /// Lists the Data Lake Store accounts within the subscription. The response
+            /// includes a link to the next page of results, if any.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

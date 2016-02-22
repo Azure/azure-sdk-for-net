@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// Creates an Azure Data Lake Analytics catalog management client.
+    /// Creates an Azure Data Lake Analytics catalog client.
     /// </summary>
     public partial class DataLakeAnalyticsCatalogManagementClient : ServiceClient<DataLakeAnalyticsCatalogManagementClient>, IDataLakeAnalyticsCatalogManagementClient, IAzureClient
     {

@@ -29,14 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the ContentSummary class.
         /// </summary>
-        public ContentSummary(long? directoryCount = default(long?), long? fileCount = default(long?), long? length = default(long?), long? quota = default(long?), long? spaceConsumed = default(long?), long? spaceQuota = default(long?))
+        public ContentSummary(long? directoryCount = default(long?), long? fileCount = default(long?), long? length = default(long?), long? spaceConsumed = default(long?))
         {
             DirectoryCount = directoryCount;
             FileCount = fileCount;
             Length = length;
-            Quota = quota;
             SpaceConsumed = spaceConsumed;
-            SpaceQuota = spaceQuota;
         }
 
         /// <summary>
@@ -58,22 +56,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public long? Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the namespace quota of this directory.
-        /// </summary>
-        [JsonProperty(PropertyName = "quota")]
-        public long? Quota { get; set; }
-
-        /// <summary>
         /// Gets or sets the disk space consumed by the content.
         /// </summary>
         [JsonProperty(PropertyName = "spaceConsumed")]
         public long? SpaceConsumed { get; set; }
-
-        /// <summary>
-        /// Gets or sets the disk space quota.
-        /// </summary>
-        [JsonProperty(PropertyName = "spaceQuota")]
-        public long? SpaceQuota { get; set; }
 
     }
 }

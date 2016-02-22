@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Data Lake firewall rule properties information
+    /// Data Lake Store firewall rule properties information
     /// </summary>
     public partial class FirewallRuleProperties
     {

@@ -565,6 +565,7 @@ namespace DataLakeStore.Tests
 
                     // set the time on the file
                     // We use a static date for now since we aren't interested in whether the value is set properly, only that the method returns a 200.
+                    /* TODO: Re enable once supported.
                     var timeToSet = new DateTime(2015, 10, 26, 14, 30, 0).Ticks;
                     commonData.DataLakeStoreFileSystemClient.FileSystem.SetTimes(filePath,
                         commonData.DataLakeStoreFileSystemAccountName, timeToSet, timeToSet);
@@ -573,6 +574,7 @@ namespace DataLakeStore.Tests
                         commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileStatus(filePath,
                             commonData.DataLakeStoreFileSystemAccountName)
                             .FileStatus;
+                    */
 
                     /*
                  * This API is available but all values put into it are ignored. Commenting this out until this API is fully functional.
@@ -705,7 +707,7 @@ namespace DataLakeStore.Tests
                 ? TestUtilities.GenerateName(folderToCreate)
                 : folderToCreate;
 
-            var response = commonData.DataLakeStoreFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName, null);
+            var response = commonData.DataLakeStoreFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName);
             Assert.True(response.Boolean);
 
             return folderPath;
