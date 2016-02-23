@@ -170,18 +170,13 @@ namespace Sql2.Tests.ScenarioTests
                 var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
                 var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
-                // Using a preconfigured runner server/db in order to test this
-                // Variables for server creation.
-                /*
-                string serverName = "restorerunnerserverstageseas1";
-                string databaseName = "PreConfiguredStandardDB";
-                string serverLocation = "Southeast Asia";
-                string resGroupName = "Default-SQL-SoutheastAsia";
-                */
+                // Use a preconfigured runner server/db in order to test this
+                // Create a resource group/server/db with the following details prior to running this test
+                // If first run on a live cluster, wait several hours for the geo pair to be created
 
-                string serverName = "csm-sql-backup-geo31415seasia";  
-                string resGroupName = "csm-rg-backup-geo31415seasia";  
-                string serverLocation = "Southeast Asia";  
+                string serverName = "csm-sql-backup-geo31415seasia";
+                string resGroupName = "csm-rg-backup-geo31415seasia";
+                string serverLocation = "Southeast Asia";
                 string standardDatabaseName = "csm-sql-backup-geo-db31415";
                 string adminLogin = "testlogin";
                 string adminPass = "NotYukon!9";
@@ -218,30 +213,21 @@ namespace Sql2.Tests.ScenarioTests
                     },
                 });
 
-                try
+                GeoBackupListResponse geoBackups = sqlClient.DatabaseBackup.ListGeoBackups(resGroupName, serverName);
+
+                Assert.True(geoBackups.GeoBackups.Count >= 1);
+
+                var geoRestoreDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_georestored", new DatabaseCreateOrUpdateParameters()
                 {
-                    // If first run on a live cluster, wait several hours for the geo pair to be created
-                    GeoBackupListResponse geoBackups = sqlClient.DatabaseBackup.ListGeoBackups(resGroupName, serverName);
-
-                    Assert.True(geoBackups.GeoBackups.Count >= 1);
-
-                    var geoRestoreDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_georestored", new DatabaseCreateOrUpdateParameters()
+                    Location = serverLocation,
+                    Properties = new DatabaseCreateOrUpdateProperties()
                     {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            SourceDatabaseId = geoBackups.GeoBackups[0].Id,
-                            CreateMode = "Recovery"
-                        }
-                    });
+                        SourceDatabaseId = geoBackups.GeoBackups[0].Id,
+                        CreateMode = "Recovery"
+                    }
+                });
 
-                    TestUtilities.ValidateOperationResponse(geoRestoreDbResponse, HttpStatusCode.Created);
-                }
-                finally
-                {
-                    // Clean up the resource group.
-                    //resClient.ResourceGroups.Delete(resGroupName);
-                }
+                TestUtilities.ValidateOperationResponse(geoRestoreDbResponse, HttpStatusCode.Created);
             }
         }
 
@@ -282,71 +268,59 @@ namespace Sql2.Tests.ScenarioTests
                     Location = serverLocation,
                 });
 
-                try
+                //////////////////////////////////////////////////////////////////////
+                // Create server for test.
+                var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
                 {
-                    //////////////////////////////////////////////////////////////////////
-                    // Create server for test.
-                    var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+                    Location = serverLocation,
+                    Properties = new ServerCreateOrUpdateProperties()
                     {
-                        Location = serverLocation,
-                        Properties = new ServerCreateOrUpdateProperties()
-                        {
-                            AdministratorLogin = adminLogin,
-                            AdministratorLoginPassword = adminPass,
-                            Version = version,
-                        }
-                    });
+                        AdministratorLogin = adminLogin,
+                        AdministratorLoginPassword = adminPass,
+                        Version = version,
+                    }
+                });
 
-                    // Verify the the response from the service contains the right information
-                    TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
-                    //////////////////////////////////////////////////////////////////////
+                // Verify the the response from the service contains the right information
+                TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
+                //////////////////////////////////////////////////////////////////////
 
-                    //////////////////////////////////////////////////////////////////////
-                    // Create database test.
-
-
-                    // Create standard database
-                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            MaxSizeBytes = standardDefaultDatabaseSize,
-                            Edition = standardDatabaseEdition,
-                            RequestedServiceObjectiveId = dbSloS0,
-                        },
-                    });
-
-                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
-                    //////////////////////////////////////////////////////////////////////
-
-                    // If first run on a live cluster, wait 10 minutes for backup to be taken
-                    var deleteDbResponse = sqlClient.Databases.Delete(resGroupName, serverName, standardDatabaseName);
-
-                    TestUtilities.ValidateOperationResponse(deleteDbResponse, HttpStatusCode.OK);
-
-                    DeletedDatabaseBackupListResponse deletedDatabaseBackups = sqlClient.DatabaseBackup.ListDeletedDatabaseBackups(resGroupName, serverName);
-
-                    Assert.True(deletedDatabaseBackups.DeletedDatabaseBackups.Count > 0);
-
-                    var restoreDroppedDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_restored", new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            SourceDatabaseId = deletedDatabaseBackups.DeletedDatabaseBackups[0].Id,
-                            RestorePointInTime = deletedDatabaseBackups.DeletedDatabaseBackups[0].Properties.DeletionDate,
-                            CreateMode = "Restore"
-                        }
-                    });
-
-                    TestUtilities.ValidateOperationResponse(restoreDroppedDbResponse, HttpStatusCode.Created);
-                }
-                finally
+                // Create standard database
+                var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
                 {
-                    // Clean up the resource group.
-                    //resClient.ResourceGroups.Delete(resGroupName);
-                }
+                    Location = serverLocation,
+                    Properties = new DatabaseCreateOrUpdateProperties()
+                    {
+                        MaxSizeBytes = standardDefaultDatabaseSize,
+                        Edition = standardDatabaseEdition,
+                        RequestedServiceObjectiveId = dbSloS0,
+                    },
+                });
+
+                TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
+                //////////////////////////////////////////////////////////////////////
+
+                // If first run on a live cluster, wait 10 minutes for backup to be taken (set a breakpoint to stop execution here)
+                var deleteDbResponse = sqlClient.Databases.Delete(resGroupName, serverName, standardDatabaseName);
+
+                TestUtilities.ValidateOperationResponse(deleteDbResponse, HttpStatusCode.OK);
+
+                DeletedDatabaseBackupListResponse deletedDatabaseBackups = sqlClient.DatabaseBackup.ListDeletedDatabaseBackups(resGroupName, serverName);
+
+                Assert.True(deletedDatabaseBackups.DeletedDatabaseBackups.Count > 0);
+
+                var restoreDroppedDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_restored", new DatabaseCreateOrUpdateParameters()
+                {
+                    Location = serverLocation,
+                    Properties = new DatabaseCreateOrUpdateProperties()
+                    {
+                        SourceDatabaseId = deletedDatabaseBackups.DeletedDatabaseBackups[0].Id,
+                        RestorePointInTime = deletedDatabaseBackups.DeletedDatabaseBackups[0].Properties.DeletionDate,
+                        CreateMode = "Restore"
+                    }
+                });
+
+                TestUtilities.ValidateOperationResponse(restoreDroppedDbResponse, HttpStatusCode.Created);
             }
         }
 
@@ -387,67 +361,55 @@ namespace Sql2.Tests.ScenarioTests
                     Location = serverLocation,
                 });
 
-                try
+                //////////////////////////////////////////////////////////////////////
+                // Create server for test.
+                var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
                 {
-                    //////////////////////////////////////////////////////////////////////
-                    // Create server for test.
-                    var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+                    Location = serverLocation,
+                    Properties = new ServerCreateOrUpdateProperties()
                     {
-                        Location = serverLocation,
-                        Properties = new ServerCreateOrUpdateProperties()
-                        {
-                            AdministratorLogin = adminLogin,
-                            AdministratorLoginPassword = adminPass,
-                            Version = version,
-                        }
-                    });
+                        AdministratorLogin = adminLogin,
+                        AdministratorLoginPassword = adminPass,
+                        Version = version,
+                    }
+                });
 
-                    // Verify the the response from the service contains the right information
-                    TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
-                    //////////////////////////////////////////////////////////////////////
+                // Verify the the response from the service contains the right information
+                TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
+                //////////////////////////////////////////////////////////////////////
 
-                    //////////////////////////////////////////////////////////////////////
-                    // Create database test.
-
-
-                    // Create standard database
-                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            MaxSizeBytes = standardDefaultDatabaseSize,
-                            Edition = standardDatabaseEdition,
-                            RequestedServiceObjectiveId = dbSloS0,
-                        },
-                    });
-
-                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
-                    //////////////////////////////////////////////////////////////////////
-
-                    string databaseId = createDbResponse.Database.Id;
-
-                    // If first run on a live cluster, wait 10 minutes for backup to be taken
-                    DateTime restorePointInTime = DateTime.Parse("2016-02-12T13:37:59.5082626-08:00");
-
-                    var restoreDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_" + restorePointInTime.ToString("o"), new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            SourceDatabaseId = databaseId,
-                            RestorePointInTime = restorePointInTime,
-                            CreateMode = "PointInTimeRestore"
-                        }
-                    });
-
-                    TestUtilities.ValidateOperationResponse(restoreDbResponse, HttpStatusCode.Created);
-                }
-                finally
+                // Create standard database
+                var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
                 {
-                    // Clean up the resource group.
-                    //resClient.ResourceGroups.Delete(resGroupName);
-                }
+                    Location = serverLocation,
+                    Properties = new DatabaseCreateOrUpdateProperties()
+                    {
+                        MaxSizeBytes = standardDefaultDatabaseSize,
+                        Edition = standardDatabaseEdition,
+                        RequestedServiceObjectiveId = dbSloS0,
+                    },
+                });
+
+                TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
+                //////////////////////////////////////////////////////////////////////
+
+                string databaseId = createDbResponse.Database.Id;
+
+                // If first run on a live cluster, wait 10 minutes for backup to be taken (set a breakpoint to stop execution here).  The time of the restore will also need to be updated if running on a a live cluster.
+                DateTime restorePointInTime = DateTime.Parse("2016-02-12T13:37:59.5082626-08:00");
+
+                var restoreDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_" + restorePointInTime.ToString("o"), new DatabaseCreateOrUpdateParameters()
+                {
+                    Location = serverLocation,
+                    Properties = new DatabaseCreateOrUpdateProperties()
+                    {
+                        SourceDatabaseId = databaseId,
+                        RestorePointInTime = restorePointInTime,
+                        CreateMode = "PointInTimeRestore"
+                    }
+                });
+
+                TestUtilities.ValidateOperationResponse(restoreDbResponse, HttpStatusCode.Created);
             }
         }
 

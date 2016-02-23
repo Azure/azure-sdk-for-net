@@ -62,7 +62,8 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns an Azure SQL Database restorable dropped database.
+        /// Returns an Azure SQL deleted database backup (a resource
+        /// representing a deleted database that can be restored).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -70,11 +71,11 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server to retrieve
-        /// dropped databases for.
+        /// deleted databases for.
         /// </param>
         /// <param name='databaseName'>
         /// Required. The name of the Azure SQL Database Database to retrieve
-        /// dropped databases for.
+        /// deleted databases for.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -588,7 +589,8 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns a list of Azure SQL Database restorable dropped databases.
+        /// Returns a list of Azure SQL deleted database backups (a resource
+        /// representing a deleted database that can be restored).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -596,7 +598,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server to retrieve
-        /// dropped databases for.
+        /// deleted databases for.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

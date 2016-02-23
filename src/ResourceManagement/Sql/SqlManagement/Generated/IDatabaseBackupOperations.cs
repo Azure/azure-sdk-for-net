@@ -34,17 +34,18 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IDatabaseBackupOperations
     {
         /// <summary>
-        /// Returns an Azure SQL Database restorable dropped database.
+        /// Returns an Azure SQL deleted database backup (a resource
+        /// representing a deleted database that can be restored).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Database Server to retrieve dropped
+        /// The name of the Azure SQL Database Server to retrieve deleted
         /// databases for.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Azure SQL Database Database to retrieve dropped
+        /// The name of the Azure SQL Database Database to retrieve deleted
         /// databases for.
         /// </param>
         /// <param name='cancellationToken'>
@@ -79,13 +80,14 @@ namespace Microsoft.Azure.Management.Sql
         Task<GeoBackupGetResponse> GetGeoBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns a list of Azure SQL Database restorable dropped databases.
+        /// Returns a list of Azure SQL deleted database backups (a resource
+        /// representing a deleted database that can be restored).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the Azure SQL Database Server to retrieve dropped
+        /// The name of the Azure SQL Database Server to retrieve deleted
         /// databases for.
         /// </param>
         /// <param name='cancellationToken'>
