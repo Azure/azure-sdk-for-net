@@ -23,6 +23,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
 using Xunit;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace DataLakeStore.Tests
 {
@@ -70,6 +71,7 @@ namespace DataLakeStore.Tests
                 commonData = new CommonTestFixture(context);
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
+                    
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
 
@@ -78,19 +80,20 @@ namespace DataLakeStore.Tests
                     Assert.True(fileInfo.FileInfo.ExpirationTime <= 0 || fileInfo.FileInfo.ExpirationTime == maxTimeInMilliseconds, "Expiration time was not equal to 0 or DateTime.MaxValue.Ticks! Actual value reported: " + fileInfo.FileInfo.ExpirationTime);
 
                     // set the expiration time as an absolute value
-                    var toSetAbsolute = ToUnixTimeStampMs(DateTime.Now.AddSeconds(120));
+                    
+                    var toSetAbsolute = ToUnixTimeStampMs(HttpMockServer.GetVariable("absoluteTime", DateTime.Now.AddSeconds(120).ToString()));
                     commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     VerifyTimeInAcceptableRange(toSetAbsolute, fileInfo.FileInfo.ExpirationTime.Value);
 
                     // set the expiration time relative to now
-                    var toSetRelativeToNow = ToUnixTimeStampMs(DateTime.Now.AddSeconds(120));
+                    var toSetRelativeToNow = ToUnixTimeStampMs(HttpMockServer.GetVariable("relativeTime", DateTime.Now.AddSeconds(120).ToString()));
                     commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.RelativeToNow, commonData.DataLakeStoreFileSystemAccountName, 120 * 1000);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     VerifyTimeInAcceptableRange(toSetRelativeToNow, fileInfo.FileInfo.ExpirationTime.Value);
 
                     // set expiration time relative to the creation time
-                    var toSetRelativeCreationTime = ToUnixTimeStampMs(FromUnixTimestampMs(fileInfo.FileInfo.CreationTime.Value).AddSeconds(120));
+                    var toSetRelativeCreationTime = fileInfo.FileInfo.CreationTime.Value + (120 * 1000);
                     commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.RelativeToCreationDate, commonData.DataLakeStoreFileSystemAccountName, 120 * 1000);
                     fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
                     VerifyTimeInAcceptableRange(toSetRelativeCreationTime, fileInfo.FileInfo.ExpirationTime.Value);
@@ -120,11 +123,11 @@ namespace DataLakeStore.Tests
                     Assert.True(fileInfo.FileInfo.ExpirationTime <= 0 || fileInfo.FileInfo.ExpirationTime == maxTimeInMilliseconds, "Expiration time was not equal to 0 or DateTime.MaxValue.Ticks! Actual value reported: " + fileInfo.FileInfo.ExpirationTime);
 
                     // set the expiration time as an absolute value that is less than the creation time
-                    var toSetAbsolute = ToUnixTimeStampMs(DateTime.Now.AddSeconds(-120));
+                    var toSetAbsolute = ToUnixTimeStampMs(HttpMockServer.GetVariable("absoluteNegativeTime", DateTime.Now.AddSeconds(-120).ToString()));
                     Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
 
                     // set the expiration time as an absolute value that is greater than max allowed time
-                    toSetAbsolute = ToUnixTimeStampMs(DateTime.MaxValue) + 1000;
+                    toSetAbsolute = ToUnixTimeStampMs(DateTime.MaxValue.ToString()) + 1000;
                     Assert.Throws<CloudException>(() => commonData.DataLakeStoreFileSystemClient.FileSystem.SetFileExpiry(filePath, ExpiryOptionType.Absolute, commonData.DataLakeStoreFileSystemAccountName, toSetAbsolute));
 
                     // reset expiration time to never with a value and confirm the value is not honored
@@ -800,9 +803,10 @@ namespace DataLakeStore.Tests
             }
         }
 
-        internal long ToUnixTimeStampMs(DateTime date)
+        internal long ToUnixTimeStampMs(string date)
         {
-            return (long)(date.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+            var convertedDate = Convert.ToDateTime(date);
+            return (long)(convertedDate.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
             
         }
 
@@ -814,7 +818,7 @@ namespace DataLakeStore.Tests
         internal void VerifyTimeInAcceptableRange(long expected, long actual)
         {
             // We give a +- 100 ticks range due to timing constraints in the service.
-            Assert.InRange<long>(actual, expected - 100, expected + 100);
+            Assert.InRange<long>(actual, expected - 5000, expected + 5000);
         }
 
         #endregion
