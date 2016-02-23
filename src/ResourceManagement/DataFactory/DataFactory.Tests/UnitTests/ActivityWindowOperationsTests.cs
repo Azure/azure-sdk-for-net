@@ -33,7 +33,7 @@ namespace DataFactory.Tests.UnitTests
         ""dataFactoryName"": ""dfName"",
         ""pipelineName"": ""DA_WikipediaClickEvents"",
         ""activityName"": ""DA_WikipediaClickEvents"",
-        ""linkedServiceName"": LS_Wikipedia,
+        ""linkedServiceName"": ""LS_Wikipedia"",
         ""activityType"": ""Copy"",
         ""runAttempts"": 1,
         ""runStart"": ""2016-01-26T21:41:48.636Z"",
