@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the load balancer inbound address pools.
+        /// Gets or sets the load balancer inbound nat pools.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
         public IList<SubResource> LoadBalancerInboundNatPools { get; set; }
