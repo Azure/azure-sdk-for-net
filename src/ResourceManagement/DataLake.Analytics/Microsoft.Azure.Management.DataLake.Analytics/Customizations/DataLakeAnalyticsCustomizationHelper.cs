@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         internal const string PackageVersion = "0.10.0-preview";
 
+        internal const string DefaultAdlaDnsSuffix = "azuredatalakeanalytics.net";
+
         /// <summary>
         /// Get the assembly version of a service client.
         /// </summary>

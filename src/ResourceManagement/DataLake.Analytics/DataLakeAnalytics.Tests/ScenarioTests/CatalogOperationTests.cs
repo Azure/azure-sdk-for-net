@@ -53,14 +53,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(dbListResponse.Any(db => db.DatabaseName.Equals(commonData.DatabaseName)));
 
                     // Get the specific Database as well
-                    var dbGetResponse = clientToUse.Catalog.GetDatabase(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName);
+                    var dbGetResponse = clientToUse.Catalog.GetDatabase(commonData.DatabaseName, commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.Equal(commonData.DatabaseName, dbGetResponse.DatabaseName);
 
                     // Get the table list
                     var tableListResponse = clientToUse.Catalog.ListTables(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, "dbo", commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.True(tableListResponse.Count() >= 1);
 
@@ -69,13 +68,13 @@ namespace DataLakeAnalytics.Tests
 
                     // Get the specific table as well
                     var tableGetResponse = clientToUse.Catalog.GetTable(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.TableName);
+                        commonData.DatabaseName, "dbo", commonData.TableName, commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.Equal(commonData.TableName, tableGetResponse.TableName);
 
                     // Get the TVF list
                     var tvfListResponse = clientToUse.Catalog.ListTableValuedFunctions(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, "dbo", commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.True(tvfListResponse.Count() >= 1);
 
@@ -84,13 +83,13 @@ namespace DataLakeAnalytics.Tests
 
                     // Get the specific TVF as well
                     var tvfGetResponse = clientToUse.Catalog.GetTableValuedFunction(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.TvfName);
+                        commonData.DatabaseName, "dbo", commonData.TvfName, commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.Equal(commonData.TvfName, tvfGetResponse.TvfName);
 
                     // Get the View list
                     var viewListResponse = clientToUse.Catalog.ListViews(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, "dbo", commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.True(viewListResponse.Count() >= 1);
 
@@ -99,13 +98,13 @@ namespace DataLakeAnalytics.Tests
 
                     // Get the specific view as well
                     var viewGetResponse = clientToUse.Catalog.GetView(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.ViewName);
+                        commonData.DatabaseName, "dbo", commonData.ViewName, commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.Equal(commonData.ViewName, viewGetResponse.ViewName);
 
                     // Get the Procedure list
                     var procListResponse = clientToUse.Catalog.ListProcedures(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo");
+                        commonData.DatabaseName, "dbo", commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.True(procListResponse.Count() >= 1);
 
@@ -114,13 +113,13 @@ namespace DataLakeAnalytics.Tests
 
                     // Get the specific procedure as well
                     var procGetResponse = clientToUse.Catalog.GetProcedure(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", commonData.ProcName);
+                        commonData.DatabaseName, "dbo", commonData.ProcName, commonData.SecondDataLakeAnalyticsAccountName);
 
                     Assert.Equal(commonData.ProcName, procGetResponse.ProcName);
 
                     // Get all the types
                     var typeGetResponse = clientToUse.Catalog.ListTypes(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", null);
+                        commonData.DatabaseName, "dbo", commonData.SecondDataLakeAnalyticsAccountName);
 
 
                     Assert.NotNull(typeGetResponse);
@@ -128,7 +127,7 @@ namespace DataLakeAnalytics.Tests
 
                     // Get all the types that are not complex
                     typeGetResponse = clientToUse.Catalog.ListTypes(
-                        commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, "dbo", new Microsoft.Rest.Azure.OData.ODataQuery<USqlType>{Filter = "isComplexType eq false"});
+                        commonData.DatabaseName, "dbo", commonData.SecondDataLakeAnalyticsAccountName, new Microsoft.Rest.Azure.OData.ODataQuery<USqlType>{Filter = "isComplexType eq false"});
 
 
                     Assert.NotNull(typeGetResponse);
@@ -156,12 +155,13 @@ namespace DataLakeAnalytics.Tests
                     {
                         // create the secret
                         var secretCreateResponse = clientToUse.Catalog.CreateSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName,
+                            commonData.DatabaseName, commonData.SecretName,
                             new DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters
                             {
                                 Password = commonData.SecretPwd,
                                 Uri = "https://adlasecrettest.contoso.com:443"
-                            });
+                            },
+                            commonData.SecondDataLakeAnalyticsAccountName);
 
                         /*
                          * TODO: Enable once confirmed that we throw 409s when a secret already exists
@@ -179,7 +179,7 @@ namespace DataLakeAnalytics.Tests
 
                         // Get the secret and ensure the response contains a date.
                         var secretGetResponse = clientToUse.Catalog.GetSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName);
+                            commonData.DatabaseName, commonData.SecretName, commonData.SecondDataLakeAnalyticsAccountName);
 
                         Assert.NotNull(secretGetResponse);
                         Assert.NotNull(secretGetResponse.CreationTime);
@@ -195,7 +195,7 @@ namespace DataLakeAnalytics.Tests
 
                         // Get the Credential list
                         var credListResponse = clientToUse.Catalog.ListCredentials(
-                            commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName);
+                            commonData.DatabaseName, commonData.SecondDataLakeAnalyticsAccountName);
                         Assert.True(credListResponse.Count() >= 1);
 
                         // look for the credential we created
@@ -203,7 +203,7 @@ namespace DataLakeAnalytics.Tests
 
                         // Get the specific credential as well
                         var credGetResponse = clientToUse.Catalog.GetCredential(
-                            commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.CredentialName);
+                            commonData.DatabaseName, commonData.CredentialName, commonData.SecondDataLakeAnalyticsAccountName);
                         Assert.Equal(commonData.CredentialName, credGetResponse.CredentialName);
 
                         // Drop the credential (to enable secret deletion)
@@ -216,11 +216,11 @@ namespace DataLakeAnalytics.Tests
 
                         // Delete the secret
                         clientToUse.Catalog.DeleteSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName);
+                            commonData.DatabaseName, commonData.SecretName, commonData.SecondDataLakeAnalyticsAccountName);
 
                         // Try to get the secret which should throw
                         Assert.Throws<CloudException>(() => clientToUse.Catalog.GetSecret(
-                            commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.SecretName));
+                            commonData.DatabaseName, commonData.SecretName, commonData.SecondDataLakeAnalyticsAccountName));
                     }
 
                 }

@@ -49,11 +49,10 @@ namespace DataLakeStore.Tests
         /// <returns>A redis cache management client, created from the current context (environment variables)</returns>
         public static DataLakeStoreFileSystemManagementClient GetDataLakeStoreFileSystemManagementClient(this TestBase testBase, MockContext context)
         {
-            var client = context.GetServiceClient<DataLakeStoreFileSystemManagementClient>();
+            var client = context.GetServiceClient<DataLakeStoreFileSystemManagementClient>(true);
             
-            // reset this back to the default.
-            client.BaseUri = new System.Uri("https://accountname.datalakeserviceuri");
-            client.Datalakeserviceuri = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeStoreServiceUri.OriginalString.Replace("https://", "");
+            // Set this to the default for the current environment
+            client.AdlsFileSystemDnsSuffix = TestEnvironmentFactory.GetTestEnvironment().Endpoints.DataLakeStoreServiceUri.OriginalString.Replace("https://", "");
             return client;
         }
     }

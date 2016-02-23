@@ -55,9 +55,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         /// <typeparam name="T">The type of the service client to return</typeparam>
         /// <returns>A Service client using credentials and base uri from the current environment</returns>
-        public T GetServiceClient<T>(params DelegatingHandler[] handlers) where T : class
+        public T GetServiceClient<T>(bool internalBaseUri = false, params DelegatingHandler[] handlers) where T : class
         {
-            return GetServiceClient<T>(TestEnvironmentFactory.GetTestEnvironment(), handlers);
+            return GetServiceClient<T>(TestEnvironmentFactory.GetTestEnvironment(), internalBaseUri, handlers);
         }
 
         /// <summary>
@@ -66,12 +66,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="handlers">Delegating existingHandlers</param>
         /// <returns></returns>
-        public T GetServiceClient<T>(TestEnvironment currentEnvironment, params DelegatingHandler[] handlers) where T : class
+        public T GetServiceClient<T>(TestEnvironment currentEnvironment, bool internalBaseUri = false, params DelegatingHandler[] handlers) where T : class
         {
             Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
             object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo.AccessToken });
 
-            return GetServiceClientWithCredentials<T>(currentEnvironment, tokenCred, handlers);
+            return GetServiceClientWithCredentials<T>(currentEnvironment, tokenCred, internalBaseUri, handlers);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <returns>A Service client using credentials and base uri from the current environment</returns>
         public T GetServiceClientWithCredentials<T>(object credentials, params DelegatingHandler[] handlers) where T : class
         {
-            return GetServiceClientWithCredentials<T>(TestEnvironmentFactory.GetTestEnvironment(), credentials, handlers);
+            return GetServiceClientWithCredentials<T>(TestEnvironmentFactory.GetTestEnvironment(), credentials, handlers: handlers);
         }
 
         /// <summary>
@@ -93,14 +93,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="credentials">Credentials</param>
         /// <param name="handlers">Delegating existingHandlers</param>
         /// <returns></returns>
-        public T GetServiceClientWithCredentials<T>(TestEnvironment currentEnvironment, object credentials, params DelegatingHandler[] handlers) where T : class
+        public T GetServiceClientWithCredentials<T>(TestEnvironment currentEnvironment, object credentials, bool internalBaseUri = false, params DelegatingHandler[] handlers) where T : class
         {
             T client;
             handlers = AddHandlers(currentEnvironment, handlers);
             var constructors = typeof(T).GetConstructors(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
 
             ConstructorInfo constructor = null;
-            if (currentEnvironment.UsesCustomUri())
+            if (currentEnvironment.UsesCustomUri() && !internalBaseUri)
             {
                 foreach (var c in constructors)
                 {

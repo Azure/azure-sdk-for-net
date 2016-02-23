@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Test
         public static ResourceManagementClient GetResourceManagementClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
             return client;
         }
 
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Test
         public static SubscriptionClient GetSubscriptionClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<SubscriptionClient>(handler);
+            var client = context.GetServiceClient<SubscriptionClient>(handlers: handler);
             return client;
         }
 

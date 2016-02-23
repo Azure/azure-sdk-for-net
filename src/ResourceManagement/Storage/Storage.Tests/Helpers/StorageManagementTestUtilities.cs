@@ -61,7 +61,7 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handler);
+                ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
                 return resourcesClient;
             }
         }
@@ -78,7 +78,7 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                storageClient = context.GetServiceClient<StorageManagementClient>(handler);
+                storageClient = context.GetServiceClient<StorageManagementClient>(handlers: handler);
             }
             return storageClient;
         }
