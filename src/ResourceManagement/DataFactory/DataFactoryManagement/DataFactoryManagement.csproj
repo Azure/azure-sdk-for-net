@@ -27,7 +27,9 @@
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AuthenticationType\ODataAuthenticationType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
@@ -36,6 +38,7 @@
     <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OAuthLinkedServiceBase.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HdfsLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\ODataLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesOdbcLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\SchemaGenerationTypes.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureSqlDataWarehouseTableDataset.cs" />

@@ -475,8 +475,8 @@ namespace Microsoft.Azure.Management.HDInsight
 
             if (clusterCreateParameters.OSType == OSType.Windows)
             {
-                if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                    clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+                if (clusterCreateParameters.ClusterType == "Hadoop" ||
+                    clusterCreateParameters.ClusterType == "Spark")
                 {
                     return roles;
                 }
@@ -484,8 +484,8 @@ namespace Microsoft.Azure.Management.HDInsight
 
             if (clusterCreateParameters.OSType == OSType.Linux)
             {
-                if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                    clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+                if (clusterCreateParameters.ClusterType == "Hadoop" ||
+                    clusterCreateParameters.ClusterType == "Spark")
                 {
                     clusterCreateParameters.ZookeeperNodeSize = "Small";
                 }
@@ -520,10 +520,10 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 switch (clusterCreateParameters.ClusterType)
                 {
-                    case HDInsightClusterType.Hadoop:
+                    case "Hadoop":
                         headNodeSize = "Standard_D3";
                         break;
-                    case HDInsightClusterType.Spark:
+                    case "Spark":
                         headNodeSize = "Standard_D12";
                         break;
                     default:
@@ -543,7 +543,7 @@ namespace Microsoft.Azure.Management.HDInsight
             }
             else
             {
-                workerNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
+                workerNodeSize = clusterCreateParameters.ClusterType == "Spark"
                     ? "Standard_D12"
                     : "Standard_D3";
             }

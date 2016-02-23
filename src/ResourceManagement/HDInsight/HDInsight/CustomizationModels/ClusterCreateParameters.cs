@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the flavor for a cluster.
         /// </summary>
-        public HDInsightClusterType ClusterType { get; set; }
+        public string ClusterType { get; set; }
         
         /// <summary>
         /// Gets or sets the virtual network guid for this HDInsight cluster.

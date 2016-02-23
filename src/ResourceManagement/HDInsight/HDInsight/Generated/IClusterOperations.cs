@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.HDInsight.Models;
 
 namespace Microsoft.Azure.Management.HDInsight
@@ -109,6 +110,26 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The cluster long running operation response.
         /// </returns>
         Task<HDInsightOperationResponse> BeginDeletingAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Begins executing script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// The parameters for executing script actions.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        Task<HDInsightOperationResponse> BeginExecuteScriptActionsAsync(string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begins a resize operation on the specified HDInsight cluster.
@@ -208,6 +229,47 @@ namespace Microsoft.Azure.Management.HDInsight
         Task<OperationResource> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Deletes a given persisted script action of the cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='scriptName'>
+        /// The name of the script.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeletePersistedScriptAsync(string resourceGroupName, string clusterName, string scriptName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Executes script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// The parameters for executing script actions.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        Task<OperationResource> ExecuteScriptActionsAsync(string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -304,6 +366,26 @@ namespace Microsoft.Azure.Management.HDInsight
         Task<OperationResource> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets the script execution detail for the given script execution id.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// The script execution Id
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The GetScriptExecutionDetail operation response.
+        /// </returns>
+        Task<ClusterRuntimeScriptActionDetailResponse> GetScriptExecutionDetailAsync(string resourceGroupName, string clusterName, long scriptExecutionId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Lists HDInsight clusters under the subscription.
         /// </summary>
         /// <param name='cancellationToken'>
@@ -327,6 +409,61 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The List Cluster operation response.
         /// </returns>
         Task<ClusterListResponse> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Lists all persisted script actions for the given cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List PersistedScriptActions operations response.
+        /// </returns>
+        Task<ClusterListPersistedScriptActionsResponse> ListPersistedScriptsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Lists all scripts execution history for the given cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The ListScriptExecutionHistory response.
+        /// </returns>
+        Task<ClusterListRuntimeScriptActionDetailResponse> ListScriptExecutionHistoryAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Promote ad-hoc script execution to a persisted script.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// The script execution Id
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> PromoteScriptAsync(string resourceGroupName, string clusterName, long scriptExecutionId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Resizes the specified HDInsight cluster.

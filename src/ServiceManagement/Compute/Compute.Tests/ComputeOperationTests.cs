@@ -17,17 +17,12 @@ using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Testing
 {
-    using Microsoft.WindowsAzure.Management.Compute;
     using Microsoft.WindowsAzure.Management.Compute.Models;
-    using Microsoft.WindowsAzure.Management.Models;
-    using Microsoft.WindowsAzure.Management.Storage;
-    using Microsoft.WindowsAzure.Management.Storage.Models;
     using Microsoft.Azure.Test;
     using System;
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Text;
     using System.Collections.Generic;
     using Xunit;
 
@@ -41,13 +36,16 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             fixture = data;
         }
 
-        [Fact(Skip="TODO, Debug and enable Test")]
+        [Fact]
         public void CanCreateVirtualMachine()
         {
             TestUtilities.StartTest();
             using (fixture.ComputeClient = fixture.GetComputeManagementClient())
             {
                 var serviceName = TestUtilities.GenerateName();
+
+
+
                 var result = fixture.ComputeClient.HostedServices.Create(new HostedServiceCreateParameters
                 {
                     Location = fixture.Location,
