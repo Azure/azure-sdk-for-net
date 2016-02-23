@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string PointInTimeRestore = "PointInTimeRestore";
         
         /// <summary>
-        /// Database created as restore target where source is a dropped
+        /// Database created as restore target where source is a deleted
         /// database
         /// </summary>
         public const string Restore = "Restore";
