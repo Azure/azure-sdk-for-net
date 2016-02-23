@@ -4,6 +4,12 @@
 _Release date:_
 
 ### Feature Additions
+
+Added list operations for activity window.
+
+  * Added methods to retrieve activity windows with filters based on the entity types (i.e. data factories, datasets, pipelines and activities).
+
+### Feature Additions
 * The following linked service types have been added: 
     * ODataLinkedService
 * The following dataset types have been added: 
