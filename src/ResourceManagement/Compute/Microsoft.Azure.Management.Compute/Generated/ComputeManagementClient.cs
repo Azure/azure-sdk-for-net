@@ -74,22 +74,49 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
+        /// <summary>
+        /// Gets the IAvailabilitySetsOperations.
+        /// </summary>
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionImagesOperations.
+        /// </summary>
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionsOperations.
+        /// </summary>
         public virtual IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; private set; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineImagesOperations.
+        /// </summary>
         public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
 
+        /// <summary>
+        /// Gets the IUsageOperations.
+        /// </summary>
         public virtual IUsageOperations Usage { get; private set; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineSizesOperations.
+        /// </summary>
         public virtual IVirtualMachineSizesOperations VirtualMachineSizes { get; private set; }
 
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetsOperations.
+        /// </summary>
         public virtual IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; private set; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMsOperations.
+        /// </summary>
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
 
         /// <summary>
