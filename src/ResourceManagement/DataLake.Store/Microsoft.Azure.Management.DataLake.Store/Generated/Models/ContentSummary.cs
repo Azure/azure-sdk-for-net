@@ -38,28 +38,28 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets the number of directories.
+        /// Gets the number of directories.
         /// </summary>
         [JsonProperty(PropertyName = "directoryCount")]
-        public long? DirectoryCount { get; set; }
+        public long? DirectoryCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets the number of files.
+        /// Gets the number of files.
         /// </summary>
         [JsonProperty(PropertyName = "fileCount")]
-        public long? FileCount { get; set; }
+        public long? FileCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets the number of bytes used by the contet.
+        /// Gets the number of bytes used by the contet.
         /// </summary>
         [JsonProperty(PropertyName = "length")]
-        public long? Length { get; set; }
+        public long? Length { get; private set; }
 
         /// <summary>
-        /// Gets or sets the disk space consumed by the content.
+        /// Gets the disk space consumed by the content.
         /// </summary>
         [JsonProperty(PropertyName = "spaceConsumed")]
-        public long? SpaceConsumed { get; set; }
+        public long? SpaceConsumed { get; private set; }
 
     }
 }

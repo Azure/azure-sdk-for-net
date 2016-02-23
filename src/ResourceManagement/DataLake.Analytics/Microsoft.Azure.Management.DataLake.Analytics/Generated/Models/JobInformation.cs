@@ -73,11 +73,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Submitter { get; set; }
 
         /// <summary>
-        /// Gets or sets the error message details for the job, if the job
-        /// failed.
+        /// Gets the error message details for the job, if the job failed.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
-        public IList<JobErrorDetails> ErrorMessage { get; set; }
+        public IList<JobErrorDetails> ErrorMessage { get; private set; }
 
         /// <summary>
         /// Gets or sets the degree of parallelism used for this job. This
@@ -95,47 +94,46 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the time the job was submitted to the service.
+        /// Gets the time the job was submitted to the service.
         /// </summary>
         [JsonProperty(PropertyName = "submitTime")]
-        public DateTime? SubmitTime { get; set; }
+        public DateTime? SubmitTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the start time of the job.
+        /// Gets the start time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public DateTime? StartTime { get; set; }
+        public DateTime? StartTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the completion time of the job.
+        /// Gets the completion time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
-        public DateTime? EndTime { get; set; }
+        public DateTime? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the job state. When the job is in the Ended state,
-        /// refer to Result and ErrorMessage for details. Possible values
-        /// include: 'Accepted', 'Compiling', 'Ended', 'New', 'Queued',
-        /// 'Running', 'Scheduling', 'Starting', 'Paused',
-        /// 'WaitingForCapacity'
+        /// Gets the job state. When the job is in the Ended state, refer to
+        /// Result and ErrorMessage for details. Possible values include:
+        /// 'Accepted', 'Compiling', 'Ended', 'New', 'Queued', 'Running',
+        /// 'Scheduling', 'Starting', 'Paused', 'WaitingForCapacity'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public JobState? State { get; set; }
+        public JobState? State { get; private set; }
 
         /// <summary>
-        /// Gets or sets the result of job execution or the current result of
-        /// the running job. Possible values include: 'None', 'Succeeded',
+        /// Gets the result of job execution or the current result of the
+        /// running job. Possible values include: 'None', 'Succeeded',
         /// 'Cancelled', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "result")]
-        public JobResult? Result { get; set; }
+        public JobResult? Result { get; private set; }
 
         /// <summary>
-        /// Gets or sets the job state audit records, indicating when various
+        /// Gets the job state audit records, indicating when various
         /// operations have been performed on this job.
         /// </summary>
         [JsonProperty(PropertyName = "stateAuditRecords")]
-        public IList<JobStateAuditRecord> StateAuditRecords { get; set; }
+        public IList<JobStateAuditRecord> StateAuditRecords { get; private set; }
 
         /// <summary>
         /// Gets or sets the job specific properties.

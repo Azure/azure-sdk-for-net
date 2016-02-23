@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// Extension methods for DataLakeAnalyticsManagementClient.
+    /// Extension methods for DataLakeAnalyticsAccountManagementClient.
     /// </summary>
-    public static partial class DataLakeAnalyticsManagementClientExtensions
+    public static partial class DataLakeAnalyticsAccountManagementClientExtensions
     {
     }
 }

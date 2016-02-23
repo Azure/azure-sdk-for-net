@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
     /// <summary>
     /// Creates an Azure Data Lake Store account management client.
     /// </summary>
-    public partial class DataLakeStoreManagementClient : ServiceClient<DataLakeStoreManagementClient>, IDataLakeStoreManagementClient, IAzureClient
+    public partial class DataLakeStoreAccountManagementClient : ServiceClient<DataLakeStoreAccountManagementClient>, IDataLakeStoreAccountManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -80,23 +80,23 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IDataLakeStoreAccountOperations.
+        /// Gets the IAccountOperations.
         /// </summary>
-        public virtual IDataLakeStoreAccountOperations DataLakeStoreAccount { get; private set; }
+        public virtual IAccountOperations Account { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected DataLakeStoreAccountManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -104,13 +104,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected DataLakeStoreAccountManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected DataLakeStoreAccountManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected DataLakeStoreAccountManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        internal DataLakeStoreManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        internal DataLakeStoreAccountManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        internal DataLakeStoreManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        internal DataLakeStoreAccountManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        internal DataLakeStoreManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        internal DataLakeStoreAccountManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreManagementClient class.
+        /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        internal DataLakeStoreManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        internal DataLakeStoreAccountManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </summary>
         private void Initialize()
         {
-            this.DataLakeStoreAccount = new DataLakeStoreAccountOperations(this);
+            this.Account = new AccountOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-10-01-preview";
             this.AcceptLanguage = "en-US";

@@ -34,11 +34,11 @@ namespace DataLakeStore.Tests
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 commonData = new CommonTestFixture(context);
-                var clientToUse = this.GetDataLakeStoreManagementClient(context);
+                var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
 
                 // Create a test account
                 var responseCreate =
-                    clientToUse.DataLakeStoreAccount.Create(resourceGroupName: commonData.ResourceGroupName, name: commonData.DataLakeStoreAccountName,
+                    clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: commonData.DataLakeStoreAccountName,
                         parameters: new DataLakeStoreAccount
                         {
                             Name = commonData.DataLakeStoreAccountName,
@@ -52,7 +52,7 @@ namespace DataLakeStore.Tests
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.Properties.ProvisioningState);
 
                 // get the account and ensure that all the values are properly set.
-                var responseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+                var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
 
                 // validate the account creation process
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseGet.Properties.ProvisioningState);
@@ -72,7 +72,7 @@ namespace DataLakeStore.Tests
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
                     minutesWaited++;
-                    responseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+                    responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
                 }
 
                 // Confirm that the account creation did succeed
@@ -85,7 +85,7 @@ namespace DataLakeStore.Tests
                 {"updatedKey", "updatedValue"}
             };
 
-                var updateResponse = clientToUse.DataLakeStoreAccount.Update(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName,
+                var updateResponse = clientToUse.Account.Update(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName,
                 new DataLakeStoreAccount
                 {
                     Name = newAccount.Name,
@@ -97,7 +97,7 @@ namespace DataLakeStore.Tests
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, updateResponse.Properties.ProvisioningState);
 
-                var updateResponseGet = clientToUse.DataLakeStoreAccount.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+                var updateResponseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
 
                 Assert.NotNull(updateResponse.Id);
                 Assert.Contains(responseGet.Id, updateResponseGet.Id);
@@ -112,27 +112,27 @@ namespace DataLakeStore.Tests
                 var accountToChange = updateResponseGet;
                 accountToChange.Name = accountToChange.Name + "acct2";
 
-                clientToUse.DataLakeStoreAccount.Create(commonData.ResourceGroupName, accountToChange.Name, accountToChange);
+                clientToUse.Account.Create(commonData.ResourceGroupName, accountToChange.Name, accountToChange);
 
-                var listResponse = clientToUse.DataLakeStoreAccount.List();
+                var listResponse = clientToUse.Account.List();
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
                 // now list by resource group:
-                listResponse = clientToUse.DataLakeStoreAccount.ListByResourceGroup(commonData.ResourceGroupName);
+                listResponse = clientToUse.Account.ListByResourceGroup(commonData.ResourceGroupName);
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
                 // Delete the account and confirm that it is deleted.
-                clientToUse.DataLakeStoreAccount.Delete(commonData.ResourceGroupName, newAccount.Name);
+                clientToUse.Account.Delete(commonData.ResourceGroupName, newAccount.Name);
 
                 // delete the account again and make sure it continues to result in a succesful code.
-                clientToUse.DataLakeStoreAccount.Delete(commonData.ResourceGroupName, newAccount.Name);
+                clientToUse.Account.Delete(commonData.ResourceGroupName, newAccount.Name);
 
                 // delete the account with its old name, which should also succeed.
-                clientToUse.DataLakeStoreAccount.Delete(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+                clientToUse.Account.Delete(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
             }
         }
     }

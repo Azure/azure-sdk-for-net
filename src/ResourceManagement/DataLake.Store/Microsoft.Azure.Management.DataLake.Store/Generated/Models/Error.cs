@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the Error class.
         /// </summary>
-        public Error(string code, string message, string target = default(string), IList<ErrorDetails> details = default(IList<ErrorDetails>), InnerError innerError = default(InnerError))
+        public Error(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetails> details = default(IList<ErrorDetails>), InnerError innerError = default(InnerError))
         {
             Code = code;
             Message = message;
@@ -39,49 +39,34 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets the HTTP status code or error code associated with
-        /// this error
+        /// Gets the HTTP status code or error code associated with this error
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets the error message to display.
+        /// Gets the error message to display.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets the target of the error.
+        /// Gets the target of the error.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
+        public string Target { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of error details
+        /// Gets the list of error details
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<ErrorDetails> Details { get; set; }
+        public IList<ErrorDetails> Details { get; private set; }
 
         /// <summary>
-        /// Gets or sets the inner exceptions or errors, if any
+        /// Gets the inner exceptions or errors, if any
         /// </summary>
         [JsonProperty(PropertyName = "innerError")]
-        public InnerError InnerError { get; set; }
+        public InnerError InnerError { get; private set; }
 
-        /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (Code == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
-            }
-            if (Message == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Message");
-            }
-        }
     }
 }

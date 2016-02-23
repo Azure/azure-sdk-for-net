@@ -23,50 +23,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class FileSystemOperationsExtensions
     {
             /// <summary>
-            /// Gets the file information object containing the expiration time for the
-            /// file at the file path.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='filePath'>
-            /// The Data Lake Store path (starting with '/') of the file for which you
-            /// want the file expiration information.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            public static FileInfoResult GetFileInfo(this IFileSystemOperations operations, string filePath, string accountName)
-            {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetFileInfoAsync(filePath, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the file information object containing the expiration time for the
-            /// file at the file path.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='filePath'>
-            /// The Data Lake Store path (starting with '/') of the file for which you
-            /// want the file expiration information.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<FileInfoResult> GetFileInfoAsync(this IFileSystemOperations operations, string filePath, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetFileInfoWithHttpMessagesAsync(filePath, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Appends to the specified file. This method supports multiple concurrent
             /// appends to the file. NOTE: Concurrent append and normal (serial) append
             /// CANNOT be used interchangeably. Once a file has been appended to using
@@ -123,75 +79,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task ConcurrentAppendAsync(this IFileSystemOperations operations, string filePath, System.IO.Stream streamContents, string accountName, string appendMode = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.ConcurrentAppendWithHttpMessagesAsync(filePath, streamContents, accountName, appendMode, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Sets or removes the expiration time on the specified file. This operation
-            /// can only be executed against files. Folders are not supported.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='filePath'>
-            /// The Data Lake Store path (starting with '/') of the file on which to set
-            /// or remove the expiration time.
-            /// </param>
-            /// <param name='expiryOption'>
-            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
-            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
-            /// milliseconds representing the expiration date relative to when file
-            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an
-            /// integer in milliseconds representing the expiration date relative to file
-            /// creation. 4. Absolute: ExpireTime is an integer in milliseconds, as a
-            /// Unix timestamp relative to 1/1/1970 00:00:00. Possible values include:
-            /// 'NeverExpire', 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='expireTime'>
-            /// The time that the file will expire, corresponding to the ExpiryOption that
-            /// was set.
-            /// </param>
-            public static void SetFileExpiry(this IFileSystemOperations operations, string filePath, ExpiryOptionType expiryOption, string accountName, long? expireTime = default(long?))
-            {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetFileExpiryAsync(filePath, expiryOption, accountName, expireTime), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Sets or removes the expiration time on the specified file. This operation
-            /// can only be executed against files. Folders are not supported.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='filePath'>
-            /// The Data Lake Store path (starting with '/') of the file on which to set
-            /// or remove the expiration time.
-            /// </param>
-            /// <param name='expiryOption'>
-            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
-            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
-            /// milliseconds representing the expiration date relative to when file
-            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an
-            /// integer in milliseconds representing the expiration date relative to file
-            /// creation. 4. Absolute: ExpireTime is an integer in milliseconds, as a
-            /// Unix timestamp relative to 1/1/1970 00:00:00. Possible values include:
-            /// 'NeverExpire', 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='expireTime'>
-            /// The time that the file will expire, corresponding to the ExpiryOption that
-            /// was set.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task SetFileExpiryAsync(this IFileSystemOperations operations, string filePath, ExpiryOptionType expiryOption, string accountName, long? expireTime = default(long?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.SetFileExpiryWithHttpMessagesAsync(filePath, expiryOption, accountName, expireTime, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -1118,40 +1005,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task SetPermissionAsync(this IFileSystemOperations operations, string setPermissionFilePath, string accountName, string permission = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.SetPermissionWithHttpMessagesAsync(setPermissionFilePath, accountName, permission, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Get the home directory for the specified account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            public static HomeDirectoryResult GetHomeDirectory(this IFileSystemOperations operations, string accountName)
-            {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetHomeDirectoryAsync(accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the home directory for the specified account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<HomeDirectoryResult> GetHomeDirectoryAsync(this IFileSystemOperations operations, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetHomeDirectoryWithHttpMessagesAsync(accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
     }

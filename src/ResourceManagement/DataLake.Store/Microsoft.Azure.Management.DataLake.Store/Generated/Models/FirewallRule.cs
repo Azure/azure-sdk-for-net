@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the namespace and type of the firewall Rule.
+        /// Gets the namespace and type of the firewall Rule.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Gets or sets the firewall rule's subscription ID.

@@ -62,6 +62,8 @@ namespace DataLakeStore.Tests
             }
         }
 
+        /*
+        TODO: Re-enable these tests when expiry is re-enabled in production
         [Fact]
         public void DataLakeStoreFileSystemSetAndRemoveExpiry()
         {
@@ -137,6 +139,7 @@ namespace DataLakeStore.Tests
                 }
             }
         }
+        */
 
         [Fact]
         public void DataLakeStoreFileSystemListFolderContents()

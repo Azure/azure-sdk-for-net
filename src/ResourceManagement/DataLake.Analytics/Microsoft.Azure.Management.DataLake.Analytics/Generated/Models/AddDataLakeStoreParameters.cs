@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the AddDataLakeStoreParameters class.
         /// </summary>
-        public AddDataLakeStoreParameters(DataLakeStoreAccountInfoProperties properties = default(DataLakeStoreAccountInfoProperties))
+        public AddDataLakeStoreParameters(DataLakeStoreAccountInfoProperties properties)
         {
             Properties = properties;
         }
@@ -41,5 +41,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "properties")]
         public DataLakeStoreAccountInfoProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+        }
     }
 }

@@ -26,17 +26,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// DataLakeAnalyticsAccountOperations operations.
+    /// AccountOperations operations.
     /// </summary>
-    internal partial class DataLakeAnalyticsAccountOperations : IServiceOperations<DataLakeAnalyticsManagementClient>, IDataLakeAnalyticsAccountOperations
+    internal partial class AccountOperations : IServiceOperations<DataLakeAnalyticsAccountManagementClient>, IAccountOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeAnalyticsAccountOperations class.
+        /// Initializes a new instance of the AccountOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DataLakeAnalyticsAccountOperations(DataLakeAnalyticsManagementClient client)
+        internal AccountOperations(DataLakeAnalyticsAccountManagementClient client)
         {
             if (client == null) 
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         }
 
         /// <summary>
-        /// Gets a reference to the DataLakeAnalyticsManagementClient
+        /// Gets a reference to the DataLakeAnalyticsAccountManagementClient
         /// </summary>
-        public DataLakeAnalyticsManagementClient Client { get; private set; }
+        public DataLakeAnalyticsAccountManagementClient Client { get; private set; }
 
         /// <summary>
         /// Gets the specified Azure Storage account linked to the given Data Lake
@@ -624,6 +624,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
             }
             if (this.Client.ApiVersion == null)
             {
@@ -2090,6 +2094,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
             }
             if (this.Client.ApiVersion == null)
             {

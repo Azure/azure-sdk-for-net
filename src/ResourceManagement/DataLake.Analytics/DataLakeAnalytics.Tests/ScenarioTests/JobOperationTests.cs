@@ -51,7 +51,7 @@ namespace DataLakeAnalytics.Tests
                     JobId = jobId.ToString(),
                     DegreeOfParallelism = 2,
                     Type = JobType.USql,
-                    Properties = new USqlProperties
+                    Properties = new USqlJobProperties
                     {
                         // TODO: figure out why this is no longer showing up as a property
                         // Type = JobType.USql, 

@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Models;
 
     /// <summary>
-    /// Extension methods for DataLakeStoreManagementClient.
+    /// Extension methods for DataLakeStoreAccountManagementClient.
     /// </summary>
-    public static partial class DataLakeStoreManagementClientExtensions
+    public static partial class DataLakeStoreAccountManagementClientExtensions
     {
     }
 }
