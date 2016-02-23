@@ -1985,25 +1985,18 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='nextLink'>
         /// Required. A nextLink URL from a previous List response.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters for the request.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Response to an ApplicationOperations.ListApplications request.
         /// </returns>
-        public async Task<ListApplicationsResponse> ListNextAsync(string nextLink, ListApplicationsParameters parameters, CancellationToken cancellationToken)
+        public async Task<ListApplicationsResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
             // Validate
             if (nextLink == null)
             {
                 throw new ArgumentNullException("nextLink");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
             }
             
             // Tracing
@@ -2014,7 +2007,6 @@ namespace Microsoft.Azure.Management.Batch
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextLink", nextLink);
-                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
             }
             

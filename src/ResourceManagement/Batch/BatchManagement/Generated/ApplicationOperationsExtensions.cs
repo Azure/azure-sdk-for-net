@@ -515,17 +515,14 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='nextLink'>
         /// Required. A nextLink URL from a previous List response.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters for the request.
-        /// </param>
         /// <returns>
         /// Response to an ApplicationOperations.ListApplications request.
         /// </returns>
-        public static ListApplicationsResponse ListNext(this IApplicationOperations operations, string nextLink, ListApplicationsParameters parameters)
+        public static ListApplicationsResponse ListNext(this IApplicationOperations operations, string nextLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApplicationOperations)s).ListNextAsync(nextLink, parameters);
+                return ((IApplicationOperations)s).ListNextAsync(nextLink);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -540,15 +537,12 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='nextLink'>
         /// Required. A nextLink URL from a previous List response.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters for the request.
-        /// </param>
         /// <returns>
         /// Response to an ApplicationOperations.ListApplications request.
         /// </returns>
-        public static Task<ListApplicationsResponse> ListNextAsync(this IApplicationOperations operations, string nextLink, ListApplicationsParameters parameters)
+        public static Task<ListApplicationsResponse> ListNextAsync(this IApplicationOperations operations, string nextLink)
         {
-            return operations.ListNextAsync(nextLink, parameters, CancellationToken.None);
+            return operations.ListNextAsync(nextLink, CancellationToken.None);
         }
         
         /// <summary>

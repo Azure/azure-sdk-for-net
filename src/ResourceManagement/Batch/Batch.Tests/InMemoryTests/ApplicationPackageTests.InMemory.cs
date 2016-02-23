@@ -298,6 +298,14 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(utcNow, result.StorageUrlExpiry);
         }
 
+        [Fact]
+        public void ApplicationListNextThrowsExceptions()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = GetBatchManagementClient(handler);
+
+            Assert.Throws<ArgumentNullException>(() => client.Applications.ListNext(null));
+        }
 
         [Fact]
         public void ListApplicationValidateMessage()

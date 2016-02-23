@@ -220,16 +220,13 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='nextLink'>
         /// A nextLink URL from a previous List response.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters for the request.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Response to an ApplicationOperations.ListApplications request.
         /// </returns>
-        Task<ListApplicationsResponse> ListNextAsync(string nextLink, ListApplicationsParameters parameters, CancellationToken cancellationToken);
+        Task<ListApplicationsResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Updates settings for the specified application.
