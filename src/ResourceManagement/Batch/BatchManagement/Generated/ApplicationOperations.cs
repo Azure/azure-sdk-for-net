@@ -299,10 +299,9 @@ namespace Microsoft.Azure.Management.Batch
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response to an ApplicationOperations.AddApplicationResponse request.
         /// </returns>
-        public async Task<AzureOperationResponse> AddApplicationAsync(string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters, CancellationToken cancellationToken)
+        public async Task<AddApplicationResponse> AddApplicationAsync(string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -452,9 +451,93 @@ namespace Microsoft.Azure.Management.Batch
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    AddApplicationResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AddApplicationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Application applicationInstance = new Application();
+                            result.Application = applicationInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                applicationInstance.Id = idInstance;
+                            }
+                            
+                            JToken displayNameValue = responseDoc["displayName"];
+                            if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                            {
+                                string displayNameInstance = ((string)displayNameValue);
+                                applicationInstance.DisplayName = displayNameInstance;
+                            }
+                            
+                            JToken packagesArray = responseDoc["packages"];
+                            if (packagesArray != null && packagesArray.Type != JTokenType.Null)
+                            {
+                                applicationInstance.ApplicationPackages = new List<ApplicationPackage>();
+                                foreach (JToken packagesValue in ((JArray)packagesArray))
+                                {
+                                    ApplicationPackage applicationPackageInstance = new ApplicationPackage();
+                                    applicationInstance.ApplicationPackages.Add(applicationPackageInstance);
+                                    
+                                    JToken versionValue = packagesValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        string versionInstance = ((string)versionValue);
+                                        applicationPackageInstance.Version = versionInstance;
+                                    }
+                                    
+                                    JToken stateValue = packagesValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                    {
+                                        PackageState stateInstance = BatchManagementClient.ParsePackageState(((string)stateValue));
+                                        applicationPackageInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken formatValue = packagesValue["format"];
+                                    if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                    {
+                                        string formatInstance = ((string)formatValue);
+                                        applicationPackageInstance.Format = formatInstance;
+                                    }
+                                    
+                                    JToken lastActivationTimeValue = packagesValue["lastActivationTime"];
+                                    if (lastActivationTimeValue != null && lastActivationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastActivationTimeInstance = ((DateTime)lastActivationTimeValue);
+                                        applicationPackageInstance.LastActivationTime = lastActivationTimeInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken allowUpdatesValue = responseDoc["allowUpdates"];
+                            if (allowUpdatesValue != null && allowUpdatesValue.Type != JTokenType.Null)
+                            {
+                                bool allowUpdatesInstance = ((bool)allowUpdatesValue);
+                                applicationInstance.AllowUpdates = allowUpdatesInstance;
+                            }
+                            
+                            JToken defaultVersionValue = responseDoc["defaultVersion"];
+                            if (defaultVersionValue != null && defaultVersionValue.Type != JTokenType.Null)
+                            {
+                                string defaultVersionInstance = ((string)defaultVersionValue);
+                                applicationInstance.DefaultVersion = defaultVersionInstance;
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -681,6 +764,27 @@ namespace Microsoft.Azure.Management.Batch
                             {
                                 DateTime storageUrlExpiryInstance = ((DateTime)storageUrlExpiryValue);
                                 result.StorageUrlExpiry = storageUrlExpiryInstance;
+                            }
+                            
+                            JToken stateValue = responseDoc["state"];
+                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                            {
+                                PackageState stateInstance = BatchManagementClient.ParsePackageState(((string)stateValue));
+                                result.State = stateInstance;
+                            }
+                            
+                            JToken formatValue = responseDoc["format"];
+                            if (formatValue != null && formatValue.Type != JTokenType.Null)
+                            {
+                                string formatInstance = ((string)formatValue);
+                                result.Format = formatInstance;
+                            }
+                            
+                            JToken lastActivationTimeValue = responseDoc["lastActivationTime"];
+                            if (lastActivationTimeValue != null && lastActivationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime lastActivationTimeInstance = ((DateTime)lastActivationTimeValue);
+                                result.LastActivationTime = lastActivationTimeInstance;
                             }
                         }
                         

@@ -96,9 +96,20 @@ namespace Batch.Tests.InMemoryTests
         [Fact]
         public void AddApplicationValidateMessage()
         {
+            var utcNow = DateTime.UtcNow;
+
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created)
             {
-                StatusCode = HttpStatusCode.Created
+                StatusCode = HttpStatusCode.Created,
+                Content = new StringContent(@"{
+                    'id': 'foo',
+                    'allowUpdates': 'true',
+                    'displayName' : 'displayName',
+                    'defaultVersion' : 'beta',
+                    'packages':[
+                        {'version':'fooVersion', 'state':'pending', 'format': 'betaFormat', 'lastActivationTime': '" + utcNow.ToString("o") + @"'}],
+
+                    }")
             };
 
             response.Headers.Add("x-ms-request-id", "1");

@@ -79,10 +79,9 @@ namespace Microsoft.Azure.Management.Batch
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response to an ApplicationOperations.AddApplicationResponse request.
         /// </returns>
-        Task<AzureOperationResponse> AddApplicationAsync(string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters, CancellationToken cancellationToken);
+        Task<AddApplicationResponse> AddApplicationAsync(string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates an application package record.

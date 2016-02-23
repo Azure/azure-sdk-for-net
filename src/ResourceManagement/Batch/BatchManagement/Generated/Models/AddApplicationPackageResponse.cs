@@ -22,6 +22,7 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
@@ -30,6 +31,18 @@ namespace Microsoft.Azure.Management.Batch.Models
     /// </summary>
     public partial class AddApplicationPackageResponse : AzureOperationResponse
     {
+        private string _format;
+        
+        /// <summary>
+        /// Optional. Gets or sets the format of the application package, if
+        /// known.
+        /// </summary>
+        public string Format
+        {
+            get { return this._format; }
+            set { this._format = value; }
+        }
+        
         private string _id;
         
         /// <summary>
@@ -39,6 +52,29 @@ namespace Microsoft.Azure.Management.Batch.Models
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private System.DateTime? _lastActivationTime;
+        
+        /// <summary>
+        /// Optional. Gets or sets the time at which the package was last
+        /// activated, if the package is active.
+        /// </summary>
+        public System.DateTime? LastActivationTime
+        {
+            get { return this._lastActivationTime; }
+            set { this._lastActivationTime = value; }
+        }
+        
+        private PackageState _state;
+        
+        /// <summary>
+        /// Required. Gets or sets the current state of the application package.
+        /// </summary>
+        public PackageState State
+        {
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         private string _storageUrl;

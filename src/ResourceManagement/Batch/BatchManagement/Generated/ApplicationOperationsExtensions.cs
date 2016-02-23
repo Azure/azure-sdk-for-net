@@ -120,10 +120,9 @@ namespace Microsoft.Azure.Management.Batch
         /// Required. The parameters for the request.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response to an ApplicationOperations.AddApplicationResponse request.
         /// </returns>
-        public static AzureOperationResponse AddApplication(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters)
+        public static AddApplicationResponse AddApplication(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -153,10 +152,9 @@ namespace Microsoft.Azure.Management.Batch
         /// Required. The parameters for the request.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response to an ApplicationOperations.AddApplicationResponse request.
         /// </returns>
-        public static Task<AzureOperationResponse> AddApplicationAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters)
+        public static Task<AddApplicationResponse> AddApplicationAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters)
         {
             return operations.AddApplicationAsync(resourceGroupName, accountName, applicationId, parameters, CancellationToken.None);
         }
