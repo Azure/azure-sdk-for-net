@@ -37,6 +37,126 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabaseBackupOperationsExtensions
     {
         /// <summary>
+        /// Returns an Azure SQL Database restorable dropped database.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve
+        /// dropped databases for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database Database to retrieve
+        /// dropped databases for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database deleted
+        /// database backup request.
+        /// </returns>
+        public static DeletedDatabaseBackupGetResponse GetDeletedDatabaseBackup(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseBackupOperations)s).GetDeletedDatabaseBackupAsync(resourceGroupName, serverName, databaseName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database restorable dropped database.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve
+        /// dropped databases for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database Database to retrieve
+        /// dropped databases for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database deleted
+        /// database backup request.
+        /// </returns>
+        public static Task<DeletedDatabaseBackupGetResponse> GetDeletedDatabaseBackupAsync(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return operations.GetDeletedDatabaseBackupAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database geo backup.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backups for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo
+        /// backups for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database geo backup
+        /// request.
+        /// </returns>
+        public static GeoBackupGetResponse GetGeoBackup(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDatabaseBackupOperations)s).GetGeoBackupAsync(resourceGroupName, serverName, databaseName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database geo backup.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IDatabaseBackupOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server to retrieve geo
+        /// backups for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database to retrieve geo
+        /// backups for.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database geo backup
+        /// request.
+        /// </returns>
+        public static Task<GeoBackupGetResponse> GetGeoBackupAsync(this IDatabaseBackupOperations operations, string resourceGroupName, string serverName, string databaseName)
+        {
+            return operations.GetGeoBackupAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns a list of Azure SQL Database restorable dropped databases.
         /// </summary>
         /// <param name='operations'>
