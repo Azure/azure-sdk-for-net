@@ -63,7 +63,7 @@ namespace DataLakeStore.Tests
         }
 
         /*
-        TODO: Re-enable these tests when expiry is re-enabled in production
+        TODO: Re-enable code when Expiry is live on the server again
         [Fact]
         public void DataLakeStoreFileSystemSetAndRemoveExpiry()
         {
