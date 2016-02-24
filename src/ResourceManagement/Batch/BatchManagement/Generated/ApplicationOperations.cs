@@ -1786,7 +1786,7 @@ namespace Microsoft.Azure.Management.Batch
             List<string> queryParameters = new List<string>();
             if (parameters.MaxResults != null)
             {
-                queryParameters.Add("maxresults=" + Uri.EscapeDataString(parameters.MaxResults.Value.ToString()));
+                queryParameters.Add("$maxResults=" + Uri.EscapeDataString(parameters.MaxResults.Value.ToString()));
             }
             queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
