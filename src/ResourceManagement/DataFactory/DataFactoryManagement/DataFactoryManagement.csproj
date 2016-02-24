@@ -49,6 +49,8 @@
     <Compile Include="Customizations\Models\Datasets\Compression\GZipCompression.cs" />
     <Compile Include="Customizations\Models\Datasets\Compression\Compression.cs" />
     <Compile Include="Customizations\Models\IGenericTypeProperties.cs" />
+    <Compile Include="Customizations\Operations\ActivityWindows\ActivityWindowOperations.cs" />
+    <Compile Include="Customizations\Operations\ActivityWindows\ActivityWindowOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactoryOperationUtilities.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperations.cs" />
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
+    <Compile Include="Customizations\Operations\ActivityWindows\IActivityWindowOperations.cs" />
     <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Registration.cs" />
     <Compile Include="Customizations\Operations\OAuth\IOAuthOperations.cs" />
