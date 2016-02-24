@@ -337,7 +337,6 @@ END;", dbName, tableName, tvfName, viewName, procName);
             var createOrBuildParams = new JobInformation
             {
                 Name = TestUtilities.GenerateName("testjob1"),
-                JobId = jobIdToUse.ToString(),
                 Type = JobType.USql,
                 DegreeOfParallelism = 2,
                 Properties = new USqlJobProperties

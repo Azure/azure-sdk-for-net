@@ -1004,21 +1004,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
-        /// <param name='listSize'>
-        /// Gets or sets the number of items to return. Optional.
-        /// </param>
-        /// <param name='listAfter'>
-        /// Gets or sets the item or lexographical index after which to begin
-        /// returning results. For example, a file list of 'a','b','d' and
-        /// listAfter='b' will return 'd', and a listAfter='c' will also return 'd'.
-        /// Optional.
-        /// </param>
-        /// <param name='listBefore'>
-        /// Gets or sets the item or lexographical index before which to begin
-        /// returning results. For example, a file list of 'a','b','d' and
-        /// listBefore='d' will return 'a','b', and a listBefore='c' will also return
-        /// 'a','b'. Optional.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1028,7 +1013,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string listFilePath, string accountName, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string listFilePath, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (listFilePath == null)
             {
@@ -1050,7 +1035,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
-            string op = "MSLISTSTATUS";
+            string op = "LISTSTATUS";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1059,9 +1044,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("listFilePath", listFilePath);
-                tracingParameters.Add("listSize", listSize);
-                tracingParameters.Add("listAfter", listAfter);
-                tracingParameters.Add("listBefore", listBefore);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1074,18 +1056,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
             List<string> _queryParameters = new List<string>();
-            if (listSize != null)
-            {
-                _queryParameters.Add(string.Format("listSize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(listSize, this.Client.SerializationSettings).Trim('"'))));
-            }
-            if (listAfter != null)
-            {
-                _queryParameters.Add(string.Format("listAfter={0}", Uri.EscapeDataString(listAfter)));
-            }
-            if (listBefore != null)
-            {
-                _queryParameters.Add(string.Format("listBefore={0}", Uri.EscapeDataString(listBefore)));
-            }
             if (op != null)
             {
                 _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));

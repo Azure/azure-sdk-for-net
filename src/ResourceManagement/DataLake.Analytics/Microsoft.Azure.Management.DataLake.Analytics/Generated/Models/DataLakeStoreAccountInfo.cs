@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccountInfo class.
         /// </summary>
-        public DataLakeStoreAccountInfo(string name, DataLakeStoreAccountInfoProperties properties)
+        public DataLakeStoreAccountInfo(string name, DataLakeStoreAccountInfoProperties properties = default(DataLakeStoreAccountInfoProperties))
         {
             Name = name;
             Properties = properties;
@@ -56,10 +56,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
             }
         }
     }
