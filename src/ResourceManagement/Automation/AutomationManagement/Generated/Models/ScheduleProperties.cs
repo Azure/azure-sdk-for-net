@@ -97,6 +97,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._startTime = value; }
         }
         
+        private string _timeZone;
+        
+        /// <summary>
+        /// Optional. Gets or sets the time zone of the schedule.
+        /// </summary>
+        public string TimeZone
+        {
+            get { return this._timeZone; }
+            set { this._timeZone = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ScheduleProperties class.
         /// </summary>
