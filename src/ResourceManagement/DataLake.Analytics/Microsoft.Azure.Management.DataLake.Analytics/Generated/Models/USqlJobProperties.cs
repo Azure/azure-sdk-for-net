@@ -56,13 +56,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the job specific statistics.
         /// </summary>
         [JsonProperty(PropertyName = "statistics")]
-        public JobStatistics Statistics { get; private set; }
+        public JobStatistics Statistics { get; set; }
 
         /// <summary>
-        /// Gets the job specific debug data locations.
+        /// Gets or sets the job specific debug data locations.
         /// </summary>
         [JsonProperty(PropertyName = "debugData")]
-        public JobDataPath DebugData { get; private set; }
+        public JobDataPath DebugData { get; set; }
 
         /// <summary>
         /// Gets the U-SQL algebra file path after the job has completed
