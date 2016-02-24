@@ -42,6 +42,7 @@ namespace Sql2.Tests.ScenarioTests
                 Sql2ScenarioHelper.RunTwoServersTestInEnvironment(
                     handler,
                     "12.0",
+                    false,
                     (sqlClient, resGroupName, server1, server2) =>
                     {
                         //////////////////////////////////////////////////////////////////////

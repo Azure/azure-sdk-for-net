@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.HDInsight;
 using Microsoft.Azure.Management.HDInsight.Models;
 
@@ -235,6 +236,58 @@ namespace Microsoft.Azure.Management.HDInsight
         public static Task<HDInsightOperationResponse> BeginDeletingAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
         {
             return operations.BeginDeletingAsync(resourceGroupName, clusterName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Begins executing script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// Required. The parameters for executing script actions.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public static HDInsightOperationResponse BeginExecuteScriptActions(this IClusterOperations operations, string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).BeginExecuteScriptActionsAsync(resourceGroupName, clusterName, executeScriptActionParameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins executing script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// Required. The parameters for executing script actions.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public static Task<HDInsightOperationResponse> BeginExecuteScriptActionsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters)
+        {
+            return operations.BeginExecuteScriptActionsAsync(resourceGroupName, clusterName, executeScriptActionParameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -489,6 +542,112 @@ namespace Microsoft.Azure.Management.HDInsight
         public static Task<OperationResource> DeleteAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
         {
             return operations.DeleteAsync(resourceGroupName, clusterName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Deletes a given persisted script action of the cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptName'>
+        /// Required. The name of the script.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse DeletePersistedScript(this IClusterOperations operations, string resourceGroupName, string clusterName, string scriptName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).DeletePersistedScriptAsync(resourceGroupName, clusterName, scriptName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deletes a given persisted script action of the cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptName'>
+        /// Required. The name of the script.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DeletePersistedScriptAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, string scriptName)
+        {
+            return operations.DeletePersistedScriptAsync(resourceGroupName, clusterName, scriptName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Executes script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// Required. The parameters for executing script actions.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public static OperationResource ExecuteScriptActions(this IClusterOperations operations, string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).ExecuteScriptActionsAsync(resourceGroupName, clusterName, executeScriptActionParameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Executes script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// Required. The parameters for executing script actions.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public static Task<OperationResource> ExecuteScriptActionsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters)
+        {
+            return operations.ExecuteScriptActionsAsync(resourceGroupName, clusterName, executeScriptActionParameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -756,6 +915,58 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
+        /// Gets the script execution detail for the given script execution id.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// Required. The script execution Id
+        /// </param>
+        /// <returns>
+        /// The GetScriptExecutionDetail operation response.
+        /// </returns>
+        public static ClusterRuntimeScriptActionDetailResponse GetScriptExecutionDetail(this IClusterOperations operations, string resourceGroupName, string clusterName, long scriptExecutionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).GetScriptExecutionDetailAsync(resourceGroupName, clusterName, scriptExecutionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the script execution detail for the given script execution id.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// Required. The script execution Id
+        /// </param>
+        /// <returns>
+        /// The GetScriptExecutionDetail operation response.
+        /// </returns>
+        public static Task<ClusterRuntimeScriptActionDetailResponse> GetScriptExecutionDetailAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, long scriptExecutionId)
+        {
+            return operations.GetScriptExecutionDetailAsync(resourceGroupName, clusterName, scriptExecutionId, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Lists HDInsight clusters under the subscription.
         /// </summary>
         /// <param name='operations'>
@@ -827,6 +1038,152 @@ namespace Microsoft.Azure.Management.HDInsight
         public static Task<ClusterListResponse> ListByResourceGroupAsync(this IClusterOperations operations, string resourceGroupName)
         {
             return operations.ListByResourceGroupAsync(resourceGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Lists all persisted script actions for the given cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// List PersistedScriptActions operations response.
+        /// </returns>
+        public static ClusterListPersistedScriptActionsResponse ListPersistedScripts(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).ListPersistedScriptsAsync(resourceGroupName, clusterName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Lists all persisted script actions for the given cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// List PersistedScriptActions operations response.
+        /// </returns>
+        public static Task<ClusterListPersistedScriptActionsResponse> ListPersistedScriptsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return operations.ListPersistedScriptsAsync(resourceGroupName, clusterName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Lists all scripts execution history for the given cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The ListScriptExecutionHistory response.
+        /// </returns>
+        public static ClusterListRuntimeScriptActionDetailResponse ListScriptExecutionHistory(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).ListScriptExecutionHistoryAsync(resourceGroupName, clusterName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Lists all scripts execution history for the given cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The ListScriptExecutionHistory response.
+        /// </returns>
+        public static Task<ClusterListRuntimeScriptActionDetailResponse> ListScriptExecutionHistoryAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return operations.ListScriptExecutionHistoryAsync(resourceGroupName, clusterName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Promote ad-hoc script execution to a persisted script.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// Required. The script execution Id
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse PromoteScript(this IClusterOperations operations, string resourceGroupName, string clusterName, long scriptExecutionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).PromoteScriptAsync(resourceGroupName, clusterName, scriptExecutionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Promote ad-hoc script execution to a persisted script.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// Required. The script execution Id
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> PromoteScriptAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, long scriptExecutionId)
+        {
+            return operations.PromoteScriptAsync(resourceGroupName, clusterName, scriptExecutionId, CancellationToken.None);
         }
         
         /// <summary>

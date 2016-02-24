@@ -11,6 +11,8 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SampleKeyVaultClientService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleKeyVaultClientWebRole", "samples\SampleAzureWebService\SampleKeyVaultClientWebRole\SampleKeyVaultClientWebRole.csproj", "{A34AA3C2-7E33-4E08-BD55-04C631ACEBC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleKeyVaultConfigurationManager", "samples\SampleAzureWebService\SampleKeyVaultConfigurationManager\SampleKeyVaultConfigurationManager.csproj", "{46B8DB85-0B08-4EDA-976F-FCD6C574B148}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{A34AA3C2-7E33-4E08-BD55-04C631ACEBC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A34AA3C2-7E33-4E08-BD55-04C631ACEBC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A34AA3C2-7E33-4E08-BD55-04C631ACEBC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B8DB85-0B08-4EDA-976F-FCD6C574B148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B8DB85-0B08-4EDA-976F-FCD6C574B148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B8DB85-0B08-4EDA-976F-FCD6C574B148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B8DB85-0B08-4EDA-976F-FCD6C574B148}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +43,6 @@ Global
 		{A8A1A890-175F-4027-B2CF-7B02DDE0DF42} = {66FCBAEC-D584-4898-814A-CDB29A3D4063}
 		{3B3C9279-CFC1-4D8E-A3E6-52A442832699} = {66FCBAEC-D584-4898-814A-CDB29A3D4063}
 		{A34AA3C2-7E33-4E08-BD55-04C631ACEBC8} = {66FCBAEC-D584-4898-814A-CDB29A3D4063}
+		{46B8DB85-0B08-4EDA-976F-FCD6C574B148} = {66FCBAEC-D584-4898-814A-CDB29A3D4063}
 	EndGlobalSection
 EndGlobal

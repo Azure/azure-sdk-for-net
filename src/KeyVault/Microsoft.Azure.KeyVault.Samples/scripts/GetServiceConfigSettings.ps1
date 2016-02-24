@@ -107,15 +107,14 @@ Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName `
 # **********************************************************************************************
 # Store storage account access key as a secret in the vault
 # **********************************************************************************************
-Write-Host 'Please log into Azure now' -foregroundcolor Green
-Add-AzureAccount
-$storagekey = (Get-AzureStorageKey -StorageAccountName $storageName).Primary
+$storagekey = (Get-AzureRmStorageAccountKey -StorageAccountName $storageName -ResourceGroupName keyvault).Key1
 if(-not $storageKey)
 {
 	Write-Host 'Storage key could not be retrieved. Make sure the storage account exists.' -foregroundcolor Yellow
 	exit	
 }
-Write-Host "Setting secret $secretName in vault $vaultName"
+								  
+Write-Host "Setting secret $secretName in vault $vaultName using primary storage key"
 $secret = Set-AzureKeyVaultSecret -VaultName $vaultName `
 								  -Name $secretName `
 								  -SecretValue (ConvertTo-SecureString -String $storagekey -AsPlainText -Force) 
@@ -126,6 +125,7 @@ $secret = Set-AzureKeyVaultSecret -VaultName $vaultName `
 Write-Host "Place the following into both CSCFG files for the SampleAzureWebService project:" -ForegroundColor Cyan
 '<Setting name="StorageAccountName" value="' + $storageName + '" />'
 '<Setting name="StorageAccountKeySecretUrl" value="' + $secret.Id.Substring(0, $secret.Id.LastIndexOf('/')) + '" />'
+'<Setting name="KeyVaultSecretCacheDefaultTimeSpan" value="00:00:00" />'
 '<Setting name="KeyVaultAuthClientId" value="' + $servicePrincipal.ApplicationId + '" />'
 '<Setting name="KeyVaultAuthCertThumbprint" value="' + $myCertThumbprint + '" />'
 '<Certificate name="KeyVaultAuthCert" thumbprint="' + $myCertThumbprint + '" thumbprintAlgorithm="sha1" />'

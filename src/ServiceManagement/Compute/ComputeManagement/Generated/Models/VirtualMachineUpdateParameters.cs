@@ -71,6 +71,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._dataVirtualHardDisks = value; }
         }
         
+        private DebugSettings _debugSettings;
+        
+        /// <summary>
+        /// Optional. Debug settings for console output.
+        /// </summary>
+        public DebugSettings DebugSettings
+        {
+            get { return this._debugSettings; }
+            set { this._debugSettings = value; }
+        }
+        
         private string _label;
         
         /// <summary>
