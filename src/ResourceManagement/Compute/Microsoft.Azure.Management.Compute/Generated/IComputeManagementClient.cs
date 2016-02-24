@@ -68,22 +68,49 @@ namespace Microsoft.Azure.Management.Compute
         bool? GenerateClientRequestId { get; set; }
 
 
+        /// <summary>
+        /// Gets the IAvailabilitySetsOperations.
+        /// </summary>
         IAvailabilitySetsOperations AvailabilitySets { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionImagesOperations.
+        /// </summary>
         IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineExtensionsOperations.
+        /// </summary>
         IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineImagesOperations.
+        /// </summary>
         IVirtualMachineImagesOperations VirtualMachineImages { get; }
 
+        /// <summary>
+        /// Gets the IUsageOperations.
+        /// </summary>
         IUsageOperations Usage { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineSizesOperations.
+        /// </summary>
         IVirtualMachineSizesOperations VirtualMachineSizes { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
         IVirtualMachinesOperations VirtualMachines { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetsOperations.
+        /// </summary>
         IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
 
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMsOperations.
+        /// </summary>
         IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
 
     }
