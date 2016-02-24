@@ -19,7 +19,8 @@
       <Setting name="KeyVaultAuthCertThumbprint" value="" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="KeyVaultAuthCert" thumbprint="6B862EADF8A215005109B6979A616F4B7B2874F2" thumbprintAlgorithm="sha1" />
+      <!-- The Key Vault authentication certificate definition - thumbprint must be set to the value of KeyVaultAuthCertThumbprint -->
+      <Certificate name="KeyVaultAuthCert" thumbprint="0000000000000000000000000000000000000000" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
 </ServiceConfiguration>
