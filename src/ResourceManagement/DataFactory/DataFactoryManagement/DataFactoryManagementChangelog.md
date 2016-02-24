@@ -1,22 +1,20 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
-## Version _
-_Release date: _
+## Version 4.5.0
+_Release date: 2016.02.24_
 
 ### Feature Additions
-
-Added list operations for activity window.
-
-  * Added methods to retrieve activity windows with filters based on the entity types (i.e. data factories, datasets, pipelines and activities).
-
-### Feature Additions
+* Added list operations for activity window.
+    * Added methods to retrieve activity windows with filters based on the entity types (i.e. data factories, datasets, pipelines and activities).
 * The following linked service types have been added: 
-    * ODataLinkedService
+    * ODataLinkedService, WebLinkedService
 * The following dataset types have been added: 
-    * ODataResourceDataset
+    * ODataResourceDataset, WebTableDataset
+* The following copy source types have been added: 	
+    * WebSource
 
 ## Version 4.4.0
-Release date: 2016.01.28
+_Release date: 2016.01.28_
 
 ### Feature Additions
 
@@ -24,7 +22,7 @@ Release date: 2016.01.28
     * AzureStorageSasLinkedService
 
 ## Version 4.3.0
-Release date: 2015.11.25
+_Release date: 2016.01.20_
 
 ### Feature Additions
 
@@ -33,7 +31,7 @@ Release date: 2015.11.25
     * OnPremisesOdbcLinkedService 
 
 ## Version 4.2.0
-Release date: 2015.11.10
+_Release date: 2015.11.10_
 
 ### Feature Additions
 
