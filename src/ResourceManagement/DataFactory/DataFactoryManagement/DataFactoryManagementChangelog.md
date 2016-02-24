@@ -5,9 +5,11 @@ _Release date:_
 
 ### Feature Additions
 * The following linked service types have been added: 
-    * ODataLinkedService
+    * ODataLinkedService, WebLinkedService
 * The following dataset types have been added: 
-    * ODataResourceDataset
+    * ODataResourceDataset, WebTableDataset
+* The following copy source types have been added: 	
+    * WebSource
 
 ## Version 4.4.0
 Release date: 2016.01.28
@@ -18,7 +20,7 @@ Release date: 2016.01.28
     * AzureStorageSasLinkedService
 
 ## Version 4.3.0
-Release date: 2015.11.25
+Release date: 2016.01.20
 
 ### Feature Additions
 
