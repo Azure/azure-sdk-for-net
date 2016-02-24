@@ -29,13 +29,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineExtension class.
         /// </summary>
-        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
+        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), string forceUpdateTag = default(string), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
             : base(location, id, name, type, tags)
         {
             Publisher = publisher;
             VirtualMachineExtensionType = virtualMachineExtensionType;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            ForceUpdateTag = forceUpdateTag;
             Settings = settings;
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
@@ -66,6 +67,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the extension handler should be forced to
+        /// re-run even if the extension configuration has not changed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.forceUpdateTag")]
+        public string ForceUpdateTag { get; set; }
 
         /// <summary>
         /// Gets or sets Json formatted public settings for the extension.
