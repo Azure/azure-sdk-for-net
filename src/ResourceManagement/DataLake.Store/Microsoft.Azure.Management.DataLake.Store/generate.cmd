@@ -5,7 +5,7 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.14.0-Nightly20160125
+set autoRestVersion=0.15.0-Nightly20160213
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set accountSpecFile="https://raw.githubusercontent.com/begoldsm/azure-rest-api-specs/master/arm-datalake-store/account/2015-10-01-preview/swagger/account.json"
@@ -24,6 +24,6 @@ call "%repoRoot%\tools\autorest.gen.cmd" %filesystemSpecFile% Microsoft.Azure.Ma
 ::  Fix the dynamic host parameters. (accountname and datalakeserviceuri)
 ::  Add redirect logic into all the constructors by default.
 ::  Fix redirect URIs to be full paths (Create, Open and Append)
-call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeStore"
+:: call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeStore"
 
 endlocal

@@ -18,7 +18,7 @@ namespace Networks.Tests.Helpers
         public static NetworkManagementClient GetNetworkManagementClientWithHandler(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<NetworkManagementClient>(handler);
+            var client = context.GetServiceClient<NetworkManagementClient>(handlers: handler);
             return client;
         }
 

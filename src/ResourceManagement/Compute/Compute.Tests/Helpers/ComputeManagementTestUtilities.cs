@@ -34,28 +34,28 @@ namespace Compute.Tests
             {
                 handler.IsPassThrough = true;
             }
-            return context.GetServiceClient<ComputeManagementClient>(
+            return context.GetServiceClient<ComputeManagementClient>(handlers: 
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
         }
         
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
             return client;
         }
 
         public static NetworkManagementClient GetNetworkManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<NetworkManagementClient>(handler);
+            var client = context.GetServiceClient<NetworkManagementClient>(handlers: handler);
             return client;
         }
 
         public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<StorageManagementClient>(handler);
+            var client = context.GetServiceClient<StorageManagementClient>(handlers: handler);
             return client;
         }
 

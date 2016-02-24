@@ -56,7 +56,7 @@ namespace Cdn.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handler);
+                ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
                 return resourcesClient;
             }
         }
@@ -73,7 +73,7 @@ namespace Cdn.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                cdnClient = context.GetServiceClient<CdnManagementClient>(handler);
+                cdnClient = context.GetServiceClient<CdnManagementClient>(handlers: handler);
             }
             return cdnClient;
         }

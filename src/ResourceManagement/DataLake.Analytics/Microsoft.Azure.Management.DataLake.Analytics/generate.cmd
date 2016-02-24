@@ -5,7 +5,7 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.14.0-Nightly20160125
+set autoRestVersion=0.15.0-Nightly20160213
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set accountSpecFile="https://raw.githubusercontent.com/begoldsm/azure-rest-api-specs/master/arm-datalake-analytics/account/2015-10-01-preview/swagger/account.json"
@@ -24,5 +24,5 @@ call "%repoRoot%\tools\autorest.gen.cmd" %catalogSpecFile% Microsoft.Azure.Manag
 :: TODO: This should be removed once all the manual fixes are part of the generation functionality.
 :: Current manual fix up list:
 ::  Fix the dynamic host parameters (accountname and datalakejob and catalog service uri)
-call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeAnalytics"
+:: call "powershell.exe" -Command "& %repoRoot%\tools\Fix-AdlGeneratedCode.ps1 -DataLakeAnalytics"
 endlocal
