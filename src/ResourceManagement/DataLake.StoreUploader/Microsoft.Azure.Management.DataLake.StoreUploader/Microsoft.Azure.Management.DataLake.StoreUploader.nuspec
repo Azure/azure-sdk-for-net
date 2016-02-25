@@ -22,7 +22,6 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
       <dependency id="Microsoft.Azure.Management.DataLake.Store" version="[0.10.0-preview,3.0)" />
     </dependencies>
   </metadata>
