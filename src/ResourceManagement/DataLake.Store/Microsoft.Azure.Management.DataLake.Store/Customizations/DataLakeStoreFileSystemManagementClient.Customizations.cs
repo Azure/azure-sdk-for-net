@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string dataLakeServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(credentials, handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string adlsFileSystemDnsSuffix = DataLakeStoreCustomizationHelper.DefaultAdlsFileSystemDnsSuffix, params DelegatingHandler[] handlers) : this(credentials, handlers)
         {
-            this.Datalakeserviceuri = dataLakeServiceUri;
+            this.AdlsFileSystemDnsSuffix = adlsFileSystemDnsSuffix;
             DataLakeStoreCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         }
 
@@ -57,48 +57,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string dataLakeServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
+        public DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string adlsFileSystemDnsSuffix = DataLakeStoreCustomizationHelper.DefaultAdlsFileSystemDnsSuffix, params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
         {
-            this.Datalakeserviceuri = dataLakeServiceUri;
-            DataLakeStoreCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DataLakeStoreFileSystemManagementClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", string dataLakeServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(baseUri, credentials, handlers)
-        {
-            this.Datalakeserviceuri = dataLakeServiceUri;
-            DataLakeStoreCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DataLakeStoreFileSystemManagementClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public DataLakeStoreFileSystemManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", string dataLakeServiceUri = "azuredatalakestore.net", params DelegatingHandler[] handlers) : this(baseUri, credentials, rootHandler, handlers)
-        {
-            this.Datalakeserviceuri = dataLakeServiceUri;
+            this.AdlsFileSystemDnsSuffix = adlsFileSystemDnsSuffix;
             DataLakeStoreCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         }
     }

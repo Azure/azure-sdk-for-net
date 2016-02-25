@@ -17,6 +17,9 @@ namespace Microsoft.Azure.Management.Compute
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Extension methods for VirtualMachineScaleSetsOperations.
+    /// </summary>
     public static partial class VirtualMachineScaleSetsOperationsExtensions
     {
             /// <summary>
@@ -899,6 +902,80 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginUpdateInstancesAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.BeginUpdateInstancesWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// The operation to re-image virtual machines in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            public static void Reimage(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            {
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).ReimageAsync(resourceGroupName, vmScaleSetName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to re-image virtual machines in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ReimageAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// The operation to re-image virtual machines in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            public static void BeginReimage(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            {
+                Task.Factory.StartNew(s => ((IVirtualMachineScaleSetsOperations)s).BeginReimageAsync(resourceGroupName, vmScaleSetName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to re-image virtual machines in a virtual machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginReimageAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
