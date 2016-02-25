@@ -341,52 +341,17 @@ namespace Sql2.Tests.ScenarioTests
                 var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
                 // Variables for server creation.
-                string serverName = "csm-sql-backup31415";
-                string resGroupName = "csm-rg-backup31415";
+                string serverName = "hchung-testsvr2";
+                string resGroupName = "hchung-test2";
+                string standardDatabaseName = "hchung-testdb-geo2";
+                string serverLocation = "Southeast Asia";
 
-                string serverLocation = "North Europe";
-                string adminLogin = "testlogin";
-                string adminPass = "NotYukon!9";
-                string version = "12.0";
-
-                // Constants for Azure SQL standard database creation.
-                var standardDefaultDatabaseSize = 1L * 1024L * 1024L * 1024L; // 1 GB
-                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
-                var standardDatabaseName = "csm-sql-backup-db31415";
-                string standardDatabaseEdition = "Standard";
-
-                // Create the resource group.
-                resClient.ResourceGroups.CreateOrUpdate(resGroupName, new ResourceGroup()
-                {
-                    Location = serverLocation,
-                });
-
-                //////////////////////////////////////////////////////////////////////
-                // Create server for test.
-                var createResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
-                {
-                    Location = serverLocation,
-                    Properties = new ServerCreateOrUpdateProperties()
-                    {
-                        AdministratorLogin = adminLogin,
-                        AdministratorLoginPassword = adminPass,
-                        Version = version,
-                    }
-                });
-
-                // Verify the the response from the service contains the right information
-                TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.Created);
-                //////////////////////////////////////////////////////////////////////
-
-                // Create standard database
+                // Create or update standard database
                 var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName, new DatabaseCreateOrUpdateParameters()
                 {
                     Location = serverLocation,
                     Properties = new DatabaseCreateOrUpdateProperties()
                     {
-                        MaxSizeBytes = standardDefaultDatabaseSize,
-                        Edition = standardDatabaseEdition,
-                        RequestedServiceObjectiveId = dbSloS0,
                     },
                 });
 
@@ -396,9 +361,10 @@ namespace Sql2.Tests.ScenarioTests
                 string databaseId = createDbResponse.Database.Id;
 
                 // If first run on a live cluster, wait 10 minutes for backup to be taken (set a breakpoint to stop execution here).  The time of the restore will also need to be updated if running on a a live cluster.
-                DateTime restorePointInTime = DateTime.Parse("2016-02-12T13:37:59.5082626-08:00");
+                string timeString = "2016-02-24T00:00:00";
+                DateTime restorePointInTime = DateTime.Parse(timeString);
 
-                var restoreDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_" + restorePointInTime.ToString("o"), new DatabaseCreateOrUpdateParameters()
+                var restoreDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, standardDatabaseName + "_" + timeString, new DatabaseCreateOrUpdateParameters()
                 {
                     Location = serverLocation,
                     Properties = new DatabaseCreateOrUpdateProperties()
