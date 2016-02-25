@@ -5,6 +5,8 @@ _Release date: 2016.05.20_
 
 ### Feature Additions
 * Added new StorageFormat type OrcFormat type to copy files in optimized row columnar (ORC) format.
+* Add AllowPolyBase and PolyBaseSettings properties to SqlDWSink.
+    * Enables the use of PolyBase to copy data into SQL Data Warehouse.
 
 ## Version 4.6.1
 _Release date: 2016.04.26_
