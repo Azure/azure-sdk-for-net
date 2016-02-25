@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._contentLink = value; }
         }
         
+        private ModuleErrorInfo _error;
+        
+        /// <summary>
+        /// Optional. Gets or sets the error info of the module.
+        /// </summary>
+        public ModuleErrorInfo Error
+        {
+            get { return this._error; }
+            set { this._error = value; }
+        }
+        
         private bool _isGlobal;
         
         /// <summary>
