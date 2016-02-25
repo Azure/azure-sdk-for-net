@@ -29,10 +29,95 @@ namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
     /// Represents all the operations for operating on Azure SQL Database
-    /// restore points. Contains operations to: List restore points.
+    /// database backups.
     /// </summary>
     public partial interface IDatabaseBackupOperations
     {
+        /// <summary>
+        /// Returns an Azure SQL deleted database backup (a resource
+        /// representing a deleted database that can be restored).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server to retrieve deleted
+        /// databases for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database Database to retrieve deleted
+        /// databases for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database deleted
+        /// database backup request.
+        /// </returns>
+        Task<DeletedDatabaseBackupGetResponse> GetDeletedDatabaseBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns an Azure SQL Database geo backup.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server to retrieve geo backups
+        /// for.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database to retrieve geo backups for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a Get Azure Sql Database geo backup
+        /// request.
+        /// </returns>
+        Task<GeoBackupGetResponse> GetGeoBackupAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns a list of Azure SQL deleted database backups (a resource
+        /// representing a deleted database that can be restored).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server to retrieve deleted
+        /// databases for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database deleted
+        /// database backups request.
+        /// </returns>
+        Task<DeletedDatabaseBackupListResponse> ListDeletedDatabaseBackupsAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns a list of Azure SQL Database geo backups.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server to retrieve geo backups
+        /// for.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a List Azure Sql Database geo backups
+        /// request.
+        /// </returns>
+        Task<GeoBackupListResponse> ListGeoBackupsAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Returns a list of Azure SQL Database restore points.
         /// </summary>

@@ -27,26 +27,26 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a get server communication link request.
+    /// Represents the response to a Get Azure Sql Database geo backup request.
     /// </summary>
-    public partial class ServerCommunicationLinkGetResponse : AzureOperationResponse
+    public partial class GeoBackupGetResponse : AzureOperationResponse
     {
-        private ServerCommunicationLink _serverCommunicationLink;
+        private GeoBackup _geoBackup;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Server communication link.
+        /// Optional. Gets or sets the object representing a given Azure Sql
+        /// Database geo backup.
         /// </summary>
-        public ServerCommunicationLink ServerCommunicationLink
+        public GeoBackup GeoBackup
         {
-            get { return this._serverCommunicationLink; }
-            set { this._serverCommunicationLink = value; }
+            get { return this._geoBackup; }
+            set { this._geoBackup = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ServerCommunicationLinkGetResponse class.
+        /// Initializes a new instance of the GeoBackupGetResponse class.
         /// </summary>
-        public ServerCommunicationLinkGetResponse()
+        public GeoBackupGetResponse()
         {
         }
     }

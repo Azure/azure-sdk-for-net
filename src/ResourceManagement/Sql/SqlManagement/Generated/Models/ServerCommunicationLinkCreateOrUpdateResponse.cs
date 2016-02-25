@@ -27,8 +27,7 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Response for long running Azure Sql Database server communication link
-    /// operation.
+    /// Response for long running Azure Sql server communication link operation.
     /// </summary>
     public partial class ServerCommunicationLinkCreateOrUpdateResponse : AzureOperationResponse
     {
@@ -69,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Optional. Gets or sets the object that represents the Azure Sql
-        /// Database Server communication link.
+        /// Server communication link.
         /// </summary>
         public ServerCommunicationLink ServerCommunicationLink
         {

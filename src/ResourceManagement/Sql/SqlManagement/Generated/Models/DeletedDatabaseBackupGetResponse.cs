@@ -27,26 +27,28 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a get server communication link request.
+    /// Represents the response to a Get Azure Sql Database deleted database
+    /// backup request.
     /// </summary>
-    public partial class ServerCommunicationLinkGetResponse : AzureOperationResponse
+    public partial class DeletedDatabaseBackupGetResponse : AzureOperationResponse
     {
-        private ServerCommunicationLink _serverCommunicationLink;
+        private DeletedDatabaseBackup _deletedDatabaseBackup;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Sql Server communication link.
+        /// Optional. Gets or sets the object representing a given Azure Sql
+        /// Database deleted database backup.
         /// </summary>
-        public ServerCommunicationLink ServerCommunicationLink
+        public DeletedDatabaseBackup DeletedDatabaseBackup
         {
-            get { return this._serverCommunicationLink; }
-            set { this._serverCommunicationLink = value; }
+            get { return this._deletedDatabaseBackup; }
+            set { this._deletedDatabaseBackup = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ServerCommunicationLinkGetResponse class.
+        /// Initializes a new instance of the DeletedDatabaseBackupGetResponse
+        /// class.
         /// </summary>
-        public ServerCommunicationLinkGetResponse()
+        public DeletedDatabaseBackupGetResponse()
         {
         }
     }

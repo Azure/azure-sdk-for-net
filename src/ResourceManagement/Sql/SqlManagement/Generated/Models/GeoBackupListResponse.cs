@@ -20,47 +20,54 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Server communication link.
+    /// Represents the response to a List Azure Sql Database geo backups
+    /// request.
     /// </summary>
-    public partial class ServerCommunicationLink : ResourceBaseExtended
+    public partial class GeoBackupListResponse : AzureOperationResponse, IEnumerable<GeoBackup>
     {
-        private ServerCommunicationLinkProperties _properties;
+        private IList<GeoBackup> _geoBackups;
         
         /// <summary>
-        /// Optional. Gets or sets the properties representing the resource.
+        /// Optional. Gets or sets the list of a given Azure Sql Database geo
+        /// backups.
         /// </summary>
-        public ServerCommunicationLinkProperties Properties
+        public IList<GeoBackup> GeoBackups
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._geoBackups; }
+            set { this._geoBackups = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerCommunicationLink class.
+        /// Initializes a new instance of the GeoBackupListResponse class.
         /// </summary>
-        public ServerCommunicationLink()
+        public GeoBackupListResponse()
         {
+            this.GeoBackups = new LazyList<GeoBackup>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerCommunicationLink class
-        /// with required arguments.
+        /// Gets the sequence of GeoBackups.
         /// </summary>
-        public ServerCommunicationLink(string location)
-            : this()
+        public IEnumerator<GeoBackup> GetEnumerator()
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
+            return this.GeoBackups.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of GeoBackups.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
