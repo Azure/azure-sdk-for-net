@@ -270,6 +270,62 @@ namespace HDInsightJob.Tests
         }
 
         [Fact]
+        [Trait("Category","Windows")]
+        public void SubmitMapReduceStreamingJobWithFilesParam()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var username = TestUtils.UserName;
+                var password = TestUtils.Password;
+                var clustername = TestUtils.ClusterName;
+
+                var credentials = new BasicAuthenticationCloudCredentials
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+
+                var parameters = new MapReduceStreamingJobSubmissionParameters
+                {
+                    UserName = username,
+                    Mapper = "cat.exe",
+                    Reducer = "wc.exe",
+                    Input = "/example/data/gutenberg/davinci.txt",
+                    Output = "/example/data/gutenberg/wcount",
+                    Files = new List<string>{"/example/apps/wc.exe","/example/apps/cat.exe"}
+                };
+
+                var response = client.JobManagement.SubmitMapReduceStreamingJob(parameters);
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                if (jobStatus.JobDetail.ExitValue == 0)
+                {
+                    // Retrieve Job Output
+                    var output = client.JobManagement.GetJobOutput(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    string textOutput = Convert(output);
+                    Assert.True(textOutput.Length > 0);
+                }
+                else
+                {
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    string errorTextOutput = Convert(output);
+                    Assert.NotNull(errorTextOutput);
+                    Assert.True(false);
+                }
+            }
+        }
+
+        [Fact]
         public void SubmitPigJob()
         {
             using (var context = UndoContext.Current)

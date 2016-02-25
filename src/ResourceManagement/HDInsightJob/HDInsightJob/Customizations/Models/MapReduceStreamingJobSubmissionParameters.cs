@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// Optional.
         /// </summary>
         public string File { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Files { get; set; }
         
         /// <summary>
         /// Optional.
@@ -103,6 +108,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
             content += !string.IsNullOrEmpty(this.Reducer) ? string.Format("&reducer={0}", this.Reducer) : string.Empty;
             content += !string.IsNullOrEmpty(this.Output) ? string.Format("&output={0}", this.Output) : string.Empty;
             content += !string.IsNullOrEmpty(this.File) ? string.Format("&file={0}", this.File) : string.Empty;
+            content += ModelHelper.ConvertListToString(this.Files, "&files=", ",");
             content += ModelHelper.ConvertDictionaryToString(this.Defines, "&define=");
             content += ModelHelper.ConvertDictionaryToString(this.CmdEnv, "&cmdenv=");
             content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
