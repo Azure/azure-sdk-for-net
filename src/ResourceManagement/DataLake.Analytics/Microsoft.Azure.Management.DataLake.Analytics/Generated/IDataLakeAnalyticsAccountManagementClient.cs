@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.DataLake.Store
+namespace Microsoft.Azure.Management.DataLake.Analytics
 {
     using System;
     using System.Collections.Generic;
@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Models;
 
     /// <summary>
-    /// Creates an Azure Data Lake Store account management client.
+    /// Creates an Azure Data Lake Analytics account management client.
     /// </summary>
-    public partial interface IDataLakeStoreManagementClient : IDisposable
+    public partial interface IDataLakeAnalyticsAccountManagementClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
 
         /// <summary>
-        /// Gets the IDataLakeStoreAccountOperations.
+        /// Gets the IAccountOperations.
         /// </summary>
-        IDataLakeStoreAccountOperations DataLakeStoreAccount { get; }
+        IAccountOperations Account { get; }
 
     }
 }

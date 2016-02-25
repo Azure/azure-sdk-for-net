@@ -31,7 +31,7 @@ namespace DataLakeStore.Tests
     public class DataLakeStoreAndFileSystemManagementHelper
     {
         internal readonly ResourceManagementClient resourceManagementClient;
-        internal readonly DataLakeStoreManagementClient dataLakeStoreManagementClient;
+        internal readonly DataLakeStoreAccountManagementClient dataLakeStoreManagementClient;
         internal readonly DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient;
         internal readonly TestBase testBase;
 
@@ -39,7 +39,7 @@ namespace DataLakeStore.Tests
         {
             this.testBase = testBase;
             resourceManagementClient = this.testBase.GetResourceManagementClient(context);
-            dataLakeStoreManagementClient = this.testBase.GetDataLakeStoreManagementClient(context);
+            dataLakeStoreManagementClient = this.testBase.GetDataLakeStoreAccountManagementClient(context);
             dataLakeStoreFileSystemClient = this.testBase.GetDataLakeStoreFileSystemManagementClient(context);
         }
 
@@ -92,7 +92,7 @@ namespace DataLakeStore.Tests
             DataLakeStoreAccount accountGetResponse = null;
             try
             {
-                accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName, accountName);
+                accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName, accountName);
                 exists = true;
             }
             catch
@@ -103,10 +103,10 @@ namespace DataLakeStore.Tests
 
             if (!exists)
             {
-                dataLakeStoreManagementClient.DataLakeStoreAccount.Create(resourceGroupName, accountName,
+                dataLakeStoreManagementClient.Account.Create(resourceGroupName, accountName,
                     new DataLakeStoreAccount {Location = location, Name = accountName});
                 
-                accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName,
+                accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
                     accountName);
 
                 // wait for provisioning state to be Succeeded
@@ -120,7 +120,7 @@ namespace DataLakeStore.Tests
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
                     minutesWaited++;
-                    accountGetResponse = dataLakeStoreManagementClient.DataLakeStoreAccount.Get(resourceGroupName,
+                    accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
                         accountName);
                 }
             }

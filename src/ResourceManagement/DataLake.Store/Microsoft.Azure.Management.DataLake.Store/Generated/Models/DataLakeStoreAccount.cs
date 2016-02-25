@@ -52,16 +52,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the namespace and type of the account.
+        /// Gets the namespace and type of the account.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the account subscription ID.
+        /// Gets the account subscription ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the value of custom properties.

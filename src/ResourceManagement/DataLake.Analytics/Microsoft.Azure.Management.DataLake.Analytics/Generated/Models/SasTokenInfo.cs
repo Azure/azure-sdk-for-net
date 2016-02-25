@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Container.
         /// </summary>
         [JsonProperty(PropertyName = "accessToken")]
-        public string AccessToken { get; set; }
+        public string AccessToken { get; private set; }
 
     }
 }

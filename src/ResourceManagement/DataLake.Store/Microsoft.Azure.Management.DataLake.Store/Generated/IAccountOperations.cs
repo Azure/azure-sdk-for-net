@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Models;
 
     /// <summary>
-    /// DataLakeStoreAccountOperations operations.
+    /// AccountOperations operations.
     /// </summary>
-    public partial interface IDataLakeStoreAccountOperations
+    public partial interface IAccountOperations
     {
         /// <summary>
         /// Deletes the specified firewall rule from the specified Data Lake

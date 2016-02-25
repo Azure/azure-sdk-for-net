@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     /// <summary>
     /// Creates a Data Lake Store account management client.
     /// </summary>
-    public partial class DataLakeAnalyticsManagementClient : ServiceClient<DataLakeAnalyticsManagementClient>, IDataLakeAnalyticsManagementClient, IAzureClient
+    public partial class DataLakeAnalyticsAccountManagementClient : ServiceClient<DataLakeAnalyticsAccountManagementClient>, IDataLakeAnalyticsAccountManagementClient, IAzureClient
     {
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreManagementClient class.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(credentials, handlers)
+        public DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(credentials, handlers)
         {
             DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         }
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
+        public DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(credentials, rootHandler, handlers)
         {
             DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         }
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsManagementClient(Uri baseUri, ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(baseUri, credentials, handlers)
+        public DataLakeAnalyticsAccountManagementClient(Uri baseUri, ServiceClientCredentials credentials, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(baseUri, credentials, handlers)
         {
             DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         }
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public DataLakeAnalyticsManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(baseUri, credentials, rootHandler, handlers)
+        public DataLakeAnalyticsAccountManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, string userAgentAssemblyVersion = "", params DelegatingHandler[] handlers) : this(baseUri, credentials, rootHandler, handlers)
         {
             DataLakeAnalyticsCustomizationHelper.UpdateUserAgentAssemblyVersion(this, userAgentAssemblyVersion);
         } 

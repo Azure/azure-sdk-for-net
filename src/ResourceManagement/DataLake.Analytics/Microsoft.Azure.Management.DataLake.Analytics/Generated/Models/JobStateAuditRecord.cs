@@ -39,28 +39,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets the new state the job is in.
+        /// Gets the new state the job is in.
         /// </summary>
         [JsonProperty(PropertyName = "newState")]
-        public string NewState { get; set; }
+        public string NewState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the time stamp that the state change took place.
+        /// Gets the time stamp that the state change took place.
         /// </summary>
         [JsonProperty(PropertyName = "timeStamp")]
-        public DateTime? TimeStamp { get; set; }
+        public DateTime? TimeStamp { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user who requests the change.
+        /// Gets the user who requests the change.
         /// </summary>
         [JsonProperty(PropertyName = "requestedByUser")]
-        public string RequestedByUser { get; set; }
+        public string RequestedByUser { get; private set; }
 
         /// <summary>
-        /// Gets or sets  the details of the audit log.
+        /// Gets  the details of the audit log.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public string Details { get; set; }
+        public string Details { get; private set; }
 
     }
 }

@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// </summary>
     [JsonObject("USql")]
-    public partial class USqlProperties : JobProperties
+    public partial class USqlJobProperties : JobProperties
     {
         /// <summary>
-        /// Initializes a new instance of the USqlProperties class.
+        /// Initializes a new instance of the USqlJobProperties class.
         /// </summary>
-        public USqlProperties() { }
+        public USqlJobProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the USqlProperties class.
+        /// Initializes a new instance of the USqlJobProperties class.
         /// </summary>
-        public USqlProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), string algebraFilePath = default(string), string totalCompilationTime = default(string), string totalPauseTime = default(string), string totalQueuedTime = default(string), string totalRunningTime = default(string), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), string compileMode = default(string))
+        public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), string algebraFilePath = default(string), string totalCompilationTime = default(string), string totalPauseTime = default(string), string totalQueuedTime = default(string), string totalRunningTime = default(string), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), string compileMode = default(string))
             : base(script, runtimeVersion)
         {
             Resources = resources;
@@ -65,63 +65,62 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public JobDataPath DebugData { get; set; }
 
         /// <summary>
-        /// Gets or sets the U-SQL algebra file path after the job has
-        /// completed
+        /// Gets the U-SQL algebra file path after the job has completed
         /// </summary>
         [JsonProperty(PropertyName = "algebraFilePath")]
-        public string AlgebraFilePath { get; set; }
+        public string AlgebraFilePath { get; private set; }
 
         /// <summary>
-        /// Gets or sets the total time this job spent compiling. This value
-        /// should not be set by the user and will be ignored if it is.
+        /// Gets the total time this job spent compiling. This value should
+        /// not be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalCompilationTime")]
-        public string TotalCompilationTime { get; set; }
+        public string TotalCompilationTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the total time this job spent paused. This value
-        /// should not be set by the user and will be ignored if it is.
+        /// Gets the total time this job spent paused. This value should not
+        /// be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalPauseTime")]
-        public string TotalPauseTime { get; set; }
+        public string TotalPauseTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the total time this job spent queued. This value
-        /// should not be set by the user and will be ignored if it is.
+        /// Gets the total time this job spent queued. This value should not
+        /// be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalQueuedTime")]
-        public string TotalQueuedTime { get; set; }
+        public string TotalQueuedTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the total time this job spent executing. This value
-        /// should not be set by the user and will be ignored if it is.
+        /// Gets the total time this job spent executing. This value should
+        /// not be set by the user and will be ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "totalRunningTime")]
-        public string TotalRunningTime { get; set; }
+        public string TotalRunningTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ID used to identify the job manager coordinating
-        /// job execution. This value should not be set by the user and will
-        /// be ignored if it is.
+        /// Gets the ID used to identify the job manager coordinating job
+        /// execution. This value should not be set by the user and will be
+        /// ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "rootProcessNodeId")]
-        public string RootProcessNodeId { get; set; }
+        public string RootProcessNodeId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ID used to identify the yarn application
-        /// executing the job. This value should not be set by the user and
-        /// will be ignored if it is.
+        /// Gets the ID used to identify the yarn application executing the
+        /// job. This value should not be set by the user and will be ignored
+        /// if it is.
         /// </summary>
         [JsonProperty(PropertyName = "yarnApplicationId")]
-        public string YarnApplicationId { get; set; }
+        public string YarnApplicationId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the timestamp (in ticks) for the yarn application
-        /// executing the job. This value should not be set by the user and
-        /// will be ignored if it is.
+        /// Gets the timestamp (in ticks) for the yarn application executing
+        /// the job. This value should not be set by the user and will be
+        /// ignored if it is.
         /// </summary>
         [JsonProperty(PropertyName = "yarnApplicationTimeStamp")]
-        public long? YarnApplicationTimeStamp { get; set; }
+        public long? YarnApplicationTimeStamp { get; private set; }
 
         /// <summary>
         /// Gets or sets the compile mode for the job. Possible values

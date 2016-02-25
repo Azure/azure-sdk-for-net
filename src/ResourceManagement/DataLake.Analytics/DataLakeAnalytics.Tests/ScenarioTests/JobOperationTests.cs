@@ -48,10 +48,9 @@ namespace DataLakeAnalytics.Tests
                 var jobToSubmit = new JobInformation
                 {
                     Name = "azure sdk data lake analytics job",
-                    JobId = jobId.ToString(),
                     DegreeOfParallelism = 2,
                     Type = JobType.USql,
-                    Properties = new USqlProperties
+                    Properties = new USqlJobProperties
                     {
                         // TODO: figure out why this is no longer showing up as a property
                         // Type = JobType.USql, 
@@ -74,7 +73,6 @@ namespace DataLakeAnalytics.Tests
                 Assert.NotEmpty(getCancelledJobResponse.ErrorMessage);
 
                 // Resubmit the job
-                jobToSubmit.JobId = secondId.ToString();
                 jobCreateResponse = clientToUse.Job.Create(secondId.ToString(), jobToSubmit, commonData.SecondDataLakeAnalyticsAccountName);
 
                 Assert.NotNull(jobCreateResponse);
@@ -107,7 +105,8 @@ namespace DataLakeAnalytics.Tests
 
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
 
-                // Just compile the job
+                // Just compile the job, which requires a jobId in the job object.
+                jobToSubmit.JobId = getJobResponse.JobId;
                 var compileResponse = clientToUse.Job.Build(jobToSubmit, commonData.SecondDataLakeAnalyticsAccountName);
                 Assert.NotNull(compileResponse);
 

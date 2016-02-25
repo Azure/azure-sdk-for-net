@@ -26,17 +26,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Models;
 
     /// <summary>
-    /// DataLakeStoreAccountOperations operations.
+    /// AccountOperations operations.
     /// </summary>
-    internal partial class DataLakeStoreAccountOperations : IServiceOperations<DataLakeStoreManagementClient>, IDataLakeStoreAccountOperations
+    internal partial class AccountOperations : IServiceOperations<DataLakeStoreAccountManagementClient>, IAccountOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountOperations class.
+        /// Initializes a new instance of the AccountOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DataLakeStoreAccountOperations(DataLakeStoreManagementClient client)
+        internal AccountOperations(DataLakeStoreAccountManagementClient client)
         {
             if (client == null) 
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Gets a reference to the DataLakeStoreManagementClient
+        /// Gets a reference to the DataLakeStoreAccountManagementClient
         /// </summary>
-        public DataLakeStoreManagementClient Client { get; private set; }
+        public DataLakeStoreAccountManagementClient Client { get; private set; }
 
         /// <summary>
         /// Deletes the specified firewall rule from the specified Data Lake Store

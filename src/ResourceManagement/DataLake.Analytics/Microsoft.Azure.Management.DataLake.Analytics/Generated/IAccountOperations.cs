@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using Models;
 
     /// <summary>
-    /// DataLakeAnalyticsAccountOperations operations.
+    /// AccountOperations operations.
     /// </summary>
-    public partial interface IDataLakeAnalyticsAccountOperations
+    public partial interface IAccountOperations
     {
         /// <summary>
         /// Gets the specified Azure Storage account linked to the given Data
