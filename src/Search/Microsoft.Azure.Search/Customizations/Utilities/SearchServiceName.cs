@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Search
 
         public Uri BuildBaseUriWithIndex(IndexName indexName)
         {
-            Uri uri = TypeConversion.TryParseUri("https://" + this + ".search.windows.net/indexes/" + indexName + "/");
+            Uri uri = 
+                TypeConversion.TryParseUri("https://" + this + ".search.windows.net/indexes('" + indexName + "')/");
             Throw.IfArgument(uri == null, "searchServiceName", InvalidSearchUriMessage);
             return uri;
         }

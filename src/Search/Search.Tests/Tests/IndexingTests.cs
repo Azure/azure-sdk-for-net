@@ -677,6 +677,34 @@ namespace Microsoft.Azure.Search.Tests
             Run(() => TestCanIndexAndRetrieveWithCustomConverter<CustomBook>(customizeSettings));
         }
 
+        [Fact]
+        public void CanUseIndexWithReservedName()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+                var indexWithReservedName =
+                    new Index()
+                    {
+                        Name = "prototype",
+                        Fields = new[] { new Field("ID", DataType.String) { IsKey = true } }
+                    };
+
+                serviceClient.Indexes.Create(indexWithReservedName);
+
+                SearchIndexClient indexClient = Data.GetSearchIndexClient(indexWithReservedName.Name);
+
+                var batch = IndexBatch.Upload(new[] { new Document() { { "ID", "1" } } });
+                indexClient.Documents.Index(batch);
+
+                SearchTestUtilities.WaitForIndexing();
+
+                Document doc = indexClient.Documents.Get("1");
+                Assert.NotNull(doc);
+            });
+        }
+
         private void TestCanIndexAndRetrieveWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null) 
             where T : CustomBook, new()
         {
