@@ -148,6 +148,26 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<ExpressRouteCircuitPeering>>> ListWithHttpMessagesAsync(string resourceGroupName, string circuitName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The Liststats ExpressRouteCircuit opertion retrieves all the stats
+        /// from a ExpressRouteCircuits in a resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='circuitName'>
+        /// The name of the circuit.
+        /// </param>
+        /// <param name='peeringName'>
+        /// The name of the peering.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<ExpressRouteCircuitStats>>> ListStatsWithHttpMessagesAsync(string resourceGroupName, string circuitName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The List peering operation retrieves all the peerings in an
         /// ExpressRouteCircuit.
         /// </summary>
@@ -161,5 +181,19 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<ExpressRouteCircuitPeering>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The Liststats ExpressRouteCircuit opertion retrieves all the stats
+        /// from a ExpressRouteCircuits in a resource group.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<ExpressRouteCircuitStats>>> ListStatsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

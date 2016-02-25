@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the loadBalancer.
+            /// The name of the circuit.
             /// </param>
             public static IPage<ExpressRouteCircuitStats> ListStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
             {
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the loadBalancer.
+            /// The name of the circuit.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

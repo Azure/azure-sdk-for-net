@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='circuitName'>
-        /// The name of the loadBalancer.
+        /// The name of the circuit.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
