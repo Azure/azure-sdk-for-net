@@ -32,10 +32,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.sku,
                         Definition = JToken.Parse(this.definition)
                     });
 
@@ -43,7 +40,7 @@ namespace Test.Azure.Management.Logic
                 var workflow = client.Workflows.Get(this.resourceGroupName, workflowName);
                 Assert.Equal(WorkflowState.Enabled, workflow.State);
                 Assert.Equal(this.location, workflow.Location);
-                Assert.Equal(SkuName.Basic, workflow.Sku.Name);
+                Assert.Equal(this.sku.Name, workflow.Sku.Name);
                 Assert.NotEmpty(workflow.Definition.ToString());
 
                 // Delete the workflow
@@ -66,10 +63,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -113,10 +107,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -132,10 +123,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -182,10 +170,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.sku,
                         Definition = JToken.Parse(this.simpleTriggerDefinition)
                     });
 
@@ -196,10 +181,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.sku,
                         Definition = JToken.Parse(this.definition)
                     });
 
@@ -212,10 +194,7 @@ namespace Test.Azure.Management.Logic
                         new Workflow
                         {
                             Location = this.location,
-                            Sku = new Sku()
-                            {
-                                Name = SkuName.Free
-                            },
+                            Sku = this.sku,
                             Definition = "invalid definition"
                         });
                 });
@@ -275,10 +254,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.sku,
                         Definition = JToken.Parse(this.definition)
                     });
 
