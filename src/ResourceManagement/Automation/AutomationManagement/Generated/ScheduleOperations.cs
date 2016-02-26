@@ -212,11 +212,6 @@ namespace Microsoft.Azure.Management.Automation
                 
                 propertiesValue["frequency"] = parameters.Properties.Frequency;
                 
-                if (parameters.Properties.TimeZone != null)
-                {
-                    propertiesValue["timeZone"] = parameters.Properties.TimeZone;
-                }
-                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -326,13 +321,6 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     string frequencyInstance = ((string)frequencyValue);
                                     propertiesInstance.Frequency = frequencyInstance;
-                                }
-                                
-                                JToken timeZoneValue = propertiesValue2["timeZone"];
-                                if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
-                                {
-                                    string timeZoneInstance = ((string)timeZoneValue);
-                                    propertiesInstance.TimeZone = timeZoneInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
@@ -759,13 +747,6 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.Frequency = frequencyInstance;
                                 }
                                 
-                                JToken timeZoneValue = propertiesValue["timeZone"];
-                                if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
-                                {
-                                    string timeZoneInstance = ((string)timeZoneValue);
-                                    propertiesInstance.TimeZone = timeZoneInstance;
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -1025,13 +1006,6 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.Frequency = frequencyInstance;
                                         }
                                         
-                                        JToken timeZoneValue = propertiesValue["timeZone"];
-                                        if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
-                                        {
-                                            string timeZoneInstance = ((string)timeZoneValue);
-                                            propertiesInstance.TimeZone = timeZoneInstance;
-                                        }
-                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1266,13 +1240,6 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             string frequencyInstance = ((string)frequencyValue);
                                             propertiesInstance.Frequency = frequencyInstance;
-                                        }
-                                        
-                                        JToken timeZoneValue = propertiesValue["timeZone"];
-                                        if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
-                                        {
-                                            string timeZoneInstance = ((string)timeZoneValue);
-                                            propertiesInstance.TimeZone = timeZoneInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];

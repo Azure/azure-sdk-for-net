@@ -377,27 +377,6 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
-                                JToken errorValue = propertiesValue2["error"];
-                                if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                {
-                                    ModuleErrorInfo errorInstance = new ModuleErrorInfo();
-                                    propertiesInstance.Error = errorInstance;
-                                    
-                                    JToken codeValue = errorValue["code"];
-                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                    {
-                                        string codeInstance = ((string)codeValue);
-                                        errorInstance.Code = codeInstance;
-                                    }
-                                    
-                                    JToken messageValue = errorValue["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        errorInstance.Message = messageInstance;
-                                    }
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -889,27 +868,6 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
-                                JToken errorValue = propertiesValue["error"];
-                                if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                {
-                                    ModuleErrorInfo errorInstance = new ModuleErrorInfo();
-                                    propertiesInstance.Error = errorInstance;
-                                    
-                                    JToken codeValue = errorValue["code"];
-                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                    {
-                                        string codeInstance = ((string)codeValue);
-                                        errorInstance.Code = codeInstance;
-                                    }
-                                    
-                                    JToken messageValue = errorValue["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        errorInstance.Message = messageInstance;
-                                    }
-                                }
-                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -1236,27 +1194,6 @@ namespace Microsoft.Azure.Management.Automation
                                             }
                                         }
                                         
-                                        JToken errorValue = propertiesValue["error"];
-                                        if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                        {
-                                            ModuleErrorInfo errorInstance = new ModuleErrorInfo();
-                                            propertiesInstance.Error = errorInstance;
-                                            
-                                            JToken codeValue = errorValue["code"];
-                                            if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                            {
-                                                string codeInstance = ((string)codeValue);
-                                                errorInstance.Code = codeInstance;
-                                            }
-                                            
-                                            JToken messageValue = errorValue["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                            {
-                                                string messageInstance = ((string)messageValue);
-                                                errorInstance.Message = messageInstance;
-                                            }
-                                        }
-                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1557,27 +1494,6 @@ namespace Microsoft.Azure.Management.Automation
                                             {
                                                 string versionInstance2 = ((string)versionValue2);
                                                 contentLinkInstance.Version = versionInstance2;
-                                            }
-                                        }
-                                        
-                                        JToken errorValue = propertiesValue["error"];
-                                        if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                        {
-                                            ModuleErrorInfo errorInstance = new ModuleErrorInfo();
-                                            propertiesInstance.Error = errorInstance;
-                                            
-                                            JToken codeValue = errorValue["code"];
-                                            if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                            {
-                                                string codeInstance = ((string)codeValue);
-                                                errorInstance.Code = codeInstance;
-                                            }
-                                            
-                                            JToken messageValue = errorValue["message"];
-                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                            {
-                                                string messageInstance = ((string)messageValue);
-                                                errorInstance.Message = messageInstance;
                                             }
                                         }
                                         
@@ -2006,27 +1922,6 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         string versionInstance2 = ((string)versionValue2);
                                         contentLinkInstance.Version = versionInstance2;
-                                    }
-                                }
-                                
-                                JToken errorValue = propertiesValue2["error"];
-                                if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                {
-                                    ModuleErrorInfo errorInstance = new ModuleErrorInfo();
-                                    propertiesInstance.Error = errorInstance;
-                                    
-                                    JToken codeValue = errorValue["code"];
-                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                    {
-                                        string codeInstance = ((string)codeValue);
-                                        errorInstance.Code = codeInstance;
-                                    }
-                                    
-                                    JToken messageValue = errorValue["message"];
-                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance = ((string)messageValue);
-                                        errorInstance.Message = messageInstance;
                                     }
                                 }
                                 
