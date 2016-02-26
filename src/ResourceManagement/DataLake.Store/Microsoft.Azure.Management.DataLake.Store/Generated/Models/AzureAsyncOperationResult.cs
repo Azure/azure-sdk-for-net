@@ -43,26 +43,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         }
 
         /// <summary>
-        /// Gets or sets the status of the AzureAsuncOperation. Possible
-        /// values include: 'InProgress', 'Succeeded', 'Failed'
+        /// Gets the status of the AzureAsuncOperation. Possible values
+        /// include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public OperationStatus? Status { get; set; }
+        public OperationStatus? Status { get; private set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public Error Error { get; set; }
+        public Error Error { get; private set; }
 
-        /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Error != null)
-            {
-                this.Error.Validate();
-            }
-        }
     }
 }

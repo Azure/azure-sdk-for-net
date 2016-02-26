@@ -41,20 +41,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// this error
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
         /// Gets or sets the error message localized based on Accept-Language
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
         /// Gets or sets the target of the particular error (for example, the
         /// name of the property in error).
         /// </summary>
         [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
+        public string Target { get; private set; }
 
     }
 }

@@ -36,16 +36,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets the last update time for the statistics.
+        /// Gets the last update time for the statistics.
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateTimeUtc")]
-        public DateTime? LastUpdateTimeUtc { get; set; }
+        public DateTime? LastUpdateTimeUtc { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of stages for the job.
+        /// Gets the list of stages for the job.
         /// </summary>
         [JsonProperty(PropertyName = "stages")]
-        public IList<JobStatisticsVertexStage> Stages { get; set; }
+        public IList<JobStatisticsVertexStage> Stages { get; private set; }
 
     }
 }

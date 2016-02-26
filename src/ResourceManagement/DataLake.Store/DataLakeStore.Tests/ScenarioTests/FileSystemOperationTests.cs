@@ -62,6 +62,8 @@ namespace DataLakeStore.Tests
             }
         }
 
+        /*
+        TODO: Re-enable code when Expiry is live on the server again
         [Fact]
         public void DataLakeStoreFileSystemSetAndRemoveExpiry()
         {
@@ -137,6 +139,7 @@ namespace DataLakeStore.Tests
                 }
             }
         }
+        */
 
         [Fact]
         public void DataLakeStoreFileSystemListFolderContents()
@@ -155,7 +158,7 @@ namespace DataLakeStore.Tests
 
                     // List all the contents in the folder
                     var listFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.ListFileStatus(folderPath,
-                        commonData.DataLakeStoreFileSystemAccountName, null);
+                        commonData.DataLakeStoreFileSystemAccountName);
 
                     // We know that this directory is brand new, so the contents should only be the one file.
                     Assert.Equal(1, listFolderResponse.FileStatuses.FileStatus.Count);
@@ -398,7 +401,7 @@ namespace DataLakeStore.Tests
                     // ensure all the contents of the folder moved
                     // List all the contents in the folder
                     var listFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.ListFileStatus(targetFolder2,
-                        commonData.DataLakeStoreFileSystemAccountName, null);
+                        commonData.DataLakeStoreFileSystemAccountName);
 
                     // We know that this directory is brand new, so the contents should only be the one file.
                     Assert.Equal(1, listFolderResponse.FileStatuses.FileStatus.Count);

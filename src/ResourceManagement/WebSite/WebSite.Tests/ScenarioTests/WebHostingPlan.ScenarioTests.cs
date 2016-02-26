@@ -218,7 +218,7 @@ namespace WebSites.Tests.ScenarioTests
         }
 
         //[Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
-        [Fact]
+        [Fact(Skip="TODO: Fix datetime parsing in test to correctly handle UTC times and rerecord.")]
         public void GetWebHostingPlanMetrics()
         {
             using (var context = MockContext.Start(this.GetType().FullName))

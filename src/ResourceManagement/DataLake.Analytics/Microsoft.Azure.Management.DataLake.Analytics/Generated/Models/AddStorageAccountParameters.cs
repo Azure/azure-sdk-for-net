@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the AddStorageAccountParameters
         /// class.
         /// </summary>
-        public AddStorageAccountParameters(StorageAccountProperties properties = default(StorageAccountProperties))
+        public AddStorageAccountParameters(StorageAccountProperties properties)
         {
             Properties = properties;
         }
@@ -43,5 +43,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "properties")]
         public StorageAccountProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
+        }
     }
 }

@@ -58,16 +58,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public DataLakeStoreAccountState? State { get; private set; }
 
         /// <summary>
-        /// Gets or sets the account creation time.
+        /// Gets the account creation time.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
-        public DateTime? CreationTime { get; set; }
+        public DateTime? CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the account last modified time.
+        /// Gets the account last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
-        public DateTime? LastModifiedTime { get; set; }
+        public DateTime? LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the gateway host.
