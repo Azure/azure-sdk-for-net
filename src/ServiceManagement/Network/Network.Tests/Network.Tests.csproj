@@ -104,6 +104,12 @@
     <None Include="SessionRecords\Network.Tests.ApplicationGateways.SetupApplicationGatewayTests\CreateApplicationGateway.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.LocallNetworkGatewayTests\LocalNetworkGatewayAPITestsWithBgp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayConnectionTests\VirtualNetworkGatewayConnectionWithBgpTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Network.Tests.MultiVipTests\TestAddAndRemoveVip.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
