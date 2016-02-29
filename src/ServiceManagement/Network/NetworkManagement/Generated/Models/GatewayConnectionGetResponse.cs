@@ -43,6 +43,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._connectedEntityId = value; }
         }
         
+        private bool _enableBgp;
+        
+        /// <summary>
+        /// Optional. Whether BGP is enabled for this connection
+        /// </summary>
+        public bool EnableBgp
+        {
+            get { return this._enableBgp; }
+            set { this._enableBgp = value; }
+        }
+        
         private string _gatewayConnectionName;
         
         /// <summary>

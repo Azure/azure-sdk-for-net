@@ -31,6 +31,7 @@ namespace Network.Tests
         public const string SimpleNetworkConfigurationFilePath = @"TestData\SimpleNetworkConfiguration.xml";
         public const string DeleteNetworkConfigurationFilePath = @"TestData\DeleteNetworkConfiguration.xml";
         public const string CoexistenceFeatureNetworkConfigurationFilePath = @"TestData\CoexistenceFeatureNetworkConfiguration.xml";
+        public const string GatewayNetworkConfigurationFilePath = @"TestData\GatewayNetworkConfiguration.xml";
 
         public const string VnetOneWebOneWorkerCscfgFilePath = @"TestData\VnetOneWebOneWorker.cscfg";
         public const string OneWebOneWorkerPkgFilePath = @"OneWebOneWorker.cspkg";
@@ -49,6 +50,8 @@ namespace Network.Tests
             CreateSetConfigurationParametersFromFile(DeleteNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters CoexistenceFeatureNetworkConfigurationParameters =
             CreateSetConfigurationParametersFromFile(CoexistenceFeatureNetworkConfigurationFilePath);
+        public static readonly NetworkSetConfigurationParameters GatewayNetworkConfigurationParameters =
+            CreateSetConfigurationParametersFromFile(GatewayNetworkConfigurationFilePath);
 
         public static readonly GatewayCreateParameters StaticRoutingGatewayParameters =
             CreateGatewayParameters(GatewayType.StaticRouting);
