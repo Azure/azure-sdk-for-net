@@ -43,11 +43,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// <summary>
         /// Optional.
         /// </summary>
-        public string EnableLog { get; set; }
-
-        /// <summary>
-        /// Optional.
-        /// </summary>
         public IList<string> Files { get; set; }
         
         /// <summary>
@@ -95,7 +90,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
             content += ModelHelper.ConvertDictionaryToString(this.Defines, "&define=");
             content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
             content += ModelHelper.GetStatusDirectory(this.StatusDir);
-            content += !string.IsNullOrEmpty(this.EnableLog) ? string.Format("&errorlog={0}", this.EnableLog) : string.Empty;
 
             return content;
         }

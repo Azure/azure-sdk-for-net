@@ -27,29 +27,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     public partial interface IJobOperations
     {
         /// <summary>
-        /// Gets the task log summary from execution of a jobDetails.
-        /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="targetDirectory">
-        /// Required. The directory in which to download the logs to.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer"></param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// 
-        /// </returns>
-        Task DownloadJobTaskLogsAsync(string jobId, string targetDirectory, string storageAccountName,
-            string storageAccountKey, string defaultContainer, CancellationToken cancellationToken);
-
-        /// <summary>
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>
         /// <param name="jobId">
@@ -87,26 +64,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
         Task<Stream> GetJobErrorLogsAsync(string jobId, string storageAccountName, string storageAccountKey,
-            string defaultContainer, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Gets the task logs from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name="jobId">
-        ///     Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
-        /// </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>
-        /// The task logs of an individual jobDetails by jobId.
-        /// </returns>
-        Task<Stream> GetJobTaskLogSummaryAsync(string jobId, string storageAccountName, string storageAccountKey,
             string defaultContainer, CancellationToken cancellationToken);
     }
 }

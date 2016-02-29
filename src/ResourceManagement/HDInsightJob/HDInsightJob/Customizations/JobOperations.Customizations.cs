@@ -69,51 +69,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             }
         }
 
-        /// <summary>
-        /// Gets the task log summary from execution of a jobDetails.
-        /// </summary>
-        /// <param name='jobId'>
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name='targetDirectory'>
-        /// Required. The directory in which to download the logs to.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Job operation response.
-        /// </returns>
-        public async Task DownloadJobTaskLogsAsync(string jobId, string targetDirectory, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
-        {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            DefaultStorageContainer = defaultContainer;
-
-            var job = await GetJobAsync(jobId, cancellationToken);
-
-            var statusdir = GetStatusFolder(job);
-            if (statusdir == null)
-            {
-                throw new CloudException(string.Format("Job {0} was not created with a status folder and therefore no logs were saved.", job.JobDetail.Id));
-            }
-
-            var taskLogsDirectoryPath = GetStatusDirectoryPath(statusdir, storageAccountName, defaultContainer,
-                Client.Credentials.Username, Constants.TaskLogsDirectoryName);
-            var taskLogDirectoryContents = await List(taskLogsDirectoryPath, true);
-
-            // List also returns the directory we're looking into, 
-            // so we will ignore the directory as we can't read it.
-            foreach (var taskLogFilePath in taskLogDirectoryContents.Where(path => !string.Equals(path.AbsoluteUri, taskLogsDirectoryPath.AbsoluteUri, StringComparison.OrdinalIgnoreCase)))
-            {
-                // create local file in the targetdirectory.
-                var localFilePath = Path.Combine(targetDirectory, taskLogFilePath.Segments.Last());
-                var fileContentStream = await Read(taskLogFilePath);
-                var fileContents = new StreamReader(fileContentStream).ReadToEnd();
-                File.WriteAllText(localFilePath, fileContents);
-            }
-        }
-
         public async Task<Stream> GetJobOutputAsync(string jobId, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
         {
             StorageAccountName = storageAccountName;
@@ -127,13 +82,5 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             StorageAccountKey = storageAccountKey;
             return await GetJobResultFile(jobId, storageAccountName, defaultContainer, "stderr");
         }
-
-        public async Task<Stream> GetJobTaskLogSummaryAsync(string jobId, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
-        {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            return await GetJobResultFile(jobId, storageAccountName, defaultContainer, "logs/list.txt");
-        }
-
     }
 }
