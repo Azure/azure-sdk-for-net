@@ -38,25 +38,25 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets BytesIn of the peering on primary device.
+        /// Gets BytesIn of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "primarybytesIn")]
         public int? PrimarybytesIn { get; set; }
 
         /// <summary>
-        /// Gets BytesOut of the peering on primary device.
+        /// Gets BytesOut of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "primarybytesOut")]
         public int? PrimarybytesOut { get; set; }
 
         /// <summary>
-        /// Gets BytesIn of the peering on secondary device.
+        /// Gets BytesIn of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "secondarybytesIn")]
         public int? SecondarybytesIn { get; set; }
 
         /// <summary>
-        /// Gets BytesOut of the peering on secondary device.
+        /// Gets BytesOut of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "secondarybytesOut")]
         public int? SecondarybytesOut { get; set; }

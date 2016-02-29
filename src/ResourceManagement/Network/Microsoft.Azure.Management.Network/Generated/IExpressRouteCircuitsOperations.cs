@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='circuitName'>
-        /// The name of the circuit.
+        /// The name of the loadBalancer.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<ExpressRouteCircuitStats>>> ListStatsWithHttpMessagesAsync(string resourceGroupName, string circuitName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ExpressRouteCircuitStats>> ListStatsWithHttpMessagesAsync(string resourceGroupName, string circuitName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List ExpressRouteCircuit opertion retrieves all the
         /// ExpressRouteCircuits in a resource group.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<ExpressRouteCircuitStats>>> ListStatsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ExpressRouteCircuitStats>> ListStatsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List ExpressRouteCircuit opertion retrieves all the
         /// ExpressRouteCircuits in a resource group.

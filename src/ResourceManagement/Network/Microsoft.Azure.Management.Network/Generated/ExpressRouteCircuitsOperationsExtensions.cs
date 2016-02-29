@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the circuit.
+            /// The name of the loadBalancer.
             /// </param>
-            public static IPage<ExpressRouteCircuitStats> ListStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
+            public static ExpressRouteCircuitStats ListStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
             {
                 return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListStatsAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -348,12 +348,12 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the circuit.
+            /// The name of the loadBalancer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitStats>> ListStatsAsync( this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExpressRouteCircuitStats> ListStatsAsync( this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListStatsWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -513,7 +513,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ExpressRouteCircuitStats> ListStatsNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
+            public static ExpressRouteCircuitStats ListStatsNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListStatsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitStats>> ListStatsNextAsync( this IExpressRouteCircuitsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExpressRouteCircuitStats> ListStatsNextAsync( this IExpressRouteCircuitsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListStatsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
