@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,54 +10,57 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider1</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider2</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>128</Bandwidth>\r\n        <Label>256</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Azure,USWest,Boydton 1 DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>GNS</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>10Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1024</Bandwidth>\r\n        <Label>1024Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,USWest,Azure</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>IXP-01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
+      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Aryaka Networks</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>AT&amp;T</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Dallas,London,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>AT&amp;T Netbond</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London,Hong Kong,Silicon Valley,Singapore,Tokyo,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>British Telecom</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Hong Kong</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>China Telecom Global</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Colt Ethernet</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Colt IPVPN</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Comcast</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Los Angeles</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Coresite</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Atlanta,Chicago,Dallas,Hong Kong,London,Los Angeles,Melbourne,New York,Osaka,Sao Paulo,Seattle,Silicon Valley,Singapore,Sydney,Tokyo,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Equinix</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>EuNetworks</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Osaka,Tokyo</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>IIJ</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London,Singapore,Washington DC,Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>InterCloud</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London,Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Internet Solutions – Cloud Connect</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Interxion</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Chicago,Dallas,London,Seattle,Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Level 3 Communications - Exchange</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Chicago,Dallas,London,Seattle,Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Level 3 Communications - IPVPN</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Melbourne,Sydney</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Megaport</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>MTN</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Melbourne,Sydney</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>NEXTDC</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Tokyo</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>NTT Communications</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Hong Kong,London,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Orange</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Hong Kong</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>PCCW Global Limited</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Singapore</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>SingTel Domestic</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Singapore</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>SingTel International</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Chennai,Hong Kong,London,Mumbai,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Tata Communications</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>TeleCity Group</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Melbourne,Sydney</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Telstra Corporation</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Hong Kong,London,Silicon Valley,Sydney,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Verizon</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Vodafone</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Chicago,Los Angeles,New York,Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Zayo Group</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
       "ResponseHeaders": {
         "Content-Length": [
-          "5820"
+          "34520"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "353c28d032a20dd4893146cf1963363f"
+          "aaed5051e3eb5a1aae5cbef3a35b9336"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:05:58 GMT"
+          "Wed, 23 Dec 2015 21:59:57 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "POST",
-      "RequestBody": "<CreateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>1</Bandwidth>\r\n  <CircuitName>circuit666</CircuitName>\r\n  <Location>Location1</Location>\r\n  <ServiceProviderName>BVTTestServiceProvider2</ServiceProviderName>\r\n</CreateDedicatedCircuit>",
+      "RequestBody": "<CreateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>50</Bandwidth>\r\n  <BillingType>UnlimitedData</BillingType>\r\n  <CircuitName>circuit9026</CircuitName>\r\n  <Location>Amsterdam</Location>\r\n  <ServiceProviderName>Equinix</ServiceProviderName>\r\n  <Sku>Standard</Sku>\r\n</CreateDedicatedCircuit>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "274"
+          "327"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>5284437f-6eb4-0333-af5e-18240f6bf78b</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>e8ae3f4e-4528-44d3-8eac-e63948d7c4e0</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -65,26 +68,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "5284437f6eb40333af5e18240f6bf78b"
+          "04413ecd73ee5e2ab5c5daac1c2d855e"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:06:03 GMT"
+          "Wed, 23 Dec 2015 22:00:52 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/5284437f-6eb4-0333-af5e-18240f6bf78b",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi81Mjg0NDM3Zi02ZWI0LTAzMzMtYWY1ZS0xODI0MGY2YmY3OGI=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/e8ae3f4e-4528-44d3-8eac-e63948d7c4e0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9lOGFlM2Y0ZS00NTI4LTQ0ZDMtOGVhYy1lNjM5NDhkN2M0ZTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -92,37 +98,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>5284437f-6eb4-0333-af5e-18240f6bf78b</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:06:02.8582692</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>e8ae3f4e-4528-44d3-8eac-e63948d7c4e0</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:00:52.5598866</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "336"
+          "343"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "7783744c991b054cbf7456c051308c79"
+          "34ad852cbf62549797f32b46b52061a3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:06:03 GMT"
+          "Wed, 23 Dec 2015 22:00:52 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/5284437f-6eb4-0333-af5e-18240f6bf78b",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi81Mjg0NDM3Zi02ZWI0LTAzMzMtYWY1ZS0xODI0MGY2YmY3OGI=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/e8ae3f4e-4528-44d3-8eac-e63948d7c4e0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9lOGFlM2Y0ZS00NTI4LTQ0ZDMtOGVhYy1lNjM5NDhkN2M0ZTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -130,10 +139,10 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data>1fead7c8-395c-4ffa-8a30-9965c13f7ed6</Data>\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>5284437f-6eb4-0333-af5e-18240f6bf78b</ID>\r\n  <OperationCompletedTime>2015-02-24T21:06:08.2430735</OperationCompletedTime>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:06:02.8582692</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data>aec3ca48-6940-41bb-95f0-929627ea42f6</Data>\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>e8ae3f4e-4528-44d3-8eac-e63948d7c4e0</ID>\r\n  <OperationCompletedTime>2015-12-23T22:01:04.3328092</OperationCompletedTime>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:00:52.5598866</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
           "496"
@@ -141,26 +150,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "7c2c6cafa76008ceb252f610317ac357"
+          "29f0d19196c55cf38c5e3aacd98eeda8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:06:35 GMT"
+          "Wed, 23 Dec 2015 22:01:23 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/1fead7c8-395c-4ffa-8a30-9965c13f7ed6?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzFmZWFkN2M4LTM5NWMtNGZmYS04YTMwLTk5NjVjMTNmN2VkNj9hcGktdmVyc2lvbj0xLjA=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/aec3ca48-6940-41bb-95f0-929627ea42f6?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2FlYzNjYTQ4LTY5NDAtNDFiYi05NWYwLTkyOTYyN2VhNDJmNj9hcGktdmVyc2lvbj0xLjA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -168,37 +180,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<DedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Bandwidth>1</Bandwidth>\r\n  <CircuitName>circuit666</CircuitName>\r\n  <Location>Location1</Location>\r\n  <ServiceKey>1fead7c8-395c-4ffa-8a30-9965c13f7ed6</ServiceKey>\r\n  <ServiceProviderName>bvttestserviceprovider2</ServiceProviderName>\r\n  <ServiceProviderProvisioningState>NotProvisioned</ServiceProviderProvisioningState>\r\n  <Status>Enabled</Status>\r\n</DedicatedCircuit>",
+      "ResponseBody": "<DedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Bandwidth>50</Bandwidth>\r\n  <BillingType>UnlimitedData</BillingType>\r\n  <CircuitName>circuit9026</CircuitName>\r\n  <Location>Amsterdam</Location>\r\n  <ServiceKey>aec3ca48-6940-41bb-95f0-929627ea42f6</ServiceKey>\r\n  <ServiceProviderName>equinix</ServiceProviderName>\r\n  <ServiceProviderProvisioningState>NotProvisioned</ServiceProviderProvisioningState>\r\n  <Sku>Standard</Sku>\r\n  <Status>Enabled</Status>\r\n</DedicatedCircuit>",
       "ResponseHeaders": {
         "Content-Length": [
-          "464"
+          "509"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "ac457dcbe2a20accabb228c6921dd979"
+          "01ad817e688d5447838cd8e4bbb1bfbe"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:06:36 GMT"
+          "Wed, 23 Dec 2015 22:01:26 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/1fead7c8-395c-4ffa-8a30-9965c13f7ed6?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzFmZWFkN2M4LTM5NWMtNGZmYS04YTMwLTk5NjVjMTNmN2VkNj9hcGktdmVyc2lvbj0xLjA=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/aec3ca48-6940-41bb-95f0-929627ea42f6?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2FlYzNjYTQ4LTY5NDAtNDFiYi05NWYwLTkyOTYyN2VhNDJmNj9hcGktdmVyc2lvbj0xLjA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -206,37 +221,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<DedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Bandwidth>10</Bandwidth>\r\n  <CircuitName>circuit666</CircuitName>\r\n  <Location>Location1</Location>\r\n  <ServiceKey>1fead7c8-395c-4ffa-8a30-9965c13f7ed6</ServiceKey>\r\n  <ServiceProviderName>bvttestserviceprovider2</ServiceProviderName>\r\n  <ServiceProviderProvisioningState>NotProvisioned</ServiceProviderProvisioningState>\r\n  <Status>Enabled</Status>\r\n</DedicatedCircuit>",
+      "ResponseBody": "<DedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Bandwidth>10000</Bandwidth>\r\n  <BillingType>UnlimitedData</BillingType>\r\n  <CircuitName>circuit9026</CircuitName>\r\n  <Location>Amsterdam</Location>\r\n  <ServiceKey>aec3ca48-6940-41bb-95f0-929627ea42f6</ServiceKey>\r\n  <ServiceProviderName>equinix</ServiceProviderName>\r\n  <ServiceProviderProvisioningState>NotProvisioned</ServiceProviderProvisioningState>\r\n  <Sku>Standard</Sku>\r\n  <Status>Enabled</Status>\r\n</DedicatedCircuit>",
       "ResponseHeaders": {
         "Content-Length": [
-          "465"
+          "512"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "227c337febf00d45975101f15f76b3de"
+          "aa4f98a35c1a539bb74fcd85cd691817"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:07:12 GMT"
+          "Wed, 23 Dec 2015 22:02:24 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -244,54 +262,57 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<DedicatedCircuits xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuit>\r\n    <Bandwidth>1</Bandwidth>\r\n    <CircuitName>circuit666</CircuitName>\r\n    <Location>Location1</Location>\r\n    <ServiceKey>1fead7c8-395c-4ffa-8a30-9965c13f7ed6</ServiceKey>\r\n    <ServiceProviderName>bvttestserviceprovider2</ServiceProviderName>\r\n    <ServiceProviderProvisioningState>NotProvisioned</ServiceProviderProvisioningState>\r\n    <Status>Enabled</Status>\r\n  </DedicatedCircuit>\r\n  <DedicatedCircuit>\r\n    <Bandwidth>1</Bandwidth>\r\n    <CircuitName>circuit2409</CircuitName>\r\n    <Location>Location1</Location>\r\n    <ServiceKey>3a4d0115-91ea-48a0-b6d3-ec021c04edb4</ServiceKey>\r\n    <ServiceProviderName>bvttestserviceprovider2</ServiceProviderName>\r\n    <ServiceProviderProvisioningState>Provisioned</ServiceProviderProvisioningState>\r\n    <Status>Disabling</Status>\r\n  </DedicatedCircuit>\r\n  <DedicatedCircuit>\r\n    <Bandwidth>1</Bandwidth>\r\n    <CircuitName>circuit4945</CircuitName>\r\n    <Location>Location1</Location>\r\n    <ServiceKey>a6933301-a63f-4e84-9e75-5a9b6bda9bd9</ServiceKey>\r\n    <ServiceProviderName>bvttestserviceprovider2</ServiceProviderName>\r\n    <ServiceProviderProvisioningState>Provisioned</ServiceProviderProvisioningState>\r\n    <Status>Enabled</Status>\r\n  </DedicatedCircuit>\r\n  <DedicatedCircuit>\r\n    <Bandwidth>1</Bandwidth>\r\n    <CircuitName>circuit2407</CircuitName>\r\n    <Location>Location1</Location>\r\n    <ServiceKey>c4701ec8-e208-480c-84ef-ca53b2664cca</ServiceKey>\r\n    <ServiceProviderName>bvttestserviceprovider2</ServiceProviderName>\r\n    <ServiceProviderProvisioningState>NotProvisioned</ServiceProviderProvisioningState>\r\n    <Status>Enabled</Status>\r\n  </DedicatedCircuit>\r\n</DedicatedCircuits>",
+      "ResponseBody": "<DedicatedCircuits xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuit>\r\n    <Bandwidth>50</Bandwidth>\r\n    <BillingType i:nil=\"true\" />\r\n    <CircuitName>circuit9026</CircuitName>\r\n    <Location>Amsterdam</Location>\r\n    <ServiceKey>aec3ca48-6940-41bb-95f0-929627ea42f6</ServiceKey>\r\n    <ServiceProviderName>equinix</ServiceProviderName>\r\n    <ServiceProviderProvisioningState>NotProvisioned</ServiceProviderProvisioningState>\r\n    <Sku>Standard</Sku>\r\n    <Status>Enabled</Status>\r\n  </DedicatedCircuit>\r\n</DedicatedCircuits>",
       "ResponseHeaders": {
         "Content-Length": [
-          "1588"
+          "535"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "fe9560f3c7fc0cfb86e490d66f5764c7"
+          "74349a5296fb508088e9d7dcd7cfb2e0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:06:37 GMT"
+          "Wed, 23 Dec 2015 22:01:33 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/1fead7c8-395c-4ffa-8a30-9965c13f7ed6?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzFmZWFkN2M4LTM5NWMtNGZmYS04YTMwLTk5NjVjMTNmN2VkNj9hcGktdmVyc2lvbj0xLjA=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/aec3ca48-6940-41bb-95f0-929627ea42f6?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2FlYzNjYTQ4LTY5NDAtNDFiYi05NWYwLTkyOTYyN2VhNDJmNj9hcGktdmVyc2lvbj0xLjA=",
       "RequestMethod": "PUT",
-      "RequestBody": "<UpdateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>10</Bandwidth>\r\n</UpdateDedicatedCircuit>",
+      "RequestBody": "<UpdateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>10000</Bandwidth>\r\n</UpdateDedicatedCircuit>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "130"
+          "133"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>95ee9da4-723b-0f5a-aba1-27a1c79c33e7</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>396cf18b-b1c7-458e-853d-df6831268f5f</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -299,26 +320,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "95ee9da4723b0f5aaba127a1c79c33e7"
+          "1dffd70f5254516788256c8dcc5b42f3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:06:39 GMT"
+          "Wed, 23 Dec 2015 22:01:47 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/95ee9da4-723b-0f5a-aba1-27a1c79c33e7",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NWVlOWRhNC03MjNiLTBmNWEtYWJhMS0yN2ExYzc5YzMzZTc=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/396cf18b-b1c7-458e-853d-df6831268f5f",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8zOTZjZjE4Yi1iMWM3LTQ1OGUtODUzZC1kZjY4MzEyNjhmNWY=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -326,37 +350,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>95ee9da4-723b-0f5a-aba1-27a1c79c33e7</ID>\r\n  <OperationStartedTime>2015-02-24T21:06:39.295376</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>396cf18b-b1c7-458e-853d-df6831268f5f</ID>\r\n  <OperationStartedTime>2015-12-23T22:01:46.253601</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "282"
+          "289"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "9ba5f952eb770b199187140a9ebeeeeb"
+          "1edd29a5904c5f3a9f1f70b5c00355fb"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:06:40 GMT"
+          "Wed, 23 Dec 2015 22:01:47 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/95ee9da4-723b-0f5a-aba1-27a1c79c33e7",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NWVlOWRhNC03MjNiLTBmNWEtYWJhMS0yN2ExYzc5YzMzZTc=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/396cf18b-b1c7-458e-853d-df6831268f5f",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8zOTZjZjE4Yi1iMWM3LTQ1OGUtODUzZC1kZjY4MzEyNjhmNWY=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -364,29 +391,32 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>95ee9da4-723b-0f5a-aba1-27a1c79c33e7</ID>\r\n  <OperationCompletedTime>2015-02-24T21:06:40.7929858</OperationCompletedTime>\r\n  <OperationStartedTime>2015-02-24T21:06:39.295376</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>396cf18b-b1c7-458e-853d-df6831268f5f</ID>\r\n  <OperationCompletedTime>2015-12-23T22:01:59.4152749</OperationCompletedTime>\r\n  <OperationStartedTime>2015-12-23T22:01:46.253601</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "393"
+          "400"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "f812b6e43d920d838946e5e734e44261"
+          "9e579b82b07058e1a929d4966cd7e745"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:07:11 GMT"
+          "Wed, 23 Dec 2015 22:02:17 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -395,11 +425,11 @@
   ],
   "Names": {
     "CanCreateGetListUpdateAndDeleteDedicatedCircuit": [
-      "circuit666"
+      "circuit9026"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4",
-    "TEST_PROVIDER_NAME": "bvttestserviceprovider2"
+    "SubscriptionId": "04bc22f5-6269-4309-acc6-fbe9284595cd",
+    "TEST_PROVIDER_NAME": "Equinix"
   }
 }

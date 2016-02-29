@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation
@@ -34,6 +35,51 @@ namespace Microsoft.Azure.Management.Automation
     /// </summary>
     public partial interface IDscNodeConfigurationOperations
     {
+        /// <summary>
+        /// Create the node configuration identified by node configuration
+        /// name.  (see http://aka.ms/azureautomationsdk/dscnodeconfigurations
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The create or update parameters for configuration.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get Dsc node configuration operation.
+        /// </returns>
+        Task<DscNodeConfigurationGetResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, DscNodeConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Delete the Dsc node configurations by node configuration.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more
+        /// information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='nodeConfigurationName'>
+        /// The Dsc node configuration name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccount, string nodeConfigurationName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Retrieve the Dsc node configurations by node configuration.  (see
         /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more

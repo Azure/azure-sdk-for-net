@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation
@@ -55,6 +56,29 @@ namespace Microsoft.Azure.Management.Automation
         /// The response model for the configuration create response.
         /// </returns>
         Task<DscConfigurationCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, DscConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Delete the dsc configuration identified by configuration name.
+        /// (see http://aka.ms/azureautomationsdk/configurationoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='configurationName'>
+        /// The configuration name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccount, string configurationName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieve the configuration identified by configuration name.  (see

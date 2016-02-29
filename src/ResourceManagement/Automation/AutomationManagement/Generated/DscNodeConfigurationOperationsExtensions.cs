@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
 
@@ -30,6 +31,120 @@ namespace Microsoft.Azure.Management.Automation
 {
     public static partial class DscNodeConfigurationOperationsExtensions
     {
+        /// <summary>
+        /// Create the node configuration identified by node configuration
+        /// name.  (see http://aka.ms/azureautomationsdk/dscnodeconfigurations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscNodeConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The create or update parameters for configuration.
+        /// </param>
+        /// <returns>
+        /// The response model for the get Dsc node configuration operation.
+        /// </returns>
+        public static DscNodeConfigurationGetResponse CreateOrUpdate(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccount, DscNodeConfigurationCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDscNodeConfigurationOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Create the node configuration identified by node configuration
+        /// name.  (see http://aka.ms/azureautomationsdk/dscnodeconfigurations
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscNodeConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The create or update parameters for configuration.
+        /// </param>
+        /// <returns>
+        /// The response model for the get Dsc node configuration operation.
+        /// </returns>
+        public static Task<DscNodeConfigurationGetResponse> CreateOrUpdateAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccount, DscNodeConfigurationCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Delete the Dsc node configurations by node configuration.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscNodeConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='nodeConfigurationName'>
+        /// Required. The Dsc node configuration name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse Delete(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccount, string nodeConfigurationName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDscNodeConfigurationOperations)s).DeleteAsync(resourceGroupName, automationAccount, nodeConfigurationName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Delete the Dsc node configurations by node configuration.  (see
+        /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IDscNodeConfigurationOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='nodeConfigurationName'>
+        /// Required. The Dsc node configuration name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DeleteAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccount, string nodeConfigurationName)
+        {
+            return operations.DeleteAsync(resourceGroupName, automationAccount, nodeConfigurationName, CancellationToken.None);
+        }
+        
         /// <summary>
         /// Retrieve the Dsc node configurations by node configuration.  (see
         /// http://aka.ms/azureautomationsdk/dscnodeconfigurations for more

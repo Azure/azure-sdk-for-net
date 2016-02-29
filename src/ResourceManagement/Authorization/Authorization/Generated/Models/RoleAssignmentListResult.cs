@@ -33,6 +33,18 @@ namespace Microsoft.Azure.Management.Authorization.Models
     /// </summary>
     public partial class RoleAssignmentListResult : AzureOperationResponse
     {
+        private string _nextLink;
+        
+        /// <summary>
+        /// Optional. Gets or sets the URL to get the next set of role
+        /// assignment results.
+        /// </summary>
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
         private IList<RoleAssignment> _roleAssignments;
         
         /// <summary>

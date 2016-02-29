@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(parameters.RunbookName);
             url = url + "/draft/testJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -193,6 +193,11 @@ namespace Microsoft.Azure.Management.Automation
                         }
                         testJobCreateParametersValue["parameters"] = parametersDictionary;
                     }
+                }
+                
+                if (parameters.RunOn != null)
+                {
+                    testJobCreateParametersValue["runOn"] = parameters.RunOn;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -263,6 +268,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string statusDetailsInstance = ((string)statusDetailsValue);
                                 testJobInstance.StatusDetails = statusDetailsInstance;
+                            }
+                            
+                            JToken runOnValue = responseDoc["runOn"];
+                            if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                            {
+                                string runOnInstance = ((string)runOnValue);
+                                testJobInstance.RunOn = runOnInstance;
                             }
                             
                             JToken startTimeValue = responseDoc["startTime"];
@@ -411,7 +423,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -509,6 +521,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string statusDetailsInstance = ((string)statusDetailsValue);
                                 testJobInstance.StatusDetails = statusDetailsInstance;
+                            }
+                            
+                            JToken runOnValue = responseDoc["runOn"];
+                            if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                            {
+                                string runOnInstance = ((string)runOnValue);
+                                testJobInstance.RunOn = runOnInstance;
                             }
                             
                             JToken startTimeValue = responseDoc["startTime"];
@@ -658,7 +677,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob/resume";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -821,7 +840,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob/stop";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -984,7 +1003,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/testJob/suspend";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

@@ -108,6 +108,45 @@ namespace Microsoft.Azure.Management.SiteRecovery
             set { this._resourceNamespace = value; }
         }
         
+        private string _resourceType;
+        
+        public string ResourceType
+        {
+            get { return this._resourceType; }
+            set { this._resourceType = value; }
+        }
+        
+        private IAlertSettingsOperations _alertSettings;
+        
+        /// <summary>
+        /// Definition of alert settings operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IAlertSettingsOperations AlertSettings
+        {
+            get { return this._alertSettings; }
+        }
+        
+        private IEventOperations _events;
+        
+        /// <summary>
+        /// Definition of event operations for the Site Recovery extension.
+        /// </summary>
+        public virtual IEventOperations Events
+        {
+            get { return this._events; }
+        }
+        
+        private IFabricOperations _fabrics;
+        
+        /// <summary>
+        /// Definition of fabric operations for the Site Recovery extension.
+        /// </summary>
+        public virtual IFabricOperations Fabrics
+        {
+            get { return this._fabrics; }
+        }
+        
         private IJobOperations _jobs;
         
         /// <summary>
@@ -116,6 +155,70 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public virtual IJobOperations Jobs
         {
             get { return this._jobs; }
+        }
+        
+        private ILogicalNetworkOperations _logicalNetwork;
+        
+        /// <summary>
+        /// Definition of Logical Network operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual ILogicalNetworkOperations LogicalNetwork
+        {
+            get { return this._logicalNetwork; }
+        }
+        
+        private INetworkMappingOperations _networkMapping;
+        
+        /// <summary>
+        /// Definition of NetworkMapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual INetworkMappingOperations NetworkMapping
+        {
+            get { return this._networkMapping; }
+        }
+        
+        private INetworkOperations _network;
+        
+        /// <summary>
+        /// Definition of Network operations for the Site Recovery extension.
+        /// </summary>
+        public virtual INetworkOperations Network
+        {
+            get { return this._network; }
+        }
+        
+        private IPolicyOperations _policies;
+        
+        /// <summary>
+        /// Definition of Policy operations for the Site Recovery extension.
+        /// </summary>
+        public virtual IPolicyOperations Policies
+        {
+            get { return this._policies; }
+        }
+        
+        private IProtectableItemOperations _protectableItem;
+        
+        /// <summary>
+        /// Definition of Protectable Item operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IProtectableItemOperations ProtectableItem
+        {
+            get { return this._protectableItem; }
+        }
+        
+        private IProtectionContainerMappingOperations _protectionContainerMapping;
+        
+        /// <summary>
+        /// Definition of Protection Container mapping operations for the Site
+        /// Recovery extension.
+        /// </summary>
+        public virtual IProtectionContainerMappingOperations ProtectionContainerMapping
+        {
+            get { return this._protectionContainerMapping; }
         }
         
         private IProtectionContainerOperations _protectionContainer;
@@ -129,32 +232,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
             get { return this._protectionContainer; }
         }
         
-        private IProtectionEntityOperations _protectionEntity;
-        
-        /// <summary>
-        /// Definition of protection entity operations for the Site Recovery
-        /// extension.
-        /// </summary>
-        public virtual IProtectionEntityOperations ProtectionEntity
-        {
-            get { return this._protectionEntity; }
-        }
-        
-        private IProtectionProfileOperations _protectionProfile;
-        
-        /// <summary>
-        /// Definition of Protection Profile operations for the Site Recovery
-        /// extension.
-        /// </summary>
-        public virtual IProtectionProfileOperations ProtectionProfile
-        {
-            get { return this._protectionProfile; }
-        }
-        
         private IRecoveryPlanOperations _recoveryPlan;
         
         /// <summary>
-        /// Definition of recoveryplan operations for the Site Recovery
+        /// Definition of recovery plan operations for the Site Recovery
         /// extension.
         /// </summary>
         public virtual IRecoveryPlanOperations RecoveryPlan
@@ -162,14 +243,68 @@ namespace Microsoft.Azure.Management.SiteRecovery
             get { return this._recoveryPlan; }
         }
         
-        private IServerOperations _servers;
+        private IRecoveryPointOperations _recoveryPoint;
         
         /// <summary>
-        /// Definition of server operations for the Site Recovery extension.
+        /// Definition of recovery point operations for Site recovery extension.
         /// </summary>
-        public virtual IServerOperations Servers
+        public virtual IRecoveryPointOperations RecoveryPoint
         {
-            get { return this._servers; }
+            get { return this._recoveryPoint; }
+        }
+        
+        private IRecoveryServicesProviderOperations _recoveryServicesProvider;
+        
+        /// <summary>
+        /// Definition of provider operations for the Site Recovery extension.
+        /// </summary>
+        public virtual IRecoveryServicesProviderOperations RecoveryServicesProvider
+        {
+            get { return this._recoveryServicesProvider; }
+        }
+        
+        private IReplicationProtectedItemOperations _replicationProtectedItem;
+        
+        /// <summary>
+        /// Definition of Replication protected item operations for the Site
+        /// Recovery extension.
+        /// </summary>
+        public virtual IReplicationProtectedItemOperations ReplicationProtectedItem
+        {
+            get { return this._replicationProtectedItem; }
+        }
+        
+        private IStorageClassificationMappingOperations _storageClassificationMapping;
+        
+        /// <summary>
+        /// Definition of storage mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IStorageClassificationMappingOperations StorageClassificationMapping
+        {
+            get { return this._storageClassificationMapping; }
+        }
+        
+        private IStorageClassificationOperations _storageClassification;
+        
+        /// <summary>
+        /// Definition of storage classification operations for the Site
+        /// Recovery extension.
+        /// </summary>
+        public virtual IStorageClassificationOperations StorageClassification
+        {
+            get { return this._storageClassification; }
+        }
+        
+        private IVCenterOperations _vCenters;
+        
+        /// <summary>
+        /// Definition of vCenter entity operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IVCenterOperations VCenters
+        {
+            get { return this._vCenters; }
         }
         
         /// <summary>
@@ -179,12 +314,24 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public SiteRecoveryManagementClient()
             : base()
         {
+            this._alertSettings = new AlertSettingsOperations(this);
+            this._events = new EventOperations(this);
+            this._fabrics = new FabricOperations(this);
             this._jobs = new JobOperations(this);
+            this._logicalNetwork = new LogicalNetworkOperations(this);
+            this._networkMapping = new NetworkMappingOperations(this);
+            this._network = new NetworkOperations(this);
+            this._policies = new PolicyOperations(this);
+            this._protectableItem = new ProtectableItemOperations(this);
+            this._protectionContainerMapping = new ProtectionContainerMappingOperations(this);
             this._protectionContainer = new ProtectionContainerOperations(this);
-            this._protectionEntity = new ProtectionEntityOperations(this);
-            this._protectionProfile = new ProtectionProfileOperations(this);
             this._recoveryPlan = new RecoveryPlanOperations(this);
-            this._servers = new ServerOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
+            this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
+            this._storageClassificationMapping = new StorageClassificationMappingOperations(this);
+            this._storageClassification = new StorageClassificationOperations(this);
+            this._vCenters = new VCenterOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -204,6 +351,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
+        /// <param name='resourceType'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -213,7 +363,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (resourceName == null)
@@ -228,6 +378,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException("resourceType");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -239,6 +393,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._resourceName = resourceName;
             this._resourceGroupName = resourceGroupName;
             this._resourceNamespace = resourceNamespace;
+            this._resourceType = resourceType;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -258,12 +413,15 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
+        /// <param name='resourceType'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, SubscriptionCloudCredentials credentials)
+        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials)
             : this()
         {
             if (resourceName == null)
@@ -278,6 +436,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException("resourceType");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -285,6 +447,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._resourceName = resourceName;
             this._resourceGroupName = resourceGroupName;
             this._resourceNamespace = resourceNamespace;
+            this._resourceType = resourceType;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -301,12 +464,24 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public SiteRecoveryManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._alertSettings = new AlertSettingsOperations(this);
+            this._events = new EventOperations(this);
+            this._fabrics = new FabricOperations(this);
             this._jobs = new JobOperations(this);
+            this._logicalNetwork = new LogicalNetworkOperations(this);
+            this._networkMapping = new NetworkMappingOperations(this);
+            this._network = new NetworkOperations(this);
+            this._policies = new PolicyOperations(this);
+            this._protectableItem = new ProtectableItemOperations(this);
+            this._protectionContainerMapping = new ProtectionContainerMappingOperations(this);
             this._protectionContainer = new ProtectionContainerOperations(this);
-            this._protectionEntity = new ProtectionEntityOperations(this);
-            this._protectionProfile = new ProtectionProfileOperations(this);
             this._recoveryPlan = new RecoveryPlanOperations(this);
-            this._servers = new ServerOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._recoveryServicesProvider = new RecoveryServicesProviderOperations(this);
+            this._replicationProtectedItem = new ReplicationProtectedItemOperations(this);
+            this._storageClassificationMapping = new StorageClassificationMappingOperations(this);
+            this._storageClassification = new StorageClassificationOperations(this);
+            this._vCenters = new VCenterOperations(this);
             this._apiVersion = "2015-01-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -326,6 +501,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
+        /// <param name='resourceType'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -338,7 +516,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
             if (resourceName == null)
@@ -353,6 +531,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException("resourceType");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -364,6 +546,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._resourceName = resourceName;
             this._resourceGroupName = resourceGroupName;
             this._resourceNamespace = resourceNamespace;
+            this._resourceType = resourceType;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -383,6 +566,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='resourceNamespace'>
         /// Required.
         /// </param>
+        /// <param name='resourceType'>
+        /// Required.
+        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -391,7 +577,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public SiteRecoveryManagementClient(string resourceName, string resourceGroupName, string resourceNamespace, string resourceType, SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
             if (resourceName == null)
@@ -406,6 +592,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 throw new ArgumentNullException("resourceNamespace");
             }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException("resourceType");
+            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -413,6 +603,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             this._resourceName = resourceName;
             this._resourceGroupName = resourceGroupName;
             this._resourceNamespace = resourceNamespace;
+            this._resourceType = resourceType;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -437,6 +628,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 clonedClient._resourceName = this._resourceName;
                 clonedClient._resourceGroupName = this._resourceGroupName;
                 clonedClient._resourceNamespace = this._resourceNamespace;
+                clonedClient._resourceType = this._resourceType;
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
                 clonedClient._apiVersion = this._apiVersion;

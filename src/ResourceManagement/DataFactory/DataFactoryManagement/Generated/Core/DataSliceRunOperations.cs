@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/runs/";
             url = url + Uri.EscapeDataString(runId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -592,7 +592,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataSliceRunId);
             url = url + "/logInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -711,12 +711,12 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters for specifying the filters to list data slice
-        /// runs of the table.
+        /// runs of the dataset.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -724,7 +724,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slice runs operation response.
         /// </returns>
-        public async Task<DataSliceRunListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceRunListParameters parameters, CancellationToken cancellationToken)
+        public async Task<DataSliceRunListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string datasetName, DataSliceRunListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -751,17 +751,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("dataFactoryName");
             }
-            if (tableName == null)
+            if (datasetName == null)
             {
-                throw new ArgumentNullException("tableName");
+                throw new ArgumentNullException("datasetName");
             }
-            if (tableName != null && tableName.Length > 260)
+            if (datasetName != null && datasetName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("tableName");
+                throw new ArgumentOutOfRangeException("datasetName");
             }
-            if (Regex.IsMatch(tableName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(datasetName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("tableName");
+                throw new ArgumentOutOfRangeException("datasetName");
             }
             if (parameters == null)
             {
@@ -781,7 +781,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("tableName", tableName);
+                tracingParameters.Add("datasetName", datasetName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -798,11 +798,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/datasets/";
-            url = url + Uri.EscapeDataString(tableName);
+            url = url + Uri.EscapeDataString(datasetName);
             url = url + "/sliceruns";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("startTime=" + Uri.EscapeDataString(parameters.DataSliceStartTime));
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

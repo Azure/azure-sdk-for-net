@@ -74,12 +74,12 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters specifying how to list data slices of the
-        /// table.
+        /// dataset.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        public async Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters, CancellationToken cancellationToken)
+        public async Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string datasetName, DataSliceListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -114,17 +114,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("dataFactoryName");
             }
-            if (tableName == null)
+            if (datasetName == null)
             {
-                throw new ArgumentNullException("tableName");
+                throw new ArgumentNullException("datasetName");
             }
-            if (tableName != null && tableName.Length > 260)
+            if (datasetName != null && datasetName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("tableName");
+                throw new ArgumentOutOfRangeException("datasetName");
             }
-            if (Regex.IsMatch(tableName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(datasetName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("tableName");
+                throw new ArgumentOutOfRangeException("datasetName");
             }
             if (parameters == null)
             {
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("tableName", tableName);
+                tracingParameters.Add("datasetName", datasetName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -165,12 +165,12 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/datasets/";
-            url = url + Uri.EscapeDataString(tableName);
+            url = url + Uri.EscapeDataString(datasetName);
             url = url + "/slices";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime));
             queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -534,7 +534,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Sets status of data slices over a time range for a specific table.
+        /// Sets status of data slices over a time range for a specific dataset.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -542,8 +542,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to set status of data slices.
@@ -555,7 +555,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string datasetName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -582,17 +582,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("dataFactoryName");
             }
-            if (tableName == null)
+            if (datasetName == null)
             {
-                throw new ArgumentNullException("tableName");
+                throw new ArgumentNullException("datasetName");
             }
-            if (tableName != null && tableName.Length > 260)
+            if (datasetName != null && datasetName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("tableName");
+                throw new ArgumentOutOfRangeException("datasetName");
             }
-            if (Regex.IsMatch(tableName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(datasetName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("tableName");
+                throw new ArgumentOutOfRangeException("datasetName");
             }
             if (parameters == null)
             {
@@ -608,7 +608,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("tableName", tableName);
+                tracingParameters.Add("datasetName", datasetName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "SetStatusAsync", tracingParameters);
             }
@@ -625,7 +625,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/datasets/";
-            url = url + Uri.EscapeDataString(tableName);
+            url = url + Uri.EscapeDataString(datasetName);
             url = url + "/slices/setstatus";
             List<string> queryParameters = new List<string>();
             if (parameters.DataSliceRangeStartTime != null)
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
             }
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

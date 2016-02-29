@@ -87,6 +87,15 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for determining the set of
+        /// capabilites available in a specified region.
+        /// </summary>
+        ICapabilitiesOperations Capabilities
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating pertaining to
         /// activation on Azure SQL Data Warehouse databases. Contains
         /// operations to: Pause and Resume databases
@@ -98,7 +107,7 @@ namespace Microsoft.Azure.Management.Sql
         
         /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
-        /// restore points. Contains operations to: List restore points.
+        /// database backups.
         /// </summary>
         IDatabaseBackupOperations DatabaseBackup
         {
@@ -148,15 +157,6 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Represents all the operations for determining the set of
-        /// capabilites available in a specified region.
-        /// </summary>
-        ILocationCapabilitiesOperations Capabilities
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// Represents all the operations for operating on Azure SQL
         /// Recommended Elastic Pools.  Contains operations to: Retrieve.
         /// </summary>
@@ -196,12 +196,42 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Security Alert policy.  Contains operations to:
+        /// Create, Retrieve and Update policy.
+        /// </summary>
+        ISecurityAlertPolicyOperations SecurityAlertPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Server
         /// Active Directory Administrators.  Contains operations to: Create,
         /// Retrieve, Update, and Delete Azure SQL Server Active Directory
         /// Administrators.
         /// </summary>
         IServerAdministratorOperations ServerAdministrators
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Server
+        /// communication links.  Contains operations to: Create, Retrieve,
+        /// Update, and Delete.
+        /// </summary>
+        IServerCommunicationLinkOperations CommunicationLinks
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Server
+        /// disaster recovery configurations.  Contains operations to: Create,
+        /// Retrieve, Update, and Delete.
+        /// </summary>
+        IServerDisasterRecoveryConfigurationOperations ServerDisasterRecoveryConfigurations
         {
             get; 
         }

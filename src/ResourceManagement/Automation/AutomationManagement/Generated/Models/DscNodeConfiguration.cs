@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of the dsc node configuration.
     /// </summary>
-    public partial class DscNodeConfiguration : ResourceBase
+    public partial class DscNodeConfiguration
     {
         private DscConfigurationAssociationProperty _configuration;
         
@@ -50,6 +50,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._creationTime; }
             set { this._creationTime = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private DateTimeOffset _lastModifiedTime;

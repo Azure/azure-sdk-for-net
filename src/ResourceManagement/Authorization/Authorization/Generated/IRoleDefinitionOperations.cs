@@ -38,6 +38,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
         /// <param name='parameters'>
         /// Role definition.
         /// </param>
@@ -47,7 +50,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <returns>
         /// Role definition create or update operation result.
         /// </returns>
-        Task<RoleDefinitionCreateOrUpdateResult> CreateOrUpdateAsync(Guid roleDefinitionId, RoleDefinitionCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<RoleDefinitionCreateOrUpdateResult> CreateOrUpdateAsync(Guid roleDefinitionId, string scope, RoleDefinitionCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes the role definition.
@@ -55,19 +58,25 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Role definition id.
         /// </param>
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Role definition delete operation result.
         /// </returns>
-        Task<RoleDefinitionDeleteResult> DeleteAsync(string roleDefinitionId, CancellationToken cancellationToken);
+        Task<RoleDefinitionDeleteResult> DeleteAsync(Guid roleDefinitionId, string scope, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get role definition by name (GUID).
         /// </summary>
-        /// <param name='roleDefinitionName'>
-        /// Role definition name (GUID).
+        /// <param name='roleDefinitionId'>
+        /// Role definition Id
+        /// </param>
+        /// <param name='scope'>
+        /// Scope
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -75,13 +84,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <returns>
         /// Role definition get operation result.
         /// </returns>
-        Task<RoleDefinitionGetResult> GetAsync(Guid roleDefinitionName, CancellationToken cancellationToken);
+        Task<RoleDefinitionGetResult> GetAsync(Guid roleDefinitionId, string scope, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get role definition by name (GUID).
         /// </summary>
         /// <param name='roleDefinitionId'>
-        /// Role definition Id
+        /// Fully qualified role definition Id
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -92,14 +101,21 @@ namespace Microsoft.Azure.Management.Authorization
         Task<RoleDefinitionGetResult> GetByIdAsync(string roleDefinitionId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get all role definitions.
+        /// Get all role definitions that are applicable at scope and above.
+        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
+        /// <param name='scope'>
+        /// Scope
+        /// </param>
+        /// <param name='parameters'>
+        /// List role definitions filters.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        Task<RoleDefinitionListResult> ListAsync(CancellationToken cancellationToken);
+        Task<RoleDefinitionListResult> ListAsync(string scope, ListDefinitionFilterParameters parameters, CancellationToken cancellationToken);
     }
 }

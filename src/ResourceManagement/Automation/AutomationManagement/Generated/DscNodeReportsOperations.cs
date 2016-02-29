@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.Azure.Management.Automation.Specification.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Automation
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/reports/";
             url = url + Uri.EscapeDataString(reportId.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -240,6 +241,48 @@ namespace Microsoft.Azure.Management.Automation
                                 nodeReportInstance.Type = typeInstance;
                             }
                             
+                            JToken reportIdValue = responseDoc["reportId"];
+                            if (reportIdValue != null && reportIdValue.Type != JTokenType.Null)
+                            {
+                                Guid reportIdInstance = Guid.Parse(((string)reportIdValue));
+                                nodeReportInstance.ReportId = reportIdInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                nodeReportInstance.Status = statusInstance;
+                            }
+                            
+                            JToken refreshModeValue = responseDoc["refreshMode"];
+                            if (refreshModeValue != null && refreshModeValue.Type != JTokenType.Null)
+                            {
+                                string refreshModeInstance = ((string)refreshModeValue);
+                                nodeReportInstance.RefreshMode = refreshModeInstance;
+                            }
+                            
+                            JToken rebootRequestedValue = responseDoc["rebootRequested"];
+                            if (rebootRequestedValue != null && rebootRequestedValue.Type != JTokenType.Null)
+                            {
+                                string rebootRequestedInstance = ((string)rebootRequestedValue);
+                                nodeReportInstance.RebootRequested = rebootRequestedInstance;
+                            }
+                            
+                            JToken reportFormatVersionValue = responseDoc["reportFormatVersion"];
+                            if (reportFormatVersionValue != null && reportFormatVersionValue.Type != JTokenType.Null)
+                            {
+                                string reportFormatVersionInstance = ((string)reportFormatVersionValue);
+                                nodeReportInstance.ReportFormatVersion = reportFormatVersionInstance;
+                            }
+                            
+                            JToken configurationVersionValue = responseDoc["configurationVersion"];
+                            if (configurationVersionValue != null && configurationVersionValue.Type != JTokenType.Null)
+                            {
+                                string configurationVersionInstance = ((string)configurationVersionValue);
+                                nodeReportInstance.ConfigurationVersion = configurationVersionInstance;
+                            }
+                            
                             JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
@@ -247,43 +290,241 @@ namespace Microsoft.Azure.Management.Automation
                                 nodeReportInstance.Id = idInstance;
                             }
                             
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                            JToken errorsArray = responseDoc["errors"];
+                            if (errorsArray != null && errorsArray.Type != JTokenType.Null)
                             {
-                                string idInstance2 = ((string)idValue2);
-                                nodeReportInstance.Id = idInstance2;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                nodeReportInstance.Name = nameInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                nodeReportInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JToken errorsValue in ((JArray)errorsArray))
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    nodeReportInstance.Tags.Add(tagsKey, tagsValue);
+                                    DscReportError dscReportErrorInstance = new DscReportError();
+                                    nodeReportInstance.Errors.Add(dscReportErrorInstance);
+                                    
+                                    JToken errorSourceValue = errorsValue["errorSource"];
+                                    if (errorSourceValue != null && errorSourceValue.Type != JTokenType.Null)
+                                    {
+                                        string errorSourceInstance = ((string)errorSourceValue);
+                                        dscReportErrorInstance.ErrorSource = errorSourceInstance;
+                                    }
+                                    
+                                    JToken resourceIdValue = errorsValue["resourceId"];
+                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceIdInstance = ((string)resourceIdValue);
+                                        dscReportErrorInstance.ResourceId = resourceIdInstance;
+                                    }
+                                    
+                                    JToken errorCodeValue = errorsValue["errorCode"];
+                                    if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                    {
+                                        string errorCodeInstance = ((string)errorCodeValue);
+                                        dscReportErrorInstance.ErrorCode = errorCodeInstance;
+                                    }
+                                    
+                                    JToken errorMessageValue = errorsValue["errorMessage"];
+                                    if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance = ((string)errorMessageValue);
+                                        dscReportErrorInstance.ErrorMessage = errorMessageInstance;
+                                    }
+                                    
+                                    JToken localeValue = errorsValue["locale"];
+                                    if (localeValue != null && localeValue.Type != JTokenType.Null)
+                                    {
+                                        string localeInstance = ((string)localeValue);
+                                        dscReportErrorInstance.Locale = localeInstance;
+                                    }
+                                    
+                                    JToken errorDetailsValue = errorsValue["errorDetails"];
+                                    if (errorDetailsValue != null && errorDetailsValue.Type != JTokenType.Null)
+                                    {
+                                        string errorDetailsInstance = ((string)errorDetailsValue);
+                                        dscReportErrorInstance.ErrorDetails = errorDetailsInstance;
+                                    }
                                 }
                             }
                             
-                            JToken etagValue = responseDoc["etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            JToken resourcesArray = responseDoc["resources"];
+                            if (resourcesArray != null && resourcesArray.Type != JTokenType.Null)
                             {
-                                string etagInstance = ((string)etagValue);
-                                nodeReportInstance.Etag = etagInstance;
+                                foreach (JToken resourcesValue in ((JArray)resourcesArray))
+                                {
+                                    DscReportResource dscReportResourceInstance = new DscReportResource();
+                                    nodeReportInstance.Resources.Add(dscReportResourceInstance);
+                                    
+                                    JToken resourceIdValue2 = resourcesValue["resourceId"];
+                                    if (resourceIdValue2 != null && resourceIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string resourceIdInstance2 = ((string)resourceIdValue2);
+                                        dscReportResourceInstance.ReportResourceId = resourceIdInstance2;
+                                    }
+                                    
+                                    JToken sourceInfoValue = resourcesValue["sourceInfo"];
+                                    if (sourceInfoValue != null && sourceInfoValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceInfoInstance = ((string)sourceInfoValue);
+                                        dscReportResourceInstance.SourceInfo = sourceInfoInstance;
+                                    }
+                                    
+                                    JToken dependsOnArray = resourcesValue["dependsOn"];
+                                    if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
+                                        {
+                                            DscReportResourceNavigation dscReportResourceNavigationInstance = new DscReportResourceNavigation();
+                                            dscReportResourceInstance.DependsOn.Add(dscReportResourceNavigationInstance);
+                                            
+                                            JToken resourceIdValue3 = dependsOnValue["resourceId"];
+                                            if (resourceIdValue3 != null && resourceIdValue3.Type != JTokenType.Null)
+                                            {
+                                                string resourceIdInstance3 = ((string)resourceIdValue3);
+                                                dscReportResourceNavigationInstance.ReportResourceId = resourceIdInstance3;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken moduleNameValue = resourcesValue["moduleName"];
+                                    if (moduleNameValue != null && moduleNameValue.Type != JTokenType.Null)
+                                    {
+                                        string moduleNameInstance = ((string)moduleNameValue);
+                                        dscReportResourceInstance.ModuleName = moduleNameInstance;
+                                    }
+                                    
+                                    JToken moduleVersionValue = resourcesValue["moduleVersion"];
+                                    if (moduleVersionValue != null && moduleVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string moduleVersionInstance = ((string)moduleVersionValue);
+                                        dscReportResourceInstance.ModuleVersion = moduleVersionInstance;
+                                    }
+                                    
+                                    JToken resourceNameValue = resourcesValue["resourceName"];
+                                    if (resourceNameValue != null && resourceNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceNameInstance = ((string)resourceNameValue);
+                                        dscReportResourceInstance.ResourceName = resourceNameInstance;
+                                    }
+                                    
+                                    JToken errorValue = resourcesValue["error"];
+                                    if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                    {
+                                        string errorInstance = ((string)errorValue);
+                                        dscReportResourceInstance.Error = errorInstance;
+                                    }
+                                    
+                                    JToken statusValue2 = resourcesValue["status"];
+                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance2 = ((string)statusValue2);
+                                        dscReportResourceInstance.Status = statusInstance2;
+                                    }
+                                    
+                                    JToken durationInSecondsValue = resourcesValue["durationInSeconds"];
+                                    if (durationInSecondsValue != null && durationInSecondsValue.Type != JTokenType.Null)
+                                    {
+                                        double durationInSecondsInstance = ((double)durationInSecondsValue);
+                                        dscReportResourceInstance.DurationInSeconds = durationInSecondsInstance;
+                                    }
+                                    
+                                    JToken startDateValue = resourcesValue["startDate"];
+                                    if (startDateValue != null && startDateValue.Type != JTokenType.Null)
+                                    {
+                                        DateTimeOffset startDateInstance = ((DateTimeOffset)startDateValue);
+                                        dscReportResourceInstance.StartDate = startDateInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken metaConfigurationValue = responseDoc["metaConfiguration"];
+                            if (metaConfigurationValue != null && metaConfigurationValue.Type != JTokenType.Null)
+                            {
+                                DscMetaConfiguration metaConfigurationInstance = new DscMetaConfiguration();
+                                nodeReportInstance.MetaConfiguration = metaConfigurationInstance;
+                                
+                                JToken configurationModeFrequencyMinsValue = metaConfigurationValue["configurationModeFrequencyMins"];
+                                if (configurationModeFrequencyMinsValue != null && configurationModeFrequencyMinsValue.Type != JTokenType.Null)
+                                {
+                                    int configurationModeFrequencyMinsInstance = ((int)configurationModeFrequencyMinsValue);
+                                    metaConfigurationInstance.ConfigurationModeFrequencyMins = configurationModeFrequencyMinsInstance;
+                                }
+                                
+                                JToken rebootNodeIfNeededValue = metaConfigurationValue["rebootNodeIfNeeded"];
+                                if (rebootNodeIfNeededValue != null && rebootNodeIfNeededValue.Type != JTokenType.Null)
+                                {
+                                    bool rebootNodeIfNeededInstance = ((bool)rebootNodeIfNeededValue);
+                                    metaConfigurationInstance.RebootNodeIfNeeded = rebootNodeIfNeededInstance;
+                                }
+                                
+                                JToken configurationModeValue = metaConfigurationValue["configurationMode"];
+                                if (configurationModeValue != null && configurationModeValue.Type != JTokenType.Null)
+                                {
+                                    string configurationModeInstance = ((string)configurationModeValue);
+                                    metaConfigurationInstance.ConfigurationMode = configurationModeInstance;
+                                }
+                                
+                                JToken actionAfterRebootValue = metaConfigurationValue["actionAfterReboot"];
+                                if (actionAfterRebootValue != null && actionAfterRebootValue.Type != JTokenType.Null)
+                                {
+                                    string actionAfterRebootInstance = ((string)actionAfterRebootValue);
+                                    metaConfigurationInstance.ActionAfterReboot = actionAfterRebootInstance;
+                                }
+                                
+                                JToken certificateIdValue = metaConfigurationValue["certificateId"];
+                                if (certificateIdValue != null && certificateIdValue.Type != JTokenType.Null)
+                                {
+                                    string certificateIdInstance = ((string)certificateIdValue);
+                                    metaConfigurationInstance.CertificateId = certificateIdInstance;
+                                }
+                                
+                                JToken refreshFrequencyMinsValue = metaConfigurationValue["refreshFrequencyMins"];
+                                if (refreshFrequencyMinsValue != null && refreshFrequencyMinsValue.Type != JTokenType.Null)
+                                {
+                                    int refreshFrequencyMinsInstance = ((int)refreshFrequencyMinsValue);
+                                    metaConfigurationInstance.RefreshFrequencyMins = refreshFrequencyMinsInstance;
+                                }
+                                
+                                JToken allowModuleOverwriteValue = metaConfigurationValue["allowModuleOverwrite"];
+                                if (allowModuleOverwriteValue != null && allowModuleOverwriteValue.Type != JTokenType.Null)
+                                {
+                                    bool allowModuleOverwriteInstance = ((bool)allowModuleOverwriteValue);
+                                    metaConfigurationInstance.AllowModuleOverwrite = allowModuleOverwriteInstance;
+                                }
+                            }
+                            
+                            JToken hostNameValue = responseDoc["hostName"];
+                            if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
+                            {
+                                string hostNameInstance = ((string)hostNameValue);
+                                nodeReportInstance.HostName = hostNameInstance;
+                            }
+                            
+                            JToken iPV4AddressesArray = responseDoc["iPV4Addresses"];
+                            if (iPV4AddressesArray != null && iPV4AddressesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken iPV4AddressesValue in ((JArray)iPV4AddressesArray))
+                                {
+                                    nodeReportInstance.IPV4Addresses.Add(((string)iPV4AddressesValue));
+                                }
+                            }
+                            
+                            JToken iPV6AddressesArray = responseDoc["iPV6Addresses"];
+                            if (iPV6AddressesArray != null && iPV6AddressesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken iPV6AddressesValue in ((JArray)iPV6AddressesArray))
+                                {
+                                    nodeReportInstance.IPV6Addresses.Add(((string)iPV6AddressesValue));
+                                }
+                            }
+                            
+                            JToken numberOfResourcesValue = responseDoc["numberOfResources"];
+                            if (numberOfResourcesValue != null && numberOfResourcesValue.Type != JTokenType.Null)
+                            {
+                                int numberOfResourcesInstance = ((int)numberOfResourcesValue);
+                                nodeReportInstance.NumberOfResources = numberOfResourcesInstance;
+                            }
+                            
+                            JToken rawErrorsValue = responseDoc["rawErrors"];
+                            if (rawErrorsValue != null && rawErrorsValue.Type != JTokenType.Null)
+                            {
+                                string rawErrorsInstance = ((string)rawErrorsValue);
+                                nodeReportInstance.RawErrors = rawErrorsInstance;
                             }
                         }
                         
@@ -388,7 +629,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(reportId.ToString());
             url = url + "/content";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -573,7 +814,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -686,6 +927,48 @@ namespace Microsoft.Azure.Management.Automation
                                         dscNodeReportInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken reportIdValue = valueValue["reportId"];
+                                    if (reportIdValue != null && reportIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid reportIdInstance = Guid.Parse(((string)reportIdValue));
+                                        dscNodeReportInstance.ReportId = reportIdInstance;
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        dscNodeReportInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken refreshModeValue = valueValue["refreshMode"];
+                                    if (refreshModeValue != null && refreshModeValue.Type != JTokenType.Null)
+                                    {
+                                        string refreshModeInstance = ((string)refreshModeValue);
+                                        dscNodeReportInstance.RefreshMode = refreshModeInstance;
+                                    }
+                                    
+                                    JToken rebootRequestedValue = valueValue["rebootRequested"];
+                                    if (rebootRequestedValue != null && rebootRequestedValue.Type != JTokenType.Null)
+                                    {
+                                        string rebootRequestedInstance = ((string)rebootRequestedValue);
+                                        dscNodeReportInstance.RebootRequested = rebootRequestedInstance;
+                                    }
+                                    
+                                    JToken reportFormatVersionValue = valueValue["reportFormatVersion"];
+                                    if (reportFormatVersionValue != null && reportFormatVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string reportFormatVersionInstance = ((string)reportFormatVersionValue);
+                                        dscNodeReportInstance.ReportFormatVersion = reportFormatVersionInstance;
+                                    }
+                                    
+                                    JToken configurationVersionValue = valueValue["configurationVersion"];
+                                    if (configurationVersionValue != null && configurationVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string configurationVersionInstance = ((string)configurationVersionValue);
+                                        dscNodeReportInstance.ConfigurationVersion = configurationVersionInstance;
+                                    }
+                                    
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
@@ -693,43 +976,241 @@ namespace Microsoft.Azure.Management.Automation
                                         dscNodeReportInstance.Id = idInstance;
                                     }
                                     
-                                    JToken idValue2 = valueValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken errorsArray = valueValue["errors"];
+                                    if (errorsArray != null && errorsArray.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        dscNodeReportInstance.Id = idInstance2;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        dscNodeReportInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        dscNodeReportInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
+                                        foreach (JToken errorsValue in ((JArray)errorsArray))
                                         {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            dscNodeReportInstance.Tags.Add(tagsKey, tagsValue);
+                                            DscReportError dscReportErrorInstance = new DscReportError();
+                                            dscNodeReportInstance.Errors.Add(dscReportErrorInstance);
+                                            
+                                            JToken errorSourceValue = errorsValue["errorSource"];
+                                            if (errorSourceValue != null && errorSourceValue.Type != JTokenType.Null)
+                                            {
+                                                string errorSourceInstance = ((string)errorSourceValue);
+                                                dscReportErrorInstance.ErrorSource = errorSourceInstance;
+                                            }
+                                            
+                                            JToken resourceIdValue = errorsValue["resourceId"];
+                                            if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                            {
+                                                string resourceIdInstance = ((string)resourceIdValue);
+                                                dscReportErrorInstance.ResourceId = resourceIdInstance;
+                                            }
+                                            
+                                            JToken errorCodeValue = errorsValue["errorCode"];
+                                            if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                            {
+                                                string errorCodeInstance = ((string)errorCodeValue);
+                                                dscReportErrorInstance.ErrorCode = errorCodeInstance;
+                                            }
+                                            
+                                            JToken errorMessageValue = errorsValue["errorMessage"];
+                                            if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance = ((string)errorMessageValue);
+                                                dscReportErrorInstance.ErrorMessage = errorMessageInstance;
+                                            }
+                                            
+                                            JToken localeValue = errorsValue["locale"];
+                                            if (localeValue != null && localeValue.Type != JTokenType.Null)
+                                            {
+                                                string localeInstance = ((string)localeValue);
+                                                dscReportErrorInstance.Locale = localeInstance;
+                                            }
+                                            
+                                            JToken errorDetailsValue = errorsValue["errorDetails"];
+                                            if (errorDetailsValue != null && errorDetailsValue.Type != JTokenType.Null)
+                                            {
+                                                string errorDetailsInstance = ((string)errorDetailsValue);
+                                                dscReportErrorInstance.ErrorDetails = errorDetailsInstance;
+                                            }
                                         }
                                     }
                                     
-                                    JToken etagValue = valueValue["etag"];
-                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    JToken resourcesArray = valueValue["resources"];
+                                    if (resourcesArray != null && resourcesArray.Type != JTokenType.Null)
                                     {
-                                        string etagInstance = ((string)etagValue);
-                                        dscNodeReportInstance.Etag = etagInstance;
+                                        foreach (JToken resourcesValue in ((JArray)resourcesArray))
+                                        {
+                                            DscReportResource dscReportResourceInstance = new DscReportResource();
+                                            dscNodeReportInstance.Resources.Add(dscReportResourceInstance);
+                                            
+                                            JToken resourceIdValue2 = resourcesValue["resourceId"];
+                                            if (resourceIdValue2 != null && resourceIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string resourceIdInstance2 = ((string)resourceIdValue2);
+                                                dscReportResourceInstance.ReportResourceId = resourceIdInstance2;
+                                            }
+                                            
+                                            JToken sourceInfoValue = resourcesValue["sourceInfo"];
+                                            if (sourceInfoValue != null && sourceInfoValue.Type != JTokenType.Null)
+                                            {
+                                                string sourceInfoInstance = ((string)sourceInfoValue);
+                                                dscReportResourceInstance.SourceInfo = sourceInfoInstance;
+                                            }
+                                            
+                                            JToken dependsOnArray = resourcesValue["dependsOn"];
+                                            if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
+                                                {
+                                                    DscReportResourceNavigation dscReportResourceNavigationInstance = new DscReportResourceNavigation();
+                                                    dscReportResourceInstance.DependsOn.Add(dscReportResourceNavigationInstance);
+                                                    
+                                                    JToken resourceIdValue3 = dependsOnValue["resourceId"];
+                                                    if (resourceIdValue3 != null && resourceIdValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string resourceIdInstance3 = ((string)resourceIdValue3);
+                                                        dscReportResourceNavigationInstance.ReportResourceId = resourceIdInstance3;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken moduleNameValue = resourcesValue["moduleName"];
+                                            if (moduleNameValue != null && moduleNameValue.Type != JTokenType.Null)
+                                            {
+                                                string moduleNameInstance = ((string)moduleNameValue);
+                                                dscReportResourceInstance.ModuleName = moduleNameInstance;
+                                            }
+                                            
+                                            JToken moduleVersionValue = resourcesValue["moduleVersion"];
+                                            if (moduleVersionValue != null && moduleVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string moduleVersionInstance = ((string)moduleVersionValue);
+                                                dscReportResourceInstance.ModuleVersion = moduleVersionInstance;
+                                            }
+                                            
+                                            JToken resourceNameValue = resourcesValue["resourceName"];
+                                            if (resourceNameValue != null && resourceNameValue.Type != JTokenType.Null)
+                                            {
+                                                string resourceNameInstance = ((string)resourceNameValue);
+                                                dscReportResourceInstance.ResourceName = resourceNameInstance;
+                                            }
+                                            
+                                            JToken errorValue = resourcesValue["error"];
+                                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                            {
+                                                string errorInstance = ((string)errorValue);
+                                                dscReportResourceInstance.Error = errorInstance;
+                                            }
+                                            
+                                            JToken statusValue2 = resourcesValue["status"];
+                                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                            {
+                                                string statusInstance2 = ((string)statusValue2);
+                                                dscReportResourceInstance.Status = statusInstance2;
+                                            }
+                                            
+                                            JToken durationInSecondsValue = resourcesValue["durationInSeconds"];
+                                            if (durationInSecondsValue != null && durationInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                double durationInSecondsInstance = ((double)durationInSecondsValue);
+                                                dscReportResourceInstance.DurationInSeconds = durationInSecondsInstance;
+                                            }
+                                            
+                                            JToken startDateValue = resourcesValue["startDate"];
+                                            if (startDateValue != null && startDateValue.Type != JTokenType.Null)
+                                            {
+                                                DateTimeOffset startDateInstance = ((DateTimeOffset)startDateValue);
+                                                dscReportResourceInstance.StartDate = startDateInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken metaConfigurationValue = valueValue["metaConfiguration"];
+                                    if (metaConfigurationValue != null && metaConfigurationValue.Type != JTokenType.Null)
+                                    {
+                                        DscMetaConfiguration metaConfigurationInstance = new DscMetaConfiguration();
+                                        dscNodeReportInstance.MetaConfiguration = metaConfigurationInstance;
+                                        
+                                        JToken configurationModeFrequencyMinsValue = metaConfigurationValue["configurationModeFrequencyMins"];
+                                        if (configurationModeFrequencyMinsValue != null && configurationModeFrequencyMinsValue.Type != JTokenType.Null)
+                                        {
+                                            int configurationModeFrequencyMinsInstance = ((int)configurationModeFrequencyMinsValue);
+                                            metaConfigurationInstance.ConfigurationModeFrequencyMins = configurationModeFrequencyMinsInstance;
+                                        }
+                                        
+                                        JToken rebootNodeIfNeededValue = metaConfigurationValue["rebootNodeIfNeeded"];
+                                        if (rebootNodeIfNeededValue != null && rebootNodeIfNeededValue.Type != JTokenType.Null)
+                                        {
+                                            bool rebootNodeIfNeededInstance = ((bool)rebootNodeIfNeededValue);
+                                            metaConfigurationInstance.RebootNodeIfNeeded = rebootNodeIfNeededInstance;
+                                        }
+                                        
+                                        JToken configurationModeValue = metaConfigurationValue["configurationMode"];
+                                        if (configurationModeValue != null && configurationModeValue.Type != JTokenType.Null)
+                                        {
+                                            string configurationModeInstance = ((string)configurationModeValue);
+                                            metaConfigurationInstance.ConfigurationMode = configurationModeInstance;
+                                        }
+                                        
+                                        JToken actionAfterRebootValue = metaConfigurationValue["actionAfterReboot"];
+                                        if (actionAfterRebootValue != null && actionAfterRebootValue.Type != JTokenType.Null)
+                                        {
+                                            string actionAfterRebootInstance = ((string)actionAfterRebootValue);
+                                            metaConfigurationInstance.ActionAfterReboot = actionAfterRebootInstance;
+                                        }
+                                        
+                                        JToken certificateIdValue = metaConfigurationValue["certificateId"];
+                                        if (certificateIdValue != null && certificateIdValue.Type != JTokenType.Null)
+                                        {
+                                            string certificateIdInstance = ((string)certificateIdValue);
+                                            metaConfigurationInstance.CertificateId = certificateIdInstance;
+                                        }
+                                        
+                                        JToken refreshFrequencyMinsValue = metaConfigurationValue["refreshFrequencyMins"];
+                                        if (refreshFrequencyMinsValue != null && refreshFrequencyMinsValue.Type != JTokenType.Null)
+                                        {
+                                            int refreshFrequencyMinsInstance = ((int)refreshFrequencyMinsValue);
+                                            metaConfigurationInstance.RefreshFrequencyMins = refreshFrequencyMinsInstance;
+                                        }
+                                        
+                                        JToken allowModuleOverwriteValue = metaConfigurationValue["allowModuleOverwrite"];
+                                        if (allowModuleOverwriteValue != null && allowModuleOverwriteValue.Type != JTokenType.Null)
+                                        {
+                                            bool allowModuleOverwriteInstance = ((bool)allowModuleOverwriteValue);
+                                            metaConfigurationInstance.AllowModuleOverwrite = allowModuleOverwriteInstance;
+                                        }
+                                    }
+                                    
+                                    JToken hostNameValue = valueValue["hostName"];
+                                    if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
+                                    {
+                                        string hostNameInstance = ((string)hostNameValue);
+                                        dscNodeReportInstance.HostName = hostNameInstance;
+                                    }
+                                    
+                                    JToken iPV4AddressesArray = valueValue["iPV4Addresses"];
+                                    if (iPV4AddressesArray != null && iPV4AddressesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken iPV4AddressesValue in ((JArray)iPV4AddressesArray))
+                                        {
+                                            dscNodeReportInstance.IPV4Addresses.Add(((string)iPV4AddressesValue));
+                                        }
+                                    }
+                                    
+                                    JToken iPV6AddressesArray = valueValue["iPV6Addresses"];
+                                    if (iPV6AddressesArray != null && iPV6AddressesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken iPV6AddressesValue in ((JArray)iPV6AddressesArray))
+                                        {
+                                            dscNodeReportInstance.IPV6Addresses.Add(((string)iPV6AddressesValue));
+                                        }
+                                    }
+                                    
+                                    JToken numberOfResourcesValue = valueValue["numberOfResources"];
+                                    if (numberOfResourcesValue != null && numberOfResourcesValue.Type != JTokenType.Null)
+                                    {
+                                        int numberOfResourcesInstance = ((int)numberOfResourcesValue);
+                                        dscNodeReportInstance.NumberOfResources = numberOfResourcesInstance;
+                                    }
+                                    
+                                    JToken rawErrorsValue = valueValue["rawErrors"];
+                                    if (rawErrorsValue != null && rawErrorsValue.Type != JTokenType.Null)
+                                    {
+                                        string rawErrorsInstance = ((string)rawErrorsValue);
+                                        dscNodeReportInstance.RawErrors = rawErrorsInstance;
                                     }
                                 }
                             }
@@ -912,6 +1393,48 @@ namespace Microsoft.Azure.Management.Automation
                                         dscNodeReportInstance.Type = typeInstance;
                                     }
                                     
+                                    JToken reportIdValue = valueValue["reportId"];
+                                    if (reportIdValue != null && reportIdValue.Type != JTokenType.Null)
+                                    {
+                                        Guid reportIdInstance = Guid.Parse(((string)reportIdValue));
+                                        dscNodeReportInstance.ReportId = reportIdInstance;
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        dscNodeReportInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken refreshModeValue = valueValue["refreshMode"];
+                                    if (refreshModeValue != null && refreshModeValue.Type != JTokenType.Null)
+                                    {
+                                        string refreshModeInstance = ((string)refreshModeValue);
+                                        dscNodeReportInstance.RefreshMode = refreshModeInstance;
+                                    }
+                                    
+                                    JToken rebootRequestedValue = valueValue["rebootRequested"];
+                                    if (rebootRequestedValue != null && rebootRequestedValue.Type != JTokenType.Null)
+                                    {
+                                        string rebootRequestedInstance = ((string)rebootRequestedValue);
+                                        dscNodeReportInstance.RebootRequested = rebootRequestedInstance;
+                                    }
+                                    
+                                    JToken reportFormatVersionValue = valueValue["reportFormatVersion"];
+                                    if (reportFormatVersionValue != null && reportFormatVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string reportFormatVersionInstance = ((string)reportFormatVersionValue);
+                                        dscNodeReportInstance.ReportFormatVersion = reportFormatVersionInstance;
+                                    }
+                                    
+                                    JToken configurationVersionValue = valueValue["configurationVersion"];
+                                    if (configurationVersionValue != null && configurationVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string configurationVersionInstance = ((string)configurationVersionValue);
+                                        dscNodeReportInstance.ConfigurationVersion = configurationVersionInstance;
+                                    }
+                                    
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
@@ -919,43 +1442,241 @@ namespace Microsoft.Azure.Management.Automation
                                         dscNodeReportInstance.Id = idInstance;
                                     }
                                     
-                                    JToken idValue2 = valueValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken errorsArray = valueValue["errors"];
+                                    if (errorsArray != null && errorsArray.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        dscNodeReportInstance.Id = idInstance2;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        dscNodeReportInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        dscNodeReportInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
+                                        foreach (JToken errorsValue in ((JArray)errorsArray))
                                         {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            dscNodeReportInstance.Tags.Add(tagsKey, tagsValue);
+                                            DscReportError dscReportErrorInstance = new DscReportError();
+                                            dscNodeReportInstance.Errors.Add(dscReportErrorInstance);
+                                            
+                                            JToken errorSourceValue = errorsValue["errorSource"];
+                                            if (errorSourceValue != null && errorSourceValue.Type != JTokenType.Null)
+                                            {
+                                                string errorSourceInstance = ((string)errorSourceValue);
+                                                dscReportErrorInstance.ErrorSource = errorSourceInstance;
+                                            }
+                                            
+                                            JToken resourceIdValue = errorsValue["resourceId"];
+                                            if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                            {
+                                                string resourceIdInstance = ((string)resourceIdValue);
+                                                dscReportErrorInstance.ResourceId = resourceIdInstance;
+                                            }
+                                            
+                                            JToken errorCodeValue = errorsValue["errorCode"];
+                                            if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                            {
+                                                string errorCodeInstance = ((string)errorCodeValue);
+                                                dscReportErrorInstance.ErrorCode = errorCodeInstance;
+                                            }
+                                            
+                                            JToken errorMessageValue = errorsValue["errorMessage"];
+                                            if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance = ((string)errorMessageValue);
+                                                dscReportErrorInstance.ErrorMessage = errorMessageInstance;
+                                            }
+                                            
+                                            JToken localeValue = errorsValue["locale"];
+                                            if (localeValue != null && localeValue.Type != JTokenType.Null)
+                                            {
+                                                string localeInstance = ((string)localeValue);
+                                                dscReportErrorInstance.Locale = localeInstance;
+                                            }
+                                            
+                                            JToken errorDetailsValue = errorsValue["errorDetails"];
+                                            if (errorDetailsValue != null && errorDetailsValue.Type != JTokenType.Null)
+                                            {
+                                                string errorDetailsInstance = ((string)errorDetailsValue);
+                                                dscReportErrorInstance.ErrorDetails = errorDetailsInstance;
+                                            }
                                         }
                                     }
                                     
-                                    JToken etagValue = valueValue["etag"];
-                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    JToken resourcesArray = valueValue["resources"];
+                                    if (resourcesArray != null && resourcesArray.Type != JTokenType.Null)
                                     {
-                                        string etagInstance = ((string)etagValue);
-                                        dscNodeReportInstance.Etag = etagInstance;
+                                        foreach (JToken resourcesValue in ((JArray)resourcesArray))
+                                        {
+                                            DscReportResource dscReportResourceInstance = new DscReportResource();
+                                            dscNodeReportInstance.Resources.Add(dscReportResourceInstance);
+                                            
+                                            JToken resourceIdValue2 = resourcesValue["resourceId"];
+                                            if (resourceIdValue2 != null && resourceIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string resourceIdInstance2 = ((string)resourceIdValue2);
+                                                dscReportResourceInstance.ReportResourceId = resourceIdInstance2;
+                                            }
+                                            
+                                            JToken sourceInfoValue = resourcesValue["sourceInfo"];
+                                            if (sourceInfoValue != null && sourceInfoValue.Type != JTokenType.Null)
+                                            {
+                                                string sourceInfoInstance = ((string)sourceInfoValue);
+                                                dscReportResourceInstance.SourceInfo = sourceInfoInstance;
+                                            }
+                                            
+                                            JToken dependsOnArray = resourcesValue["dependsOn"];
+                                            if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
+                                                {
+                                                    DscReportResourceNavigation dscReportResourceNavigationInstance = new DscReportResourceNavigation();
+                                                    dscReportResourceInstance.DependsOn.Add(dscReportResourceNavigationInstance);
+                                                    
+                                                    JToken resourceIdValue3 = dependsOnValue["resourceId"];
+                                                    if (resourceIdValue3 != null && resourceIdValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string resourceIdInstance3 = ((string)resourceIdValue3);
+                                                        dscReportResourceNavigationInstance.ReportResourceId = resourceIdInstance3;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken moduleNameValue = resourcesValue["moduleName"];
+                                            if (moduleNameValue != null && moduleNameValue.Type != JTokenType.Null)
+                                            {
+                                                string moduleNameInstance = ((string)moduleNameValue);
+                                                dscReportResourceInstance.ModuleName = moduleNameInstance;
+                                            }
+                                            
+                                            JToken moduleVersionValue = resourcesValue["moduleVersion"];
+                                            if (moduleVersionValue != null && moduleVersionValue.Type != JTokenType.Null)
+                                            {
+                                                string moduleVersionInstance = ((string)moduleVersionValue);
+                                                dscReportResourceInstance.ModuleVersion = moduleVersionInstance;
+                                            }
+                                            
+                                            JToken resourceNameValue = resourcesValue["resourceName"];
+                                            if (resourceNameValue != null && resourceNameValue.Type != JTokenType.Null)
+                                            {
+                                                string resourceNameInstance = ((string)resourceNameValue);
+                                                dscReportResourceInstance.ResourceName = resourceNameInstance;
+                                            }
+                                            
+                                            JToken errorValue = resourcesValue["error"];
+                                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                            {
+                                                string errorInstance = ((string)errorValue);
+                                                dscReportResourceInstance.Error = errorInstance;
+                                            }
+                                            
+                                            JToken statusValue2 = resourcesValue["status"];
+                                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                            {
+                                                string statusInstance2 = ((string)statusValue2);
+                                                dscReportResourceInstance.Status = statusInstance2;
+                                            }
+                                            
+                                            JToken durationInSecondsValue = resourcesValue["durationInSeconds"];
+                                            if (durationInSecondsValue != null && durationInSecondsValue.Type != JTokenType.Null)
+                                            {
+                                                double durationInSecondsInstance = ((double)durationInSecondsValue);
+                                                dscReportResourceInstance.DurationInSeconds = durationInSecondsInstance;
+                                            }
+                                            
+                                            JToken startDateValue = resourcesValue["startDate"];
+                                            if (startDateValue != null && startDateValue.Type != JTokenType.Null)
+                                            {
+                                                DateTimeOffset startDateInstance = ((DateTimeOffset)startDateValue);
+                                                dscReportResourceInstance.StartDate = startDateInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken metaConfigurationValue = valueValue["metaConfiguration"];
+                                    if (metaConfigurationValue != null && metaConfigurationValue.Type != JTokenType.Null)
+                                    {
+                                        DscMetaConfiguration metaConfigurationInstance = new DscMetaConfiguration();
+                                        dscNodeReportInstance.MetaConfiguration = metaConfigurationInstance;
+                                        
+                                        JToken configurationModeFrequencyMinsValue = metaConfigurationValue["configurationModeFrequencyMins"];
+                                        if (configurationModeFrequencyMinsValue != null && configurationModeFrequencyMinsValue.Type != JTokenType.Null)
+                                        {
+                                            int configurationModeFrequencyMinsInstance = ((int)configurationModeFrequencyMinsValue);
+                                            metaConfigurationInstance.ConfigurationModeFrequencyMins = configurationModeFrequencyMinsInstance;
+                                        }
+                                        
+                                        JToken rebootNodeIfNeededValue = metaConfigurationValue["rebootNodeIfNeeded"];
+                                        if (rebootNodeIfNeededValue != null && rebootNodeIfNeededValue.Type != JTokenType.Null)
+                                        {
+                                            bool rebootNodeIfNeededInstance = ((bool)rebootNodeIfNeededValue);
+                                            metaConfigurationInstance.RebootNodeIfNeeded = rebootNodeIfNeededInstance;
+                                        }
+                                        
+                                        JToken configurationModeValue = metaConfigurationValue["configurationMode"];
+                                        if (configurationModeValue != null && configurationModeValue.Type != JTokenType.Null)
+                                        {
+                                            string configurationModeInstance = ((string)configurationModeValue);
+                                            metaConfigurationInstance.ConfigurationMode = configurationModeInstance;
+                                        }
+                                        
+                                        JToken actionAfterRebootValue = metaConfigurationValue["actionAfterReboot"];
+                                        if (actionAfterRebootValue != null && actionAfterRebootValue.Type != JTokenType.Null)
+                                        {
+                                            string actionAfterRebootInstance = ((string)actionAfterRebootValue);
+                                            metaConfigurationInstance.ActionAfterReboot = actionAfterRebootInstance;
+                                        }
+                                        
+                                        JToken certificateIdValue = metaConfigurationValue["certificateId"];
+                                        if (certificateIdValue != null && certificateIdValue.Type != JTokenType.Null)
+                                        {
+                                            string certificateIdInstance = ((string)certificateIdValue);
+                                            metaConfigurationInstance.CertificateId = certificateIdInstance;
+                                        }
+                                        
+                                        JToken refreshFrequencyMinsValue = metaConfigurationValue["refreshFrequencyMins"];
+                                        if (refreshFrequencyMinsValue != null && refreshFrequencyMinsValue.Type != JTokenType.Null)
+                                        {
+                                            int refreshFrequencyMinsInstance = ((int)refreshFrequencyMinsValue);
+                                            metaConfigurationInstance.RefreshFrequencyMins = refreshFrequencyMinsInstance;
+                                        }
+                                        
+                                        JToken allowModuleOverwriteValue = metaConfigurationValue["allowModuleOverwrite"];
+                                        if (allowModuleOverwriteValue != null && allowModuleOverwriteValue.Type != JTokenType.Null)
+                                        {
+                                            bool allowModuleOverwriteInstance = ((bool)allowModuleOverwriteValue);
+                                            metaConfigurationInstance.AllowModuleOverwrite = allowModuleOverwriteInstance;
+                                        }
+                                    }
+                                    
+                                    JToken hostNameValue = valueValue["hostName"];
+                                    if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
+                                    {
+                                        string hostNameInstance = ((string)hostNameValue);
+                                        dscNodeReportInstance.HostName = hostNameInstance;
+                                    }
+                                    
+                                    JToken iPV4AddressesArray = valueValue["iPV4Addresses"];
+                                    if (iPV4AddressesArray != null && iPV4AddressesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken iPV4AddressesValue in ((JArray)iPV4AddressesArray))
+                                        {
+                                            dscNodeReportInstance.IPV4Addresses.Add(((string)iPV4AddressesValue));
+                                        }
+                                    }
+                                    
+                                    JToken iPV6AddressesArray = valueValue["iPV6Addresses"];
+                                    if (iPV6AddressesArray != null && iPV6AddressesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken iPV6AddressesValue in ((JArray)iPV6AddressesArray))
+                                        {
+                                            dscNodeReportInstance.IPV6Addresses.Add(((string)iPV6AddressesValue));
+                                        }
+                                    }
+                                    
+                                    JToken numberOfResourcesValue = valueValue["numberOfResources"];
+                                    if (numberOfResourcesValue != null && numberOfResourcesValue.Type != JTokenType.Null)
+                                    {
+                                        int numberOfResourcesInstance = ((int)numberOfResourcesValue);
+                                        dscNodeReportInstance.NumberOfResources = numberOfResourcesInstance;
+                                    }
+                                    
+                                    JToken rawErrorsValue = valueValue["rawErrors"];
+                                    if (rawErrorsValue != null && rawErrorsValue.Type != JTokenType.Null)
+                                    {
+                                        string rawErrorsInstance = ((string)rawErrorsValue);
+                                        dscNodeReportInstance.RawErrors = rawErrorsInstance;
                                     }
                                 }
                             }

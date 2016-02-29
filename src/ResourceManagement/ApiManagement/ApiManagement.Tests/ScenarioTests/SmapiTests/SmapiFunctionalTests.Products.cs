@@ -54,17 +54,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 string productName = TestUtilities.GenerateName("productName");
                 bool? productApprovalRequired = true;
                 string productDescription = TestUtilities.GenerateName("productDescription");
-                PeriodContract productNotificationPeriod = new PeriodContract
-                {
-                    Interval = PeriodIntervalContract.Month,
-                    Value = 2
-                };
                 ProductStateContract productState = ProductStateContract.NotPublished;
-                PeriodContract productSubscriptionPeriod = new PeriodContract
-                {
-                    Interval = PeriodIntervalContract.Year,
-                    Value = 1
-                };
                 bool? productSubscriptionRequired = true;
                 int? productSubscriptionsLimit = 10;
                 string productTerms = TestUtilities.GenerateName("productTerms");
@@ -74,9 +64,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApprovalRequired = productApprovalRequired,
                     Description = productDescription,
                     //Groups = 
-                    NotificationPeriod = productNotificationPeriod,
                     State = productState,
-                    SubscriptionPeriod = productSubscriptionPeriod,
                     SubscriptionRequired = productSubscriptionRequired,
                     SubscriptionsLimit = productSubscriptionsLimit,
                     Terms = productTerms
@@ -101,11 +89,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.Equal(productName, getResponse.Value.Name);
                 Assert.Equal(productApprovalRequired, getResponse.Value.ApprovalRequired);
                 Assert.Equal(productDescription, getResponse.Value.Description);
-                Assert.Equal(productNotificationPeriod.Interval, getResponse.Value.NotificationPeriod.Interval);
-                Assert.Equal(productNotificationPeriod.Value, getResponse.Value.NotificationPeriod.Value);
                 Assert.Equal(productState, getResponse.Value.State);
-                Assert.Equal(productSubscriptionPeriod.Interval, getResponse.Value.SubscriptionPeriod.Interval);
-                Assert.Equal(productSubscriptionPeriod.Value, getResponse.Value.SubscriptionPeriod.Value);
                 Assert.Equal(productSubscriptionRequired, getResponse.Value.SubscriptionRequired);
                 Assert.Equal(productSubscriptionsLimit, getResponse.Value.SubscriptionsLimit);
                 Assert.Equal(productTerms, getResponse.Value.Terms);
@@ -137,11 +121,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.Equal(patchedName, getResponse.Value.Name);
                 Assert.Equal(productApprovalRequired, getResponse.Value.ApprovalRequired);
                 Assert.Equal(patchedDescription, getResponse.Value.Description);
-                Assert.Equal(productNotificationPeriod.Interval, getResponse.Value.NotificationPeriod.Interval);
-                Assert.Equal(productNotificationPeriod.Value, getResponse.Value.NotificationPeriod.Value);
                 Assert.Equal(productState, getResponse.Value.State);
-                Assert.Equal(productSubscriptionPeriod.Interval, getResponse.Value.SubscriptionPeriod.Interval);
-                Assert.Equal(productSubscriptionPeriod.Value, getResponse.Value.SubscriptionPeriod.Value);
                 Assert.Equal(productSubscriptionRequired, getResponse.Value.SubscriptionRequired);
                 Assert.Equal(productSubscriptionsLimit, getResponse.Value.SubscriptionsLimit);
                 Assert.Equal(patchedTerms, getResponse.Value.Terms);

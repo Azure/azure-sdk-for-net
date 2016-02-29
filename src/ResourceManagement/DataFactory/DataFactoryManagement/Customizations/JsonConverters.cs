@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Models;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.DataFactories.Models;
 using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Core
@@ -83,7 +83,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 }
 
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
-                if (request.Content != null)
+
+                if (request.Content != null && request.Method != HttpMethod.Post)
                 {
                     this.Json = request.Content.ReadAsStringAsync().Result;
                 }
@@ -201,20 +202,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
 
         /// <summary>
-        /// Serializes the given Core.Models.Table into JSON, by mocking a create or update request to 
+        /// Serializes the given Core.Models.Dataset into JSON, by mocking a create or update request to 
         /// exercise the client's serialization logic.
         /// </summary>
         /// <param name="item">The object to serialize.</param>
         /// <returns></returns>
-        internal static string SerializeInternalTableToJson(Models.Table item)
+        internal static string SerializeInternalDatasetToJson(Models.Dataset item)
         {
-            var createParams = new Models.TableCreateOrUpdateParameters() { Table = item };
+            var createParams = new Models.DatasetCreateOrUpdateParameters() { Dataset = item };
 
             var handler = new MockResourceProviderDelegatingHandler();
             var client = GetFakeClient(handler);
             string resourceGroupName = Guid.NewGuid().ToString("D");
             string dataFactoryName = Guid.NewGuid().ToString("D");
-            client.Tables.BeginCreateOrUpdate(resourceGroupName, dataFactoryName, createParams);
+            client.Datasets.BeginCreateOrUpdate(resourceGroupName, dataFactoryName, createParams);
             return handler.Json;
         }
 
@@ -334,21 +335,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
 
         /// <summary>
-        /// Deserializes the given json into an Hydra OM InternalTable instance, by mocking a get request to 
+        /// Deserializes the given json into a <see cref="Core.Models.Dataset"/> instance, by mocking a get request to 
         /// exercise the client's deserialization logic.
         /// </summary>
         /// <param name="json">The JSON string to deserialize.</param>
         /// <returns></returns>
-        internal static Models.Table DeserializeInternalTableJson(string json)
+        internal static Models.Dataset DeserializeInternalDatasetJson(string json)
         {
             var handler = new MockResourceProviderDelegatingHandler() { Json = json };
 
             var client = GetFakeClient(handler);
             string resourceGroupName = Guid.NewGuid().ToString("D");
             string dataFactoryName = Guid.NewGuid().ToString("D");
-            string tableName = Guid.NewGuid().ToString("D");
-            Models.TableGetResponse getResponse = client.Tables.Get(resourceGroupName, dataFactoryName, tableName);
-            return getResponse.Table;
+            string datasetName = Guid.NewGuid().ToString("D");
+            Models.DatasetGetResponse getResponse = client.Datasets.Get(resourceGroupName, dataFactoryName, datasetName);
+            return getResponse.Dataset;
         }
 
         /// <summary>
@@ -420,13 +421,35 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             CoreRegistrationModel.ActivityTypeGetParameters getParameters = new CoreRegistrationModel.ActivityTypeGetParameters(
                 CoreRegistrationModel.RegistrationScope.DataFactory,
                 Guid.NewGuid().ToString("D"));
-            
+
             CoreRegistrationModel.ActivityTypeGetResponse getResponse = client.ActivityTypes.Get(
                 resourceGroupName,
                 dataFactoryName,
                 getParameters);
 
             return getResponse.ActivityType;
+        }
+
+        /// <summary>
+        /// Deserializes the given json into an Hydra OM ActivityWindow instance, by mocking a get request to 
+        /// exercise the client's deserialization logic.
+        /// </summary>
+        /// <param name="json">The JSON string to deserialize.</param>
+        /// <returns></returns>
+        internal static ActivityWindowListResponse DeserializeActivityWindow(string json)
+        {
+            var handler = new MockResourceProviderDelegatingHandler() { Json = json };
+
+            var client = GetFakeClient(handler);
+            string resourceGroupName = Guid.NewGuid().ToString("D");
+            string dataFactoryName = Guid.NewGuid().ToString("D");
+            ActivityWindowsByDataFactoryListParameters listParameters = new ActivityWindowsByDataFactoryListParameters(
+                resourceGroupName,
+                dataFactoryName);
+
+            ActivityWindowListResponse listResponse = client.ActivityWindows.ListByDataFactory(listParameters);
+
+            return listResponse;
         }
 
         /// <summary>

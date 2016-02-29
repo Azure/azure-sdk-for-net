@@ -13,10 +13,10 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
@@ -73,11 +73,10 @@ namespace StreamAnalytics.Tests.OperationTests
                     };
                     InputProperties inputProperties = new StreamInputProperties()
                     {
-                        Serialization = new CsvSerialization()
+                        Serialization = new JsonSerialization()
                         {
-                            Properties = new CsvSerializationProperties()
+                            Properties = new JsonSerializationProperties()
                             {
-                                FieldDelimiter = ",",
                                 Encoding = "UTF8"
                             }
                         },
@@ -150,9 +149,28 @@ namespace StreamAnalytics.Tests.OperationTests
                     StreamInputProperties streamInputProperties = jobGetResponse.Job.Properties.Inputs[0].Properties as StreamInputProperties;
                     Assert.Equal("Stream", jobGetResponse.Job.Properties.Inputs[0].Properties.Type);
                     Assert.Equal("Microsoft.Storage/Blob", streamInputProperties.DataSource.Type);
-                    Assert.Equal("Csv", streamInputProperties.Serialization.Type);
+                    Assert.Equal("Json", streamInputProperties.Serialization.Type);
+                    Assert.Equal(EventsOutOfOrderPolicy.Drop, jobGetResponse.Job.Properties.EventsOutOfOrderPolicy);
                     Assert.NotNull(jobGetResponse.Job.Properties.Etag);
                     Assert.Equal(jobCreateOrUpdateResponse.Job.Properties.Etag, jobGetResponse.Job.Properties.Etag);
+
+                    // Patch the streaming job
+                    JobPatchParameters jobPatchParameters = new JobPatchParameters()
+                    {
+                        JobPatchRequest = new JobPatchRequest()
+                        {
+                            Properties = new JobProperties()
+                            {
+                                EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Adjust
+                            }
+                        }
+                    };
+                    var jobPatchResponse = client.StreamingJobs.Patch(resourceGroupName, resourceName, jobPatchParameters);
+                    jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobPatchResponse.StatusCode);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(EventsOutOfOrderPolicy.Adjust, jobPatchResponse.Job.Properties.EventsOutOfOrderPolicy);
+                    Assert.Equal(EventsOutOfOrderPolicy.Adjust, jobGetResponse.Job.Properties.EventsOutOfOrderPolicy);
 
                     JobListParameters parameters = new JobListParameters(string.Empty);
                     JobListResponse response = client.StreamingJobs.ListJobsInResourceGroup(resourceGroupName, parameters);
@@ -167,7 +185,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal("LastOutputEventTime must be available when OutputStartMode is set to LastOutputEventTime. Please make sure at least one output event has been processed. ", cloudException.Error.Message);
 
                     jobStartParameters.OutputStartMode = OutputStartMode.CustomTime;
-                    jobStartParameters.OutputStartTime = DateTime.Now;
+                    jobStartParameters.OutputStartTime = new DateTime(2012, 12, 12, 12, 12, 12, DateTimeKind.Utc);
                     AzureOperationResponse jobStartOperationResponse = client.StreamingJobs.Start(resourceGroupName, resourceName, jobStartParameters);
                     Assert.Equal(HttpStatusCode.OK, jobStartOperationResponse.StatusCode);
 
@@ -235,6 +253,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     string inputName = TestUtilities.GenerateName("input");
                     string outputName = TestUtilities.GenerateName("output");
                     string transformationName = TestUtilities.GenerateName("transformation");
+                    string functionName = TestUtilities.GenerateName("function");
 
                     // Create a streaming job
                     string content = File.ReadAllText(@"Resources\JobDefinition.json");
@@ -280,8 +299,18 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(HttpStatusCode.OK, transformationCreateOrUpdateResponse.StatusCode);
                     Assert.NotNull(transformationCreateOrUpdateResponse.Transformation.Properties.Etag);
 
+                    content = File.ReadAllText(@"Resources\FunctionDefinition.json");
+                    FunctionCreateOrUpdateResponse functionCreateOrUpdateResponse =
+                        client.Functions.CreateOrUpdateWithRawJsonContent(resourceGroupName, resourceName, functionName,
+                            new FunctionCreateOrUpdateWithRawJsonContentParameters()
+                            {
+                                Content = content
+                            });
+                    Assert.Equal(HttpStatusCode.OK, functionCreateOrUpdateResponse.StatusCode);
+                    Assert.NotNull(functionCreateOrUpdateResponse.Function.Properties.Etag);
+
                     // Get a streaming job to check
-                    JobGetParameters jobGetParameters = new JobGetParameters("inputs,transformation,outputs");
+                    JobGetParameters jobGetParameters = new JobGetParameters("inputs,transformation,outputs,functions");
                     JobGetResponse jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
                     Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
                     Assert.Equal(serviceLocation, jobGetResponse.Job.Location);
@@ -289,6 +318,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(inputName, jobGetResponse.Job.Properties.Inputs.SingleOrDefault().Name);
                     Assert.Equal(outputName, jobGetResponse.Job.Properties.Outputs.SingleOrDefault().Name);
                     Assert.Equal(transformationName, jobGetResponse.Job.Properties.Transformation.Name);
+                    Assert.Equal(functionName, jobGetResponse.Job.Properties.Functions.SingleOrDefault().Name);
                     Assert.NotNull(jobGetResponse.Job.Properties.Etag);
                     Assert.NotEqual(jobCreateOrUpdateResponse.Job.Properties.Etag, jobGetResponse.Job.Properties.Etag);
                 }

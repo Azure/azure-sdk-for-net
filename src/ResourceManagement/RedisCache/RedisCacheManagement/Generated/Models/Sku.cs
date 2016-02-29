@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         private int _capacity;
         
         /// <summary>
-        /// Required. What size of redis cache to deploy. Valid values: (0, 1,
-        /// 2, 3, 4, 5, 6)
+        /// Required. What size of redis cache to deploy. Valid values: for C
+        /// family (0, 1, 2, 3, 4, 5, 6), for P family (1, 2, 3, 4)
         /// </summary>
         public int Capacity
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _family;
         
         /// <summary>
-        /// Required. Which family to use. Valid values: (C)
+        /// Required. Which family to use. Valid values: (C, P)
         /// </summary>
         public string Family
         {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         
         /// <summary>
         /// Required. What type of redis cache to deploy. Valid values: (Basic,
-        /// Standard)
+        /// Standard, Premium)
         /// </summary>
         public string Name
         {

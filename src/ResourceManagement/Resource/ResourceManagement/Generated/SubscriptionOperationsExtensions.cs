@@ -103,5 +103,87 @@ namespace Microsoft.Azure.Subscriptions
         {
             return operations.ListAsync(CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Gets a list of the subscription locations.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Required. Id of the subscription
+        /// </param>
+        /// <returns>
+        /// Location list operation response.
+        /// </returns>
+        public static LocationListResult ListLocations(this ISubscriptionOperations operations, string subscriptionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISubscriptionOperations)s).ListLocationsAsync(subscriptionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets a list of the subscription locations.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Required. Id of the subscription
+        /// </param>
+        /// <returns>
+        /// Location list operation response.
+        /// </returns>
+        public static Task<LocationListResult> ListLocationsAsync(this ISubscriptionOperations operations, string subscriptionId)
+        {
+            return operations.ListLocationsAsync(subscriptionId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets a list of the subscriptionIds.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Subscription list operation response.
+        /// </returns>
+        public static SubscriptionListResult ListNext(this ISubscriptionOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISubscriptionOperations)s).ListNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets a list of the subscriptionIds.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// Subscription list operation response.
+        /// </returns>
+        public static Task<SubscriptionListResult> ListNextAsync(this ISubscriptionOperations operations, string nextLink)
+        {
+            return operations.ListNextAsync(nextLink, CancellationToken.None);
+        }
     }
 }

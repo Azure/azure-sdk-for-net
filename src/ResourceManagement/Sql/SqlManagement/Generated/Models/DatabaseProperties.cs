@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._collation = value; }
         }
         
+        private string _createMode;
+        
+        /// <summary>
+        /// Optional. Gets the create mode for this database.
+        /// </summary>
+        public string CreateMode
+        {
+            get { return this._createMode; }
+            set { this._createMode = value; }
+        }
+        
         private DateTime _creationDate;
         
         /// <summary>

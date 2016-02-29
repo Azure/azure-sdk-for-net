@@ -283,11 +283,41 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation statistics.  (see
+        /// http://aka.ms/azureautomationsdk/statisticsoperations for more
+        /// information)
+        /// </summary>
+        IStatisticsOperations Statistics
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation test jobs.  (see
         /// http://aka.ms/azureautomationsdk/testjoboperations for more
         /// information)
         /// </summary>
         ITestJobOperations TestJobs
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation type fields.  (see
+        /// http://aka.ms/azureautomationsdk/typefieldoperations for more
+        /// information)
+        /// </summary>
+        ITypeFieldOperations TypeFields
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation usages.  (see
+        /// http://aka.ms/azureautomationsdk/usageoperations for more
+        /// information)
+        /// </summary>
+        IUsageOperations Usages
         {
             get; 
         }

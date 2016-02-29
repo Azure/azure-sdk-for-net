@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static HDInsightLongRunningOperationResponse Resize(this IClusterOperations operations, string resourceGroupName, string clusterName, int targetInstanceCount)
+        public static OperationResource Resize(this IClusterOperations operations, string resourceGroupName, string clusterName, int targetInstanceCount)
         {
             return Task.Factory.StartNew((object s) =>
             {
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public static Task<HDInsightLongRunningOperationResponse> ResizeAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, int targetInstanceCount)
+        public static Task<OperationResource> ResizeAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, int targetInstanceCount)
         {
             return operations.ResizeAsync(resourceGroupName, clusterName, targetInstanceCount, CancellationToken.None);
         }

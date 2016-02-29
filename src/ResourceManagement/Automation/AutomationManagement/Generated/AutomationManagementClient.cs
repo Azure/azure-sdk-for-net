@@ -342,6 +342,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._schedules; }
         }
         
+        private IStatisticsOperations _statistics;
+        
+        /// <summary>
+        /// Service operation for automation statistics.  (see
+        /// http://aka.ms/azureautomationsdk/statisticsoperations for more
+        /// information)
+        /// </summary>
+        public virtual IStatisticsOperations Statistics
+        {
+            get { return this._statistics; }
+        }
+        
         private ITestJobOperations _testJobs;
         
         /// <summary>
@@ -352,6 +364,30 @@ namespace Microsoft.Azure.Management.Automation
         public virtual ITestJobOperations TestJobs
         {
             get { return this._testJobs; }
+        }
+        
+        private ITypeFieldOperations _typeFields;
+        
+        /// <summary>
+        /// Service operation for automation type fields.  (see
+        /// http://aka.ms/azureautomationsdk/typefieldoperations for more
+        /// information)
+        /// </summary>
+        public virtual ITypeFieldOperations TypeFields
+        {
+            get { return this._typeFields; }
+        }
+        
+        private IUsageOperations _usages;
+        
+        /// <summary>
+        /// Service operation for automation usages.  (see
+        /// http://aka.ms/azureautomationsdk/usageoperations for more
+        /// information)
+        /// </summary>
+        public virtual IUsageOperations Usages
+        {
+            get { return this._usages; }
         }
         
         private IVariableOperations _variables;
@@ -404,7 +440,10 @@ namespace Microsoft.Azure.Management.Automation
             this._runbookDraft = new RunbookDraftOperations(this);
             this._runbooks = new RunbookOperations(this);
             this._schedules = new ScheduleOperations(this);
+            this._statistics = new StatisticsOperations(this);
             this._testJobs = new TestJobOperations(this);
+            this._typeFields = new TypeFieldOperations(this);
+            this._usages = new UsageOperations(this);
             this._variables = new VariableOperations(this);
             this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
@@ -493,7 +532,10 @@ namespace Microsoft.Azure.Management.Automation
             this._runbookDraft = new RunbookDraftOperations(this);
             this._runbooks = new RunbookOperations(this);
             this._schedules = new ScheduleOperations(this);
+            this._statistics = new StatisticsOperations(this);
             this._testJobs = new TestJobOperations(this);
+            this._typeFields = new TypeFieldOperations(this);
+            this._usages = new UsageOperations(this);
             this._variables = new VariableOperations(this);
             this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";

@@ -105,6 +105,16 @@ namespace Microsoft.Azure.Management.Storage
             get { return this._storageAccounts; }
         }
         
+        private IUsageOperations _usage;
+        
+        /// <summary>
+        /// Operations for listing usage.
+        /// </summary>
+        public virtual IUsageOperations Usage
+        {
+            get { return this._usage; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
@@ -112,7 +122,8 @@ namespace Microsoft.Azure.Management.Storage
             : base()
         {
             this._storageAccounts = new StorageAccountOperations(this);
-            this._apiVersion = "2015-05-01-preview";
+            this._usage = new UsageOperations(this);
+            this._apiVersion = "2015-06-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -178,7 +189,8 @@ namespace Microsoft.Azure.Management.Storage
             : base(httpClient)
         {
             this._storageAccounts = new StorageAccountOperations(this);
-            this._apiVersion = "2015-05-01-preview";
+            this._usage = new UsageOperations(this);
+            this._apiVersion = "2015-06-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -329,50 +341,6 @@ namespace Microsoft.Azure.Management.Storage
             if (value == AccountType.PremiumLRS)
             {
                 return "Premium_LRS";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Parse enum values for type KeyName.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static KeyName ParseKeyName(string value)
-        {
-            if ("key1".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return KeyName.Key1;
-            }
-            if ("key2".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return KeyName.Key2;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type KeyName to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string KeyNameToString(KeyName value)
-        {
-            if (value == KeyName.Key1)
-            {
-                return "key1";
-            }
-            if (value == KeyName.Key2)
-            {
-                return "key2";
             }
             throw new ArgumentOutOfRangeException("value");
         }
@@ -560,6 +528,13 @@ namespace Microsoft.Azure.Management.Storage
                                         Uri tableInstance = TypeConversion.TryParseUri(((string)tableValue));
                                         primaryEndpointsInstance.Table = tableInstance;
                                     }
+                                    
+                                    JToken fileValue = primaryEndpointsValue["file"];
+                                    if (fileValue != null && fileValue.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance = TypeConversion.TryParseUri(((string)fileValue));
+                                        primaryEndpointsInstance.File = fileInstance;
+                                    }
                                 }
                                 
                                 JToken primaryLocationValue = propertiesValue["primaryLocation"];
@@ -651,15 +626,26 @@ namespace Microsoft.Azure.Management.Storage
                                         Uri tableInstance2 = TypeConversion.TryParseUri(((string)tableValue2));
                                         secondaryEndpointsInstance.Table = tableInstance2;
                                     }
+                                    
+                                    JToken fileValue2 = secondaryEndpointsValue["file"];
+                                    if (fileValue2 != null && fileValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri fileInstance2 = TypeConversion.TryParseUri(((string)fileValue2));
+                                        secondaryEndpointsInstance.File = fileInstance2;
+                                    }
                                 }
                             }
                         }
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("RetryAfter"))
+                    if (httpResponse.Headers.Contains("Location"))
                     {
-                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("RetryAfter").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -669,11 +655,11 @@ namespace Microsoft.Azure.Management.Storage
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.InternalServerError)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         result.Status = OperationStatus.InProgress;
                     }
-                    if (statusCode == HttpStatusCode.Accepted)
+                    if (statusCode == HttpStatusCode.InternalServerError)
                     {
                         result.Status = OperationStatus.InProgress;
                     }

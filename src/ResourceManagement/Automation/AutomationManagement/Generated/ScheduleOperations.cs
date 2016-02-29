@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -260,6 +260,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             Schedule scheduleInstance = new Schedule();
                             result.Schedule = scheduleInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                scheduleInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -438,7 +445,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(scheduleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -599,7 +606,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(scheduleName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -677,6 +684,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             Schedule scheduleInstance = new Schedule();
                             result.Schedule = scheduleInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                scheduleInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -845,7 +859,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/schedules";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -929,6 +943,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     Schedule scheduleInstance = new Schedule();
                                     result.Schedules.Add(scheduleInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        scheduleInstance.Id = idInstance;
+                                    }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -1159,6 +1180,13 @@ namespace Microsoft.Azure.Management.Automation
                                     Schedule scheduleInstance = new Schedule();
                                     result.Schedules.Add(scheduleInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        scheduleInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
@@ -1356,7 +1384,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/schedules/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

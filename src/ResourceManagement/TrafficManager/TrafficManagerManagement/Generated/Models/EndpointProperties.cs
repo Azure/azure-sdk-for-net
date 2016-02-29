@@ -66,6 +66,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
             set { this._endpointStatus = value; }
         }
         
+        private uint? _minChildEndpoints;
+        
+        /// <summary>
+        /// Optional. Gets or sets the minimum number of endpoints that must be
+        /// available in the child profile in order for the parent profile to
+        /// be considered available. Only applicable to endpoint of type
+        /// 'NestedEndpoints'.
+        /// </summary>
+        public uint? MinChildEndpoints
+        {
+            get { return this._minChildEndpoints; }
+            set { this._minChildEndpoints = value; }
+        }
+        
         private uint? _priority;
         
         /// <summary>

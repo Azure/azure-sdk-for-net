@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -183,7 +184,7 @@ namespace Microsoft.Azure.Management.Resources
             this._resources = new ResourceOperations(this);
             this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
             this._tags = new TagOperations(this);
-            this._apiVersion = "2014-04-01-preview";
+            this._apiVersion = "2015-11-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -256,7 +257,7 @@ namespace Microsoft.Azure.Management.Resources
             this._resources = new ResourceOperations(this);
             this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
             this._tags = new TagOperations(this);
-            this._apiVersion = "2014-04-01-preview";
+            this._apiVersion = "2015-11-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -391,7 +392,7 @@ namespace Microsoft.Azure.Management.Resources
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -428,13 +429,25 @@ namespace Microsoft.Azure.Management.Resources
                     // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Retry-After"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.BadRequest)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        result.Status = OperationStatus.InProgress;
                     }
                     if (statusCode == HttpStatusCode.NoContent)
                     {

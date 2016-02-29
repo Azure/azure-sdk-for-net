@@ -41,6 +41,11 @@ namespace Microsoft.Azure.Management.DataFactories
         IActivityTypeOperations ActivityTypes { get; }
 
         /// <summary>
+        /// Operations for managing activity windows.
+        /// </summary>
+        IActivityWindowOperations ActivityWindows { get; }
+
+        /// <summary>
         /// Operations for managing data factory ComputeTypes.
         /// </summary>
         IComputeTypeOperations ComputeTypes { get; }
@@ -81,8 +86,8 @@ namespace Microsoft.Azure.Management.DataFactories
         IPipelineOperations Pipelines { get; }
 
         /// <summary>
-        /// Operations for managing tables.
+        /// Operations for managing Datasets.
         /// </summary>
-        ITableOperations Tables { get; }
+        IDatasetOperations Datasets { get; }
     }
 }

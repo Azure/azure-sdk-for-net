@@ -29,7 +29,7 @@ namespace DataFactory.Tests.UnitTests
     public class ActivityConfigurationTests : UnitTestBase
     {
         private readonly PipelineConverter pipelineConverter = new PipelineConverter();
-        private readonly TableConverter tableConverter = new TableConverter();
+        private readonly DatasetConverter datasetConverter = new DatasetConverter();
         private readonly LinkedServiceConverter linkedServiceConverter = new LinkedServiceConverter();
 
         [Theory, ClassData(typeof(PipelineJsonSamples))]
@@ -48,12 +48,12 @@ namespace DataFactory.Tests.UnitTests
             JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceJsonSample);
         }
 
-        [Theory, ClassData(typeof(TableJsonSamples))]
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void ActivityConfigurationTableJsonConstsTest(JsonSampleInfo sampleInfo)
+        public void ActivityConfigurationDatasetJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJsonSample);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestDatasetJsonSample);
         }
 
         private void TestLinkedServiceJsonSample(JsonSampleInfo sampleInfo)
@@ -85,13 +85,13 @@ namespace DataFactory.Tests.UnitTests
             this.TestJsonSample(string.Concat("{ \"inputs\" : [{ \"linkedService\":", sampleInfo.Json, "}], \"outputs\" : [{ \"linkedService\":", sampleInfo.Json, "}]}"), expectedActivityConfiguration);
         }
 
-        private void TestTableJsonSample(JsonSampleInfo sampleInfo)
+        private void TestDatasetJsonSample(JsonSampleInfo sampleInfo)
         {
-            Core.Models.Table tableIn =
-                Core.DataFactoryManagementClient.DeserializeInternalTableJson(sampleInfo.Json);
+            Core.Models.Dataset datasetIn =
+                Core.DataFactoryManagementClient.DeserializeInternalDatasetJson(sampleInfo.Json);
 
-            Core.Models.Table tableOut =
-                Core.DataFactoryManagementClient.DeserializeInternalTableJson(sampleInfo.Json);
+            Core.Models.Dataset datasetOut =
+                Core.DataFactoryManagementClient.DeserializeInternalDatasetJson(sampleInfo.Json);
 
             var expectedActivityConfiguration = new ActivityConfiguration()
             {
@@ -99,14 +99,14 @@ namespace DataFactory.Tests.UnitTests
                 {
                     new ResolvedTable()
                     {
-                        Table = this.tableConverter.ToWrapperType(tableIn),
+                        Dataset = this.datasetConverter.ToWrapperType(datasetIn),
                     },
                 },
                 Outputs = new Collection<ResolvedTable>()
                 {
                     new ResolvedTable()
                     {
-                        Table = this.tableConverter.ToWrapperType(tableOut),
+                        Dataset = this.datasetConverter.ToWrapperType(datasetOut),
                     },
                 },
             };

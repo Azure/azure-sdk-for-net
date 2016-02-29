@@ -12,7 +12,7 @@ namespace AzureRedisCache.Tests
     public class TestsFixtureWithCacheCreate : TestBase, IDisposable
     {
         public string ResourceGroupName { set; get; }
-        public string RedisCacheName = "hydracache1";
+        public string RedisCacheName = "hydracache-1";
         public string Location = "North Central US";
         
         public TestsFixtureWithCacheCreate()

@@ -49,24 +49,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -131,9 +116,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(1, jobGetResponse.Job.Properties.Outputs.Count);
 
                     // Test output connectivity
-                    DataSourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
+                    ResourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the output
                     string newTableName = TestUtilities.GenerateName("NewTableName");
@@ -212,24 +197,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -296,9 +266,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(outputCreateOrUpdateResponse.Output.Properties.Etag, outputGetResponse.Output.Properties.Etag);
 
                     // Test output connectivity
-                    DataSourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
+                    ResourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the output
                     blobOutputDataSource.Properties.PathPattern = "test.csv";
@@ -354,24 +324,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -425,9 +380,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(tableName, azureTableOutputDataSourceInResponse2.Properties.Table);
 
                     // Test output connectivity
-                    DataSourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
+                    ResourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the output
                     string newTableName = TestUtilities.GenerateName("NewTableName");
@@ -483,24 +438,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -521,8 +461,8 @@ namespace StreamAnalytics.Tests.OperationTests
                     {
                         Properties = new EventHubOutputDataSourceProperties()
                         {
-                            ServiceBusNamespace = "sdktest",
-                            EventHubName = "sdkeventhub",
+                            ServiceBusNamespace = TestHelper.ServiceBusNamespace,
+                            EventHubName = TestHelper.EventHubName,
                             SharedAccessPolicyName = TestHelper.SharedAccessPolicyName,
                             SharedAccessPolicyKey = TestHelper.SharedAccessPolicyKey,
                             PartitionKey = partitionKey
@@ -569,9 +509,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(partitionKey, eventHubOutputDataSourceInResponse2.Properties.PartitionKey);
 
                     // Test output connectivity
-                    DataSourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
+                    ResourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the output
                     jsonSerialization = new JsonSerialization()
@@ -592,7 +532,8 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(HttpStatusCode.OK, outputPatchResponse.StatusCode);
                     Assert.True(outputPatchResponse.Properties.Serialization is JsonSerialization);
                     JsonSerialization jsonSerializationInResponse3 = (JsonSerialization)outputPatchResponse.Properties.Serialization;
-                    Assert.Equal(Format.Array, jsonSerializationInResponse3.Properties.Format);
+                    // TODO : Re-enable check once service bug is fixed
+                    //Assert.Equal(Format.Array, jsonSerializationInResponse3.Properties.Format);
                     Assert.True(outputPatchResponse.Properties.DataSource is EventHubOutputDataSource);
                     EventHubOutputDataSource eventHubOutputDataSourceInResponse3 = (EventHubOutputDataSource)outputPatchResponse.Properties.DataSource;
                     Assert.Equal(newPartitionKey, eventHubOutputDataSourceInResponse3.Properties.PartitionKey);
@@ -639,24 +580,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -677,7 +603,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     {
                         Properties = new ServiceBusQueueOutputDataSourceProperties()
                         {
-                            ServiceBusNamespace = "sdktest",
+                            ServiceBusNamespace = TestHelper.ServiceBusNamespace,
                             QueueName = queueName,
                             SharedAccessPolicyName = TestHelper.SharedAccessPolicyName,
                             SharedAccessPolicyKey = TestHelper.SharedAccessPolicyKey,
@@ -718,9 +644,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(queueName, serviceBusQueueOutputDataSourceInResponse2.Properties.QueueName);
 
                     // Test output connectivity
-                    DataSourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
+                    ResourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the output
                     string newQueueName = TestUtilities.GenerateName("NewQueueName");
@@ -776,24 +702,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
                     resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
 
-                    Job job = new Job();
-                    job.Name = resourceName;
-                    job.Location = serviceLocation;
-
-                    // Construct the general properties for JobProperties
-                    JobProperties jobProperties = new JobProperties();
-                    jobProperties.Sku = new Sku()
-                    {
-                        Name = "standard"
-                    };
-                    jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
-                    jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
-
-                    job.Properties = jobProperties;
-
                     // Construct the JobCreateProperties
-                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters = new JobCreateOrUpdateParameters();
-                    jobCreateOrUpdateParameters.Job = job;
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
 
                     // Create a streaming job
                     JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
@@ -814,7 +725,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     {
                         Properties = new ServiceBusTopicOutputDataSourceProperties()
                         {
-                            ServiceBusNamespace = "sdktest",
+                            ServiceBusNamespace = TestHelper.ServiceBusNamespace,
                             TopicName = topicName,
                             SharedAccessPolicyName = TestHelper.SharedAccessPolicyName,
                             SharedAccessPolicyKey = TestHelper.SharedAccessPolicyKey,
@@ -855,9 +766,9 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(topicName, serviceBusTopicOutputDataSourceInResponse2.Properties.TopicName);
 
                     // Test output connectivity
-                    DataSourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
+                    ResourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
                     Assert.Equal(OperationStatus.Succeeded, response.Status);
-                    Assert.Equal(DataSourceTestStatus.TestSucceeded, response.DataSourceTestStatus);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
 
                     // Update the output
                     string newTopicName = TestUtilities.GenerateName("NewTopicName");
@@ -878,6 +789,120 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(HttpStatusCode.OK, deleteOutputOperationResponse.StatusCode);
 
                     // Check there is no output any more
+                    jobGetParameters = new JobGetParameters("outputs");
+                    jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(0, jobGetResponse.Job.Properties.Outputs.Count);
+                }
+                finally
+                {
+                    client.StreamingJobs.Delete(resourceGroupName, resourceName);
+                    resourceClient.ResourceGroups.Delete(resourceGroupName);
+                }
+            }
+        }
+
+        [Fact]
+        public void Test_OutputOperations_DocumentDB()
+        {
+            BasicDelegatingHandler handler = new BasicDelegatingHandler();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                string resourceGroupName = TestUtilities.GenerateName("StreamAnalytics");
+                string resourceName = TestUtilities.GenerateName("MyStreamingJobSubmittedBySDK");
+
+                string serviceLocation = TestHelper.GetDefaultLocation();
+
+                var resourceClient = TestHelper.GetResourceClient(handler);
+                var client = TestHelper.GetStreamAnalyticsManagementClient(handler);
+
+                try
+                {
+                    ResourceGroup resourceGroup = new ResourceGroup() { Location = serviceLocation };
+                    resourceClient.ResourceGroups.CreateOrUpdate(resourceGroupName, resourceGroup);
+
+                    // Construct the JobCreateProperties
+                    JobCreateOrUpdateParameters jobCreateOrUpdateParameters =
+                        new JobCreateOrUpdateParameters(TestHelper.GetDefaultJob(resourceName, serviceLocation));
+
+                    // Create a streaming job
+                    JobCreateOrUpdateResponse jobCreateOrUpdateResponse = client.StreamingJobs.CreateOrUpdate(resourceGroupName, jobCreateOrUpdateParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobCreateOrUpdateResponse.StatusCode);
+
+                    // Get a streaming job to check
+                    JobGetParameters jobGetParameters = new JobGetParameters(string.Empty);
+                    JobGetResponse jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
+                    Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
+                    Assert.Equal(serviceLocation, jobGetResponse.Job.Location);
+                    Assert.Equal(resourceName, jobGetResponse.Job.Name);
+
+                    // Construct the Output
+                    OutputProperties outputProperties = new OutputProperties();
+                    string outputName = TestUtilities.GenerateName("outputtest");
+                    string database = "db01";
+                    DocumentDbOutputDataSource documentDbOutputDataSource = new DocumentDbOutputDataSource()
+                    {
+                        Properties = new DocumentDbOutputDataSourceProperties()
+                        {
+                            AccountId = TestHelper.DocDbAccountId,
+                            AccountKey = TestHelper.DocDbAccountKey,
+                            Database = database,
+                            PartitionKey = "key",
+                            CollectionNamePattern = "collection"
+                        }
+                    };
+                    outputProperties.DataSource = documentDbOutputDataSource;
+                    Output output1 = new Output(outputName)
+                    {
+                        Properties = outputProperties
+                    };
+
+                    // Add an output
+                    OutputCreateOrUpdateParameters outputCreateOrUpdateParameters = new OutputCreateOrUpdateParameters();
+                    outputCreateOrUpdateParameters.Output = output1;
+                    OutputCreateOrUpdateResponse outputCreateOrUpdateResponse = client.Outputs.CreateOrUpdate(resourceGroupName, resourceName, outputCreateOrUpdateParameters);
+                    Assert.Equal(HttpStatusCode.OK, outputCreateOrUpdateResponse.StatusCode);
+                    Assert.Equal(outputName, outputCreateOrUpdateResponse.Output.Name);
+                    Assert.True(outputCreateOrUpdateResponse.Output.Properties.DataSource is DocumentDbOutputDataSource);
+                    DocumentDbOutputDataSource documentDbOutputDataSourceInResponse1 = (DocumentDbOutputDataSource)outputCreateOrUpdateResponse.Output.Properties.DataSource;
+                    Assert.Equal(database, documentDbOutputDataSourceInResponse1.Properties.Database);
+                    Assert.NotNull(outputCreateOrUpdateResponse.Output.Properties.Etag);
+
+                    // Get the output
+                    OutputGetResponse outputGetResponse = client.Outputs.Get(resourceGroupName, resourceName, outputName);
+                    Assert.Equal(HttpStatusCode.OK, outputGetResponse.StatusCode);
+                    Assert.Equal(outputName, outputGetResponse.Output.Name);
+                    Assert.True(outputGetResponse.Output.Properties.DataSource is DocumentDbOutputDataSource);
+                    DocumentDbOutputDataSource documentDbOutputDataSourceInResponse2 = (DocumentDbOutputDataSource)outputGetResponse.Output.Properties.DataSource;
+                    Assert.Equal(database, documentDbOutputDataSourceInResponse2.Properties.Database);
+
+                    // Test output connectivity
+                    ResourceTestConnectionResponse response = client.Outputs.TestConnection(resourceGroupName, resourceName, outputName);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
+                    Assert.Equal(ResourceTestStatus.TestSucceeded, response.ResourceTestStatus);
+
+                    // Update the output
+                    string newDatabase = TestUtilities.GenerateName("NewDatabase");
+                    documentDbOutputDataSource.Properties.Database = newDatabase;
+                    outputProperties.DataSource = documentDbOutputDataSource;
+                    outputProperties.Etag = outputCreateOrUpdateResponse.Output.Properties.Etag;
+                    OutputPatchParameters outputPatchParameters = new OutputPatchParameters(outputProperties);
+                    OutputPatchResponse outputPatchResponse = client.Outputs.Patch(resourceGroupName, resourceName, outputName, outputPatchParameters);
+                    Assert.Equal(HttpStatusCode.OK, outputPatchResponse.StatusCode);
+                    Assert.True(outputPatchResponse.Properties.DataSource is DocumentDbOutputDataSource);
+                    DocumentDbOutputDataSource documentDbOutputDataSourceInResponse3 = (DocumentDbOutputDataSource)outputPatchResponse.Properties.DataSource;
+                    Assert.Equal(newDatabase, documentDbOutputDataSourceInResponse3.Properties.Database);
+                    Assert.NotNull(outputPatchResponse.Properties.Etag);
+                    Assert.NotEqual(outputCreateOrUpdateResponse.Output.Properties.Etag, outputPatchResponse.Properties.Etag);
+
+                    // Delete the output
+                    AzureOperationResponse deleteOutputOperationResponse = client.Outputs.Delete(resourceGroupName, resourceName, outputName);
+                    Assert.Equal(HttpStatusCode.OK, deleteOutputOperationResponse.StatusCode);
+
+                    // Check that there are 0 outputs in the job
                     jobGetParameters = new JobGetParameters("outputs");
                     jobGetResponse = client.StreamingJobs.Get(resourceGroupName, resourceName, jobGetParameters);
                     Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);

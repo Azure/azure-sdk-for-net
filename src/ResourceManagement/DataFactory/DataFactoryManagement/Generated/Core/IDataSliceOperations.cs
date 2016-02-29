@@ -43,11 +43,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// A unique table instance name.
+        /// <param name='datasetName'>
+        /// A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying how to list data slices of the table.
+        /// Parameters specifying how to list data slices of the dataset.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters, CancellationToken cancellationToken);
+        Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string datasetName, DataSliceListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the next page of data slice instances with the link to the
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         Task<DataSliceListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Sets status of data slices over a time range for a specific table.
+        /// Sets status of data slices over a time range for a specific dataset.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the data factory.
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// A unique table instance name.
+        /// <param name='datasetName'>
+        /// A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// The parameters required to set status of data slices.
@@ -94,6 +94,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string datasetName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken);
     }
 }

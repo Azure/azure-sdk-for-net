@@ -11,12 +11,16 @@
     <Compile Include="BgpPeeringOperationTests.cs" />
     <Compile Include="CrossConnectionOperationTests.cs" />
     <Compile Include="DedicatedCircuitOperationTests.cs" />
+    <Compile Include="StatsTests.cs" />
     <Compile Include="ExpressRouteTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtilities\ExpressRouteManagementClientUndoHandlers.cs" />
     <Compile Include="TestUtilities\UndoContextDiscoveryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.StatsTests\CanNotGetStats.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.BgpPeeringTests\CanCreateGetUpdateAndRemovePrivateAndPublicPeerings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

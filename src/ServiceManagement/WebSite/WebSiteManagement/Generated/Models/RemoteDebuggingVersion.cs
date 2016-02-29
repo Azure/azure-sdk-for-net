@@ -24,16 +24,24 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
-    public enum RemoteDebuggingVersion
+    /// <summary>
+    /// The remote debugging version.
+    /// </summary>
+    public static partial class RemoteDebuggingVersion
     {
         /// <summary>
         /// Visual Studio 2012.
         /// </summary>
-        VS2012 = 0,
+        public const string VS2012 = "VS2012";
         
         /// <summary>
         /// Visual Studio 2013.
         /// </summary>
-        VS2013 = 1,
+        public const string VS2013 = "VS2013";
+        
+        /// <summary>
+        /// Visual Studio 2015.
+        /// </summary>
+        public const string VS2015 = "VS2015";
     }
 }

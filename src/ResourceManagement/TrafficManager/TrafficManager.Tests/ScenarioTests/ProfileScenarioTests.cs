@@ -178,24 +178,39 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 context.Start();
                 TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
 
-                ResourceGroupExtended resourceGroup = TrafficManagerHelper.CreateResourceGroup();
+                // This tests the list operation at subscription level therefore 
+                // we can't use any granularity (e.g. resource groups) to isolate test runs
+                int numberOfProfilesBeforeTest = trafficManagerClient.Profiles.ListAll().Profiles.Count;
 
-                for (int i = 0; i < 5; ++i)
+                ResourceGroupExtended resourceGroup1 = TrafficManagerHelper.CreateResourceGroup();
+                ResourceGroupExtended resourceGroup2 = TrafficManagerHelper.CreateResourceGroup();
+
+                // Create 2 resource groups with two profiles each
+                for (int i = 0; i < 2; ++i)
                 {
                     string profileName = TestUtilities.GenerateName("hydratestwatmv2profile");
 
                     trafficManagerClient.Profiles.CreateOrUpdate(
-                        resourceGroup.Name,
+                        resourceGroup1.Name,
                         profileName,
                         new ProfileCreateOrUpdateParameters
                         {
                             Profile = TrafficManagerHelper.GenerateDefaultProfile(profileName)
                         });
+
+                    trafficManagerClient.Profiles.CreateOrUpdate(
+                       resourceGroup2.Name,
+                       profileName,
+                       new ProfileCreateOrUpdateParameters
+                       {
+                           Profile = TrafficManagerHelper.GenerateDefaultProfile(profileName)
+                       });
                 }
 
                 ProfileListResponse listResponse = trafficManagerClient.Profiles.ListAll();
 
-                Assert.Equal(5, listResponse.Profiles.Count);
+                // At the end of the test we should have 4 profiles more than when we started
+                Assert.Equal(numberOfProfilesBeforeTest + 4, listResponse.Profiles.Count);
             }
         }
 
