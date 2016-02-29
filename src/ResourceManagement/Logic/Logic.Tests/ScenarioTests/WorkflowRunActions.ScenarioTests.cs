@@ -29,10 +29,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.sku,
                         State = WorkflowState.Enabled,
                         Definition = JToken.Parse(this.simpleDefinition)
                     });

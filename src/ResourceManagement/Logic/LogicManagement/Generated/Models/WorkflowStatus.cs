@@ -35,6 +35,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         [EnumMember(Value = "Cancelled")]
         Cancelled,
         [EnumMember(Value = "Failed")]
-        Failed
+        Failed,
+        [EnumMember(Value = "Faulted")]
+        Faulted,
+        [EnumMember(Value = "TimedOut")]
+        TimedOut,
+        [EnumMember(Value = "Aborted")]
+        Aborted
     }
 }
