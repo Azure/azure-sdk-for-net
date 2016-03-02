@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.Automation.Testing
                 using (AutomationTestBase _testFixture = new AutomationTestBase())
                 {
                     var usage = _testFixture.GetUsages();
-                    Assert.Equal(2, usage.Count);
+                    Assert.Equal(3, usage.Count);
 
                     Assert.Equal(0, usage[0].CurrentValue);
                     Assert.Equal("AccountUsage", usage[0].Name.Value);
