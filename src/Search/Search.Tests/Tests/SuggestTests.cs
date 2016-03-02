@@ -121,7 +121,12 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters =
-                new SuggestParameters() { Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z" };
+                new SuggestParameters()
+                {
+                    Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z",
+                    OrderBy = new[] { "hotelId" }   // Use OrderBy so changes in ranking don't break the test.
+                };
+
             DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 

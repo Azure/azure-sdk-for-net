@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountInfo class.
         /// </summary>
-        public StorageAccountInfo(string name = default(string), StorageAccountProperties properties = default(StorageAccountProperties))
+        public StorageAccountInfo(string name, StorageAccountProperties properties)
         {
             Name = name;
             Properties = properties;
@@ -48,5 +48,23 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "properties")]
         public StorageAccountProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
+        }
     }
 }

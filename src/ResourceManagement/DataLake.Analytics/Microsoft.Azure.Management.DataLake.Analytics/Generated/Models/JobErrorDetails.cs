@@ -48,96 +48,93 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets the error message description
+        /// Gets the error message description
         /// </summary>
         [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
         /// <summary>
-        /// Gets or sets the details of the error message.
+        /// Gets the details of the error message.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public string Details { get; set; }
+        public string Details { get; private set; }
 
         /// <summary>
-        /// Gets or sets the end offset in the job where the error was found.
+        /// Gets the end offset in the job where the error was found.
         /// </summary>
         [JsonProperty(PropertyName = "endOffset")]
-        public int? EndOffset { get; set; }
+        public int? EndOffset { get; private set; }
 
         /// <summary>
-        /// Gets or sets the specific identifier for the type of error
-        /// encountered in the job.
+        /// Gets the specific identifier for the type of error encountered in
+        /// the job.
         /// </summary>
         [JsonProperty(PropertyName = "errorId")]
-        public string ErrorId { get; set; }
+        public string ErrorId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the path to any supplemental error files, if any.
+        /// Gets the path to any supplemental error files, if any.
         /// </summary>
         [JsonProperty(PropertyName = "filePath")]
-        public string FilePath { get; set; }
+        public string FilePath { get; private set; }
 
         /// <summary>
-        /// Gets or sets the link to MSDN or Azure help for this type of
-        /// error, if any.
+        /// Gets the link to MSDN or Azure help for this type of error, if any.
         /// </summary>
         [JsonProperty(PropertyName = "helpLink")]
-        public string HelpLink { get; set; }
+        public string HelpLink { get; private set; }
 
         /// <summary>
-        /// Gets or sets the internal diagnostic stack trace if the user
-        /// requesting the job error details has sufficient permissions it
-        /// will be retrieved, otherwise it will be empty.
+        /// Gets the internal diagnostic stack trace if the user requesting
+        /// the job error details has sufficient permissions it will be
+        /// retrieved, otherwise it will be empty.
         /// </summary>
         [JsonProperty(PropertyName = "internalDiagnostics")]
-        public string InternalDiagnostics { get; set; }
+        public string InternalDiagnostics { get; private set; }
 
         /// <summary>
-        /// Gets or sets the specific line number in the job where the error
-        /// occured.
+        /// Gets the specific line number in the job where the error occured.
         /// </summary>
         [JsonProperty(PropertyName = "lineNumber")]
-        public int? LineNumber { get; set; }
+        public int? LineNumber { get; private set; }
 
         /// <summary>
-        /// Gets or sets the user friendly error message for the failure.
+        /// Gets the user friendly error message for the failure.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets the recommended resolution for the failure, if any.
+        /// Gets the recommended resolution for the failure, if any.
         /// </summary>
         [JsonProperty(PropertyName = "resolution")]
-        public string Resolution { get; set; }
+        public string Resolution { get; private set; }
 
         /// <summary>
-        /// Gets or sets the inner error of this specific job error message,
-        /// if any.
+        /// Gets the inner error of this specific job error message, if any.
         /// </summary>
         [JsonProperty(PropertyName = "InnerError")]
-        public JobInnerError InnerError { get; set; }
+        public JobInnerError InnerError { get; private set; }
 
         /// <summary>
-        /// Gets or sets the severity level of the failure. Possible values
-        /// include: 'Warning', 'Error'
+        /// Gets the severity level of the failure. Possible values include:
+        /// 'Warning', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
-        public string Severity { get; set; }
+        public string Severity { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ultimate source of the failure (usually either
-        /// SYSTEM or USER).
+        /// Gets the ultimate source of the failure (usually either SYSTEM or
+        /// USER).
         /// </summary>
         [JsonProperty(PropertyName = "source")]
-        public string Source { get; set; }
+        public string Source { get; private set; }
 
         /// <summary>
-        /// Gets or sets the end offset in the job where the error was found
+        /// Gets the end offset in the job where the error was found
         /// </summary>
         [JsonProperty(PropertyName = "startOffset")]
-        public string StartOffset { get; set; }
+        public string StartOffset { get; private set; }
 
     }
 }

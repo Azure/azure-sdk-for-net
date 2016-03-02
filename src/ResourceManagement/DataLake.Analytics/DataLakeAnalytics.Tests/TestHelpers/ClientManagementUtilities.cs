@@ -28,9 +28,9 @@ namespace DataLakeAnalytics.Tests
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A bigAnalytics management client, created from the current context (environment variables)</returns>
-        public static DataLakeAnalyticsManagementClient GetDataLakeAnalyticsManagementClient(this TestBase testBase, MockContext context)
+        public static DataLakeAnalyticsAccountManagementClient GetDataLakeAnalyticsAccountManagementClient(this TestBase testBase, MockContext context)
         {
-            return context.GetServiceClient<DataLakeAnalyticsManagementClient>();
+            return context.GetServiceClient<DataLakeAnalyticsAccountManagementClient>();
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace DataLakeAnalytics.Tests
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A dataLake management client, created from the current context (environment variables)</returns>
-        public static DataLakeStoreManagementClient GetDataLakeStoreManagementClient(this TestBase testBase, MockContext context)
+        public static DataLakeStoreAccountManagementClient GetDataLakeStoreAccountManagementClient(this TestBase testBase, MockContext context)
         {
-            return context.GetServiceClient<DataLakeStoreManagementClient>();
+            return context.GetServiceClient<DataLakeStoreAccountManagementClient>();
         }
 
         /// <summary>

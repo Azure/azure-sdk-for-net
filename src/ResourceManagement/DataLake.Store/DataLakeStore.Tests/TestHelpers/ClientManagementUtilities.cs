@@ -27,9 +27,9 @@ namespace DataLakeStore.Tests
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A redis cache management client, created from the current context (environment variables)</returns>
-        public static DataLakeStoreManagementClient GetDataLakeStoreManagementClient(this TestBase testBase, MockContext context)
+        public static DataLakeStoreAccountManagementClient GetDataLakeStoreAccountManagementClient(this TestBase testBase, MockContext context)
         {
-            return context.GetServiceClient<DataLakeStoreManagementClient>();
+            return context.GetServiceClient<DataLakeStoreAccountManagementClient>();
         }
 
         /// <summary>

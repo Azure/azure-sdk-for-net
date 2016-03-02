@@ -37,22 +37,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         }
 
         /// <summary>
-        /// Gets or sets the id of the job this data is for.
+        /// Gets the id of the job this data is for.
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
-        public string JobId { get; set; }
+        public string JobId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the command that this job data relates to.
+        /// Gets the command that this job data relates to.
         /// </summary>
         [JsonProperty(PropertyName = "command")]
-        public string Command { get; set; }
+        public string Command { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of paths to all of the job data.
+        /// Gets the list of paths to all of the job data.
         /// </summary>
         [JsonProperty(PropertyName = "paths")]
-        public IList<string> Paths { get; set; }
+        public IList<string> Paths { get; private set; }
 
     }
 }

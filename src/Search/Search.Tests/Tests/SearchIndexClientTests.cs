@@ -33,6 +33,18 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void ConstructorCreatesCorrectUrl()
+        {
+            const string ExpectedUrl = "https://azs-test.search.windows.net/indexes('test')/";
+
+            var client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"));
+            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+
+            client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"), new HttpClientHandler());
+            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+        }
+
+        [Fact]
         public void ConstructorThrowsForBadParameters()
         {
             var creds = new SearchCredentials("abc");

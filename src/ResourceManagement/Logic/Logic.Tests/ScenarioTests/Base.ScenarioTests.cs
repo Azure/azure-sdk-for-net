@@ -5,12 +5,22 @@
 namespace Test.Azure.Management.Logic
 {
     using Microsoft.Azure.Management.Logic;
+    using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public class BaseScenarioTests : TestBase
     {
         protected string resourceGroupName = "flowrg";
         protected string location = "westus";
+
+        protected Sku sku = new Sku
+        {
+            Name = SkuName.Standard,
+            Plan = new ResourceReference
+            {
+                Id = "/subscriptions/402177bc-c2ea-4a5d-98b3-7623eee7f0a1/resourceGroups/Default-SQL-EastAsia/providers/Microsoft.Web/serverFarms/Plan"
+            }
+        };
 
         protected LogicManagementClient GetLogicManagementClient(MockContext context)
         {

@@ -85,7 +85,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Gets the status. Possible values include: 'NotSpecified',
         /// 'Paused', 'Running', 'Waiting', 'Succeeded', 'Skipped',
-        /// 'Suspended', 'Cancelled', 'Failed'
+        /// 'Suspended', 'Cancelled', 'Failed', 'Faulted', 'TimedOut',
+        /// 'Aborted'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public WorkflowStatus? Status { get; private set; }

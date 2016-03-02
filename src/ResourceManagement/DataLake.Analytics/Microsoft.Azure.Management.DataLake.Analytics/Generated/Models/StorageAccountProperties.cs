@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountProperties class.
         /// </summary>
-        public StorageAccountProperties(string accessKey = default(string), string suffix = default(string))
+        public StorageAccountProperties(string accessKey, string suffix = default(string))
         {
             AccessKey = accessKey;
             Suffix = suffix;
@@ -48,5 +48,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "suffix")]
         public string Suffix { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (AccessKey == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");
+            }
+        }
     }
 }

@@ -101,19 +101,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the account creation time.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
-        public DateTime? CreationTime { get; set; }
+        public DateTime? CreationTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the account last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
-        public DateTime? LastModifiedTime { get; set; }
+        public DateTime? LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the full CName endpoint for this account.
         /// </summary>
         [JsonProperty(PropertyName = "endpoint")]
-        public string Endpoint { get; set; }
+        public string Endpoint { get; private set; }
 
     }
 }
