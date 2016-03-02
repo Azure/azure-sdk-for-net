@@ -57,7 +57,6 @@ namespace HDInsightJob.Tests
 
                 var parameters = new MapReduceJobSubmissionParameters
                 {
-                    UserName = username,
                     JarFile = "/example/jars/hadoop-mapreduce-examples.jar",
                     JarClass = "pi",
                     Defines = defines,
@@ -89,7 +88,6 @@ namespace HDInsightJob.Tests
 
             var parameters = new HiveJobSubmissionParameters
             {
-                UserName = TestUtils.UserName,
                 Query = @"select * from hivesampletable where querydwelltime > ${hiveconf:time} limit ${hiveconf:rows}",
                 Defines = defines
             };
@@ -102,7 +100,6 @@ namespace HDInsightJob.Tests
         {
             var parameters = new HiveJobSubmissionParameters
             {
-                UserName = TestUtils.UserName,
                 Query = @"select * from hivesampletable where querydwelltime > 10 limit 20"
             };
 
@@ -136,16 +133,26 @@ namespace HDInsightJob.Tests
 
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
+                var storageAccess = GetStorageAccessObject();
+
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
+                    var outputUrl = client.JobManagement.GetJobOutputUrl(jobId, storageAccess);
+                    Assert.NotNull(outputUrl);
+                    Assert.True(!string.IsNullOrEmpty(outputUrl.AbsoluteUri));
+
                     // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
                     string textOutput = Convert(output);
                     Assert.True(textOutput.Contains(expectedOutputPart));
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var errorOutputUrl = client.JobManagement.GetJobErrorLogsUrl(jobId, storageAccess);
+                    Assert.NotNull(errorOutputUrl);
+                    Assert.True(!string.IsNullOrEmpty(errorOutputUrl.AbsoluteUri));
+
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     string errorTextOutput = Convert(output);
                     Assert.NotNull(errorTextOutput);
                     Assert.True(false);
@@ -182,7 +189,6 @@ namespace HDInsightJob.Tests
 
                 var parameters = new MapReduceJobSubmissionParameters
                 {
-                    UserName = username,
                     JarFile = "/example/jars/hadoop-mapreduce-examples.jar",
                     JarClass = "pi",
                     Defines = defines,
@@ -198,16 +204,18 @@ namespace HDInsightJob.Tests
 
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
+                var storageAccess = GetStorageAccessObject();
+
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
                     // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
                     string textOutput = Convert(output);
                     Assert.True(textOutput.Contains("Estimated value of Pi is 3.14"));
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     string errorTextOutput = Convert(output);
                     Assert.NotNull(errorTextOutput);
                     Assert.True(false);
@@ -236,7 +244,6 @@ namespace HDInsightJob.Tests
 
                 var parameters = new MapReduceStreamingJobSubmissionParameters
                 {
-                    UserName = username,
                     Mapper = "cat",
                     Reducer = "wc",
                     Input = "/example/data/gutenberg/davinci.txt",
@@ -252,16 +259,18 @@ namespace HDInsightJob.Tests
 
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
+                var storageAccess = GetStorageAccessObject();
+
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
                     // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
                     string textOutput = Convert(output);
                     Assert.True(textOutput.Length > 0);
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     string errorTextOutput = Convert(output);
                     Assert.NotNull(errorTextOutput);
                     Assert.True(false);
@@ -291,12 +300,11 @@ namespace HDInsightJob.Tests
 
                 var parameters = new MapReduceStreamingJobSubmissionParameters
                 {
-                    UserName = username,
                     Mapper = "cat.exe",
                     Reducer = "wc.exe",
                     Input = "/example/data/gutenberg/davinci.txt",
                     Output = "/example/data/gutenberg/wcount",
-                    Files = new List<string>{"/example/apps/wc.exe","/example/apps/cat.exe"}
+                    Files = new List<string> { "/example/apps/wc.exe", "/example/apps/cat.exe" }
                 };
 
                 var response = client.JobManagement.SubmitMapReduceStreamingJob(parameters);
@@ -308,16 +316,18 @@ namespace HDInsightJob.Tests
 
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
+                var storageAccess = GetStorageAccessObject();
+
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
                     // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
                     string textOutput = Convert(output);
                     Assert.True(textOutput.Length > 0);
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     string errorTextOutput = Convert(output);
                     Assert.NotNull(errorTextOutput);
                     Assert.True(false);
@@ -346,7 +356,6 @@ namespace HDInsightJob.Tests
 
                 var parameters = new PigJobSubmissionParameters()
                 {
-                    UserName = username,
                     Query = "LOGS = LOAD 'wasb:///example/data/sample.log';" +
                                     "LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;" +
                                     "FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;" +
@@ -365,16 +374,18 @@ namespace HDInsightJob.Tests
 
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
+                var storageAccess = GetStorageAccessObject();
+
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
                     // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
                     string textOutput = Convert(output);
                     Assert.True(textOutput.Contains("(DEBUG,"));
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     string errorTextOutput = Convert(output);
                     Assert.NotNull(errorTextOutput);
                     Assert.True(false);
@@ -403,7 +414,6 @@ namespace HDInsightJob.Tests
 
                 var parameters = new SqoopJobSubmissionParameters
                 {
-                    UserName = username,
                     // Before we run this test, we should run following commands on cluster
                     // hdfs dfs -mkdir /user/hcat/lib
                     // hadoop fs -copyFromLocal -f /usr/share/java/sqljdbc_4.1/enu/sqljdbc41.jar /user/hcat/lib
@@ -421,16 +431,18 @@ namespace HDInsightJob.Tests
 
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
+                var storageAccess = GetStorageAccessObject();
+
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
                     // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
                     string textOutput = Convert(output);
                     Assert.True(textOutput.Length > 0);
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     string errorTextOutput = Convert(output);
                     Assert.NotNull(errorTextOutput);
                     Assert.True(false);
@@ -459,7 +471,6 @@ namespace HDInsightJob.Tests
 
                 var parameters = new HiveJobSubmissionParameters
                 {
-                    UserName = username,
                     Query = "FAKEQUERY;",
                     StatusDir = "jobstatus"
                 };
@@ -474,7 +485,14 @@ namespace HDInsightJob.Tests
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
                 Assert.True(jobStatus.JobDetail.ExitValue > 0);
-                var output = client.JobManagement.GetJobErrorLogs(jobId, TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
+
+                var storageAccess = GetStorageAccessObject();
+
+                var errorOutputUrl = client.JobManagement.GetJobErrorLogsUrl(jobId, storageAccess);
+                Assert.NotNull(errorOutputUrl);
+                Assert.True(!string.IsNullOrEmpty(errorOutputUrl.AbsoluteUri));
+
+                var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                 Assert.NotNull(output);
                 Assert.True(output.Length > 0);
                 string errorTextOutput = Convert(output);
@@ -502,6 +520,11 @@ namespace HDInsightJob.Tests
             }
 
             return jobStatus;
+        }
+
+        private IStorageAccess GetStorageAccessObject()
+        {
+            return new AzureStorageAccess(TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
         }
     }
 }

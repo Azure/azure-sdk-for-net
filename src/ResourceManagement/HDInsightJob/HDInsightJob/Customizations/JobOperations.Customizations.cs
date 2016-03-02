@@ -15,15 +15,11 @@
 // 
 
 using System;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure.Management.HDInsight.Job.Models;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
 {
@@ -32,55 +28,106 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     /// </summary>
     internal partial class JobOperations : IServiceOperations<HDInsightJobManagementClient>, IJobOperations
     {
-        private string StorageAccountName { get; set; }
-        private string StorageAccountKey { get; set; }
-        private string DefaultStorageContainer { get; set; }
-
-        internal string StorageAccountRoot
+        /// <summary>
+        /// Gets the job output content as memory stream.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The job output content as memory stream.
+        /// </returns>
+        public async Task<Stream> GetJobOutputAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
         {
-            get
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stdout");
+            return storageAccess.GetFileContent(blobReferencePath);
+        }
+
+        /// <summary>
+        /// Gets the job error output content as memory stream.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The job error output content as memory stream when job fails to run successfully.
+        /// </returns>
+        public async Task<Stream> GetJobErrorLogsAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
+        {
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stderr");
+            return storageAccess.GetFileContent(blobReferencePath);
+        }
+
+        /// <summary>
+        /// Gets the url for job output.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The url for job output.
+        /// </returns>
+        public async Task<Uri> GetJobOutputUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
+        {
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stdout");
+            return storageAccess.GetFileUrl(blobReferencePath);
+        }
+
+        /// <summary>
+        /// Gets the url for job error output.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The url for job error output.
+        /// </returns>
+        public async Task<Uri> GetJobErrorLogsUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
+        {
+            var blobReferencePath = await GetJobStatusDirectory(jobId, "stderr");
+            return storageAccess.GetFileUrl(blobReferencePath);
+        }
+
+        private async Task<string> GetJobStatusDirectory(string jobId, string file)
+        {
+            var job = await this.GetJobAsync(jobId);
+            var statusDir = GetStatusFolder(job);
+
+            if (statusDir == null)
             {
-                var storageRoot = StorageAccountName.Replace(Constants.WabsProtocolSchemeName, string.Empty);
-                storageRoot = string.Format(CultureInfo.InvariantCulture,
-                    storageRoot.Contains(".") ? "https://{0}" : Constants.ProductionStorageAccountEndpointUriTemplate,
-                    storageRoot);
-
-                return storageRoot;
+                throw new CloudException(string.Format("Job {0} was not created with a status folder and therefore no logs were saved.", job.JobDetail.Id));
             }
+
+            return string.Format("user/{0}/{1}/{2}", job.JobDetail.User, statusDir, file);
         }
 
-        internal Uri StorageAccountUri
+        private static string GetStatusFolder(JobGetResponse job)
         {
-            get { return new Uri(this.StorageAccountRoot); }
-
-        }
-
-        internal string StorageAccountConnectionString
-        {
-            get
-            {
-                var storageRoot = StorageAccountName.Replace(Constants.WabsProtocolSchemeName, string.Empty);
-                if (storageRoot.Contains("."))
-                {
-                    storageRoot = storageRoot.Substring(0, storageRoot.IndexOf('.') + 1);
-                }
-                return string.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}", storageRoot,
-                    StorageAccountKey);
-            }
-        }
-
-        public async Task<Stream> GetJobOutputAsync(string jobId, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
-        {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            return await GetJobResultFile(jobId, storageAccountName, defaultContainer, "stdout");
-        }
-
-        public async Task<Stream> GetJobErrorLogsAsync(string jobId, string storageAccountName, string storageAccountKey, string defaultContainer, CancellationToken cancellationToken)
-        {
-            StorageAccountName = storageAccountName;
-            StorageAccountKey = storageAccountKey;
-            return await GetJobResultFile(jobId, storageAccountName, defaultContainer, "stderr");
+            return job.JobDetail.Userargs.Statusdir == null ? null : job.JobDetail.Userargs.Statusdir.ToString();
         }
     }
 }

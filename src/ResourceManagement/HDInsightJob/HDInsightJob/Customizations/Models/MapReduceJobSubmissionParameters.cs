@@ -66,11 +66,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         public string StatusDir { get; set; }
         
         /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserName { get; set; }
-        
-        /// <summary>
         /// Initializes a new instance of the MapReduceJobSubmissionParameters
         /// class.
         /// </summary>
@@ -82,7 +77,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         {
             // Check input parameters and transform them to required format before sending request to templeton.
             string content = string.Empty;
-            content += !string.IsNullOrEmpty(this.UserName) ? string.Format("user.name={0}", this.UserName) : string.Empty;
             content += !string.IsNullOrEmpty(this.JarFile) ? string.Format("&jar={0}", this.JarFile) : string.Empty;
             content += !string.IsNullOrEmpty(this.JarClass) ? string.Format("&class={0}", this.JarClass) : string.Empty;
             content += ModelHelper.ConvertListToString(this.LibJars, "&libjars=", ",");

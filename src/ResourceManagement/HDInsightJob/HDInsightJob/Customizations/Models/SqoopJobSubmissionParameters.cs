@@ -56,11 +56,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         public string LibDir { get; set; }
         
         /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserName { get; set; }
-        
-        /// <summary>
         /// Initializes a new instance of the SqoopJobSubmissionParameters
         /// class.
         /// </summary>
@@ -72,7 +67,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         {
             // Check input parameters and transform them to required format before sending request to templeton.
             string content = string.Empty;
-            content += !string.IsNullOrEmpty(this.UserName) ? string.Format("user.name={0}", this.UserName) : string.Empty;
             content += !string.IsNullOrEmpty(this.Command) ? string.Format("&command={0}", this.Command) : string.Empty;
             content += !string.IsNullOrEmpty(this.File) ? string.Format("&file={0}", this.File) : string.Empty;
             content += ModelHelper.ConvertListToString(this.Files, "&files=", ",");

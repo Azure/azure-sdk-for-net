@@ -120,25 +120,24 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <summary>
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
         /// Required. The id of the job.
         /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The output of an individual jobDetails by jobId.
         /// </returns>
-        public static Stream GetJobOutput(this IJobOperations operations, string jobId, string storageAccountName,
-            string storageAccountKey, string defaultContainer)
+        public static Stream GetJobOutput(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
         {
             return Task.Factory.StartNew(
                 (object s) =>
-                    ((IJobOperations) s).GetJobOutputAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer), operations,
+                ((IJobOperations)s).GetJobOutputAsync(jobId, storageAccess), operations,
                 CancellationToken.None,
                 TaskCreationOptions.None, TaskScheduler.Default)
                 .Unwrap()
@@ -149,49 +148,47 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <summary>
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>
-        /// <param name="operations"></param>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
-        ///     Required. The id of the job.
+        /// Required. The id of the job.
         /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The output of an individual jobDetails by jobId.
         /// </returns>
         public static Task<Stream> GetJobOutputAsync(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+            IStorageAccess storageAccess)
         {
-            return operations.GetJobOutputAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer, CancellationToken.None);
+            return operations.GetJobOutputAsync(jobId, storageAccess, CancellationToken.None);
         }
 
         /// <summary>
         /// Gets the error logs from the execution of an individual jobDetails.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
         /// Required. The id of the job.
         /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
         public static Stream GetJobErrorLogs(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+            IStorageAccess storageAccess)
         {
             return Task.Factory.StartNew(
                 (object s) =>
-                    ((IJobOperations)s).GetJobErrorLogsAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer), operations,
+                    ((IJobOperations)s).GetJobErrorLogsAsync(jobId, storageAccess), operations,
                 CancellationToken.None,
                 TaskCreationOptions.None, TaskScheduler.Default)
                 .Unwrap()
@@ -202,23 +199,121 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <summary>
         /// Gets the error logs from the execution of an individual jobDetails.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
         /// Required. The id of the job.
         /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
         public static Task<Stream> GetJobErrorLogsAsync(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+            IStorageAccess storageAccess)
         {
-            return operations.GetJobErrorLogsAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer, CancellationToken.None);
+            return operations.GetJobErrorLogsAsync(jobId, storageAccess, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Gets the url for job output.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name="jobId">
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <returns>
+        /// The url for job output.
+        /// </returns>
+        public static Uri GetJobOutputUrl(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
+        {
+            return Task.Factory.StartNew(
+                (object s) =>
+                ((IJobOperations)s).GetJobOutputUrlAsync(jobId, storageAccess), operations,
+                CancellationToken.None,
+                TaskCreationOptions.None, TaskScheduler.Default)
+                .Unwrap()
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
+        /// Gets the url for job output.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name="jobId">
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <returns>
+        /// The task to get url for job output.
+        /// </returns>
+        public static Task<Uri> GetJobOutputUrlAsync(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
+        {
+            return operations.GetJobOutputUrlAsync(jobId, storageAccess, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Gets the error logs from the execution of an individual jobDetails.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name="jobId">
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <returns>
+        /// The error logs of an individual jobDetails by jobId.
+        /// </returns>
+        public static Uri GetJobErrorLogsUrl(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
+        {
+            return Task.Factory.StartNew(
+                (object s) =>
+                    ((IJobOperations)s).GetJobErrorLogsUrlAsync(jobId, storageAccess), operations,
+                CancellationToken.None,
+                TaskCreationOptions.None, TaskScheduler.Default)
+                .Unwrap()
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        /// <summary>
+        /// Gets the error logs from the execution of an individual jobDetails.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name="jobId">
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <returns>
+        /// The task to get url for job error output.
+        /// </returns>
+        public static Task<Uri> GetJobErrorLogsUrlAsync(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
+        {
+            return operations.GetJobErrorLogsUrlAsync(jobId, storageAccess, CancellationToken.None);
         }
     }
 }

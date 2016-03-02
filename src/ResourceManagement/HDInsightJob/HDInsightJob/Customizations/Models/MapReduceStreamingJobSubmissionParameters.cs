@@ -81,11 +81,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         public string StatusDir { get; set; }
         
         /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserName { get; set; }
-        
-        /// <summary>
         /// Initializes a new instance of the
         /// MapReduceStreamingJobSubmissionParameters class.
         /// </summary>
@@ -97,7 +92,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         {
             // Check input parameters and transform them to required format before sending request to templeton.
             string content = string.Empty;
-            content += !string.IsNullOrEmpty(this.UserName) ? string.Format("user.name={0}", this.UserName) : string.Empty;
             content += !string.IsNullOrEmpty(this.Input) ? string.Format("&input={0}", this.Input) : string.Empty;
             content += !string.IsNullOrEmpty(this.Mapper) ? string.Format("&mapper={0}", this.Mapper) : string.Empty;
             content += !string.IsNullOrEmpty(this.Reducer) ? string.Format("&reducer={0}", this.Reducer) : string.Empty;

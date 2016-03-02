@@ -17,7 +17,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using System;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
 {
@@ -30,40 +30,60 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>
         /// <param name="jobId">
-        ///     Required. The id of the job.
+        /// Required. The id of the job.
         /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns>
         /// The output of an individual jobDetails by jobId.
         /// </returns>
-        Task<Stream> GetJobOutputAsync(string jobId, string storageAccountName, string storageAccountKey,
-            string defaultContainer, CancellationToken cancellationToken);
+        Task<Stream> GetJobOutputAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets the error logs from the execution of an individual jobDetails.
         /// </summary>
         /// <param name="jobId">
-        ///     Required. The id of the job.
+        /// Required. The id of the job.
         /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns>
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
-        Task<Stream> GetJobErrorLogsAsync(string jobId, string storageAccountName, string storageAccountKey,
-            string defaultContainer, CancellationToken cancellationToken);
+        Task<Stream> GetJobErrorLogsAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets the output from the execution of an individual jobDetails.
+        /// </summary>
+        /// <param name="jobId">
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// The url to access output of an individual jobDetails by jobId.
+        /// </returns>
+        Task<Uri> GetJobOutputUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets the error logs from the execution of an individual jobDetails.
+        /// </summary>
+        /// <param name="jobId">
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
+        /// </param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// The url to access error logs of an individual jobDetails by jobId.
+        /// </returns>
+        Task<Uri> GetJobErrorLogsUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
     }
 }
