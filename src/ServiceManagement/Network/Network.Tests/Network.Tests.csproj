@@ -83,6 +83,9 @@
     <Compile Include="VirtualIPs\MultivipTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestData\GatewayNetworkConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\WideVNetNetworkConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -99,6 +102,12 @@
     </None>
     <None Include="packages.config" />
     <None Include="SessionRecords\Network.Tests.ApplicationGateways.SetupApplicationGatewayTests\CreateApplicationGateway.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.LocallNetworkGatewayTests\LocalNetworkGatewayAPITestsWithBgp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayConnectionTests\VirtualNetworkGatewayConnectionWithBgpTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Network.Tests.MultiVipTests\TestAddAndRemoveVip.json">
