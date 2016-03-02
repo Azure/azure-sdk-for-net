@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Image.
     /// </summary>
+    [JsonTransformation]
     public partial class VirtualMachineImage : SubResource
     {
         /// <summary>
@@ -29,16 +30,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineImage class.
         /// </summary>
-        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>))
+        public VirtualMachineImage(string name, string location, string id = default(string), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id)
         {
-            Name = name;
-            Location = location;
-            Tags = tags;
             Plan = plan;
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
+            Name = name;
+            Location = location;
+            Tags = tags;
         }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.plan")]
+        public PurchasePlan Plan { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.osDiskImage")]
+        public OSDiskImage OsDiskImage { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataDiskImages")]
+        public IList<DataDiskImage> DataDiskImages { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource.
@@ -57,21 +73,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.plan")]
-        public PurchasePlan Plan { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.osDiskImage")]
-        public OSDiskImage OsDiskImage { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.dataDiskImages")]
-        public IList<DataDiskImage> DataDiskImages { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
@@ -93,16 +94,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (this.OsDiskImage != null)
             {
                 this.OsDiskImage.Validate();
-            }
-            if (this.DataDiskImages != null)
-            {
-                foreach (var element in this.DataDiskImages)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

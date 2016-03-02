@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Resource Id.
     /// </summary>
+    [JsonTransformation]
     public partial class VirtualMachineCaptureResult : SubResource
     {
         /// <summary>

@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineAgentInstanceView VmAgent { get; set; }
 
         /// <summary>
-        /// Gets or sets the the disks information.
+        /// Gets or sets the disks information.
         /// </summary>
         [JsonProperty(PropertyName = "disks")]
         public IList<DiskInstanceView> Disks { get; set; }

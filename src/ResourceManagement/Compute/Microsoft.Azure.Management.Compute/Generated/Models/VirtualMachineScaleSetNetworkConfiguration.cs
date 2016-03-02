@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a virtual machine scale set network profile's network
     /// configurations.
     /// </summary>
+    [JsonTransformation]
     public partial class VirtualMachineScaleSetNetworkConfiguration : SubResource
     {
         /// <summary>

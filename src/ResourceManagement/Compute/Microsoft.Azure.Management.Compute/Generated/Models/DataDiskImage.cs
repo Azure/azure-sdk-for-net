@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DataDiskImage class.
         /// </summary>
-        public DataDiskImage(int lun)
+        public DataDiskImage(int? lun = default(int?))
         {
             Lun = lun;
         }
@@ -40,14 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for each data disk.The allowed character for the value is digit.
         /// </summary>
         [JsonProperty(PropertyName = "lun")]
-        public int Lun { get; private set; }
+        public int? Lun { get; private set; }
 
-        /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

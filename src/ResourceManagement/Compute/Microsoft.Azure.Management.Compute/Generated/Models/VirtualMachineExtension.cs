@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Extension.
     /// </summary>
+    [JsonTransformation]
     public partial class VirtualMachineExtension : Resource
     {
         /// <summary>

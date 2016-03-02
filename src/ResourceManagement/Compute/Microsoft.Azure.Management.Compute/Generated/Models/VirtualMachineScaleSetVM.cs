@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a virtual machine scale set virtual machine.
     /// </summary>
+    [JsonTransformation]
     public partial class VirtualMachineScaleSetVM : Resource
     {
         /// <summary>
@@ -29,13 +30,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetVM class.
         /// </summary>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), bool? latestModelApplied = default(bool?), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string))
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
             Sku = sku;
-            Plan = plan;
-            Resources = resources;
             LatestModelApplied = latestModelApplied;
             InstanceView = instanceView;
             HardwareProfile = hardwareProfile;
@@ -46,6 +45,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             AvailabilitySet = availabilitySet;
             ProvisioningState = provisioningState;
             LicenseType = licenseType;
+            Plan = plan;
+            Resources = resources;
         }
 
         /// <summary>
@@ -59,19 +60,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the purchase plan when deploying virtual machine from
-        /// VM Marketplace images.
-        /// </summary>
-        [JsonProperty(PropertyName = "plan")]
-        public Plan Plan { get; set; }
-
-        /// <summary>
-        /// Gets the virtual machine child extension resources.
-        /// </summary>
-        [JsonProperty(PropertyName = "resources")]
-        public IList<VirtualMachineExtension> Resources { get; private set; }
 
         /// <summary>
         /// Specifies whether the latest model has been applied to the virtual
@@ -117,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference Id of the availailbity set to which
+        /// Gets or sets the reference Id of the availability set to which
         /// this virtual machine belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
@@ -138,11 +126,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string LicenseType { get; set; }
 
         /// <summary>
+        /// Gets or sets the purchase plan when deploying virtual machine from
+        /// VM Marketplace images.
+        /// </summary>
+        [JsonProperty(PropertyName = "plan")]
+        public Plan Plan { get; set; }
+
+        /// <summary>
+        /// Gets the virtual machine child extension resources.
+        /// </summary>
+        [JsonProperty(PropertyName = "resources")]
+        public IList<VirtualMachineExtension> Resources { get; private set; }
+
+        /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public override void Validate()
         {
             base.Validate();
+            if (this.StorageProfile != null)
+            {
+                this.StorageProfile.Validate();
+            }
             if (this.Resources != null)
             {
                 foreach (var element in this.Resources)
@@ -152,10 +157,6 @@ namespace Microsoft.Azure.Management.Compute.Models
                         element.Validate();
                     }
                 }
-            }
-            if (this.StorageProfile != null)
-            {
-                this.StorageProfile.Validate();
             }
         }
     }

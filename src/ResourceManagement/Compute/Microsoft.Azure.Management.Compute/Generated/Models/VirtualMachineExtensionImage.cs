@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Extension Image.
     /// </summary>
+    [JsonTransformation]
     public partial class VirtualMachineExtensionImage : SubResource
     {
         /// <summary>
@@ -31,36 +32,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineExtensionImage
         /// class.
         /// </summary>
-        public VirtualMachineExtensionImage(string name, string location, string operatingSystem, string computeRole, string handlerSchema, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? vmScaleSetEnabled = default(bool?), bool? supportsMultipleExtensions = default(bool?))
+        public VirtualMachineExtensionImage(string operatingSystem, string computeRole, string handlerSchema, string name, string location, string id = default(string), bool? vmScaleSetEnabled = default(bool?), bool? supportsMultipleExtensions = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id)
         {
-            Name = name;
-            Location = location;
-            Tags = tags;
             OperatingSystem = operatingSystem;
             ComputeRole = computeRole;
             HandlerSchema = handlerSchema;
             VmScaleSetEnabled = vmScaleSetEnabled;
             SupportsMultipleExtensions = supportsMultipleExtensions;
+            Name = name;
+            Location = location;
+            Tags = tags;
         }
-
-        /// <summary>
-        /// Gets or sets the name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the operating system this extension supports.
@@ -99,18 +82,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? SupportsMultipleExtensions { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags attached to the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
             if (OperatingSystem == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OperatingSystem");
@@ -122,6 +115,14 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (HandlerSchema == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "HandlerSchema");
+            }
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
         }
     }

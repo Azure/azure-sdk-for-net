@@ -1,0 +1,9 @@
+{
+    "info": {
+        "title": "ComputeManagementClient",
+        "description": "Composite Swagger for Compute Client"
+    },
+  "documents": [
+    "compute.json"
+  ]
+}

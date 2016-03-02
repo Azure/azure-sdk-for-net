@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a network interface reference.
     /// </summary>
+    [JsonTransformation]
     public partial class NetworkInterfaceReference : SubResource
     {
         /// <summary>

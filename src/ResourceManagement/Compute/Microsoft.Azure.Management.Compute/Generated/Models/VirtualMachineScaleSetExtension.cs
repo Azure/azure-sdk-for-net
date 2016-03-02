@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a Virtual Machine Scale Set Extension.
     /// </summary>
+    [JsonTransformation]
     public partial class VirtualMachineScaleSetExtension : SubResource
     {
         /// <summary>
@@ -31,12 +32,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetExtension
         /// class.
         /// </summary>
-        public VirtualMachineScaleSetExtension(string id = default(string), string name = default(string), string publisher = default(string), string virtualMachineScaleSetExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
+        public VirtualMachineScaleSetExtension(string id = default(string), string name = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
             : base(id)
         {
             Name = name;
             Publisher = publisher;
-            VirtualMachineScaleSetExtensionType = virtualMachineScaleSetExtensionType;
+            Type = type;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             Settings = settings;
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the type of the extension handler.
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
-        public string VirtualMachineScaleSetExtensionType { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the type version of the extension handler.

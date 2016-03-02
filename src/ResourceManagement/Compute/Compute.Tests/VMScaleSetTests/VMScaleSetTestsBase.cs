@@ -41,7 +41,7 @@ namespace Compute.Tests
             {
                 Name = "vmssext01",
                 Publisher = "Microsoft.Compute",
-                VirtualMachineScaleSetExtensionType = "VMAccessAgent",
+                Type = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
                 Settings = "{}",

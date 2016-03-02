@@ -16,8 +16,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class SubResource : IResource
     {
         /// <summary>

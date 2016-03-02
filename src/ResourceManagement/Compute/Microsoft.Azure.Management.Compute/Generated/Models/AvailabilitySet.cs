@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Create or update Availability Set parameters.
     /// </summary>
+    [JsonTransformation]
     public partial class AvailabilitySet : Resource
     {
         /// <summary>
