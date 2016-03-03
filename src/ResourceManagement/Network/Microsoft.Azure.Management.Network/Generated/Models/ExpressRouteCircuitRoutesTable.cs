@@ -31,49 +31,44 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitRoutesTable
         /// class.
         /// </summary>
-        public ExpressRouteCircuitRoutesTable(string nextHopType, string addressPrefix = default(string), string nextHopIP = default(string), string asPath = default(string))
+        public ExpressRouteCircuitRoutesTable(string network = default(string), string nextHop = default(string), string locPrf = default(string), int? weight = default(int?), string path = default(string))
         {
-            AddressPrefix = addressPrefix;
-            NextHopType = nextHopType;
-            NextHopIP = nextHopIP;
-            AsPath = asPath;
+            Network = network;
+            NextHop = nextHop;
+            LocPrf = locPrf;
+            Weight = weight;
+            Path = path;
         }
 
         /// <summary>
-        /// Gets AddressPrefix.
+        /// network.
         /// </summary>
-        [JsonProperty(PropertyName = "addressPrefix")]
-        public string AddressPrefix { get; set; }
+        [JsonProperty(PropertyName = "network")]
+        public string Network { get; set; }
 
         /// <summary>
-        /// Gets NextHopType. Possible values for this property include:
-        /// 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
-        /// 'VirtualAppliance', 'None'.
+        /// nextHop
         /// </summary>
-        [JsonProperty(PropertyName = "nextHopType")]
-        public string NextHopType { get; set; }
+        [JsonProperty(PropertyName = "nextHop")]
+        public string NextHop { get; set; }
 
         /// <summary>
-        /// Gets NextHopIP.
+        /// locPrf.
         /// </summary>
-        [JsonProperty(PropertyName = "nextHopIP")]
-        public string NextHopIP { get; set; }
+        [JsonProperty(PropertyName = "locPrf")]
+        public string LocPrf { get; set; }
 
         /// <summary>
-        /// Gets AsPath.
+        /// weight.
         /// </summary>
-        [JsonProperty(PropertyName = "asPath")]
-        public string AsPath { get; set; }
+        [JsonProperty(PropertyName = "weight")]
+        public int? Weight { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// path .
         /// </summary>
-        public virtual void Validate()
-        {
-            if (NextHopType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NextHopType");
-            }
-        }
+        [JsonProperty(PropertyName = "path")]
+        public string Path { get; set; }
+
     }
 }
