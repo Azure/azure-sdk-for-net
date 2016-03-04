@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         Standard = 0,
         
         /// <summary>
-        /// Premium tier only of Linux OS type, supports Spark and RRE.
+        /// Premium tier only for Linux OS type, supports Spark and RRE.
         /// </summary>
         Premium = 1,
     }
