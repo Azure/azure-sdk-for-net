@@ -38,8 +38,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
-    /// Represents all the operations for operating on Azure SQL Database
-    /// Server communication links.  Contains operations to: Create, Retrieve,
+    /// Represents all the operations for operating on Azure SQL Server
+    /// communication links.  Contains operations to: Create, Retrieve,
     /// Update, and Delete.
     /// </summary>
     internal partial class ServerCommunicationLinkOperations : IServiceOperations<SqlManagementClient>, IServerCommunicationLinkOperations
@@ -68,32 +68,31 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Begins creating a new or updating an existing Azure SQL Database
-        /// Server communication. To determine the status of the operation
-        /// call GetServerCommunicationLinkOperationStatus.
+        /// Begins creating a new or updating an existing Azure SQL Server
+        /// communication. To determine the status of the operation call
+        /// GetServerCommunicationLinkOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the Azure SQL
-        /// Database Server belongs.
+        /// Server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Required. The name of the Azure SQL Server.
         /// </param>
         /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL Database Server communication
-        /// link to be operated on (Updated or created).
+        /// Required. The name of the Azure SQL Server communication link to be
+        /// operated on (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
-        /// Server communication link.
+        /// Required. The required parameters for creating or updating a Server
+        /// communication link.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running Azure Sql Database server communication
-        /// link operation.
+        /// Response for long running Azure Sql server communication link
+        /// operation.
         /// </returns>
         public async Task<ServerCommunicationLinkCreateOrUpdateResponse> BeginCreateOrUpdateAsync(string resourceGroupName, string serverName, string communicationLinkName, ServerCommunicationLinkCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -391,31 +390,30 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Creates a new or updates an existing Azure SQL Database Server
-        /// communication link.
+        /// Creates a new or updates an existing Azure SQL Server communication
+        /// link.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the Azure SQL
         /// Database Server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
+        /// Required. The name of the Azure SQL Server.
         /// </param>
         /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL Database Server communication
-        /// link to be operated on (Updated or created).
+        /// Required. The name of the Azure SQL Server communication link to be
+        /// operated on (Updated or created).
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
-        /// Server communication link.
+        /// Required. The required parameters for creating or updating a Server
+        /// communication link.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running Azure Sql Database server communication
-        /// link operation.
+        /// Response for long running Azure Sql server communication link
+        /// operation.
         /// </returns>
         public async Task<ServerCommunicationLinkCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string communicationLinkName, ServerCommunicationLinkCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -476,19 +474,18 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Deletes the Azure SQL Database server communication link with the
-        /// given name.
+        /// Deletes the Azure SQL server communication link with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the Azure SQL
-        /// Database Server belongs.
+        /// Server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server.
+        /// Required. The name of the Azure SQL Server.
         /// </param>
         /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL Database server communication
-        /// link to be retrieved.
+        /// Required. The name of the Azure SQL server communication link to be
+        /// retrieved.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -634,19 +631,18 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about an Azure SQL Database Server
-        /// communication links.
+        /// Returns information about an Azure SQL Server communication links.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
         /// belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server to retrieve.
+        /// Required. The name of the Azure SQL Server.
         /// </param>
         /// <param name='communicationLinkName'>
-        /// Required. The name of the Azure SQL Database server communication
-        /// link to be retrieved.
+        /// Required. The name of the Azure SQL server communication link to be
+        /// retrieved.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -868,8 +864,8 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Gets the status of an Azure Sql Database Server communication link
-        /// create or update operation.
+        /// Gets the status of an Azure Sql Server communication link create or
+        /// update operation.
         /// </summary>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation
@@ -878,8 +874,8 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for long running Azure Sql Database server communication
-        /// link operation.
+        /// Response for long running Azure Sql server communication link
+        /// operation.
         /// </returns>
         public async Task<ServerCommunicationLinkCreateOrUpdateResponse> GetServerCommunicationLinkOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
@@ -1055,11 +1051,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1088,15 +1084,14 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about Azure SQL Database Server communication
-        /// links.
+        /// Returns information about Azure SQL Server communication links.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the Azure SQL
-        /// Database Server belongs.
+        /// Server belongs.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server.
+        /// Required. The name of the Azure SQL Server.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

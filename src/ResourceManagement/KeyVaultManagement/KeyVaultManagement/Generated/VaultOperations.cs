@@ -957,12 +957,12 @@ namespace Microsoft.Azure.Management.KeyVault
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/resourceGroups/";
+            url = url + "/";
             if (resourceGroupName != null)
             {
-                url = url + Uri.EscapeDataString(resourceGroupName);
+                url = url + "resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/";
             }
-            url = url + "/resources";
+            url = url + "resources";
             List<string> queryParameters = new List<string>();
             List<string> odataFilter = new List<string>();
             odataFilter.Add("resourceType eq 'Microsoft.KeyVault/vaults' ");

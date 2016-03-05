@@ -21,32 +21,35 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Sql.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// The cluster type.
+    /// Represents the response to a Get Azure Sql Database deleted database
+    /// backup request.
     /// </summary>
-    public enum HDInsightClusterType
+    public partial class DeletedDatabaseBackupGetResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Type Hadoop.
-        /// </summary>
-        Hadoop = 0,
+        private DeletedDatabaseBackup _deletedDatabaseBackup;
         
         /// <summary>
-        /// Type HBase.
+        /// Optional. Gets or sets the object representing a given Azure Sql
+        /// Database deleted database backup.
         /// </summary>
-        HBase = 1,
+        public DeletedDatabaseBackup DeletedDatabaseBackup
+        {
+            get { return this._deletedDatabaseBackup; }
+            set { this._deletedDatabaseBackup = value; }
+        }
         
         /// <summary>
-        /// Type Spark.
+        /// Initializes a new instance of the DeletedDatabaseBackupGetResponse
+        /// class.
         /// </summary>
-        Spark = 2,
-        
-        /// <summary>
-        /// Type Storm.
-        /// </summary>
-        Storm = 3,
+        public DeletedDatabaseBackupGetResponse()
+        {
+        }
     }
 }

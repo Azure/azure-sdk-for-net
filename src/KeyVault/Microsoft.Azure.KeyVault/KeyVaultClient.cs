@@ -387,10 +387,10 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="vault">The URL for the vault in which the key is to be created.</param>
         /// <param name="keyName">The name for the key</param>
-        /// <param name="keyType">The type of key to create. For valid key types, see WebKeyTypes.</param>
-        /// <param name="keyAttributes">The attributes of the key. For more information on possible attributes, see KeyAttributes.</param>        
+        /// <param name="keyType">The type of key to create. For valid key types, see WebKeyTypes.</param>       
         /// <param name="keySize">Size of the key</param>
-        /// <param name="key_ops">JSON web key operations. For more information, see JsonWebKeyOperation.</param>        
+        /// <param name="key_ops">JSON web key operations. For more information, see JsonWebKeyOperation.</param>
+        /// <param name="keyAttributes">The attributes of the key. For more information on possible attributes, see KeyAttributes.</param>      
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>A key bundle containing the result of the create request</returns>

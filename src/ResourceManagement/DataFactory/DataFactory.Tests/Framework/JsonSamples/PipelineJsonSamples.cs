@@ -1341,5 +1341,44 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }";
 
+        public const string WebTableCopyActivityPipeline = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from Web Table."",
+        activities:
+        [
+            {
+                name: ""WebTableCopy"",
+                inputs: [ {name: ""Input""} ],
+                outputs: [ {name: ""Output""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""WebSource""
+                    },
+                    sink: 
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                policy:
+                {
+                    concurrency: 1,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
     }
 }
