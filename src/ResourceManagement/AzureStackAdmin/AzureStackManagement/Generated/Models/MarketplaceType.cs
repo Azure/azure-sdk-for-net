@@ -21,31 +21,22 @@
 
 using System;
 using System.Linq;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The type of marketplace behavior for the resource type.
     /// </summary>
-    public partial class ProviderRegistrationModel : ResourceBase
+    public enum MarketplaceType
     {
-        private ProviderRegistrationPropertiesDefinition _properties;
+        /// <summary>
+        /// The marketplace type is not specified.
+        /// </summary>
+        NotSpecified = 0,
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// The marketplace offer is an add-on to a resource.
         /// </summary>
-        public ProviderRegistrationPropertiesDefinition Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProviderRegistrationModel class.
-        /// </summary>
-        public ProviderRegistrationModel()
-        {
-        }
+        AddOn = 1,
     }
 }

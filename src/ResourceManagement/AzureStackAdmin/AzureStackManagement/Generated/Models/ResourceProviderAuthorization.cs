@@ -21,30 +21,43 @@
 
 using System;
 using System.Linq;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The resource provider authorization information.
     /// </summary>
-    public partial class ProviderRegistrationModel : ResourceBase
+    public partial class ResourceProviderAuthorization
     {
-        private ProviderRegistrationPropertiesDefinition _properties;
+        private string _applicationId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the application id of resource provider in
+        /// AAD.
         /// </summary>
-        public ProviderRegistrationPropertiesDefinition Properties
+        public string ApplicationId
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._applicationId; }
+            set { this._applicationId = value; }
+        }
+        
+        private string _roleDefinitionId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the role definition identifier against which
+        /// a role assignment is created.
+        /// </summary>
+        public string RoleDefinitionId
+        {
+            get { return this._roleDefinitionId; }
+            set { this._roleDefinitionId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProviderRegistrationModel class.
+        /// Initializes a new instance of the ResourceProviderAuthorization
+        /// class.
         /// </summary>
-        public ProviderRegistrationModel()
+        public ResourceProviderAuthorization()
         {
         }
     }

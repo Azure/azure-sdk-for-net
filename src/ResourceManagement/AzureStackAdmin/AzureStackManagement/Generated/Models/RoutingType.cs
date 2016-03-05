@@ -25,14 +25,43 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The resource routing type.
     /// </summary>
-    public enum QuotaSyncState
+    public enum RoutingType
     {
-        InSync = 0,
+        /// <summary>
+        /// The resource routing type is default.
+        /// </summary>
+        Default = 0,
         
-        Syncing = 1,
+        /// <summary>
+        /// The resource routing type is proxy only.
+        /// </summary>
+        ProxyOnly = 1,
         
-        OutOfSync = 2,
+        /// <summary>
+        /// The resource routing type is host based.
+        /// </summary>
+        HostBased = 2,
+        
+        /// <summary>
+        /// The resource routing type is extension.
+        /// </summary>
+        Extension = 4,
+        
+        /// <summary>
+        /// The resource routing type is tenant.
+        /// </summary>
+        Tenant = 8,
+        
+        /// <summary>
+        /// The resource routing type is fan out.
+        /// </summary>
+        Fanout = 16,
+        
+        /// <summary>
+        /// The resource routing type is Location based.
+        /// </summary>
+        LocationBased = 32,
     }
 }

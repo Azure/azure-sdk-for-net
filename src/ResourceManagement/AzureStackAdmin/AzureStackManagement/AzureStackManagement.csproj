@@ -70,10 +70,11 @@
     <Compile Include="Generated\ManagedSubscriptionOperations.cs" />
     <Compile Include="Generated\ManagedSubscriptionOperationsExtensions.cs" />
     <Compile Include="Generated\Models\AccessibilityState.cs" />
-    <Compile Include="Generated\Models\AdminOfferDefinition.cs" />
+    <Compile Include="Generated\Models\AddonPlanDefinition.cs" />
     <Compile Include="Generated\Models\AdminOfferModel.cs" />
-    <Compile Include="Generated\Models\AdminPlanDefinition.cs" />
+    <Compile Include="Generated\Models\AdminOfferPropertiesDefinition.cs" />
     <Compile Include="Generated\Models\AdminPlanModel.cs" />
+    <Compile Include="Generated\Models\AdminPlanPropertiesDefinition.cs" />
     <Compile Include="Generated\Models\CloudCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\CloudCreateOrUpdateResult.cs" />
     <Compile Include="Generated\Models\CloudDefinition.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Generated\Models\ManagedSubscriptionCreateOrUpdateResult.cs" />
     <Compile Include="Generated\Models\ManagedSubscriptionGetResult.cs" />
     <Compile Include="Generated\Models\ManagedSubscriptionListResult.cs" />
+    <Compile Include="Generated\Models\MarketplaceType.cs" />
     <Compile Include="Generated\Models\Metric.cs" />
     <Compile Include="Generated\Models\MetricAvailability.cs" />
     <Compile Include="Generated\Models\MetricDefinition.cs" />
@@ -155,10 +157,10 @@
     <Compile Include="Generated\Models\PriceDefinition.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationCreateOrUpdateResult.cs" />
-    <Compile Include="Generated\Models\ProviderRegistrationDefinition.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationGetResult.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationListResult.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationModel.cs" />
+    <Compile Include="Generated\Models\ProviderRegistrationPropertiesDefinition.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationValidateParameters.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationValidateResult.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationValidationDefinition.cs" />
@@ -166,7 +168,6 @@
     <Compile Include="Generated\Models\ProviderResourceType.cs" />
     <Compile Include="Generated\Models\ProvisioningState.cs" />
     <Compile Include="Generated\Models\PublicGalleryItemListResult.cs" />
-    <Compile Include="Generated\Models\QuotaSyncState.cs" />
     <Compile Include="Generated\Models\ResourceActionParameters.cs" />
     <Compile Include="Generated\Models\ResourceActionResult.cs" />
     <Compile Include="Generated\Models\ResourceBase.cs" />
@@ -185,13 +186,14 @@
     <Compile Include="Generated\Models\ResourceGroupListResult.cs" />
     <Compile Include="Generated\Models\ResourceGroupPropertiesDefinition.cs" />
     <Compile Include="Generated\Models\ResourceListResult.cs" />
+    <Compile Include="Generated\Models\ResourceProviderAuthorization.cs" />
     <Compile Include="Generated\Models\ResourceProviderDefinition.cs" />
     <Compile Include="Generated\Models\ResourceProviderEndpoint.cs" />
     <Compile Include="Generated\Models\ResourceProviderGetResult.cs" />
     <Compile Include="Generated\Models\ResourceProviderListResult.cs" />
     <Compile Include="Generated\Models\ResourceProviderManifest.cs" />
     <Compile Include="Generated\Models\ResourceType.cs" />
-    <Compile Include="Generated\Models\ServiceQuotaDefinition.cs" />
+    <Compile Include="Generated\Models\RoutingType.cs" />
     <Compile Include="Generated\Models\ShallowResourceListResult.cs" />
     <Compile Include="Generated\Models\SubscriptionCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\SubscriptionCreateOrUpdateResult.cs" />

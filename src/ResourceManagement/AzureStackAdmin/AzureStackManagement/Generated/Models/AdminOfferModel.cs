@@ -30,12 +30,12 @@ namespace Microsoft.AzureStack.Management.Models
     /// </summary>
     public partial class AdminOfferModel : ResourceBase
     {
-        private AdminOfferDefinition _properties;
+        private AdminOfferPropertiesDefinition _properties;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public AdminOfferDefinition Properties
+        public AdminOfferPropertiesDefinition Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
