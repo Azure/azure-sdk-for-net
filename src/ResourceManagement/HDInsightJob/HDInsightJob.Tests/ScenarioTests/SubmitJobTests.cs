@@ -23,6 +23,7 @@ using Microsoft.Azure.Management.HDInsight.Job;
 using Microsoft.Azure.Management.HDInsight.Job.Models;
 using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace HDInsightJob.Tests
 {
@@ -100,10 +101,10 @@ namespace HDInsightJob.Tests
         {
             var parameters = new HiveJobSubmissionParameters
             {
-                Query = @"select * from hivesampletable where querydwelltime > 10 limit 20"
+                Query = @"select querydwelltime+2 from hivesampletable where clientid = 8"
             };
 
-            SubmitHiveJobAndValidateOutput(parameters, "Massachusetts	United States");
+            SubmitHiveJobAndValidateOutput(parameters, "15.92");
         }
 
         public void SubmitHiveJobAndValidateOutput(HiveJobSubmissionParameters parameters, string expectedOutputPart)
@@ -141,10 +142,13 @@ namespace HDInsightJob.Tests
                     Assert.NotNull(outputUrl);
                     Assert.True(!string.IsNullOrEmpty(outputUrl.AbsoluteUri));
 
-                    // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
-                    string textOutput = Convert(output);
-                    Assert.True(textOutput.Contains(expectedOutputPart));
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Contains(expectedOutputPart));
+                    }
                 }
                 else
                 {
@@ -152,9 +156,13 @@ namespace HDInsightJob.Tests
                     Assert.NotNull(errorOutputUrl);
                     Assert.True(!string.IsNullOrEmpty(errorOutputUrl.AbsoluteUri));
 
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                    string errorTextOutput = Convert(output);
-                    Assert.NotNull(errorTextOutput);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
                     Assert.True(false);
                 }
             }
@@ -208,16 +216,23 @@ namespace HDInsightJob.Tests
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
-                    string textOutput = Convert(output);
-                    Assert.True(textOutput.Contains("Estimated value of Pi is 3.14"));
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Contains("Estimated value of Pi is 3.14"));
+                    }
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                    string errorTextOutput = Convert(output);
-                    Assert.NotNull(errorTextOutput);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
                     Assert.True(false);
                 }
             }
@@ -263,16 +278,23 @@ namespace HDInsightJob.Tests
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
-                    string textOutput = Convert(output);
-                    Assert.True(textOutput.Length > 0);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Length > 0);
+                    }
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                    string errorTextOutput = Convert(output);
-                    Assert.NotNull(errorTextOutput);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
                     Assert.True(false);
                 }
             }
@@ -286,9 +308,9 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
+                var username = TestUtils.WinUserName;
+                var password = TestUtils.WinPassword;
+                var clustername = TestUtils.WinClusterName;
 
                 var credentials = new BasicAuthenticationCloudCredentials
                 {
@@ -316,20 +338,27 @@ namespace HDInsightJob.Tests
 
                 var jobStatus = GetJobFinalStatus(client, jobId);
 
-                var storageAccess = GetStorageAccessObject();
+                var storageAccess = new AzureStorageAccess(TestUtils.WinStorageAccountName, TestUtils.WinStorageAccountKey, TestUtils.WinDefaultContainer);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
-                    string textOutput = Convert(output);
-                    Assert.True(textOutput.Length > 0);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Length > 0);
+                    }
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                    string errorTextOutput = Convert(output);
-                    Assert.NotNull(errorTextOutput);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
                     Assert.True(false);
                 }
             }
@@ -379,15 +408,22 @@ namespace HDInsightJob.Tests
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
                     // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
-                    string textOutput = Convert(output);
-                    Assert.True(textOutput.Contains("(DEBUG,"));
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Contains("(DEBUG,"));
+                    }
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                    string errorTextOutput = Convert(output);
-                    Assert.NotNull(errorTextOutput);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
                     Assert.True(false);
                 }
             }
@@ -412,13 +448,23 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
 
+                // Before we run this test in Record mode, we should run following commands on cluster
+                // hdfs dfs -mkdir /user/hcat/lib
+                // hadoop fs -copyFromLocal -f /usr/share/java/sqljdbc_4.1/enu/sqljdbc41.jar /user/hcat/lib
+                // Generate sqoopcommand.txt using content
+                // --connect
+                // <Connection string to DB which has table dept.>
+                // --table
+                // dept
+                // Keep these in separate lines otherwise, sqoop command will fail. Copy the sqoopcommand.txt
+                // hdfs dfs -mkdir /example/data/sqoop/
+                // hadoop fs -copyFromLocal -f sqoopcommand.txt /example/data/sqoop/
+
                 var parameters = new SqoopJobSubmissionParameters
                 {
-                    // Before we run this test, we should run following commands on cluster
-                    // hdfs dfs -mkdir /user/hcat/lib
-                    // hadoop fs -copyFromLocal -f /usr/share/java/sqljdbc_4.1/enu/sqljdbc41.jar /user/hcat/lib
                     LibDir = "/user/hcat/lib",
-                    Command = "import --connect " + TestUtils.SQLServerConnectionString + " --table dept --hive-import -m 1",
+                    Files = new List<string>{"/example/data/sqoop/sqoopcommand.txt"},
+                    Command = "import --options-file sqoopcommand.txt --hive-import -m 1",
                     StatusDir = "sqoopstatus",
                 };
 
@@ -435,16 +481,23 @@ namespace HDInsightJob.Tests
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    // Retrieve Job Output
-                    var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
-                    string textOutput = Convert(output);
-                    Assert.True(textOutput.Length > 0);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Length > 0);
+                    }
                 }
                 else
                 {
-                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                    string errorTextOutput = Convert(output);
-                    Assert.NotNull(errorTextOutput);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
                     Assert.True(false);
                 }
             }
@@ -492,11 +545,14 @@ namespace HDInsightJob.Tests
                 Assert.NotNull(errorOutputUrl);
                 Assert.True(!string.IsNullOrEmpty(errorOutputUrl.AbsoluteUri));
 
-                var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
-                Assert.NotNull(output);
-                Assert.True(output.Length > 0);
-                string errorTextOutput = Convert(output);
-                Assert.True(!string.IsNullOrEmpty(errorTextOutput));
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                    Assert.NotNull(output);
+                    Assert.True(output.Length > 0);
+                    string errorTextOutput = Convert(output);
+                    Assert.True(!string.IsNullOrEmpty(errorTextOutput));
+                }
             }
         }
 

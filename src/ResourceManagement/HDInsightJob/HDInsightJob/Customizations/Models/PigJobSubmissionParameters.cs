@@ -65,14 +65,31 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         internal string GetJobPostRequestContent()
         {
             // Check input parameters and transform them to required format before sending request to templeton.
-            string content = string.Empty;
-            content += !string.IsNullOrEmpty(this.Query) ? string.Format("&execute={0}", this.Query) : string.Empty;
-            content += !string.IsNullOrEmpty(this.File) ? string.Format("&file={0}", this.File) : string.Empty;
-            content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
-            content += ModelHelper.ConvertListToString(this.Files, "&files=", ",");
-            content += ModelHelper.GetStatusDirectory(this.StatusDir);
+            var values = new List<KeyValuePair<string, string>>();
 
-            return content;
+            if (!string.IsNullOrEmpty(this.Query))
+            {
+                values.Add(new KeyValuePair<string, string>("execute", this.Query));
+            }
+
+            if (!string.IsNullOrEmpty(this.File))
+            {
+                values.Add(new KeyValuePair<string, string>("file", this.File));
+            }
+
+            if (this.Arguments != null && this.Arguments.Count > 0)
+            {
+                values.AddRange(ModelHelper.BuildList("arg", this.Arguments));
+            }
+
+            if (this.Files != null && this.Files.Count > 0)
+            {
+                values.Add(new KeyValuePair<string, string>("files", ModelHelper.BuildListToCommaSeparatedString(this.Files)));
+            }
+
+            values.Add(new KeyValuePair<string, string>("statusdir", ModelHelper.GetStatusDirectory(this.StatusDir)));
+
+            return ModelHelper.ConvertItemsToString(values);
         }
     }
 }

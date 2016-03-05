@@ -91,19 +91,56 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         internal string GetJobPostRequestContent()
         {
             // Check input parameters and transform them to required format before sending request to templeton.
-            string content = string.Empty;
-            content += !string.IsNullOrEmpty(this.Input) ? string.Format("&input={0}", this.Input) : string.Empty;
-            content += !string.IsNullOrEmpty(this.Mapper) ? string.Format("&mapper={0}", this.Mapper) : string.Empty;
-            content += !string.IsNullOrEmpty(this.Reducer) ? string.Format("&reducer={0}", this.Reducer) : string.Empty;
-            content += !string.IsNullOrEmpty(this.Output) ? string.Format("&output={0}", this.Output) : string.Empty;
-            content += !string.IsNullOrEmpty(this.File) ? string.Format("&file={0}", this.File) : string.Empty;
-            content += ModelHelper.ConvertListToString(this.Files, "&files=", ",");
-            content += ModelHelper.ConvertDictionaryToString(this.Defines, "&define=");
-            content += ModelHelper.ConvertDictionaryToString(this.CmdEnv, "&cmdenv=");
-            content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
-            content += ModelHelper.GetStatusDirectory(this.StatusDir);
+            var values = new List<KeyValuePair<string, string>>();
 
-            return content;
+            if (!string.IsNullOrEmpty(this.Input))
+            {
+                values.Add(new KeyValuePair<string, string>("input", this.Input));
+            }
+
+            if (!string.IsNullOrEmpty(this.Output))
+            {
+                values.Add(new KeyValuePair<string, string>("output", this.Output));
+            }
+
+            if (!string.IsNullOrEmpty(this.Mapper))
+            {
+                values.Add(new KeyValuePair<string, string>("mapper", this.Mapper));
+            }
+
+            if (!string.IsNullOrEmpty(this.Reducer))
+            {
+                values.Add(new KeyValuePair<string, string>("reducer", this.Reducer));
+            }
+
+            if (!string.IsNullOrEmpty(this.File))
+            {
+                values.Add(new KeyValuePair<string, string>("file", this.File));
+            }
+
+            if (this.Files != null && this.Files.Count > 0)
+            {
+                values.Add(new KeyValuePair<string, string>("files", ModelHelper.BuildListToCommaSeparatedString(this.Files)));
+            }
+
+            if (this.Arguments != null && this.Arguments.Count > 0)
+            {
+                values.AddRange(ModelHelper.BuildList("arg", this.Arguments));
+            }
+
+            if (this.Defines != null && this.Defines.Count > 0)
+            {
+                values.AddRange(ModelHelper.BuildNameValueList("define", this.Defines));
+            }
+
+            if (this.CmdEnv != null && this.CmdEnv.Count > 0)
+            {
+                values.AddRange(ModelHelper.BuildNameValueList("cmdenv", this.CmdEnv));
+            }
+
+            values.Add(new KeyValuePair<string, string>("statusdir", ModelHelper.GetStatusDirectory(this.StatusDir)));
+
+            return ModelHelper.ConvertItemsToString(values);
         }
     }
 }

@@ -40,17 +40,51 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
                 statusDir = string.Format("{0}-{1}", statusDir, Guid.NewGuid().ToString());
             }
 
-            return string.Format("&statusdir={0}", statusDir);
+            return statusDir;
         }
 
-        internal static string ConvertDictionaryToString(IDictionary<string, string> defines, string param)
+        internal static string ConvertItemsToString(IEnumerable<KeyValuePair<string, string>> args)
         {
-            return defines == null || defines.Count == 0 ? string.Empty : param + string.Join(param, defines.Select(x => x.Key + "%3D" + x.Value).ToArray());
+            var strings = (from kvp in args
+                           select kvp.Key.EscapeDataString() + "=" + kvp.Value.EscapeDataString()).ToList();
+            return string.Join("&", strings);
         }
 
-        internal static string ConvertListToString(IList<string> list, string prefix, string join)
+        internal static string EscapeDataString(this string inputValue)
         {
-            return list == null || list.Count == 0 ? string.Empty : prefix + string.Join(join, list.ToArray());
+            if (string.IsNullOrEmpty(inputValue))
+            {
+                return string.Empty;
+            }
+
+            return Uri.EscapeDataString(inputValue);
+        }
+
+        internal static IEnumerable<KeyValuePair<string, string>> BuildNameValueList(string paramName, IEnumerable<KeyValuePair<string, string>> nameValuePairs)
+        {
+            List<KeyValuePair<string, string>> retval = new List<KeyValuePair<string, string>>();
+
+            foreach (var kvp in nameValuePairs)
+            {
+                retval.Add(new KeyValuePair<string, string>(paramName, kvp.Key + "=" + kvp.Value));
+            }
+            return retval;
+        }
+
+        internal static IEnumerable<KeyValuePair<string, string>> BuildList(string type, IEnumerable<string> args)
+        {
+            List<KeyValuePair<string, string>> retval = new List<KeyValuePair<string, string>>();
+
+            foreach (var arg in args)
+            {
+                retval.Add(new KeyValuePair<string, string>(type, arg));
+            }
+            return retval;
+        }
+
+        internal static string BuildListToCommaSeparatedString(IEnumerable<string> input)
+        {
+            return string.Join(",", input.ToArray());
         }
     }
 }

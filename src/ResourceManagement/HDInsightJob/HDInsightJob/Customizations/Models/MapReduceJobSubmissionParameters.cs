@@ -76,16 +76,41 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         internal string GetJobPostRequestContent()
         {
             // Check input parameters and transform them to required format before sending request to templeton.
-            string content = string.Empty;
-            content += !string.IsNullOrEmpty(this.JarFile) ? string.Format("&jar={0}", this.JarFile) : string.Empty;
-            content += !string.IsNullOrEmpty(this.JarClass) ? string.Format("&class={0}", this.JarClass) : string.Empty;
-            content += ModelHelper.ConvertListToString(this.LibJars, "&libjars=", ",");
-            content += ModelHelper.ConvertListToString(this.Files, "&files=", ",");
-            content += ModelHelper.ConvertDictionaryToString(this.Defines, "&define=");
-            content += ModelHelper.ConvertListToString(this.Arguments, "&arg=", "&arg=");
-            content += ModelHelper.GetStatusDirectory(this.StatusDir);
+            var values = new List<KeyValuePair<string, string>>();
 
-            return content;
+            if (!string.IsNullOrEmpty(this.JarFile))
+            {
+                values.Add(new KeyValuePair<string, string>("jar", this.JarFile));
+            }
+
+            if (!string.IsNullOrEmpty(this.JarClass))
+            {
+                values.Add(new KeyValuePair<string, string>("class", this.JarClass));
+            }
+
+            if (this.Arguments != null && this.Arguments.Count > 0)
+            {
+                values.AddRange(ModelHelper.BuildList("arg", this.Arguments));
+            }
+
+            if (this.Defines != null && this.Defines.Count > 0)
+            {
+                values.AddRange(ModelHelper.BuildNameValueList("define", this.Defines));
+            }
+
+            if (this.LibJars != null && this.LibJars.Count > 0)
+            {
+                values.Add(new KeyValuePair<string, string>("libjars", ModelHelper.BuildListToCommaSeparatedString(this.LibJars)));
+            }
+
+            if (this.Files != null && this.Files.Count > 0)
+            {
+                values.Add(new KeyValuePair<string, string>("files", ModelHelper.BuildListToCommaSeparatedString(this.Files)));
+            }
+
+            values.Add(new KeyValuePair<string, string>("statusdir", ModelHelper.GetStatusDirectory(this.StatusDir)));
+
+            return ModelHelper.ConvertItemsToString(values);
         }
     }
 }
