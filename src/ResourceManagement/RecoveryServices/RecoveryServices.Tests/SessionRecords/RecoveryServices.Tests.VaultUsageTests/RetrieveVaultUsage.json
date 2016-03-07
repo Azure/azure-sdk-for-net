@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/testsitegroup/providers/Microsoft.RecoveryServicesseadev01/vaults/rsv5/usages?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL3Rlc3RzaXRlZ3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2Vzc2VhZGV2MDEvdmF1bHRzL3JzdjUvdXNhZ2VzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c87b2028-ed19-45e9-b181-60833a6176b8"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"LRSStorageUsage\",\r\n        \"localizedValue\": \"Cloud - LRS\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"GRSStorageUsage\",\r\n        \"localizedValue\": \"Cloud - GRS\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"ProtectedInstances\",\r\n        \"localizedValue\": \"Protected Instances\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BackupItems\",\r\n        \"localizedValue\": \"Backup Items\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BackupJobs\",\r\n        \"localizedValue\": \"Backup Jobs\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BackupManagementServers\",\r\n        \"localizedValue\": \"Backup Management Servers\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"LRSStorageUsage\",\r\n        \"localizedValue\": \"Cloud - LRS\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"GRSStorageUsage\",\r\n        \"localizedValue\": \"Cloud - GRS\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"ProtectedInstances\",\r\n        \"localizedValue\": \"Protected Instances\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BackupItems\",\r\n        \"localizedValue\": \"Backup Items\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BackupJobs\",\r\n        \"localizedValue\": \"Backup Jobs\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 1,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"BackupManagementServers\",\r\n        \"localizedValue\": \"Backup Management Servers\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 0,\r\n      \"limit\": -1,\r\n      \"nextResetTime\": null,\r\n      \"quotaPeriod\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1873"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "95d70e07-f7ea-4d87-9efd-fa6bf23da473"
+        ],
+        "x-ms-client-request-id": [
+          "c87b2028-ed19-45e9-b181-60833a6176b8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "95d70e07-f7ea-4d87-9efd-fa6bf23da473"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20151215T080511Z:95d70e07-f7ea-4d87-9efd-fa6bf23da473"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 Dec 2015 08:05:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f5303a0b-fae4-4cdb-b44d-0e4c032dde26"
+  }
+}
