@@ -60,7 +60,10 @@
     <Compile Include="Generated\Management\Insights\AutomatedExportOperations.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAutomatedExportOperations.cs" />
+    <Compile Include="Generated\Management\Insights\ILogProfilesOperations.cs" />
     <Compile Include="Generated\Management\Insights\ISkuOperations.cs" />
+    <Compile Include="Generated\Management\Insights\LogProfilesOperations.cs" />
+    <Compile Include="Generated\Management\Insights\LogProfilesOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSetting.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingGetResponse.cs" />
@@ -73,6 +76,13 @@
     <Compile Include="Generated\Management\Insights\Models\DatabaseConsistencyOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseServerCredential.cs" />
     <Compile Include="Generated\Management\Insights\Models\EmailNotification.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogProfile.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogProfileCollection.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogProfileCreatOrUpdateParameters.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogProfileGetResponse.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogProfileListResponse.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogProfilePutParameters.cs" />
+    <Compile Include="Generated\Management\Insights\Models\LogProfileResource.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\MetricSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\RetentionPolicy.cs" />
