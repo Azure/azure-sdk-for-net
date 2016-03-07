@@ -22,41 +22,39 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.SiteRecovery.Models
+namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// HTTP Request headers for Site recovery service.
+    /// The resource storage details.
     /// </summary>
-    public partial class CustomRequestHeaders
+    public partial class StorageDetails
     {
-        private string _agentAuthenticationHeader;
+        private string _storageType;
         
         /// <summary>
-        /// Optional. String representing a unique code which is used to
-        /// validate that the request is originated by an authenticated client.
+        /// Optional. Gets or sets the storage type.
         /// </summary>
-        public string AgentAuthenticationHeader
+        public string StorageType
         {
-            get { return this._agentAuthenticationHeader; }
-            set { this._agentAuthenticationHeader = value; }
+            get { return this._storageType; }
+            set { this._storageType = value; }
         }
         
-        private string _clientRequestId;
+        private string _storageTypeState;
         
         /// <summary>
-        /// Optional. ClientRequestId is a unique ID for every request to Azure
-        /// Site Recovery. It is useful when diagnosing failures in API calls.
+        /// Optional. Gets or sets the storage type state.
         /// </summary>
-        public string ClientRequestId
+        public string StorageTypeState
         {
-            get { return this._clientRequestId; }
-            set { this._clientRequestId = value; }
+            get { return this._storageTypeState; }
+            set { this._storageTypeState = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomRequestHeaders class.
+        /// Initializes a new instance of the StorageDetails class.
         /// </summary>
-        public CustomRequestHeaders()
+        public StorageDetails()
         {
         }
     }

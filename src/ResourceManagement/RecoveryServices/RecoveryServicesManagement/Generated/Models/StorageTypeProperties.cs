@@ -21,32 +21,29 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
-namespace Microsoft.Azure.Management.SiteRecovery.Models
+namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The response model for the resource extended information object
+    /// Model for storage type properties.
     /// </summary>
-    public partial class ResourceExtendedInformationResponse : AzureOperationResponse
+    public partial class StorageTypeProperties
     {
-        private ResourceExtendedInformation _resourceExtendedInformation;
+        private string _storageModelType;
         
         /// <summary>
-        /// Optional. The resource extended information object
+        /// Optional. Gets or sets the storage model type.
         /// </summary>
-        public ResourceExtendedInformation ResourceExtendedInformation
+        public string StorageModelType
         {
-            get { return this._resourceExtendedInformation; }
-            set { this._resourceExtendedInformation = value; }
+            get { return this._storageModelType; }
+            set { this._storageModelType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceExtendedInformationResponse class.
+        /// Initializes a new instance of the StorageTypeProperties class.
         /// </summary>
-        public ResourceExtendedInformationResponse()
+        public StorageTypeProperties()
         {
         }
     }

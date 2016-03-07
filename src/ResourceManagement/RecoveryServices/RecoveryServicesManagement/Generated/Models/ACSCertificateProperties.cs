@@ -21,13 +21,14 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.RecoveryServices.Models;
 
-namespace Microsoft.Azure.Management.SiteRecovery.Models
+namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     /// <summary>
-    /// The certificate properties
+    /// The ACS certificate properties
     /// </summary>
-    public partial class CertificateProperties
+    public partial class ACSCertificateProperties : CertificateProperties
     {
         private string _friendlyName;
         
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private long _resourceId;
         
         /// <summary>
-        /// Optional. ASR vault id: resource id
+        /// Optional. vault id: resource id
         /// </summary>
         public long ResourceId
         {
@@ -85,9 +86,9 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateProperties class.
+        /// Initializes a new instance of the ACSCertificateProperties class.
         /// </summary>
-        public CertificateProperties()
+        public ACSCertificateProperties()
         {
         }
     }
