@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 {
                     ClusterDefinition = new ClusterDefinition
                     {
-                        ClusterType = clusterCreateParameters.ClusterType.ToString()
+                        ClusterType = clusterCreateParameters.ClusterType
                     },
                     ClusterVersion = clusterCreateParameters.Version,
                     OperatingSystemType = clusterCreateParameters.OSType
