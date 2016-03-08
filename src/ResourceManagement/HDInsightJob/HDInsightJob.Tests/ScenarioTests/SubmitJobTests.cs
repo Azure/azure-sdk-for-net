@@ -138,10 +138,6 @@ namespace HDInsightJob.Tests
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    var outputUrl = client.JobManagement.GetJobOutputUrl(jobId, storageAccess);
-                    Assert.NotNull(outputUrl);
-                    Assert.True(!string.IsNullOrEmpty(outputUrl.AbsoluteUri));
-
                     if (HttpMockServer.Mode == HttpRecorderMode.Record)
                     {
                         // Retrieve Job Output
@@ -152,10 +148,6 @@ namespace HDInsightJob.Tests
                 }
                 else
                 {
-                    var errorOutputUrl = client.JobManagement.GetJobErrorLogsUrl(jobId, storageAccess);
-                    Assert.NotNull(errorOutputUrl);
-                    Assert.True(!string.IsNullOrEmpty(errorOutputUrl.AbsoluteUri));
-
                     if (HttpMockServer.Mode == HttpRecorderMode.Record)
                     {
                         var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
@@ -540,10 +532,6 @@ namespace HDInsightJob.Tests
                 Assert.True(jobStatus.JobDetail.ExitValue > 0);
 
                 var storageAccess = GetStorageAccessObject();
-
-                var errorOutputUrl = client.JobManagement.GetJobErrorLogsUrl(jobId, storageAccess);
-                Assert.NotNull(errorOutputUrl);
-                Assert.True(!string.IsNullOrEmpty(errorOutputUrl.AbsoluteUri));
 
                 if (HttpMockServer.Mode == HttpRecorderMode.Record)
                 {

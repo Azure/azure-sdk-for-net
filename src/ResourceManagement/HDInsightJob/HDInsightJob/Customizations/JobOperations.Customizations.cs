@@ -70,48 +70,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             return storageAccess.GetFileContent(blobReferencePath);
         }
 
-        /// <summary>
-        /// Gets the url for job output.
-        /// </summary>
-        /// <param name='jobId'>
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The url for job output.
-        /// </returns>
-        public async Task<Uri> GetJobOutputUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
-        {
-            var blobReferencePath = await GetJobStatusDirectory(jobId, "stdout");
-            return storageAccess.GetFileUrl(blobReferencePath);
-        }
-
-        /// <summary>
-        /// Gets the url for job error output.
-        /// </summary>
-        /// <param name='jobId'>
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The url for job error output.
-        /// </returns>
-        public async Task<Uri> GetJobErrorLogsUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken)
-        {
-            var blobReferencePath = await GetJobStatusDirectory(jobId, "stderr");
-            return storageAccess.GetFileUrl(blobReferencePath);
-        }
-
         private async Task<string> GetJobStatusDirectory(string jobId, string file)
         {
             var job = await this.GetJobAsync(jobId);

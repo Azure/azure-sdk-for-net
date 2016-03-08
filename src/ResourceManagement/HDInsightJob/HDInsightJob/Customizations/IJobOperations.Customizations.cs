@@ -55,35 +55,5 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
         Task<Stream> GetJobErrorLogsAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Gets the output from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>
-        /// The url to access output of an individual jobDetails by jobId.
-        /// </returns>
-        Task<Uri> GetJobOutputUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Gets the error logs from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>
-        /// The url to access error logs of an individual jobDetails by jobId.
-        /// </returns>
-        Task<Uri> GetJobErrorLogsUrlAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
     }
 }

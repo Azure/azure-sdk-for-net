@@ -104,46 +104,5 @@ namespace Microsoft.Azure.Management.HDInsight.Job
 
             return blobStream;
         }
-
-        /// <summary>
-        /// Gets the content of input file as memory stream.
-        /// </summary>
-        /// <param name='file'>
-        /// Required. File path which needs to be downloaded.
-        /// </param>
-        /// <returns>
-        /// Memory stream which contains file content.
-        /// </returns>
-        public Uri GetFileUrl(string file)
-        {
-            Uri filePath = null;
-
-            try
-            {
-                if (file.StartsWith(Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase)
-                    || file.StartsWith(Constants.WabsProtocol, StringComparison.OrdinalIgnoreCase))
-                {
-                    filePath = new Uri(file);
-                }
-                else
-                {
-                    filePath =
-                     new Uri(
-                         string.Format(
-                             CultureInfo.InvariantCulture,
-                             "{0}{1}@{2}/{3}",
-                             Constants.WabsProtocolSchemeName,
-                             DefaultStorageContainer,
-                             StorageAccountName,
-                             file.TrimStart('/')));
-                }
-            }
-            catch (System.UriFormatException uriException)
-            {
-                throw new CloudException(uriException.Message);
-            }
-
-            return filePath;
-        }
     }
 }

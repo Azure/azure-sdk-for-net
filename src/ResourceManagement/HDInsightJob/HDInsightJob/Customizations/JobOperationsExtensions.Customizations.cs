@@ -14,7 +14,6 @@
 // limitations under the License.
 // 
 
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -216,104 +215,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             IStorageAccess storageAccess)
         {
             return operations.GetJobErrorLogsAsync(jobId, storageAccess, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Gets the url for job output.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
-        /// </param>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <returns>
-        /// The url for job output.
-        /// </returns>
-        public static Uri GetJobOutputUrl(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
-        {
-            return Task.Factory.StartNew(
-                (object s) =>
-                ((IJobOperations)s).GetJobOutputUrlAsync(jobId, storageAccess), operations,
-                CancellationToken.None,
-                TaskCreationOptions.None, TaskScheduler.Default)
-                .Unwrap()
-                .GetAwaiter()
-                .GetResult();
-        }
-
-        /// <summary>
-        /// Gets the url for job output.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
-        /// </param>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <returns>
-        /// The task to get url for job output.
-        /// </returns>
-        public static Task<Uri> GetJobOutputUrlAsync(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
-        {
-            return operations.GetJobOutputUrlAsync(jobId, storageAccess, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Gets the error logs from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
-        /// </param>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <returns>
-        /// The error logs of an individual jobDetails by jobId.
-        /// </returns>
-        public static Uri GetJobErrorLogsUrl(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
-        {
-            return Task.Factory.StartNew(
-                (object s) =>
-                    ((IJobOperations)s).GetJobErrorLogsUrlAsync(jobId, storageAccess), operations,
-                CancellationToken.None,
-                TaskCreationOptions.None, TaskScheduler.Default)
-                .Unwrap()
-                .GetAwaiter()
-                .GetResult();
-        }
-
-        /// <summary>
-        /// Gets the error logs from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
-        /// </param>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="storageAccess">
-        /// Required. The storage account object of type IStorageAccess.
-        /// </param>
-        /// <returns>
-        /// The task to get url for job error output.
-        /// </returns>
-        public static Task<Uri> GetJobErrorLogsUrlAsync(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
-        {
-            return operations.GetJobErrorLogsUrlAsync(jobId, storageAccess, CancellationToken.None);
         }
     }
 }

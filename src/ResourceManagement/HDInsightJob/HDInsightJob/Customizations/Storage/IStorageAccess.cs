@@ -22,17 +22,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     public interface IStorageAccess
     {
         /// <summary>
-        /// Gets the storage access url for a file.
-        /// </summary>
-        /// <param name='file'>
-        /// Required. File path for which url to be generated.
-        /// </param>
-        /// <returns>
-        /// Uri object for the input file stream.
-        /// </returns>
-        Uri GetFileUrl(string file);
-
-        /// <summary>
         /// Gets the content of input file as memory stream.
         /// </summary>
         /// <param name='file'>
