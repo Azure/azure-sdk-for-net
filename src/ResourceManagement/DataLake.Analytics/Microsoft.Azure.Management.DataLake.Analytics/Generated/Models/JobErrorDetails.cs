@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobErrorDetails class.
         /// </summary>
-        public JobErrorDetails(string description = default(string), string details = default(string), int? endOffset = default(int?), string errorId = default(string), string filePath = default(string), string helpLink = default(string), string internalDiagnostics = default(string), int? lineNumber = default(int?), string message = default(string), string resolution = default(string), JobInnerError innerError = default(JobInnerError), string severity = default(string), string source = default(string), string startOffset = default(string))
+        public JobErrorDetails(string description = default(string), string details = default(string), int? endOffset = default(int?), string errorId = default(string), string filePath = default(string), string helpLink = default(string), string internalDiagnostics = default(string), int? lineNumber = default(int?), string message = default(string), string resolution = default(string), JobInnerError innerError = default(JobInnerError), string severity = default(string), string source = default(string), int? startOffset = default(int?))
         {
             Description = description;
             Details = details;
@@ -131,10 +131,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Source { get; private set; }
 
         /// <summary>
-        /// Gets the end offset in the job where the error was found
+        /// Gets the start offset in the job where the error was found
         /// </summary>
         [JsonProperty(PropertyName = "startOffset")]
-        public string StartOffset { get; private set; }
+        public int? StartOffset { get; private set; }
 
     }
 }

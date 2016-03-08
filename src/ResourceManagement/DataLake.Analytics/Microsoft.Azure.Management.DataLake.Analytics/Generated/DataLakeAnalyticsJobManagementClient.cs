@@ -187,7 +187,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
@@ -202,7 +201,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobProperties>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobProperties>("type"));
-            DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }
