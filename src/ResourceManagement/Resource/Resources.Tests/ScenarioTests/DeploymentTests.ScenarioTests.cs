@@ -144,7 +144,8 @@ namespace ResourceGroups.Tests
                 Assert.True(deploymentListResult.Deployments[0].Properties.Parameters.Contains("mctest0101"));
 
                 //stop the deployment
-                if(deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Running"))
+                if(deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Running")
+                    || deploymentGetResult.Deployment.Properties.ProvisioningState.Equals("Accepted"))
                 {
                     client.Deployments.Cancel(groupName, deploymentName);
                 }
