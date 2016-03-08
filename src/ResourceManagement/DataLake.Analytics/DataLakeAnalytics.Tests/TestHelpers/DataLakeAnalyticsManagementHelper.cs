@@ -59,7 +59,6 @@ namespace DataLakeAnalytics.Tests
                         !resultAfterRegister.RegistrationState.Equals("Registering"),
                 string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", resultAfterRegister.RegistrationState));
             ThrowIfTrue(resultAfterRegister.ResourceTypes == null || resultAfterRegister.ResourceTypes.Count == 0, "Provider.ResourceTypes is empty.");
-            ThrowIfTrue(resultAfterRegister.ResourceTypes[0].Locations == null || resultAfterRegister.ResourceTypes[0].Locations.Count == 0, "Provider.ResourceTypes[0].Locations is empty.");
         }
 
         public void TryCreateResourceGroup(string resourceGroupName, string location)
