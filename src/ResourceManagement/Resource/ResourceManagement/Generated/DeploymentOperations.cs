@@ -592,6 +592,13 @@ namespace Microsoft.Azure.Management.Resources
             }
             if (parameters.Properties != null)
             {
+                if (parameters.Properties.DebugSetting != null)
+                {
+                    if (parameters.Properties.DebugSetting.DeploymentDebugDetailLevel == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.DebugSetting.DeploymentDebugDetailLevel");
+                    }
+                }
                 if (parameters.Properties.ParametersLink != null)
                 {
                     if (parameters.Properties.ParametersLink.Uri == null)
@@ -720,7 +727,7 @@ namespace Microsoft.Azure.Management.Resources
                         JObject debugSettingValue = new JObject();
                         propertiesValue["debugSetting"] = debugSettingValue;
                         
-                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DetailLevel.ToString();
+                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DeploymentDebugDetailLevel;
                     }
                 }
                 
@@ -1153,8 +1160,8 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken detailLevelValue = debugSettingValue2["detailLevel"];
                                     if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
                                     {
-                                        DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
-                                        debugSettingInstance.DetailLevel = detailLevelInstance;
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
                                     }
                                 }
                             }
@@ -1776,8 +1783,8 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken detailLevelValue = debugSettingValue["detailLevel"];
                                     if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
                                     {
-                                        DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
-                                        debugSettingInstance.DetailLevel = detailLevelInstance;
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
                                     }
                                 }
                             }
@@ -2336,8 +2343,8 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken detailLevelValue = debugSettingValue["detailLevel"];
                                             if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
                                             {
-                                                DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
-                                                debugSettingInstance.DetailLevel = detailLevelInstance;
+                                                string detailLevelInstance = ((string)detailLevelValue);
+                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
                                             }
                                         }
                                     }
@@ -2863,8 +2870,8 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken detailLevelValue = debugSettingValue["detailLevel"];
                                             if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
                                             {
-                                                DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
-                                                debugSettingInstance.DetailLevel = detailLevelInstance;
+                                                string detailLevelInstance = ((string)detailLevelValue);
+                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
                                             }
                                         }
                                     }
@@ -2953,6 +2960,13 @@ namespace Microsoft.Azure.Management.Resources
             }
             if (parameters.Properties != null)
             {
+                if (parameters.Properties.DebugSetting != null)
+                {
+                    if (parameters.Properties.DebugSetting.DeploymentDebugDetailLevel == null)
+                    {
+                        throw new ArgumentNullException("parameters.Properties.DebugSetting.DeploymentDebugDetailLevel");
+                    }
+                }
                 if (parameters.Properties.ParametersLink != null)
                 {
                     if (parameters.Properties.ParametersLink.Uri == null)
@@ -3082,7 +3096,7 @@ namespace Microsoft.Azure.Management.Resources
                         JObject debugSettingValue = new JObject();
                         propertiesValue["debugSetting"] = debugSettingValue;
                         
-                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DetailLevel.ToString();
+                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DeploymentDebugDetailLevel;
                     }
                 }
                 
@@ -3557,8 +3571,8 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken detailLevelValue = debugSettingValue2["detailLevel"];
                                     if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
                                     {
-                                        DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
-                                        debugSettingInstance.DetailLevel = detailLevelInstance;
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
                                     }
                                 }
                             }

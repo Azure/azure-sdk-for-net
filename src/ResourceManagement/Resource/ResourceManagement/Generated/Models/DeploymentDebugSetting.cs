@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -30,15 +29,16 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentDebugSetting
     {
-        private DeploymentDebugDetailLevel _detailLevel;
+        private string _deploymentDebugDetailLevel;
         
         /// <summary>
-        /// Required. Deployment debug detail level.
+        /// Required. Deployment debug detail level. Any combination of None,
+        /// RequestContent and ResponseContent
         /// </summary>
-        public DeploymentDebugDetailLevel DetailLevel
+        public string DeploymentDebugDetailLevel
         {
-            get { return this._detailLevel; }
-            set { this._detailLevel = value; }
+            get { return this._deploymentDebugDetailLevel; }
+            set { this._deploymentDebugDetailLevel = value; }
         }
         
         /// <summary>
@@ -52,10 +52,14 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Initializes a new instance of the DeploymentDebugSetting class with
         /// required arguments.
         /// </summary>
-        public DeploymentDebugSetting(DeploymentDebugDetailLevel detailLevel)
+        public DeploymentDebugSetting(string deploymentDebugDetailLevel)
             : this()
         {
-            this.DetailLevel = detailLevel;
+            if (deploymentDebugDetailLevel == null)
+            {
+                throw new ArgumentNullException("deploymentDebugDetailLevel");
+            }
+            this.DeploymentDebugDetailLevel = deploymentDebugDetailLevel;
         }
     }
 }
