@@ -234,6 +234,11 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["createMode"] = parameters.Properties.CreateMode;
                 }
                 
+                if (parameters.Properties.RestorePointInTime != null)
+                {
+                    propertiesValue["restorePointInTime"] = parameters.Properties.RestorePointInTime.Value;
+                }
+                
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
@@ -1117,6 +1122,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
                                     propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                 }
+                                
+                                JToken createModeValue = propertiesValue2["createMode"];
+                                if (createModeValue != null && createModeValue.Type != JTokenType.Null)
+                                {
+                                    string createModeInstance = ((string)createModeValue);
+                                    propertiesInstance.CreateMode = createModeInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -1173,11 +1185,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -2384,6 +2396,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
                                     propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                 }
+                                
+                                JToken createModeValue = propertiesValue["createMode"];
+                                if (createModeValue != null && createModeValue.Type != JTokenType.Null)
+                                {
+                                    string createModeInstance = ((string)createModeValue);
+                                    propertiesInstance.CreateMode = createModeInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -3404,6 +3423,13 @@ namespace Microsoft.Azure.Management.Sql
                                             string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
                                             propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                         }
+                                        
+                                        JToken createModeValue = propertiesValue["createMode"];
+                                        if (createModeValue != null && createModeValue.Type != JTokenType.Null)
+                                        {
+                                            string createModeInstance = ((string)createModeValue);
+                                            propertiesInstance.CreateMode = createModeInstance;
+                                        }
                                     }
                                     
                                     JToken idValue8 = valueValue["id"];
@@ -4392,6 +4418,13 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
                                     propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                }
+                                
+                                JToken createModeValue = propertiesValue["createMode"];
+                                if (createModeValue != null && createModeValue.Type != JTokenType.Null)
+                                {
+                                    string createModeInstance = ((string)createModeValue);
+                                    propertiesInstance.CreateMode = createModeInstance;
                                 }
                             }
                             
@@ -5421,6 +5454,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
                                     propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                 }
+                                
+                                JToken createModeValue = propertiesValue["createMode"];
+                                if (createModeValue != null && createModeValue.Type != JTokenType.Null)
+                                {
+                                    string createModeInstance = ((string)createModeValue);
+                                    propertiesInstance.CreateMode = createModeInstance;
+                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -6426,6 +6466,13 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
                                             propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                        }
+                                        
+                                        JToken createModeValue = propertiesValue["createMode"];
+                                        if (createModeValue != null && createModeValue.Type != JTokenType.Null)
+                                        {
+                                            string createModeInstance = ((string)createModeValue);
+                                            propertiesInstance.CreateMode = createModeInstance;
                                         }
                                     }
                                     
@@ -7444,6 +7491,13 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
                                             propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
+                                        }
+                                        
+                                        JToken createModeValue = propertiesValue["createMode"];
+                                        if (createModeValue != null && createModeValue.Type != JTokenType.Null)
+                                        {
+                                            string createModeInstance = ((string)createModeValue);
+                                            propertiesInstance.CreateMode = createModeInstance;
                                         }
                                     }
                                     

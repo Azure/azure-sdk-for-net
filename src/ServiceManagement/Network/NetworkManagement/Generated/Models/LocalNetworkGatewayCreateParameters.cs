@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -40,6 +41,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         {
             get { return this._addressSpace; }
             set { this._addressSpace = value; }
+        }
+        
+        private BgpSettings _bgpSettings;
+        
+        /// <summary>
+        /// Optional. Local network gateway's BGP settings
+        /// </summary>
+        public BgpSettings BgpSettings
+        {
+            get { return this._bgpSettings; }
+            set { this._bgpSettings = value; }
         }
         
         private string _gatewayName;

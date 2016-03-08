@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -249,6 +249,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             Variable variableInstance = new Variable();
                             result.Variable = variableInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                variableInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -399,7 +406,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(variableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -560,7 +567,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(variableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -638,6 +645,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             Variable variableInstance = new Variable();
                             result.Variable = variableInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                variableInstance.Id = idInstance;
+                            }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -778,7 +792,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/variables";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -862,6 +876,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     Variable variableInstance = new Variable();
                                     result.Variables.Add(variableInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        variableInstance.Id = idInstance;
+                                    }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -1064,6 +1085,13 @@ namespace Microsoft.Azure.Management.Automation
                                     Variable variableInstance = new Variable();
                                     result.Variables.Add(variableInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        variableInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
@@ -1233,7 +1261,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/variables/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

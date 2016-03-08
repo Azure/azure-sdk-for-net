@@ -303,7 +303,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1114,7 +1114,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1438,7 +1438,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2364,6 +2364,30 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(vMImageInputElement);
                 }
                 
+                if (parameters.DebugSettings != null)
+                {
+                    XElement debugSettingsElement = new XElement(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
+                    persistentVMRoleElement.Add(debugSettingsElement);
+                    
+                    XElement bootDiagnosticsEnabledElement = new XElement(XName.Get("BootDiagnosticsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                    bootDiagnosticsEnabledElement.Value = parameters.DebugSettings.BootDiagnosticsEnabled.ToString().ToLower();
+                    debugSettingsElement.Add(bootDiagnosticsEnabledElement);
+                    
+                    if (parameters.DebugSettings.ConsoleScreenshotBlobUri != null)
+                    {
+                        XElement consoleScreenshotBlobUriElement = new XElement(XName.Get("ConsoleScreenshotBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                        consoleScreenshotBlobUriElement.Value = parameters.DebugSettings.ConsoleScreenshotBlobUri.AbsoluteUri;
+                        debugSettingsElement.Add(consoleScreenshotBlobUriElement);
+                    }
+                    
+                    if (parameters.DebugSettings.SerialOutputBlobUri != null)
+                    {
+                        XElement serialOutputBlobUriElement = new XElement(XName.Get("SerialOutputBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                        serialOutputBlobUriElement.Value = parameters.DebugSettings.SerialOutputBlobUri.AbsoluteUri;
+                        debugSettingsElement.Add(serialOutputBlobUriElement);
+                    }
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -2653,7 +2677,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3666,6 +3690,30 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                         }
+                        
+                        if (roleListItem.DebugSettings != null)
+                        {
+                            XElement debugSettingsElement = new XElement(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
+                            roleElement.Add(debugSettingsElement);
+                            
+                            XElement bootDiagnosticsEnabledElement = new XElement(XName.Get("BootDiagnosticsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                            bootDiagnosticsEnabledElement.Value = roleListItem.DebugSettings.BootDiagnosticsEnabled.ToString().ToLower();
+                            debugSettingsElement.Add(bootDiagnosticsEnabledElement);
+                            
+                            if (roleListItem.DebugSettings.ConsoleScreenshotBlobUri != null)
+                            {
+                                XElement consoleScreenshotBlobUriElement = new XElement(XName.Get("ConsoleScreenshotBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                consoleScreenshotBlobUriElement.Value = roleListItem.DebugSettings.ConsoleScreenshotBlobUri.AbsoluteUri;
+                                debugSettingsElement.Add(consoleScreenshotBlobUriElement);
+                            }
+                            
+                            if (roleListItem.DebugSettings.SerialOutputBlobUri != null)
+                            {
+                                XElement serialOutputBlobUriElement = new XElement(XName.Get("SerialOutputBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                serialOutputBlobUriElement.Value = roleListItem.DebugSettings.SerialOutputBlobUri.AbsoluteUri;
+                                debugSettingsElement.Add(serialOutputBlobUriElement);
+                            }
+                        }
                     }
                     deploymentElement.Add(roleListSequenceElement);
                 }
@@ -3929,7 +3977,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4081,7 +4129,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4246,7 +4294,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4416,7 +4464,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4605,7 +4653,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4760,7 +4808,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5080,7 +5128,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5983,6 +6031,30 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(provisionGuestAgentElement);
                 }
                 
+                if (parameters.DebugSettings != null)
+                {
+                    XElement debugSettingsElement = new XElement(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
+                    persistentVMRoleElement.Add(debugSettingsElement);
+                    
+                    XElement bootDiagnosticsEnabledElement = new XElement(XName.Get("BootDiagnosticsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                    bootDiagnosticsEnabledElement.Value = parameters.DebugSettings.BootDiagnosticsEnabled.ToString().ToLower();
+                    debugSettingsElement.Add(bootDiagnosticsEnabledElement);
+                    
+                    if (parameters.DebugSettings.ConsoleScreenshotBlobUri != null)
+                    {
+                        XElement consoleScreenshotBlobUriElement = new XElement(XName.Get("ConsoleScreenshotBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                        consoleScreenshotBlobUriElement.Value = parameters.DebugSettings.ConsoleScreenshotBlobUri.AbsoluteUri;
+                        debugSettingsElement.Add(consoleScreenshotBlobUriElement);
+                    }
+                    
+                    if (parameters.DebugSettings.SerialOutputBlobUri != null)
+                    {
+                        XElement serialOutputBlobUriElement = new XElement(XName.Get("SerialOutputBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                        serialOutputBlobUriElement.Value = parameters.DebugSettings.SerialOutputBlobUri.AbsoluteUri;
+                        debugSettingsElement.Add(serialOutputBlobUriElement);
+                    }
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -6149,7 +6221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6461,7 +6533,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6562,7 +6634,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6673,7 +6745,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6775,7 +6847,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6879,7 +6951,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7010,7 +7082,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7859,6 +7931,34 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     oSVirtualHardDiskInstance.ResizedSizeInGB = resizedSizeInGBInstance;
                                 }
                             }
+                            
+                            XElement debugSettingsElement = persistentVMRoleElement.Element(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
+                            if (debugSettingsElement != null)
+                            {
+                                DebugSettings debugSettingsInstance = new DebugSettings();
+                                result.DebugSettings = debugSettingsInstance;
+                                
+                                XElement bootDiagnosticsEnabledElement = debugSettingsElement.Element(XName.Get("BootDiagnosticsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                                if (bootDiagnosticsEnabledElement != null)
+                                {
+                                    bool bootDiagnosticsEnabledInstance = bool.Parse(bootDiagnosticsEnabledElement.Value);
+                                    debugSettingsInstance.BootDiagnosticsEnabled = bootDiagnosticsEnabledInstance;
+                                }
+                                
+                                XElement consoleScreenshotBlobUriElement = debugSettingsElement.Element(XName.Get("ConsoleScreenshotBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                if (consoleScreenshotBlobUriElement != null)
+                                {
+                                    Uri consoleScreenshotBlobUriInstance = TypeConversion.TryParseUri(consoleScreenshotBlobUriElement.Value);
+                                    debugSettingsInstance.ConsoleScreenshotBlobUri = consoleScreenshotBlobUriInstance;
+                                }
+                                
+                                XElement serialOutputBlobUriElement = debugSettingsElement.Element(XName.Get("SerialOutputBlobUri", "http://schemas.microsoft.com/windowsazure"));
+                                if (serialOutputBlobUriElement != null)
+                                {
+                                    Uri serialOutputBlobUriInstance = TypeConversion.TryParseUri(serialOutputBlobUriElement.Value);
+                                    debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
+                                }
+                            }
                         }
                         
                     }
@@ -7984,7 +8084,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8109,7 +8209,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8212,7 +8312,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8309,7 +8409,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8407,7 +8507,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8504,7 +8604,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8608,7 +8708,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -8708,7 +8808,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

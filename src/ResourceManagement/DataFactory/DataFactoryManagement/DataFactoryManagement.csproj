@@ -16,6 +16,7 @@
     <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLUpdateResourceActivity.cs" />
     <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\WebSource.cs" />
     <Compile Include="Customizations\Models\Activities\DataLakeAnalyticsUSQLActivity.cs" />
     <Compile Include="Customizations\Models\Activities\USqlCompilationMode.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\AzureDataLakeStoreSink.cs" />
@@ -27,13 +28,21 @@
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\WebTableDataset.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AuthenticationType\ODataAuthenticationType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureStorageSasLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\WebLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OAuthLinkedServiceBase.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\HdfsLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\ODataLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesOdbcLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\SchemaGenerationTypes.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureSqlDataWarehouseTableDataset.cs" />
     <Compile Include="Customizations\Models\Registration\BaseAdfSchemaProperty.cs" />
@@ -43,6 +52,8 @@
     <Compile Include="Customizations\Models\Datasets\Compression\GZipCompression.cs" />
     <Compile Include="Customizations\Models\Datasets\Compression\Compression.cs" />
     <Compile Include="Customizations\Models\IGenericTypeProperties.cs" />
+    <Compile Include="Customizations\Operations\ActivityWindows\ActivityWindowOperations.cs" />
+    <Compile Include="Customizations\Operations\ActivityWindows\ActivityWindowOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactoryOperationUtilities.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />
@@ -58,6 +69,7 @@
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperations.cs" />
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
+    <Compile Include="Customizations\Operations\ActivityWindows\IActivityWindowOperations.cs" />
     <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Registration.cs" />
     <Compile Include="Customizations\Operations\OAuth\IOAuthOperations.cs" />
@@ -170,7 +182,7 @@
     <Compile Include="Customizations\Models\Datasets\Partitions\Partition.cs" />
     <Compile Include="Customizations\Models\Datasets\Partitions\PartitionColumn.cs" />
     <Compile Include="Customizations\Models\Datasets\Partitions\PartitionValue.cs" />
-    <Compile Include="Customizations\Models\Datasets\RelationalTableLocation.cs" />
+    <Compile Include="Customizations\Models\Datasets\RelationalTableDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\AvroFormat.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\StorageFormat.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\TextFormat.cs" />

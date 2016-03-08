@@ -25,8 +25,8 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Create or update Azure Sql Database Server communication link
-    /// parameters properties.
+    /// Create or update Azure Sql Server communication link parameters
+    /// properties.
     /// </summary>
     public partial class ServerCommunicationLinkCreateOrUpdateProperties
     {

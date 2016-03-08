@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
+    /// <summary>
+    /// The size of a web worker.
+    /// </summary>
     public enum WorkerSizeOptions
     {
         Small = 0,

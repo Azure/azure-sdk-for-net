@@ -32,7 +32,7 @@ namespace Microsoft.Azure
         /// </summary>
         /// <param name="name">Setting name.</param>
         /// <returns>Setting value or null if not found.</returns>
-        public static string GetSetting(string name)
+        public static string GetSetting(string name, bool outputResultsToTrace)
         {
             if (name == null)
             {
@@ -44,7 +44,20 @@ namespace Microsoft.Azure
                 throw new ArgumentException(message);
             }
 
+            AzureApplicationSettings.WriteToTrace = outputResultsToTrace;
+
             return AppSettings.GetSetting(name);
+        }
+
+        /// <summary>
+        /// Gets a setting with the given name. Trace results.
+        /// </summary>
+        /// <remarks>This overloaded function is kept for backward compabability.</remarks>
+        /// <param name="name">Setting name.</param>
+        /// <returns>Setting value or null if not found.</returns>
+        public static string GetSetting(string name)
+        {
+            return GetSetting(name, true);
         }
 
         /// <summary>

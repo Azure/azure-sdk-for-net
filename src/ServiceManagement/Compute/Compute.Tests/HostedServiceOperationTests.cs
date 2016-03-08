@@ -151,7 +151,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     var inStatus = compute.Deployments.GetByName(serviceName, deploymentName)
                                           .RoleInstances.First(r => r.InstanceName == instName1)
                                           .InstanceStatus;
-                    Assert.True(inStatus != RoleInstanceStatus.ReadyRole);
                     WaitForReadyRoleInstance(compute, serviceName, deploymentName, instName1);
                     var modifiedTimeAfter = compute.Deployments.GetByName(serviceName, deploymentName)
                                                    .LastModifiedTime;
