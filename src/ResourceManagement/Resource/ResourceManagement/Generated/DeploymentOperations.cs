@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(deploymentName);
             url = url + "/cancel";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -453,7 +453,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -633,7 +633,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -714,6 +714,14 @@ namespace Microsoft.Azure.Management.Resources
                     }
                     
                     propertiesValue["mode"] = parameters.Properties.Mode.ToString();
+                    
+                    if (parameters.Properties.DebugSetting != null)
+                    {
+                        JObject debugSettingValue = new JObject();
+                        propertiesValue["debugSetting"] = debugSettingValue;
+                        
+                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DetailLevel.ToString();
+                    }
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1135,6 +1143,20 @@ namespace Microsoft.Azure.Management.Resources
                                     DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                     propertiesInstance.Mode = modeInstance;
                                 }
+                                
+                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
+                                        debugSettingInstance.DetailLevel = detailLevelInstance;
+                                    }
+                                }
                             }
                         }
                         
@@ -1297,7 +1319,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1744,6 +1766,20 @@ namespace Microsoft.Azure.Management.Resources
                                     DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                     propertiesInstance.Mode = modeInstance;
                                 }
+                                
+                                JToken debugSettingValue = propertiesValue["debugSetting"];
+                                if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
+                                        debugSettingInstance.DetailLevel = detailLevelInstance;
+                                    }
+                                }
                             }
                         }
                         
@@ -1838,7 +1874,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2289,6 +2325,20 @@ namespace Microsoft.Azure.Management.Resources
                                         {
                                             DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                             propertiesInstance.Mode = modeInstance;
+                                        }
+                                        
+                                        JToken debugSettingValue = propertiesValue["debugSetting"];
+                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSetting = debugSettingInstance;
+                                            
+                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            {
+                                                DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
+                                                debugSettingInstance.DetailLevel = detailLevelInstance;
+                                            }
                                         }
                                     }
                                 }
@@ -2803,6 +2853,20 @@ namespace Microsoft.Azure.Management.Resources
                                             DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                             propertiesInstance.Mode = modeInstance;
                                         }
+                                        
+                                        JToken debugSettingValue = propertiesValue["debugSetting"];
+                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSetting = debugSettingInstance;
+                                            
+                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            {
+                                                DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
+                                                debugSettingInstance.DetailLevel = detailLevelInstance;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -2931,7 +2995,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(deploymentName);
             url = url + "/validate";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3012,6 +3076,14 @@ namespace Microsoft.Azure.Management.Resources
                     }
                     
                     propertiesValue["mode"] = parameters.Properties.Mode.ToString();
+                    
+                    if (parameters.Properties.DebugSetting != null)
+                    {
+                        JObject debugSettingValue = new JObject();
+                        propertiesValue["debugSetting"] = debugSettingValue;
+                        
+                        debugSettingValue["detailLevel"] = parameters.Properties.DebugSetting.DetailLevel.ToString();
+                    }
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -3474,6 +3546,20 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     DeploymentMode modeInstance = ((DeploymentMode)Enum.Parse(typeof(DeploymentMode), ((string)modeValue), true));
                                     propertiesInstance.Mode = modeInstance;
+                                }
+                                
+                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        DeploymentDebugDetailLevel detailLevelInstance = ((DeploymentDebugDetailLevel)Enum.Parse(typeof(DeploymentDebugDetailLevel), ((string)detailLevelValue), true));
+                                        debugSettingInstance.DetailLevel = detailLevelInstance;
+                                    }
                                 }
                             }
                         }

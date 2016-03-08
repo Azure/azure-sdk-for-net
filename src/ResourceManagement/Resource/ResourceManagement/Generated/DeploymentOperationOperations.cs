@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/operations/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -243,6 +243,13 @@ namespace Microsoft.Azure.Management.Resources
                                     propertiesInstance.Timestamp = timestampInstance;
                                 }
                                 
+                                JToken serviceRequestIdValue = propertiesValue["serviceRequestId"];
+                                if (serviceRequestIdValue != null && serviceRequestIdValue.Type != JTokenType.Null)
+                                {
+                                    string serviceRequestIdInstance = ((string)serviceRequestIdValue);
+                                    propertiesInstance.ServiceRequestId = serviceRequestIdInstance;
+                                }
+                                
                                 JToken statusCodeValue = propertiesValue["statusCode"];
                                 if (statusCodeValue != null && statusCodeValue.Type != JTokenType.Null)
                                 {
@@ -282,6 +289,34 @@ namespace Microsoft.Azure.Management.Resources
                                     {
                                         string resourceTypeInstance = ((string)resourceTypeValue);
                                         targetResourceInstance.ResourceType = resourceTypeInstance;
+                                    }
+                                }
+                                
+                                JToken requestValue = propertiesValue["request"];
+                                if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                {
+                                    DeploymentOperationHttpMessage requestInstance = new DeploymentOperationHttpMessage();
+                                    propertiesInstance.Request = requestInstance;
+                                    
+                                    JToken contentValue = requestValue["content"];
+                                    if (contentValue != null && contentValue.Type != JTokenType.Null)
+                                    {
+                                        string contentInstance = contentValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                        requestInstance.Content = contentInstance;
+                                    }
+                                }
+                                
+                                JToken responseValue = propertiesValue["response"];
+                                if (responseValue != null && responseValue.Type != JTokenType.Null)
+                                {
+                                    DeploymentOperationHttpMessage responseInstance = new DeploymentOperationHttpMessage();
+                                    propertiesInstance.Response = responseInstance;
+                                    
+                                    JToken contentValue2 = responseValue["content"];
+                                    if (contentValue2 != null && contentValue2.Type != JTokenType.Null)
+                                    {
+                                        string contentInstance2 = contentValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                        responseInstance.Content = contentInstance2;
                                     }
                                 }
                             }
@@ -386,7 +421,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -502,6 +537,13 @@ namespace Microsoft.Azure.Management.Resources
                                             propertiesInstance.Timestamp = timestampInstance;
                                         }
                                         
+                                        JToken serviceRequestIdValue = propertiesValue["serviceRequestId"];
+                                        if (serviceRequestIdValue != null && serviceRequestIdValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceRequestIdInstance = ((string)serviceRequestIdValue);
+                                            propertiesInstance.ServiceRequestId = serviceRequestIdInstance;
+                                        }
+                                        
                                         JToken statusCodeValue = propertiesValue["statusCode"];
                                         if (statusCodeValue != null && statusCodeValue.Type != JTokenType.Null)
                                         {
@@ -541,6 +583,34 @@ namespace Microsoft.Azure.Management.Resources
                                             {
                                                 string resourceTypeInstance = ((string)resourceTypeValue);
                                                 targetResourceInstance.ResourceType = resourceTypeInstance;
+                                            }
+                                        }
+                                        
+                                        JToken requestValue = propertiesValue["request"];
+                                        if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentOperationHttpMessage requestInstance = new DeploymentOperationHttpMessage();
+                                            propertiesInstance.Request = requestInstance;
+                                            
+                                            JToken contentValue = requestValue["content"];
+                                            if (contentValue != null && contentValue.Type != JTokenType.Null)
+                                            {
+                                                string contentInstance = contentValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                requestInstance.Content = contentInstance;
+                                            }
+                                        }
+                                        
+                                        JToken responseValue = propertiesValue["response"];
+                                        if (responseValue != null && responseValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentOperationHttpMessage responseInstance = new DeploymentOperationHttpMessage();
+                                            propertiesInstance.Response = responseInstance;
+                                            
+                                            JToken contentValue2 = responseValue["content"];
+                                            if (contentValue2 != null && contentValue2.Type != JTokenType.Null)
+                                            {
+                                                string contentInstance2 = contentValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                responseInstance.Content = contentInstance2;
                                             }
                                         }
                                     }
@@ -720,6 +790,13 @@ namespace Microsoft.Azure.Management.Resources
                                             propertiesInstance.Timestamp = timestampInstance;
                                         }
                                         
+                                        JToken serviceRequestIdValue = propertiesValue["serviceRequestId"];
+                                        if (serviceRequestIdValue != null && serviceRequestIdValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceRequestIdInstance = ((string)serviceRequestIdValue);
+                                            propertiesInstance.ServiceRequestId = serviceRequestIdInstance;
+                                        }
+                                        
                                         JToken statusCodeValue = propertiesValue["statusCode"];
                                         if (statusCodeValue != null && statusCodeValue.Type != JTokenType.Null)
                                         {
@@ -759,6 +836,34 @@ namespace Microsoft.Azure.Management.Resources
                                             {
                                                 string resourceTypeInstance = ((string)resourceTypeValue);
                                                 targetResourceInstance.ResourceType = resourceTypeInstance;
+                                            }
+                                        }
+                                        
+                                        JToken requestValue = propertiesValue["request"];
+                                        if (requestValue != null && requestValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentOperationHttpMessage requestInstance = new DeploymentOperationHttpMessage();
+                                            propertiesInstance.Request = requestInstance;
+                                            
+                                            JToken contentValue = requestValue["content"];
+                                            if (contentValue != null && contentValue.Type != JTokenType.Null)
+                                            {
+                                                string contentInstance = contentValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                requestInstance.Content = contentInstance;
+                                            }
+                                        }
+                                        
+                                        JToken responseValue = propertiesValue["response"];
+                                        if (responseValue != null && responseValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentOperationHttpMessage responseInstance = new DeploymentOperationHttpMessage();
+                                            propertiesInstance.Response = responseInstance;
+                                            
+                                            JToken contentValue2 = responseValue["content"];
+                                            if (contentValue2 != null && contentValue2.Type != JTokenType.Null)
+                                            {
+                                                string contentInstance2 = contentValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                responseInstance.Content = contentInstance2;
                                             }
                                         }
                                     }

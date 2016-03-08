@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/providers/";
             url = url + Uri.EscapeDataString(resourceProviderNamespace);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Resources
             {
                 queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -756,7 +756,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(resourceProviderNamespace);
             url = url + "/register";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -973,7 +973,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + Uri.EscapeDataString(resourceProviderNamespace);
             url = url + "/unregister";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-01");
+            queryParameters.Add("api-version=2016-02-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
