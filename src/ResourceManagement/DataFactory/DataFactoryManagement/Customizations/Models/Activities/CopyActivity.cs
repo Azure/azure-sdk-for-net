@@ -38,6 +38,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public CopyTranslator Translator { get; set; }
 
+        /// <summary>
+        /// Optional. Maximum number of concurrent sessions opened on the source and sink, to avoid session overload and affecting other workloads.
+        /// If not configured, an appropriate default value will be chosen for each type of source and sink.
+        /// </summary>
+        public uint? ParallelCopies { get; set; }
+
+        /// <summary>
+        /// Optional. Maximum number of cloud data movement units (DMU) to use for performing copy between two cloud data sources.
+        /// When the resource allocated to the default single DMU is the bottleneck, using a larger value can achieve higher throughput.
+        /// </summary>
+        public uint? CloudUnits { get; set; }
+
         public CopyActivity()
         {
         }

@@ -1,5 +1,15 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version _
+_Release date: _
+
+
+### Feature Additions
+
+* The following optional properties have been added to CopyActivity to to enable tuning of copy performance: 
+    * ParallelCopies
+    * CloudUnits
+
 ## Version 4.5.0
 _Release date: 2016.02.24_
 
