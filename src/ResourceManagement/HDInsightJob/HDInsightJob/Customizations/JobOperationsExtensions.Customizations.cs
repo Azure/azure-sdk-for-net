@@ -17,6 +17,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.HDInsight.Job.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
 {
@@ -26,93 +27,116 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     public partial class JobOperationsExtensions
     {
         /// <summary>
-        /// Gets the task log summary from execution of a jobDetails.
+        /// Submits an Hive job to an HDINSIGHT cluster.
         /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
         /// </param>
-        /// <param name="targetDirectory">
-        /// Required. The directory in which to download the logs to.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account
-        /// </param>
-        /// <param name="storageAccountKey">
-        /// The default storage account key.
-        /// </param>
-        /// <param name="defaultContainer">
-        /// The default container.
-        /// </param>
-        /// Cancellation token.
+        /// <param name='parameters'>
+        /// Required. Hive job parameters.
         /// </param>
         /// <returns>
-        /// 
+        /// The Create Job operation response.
         /// </returns>
-        public static void DownloadJobTaskLogs(this IJobOperations operations, string jobId, string targetDirectory,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+        public static JobSubmissionResponse SubmitHiveJob(this IJobOperations operations, HiveJobSubmissionParameters parameters)
         {
-            Task.Factory.StartNew(
-                (object s) =>
-                    ((IJobOperations) s).DownloadJobTaskLogsAsync(jobId, targetDirectory, storageAccountName,
-                        storageAccountKey, defaultContainer), operations, CancellationToken.None,
-                TaskCreationOptions.None, TaskScheduler.Default)
-                .Unwrap()
-                .GetAwaiter()
-                .GetResult();
+            return operations.SubmitHiveJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
         }
 
         /// <summary>
-        /// Gets the task log summary from execution of a jobDetails.
+        /// Submits a MapReduce job to an HDINSIGHT cluster.
         /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
         /// </param>
-        /// <param name="targetDirectory">
-        /// Required. The directory in which to download the logs to.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account.
-        /// </param>
-        /// <param name="storageAccountKey">
-        /// The default storage account key.
-        /// </param>
-        /// <param name="defaultContainer">
-        /// The default container.
-        /// </param>
-        /// Cancellation token.
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
         /// </param>
         /// <returns>
-        /// 
+        /// The Create Job operation response.
         /// </returns>
-        public static Task DownloadJobTaskLogsAsync(this IJobOperations operations, string jobId, string targetDirectory,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+        public static JobSubmissionResponse SubmitMapReduceJob(this IJobOperations operations, MapReduceJobSubmissionParameters parameters)
         {
-            return operations.DownloadJobTaskLogsAsync(jobId, targetDirectory, storageAccountName, storageAccountKey,
-                defaultContainer, CancellationToken.None);
+            return operations.SubmitMapReduceJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
+        /// <summary>
+        /// Submits a MapReduce streaming job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. MapReduce job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitMapReduceStreamingJob(this IJobOperations operations, MapReduceStreamingJobSubmissionParameters parameters)
+        {
+            return operations.SubmitMapReduceStreamingJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
+        /// <summary>
+        /// Submits an Hive job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Pig job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitPigJob(this IJobOperations operations, PigJobSubmissionParameters parameters)
+        {
+            return operations.SubmitPigJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
+        }
+
+        /// <summary>
+        /// Submits an Sqoop job to an HDINSIGHT cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Sqoop job parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Job operation response.
+        /// </returns>
+        public static JobSubmissionResponse SubmitSqoopJob(this IJobOperations operations, SqoopJobSubmissionParameters parameters)
+        {
+            return operations.SubmitSqoopJob(new JobSubmissionParameters { Content = parameters.GetJobPostRequestContent() });
         }
 
         /// <summary>
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
         /// Required. The id of the job.
         /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The output of an individual jobDetails by jobId.
         /// </returns>
-        public static Stream GetJobOutput(this IJobOperations operations, string jobId, string storageAccountName,
-            string storageAccountKey, string defaultContainer)
+        public static Stream GetJobOutput(this IJobOperations operations, string jobId, IStorageAccess storageAccess)
         {
             return Task.Factory.StartNew(
                 (object s) =>
-                    ((IJobOperations) s).GetJobOutputAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer), operations,
+                ((IJobOperations)s).GetJobOutputAsync(jobId, storageAccess), operations,
                 CancellationToken.None,
                 TaskCreationOptions.None, TaskScheduler.Default)
                 .Unwrap()
@@ -123,49 +147,47 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <summary>
         /// Gets the output from the execution of an individual jobDetails.
         /// </summary>
-        /// <param name="operations"></param>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
-        ///     Required. The id of the job.
+        /// Required. The id of the job.
         /// </param>
-        /// <param name="storageAccountName">
-        ///     Required. The storage account the container lives on.
-        /// </param>
-        /// <param name="storageAccountKey"></param>
-        /// <param name="defaultContainer">
-        ///     Required. The default container.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The output of an individual jobDetails by jobId.
         /// </returns>
         public static Task<Stream> GetJobOutputAsync(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+            IStorageAccess storageAccess)
         {
-            return operations.GetJobOutputAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer, CancellationToken.None);
+            return operations.GetJobOutputAsync(jobId, storageAccess, CancellationToken.None);
         }
 
         /// <summary>
         /// Gets the error logs from the execution of an individual jobDetails.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
         /// Required. The id of the job.
         /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
         public static Stream GetJobErrorLogs(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+            IStorageAccess storageAccess)
         {
             return Task.Factory.StartNew(
                 (object s) =>
-                    ((IJobOperations)s).GetJobErrorLogsAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer), operations,
+                    ((IJobOperations)s).GetJobErrorLogsAsync(jobId, storageAccess), operations,
                 CancellationToken.None,
                 TaskCreationOptions.None, TaskScheduler.Default)
                 .Unwrap()
@@ -176,74 +198,23 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <summary>
         /// Gets the error logs from the execution of an individual jobDetails.
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.Job.IJobOperations.
+        /// </param>
         /// <param name="jobId">
         /// Required. The id of the job.
         /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
+        /// <param name="storageAccess">
+        /// Required. The storage account object of type IStorageAccess.
         /// </param>
         /// <returns>
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
         public static Task<Stream> GetJobErrorLogsAsync(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
+            IStorageAccess storageAccess)
         {
-            return operations.GetJobErrorLogsAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer, CancellationToken.None);
+            return operations.GetJobErrorLogsAsync(jobId, storageAccess, CancellationToken.None);
         }
-
-        /// <summary>
-        /// Gets the task logs from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
-        /// </param>
-        /// <returns>
-        /// The task logs of an individual jobDetails by jobId.
-        /// </returns>
-        public static Stream GetJobTaskLogSummary(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
-        {
-            return Task.Factory.StartNew(
-                (object s) =>
-                    ((IJobOperations)s).GetJobTaskLogSummaryAsync(jobId, storageAccountName, storageAccountKey,
-                        defaultContainer), operations, CancellationToken.None,
-                TaskCreationOptions.None, TaskScheduler.Default)
-                .Unwrap()
-                .GetAwaiter()
-                .GetResult();
-        }
-
-        /// <summary>
-        /// Gets the task logs from the execution of an individual jobDetails.
-        /// </summary>
-        /// <param name="jobId">
-        /// Required. The id of the job.
-        /// </param>
-        /// <param name="defaultContainer">
-        /// Required. The default container.
-        /// </param>
-        /// <param name="storageAccountName">
-        /// Required. The storage account the container lives on.
-        /// </param>
-        /// <returns>
-        /// The task logs of an individual jobDetails by jobId.
-        /// </returns>
-        public static Task<Stream> GetJobTaskLogSummaryAsync(this IJobOperations operations, string jobId,
-            string storageAccountName, string storageAccountKey, string defaultContainer)
-        {
-            return operations.GetJobTaskLogSummaryAsync(jobId, storageAccountName, storageAccountKey,
-                defaultContainer, CancellationToken.None);
-        }
-
     }
 }

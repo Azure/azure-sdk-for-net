@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.HDInsight.Job.Models
@@ -29,60 +30,30 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     /// </summary>
     public partial class SqoopJobSubmissionParameters
     {
-        private string _command;
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Command { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Command
-        {
-            get { return this._command; }
-            set { this._command = value; }
-        }
-        
-        private string _file;
+        public string File { get; set; }
+
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Files { get; set; }
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string File
-        {
-            get { return this._file; }
-            set { this._file = value; }
-        }
-        
-        private string _files;
-        
+        public string StatusDir { get; set; }
+
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Files
-        {
-            get { return this._files; }
-            set { this._files = value; }
-        }
-        
-        private string _statusDir;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string StatusDir
-        {
-            get { return this._statusDir; }
-            set { this._statusDir = value; }
-        }
-        
-        private string _userName;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserName
-        {
-            get { return this._userName; }
-            set { this._userName = value; }
-        }
+        public string LibDir { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the SqoopJobSubmissionParameters
@@ -90,6 +61,36 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// </summary>
         public SqoopJobSubmissionParameters()
         {
+        }
+
+        internal string GetJobPostRequestContent()
+        {
+            // Check input parameters and transform them to required format before sending request to templeton.
+            var values = new List<KeyValuePair<string, string>>();
+
+            if (!string.IsNullOrEmpty(this.Command))
+            {
+                values.Add(new KeyValuePair<string, string>("command", this.Command));
+            }
+
+            if (!string.IsNullOrEmpty(this.File))
+            {
+                values.Add(new KeyValuePair<string, string>("file", this.File));
+            }
+
+            if (!string.IsNullOrEmpty(this.LibDir))
+            {
+                values.Add(new KeyValuePair<string, string>("libdir", this.LibDir));
+            }
+
+            if (this.Files != null && this.Files.Count > 0)
+            {
+                values.Add(new KeyValuePair<string, string>("files", ModelHelper.BuildListToCommaSeparatedString(this.Files)));
+            }
+
+            values.Add(new KeyValuePair<string, string>("statusdir", ModelHelper.GetStatusDirectory(this.StatusDir)));
+
+            return ModelHelper.ConvertItemsToString(values);
         }
     }
 }
