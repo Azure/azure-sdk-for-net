@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/providers/microsoft.insights?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVjMGFkNDYtYWUzZi00OTNlLTkxY2UtOTI5N2UwOTUzZmMxL3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/providers/microsoft.insights?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Byb3ZpZGVycy9taWNyb3NvZnQuaW5zaWdodHM/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45c0ad46-ae3f-493e-91ce-9297e0953fc1/providers/microsoft.insights\",\r\n  \"namespace\": \"microsoft.insights\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"11c174dc-1945-4a9a-a36b-c79a0f246b9b\",\r\n    \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"components\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"webtests\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"queries\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"alertrules\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"autoscalesettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"eventtypes\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-11-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-06-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"automatedExportSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"diagnosticSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"metricDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"logDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Brazil South\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Unregistered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/providers/microsoft.insights\",\r\n  \"namespace\": \"microsoft.insights\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"11c174dc-1945-4a9a-a36b-c79a0f246b9b\",\r\n    \"roleDefinitionId\": \"dd9d4347-f397-45f2-b538-85f21c90037b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"components\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"webtests\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"queries\",\r\n      \"locations\": [\r\n        \"Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01\",\r\n        \"2014-08-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"alertrules\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-03-01\",\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"autoscalesettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"eventtypes\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-11-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-06-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"automatedExportSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\",\r\n        \"2014-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"diagnosticSettings\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"metricDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"logDefinitions\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"Central US\",\r\n        \"Brazil South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-07-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"eventCategories\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "3309"
+          "3036"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +25,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14940"
+          "14992"
         ],
         "x-ms-request-id": [
-          "445a3e59-4f7f-413e-aa91-9bcdeb764443"
+          "8c1f3211-eba1-49e3-a251-7c395fdc8436"
         ],
         "x-ms-correlation-request-id": [
-          "445a3e59-4f7f-413e-aa91-9bcdeb764443"
+          "8c1f3211-eba1-49e3-a251-7c395fdc8436"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T001224Z:445a3e59-4f7f-413e-aa91-9bcdeb764443"
+          "CENTRALUS:20160308T031940Z:8c1f3211-eba1-49e3-a251-7c395fdc8436"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,7 +43,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 24 Jan 2016 00:12:23 GMT"
+          "Tue, 08 Mar 2016 03:19:40 GMT"
         ]
       },
       "StatusCode": 200
@@ -76,22 +76,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5343042a-1acb-4136-b74b-053f62ff2f3a"
+          "29285984-e184-48a5-acfd-c757f308b91c"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "388cdf25-5e3a-4222-acca-8df4fa03d348"
+          "1e9f9a6f-be24-4f3e-9abb-6af0865c0502"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T001224Z:388cdf25-5e3a-4222-acca-8df4fa03d348"
+          "CENTRALUS:20160308T031941Z:1e9f9a6f-be24-4f3e-9abb-6af0865c0502"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Sun, 24 Jan 2016 00:12:24 GMT"
+          "Tue, 08 Mar 2016 03:19:40 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -130,13 +130,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "e059abcf-9efd-467f-beb3-bd05f8eb5e35"
+          "e5582cdd-ca5b-4666-909d-d3a4a6e2d140"
         ],
         "x-ms-correlation-request-id": [
-          "e059abcf-9efd-467f-beb3-bd05f8eb5e35"
+          "e5582cdd-ca5b-4666-909d-d3a4a6e2d140"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160124T001224Z:e059abcf-9efd-467f-beb3-bd05f8eb5e35"
+          "CENTRALUS:20160308T031941Z:e5582cdd-ca5b-4666-909d-d3a4a6e2d140"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -145,7 +145,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 24 Jan 2016 00:12:24 GMT"
+          "Tue, 08 Mar 2016 03:19:41 GMT"
         ]
       },
       "StatusCode": 404
@@ -153,6 +153,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "45c0ad46-ae3f-493e-91ce-9297e0953fc1"
+    "SubscriptionId": "38b598fc-e57a-423f-b2e7-dc0ddb631f1f"
   }
 }

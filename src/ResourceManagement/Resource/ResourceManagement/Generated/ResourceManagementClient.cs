@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Resources
             this._resources = new ResourceOperations(this);
             this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
             this._tags = new TagOperations(this);
-            this._apiVersion = "2015-11-01";
+            this._apiVersion = "2016-02-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Resources
             this._resources = new ResourceOperations(this);
             this._resourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
             this._tags = new TagOperations(this);
-            this._apiVersion = "2015-11-01";
+            this._apiVersion = "2016-02-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.Resources
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -437,11 +437,11 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -449,11 +449,11 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         result.Status = OperationStatus.InProgress;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

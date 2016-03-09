@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._correlationId = value; }
         }
         
+        private DeploymentDebugSetting _debugSettingResponse;
+        
+        /// <summary>
+        /// Optional. Gets or sets the deployment debug setting.
+        /// </summary>
+        public DeploymentDebugSetting DebugSettingResponse
+        {
+            get { return this._debugSettingResponse; }
+            set { this._debugSettingResponse = value; }
+        }
+        
         private IList<Dependency> _dependencies;
         
         /// <summary>
