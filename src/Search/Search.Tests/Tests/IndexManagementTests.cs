@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Reflection;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
@@ -292,89 +293,10 @@ namespace Microsoft.Azure.Search.Tests
                         Fields = new[] { new Field("id", DataType.String) { IsKey = true } }.ToList()
                     };
 
-                var allAnalyzers =
-                    new[]
-                    {
-                        AnalyzerName.ArLucene,
-                        AnalyzerName.CsLucene,
-                        AnalyzerName.DaLucene,
-                        AnalyzerName.DeLucene,
-                        AnalyzerName.ElLucene,
-                        AnalyzerName.EnLucene,
-                        AnalyzerName.EsLucene,
-                        AnalyzerName.FiLucene,
-                        AnalyzerName.FrLucene,
-                        AnalyzerName.HiLucene,
-                        AnalyzerName.HuLucene,
-                        AnalyzerName.IdLucene,
-                        AnalyzerName.ItLucene,
-                        AnalyzerName.JaLucene,
-                        AnalyzerName.KoLucene,
-                        AnalyzerName.LvLucene,
-                        AnalyzerName.NlLucene,
-                        AnalyzerName.NoLucene,
-                        AnalyzerName.PlLucene,
-                        AnalyzerName.PtBRLucene,
-                        AnalyzerName.PtPTLucene,
-                        AnalyzerName.RoLucene,
-                        AnalyzerName.RuLucene,
-                        AnalyzerName.StandardAsciiFoldingLucene,
-                        AnalyzerName.StandardLucene,
-                        AnalyzerName.SvLucene,
-                        AnalyzerName.ThLucene,
-                        AnalyzerName.ZhHansLucene,
-                        AnalyzerName.ZhHantLucene,
-                        AnalyzerName.ArMicrosoft,
-                        AnalyzerName.BgMicrosoft,
-                        AnalyzerName.BnMicrosoft,
-                        AnalyzerName.CaMicrosoft,
-                        AnalyzerName.CsMicrosoft,
-                        AnalyzerName.DaMicrosoft,
-                        AnalyzerName.DeMicrosoft,
-                        AnalyzerName.ElMicrosoft,
-                        AnalyzerName.EnMicrosoft,
-                        AnalyzerName.EsMicrosoft,
-                        AnalyzerName.EtMicrosoft,
-                        AnalyzerName.FiMicrosoft,
-                        AnalyzerName.FrMicrosoft,
-                        AnalyzerName.HeMicrosoft,
-                        AnalyzerName.HiMicrosoft,
-                        AnalyzerName.HrMicrosoft,
-                        AnalyzerName.HuMicrosoft,
-                        AnalyzerName.GuMicrosoft,
-                        AnalyzerName.IdMicrosoft,
-                        AnalyzerName.IsMicrosoft,
-                        AnalyzerName.ItMicrosoft,
-                        AnalyzerName.JaMicrosoft,
-                        AnalyzerName.KnMicrosoft,
-                        AnalyzerName.LtMicrosoft,
-                        AnalyzerName.LvMicrosoft,
-                        AnalyzerName.NlMicrosoft,
-                        AnalyzerName.NbMicrosoft,
-                        AnalyzerName.MlMicrosoft,
-                        AnalyzerName.MsMicrosoft,
-                        AnalyzerName.MrMicrosoft,
-                        AnalyzerName.PaMicrosoft,
-                        AnalyzerName.PlMicrosoft,
-                        AnalyzerName.PtPtMicrosoft,
-                        AnalyzerName.PtBrMicrosoft,
-                        AnalyzerName.RoMicrosoft,
-                        AnalyzerName.RuMicrosoft,
-                        AnalyzerName.SkMicrosoft,
-                        AnalyzerName.SlMicrosoft,
-                        AnalyzerName.SrCyrillicMicrosoft,
-                        AnalyzerName.SrLatinMicrosoft,
-                        AnalyzerName.SvMicrosoft,
-                        AnalyzerName.TaMicrosoft,
-                        AnalyzerName.TeMicrosoft,
-                        AnalyzerName.TrMicrosoft,
-                        AnalyzerName.ThMicrosoft,
-                        AnalyzerName.UkMicrosoft,
-                        AnalyzerName.UrMicrosoft,
-                        AnalyzerName.ViMicrosoft,
-                        AnalyzerName.ZhHansMicrosoft,
-                        AnalyzerName.ZhHantMicrosoft
-                    };
+                AnalyzerName[] allAnalyzers =
+                    (from field in typeof(AnalyzerName).GetTypeInfo().GetFields()
+                    where field.FieldType == typeof(AnalyzerName) && field.IsStatic
+                    select field.GetValue(null)).Cast<AnalyzerName>().ToArray();
 
                 for (int i = 0; i < allAnalyzers.Length; i++)
                 {
