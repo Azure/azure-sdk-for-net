@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <param name='credentials'>
         /// Required. Basic authentication credentials for job submission.
         /// </param>
-        public HDInsightJobManagementClient(string clusterDnsName, BasicAuthenticationCloudCredentials credentials)
+        internal HDInsightJobManagementClient(string clusterDnsName, BasicAuthenticationCloudCredentials credentials)
             : this()
         {
             if (clusterDnsName == null)

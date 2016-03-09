@@ -9,9 +9,7 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScenarioTests\GetJobTests.cs" />
     <Compile Include="ScenarioTests\JobsEnumerationTests.cs" />
-    <Compile Include="ScenarioTests\StorageHelperTests.cs" />
     <Compile Include="ScenarioTests\SubmitJobTests.cs" />
     <Compile Include="TestUtils.cs" />
   </ItemGroup>
@@ -23,41 +21,35 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="SessionRecords\HDInsightJob.Tests.GetJobTests\GetHiveJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\HDInsightJob.Tests.ScenarioTests.JobsEnumerationTests\GetJobsPagination.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.GetJobTests\GetPigJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.GetJobTests\GetSqoopJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.GetJobTests\ListJobs.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.StorageHelperTests\GetJobError.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.StorageHelperTests\GetJobOutput.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\HDInsightJob.Tests.ScenarioTests.JobsEnumerationTests\ListJobs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\KillMapReduceStreamingJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitHiveJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitHiveJobAndValidateOutput.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitHiveJobError.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceStreamingJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitMapReduceStreamingJobWithFilesParam.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitPigJob.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\HDInsightJob.Tests.ScenarioTests.JobsEnumerationTests\GetJobsPagination.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\HDInsightJob.Tests.SubmitJobTests\SubmitSqoopJob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
