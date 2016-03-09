@@ -1088,6 +1088,20 @@ namespace Microsoft.Azure.Management.Resources
                                     }
                                 }
                                 
+                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                    }
+                                }
+                                
                                 JToken templateValue = propertiesValue2["template"];
                                 if (templateValue != null && templateValue.Type != JTokenType.Null)
                                 {
@@ -1151,17 +1165,17 @@ namespace Microsoft.Azure.Management.Resources
                                     propertiesInstance.Mode = modeInstance;
                                 }
                                 
-                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
-                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                JToken debugSettingValue3 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue3 != null && debugSettingValue3.Type != JTokenType.Null)
                                 {
-                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
-                                    propertiesInstance.DebugSetting = debugSettingInstance;
+                                    DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance2;
                                     
-                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
-                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    JToken detailLevelValue2 = debugSettingValue3["detailLevel"];
+                                    if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
                                     {
-                                        string detailLevelInstance = ((string)detailLevelValue);
-                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                        string detailLevelInstance2 = ((string)detailLevelValue2);
+                                        debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
                                     }
                                 }
                             }
@@ -1711,6 +1725,20 @@ namespace Microsoft.Azure.Management.Resources
                                     }
                                 }
                                 
+                                JToken debugSettingValue = propertiesValue["debugSetting"];
+                                if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                    }
+                                }
+                                
                                 JToken templateValue = propertiesValue["template"];
                                 if (templateValue != null && templateValue.Type != JTokenType.Null)
                                 {
@@ -1774,17 +1802,17 @@ namespace Microsoft.Azure.Management.Resources
                                     propertiesInstance.Mode = modeInstance;
                                 }
                                 
-                                JToken debugSettingValue = propertiesValue["debugSetting"];
-                                if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                JToken debugSettingValue2 = propertiesValue["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
                                 {
-                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
-                                    propertiesInstance.DebugSetting = debugSettingInstance;
+                                    DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance2;
                                     
-                                    JToken detailLevelValue = debugSettingValue["detailLevel"];
-                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    JToken detailLevelValue2 = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
                                     {
-                                        string detailLevelInstance = ((string)detailLevelValue);
-                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                        string detailLevelInstance2 = ((string)detailLevelValue2);
+                                        debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
                                     }
                                 }
                             }
@@ -2271,6 +2299,20 @@ namespace Microsoft.Azure.Management.Resources
                                             }
                                         }
                                         
+                                        JToken debugSettingValue = propertiesValue["debugSetting"];
+                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                            
+                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            {
+                                                string detailLevelInstance = ((string)detailLevelValue);
+                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                            }
+                                        }
+                                        
                                         JToken templateValue = propertiesValue["template"];
                                         if (templateValue != null && templateValue.Type != JTokenType.Null)
                                         {
@@ -2334,17 +2376,17 @@ namespace Microsoft.Azure.Management.Resources
                                             propertiesInstance.Mode = modeInstance;
                                         }
                                         
-                                        JToken debugSettingValue = propertiesValue["debugSetting"];
-                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        JToken debugSettingValue2 = propertiesValue["debugSetting"];
+                                        if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
                                         {
-                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
-                                            propertiesInstance.DebugSetting = debugSettingInstance;
+                                            DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSetting = debugSettingInstance2;
                                             
-                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
-                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            JToken detailLevelValue2 = debugSettingValue2["detailLevel"];
+                                            if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
                                             {
-                                                string detailLevelInstance = ((string)detailLevelValue);
-                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                                string detailLevelInstance2 = ((string)detailLevelValue2);
+                                                debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
                                             }
                                         }
                                     }
@@ -2798,6 +2840,20 @@ namespace Microsoft.Azure.Management.Resources
                                             }
                                         }
                                         
+                                        JToken debugSettingValue = propertiesValue["debugSetting"];
+                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        {
+                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                            
+                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
+                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            {
+                                                string detailLevelInstance = ((string)detailLevelValue);
+                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                            }
+                                        }
+                                        
                                         JToken templateValue = propertiesValue["template"];
                                         if (templateValue != null && templateValue.Type != JTokenType.Null)
                                         {
@@ -2861,17 +2917,17 @@ namespace Microsoft.Azure.Management.Resources
                                             propertiesInstance.Mode = modeInstance;
                                         }
                                         
-                                        JToken debugSettingValue = propertiesValue["debugSetting"];
-                                        if (debugSettingValue != null && debugSettingValue.Type != JTokenType.Null)
+                                        JToken debugSettingValue2 = propertiesValue["debugSetting"];
+                                        if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
                                         {
-                                            DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
-                                            propertiesInstance.DebugSetting = debugSettingInstance;
+                                            DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                            propertiesInstance.DebugSetting = debugSettingInstance2;
                                             
-                                            JToken detailLevelValue = debugSettingValue["detailLevel"];
-                                            if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                            JToken detailLevelValue2 = debugSettingValue2["detailLevel"];
+                                            if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
                                             {
-                                                string detailLevelInstance = ((string)detailLevelValue);
-                                                debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                                string detailLevelInstance2 = ((string)detailLevelValue2);
+                                                debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
                                             }
                                         }
                                     }
@@ -3499,6 +3555,20 @@ namespace Microsoft.Azure.Management.Resources
                                     }
                                 }
                                 
+                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                {
+                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSettingResponse = debugSettingInstance;
+                                    
+                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
+                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    {
+                                        string detailLevelInstance = ((string)detailLevelValue);
+                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                    }
+                                }
+                                
                                 JToken templateValue = propertiesValue2["template"];
                                 if (templateValue != null && templateValue.Type != JTokenType.Null)
                                 {
@@ -3562,17 +3632,17 @@ namespace Microsoft.Azure.Management.Resources
                                     propertiesInstance.Mode = modeInstance;
                                 }
                                 
-                                JToken debugSettingValue2 = propertiesValue2["debugSetting"];
-                                if (debugSettingValue2 != null && debugSettingValue2.Type != JTokenType.Null)
+                                JToken debugSettingValue3 = propertiesValue2["debugSetting"];
+                                if (debugSettingValue3 != null && debugSettingValue3.Type != JTokenType.Null)
                                 {
-                                    DeploymentDebugSetting debugSettingInstance = new DeploymentDebugSetting();
-                                    propertiesInstance.DebugSetting = debugSettingInstance;
+                                    DeploymentDebugSetting debugSettingInstance2 = new DeploymentDebugSetting();
+                                    propertiesInstance.DebugSetting = debugSettingInstance2;
                                     
-                                    JToken detailLevelValue = debugSettingValue2["detailLevel"];
-                                    if (detailLevelValue != null && detailLevelValue.Type != JTokenType.Null)
+                                    JToken detailLevelValue2 = debugSettingValue3["detailLevel"];
+                                    if (detailLevelValue2 != null && detailLevelValue2.Type != JTokenType.Null)
                                     {
-                                        string detailLevelInstance = ((string)detailLevelValue);
-                                        debugSettingInstance.DeploymentDebugDetailLevel = detailLevelInstance;
+                                        string detailLevelInstance2 = ((string)detailLevelValue2);
+                                        debugSettingInstance2.DeploymentDebugDetailLevel = detailLevelInstance2;
                                     }
                                 }
                             }
