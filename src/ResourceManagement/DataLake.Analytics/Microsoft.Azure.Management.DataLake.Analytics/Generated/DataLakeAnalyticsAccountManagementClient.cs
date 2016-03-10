@@ -276,11 +276,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
+                ContractResolver = new ReadOnlyJsonContractResolver()
             };
             DeserializationSettings = new JsonSerializerSettings
             {
@@ -288,11 +284,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
+                ContractResolver = new ReadOnlyJsonContractResolver()
             };
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
