@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the ContainerServiceListResult class.
         /// </summary>
-        public ContainerServiceListResult(object properties = default(object))
+        public ContainerServiceListResult(IList<ContainerService> value = default(IList<ContainerService>))
         {
-            Properties = properties;
+            Value = value;
         }
 
         /// <summary>
         /// Gets or sets the list of container services.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<ContainerService> Value { get; set; }
 
     }
 }
