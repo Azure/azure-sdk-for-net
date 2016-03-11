@@ -175,6 +175,16 @@ namespace Microsoft.AzureStack.Management
                     managedSubscriptionCreateOrUpdateParametersValue["externalReferenceId"] = parameters.Subscription.ExternalReferenceId;
                 }
                 
+                if (parameters.Subscription.Owner != null)
+                {
+                    managedSubscriptionCreateOrUpdateParametersValue["owner"] = parameters.Subscription.Owner;
+                }
+                
+                if (parameters.Subscription.TenantId != null)
+                {
+                    managedSubscriptionCreateOrUpdateParametersValue["tenantId"] = parameters.Subscription.TenantId;
+                }
+                
                 if (parameters.Subscription.OfferId != null)
                 {
                     managedSubscriptionCreateOrUpdateParametersValue["offerId"] = parameters.Subscription.OfferId;
@@ -231,7 +241,7 @@ namespace Microsoft.AzureStack.Management
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            SubscriptionDefinition subscriptionInstance = new SubscriptionDefinition();
+                            AdminSubscriptionDefinition subscriptionInstance = new AdminSubscriptionDefinition();
                             result.Subscription = subscriptionInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -260,6 +270,20 @@ namespace Microsoft.AzureStack.Management
                             {
                                 string externalReferenceIdInstance = ((string)externalReferenceIdValue);
                                 subscriptionInstance.ExternalReferenceId = externalReferenceIdInstance;
+                            }
+                            
+                            JToken ownerValue = responseDoc["owner"];
+                            if (ownerValue != null && ownerValue.Type != JTokenType.Null)
+                            {
+                                string ownerInstance = ((string)ownerValue);
+                                subscriptionInstance.Owner = ownerInstance;
+                            }
+                            
+                            JToken tenantIdValue = responseDoc["tenantId"];
+                            if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                            {
+                                string tenantIdInstance = ((string)tenantIdValue);
+                                subscriptionInstance.TenantId = tenantIdInstance;
                             }
                             
                             JToken offerIdValue = responseDoc["offerId"];
@@ -551,7 +575,7 @@ namespace Microsoft.AzureStack.Management
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            SubscriptionDefinition subscriptionInstance = new SubscriptionDefinition();
+                            AdminSubscriptionDefinition subscriptionInstance = new AdminSubscriptionDefinition();
                             result.Subscription = subscriptionInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -580,6 +604,20 @@ namespace Microsoft.AzureStack.Management
                             {
                                 string externalReferenceIdInstance = ((string)externalReferenceIdValue);
                                 subscriptionInstance.ExternalReferenceId = externalReferenceIdInstance;
+                            }
+                            
+                            JToken ownerValue = responseDoc["owner"];
+                            if (ownerValue != null && ownerValue.Type != JTokenType.Null)
+                            {
+                                string ownerInstance = ((string)ownerValue);
+                                subscriptionInstance.Owner = ownerInstance;
+                            }
+                            
+                            JToken tenantIdValue = responseDoc["tenantId"];
+                            if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                            {
+                                string tenantIdInstance = ((string)tenantIdValue);
+                                subscriptionInstance.TenantId = tenantIdInstance;
                             }
                             
                             JToken offerIdValue = responseDoc["offerId"];
@@ -741,49 +779,63 @@ namespace Microsoft.AzureStack.Management
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    SubscriptionDefinition subscriptionDefinitionInstance = new SubscriptionDefinition();
-                                    result.Subscriptions.Add(subscriptionDefinitionInstance);
+                                    AdminSubscriptionDefinition adminSubscriptionDefinitionInstance = new AdminSubscriptionDefinition();
+                                    result.Subscriptions.Add(adminSubscriptionDefinitionInstance);
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        subscriptionDefinitionInstance.Id = idInstance;
+                                        adminSubscriptionDefinitionInstance.Id = idInstance;
                                     }
                                     
                                     JToken subscriptionIdValue = valueValue["subscriptionId"];
                                     if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                                     {
                                         string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                        subscriptionDefinitionInstance.SubscriptionId = subscriptionIdInstance;
+                                        adminSubscriptionDefinitionInstance.SubscriptionId = subscriptionIdInstance;
                                     }
                                     
                                     JToken displayNameValue = valueValue["displayName"];
                                     if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                     {
                                         string displayNameInstance = ((string)displayNameValue);
-                                        subscriptionDefinitionInstance.DisplayName = displayNameInstance;
+                                        adminSubscriptionDefinitionInstance.DisplayName = displayNameInstance;
                                     }
                                     
                                     JToken externalReferenceIdValue = valueValue["externalReferenceId"];
                                     if (externalReferenceIdValue != null && externalReferenceIdValue.Type != JTokenType.Null)
                                     {
                                         string externalReferenceIdInstance = ((string)externalReferenceIdValue);
-                                        subscriptionDefinitionInstance.ExternalReferenceId = externalReferenceIdInstance;
+                                        adminSubscriptionDefinitionInstance.ExternalReferenceId = externalReferenceIdInstance;
+                                    }
+                                    
+                                    JToken ownerValue = valueValue["owner"];
+                                    if (ownerValue != null && ownerValue.Type != JTokenType.Null)
+                                    {
+                                        string ownerInstance = ((string)ownerValue);
+                                        adminSubscriptionDefinitionInstance.Owner = ownerInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        adminSubscriptionDefinitionInstance.TenantId = tenantIdInstance;
                                     }
                                     
                                     JToken offerIdValue = valueValue["offerId"];
                                     if (offerIdValue != null && offerIdValue.Type != JTokenType.Null)
                                     {
                                         string offerIdInstance = ((string)offerIdValue);
-                                        subscriptionDefinitionInstance.OfferId = offerIdInstance;
+                                        adminSubscriptionDefinitionInstance.OfferId = offerIdInstance;
                                     }
                                     
                                     JToken stateValue = valueValue["state"];
                                     if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
                                         SubscriptionState stateInstance = ((SubscriptionState)Enum.Parse(typeof(SubscriptionState), ((string)stateValue), true));
-                                        subscriptionDefinitionInstance.State = stateInstance;
+                                        adminSubscriptionDefinitionInstance.State = stateInstance;
                                     }
                                 }
                             }
@@ -923,49 +975,63 @@ namespace Microsoft.AzureStack.Management
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    SubscriptionDefinition subscriptionDefinitionInstance = new SubscriptionDefinition();
-                                    result.Subscriptions.Add(subscriptionDefinitionInstance);
+                                    AdminSubscriptionDefinition adminSubscriptionDefinitionInstance = new AdminSubscriptionDefinition();
+                                    result.Subscriptions.Add(adminSubscriptionDefinitionInstance);
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        subscriptionDefinitionInstance.Id = idInstance;
+                                        adminSubscriptionDefinitionInstance.Id = idInstance;
                                     }
                                     
                                     JToken subscriptionIdValue = valueValue["subscriptionId"];
                                     if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                                     {
                                         string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                        subscriptionDefinitionInstance.SubscriptionId = subscriptionIdInstance;
+                                        adminSubscriptionDefinitionInstance.SubscriptionId = subscriptionIdInstance;
                                     }
                                     
                                     JToken displayNameValue = valueValue["displayName"];
                                     if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                     {
                                         string displayNameInstance = ((string)displayNameValue);
-                                        subscriptionDefinitionInstance.DisplayName = displayNameInstance;
+                                        adminSubscriptionDefinitionInstance.DisplayName = displayNameInstance;
                                     }
                                     
                                     JToken externalReferenceIdValue = valueValue["externalReferenceId"];
                                     if (externalReferenceIdValue != null && externalReferenceIdValue.Type != JTokenType.Null)
                                     {
                                         string externalReferenceIdInstance = ((string)externalReferenceIdValue);
-                                        subscriptionDefinitionInstance.ExternalReferenceId = externalReferenceIdInstance;
+                                        adminSubscriptionDefinitionInstance.ExternalReferenceId = externalReferenceIdInstance;
+                                    }
+                                    
+                                    JToken ownerValue = valueValue["owner"];
+                                    if (ownerValue != null && ownerValue.Type != JTokenType.Null)
+                                    {
+                                        string ownerInstance = ((string)ownerValue);
+                                        adminSubscriptionDefinitionInstance.Owner = ownerInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        adminSubscriptionDefinitionInstance.TenantId = tenantIdInstance;
                                     }
                                     
                                     JToken offerIdValue = valueValue["offerId"];
                                     if (offerIdValue != null && offerIdValue.Type != JTokenType.Null)
                                     {
                                         string offerIdInstance = ((string)offerIdValue);
-                                        subscriptionDefinitionInstance.OfferId = offerIdInstance;
+                                        adminSubscriptionDefinitionInstance.OfferId = offerIdInstance;
                                     }
                                     
                                     JToken stateValue = valueValue["state"];
                                     if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
                                         SubscriptionState stateInstance = ((SubscriptionState)Enum.Parse(typeof(SubscriptionState), ((string)stateValue), true));
-                                        subscriptionDefinitionInstance.State = stateInstance;
+                                        adminSubscriptionDefinitionInstance.State = stateInstance;
                                     }
                                 }
                             }

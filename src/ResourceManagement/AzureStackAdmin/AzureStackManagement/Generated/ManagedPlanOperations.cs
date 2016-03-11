@@ -129,7 +129,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/plans/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/plans/";
             if (parameters.Plan.Name != null)
             {
                 url = url + Uri.EscapeDataString(parameters.Plan.Name);
@@ -497,7 +497,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/plans/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/plans/";
             url = url + Uri.EscapeDataString(planId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -645,7 +645,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/plans/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/plans/";
             url = url + Uri.EscapeDataString(planId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -925,7 +925,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/plans/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/plans/";
             url = url + Uri.EscapeDataString(planId);
             url = url + "/metricdefinitions/";
             url = url + Uri.EscapeDataString(metricDefinitionId);
@@ -1180,7 +1180,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/plans/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/plans/";
             url = url + Uri.EscapeDataString(planId);
             url = url + "/metrics/";
             url = url + Uri.EscapeDataString(metricId);
@@ -1464,7 +1464,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/plans";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/plans";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             queryParameters.Add("includeDetails=" + Uri.EscapeDataString(includeDetails.ToString().ToLower()));
@@ -1959,7 +1959,7 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/providers/Microsoft.Subscriptions/plans";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/plans";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             queryParameters.Add("includeDetails=" + Uri.EscapeDataString(includeDetails.ToString().ToLower()));

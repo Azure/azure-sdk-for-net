@@ -129,7 +129,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers/";
             if (parameters.Offer.Name != null)
             {
                 url = url + Uri.EscapeDataString(parameters.Offer.Name);
@@ -544,7 +544,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers/";
             url = url + Uri.EscapeDataString(offerId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -692,7 +692,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers/";
             url = url + Uri.EscapeDataString(offerId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -1001,7 +1001,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers/";
             url = url + Uri.EscapeDataString(offerId);
             url = url + "/metricdefinitions/";
             url = url + Uri.EscapeDataString(metricDefinitionId);
@@ -1256,7 +1256,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers/";
             url = url + Uri.EscapeDataString(offerId);
             url = url + "/metrics/";
             url = url + Uri.EscapeDataString(metricId);
@@ -1556,7 +1556,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers/";
             url = url + Uri.EscapeDataString(offerName);
             url = url + "/Link";
             List<string> queryParameters = new List<string>();
@@ -1869,7 +1869,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             queryParameters.Add("includeDetails=" + Uri.EscapeDataString(includeDetails.ToString().ToLower()));
@@ -2741,7 +2741,7 @@ namespace Microsoft.AzureStack.Management
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Subscriptions/offers/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/offers/";
             url = url + Uri.EscapeDataString(offerName);
             url = url + "/Unlink";
             List<string> queryParameters = new List<string>();

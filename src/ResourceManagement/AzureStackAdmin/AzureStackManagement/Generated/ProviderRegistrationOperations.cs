@@ -468,7 +468,7 @@ namespace Microsoft.AzureStack.Management
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                ProviderRegistrationPropertiesDefinition propertiesInstance = new ProviderRegistrationPropertiesDefinition();
+                                ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                 providerRegistrationInstance.Properties = propertiesInstance;
                                 
                                 JToken displayNameValue = propertiesValue2["displayName"];
@@ -1073,7 +1073,7 @@ namespace Microsoft.AzureStack.Management
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                ProviderRegistrationPropertiesDefinition propertiesInstance = new ProviderRegistrationPropertiesDefinition();
+                                ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                 providerRegistrationInstance.Properties = propertiesInstance;
                                 
                                 JToken displayNameValue = propertiesValue["displayName"];
@@ -1525,7 +1525,7 @@ namespace Microsoft.AzureStack.Management
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ProviderRegistrationPropertiesDefinition propertiesInstance = new ProviderRegistrationPropertiesDefinition();
+                                        ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                         providerRegistrationModelInstance.Properties = propertiesInstance;
                                         
                                         JToken displayNameValue = propertiesValue["displayName"];
@@ -1956,7 +1956,7 @@ namespace Microsoft.AzureStack.Management
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ProviderRegistrationPropertiesDefinition propertiesInstance = new ProviderRegistrationPropertiesDefinition();
+                                        ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                         providerRegistrationModelInstance.Properties = propertiesInstance;
                                         
                                         JToken displayNameValue = propertiesValue["displayName"];
@@ -2399,7 +2399,7 @@ namespace Microsoft.AzureStack.Management
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ProviderRegistrationPropertiesDefinition propertiesInstance = new ProviderRegistrationPropertiesDefinition();
+                                        ManifestPropertiesDefinition propertiesInstance = new ManifestPropertiesDefinition();
                                         providerRegistrationModelInstance.Properties = propertiesInstance;
                                         
                                         JToken displayNameValue = propertiesValue["displayName"];

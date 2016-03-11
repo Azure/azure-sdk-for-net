@@ -30,12 +30,12 @@ namespace Microsoft.AzureStack.Management.Models
     /// </summary>
     public partial class ManagedSubscriptionCreateOrUpdateParameters
     {
-        private SubscriptionDefinition _subscription;
+        private AdminSubscriptionDefinition _subscription;
         
         /// <summary>
         /// Required. Your documentation here.
         /// </summary>
-        public SubscriptionDefinition Subscription
+        public AdminSubscriptionDefinition Subscription
         {
             get { return this._subscription; }
             set { this._subscription = value; }
@@ -54,7 +54,7 @@ namespace Microsoft.AzureStack.Management.Models
         /// ManagedSubscriptionCreateOrUpdateParameters class with required
         /// arguments.
         /// </summary>
-        public ManagedSubscriptionCreateOrUpdateParameters(SubscriptionDefinition subscription)
+        public ManagedSubscriptionCreateOrUpdateParameters(AdminSubscriptionDefinition subscription)
             : this()
         {
             if (subscription == null)

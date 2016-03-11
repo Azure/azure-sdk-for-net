@@ -75,6 +75,7 @@
     <Compile Include="Generated\Models\AdminOfferPropertiesDefinition.cs" />
     <Compile Include="Generated\Models\AdminPlanModel.cs" />
     <Compile Include="Generated\Models\AdminPlanPropertiesDefinition.cs" />
+    <Compile Include="Generated\Models\AdminSubscriptionDefinition.cs" />
     <Compile Include="Generated\Models\CloudCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\CloudCreateOrUpdateResult.cs" />
     <Compile Include="Generated\Models\CloudDefinition.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Generated\Models\ManagedSubscriptionCreateOrUpdateResult.cs" />
     <Compile Include="Generated\Models\ManagedSubscriptionGetResult.cs" />
     <Compile Include="Generated\Models\ManagedSubscriptionListResult.cs" />
+    <Compile Include="Generated\Models\ManifestPropertiesDefinition.cs" />
     <Compile Include="Generated\Models\MarketplaceType.cs" />
     <Compile Include="Generated\Models\Metric.cs" />
     <Compile Include="Generated\Models\MetricAvailability.cs" />
@@ -160,7 +162,6 @@
     <Compile Include="Generated\Models\ProviderRegistrationGetResult.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationListResult.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationModel.cs" />
-    <Compile Include="Generated\Models\ProviderRegistrationPropertiesDefinition.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationValidateParameters.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationValidateResult.cs" />
     <Compile Include="Generated\Models\ProviderRegistrationValidationDefinition.cs" />

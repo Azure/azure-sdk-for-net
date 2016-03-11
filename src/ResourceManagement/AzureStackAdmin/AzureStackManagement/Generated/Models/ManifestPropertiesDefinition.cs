@@ -30,7 +30,7 @@ namespace Microsoft.AzureStack.Management.Models
     /// <summary>
     /// The resource provider registration definition.
     /// </summary>
-    public partial class ProviderRegistrationPropertiesDefinition
+    public partial class ManifestPropertiesDefinition
     {
         private string _displayName;
         
@@ -146,10 +146,10 @@ namespace Microsoft.AzureStack.Management.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProviderRegistrationPropertiesDefinition class.
+        /// Initializes a new instance of the ManifestPropertiesDefinition
+        /// class.
         /// </summary>
-        public ProviderRegistrationPropertiesDefinition()
+        public ManifestPropertiesDefinition()
         {
             this.ResourceTypes = new LazyList<ResourceType>();
         }
