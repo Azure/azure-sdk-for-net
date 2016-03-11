@@ -81,7 +81,6 @@
     <Compile Include="Generated\Management\Insights\Models\LogProfileCreatOrUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogProfileGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogProfileListResponse.cs" />
-    <Compile Include="Generated\Management\Insights\Models\LogProfilePutParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogProfileResource.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\MetricSettings.cs" />
