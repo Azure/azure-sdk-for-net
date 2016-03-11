@@ -13,12 +13,12 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ComponentNames.
+    /// Defines values for InstanceViewTypes.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ComponentNames
+    public enum InstanceViewTypes
     {
-        [EnumMember(Value = "Microsoft-Windows-Shell-Setup")]
-        MicrosoftWindowsShellSetup
+        [EnumMember(Value = "instanceView")]
+        InstanceView
     }
 }

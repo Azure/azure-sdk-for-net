@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the AdditionalUnattendContent class.
         /// </summary>
-        public AdditionalUnattendContent(string passName = default(string), string componentName = default(string), SettingNames? settingName = default(SettingNames?), string content = default(string))
+        public AdditionalUnattendContent(PassNames? passName = default(PassNames?), ComponentNames? componentName = default(ComponentNames?), SettingNames? settingName = default(SettingNames?), string content = default(string))
         {
             PassName = passName;
             ComponentName = componentName;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// oobeSystem. Possible values include: 'oobeSystem'
         /// </summary>
         [JsonProperty(PropertyName = "passName")]
-        public string PassName { get; set; }
+        public PassNames? PassName { get; set; }
 
         /// <summary>
         /// Gets or sets the component name. Currently, the only allowable
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Microsoft-Windows-Shell-Setup'
         /// </summary>
         [JsonProperty(PropertyName = "componentName")]
-        public string ComponentName { get; set; }
+        public ComponentNames? ComponentName { get; set; }
 
         /// <summary>
         /// Gets or sets setting name (e.g. FirstLogonCommands, AutoLogon ).

@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Profile for Orchestrator
+    /// </summary>
     public partial class ContainerServiceOrchestratorProfile
     {
         /// <summary>

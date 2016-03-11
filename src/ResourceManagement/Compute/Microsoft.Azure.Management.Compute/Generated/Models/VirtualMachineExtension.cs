@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the VirtualMachineExtension class.
         /// </summary>
-        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
+        public VirtualMachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ForceUpdateTagTypes? forceUpdateTag = default(ForceUpdateTagTypes?), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
             : base(location, id, name, type, tags)
         {
             ForceUpdateTag = forceUpdateTag;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// values include: 'RerunExtension'
         /// </summary>
         [JsonProperty(PropertyName = "properties.forceUpdateTag")]
-        public string ForceUpdateTag { get; set; }
+        public ForceUpdateTagTypes? ForceUpdateTag { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the extension handler publisher.

@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Profile for Windows jumpbox
+    /// </summary>
     public partial class ContainerServiceWindowsProfile
     {
         /// <summary>

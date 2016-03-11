@@ -54,7 +54,7 @@ namespace Compute.Tests
             }
         }
 
-        public static void ValidateVirtualMachineSizeListResponse(VirtualMachineSizeListResult vmSizeListResponse)
+        public static void ValidateVirtualMachineSizeListResponse(IEnumerable<VirtualMachineSize> vmSizeListResponse)
         {
             var expectedVMSizePropertiesList = new List<VirtualMachineSize>()
             {
@@ -78,18 +78,18 @@ namespace Compute.Tests
                 }
             };
 
-            VirtualMachineSizeListResult vmSizesPropertyList = vmSizeListResponse;
+            IEnumerable<VirtualMachineSize> vmSizesPropertyList = vmSizeListResponse;
             Assert.NotNull(vmSizesPropertyList);
-            Assert.True(vmSizesPropertyList.Value.Count > 1, "ListVMSizes should return more than 1 VM sizes");
+            Assert.True(vmSizesPropertyList.Count() > 1, "ListVMSizes should return more than 1 VM sizes");
 
             VirtualMachineSize expectedVMSizeProperties = expectedVMSizePropertiesList[0];
             VirtualMachineSize vmSizeProperties =
-                vmSizesPropertyList.Value.FirstOrDefault(x => x.Name == expectedVMSizeProperties.Name);
+                vmSizesPropertyList.FirstOrDefault(x => x.Name == expectedVMSizeProperties.Name);
             Assert.NotNull(vmSizeProperties);
             CompareVMSizes(expectedVMSizeProperties, vmSizeProperties);
 
             expectedVMSizeProperties = expectedVMSizePropertiesList[1];
-            vmSizeProperties = vmSizesPropertyList.Value.FirstOrDefault(x => x.Name == expectedVMSizeProperties.Name);
+            vmSizeProperties = vmSizesPropertyList.FirstOrDefault(x => x.Name == expectedVMSizeProperties.Name);
             Assert.NotNull(vmSizeProperties);
             CompareVMSizes(expectedVMSizeProperties, vmSizeProperties);
         }

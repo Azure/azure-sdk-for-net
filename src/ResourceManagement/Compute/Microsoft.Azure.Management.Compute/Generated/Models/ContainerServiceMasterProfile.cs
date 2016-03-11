@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Profile for container service master
+    /// </summary>
     public partial class ContainerServiceMasterProfile
     {
         /// <summary>
@@ -48,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DnsPrefix { get; set; }
 
         /// <summary>
-        /// FDQN for the agent pool
+        /// FDQN for the master
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; private set; }

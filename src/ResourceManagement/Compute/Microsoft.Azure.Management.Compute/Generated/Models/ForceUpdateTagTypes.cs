@@ -15,8 +15,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for ForceUpdateTagTypes.
     /// </summary>
-    public static class ForceUpdateTagTypes
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ForceUpdateTagTypes
     {
-        public const string RerunExtension = "RerunExtension";
+        [EnumMember(Value = "RerunExtension")]
+        RerunExtension
     }
 }

@@ -63,12 +63,12 @@ namespace Compute.Tests
 
                     var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
-                    ValidateVM(inputVM, listResponse.Value.FirstOrDefault(x => x.Name == inputVM.Name),
+                    ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
                         Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);

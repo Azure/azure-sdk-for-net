@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
+        /// Profile for container service VM diagnostic agent
         /// </summary>
         [JsonProperty(PropertyName = "vmDiagnostics")]
         public ContainerServiceVMDiagnostics VmDiagnostics { get; set; }

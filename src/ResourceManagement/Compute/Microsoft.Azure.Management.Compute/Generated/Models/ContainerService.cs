@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Container service
+    /// </summary>
     [JsonTransformation]
     public partial class ContainerService : Resource
     {
@@ -46,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// The location of the resource.
+        /// Properties of orchestrator
         /// </summary>
         [JsonProperty(PropertyName = "properties.orchestratorProfile")]
         public ContainerServiceOrchestratorProfile OrchestratorProfile { get; set; }
