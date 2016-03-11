@@ -224,7 +224,7 @@ namespace Compute.Tests
             // List AvailabilitySets
             string expectedAvailabilitySetId = Helpers.GetAvailabilitySetRef(subId, resourceGroupName, inputAvailabilitySetName);
             var listResponse = computeClient.AvailabilitySets.List(resourceGroupName);
-            ValidateAvailabilitySet(inputAvailabilitySet, listResponse.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
+            ValidateAvailabilitySet(inputAvailabilitySet, listResponse.Value.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
                 inputAvailabilitySetName, expectedAvailabilitySetId, defaultFD, defaultUD);
 
             // This call will also delete the Availability Set

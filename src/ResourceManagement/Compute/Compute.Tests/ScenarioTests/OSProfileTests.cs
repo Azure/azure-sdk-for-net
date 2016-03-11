@@ -34,7 +34,7 @@ namespace Compute.Tests
 
         private const string OOBESystem = PassNames.OobeSystem;
         private const string MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
-        private const string AutoLogon = SettingNames.AutoLogon;
+        private const SettingNames AutoLogon = SettingNames.AutoLogon;
 
         private const string PacificStandardTime = "Pacific Standard Time";
 
