@@ -32,15 +32,14 @@
     <Compile Include="Customizations\Models\HiveJobSubmissionParameters.cs" />
     <Compile Include="Customizations\Models\MapReduceJobSubmissionParameters.cs" />
     <Compile Include="Customizations\Models\MapReduceStreamingJobSubmissionParameters.cs" />
-    <Compile Include="Customizations\Storage\IStorageAccess.cs" />
+    <Compile Include="Customizations\Models\Storage\IStorageAccess.cs" />
     <Compile Include="Helpers\ModelHelper.cs" />
     <Compile Include="Customizations\Models\PigJobSubmissionParameters.cs" />
     <Compile Include="Customizations\Models\SqoopJobSubmissionParameters.cs" />
     <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\Constants.cs" />
-    <Compile Include="Customizations\Storage\AzureStorageAccess.cs" />
+    <Compile Include="Customizations\Models\Storage\AzureStorageAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

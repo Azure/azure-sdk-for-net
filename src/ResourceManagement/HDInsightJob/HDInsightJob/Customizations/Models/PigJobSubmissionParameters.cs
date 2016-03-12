@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         public string Query { get; set; }
         
         /// <summary>
-        /// Optional. Status directory in hdfs to store job files stderr, stdout and exit.
+        /// Optional. Status directory in the default storage account to store job files stderr, stdout and exit.
         /// </summary>
         public string StatusDir { get; set; }
         

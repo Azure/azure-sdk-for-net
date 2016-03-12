@@ -16,7 +16,7 @@
 
 using System.IO;
 
-namespace Microsoft.Azure.Management.HDInsight.Job
+namespace Microsoft.Azure.Management.HDInsight.Job.Models
 {
     /// <summary>
     /// Manages storage access details for job operations against HDInsight clusters.

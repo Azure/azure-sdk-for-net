@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         public string Input { get; set; }
         
         /// <summary>
-        /// Optional. Gets or sets Mapper.
+        /// Optional. Gets or sets Mapper executable or Java class name.
         /// </summary>
         public string Mapper { get; set; }
         
@@ -71,12 +71,12 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         public string Output { get; set; }
         
         /// <summary>
-        /// Optional. Gets or sets Reducer.
+        /// Optional. Gets or sets Reducer executable or Java class name.
         /// </summary>
         public string Reducer { get; set; }
         
         /// <summary>
-        /// Optional. Status directory in hdfs to store job files stderr, stdout and exit.
+        /// Optional. Status directory in the default storage account to store job files stderr, stdout and exit.
         /// </summary>
         public string StatusDir { get; set; }
         
