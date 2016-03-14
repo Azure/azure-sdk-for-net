@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlSchema class.
         /// </summary>
-        public USqlSchema(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string))
+        public USqlSchema(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
-            SchemaName = schemaName;
+            Name = name;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the schema.
         /// </summary>
         [JsonProperty(PropertyName = "schemaName")]
-        public string SchemaName { get; set; }
+        public string Name { get; set; }
 
     }
 }

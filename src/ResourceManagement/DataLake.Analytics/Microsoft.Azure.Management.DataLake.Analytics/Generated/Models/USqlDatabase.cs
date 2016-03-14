@@ -29,17 +29,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlDatabase class.
         /// </summary>
-        public USqlDatabase(string computeAccountName = default(string), string version = default(string), string databaseName = default(string))
+        public USqlDatabase(string computeAccountName = default(string), Guid? version = default(Guid?), string name = default(string))
             : base(computeAccountName, version)
         {
-            DatabaseName = databaseName;
+            Name = name;
         }
 
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
-        public string DatabaseName { get; set; }
+        public string Name { get; set; }
 
     }
 }

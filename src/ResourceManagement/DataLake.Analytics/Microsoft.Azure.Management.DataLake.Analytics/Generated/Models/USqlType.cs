@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlType class.
         /// </summary>
-        public USqlType(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string), string typeName = default(string), string typeFamily = default(string), string cSharpName = default(string), string fullCSharpName = default(string), int? systemTypeId = default(int?), int? userTypeId = default(int?), int? schemaId = default(int?), int? principalId = default(int?), bool? isNullable = default(bool?), bool? isUserDefined = default(bool?), bool? isAssemblyType = default(bool?), bool? isTableType = default(bool?), bool? isComplexType = default(bool?))
+        public USqlType(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string typeFamily = default(string), string cSharpName = default(string), string fullCSharpName = default(string), int? systemTypeId = default(int?), int? userTypeId = default(int?), int? schemaId = default(int?), int? principalId = default(int?), bool? isNullable = default(bool?), bool? isUserDefined = default(bool?), bool? isAssemblyType = default(bool?), bool? isTableType = default(bool?), bool? isComplexType = default(bool?))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SchemaName = schemaName;
-            TypeName = typeName;
+            Name = name;
             TypeFamily = typeFamily;
             CSharpName = cSharpName;
             FullCSharpName = fullCSharpName;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of type for this type.
         /// </summary>
         [JsonProperty(PropertyName = "typeName")]
-        public string TypeName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the type family for this type.

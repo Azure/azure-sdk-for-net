@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobDataPath class.
         /// </summary>
-        public JobDataPath(string jobId = default(string), string command = default(string), IList<string> paths = default(IList<string>))
+        public JobDataPath(Guid? jobId = default(Guid?), string command = default(string), IList<string> paths = default(IList<string>))
         {
             JobId = jobId;
             Command = command;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets the id of the job this data is for.
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
-        public string JobId { get; private set; }
+        public Guid? JobId { get; private set; }
 
         /// <summary>
         /// Gets the command that this job data relates to.

@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlCredential class.
         /// </summary>
-        public USqlCredential(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string identity = default(string), string credentialName = default(string), string userName = default(string))
+        public USqlCredential(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string identity = default(string), string name = default(string), string userName = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             Identity = identity;
-            CredentialName = credentialName;
+            Name = name;
             UserName = userName;
         }
 
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the credential.
         /// </summary>
         [JsonProperty(PropertyName = "credentialName")]
-        public string CredentialName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the user name associated with the credential.

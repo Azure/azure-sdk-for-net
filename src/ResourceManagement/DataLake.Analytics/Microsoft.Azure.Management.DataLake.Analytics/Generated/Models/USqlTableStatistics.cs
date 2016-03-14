@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlTableStatistics class.
         /// </summary>
-        public USqlTableStatistics(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string), string tableName = default(string), string statisticsName = default(string), string userStatName = default(string), string statDataPath = default(string), DateTimeOffset? createTime = default(DateTimeOffset?), DateTimeOffset? updateTime = default(DateTimeOffset?), bool? isUserCreated = default(bool?), bool? isAutoCreated = default(bool?), bool? hasFilter = default(bool?), string filterDefinition = default(string), IList<string> colNames = default(IList<string>))
+        public USqlTableStatistics(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string tableName = default(string), string name = default(string), string userStatName = default(string), string statDataPath = default(string), DateTimeOffset? createTime = default(DateTimeOffset?), DateTimeOffset? updateTime = default(DateTimeOffset?), bool? isUserCreated = default(bool?), bool? isAutoCreated = default(bool?), bool? hasFilter = default(bool?), string filterDefinition = default(string), IList<string> colNames = default(IList<string>))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SchemaName = schemaName;
             TableName = tableName;
-            StatisticsName = statisticsName;
+            Name = name;
             UserStatName = userStatName;
             StatDataPath = statDataPath;
             CreateTime = createTime;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the table statistics.
         /// </summary>
         [JsonProperty(PropertyName = "statisticsName")]
-        public string StatisticsName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the user statistics.

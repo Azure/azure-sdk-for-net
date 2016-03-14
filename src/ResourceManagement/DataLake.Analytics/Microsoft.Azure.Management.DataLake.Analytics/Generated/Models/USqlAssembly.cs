@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlAssembly class.
         /// </summary>
-        public USqlAssembly(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string assemblyName = default(string), string clrName = default(string), bool? isVisible = default(bool?), bool? isUserDefined = default(bool?), IList<USqlAssemblyFileInfo> files = default(IList<USqlAssemblyFileInfo>), IList<USqlAssemblyDependencyInfo> dependencies = default(IList<USqlAssemblyDependencyInfo>))
+        public USqlAssembly(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), string clrName = default(string), bool? isVisible = default(bool?), bool? isUserDefined = default(bool?), IList<USqlAssemblyFileInfo> files = default(IList<USqlAssemblyFileInfo>), IList<USqlAssemblyDependencyInfo> dependencies = default(IList<USqlAssemblyDependencyInfo>))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
-            AssemblyName = assemblyName;
+            Name = name;
             ClrName = clrName;
             IsVisible = isVisible;
             IsUserDefined = isUserDefined;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the assembly.
         /// </summary>
         [JsonProperty(PropertyName = "assemblyName")]
-        public string AssemblyName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the CLR.

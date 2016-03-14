@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlExternalDataSource class.
         /// </summary>
-        public USqlExternalDataSource(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string externalDataSourceName = default(string), string provider = default(string), string providerString = default(string), IList<string> pushdownTypes = default(IList<string>))
+        public USqlExternalDataSource(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), string provider = default(string), string providerString = default(string), IList<string> pushdownTypes = default(IList<string>))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
-            ExternalDataSourceName = externalDataSourceName;
+            Name = name;
             Provider = provider;
             ProviderString = providerString;
             PushdownTypes = pushdownTypes;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the external data source.
         /// </summary>
         [JsonProperty(PropertyName = "externalDataSourceName")]
-        public string ExternalDataSourceName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the provider for the external data source.

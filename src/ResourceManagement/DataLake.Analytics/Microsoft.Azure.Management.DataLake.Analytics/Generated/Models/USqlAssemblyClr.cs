@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlAssemblyClr class.
         /// </summary>
-        public USqlAssemblyClr(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string assemblyClrName = default(string), string clrName = default(string))
+        public USqlAssemblyClr(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), string clrName = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
-            AssemblyClrName = assemblyClrName;
+            Name = name;
             ClrName = clrName;
         }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the assembly.
         /// </summary>
         [JsonProperty(PropertyName = "assemblyClrName")]
-        public string AssemblyClrName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the CLR.

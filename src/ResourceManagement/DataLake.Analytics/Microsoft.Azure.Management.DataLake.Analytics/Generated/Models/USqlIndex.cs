@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlIndex class.
         /// </summary>
-        public USqlIndex(string name = default(string), IList<USqlDirectedColumn> indexKeys = default(IList<USqlDirectedColumn>), IList<string> columns = default(IList<string>), USqlDistributionInfo distributionInfo = default(USqlDistributionInfo), string partitionFunction = default(string), IList<string> partitionKeyList = default(IList<string>), IList<string> streamNames = default(IList<string>), bool? isColumnstore = default(bool?), int? indexId = default(int?), bool? isUnique = default(bool?))
+        public USqlIndex(string name = default(string), IList<USqlDirectedColumn> indexKeys = default(IList<USqlDirectedColumn>), IList<string> columns = default(IList<string>), USqlDistributionInfo distributionInfo = default(USqlDistributionInfo), Guid? partitionFunction = default(Guid?), IList<string> partitionKeyList = default(IList<string>), IList<string> streamNames = default(IList<string>), bool? isColumnstore = default(bool?), int? indexId = default(int?), bool? isUnique = default(bool?))
         {
             Name = name;
             IndexKeys = indexKeys;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets partition function ID for the index.
         /// </summary>
         [JsonProperty(PropertyName = "partitionFunction")]
-        public string PartitionFunction { get; set; }
+        public Guid? PartitionFunction { get; set; }
 
         /// <summary>
         /// Gets or sets the list of partion keys in the index

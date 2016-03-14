@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlProcedure class.
         /// </summary>
-        public USqlProcedure(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string), string procName = default(string), string definition = default(string))
+        public USqlProcedure(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string definition = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SchemaName = schemaName;
-            ProcName = procName;
+            Name = name;
             Definition = definition;
         }
 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the procedure.
         /// </summary>
         [JsonProperty(PropertyName = "procName")]
-        public string ProcName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the defined query of the procedure.

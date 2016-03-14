@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlSecret class.
         /// </summary>
-        public USqlSecret(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string secretName = default(string), DateTimeOffset? creationTime = default(DateTimeOffset?), string uri = default(string), string password = default(string))
+        public USqlSecret(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), DateTimeOffset? creationTime = default(DateTimeOffset?), string uri = default(string), string password = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
-            SecretName = secretName;
+            Name = name;
             CreationTime = creationTime;
             Uri = uri;
             Password = password;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the secret.
         /// </summary>
         [JsonProperty(PropertyName = "secretName")]
-        public string SecretName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the credential object. This is

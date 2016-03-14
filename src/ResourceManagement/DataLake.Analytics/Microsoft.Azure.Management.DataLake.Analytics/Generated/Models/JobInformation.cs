@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobInformation class.
         /// </summary>
-        public JobInformation(string name, JobType type, JobProperties properties, string jobId = default(string), string submitter = default(string), IList<JobErrorDetails> errorMessage = default(IList<JobErrorDetails>), int? degreeOfParallelism = default(int?), int? priority = default(int?), DateTimeOffset? submitTime = default(DateTimeOffset?), DateTimeOffset? startTime = default(DateTimeOffset?), DateTimeOffset? endTime = default(DateTimeOffset?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
+        public JobInformation(string name, JobType type, JobProperties properties, Guid? jobId = default(Guid?), string submitter = default(string), IList<JobErrorDetails> errorMessage = default(IList<JobErrorDetails>), int? degreeOfParallelism = default(int?), int? priority = default(int?), DateTimeOffset? submitTime = default(DateTimeOffset?), DateTimeOffset? startTime = default(DateTimeOffset?), DateTimeOffset? endTime = default(DateTimeOffset?), JobState? state = default(JobState?), JobResult? result = default(JobResult?), IList<JobStateAuditRecord> stateAuditRecords = default(IList<JobStateAuditRecord>))
         {
             JobId = jobId;
             Name = name;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the job's unique identifier (a GUID).
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
-        public string JobId { get; set; }
+        public Guid? JobId { get; set; }
 
         /// <summary>
         /// Gets or sets the friendly name of the job.

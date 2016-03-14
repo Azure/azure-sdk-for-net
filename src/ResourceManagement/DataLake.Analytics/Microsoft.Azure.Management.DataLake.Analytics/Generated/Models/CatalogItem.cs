@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the CatalogItem class.
         /// </summary>
-        public CatalogItem(string computeAccountName = default(string), string version = default(string))
+        public CatalogItem(string computeAccountName = default(string), Guid? version = default(Guid?))
         {
             ComputeAccountName = computeAccountName;
             Version = version;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the version of the catalog item.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
+        public Guid? Version { get; set; }
 
     }
 }

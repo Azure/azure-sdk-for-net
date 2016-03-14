@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlView class.
         /// </summary>
-        public USqlView(string computeAccountName = default(string), string version = default(string), string databaseName = default(string), string schemaName = default(string), string viewName = default(string), string definition = default(string))
+        public USqlView(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string definition = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
             SchemaName = schemaName;
-            ViewName = viewName;
+            Name = name;
             Definition = definition;
         }
 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the view.
         /// </summary>
         [JsonProperty(PropertyName = "viewName")]
-        public string ViewName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the defined query of the view.

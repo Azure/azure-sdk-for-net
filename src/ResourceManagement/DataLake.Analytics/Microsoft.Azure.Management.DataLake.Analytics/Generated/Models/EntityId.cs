@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the EntityId class.
         /// </summary>
-        public EntityId(DdlName name = default(DdlName), string version = default(string))
+        public EntityId(DdlName name = default(DdlName), Guid? version = default(Guid?))
         {
             Name = name;
             Version = version;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the version of the external data source.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
+        public Guid? Version { get; set; }
 
     }
 }
