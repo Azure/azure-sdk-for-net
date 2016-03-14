@@ -3,8 +3,7 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.HDInsight.Job</id>
     <title>Microsoft Azure HDInsight Job Management Library</title>
-    <releaseNotes>
-      <text><![CDATA[
+    <releaseNotes><![CDATA[
 Some parameters of the job submission objects have changed:
 
   *  HiveJobSubmissionParameters
@@ -57,8 +56,7 @@ The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) no
 
   *  Create the AzureStorageAccess object by providing Azure storage account details:
        new AzureStorageAccess(TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer)
-]]></text>
-    </releaseNotes>
+]]></releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
