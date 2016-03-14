@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class OnPremisesOdbcLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>
-        /// Required. Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous, Basic, and Windows.
+        /// Required. Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic.
         /// </summary>
         [AdfRequired]
         public string AuthenticationType { get; set; }

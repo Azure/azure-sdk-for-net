@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdsm54westus/collections/testd750/securityPrincipals/ContinuationToken?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHNtNTR3ZXN0dXMvY29sbGVjdGlvbnMvdGVzdGQ3NTAvc2VjdXJpdHlQcmluY2lwYWxzL0NvbnRpbnVhdGlvblRva2VuP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"NewContinuationToken\": \"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTE2Ij8+PENvbnRpbnVhdGlvblRva2VuPjxWZXJzaW9uPjIuMDwvVmVyc2lvbj48VHlwZT5UYWJsZTwvVHlwZT48TmV4dFBhcnRpdGlvbktleT4xITQ4IVptUTBOV1l6TURJdE5XVXhNaTAwTVdOa0xUazJZMlF0WlRVeE1EazNOMlk0TURjejwvTmV4dFBhcnRpdGlvbktleT48TmV4dFJvd0tleT4xITEwMCFPRE16TnpJME5ERXRZakl6TXkwMFl6RTBMV0ZoTm1ZdE9HSTRZV0V3WkROak1HSXhPamMxWmpKa1pEYzBMVGRsTW1JdE5EVmtOeTFpT1RsakxUVTVOalJoWldNeU1XWmtOQS0tPC9OZXh0Um93S2V5PjwvQ29udGludWF0aW9uVG9rZW4+\",\r\n  \"UserConsentStatusList\": [\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"08a96f6c-cde9-4540-a955-8f373ded73cb\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser5@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    },\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"221224c4-ee64-48bc-acc5-c94264070a3d\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser8@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    },\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"6e71efa0-0392-45ba-8d1f-a9bee5fe675c\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser6@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1009"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "f53a2660e160660388478280c7fa7773"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Feb 2016 01:18:40 GMT"
+        ],
+        "Server": [
+          "1.0.6190.6901",
+          "(rd_rdfe_n.160127-1206)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdsm54westus/collections/testd750/securityPrincipals/ContinuationToken?PreviousContinuationToken=PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTE2Ij8%2BPENvbnRpbnVhdGlvblRva2VuPjxWZXJzaW9uPjIuMDwvVmVyc2lvbj48VHlwZT5UYWJsZTwvVHlwZT48TmV4dFBhcnRpdGlvbktleT4xITQ4IVptUTBOV1l6TURJdE5XVXhNaTAwTVdOa0xUazJZMlF0WlRVeE1EazNOMlk0TURjejwvTmV4dFBhcnRpdGlvbktleT48TmV4dFJvd0tleT4xITEwMCFPRE16TnpJME5ERXRZakl6TXkwMFl6RTBMV0ZoTm1ZdE9HSTRZV0V3WkROak1HSXhPamMxWmpKa1pEYzBMVGRsTW1JdE5EVmtOeTFpT1RsakxUVTVOalJoWldNeU1XWmtOQS0tPC9OZXh0Um93S2V5PjwvQ29udGludWF0aW9uVG9rZW4%2B&api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHNtNTR3ZXN0dXMvY29sbGVjdGlvbnMvdGVzdGQ3NTAvc2VjdXJpdHlQcmluY2lwYWxzL0NvbnRpbnVhdGlvblRva2VuP1ByZXZpb3VzQ29udGludWF0aW9uVG9rZW49UEQ5NGJXd2dkbVZ5YzJsdmJqMGlNUzR3SWlCbGJtTnZaR2x1WnowaWRYUm1MVEUySWo4JTJCUEVOdmJuUnBiblZoZEdsdmJsUnZhMlZ1UGp4V1pYSnphVzl1UGpJdU1Ed3ZWbVZ5YzJsdmJqNDhWSGx3WlQ1VVlXSnNaVHd2Vkhsd1pUNDhUbVY0ZEZCaGNuUnBkR2x2Ymt0bGVUNHhJVFE0SVZwdFVUQk9WMWw2VFVSSmRFNVhWWGhOYVRBd1RWZE9hMHhVYXpKWk1sRjBXbFJWZUUxRWF6Tk9NbGswVFVSamVqd3ZUbVY0ZEZCaGNuUnBkR2x2Ymt0bGVUNDhUbVY0ZEZKdmQwdGxlVDR4SVRFd01DRlBSRTE2VG5wSk1FNUVSWFJaYWtsNlRYa3dNRmw2UlRCTVYwWm9UbTFaZEU5SFNUUlpWMFYzV2tST2FrMUhTWGhQYW1NeFdtcEthMXBFWXpCTVZHUnNUVzFKZEU1RVZtdE9lVEZwVDFSc2FreFVWVFZPYWxKb1dsZE5lVTFYV210T1FTMHRQQzlPWlhoMFVtOTNTMlY1UGp3dlEyOXVkR2x1ZFdGMGFXOXVWRzlyWlc0JTJCJmFwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"NewContinuationToken\": \"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTE2Ij8+PENvbnRpbnVhdGlvblRva2VuPjxWZXJzaW9uPjIuMDwvVmVyc2lvbj48VHlwZT5UYWJsZTwvVHlwZT48TmV4dFBhcnRpdGlvbktleT4xITQ4IVptUTBOV1l6TURJdE5XVXhNaTAwTVdOa0xUazJZMlF0WlRVeE1EazNOMlk0TURjejwvTmV4dFBhcnRpdGlvbktleT48TmV4dFJvd0tleT4xITEwMCFPRE16TnpJME5ERXRZakl6TXkwMFl6RTBMV0ZoTm1ZdE9HSTRZV0V3WkROak1HSXhPbU01T1RGbVptWTFMV1l3WkdZdE5EY3lOeTA1WW1RM0xUZzJZMk0wWTJSbE9HWmxPQS0tPC9OZXh0Um93S2V5PjwvQ29udGludWF0aW9uVG9rZW4+\",\r\n  \"UserConsentStatusList\": [\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"75f2dd74-7e2b-45d7-b99c-5964aec21fd4\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser7@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    },\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"b3e0e787-873e-4260-8f19-e7ca5df0d0ec\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser2@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    },\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"c16caa9c-343f-4aa7-bd3b-80832a8168cc\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser3@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1009"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "58d0e6a0f34767c0b78bcff2f2bd8eca"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Feb 2016 01:18:45 GMT"
+        ],
+        "Server": [
+          "1.0.6190.6901",
+          "(rd_rdfe_n.160127-1206)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdsm54westus/collections/testd750/securityPrincipals/ContinuationToken?PreviousContinuationToken=PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTE2Ij8%2BPENvbnRpbnVhdGlvblRva2VuPjxWZXJzaW9uPjIuMDwvVmVyc2lvbj48VHlwZT5UYWJsZTwvVHlwZT48TmV4dFBhcnRpdGlvbktleT4xITQ4IVptUTBOV1l6TURJdE5XVXhNaTAwTVdOa0xUazJZMlF0WlRVeE1EazNOMlk0TURjejwvTmV4dFBhcnRpdGlvbktleT48TmV4dFJvd0tleT4xITEwMCFPRE16TnpJME5ERXRZakl6TXkwMFl6RTBMV0ZoTm1ZdE9HSTRZV0V3WkROak1HSXhPbU01T1RGbVptWTFMV1l3WkdZdE5EY3lOeTA1WW1RM0xUZzJZMk0wWTJSbE9HWmxPQS0tPC9OZXh0Um93S2V5PjwvQ29udGludWF0aW9uVG9rZW4%2B&api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHNtNTR3ZXN0dXMvY29sbGVjdGlvbnMvdGVzdGQ3NTAvc2VjdXJpdHlQcmluY2lwYWxzL0NvbnRpbnVhdGlvblRva2VuP1ByZXZpb3VzQ29udGludWF0aW9uVG9rZW49UEQ5NGJXd2dkbVZ5YzJsdmJqMGlNUzR3SWlCbGJtTnZaR2x1WnowaWRYUm1MVEUySWo4JTJCUEVOdmJuUnBiblZoZEdsdmJsUnZhMlZ1UGp4V1pYSnphVzl1UGpJdU1Ed3ZWbVZ5YzJsdmJqNDhWSGx3WlQ1VVlXSnNaVHd2Vkhsd1pUNDhUbVY0ZEZCaGNuUnBkR2x2Ymt0bGVUNHhJVFE0SVZwdFVUQk9WMWw2VFVSSmRFNVhWWGhOYVRBd1RWZE9hMHhVYXpKWk1sRjBXbFJWZUUxRWF6Tk9NbGswVFVSamVqd3ZUbVY0ZEZCaGNuUnBkR2x2Ymt0bGVUNDhUbVY0ZEZKdmQwdGxlVDR4SVRFd01DRlBSRTE2VG5wSk1FNUVSWFJaYWtsNlRYa3dNRmw2UlRCTVYwWm9UbTFaZEU5SFNUUlpWMFYzV2tST2FrMUhTWGhQYlUwMVQxUkdiVnB0V1RGTVYxbDNXa2RaZEU1RVkzbE9lVEExV1cxUk0weFVaekpaTWswd1dUSlNiRTlIV214UFFTMHRQQzlPWlhoMFVtOTNTMlY1UGp3dlEyOXVkR2x1ZFdGMGFXOXVWRzlyWlc0JTJCJmFwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"NewContinuationToken\": null,\r\n  \"UserConsentStatusList\": [\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"c991fff5-f0df-4727-9bd7-86cc4cde8fe8\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser1@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    },\r\n    {\r\n      \"Status\": 3,\r\n      \"User\": {\r\n        \"AadObjectId\": \"e09af21e-84cd-4137-83eb-2fcd585411c0\",\r\n        \"Description\": \"\",\r\n        \"Name\": \"tstestuser4@rdvmohoro.com\",\r\n        \"SecurityPrincipalType\": 0,\r\n        \"UserIdType\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "391"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "3f4aaaa92db76fa5a3c7c7f1112d1dbb"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Feb 2016 01:18:49 GMT"
+        ],
+        "Server": [
+          "1.0.6190.6901",
+          "(rd_rdfe_n.160127-1206)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

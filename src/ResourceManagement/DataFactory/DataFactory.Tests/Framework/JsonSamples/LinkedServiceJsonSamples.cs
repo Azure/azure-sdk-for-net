@@ -75,6 +75,21 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureStorageSasLinkedService = @"
+{
+    name: ""Test-Windows-Azure-storage-Sas-linkedService"",
+    properties:
+    {
+        type: ""AzureStorageSas"",
+        hubName: ""testHub"",
+        typeProperties:
+        {
+            sasUri: ""SasUri""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string HDISLinkedService = @"
 {
     name: ""Test-HDIS-LinkedService"",
@@ -387,6 +402,41 @@ namespace DataFactory.Tests.Framework.JsonSamples
             gatewayName: ""MSourceDemoGateway"",
             authenticationType: ""Windows"",
             encryptedCredential: ""myEncryptedCredential""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string ODataLinkedService = @"
+{
+    name: ""LinkedService-OData"",
+    properties:
+    {
+        type: ""OData"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            url : ""http://localhost/webhdfs/v1/"", 
+            userName: ""admin"",
+            password : ""fakepassword""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string WebLinkedService = @"
+{
+    name: ""Test-Web-linkedService"",
+    properties:
+    {
+        type: ""Web"",
+        typeProperties: {
+            url: ""http://myhost.com/"",
+            authenticationType: ""Basic"",
+            username: ""microsoft"",
+            password: ""fakepassword"",
+            apiKey: ""mykey""            
         }
     }
 }";

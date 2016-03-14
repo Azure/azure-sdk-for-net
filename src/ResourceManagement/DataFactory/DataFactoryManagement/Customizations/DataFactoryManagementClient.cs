@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
+using Hyak.Common;
 using System;
 using System.Net.Http;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
@@ -66,7 +66,12 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Operations for managing data factory ActivityTypes.
         /// </summary>
         public virtual IActivityTypeOperations ActivityTypes { get; private set; }
-        
+
+        /// <summary>
+        /// Operations for managing activity windows.
+        /// </summary>
+        public virtual IActivityWindowOperations ActivityWindows { get; private set; }
+
         /// <summary>
         /// Operations for managing data factory ComputeTypes.
         /// </summary>
@@ -205,7 +210,7 @@ namespace Microsoft.Azure.Management.DataFactories
             Ensure.IsNotNull(credentials, "credentials");
 
             this.InternalClient = new Core.DataFactoryManagementClient(credentials);
-            
+
             this.Credentials.InitializeServiceClient(this);
             this.PostInitialize();
         }
@@ -320,6 +325,7 @@ namespace Microsoft.Azure.Management.DataFactories
         private void PreInitialize()
         {
             this.ActivityTypes = new ActivityTypeOperations(this);
+            this.ActivityWindows = new ActivityWindowOperations(this);
             this.ComputeTypes = new ComputeTypeOperations(this);
             this.DataFactories = new DataFactoryOperations(this);
             this.DataSlices = new DataSliceOperations(this);

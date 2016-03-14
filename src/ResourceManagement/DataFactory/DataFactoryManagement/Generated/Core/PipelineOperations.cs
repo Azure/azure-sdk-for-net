@@ -183,6 +183,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         }
                     }
                 }
+                if (parameters.Pipeline.Properties.Datasets != null)
+                {
+                    foreach (Dataset datasetsParameterItem in parameters.Pipeline.Properties.Datasets)
+                    {
+                        if (datasetsParameterItem.Name == null)
+                        {
+                            throw new ArgumentNullException("parameters.Pipeline.Properties.Datasets.Name");
+                        }
+                        if (datasetsParameterItem.Name != null && datasetsParameterItem.Name.Length > 260)
+                        {
+                            throw new ArgumentOutOfRangeException("parameters.Pipeline.Properties.Datasets.Name");
+                        }
+                        if (Regex.IsMatch(datasetsParameterItem.Name, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+                        {
+                            throw new ArgumentOutOfRangeException("parameters.Pipeline.Properties.Datasets.Name");
+                        }
+                        if (datasetsParameterItem.Properties == null)
+                        {
+                            throw new ArgumentNullException("parameters.Pipeline.Properties.Datasets.Properties");
+                        }
+                        if (datasetsParameterItem.Properties.Availability == null)
+                        {
+                            throw new ArgumentNullException("parameters.Pipeline.Properties.Datasets.Properties.Availability");
+                        }
+                        if (datasetsParameterItem.Properties.Availability.Frequency == null)
+                        {
+                            throw new ArgumentNullException("parameters.Pipeline.Properties.Datasets.Properties.Availability.Frequency");
+                        }
+                        if (datasetsParameterItem.Properties.LinkedServiceName == null)
+                        {
+                            throw new ArgumentNullException("parameters.Pipeline.Properties.Datasets.Properties.LinkedServiceName");
+                        }
+                        if (datasetsParameterItem.Properties.Type == null)
+                        {
+                            throw new ArgumentNullException("parameters.Pipeline.Properties.Datasets.Properties.Type");
+                        }
+                        if (datasetsParameterItem.Properties.TypeProperties == null)
+                        {
+                            throw new ArgumentNullException("parameters.Pipeline.Properties.Datasets.Properties.TypeProperties");
+                        }
+                    }
+                }
             }
             
             // Tracing
@@ -431,6 +473,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         propertiesValue["runtimeInfo"] = runtimeInfoValue;
                         
                         runtimeInfoValue["deploymentTime"] = parameters.Pipeline.Properties.RuntimeInfo.DeploymentTime;
+                        
+                        if (parameters.Pipeline.Properties.RuntimeInfo.PipelineState != null)
+                        {
+                            runtimeInfoValue["pipelineState"] = parameters.Pipeline.Properties.RuntimeInfo.PipelineState;
+                        }
                     }
                     
                     if (parameters.Pipeline.Properties.ProvisioningState != null)
@@ -446,6 +493,191 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     if (parameters.Pipeline.Properties.HubName != null)
                     {
                         propertiesValue["hubName"] = parameters.Pipeline.Properties.HubName;
+                    }
+                    
+                    if (parameters.Pipeline.Properties.PipelineMode != null)
+                    {
+                        propertiesValue["pipelineMode"] = parameters.Pipeline.Properties.PipelineMode;
+                    }
+                    
+                    if (parameters.Pipeline.Properties.ExpirationTime != null)
+                    {
+                        propertiesValue["expirationTime"] = parameters.Pipeline.Properties.ExpirationTime.Value.ToString();
+                    }
+                    
+                    if (parameters.Pipeline.Properties.Datasets != null)
+                    {
+                        if (parameters.Pipeline.Properties.Datasets is ILazyCollection == false || ((ILazyCollection)parameters.Pipeline.Properties.Datasets).IsInitialized)
+                        {
+                            JArray datasetsArray = new JArray();
+                            foreach (Dataset datasetsItem in parameters.Pipeline.Properties.Datasets)
+                            {
+                                JObject datasetValue = new JObject();
+                                datasetsArray.Add(datasetValue);
+                                
+                                datasetValue["name"] = datasetsItem.Name;
+                                
+                                JObject propertiesValue2 = new JObject();
+                                datasetValue["properties"] = propertiesValue2;
+                                
+                                propertiesValue2["type"] = datasetsItem.Properties.Type;
+                                
+                                propertiesValue2["typeProperties"] = JObject.Parse(datasetsItem.Properties.TypeProperties);
+                                
+                                propertiesValue2["linkedServiceName"] = datasetsItem.Properties.LinkedServiceName;
+                                
+                                if (datasetsItem.Properties.Description != null)
+                                {
+                                    propertiesValue2["description"] = datasetsItem.Properties.Description;
+                                }
+                                
+                                if (datasetsItem.Properties.Structure != null)
+                                {
+                                    if (datasetsItem.Properties.Structure is ILazyCollection == false || ((ILazyCollection)datasetsItem.Properties.Structure).IsInitialized)
+                                    {
+                                        JArray structureArray = new JArray();
+                                        foreach (DataElement structureItem in datasetsItem.Properties.Structure)
+                                        {
+                                            JObject dataElementValue = new JObject();
+                                            structureArray.Add(dataElementValue);
+                                            
+                                            if (structureItem.Name != null)
+                                            {
+                                                dataElementValue["name"] = structureItem.Name;
+                                            }
+                                            
+                                            if (structureItem.Description != null)
+                                            {
+                                                dataElementValue["description"] = structureItem.Description;
+                                            }
+                                            
+                                            if (structureItem.Type != null)
+                                            {
+                                                dataElementValue["type"] = structureItem.Type;
+                                            }
+                                            
+                                            if (structureItem.Culture != null)
+                                            {
+                                                dataElementValue["culture"] = structureItem.Culture;
+                                            }
+                                            
+                                            if (structureItem.Format != null)
+                                            {
+                                                dataElementValue["format"] = structureItem.Format;
+                                            }
+                                        }
+                                        propertiesValue2["structure"] = structureArray;
+                                    }
+                                }
+                                
+                                JObject availabilityValue = new JObject();
+                                propertiesValue2["availability"] = availabilityValue;
+                                
+                                availabilityValue["frequency"] = datasetsItem.Properties.Availability.Frequency;
+                                
+                                availabilityValue["interval"] = datasetsItem.Properties.Availability.Interval;
+                                
+                                if (datasetsItem.Properties.Availability.AnchorDateTime != null)
+                                {
+                                    availabilityValue["anchorDateTime"] = datasetsItem.Properties.Availability.AnchorDateTime.Value;
+                                }
+                                
+                                if (datasetsItem.Properties.Availability.Offset != null)
+                                {
+                                    availabilityValue["offset"] = datasetsItem.Properties.Availability.Offset.Value.ToString();
+                                }
+                                
+                                if (datasetsItem.Properties.Availability.Style != null)
+                                {
+                                    availabilityValue["style"] = datasetsItem.Properties.Availability.Style;
+                                }
+                                
+                                if (datasetsItem.Properties.Policy != null)
+                                {
+                                    JObject policyValue2 = new JObject();
+                                    propertiesValue2["policy"] = policyValue2;
+                                    
+                                    if (datasetsItem.Properties.Policy.Validation != null)
+                                    {
+                                        JObject validationValue = new JObject();
+                                        policyValue2["validation"] = validationValue;
+                                        
+                                        if (datasetsItem.Properties.Policy.Validation.MinimumRows != null)
+                                        {
+                                            validationValue["minimumRows"] = datasetsItem.Properties.Policy.Validation.MinimumRows.Value;
+                                        }
+                                        
+                                        if (datasetsItem.Properties.Policy.Validation.MinimumSizeMB != null)
+                                        {
+                                            validationValue["minimumSizeMB"] = datasetsItem.Properties.Policy.Validation.MinimumSizeMB.Value;
+                                        }
+                                        
+                                        if (datasetsItem.Properties.Policy.Validation.ValidationPriorityOrder != null)
+                                        {
+                                            validationValue["validationPriorityOrder"] = datasetsItem.Properties.Policy.Validation.ValidationPriorityOrder;
+                                        }
+                                    }
+                                    
+                                    if (datasetsItem.Properties.Policy.Latency != null)
+                                    {
+                                        JObject latencyValue = new JObject();
+                                        policyValue2["latency"] = latencyValue;
+                                        
+                                        if (datasetsItem.Properties.Policy.Latency.LatencyLength != null)
+                                        {
+                                            latencyValue["latencyLength"] = datasetsItem.Properties.Policy.Latency.LatencyLength.Value.ToString();
+                                        }
+                                    }
+                                    
+                                    if (datasetsItem.Properties.Policy.ExternalData != null)
+                                    {
+                                        JObject externalDataValue = new JObject();
+                                        policyValue2["externalData"] = externalDataValue;
+                                        
+                                        if (datasetsItem.Properties.Policy.ExternalData.DataDelay != null)
+                                        {
+                                            externalDataValue["dataDelay"] = datasetsItem.Properties.Policy.ExternalData.DataDelay.Value.ToString();
+                                        }
+                                        
+                                        if (datasetsItem.Properties.Policy.ExternalData.RetryInterval != null)
+                                        {
+                                            externalDataValue["retryInterval"] = datasetsItem.Properties.Policy.ExternalData.RetryInterval.Value.ToString();
+                                        }
+                                        
+                                        if (datasetsItem.Properties.Policy.ExternalData.RetryTimeout != null)
+                                        {
+                                            externalDataValue["retryTimeout"] = datasetsItem.Properties.Policy.ExternalData.RetryTimeout.Value.ToString();
+                                        }
+                                        
+                                        if (datasetsItem.Properties.Policy.ExternalData.MaximumRetry != null)
+                                        {
+                                            externalDataValue["maximumRetry"] = datasetsItem.Properties.Policy.ExternalData.MaximumRetry.Value;
+                                        }
+                                    }
+                                }
+                                
+                                if (datasetsItem.Properties.External != null)
+                                {
+                                    propertiesValue2["external"] = datasetsItem.Properties.External.Value;
+                                }
+                                
+                                if (datasetsItem.Properties.CreateTime != null)
+                                {
+                                    propertiesValue2["createTime"] = datasetsItem.Properties.CreateTime.Value;
+                                }
+                                
+                                if (datasetsItem.Properties.ProvisioningState != null)
+                                {
+                                    propertiesValue2["provisioningState"] = datasetsItem.Properties.ProvisioningState;
+                                }
+                                
+                                if (datasetsItem.Properties.ErrorMessage != null)
+                                {
+                                    propertiesValue2["errorMessage"] = datasetsItem.Properties.ErrorMessage;
+                                }
+                            }
+                            propertiesValue["datasets"] = datasetsArray;
+                        }
                     }
                 }
                 
@@ -505,20 +737,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 pipelineInstance.Name = nameInstance;
                             }
                             
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            JToken propertiesValue3 = responseDoc["properties"];
+                            if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                             {
                                 PipelineProperties propertiesInstance = new PipelineProperties();
                                 pipelineInstance.Properties = propertiesInstance;
                                 
-                                JToken descriptionValue = propertiesValue2["description"];
+                                JToken descriptionValue = propertiesValue3["description"];
                                 if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                 {
                                     string descriptionInstance = ((string)descriptionValue);
                                     propertiesInstance.Description = descriptionInstance;
                                 }
                                 
-                                JToken activitiesArray2 = propertiesValue2["activities"];
+                                JToken activitiesArray2 = propertiesValue3["activities"];
                                 if (activitiesArray2 != null && activitiesArray2.Type != JTokenType.Null)
                                 {
                                     foreach (JToken activitiesValue in ((JArray)activitiesArray2))
@@ -561,55 +793,55 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             activityInstance.LinkedServiceName = linkedServiceNameInstance;
                                         }
                                         
-                                        JToken policyValue2 = activitiesValue["policy"];
-                                        if (policyValue2 != null && policyValue2.Type != JTokenType.Null)
+                                        JToken policyValue3 = activitiesValue["policy"];
+                                        if (policyValue3 != null && policyValue3.Type != JTokenType.Null)
                                         {
                                             ActivityPolicy policyInstance = new ActivityPolicy();
                                             activityInstance.Policy = policyInstance;
                                             
-                                            JToken timeoutValue = policyValue2["timeout"];
+                                            JToken timeoutValue = policyValue3["timeout"];
                                             if (timeoutValue != null && timeoutValue.Type != JTokenType.Null)
                                             {
                                                 TimeSpan timeoutInstance = TimeSpan.Parse(((string)timeoutValue), CultureInfo.InvariantCulture);
                                                 policyInstance.Timeout = timeoutInstance;
                                             }
                                             
-                                            JToken delayValue = policyValue2["delay"];
+                                            JToken delayValue = policyValue3["delay"];
                                             if (delayValue != null && delayValue.Type != JTokenType.Null)
                                             {
                                                 TimeSpan delayInstance = TimeSpan.Parse(((string)delayValue), CultureInfo.InvariantCulture);
                                                 policyInstance.Delay = delayInstance;
                                             }
                                             
-                                            JToken concurrencyValue = policyValue2["concurrency"];
+                                            JToken concurrencyValue = policyValue3["concurrency"];
                                             if (concurrencyValue != null && concurrencyValue.Type != JTokenType.Null)
                                             {
                                                 uint concurrencyInstance = ((uint)concurrencyValue);
                                                 policyInstance.Concurrency = concurrencyInstance;
                                             }
                                             
-                                            JToken executionPriorityOrderValue = policyValue2["executionPriorityOrder"];
+                                            JToken executionPriorityOrderValue = policyValue3["executionPriorityOrder"];
                                             if (executionPriorityOrderValue != null && executionPriorityOrderValue.Type != JTokenType.Null)
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
                                             }
                                             
-                                            JToken retryValue = policyValue2["retry"];
+                                            JToken retryValue = policyValue3["retry"];
                                             if (retryValue != null && retryValue.Type != JTokenType.Null)
                                             {
                                                 int retryInstance = ((int)retryValue);
                                                 policyInstance.Retry = retryInstance;
                                             }
                                             
-                                            JToken longRetryValue = policyValue2["longRetry"];
+                                            JToken longRetryValue = policyValue3["longRetry"];
                                             if (longRetryValue != null && longRetryValue.Type != JTokenType.Null)
                                             {
                                                 int longRetryInstance = ((int)longRetryValue);
                                                 policyInstance.LongRetry = longRetryInstance;
                                             }
                                             
-                                            JToken longRetryIntervalValue = policyValue2["longRetryInterval"];
+                                            JToken longRetryIntervalValue = policyValue3["longRetryInterval"];
                                             if (longRetryIntervalValue != null && longRetryIntervalValue.Type != JTokenType.Null)
                                             {
                                                 TimeSpan longRetryIntervalInstance = TimeSpan.Parse(((string)longRetryIntervalValue), CultureInfo.InvariantCulture);
@@ -716,28 +948,28 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     }
                                 }
                                 
-                                JToken startValue = propertiesValue2["start"];
+                                JToken startValue = propertiesValue3["start"];
                                 if (startValue != null && startValue.Type != JTokenType.Null)
                                 {
                                     DateTime startInstance = ((DateTime)startValue);
                                     propertiesInstance.Start = startInstance;
                                 }
                                 
-                                JToken endValue = propertiesValue2["end"];
+                                JToken endValue = propertiesValue3["end"];
                                 if (endValue != null && endValue.Type != JTokenType.Null)
                                 {
                                     DateTime endInstance = ((DateTime)endValue);
                                     propertiesInstance.End = endInstance;
                                 }
                                 
-                                JToken isPausedValue = propertiesValue2["isPaused"];
+                                JToken isPausedValue = propertiesValue3["isPaused"];
                                 if (isPausedValue != null && isPausedValue.Type != JTokenType.Null)
                                 {
                                     bool isPausedInstance = ((bool)isPausedValue);
                                     propertiesInstance.IsPaused = isPausedInstance;
                                 }
                                 
-                                JToken runtimeInfoValue2 = propertiesValue2["runtimeInfo"];
+                                JToken runtimeInfoValue2 = propertiesValue3["runtimeInfo"];
                                 if (runtimeInfoValue2 != null && runtimeInfoValue2.Type != JTokenType.Null)
                                 {
                                     PipelineRuntimeInfo runtimeInfoInstance = new PipelineRuntimeInfo();
@@ -749,27 +981,299 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue2["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
-                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                JToken provisioningStateValue = propertiesValue3["provisioningState"];
                                 if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
                                     string provisioningStateInstance = ((string)provisioningStateValue);
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                                 
-                                JToken errorMessageValue = propertiesValue2["errorMessage"];
+                                JToken errorMessageValue = propertiesValue3["errorMessage"];
                                 if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
                                 {
                                     string errorMessageInstance = ((string)errorMessageValue);
                                     propertiesInstance.ErrorMessage = errorMessageInstance;
                                 }
                                 
-                                JToken hubNameValue = propertiesValue2["hubName"];
+                                JToken hubNameValue = propertiesValue3["hubName"];
                                 if (hubNameValue != null && hubNameValue.Type != JTokenType.Null)
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue3["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue3["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
+                                }
+                                
+                                JToken datasetsArray2 = propertiesValue3["datasets"];
+                                if (datasetsArray2 != null && datasetsArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken datasetsValue in ((JArray)datasetsArray2))
+                                    {
+                                        Dataset datasetInstance = new Dataset();
+                                        propertiesInstance.Datasets.Add(datasetInstance);
+                                        
+                                        JToken nameValue5 = datasetsValue["name"];
+                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance5 = ((string)nameValue5);
+                                            datasetInstance.Name = nameInstance5;
+                                        }
+                                        
+                                        JToken propertiesValue4 = datasetsValue["properties"];
+                                        if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                        {
+                                            DatasetProperties propertiesInstance2 = new DatasetProperties();
+                                            datasetInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken typeValue2 = propertiesValue4["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance2 = ((string)typeValue2);
+                                                propertiesInstance2.Type = typeInstance2;
+                                            }
+                                            
+                                            JToken typePropertiesValue2 = propertiesValue4["typeProperties"];
+                                            if (typePropertiesValue2 != null && typePropertiesValue2.Type != JTokenType.Null)
+                                            {
+                                                string typePropertiesInstance2 = typePropertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                propertiesInstance2.TypeProperties = typePropertiesInstance2;
+                                            }
+                                            
+                                            JToken linkedServiceNameValue2 = propertiesValue4["linkedServiceName"];
+                                            if (linkedServiceNameValue2 != null && linkedServiceNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string linkedServiceNameInstance2 = ((string)linkedServiceNameValue2);
+                                                propertiesInstance2.LinkedServiceName = linkedServiceNameInstance2;
+                                            }
+                                            
+                                            JToken descriptionValue3 = propertiesValue4["description"];
+                                            if (descriptionValue3 != null && descriptionValue3.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance3 = ((string)descriptionValue3);
+                                                propertiesInstance2.Description = descriptionInstance3;
+                                            }
+                                            
+                                            JToken structureArray2 = propertiesValue4["structure"];
+                                            if (structureArray2 != null && structureArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken structureValue in ((JArray)structureArray2))
+                                                {
+                                                    DataElement dataElementInstance = new DataElement();
+                                                    propertiesInstance2.Structure.Add(dataElementInstance);
+                                                    
+                                                    JToken nameValue6 = structureValue["name"];
+                                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance6 = ((string)nameValue6);
+                                                        dataElementInstance.Name = nameInstance6;
+                                                    }
+                                                    
+                                                    JToken descriptionValue4 = structureValue["description"];
+                                                    if (descriptionValue4 != null && descriptionValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string descriptionInstance4 = ((string)descriptionValue4);
+                                                        dataElementInstance.Description = descriptionInstance4;
+                                                    }
+                                                    
+                                                    JToken typeValue3 = structureValue["type"];
+                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance3 = ((string)typeValue3);
+                                                        dataElementInstance.Type = typeInstance3;
+                                                    }
+                                                    
+                                                    JToken cultureValue = structureValue["culture"];
+                                                    if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                    {
+                                                        string cultureInstance = ((string)cultureValue);
+                                                        dataElementInstance.Culture = cultureInstance;
+                                                    }
+                                                    
+                                                    JToken formatValue = structureValue["format"];
+                                                    if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                    {
+                                                        string formatInstance = ((string)formatValue);
+                                                        dataElementInstance.Format = formatInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken availabilityValue2 = propertiesValue4["availability"];
+                                            if (availabilityValue2 != null && availabilityValue2.Type != JTokenType.Null)
+                                            {
+                                                Availability availabilityInstance = new Availability();
+                                                propertiesInstance2.Availability = availabilityInstance;
+                                                
+                                                JToken frequencyValue2 = availabilityValue2["frequency"];
+                                                if (frequencyValue2 != null && frequencyValue2.Type != JTokenType.Null)
+                                                {
+                                                    string frequencyInstance2 = ((string)frequencyValue2);
+                                                    availabilityInstance.Frequency = frequencyInstance2;
+                                                }
+                                                
+                                                JToken intervalValue2 = availabilityValue2["interval"];
+                                                if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
+                                                {
+                                                    uint intervalInstance2 = ((uint)intervalValue2);
+                                                    availabilityInstance.Interval = intervalInstance2;
+                                                }
+                                                
+                                                JToken anchorDateTimeValue2 = availabilityValue2["anchorDateTime"];
+                                                if (anchorDateTimeValue2 != null && anchorDateTimeValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime anchorDateTimeInstance2 = ((DateTime)anchorDateTimeValue2);
+                                                    availabilityInstance.AnchorDateTime = anchorDateTimeInstance2;
+                                                }
+                                                
+                                                JToken offsetValue2 = availabilityValue2["offset"];
+                                                if (offsetValue2 != null && offsetValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan offsetInstance2 = TimeSpan.Parse(((string)offsetValue2), CultureInfo.InvariantCulture);
+                                                    availabilityInstance.Offset = offsetInstance2;
+                                                }
+                                                
+                                                JToken styleValue2 = availabilityValue2["style"];
+                                                if (styleValue2 != null && styleValue2.Type != JTokenType.Null)
+                                                {
+                                                    string styleInstance2 = ((string)styleValue2);
+                                                    availabilityInstance.Style = styleInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken policyValue4 = propertiesValue4["policy"];
+                                            if (policyValue4 != null && policyValue4.Type != JTokenType.Null)
+                                            {
+                                                Policy policyInstance2 = new Policy();
+                                                propertiesInstance2.Policy = policyInstance2;
+                                                
+                                                JToken validationValue2 = policyValue4["validation"];
+                                                if (validationValue2 != null && validationValue2.Type != JTokenType.Null)
+                                                {
+                                                    ValidationPolicy validationInstance = new ValidationPolicy();
+                                                    policyInstance2.Validation = validationInstance;
+                                                    
+                                                    JToken minimumRowsValue = validationValue2["minimumRows"];
+                                                    if (minimumRowsValue != null && minimumRowsValue.Type != JTokenType.Null)
+                                                    {
+                                                        long minimumRowsInstance = ((long)minimumRowsValue);
+                                                        validationInstance.MinimumRows = minimumRowsInstance;
+                                                    }
+                                                    
+                                                    JToken minimumSizeMBValue = validationValue2["minimumSizeMB"];
+                                                    if (minimumSizeMBValue != null && minimumSizeMBValue.Type != JTokenType.Null)
+                                                    {
+                                                        double minimumSizeMBInstance = ((double)minimumSizeMBValue);
+                                                        validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                    }
+                                                    
+                                                    JToken validationPriorityOrderValue = validationValue2["validationPriorityOrder"];
+                                                    if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                    {
+                                                        string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                        validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken latencyValue2 = policyValue4["latency"];
+                                                if (latencyValue2 != null && latencyValue2.Type != JTokenType.Null)
+                                                {
+                                                    LatencyPolicy latencyInstance = new LatencyPolicy();
+                                                    policyInstance2.Latency = latencyInstance;
+                                                    
+                                                    JToken latencyLengthValue = latencyValue2["latencyLength"];
+                                                    if (latencyLengthValue != null && latencyLengthValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan latencyLengthInstance = TimeSpan.Parse(((string)latencyLengthValue), CultureInfo.InvariantCulture);
+                                                        latencyInstance.LatencyLength = latencyLengthInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken externalDataValue2 = policyValue4["externalData"];
+                                                if (externalDataValue2 != null && externalDataValue2.Type != JTokenType.Null)
+                                                {
+                                                    ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                    policyInstance2.ExternalData = externalDataInstance;
+                                                    
+                                                    JToken dataDelayValue = externalDataValue2["dataDelay"];
+                                                    if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.DataDelay = dataDelayInstance;
+                                                    }
+                                                    
+                                                    JToken retryIntervalValue = externalDataValue2["retryInterval"];
+                                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                    }
+                                                    
+                                                    JToken retryTimeoutValue = externalDataValue2["retryTimeout"];
+                                                    if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                    }
+                                                    
+                                                    JToken maximumRetryValue = externalDataValue2["maximumRetry"];
+                                                    if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                    {
+                                                        int maximumRetryInstance = ((int)maximumRetryValue);
+                                                        externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken externalValue = propertiesValue4["external"];
+                                            if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                            {
+                                                bool externalInstance = ((bool)externalValue);
+                                                propertiesInstance2.External = externalInstance;
+                                            }
+                                            
+                                            JToken createTimeValue = propertiesValue4["createTime"];
+                                            if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime createTimeInstance = ((DateTime)createTimeValue);
+                                                propertiesInstance2.CreateTime = createTimeInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = propertiesValue4["provisioningState"];
+                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                propertiesInstance2.ProvisioningState = provisioningStateInstance2;
+                                            }
+                                            
+                                            JToken errorMessageValue2 = propertiesValue4["errorMessage"];
+                                            if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                propertiesInstance2.ErrorMessage = errorMessageInstance2;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1236,6 +1740,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -1257,6 +1768,271 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
+                                }
+                                
+                                JToken datasetsArray = propertiesValue["datasets"];
+                                if (datasetsArray != null && datasetsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken datasetsValue in ((JArray)datasetsArray))
+                                    {
+                                        Dataset datasetInstance = new Dataset();
+                                        propertiesInstance.Datasets.Add(datasetInstance);
+                                        
+                                        JToken nameValue5 = datasetsValue["name"];
+                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance5 = ((string)nameValue5);
+                                            datasetInstance.Name = nameInstance5;
+                                        }
+                                        
+                                        JToken propertiesValue2 = datasetsValue["properties"];
+                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            DatasetProperties propertiesInstance2 = new DatasetProperties();
+                                            datasetInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken typeValue2 = propertiesValue2["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance2 = ((string)typeValue2);
+                                                propertiesInstance2.Type = typeInstance2;
+                                            }
+                                            
+                                            JToken typePropertiesValue2 = propertiesValue2["typeProperties"];
+                                            if (typePropertiesValue2 != null && typePropertiesValue2.Type != JTokenType.Null)
+                                            {
+                                                string typePropertiesInstance2 = typePropertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                propertiesInstance2.TypeProperties = typePropertiesInstance2;
+                                            }
+                                            
+                                            JToken linkedServiceNameValue2 = propertiesValue2["linkedServiceName"];
+                                            if (linkedServiceNameValue2 != null && linkedServiceNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string linkedServiceNameInstance2 = ((string)linkedServiceNameValue2);
+                                                propertiesInstance2.LinkedServiceName = linkedServiceNameInstance2;
+                                            }
+                                            
+                                            JToken descriptionValue3 = propertiesValue2["description"];
+                                            if (descriptionValue3 != null && descriptionValue3.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance3 = ((string)descriptionValue3);
+                                                propertiesInstance2.Description = descriptionInstance3;
+                                            }
+                                            
+                                            JToken structureArray = propertiesValue2["structure"];
+                                            if (structureArray != null && structureArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken structureValue in ((JArray)structureArray))
+                                                {
+                                                    DataElement dataElementInstance = new DataElement();
+                                                    propertiesInstance2.Structure.Add(dataElementInstance);
+                                                    
+                                                    JToken nameValue6 = structureValue["name"];
+                                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance6 = ((string)nameValue6);
+                                                        dataElementInstance.Name = nameInstance6;
+                                                    }
+                                                    
+                                                    JToken descriptionValue4 = structureValue["description"];
+                                                    if (descriptionValue4 != null && descriptionValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string descriptionInstance4 = ((string)descriptionValue4);
+                                                        dataElementInstance.Description = descriptionInstance4;
+                                                    }
+                                                    
+                                                    JToken typeValue3 = structureValue["type"];
+                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance3 = ((string)typeValue3);
+                                                        dataElementInstance.Type = typeInstance3;
+                                                    }
+                                                    
+                                                    JToken cultureValue = structureValue["culture"];
+                                                    if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                    {
+                                                        string cultureInstance = ((string)cultureValue);
+                                                        dataElementInstance.Culture = cultureInstance;
+                                                    }
+                                                    
+                                                    JToken formatValue = structureValue["format"];
+                                                    if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                    {
+                                                        string formatInstance = ((string)formatValue);
+                                                        dataElementInstance.Format = formatInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken availabilityValue = propertiesValue2["availability"];
+                                            if (availabilityValue != null && availabilityValue.Type != JTokenType.Null)
+                                            {
+                                                Availability availabilityInstance = new Availability();
+                                                propertiesInstance2.Availability = availabilityInstance;
+                                                
+                                                JToken frequencyValue2 = availabilityValue["frequency"];
+                                                if (frequencyValue2 != null && frequencyValue2.Type != JTokenType.Null)
+                                                {
+                                                    string frequencyInstance2 = ((string)frequencyValue2);
+                                                    availabilityInstance.Frequency = frequencyInstance2;
+                                                }
+                                                
+                                                JToken intervalValue2 = availabilityValue["interval"];
+                                                if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
+                                                {
+                                                    uint intervalInstance2 = ((uint)intervalValue2);
+                                                    availabilityInstance.Interval = intervalInstance2;
+                                                }
+                                                
+                                                JToken anchorDateTimeValue2 = availabilityValue["anchorDateTime"];
+                                                if (anchorDateTimeValue2 != null && anchorDateTimeValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime anchorDateTimeInstance2 = ((DateTime)anchorDateTimeValue2);
+                                                    availabilityInstance.AnchorDateTime = anchorDateTimeInstance2;
+                                                }
+                                                
+                                                JToken offsetValue2 = availabilityValue["offset"];
+                                                if (offsetValue2 != null && offsetValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan offsetInstance2 = TimeSpan.Parse(((string)offsetValue2), CultureInfo.InvariantCulture);
+                                                    availabilityInstance.Offset = offsetInstance2;
+                                                }
+                                                
+                                                JToken styleValue2 = availabilityValue["style"];
+                                                if (styleValue2 != null && styleValue2.Type != JTokenType.Null)
+                                                {
+                                                    string styleInstance2 = ((string)styleValue2);
+                                                    availabilityInstance.Style = styleInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken policyValue2 = propertiesValue2["policy"];
+                                            if (policyValue2 != null && policyValue2.Type != JTokenType.Null)
+                                            {
+                                                Policy policyInstance2 = new Policy();
+                                                propertiesInstance2.Policy = policyInstance2;
+                                                
+                                                JToken validationValue = policyValue2["validation"];
+                                                if (validationValue != null && validationValue.Type != JTokenType.Null)
+                                                {
+                                                    ValidationPolicy validationInstance = new ValidationPolicy();
+                                                    policyInstance2.Validation = validationInstance;
+                                                    
+                                                    JToken minimumRowsValue = validationValue["minimumRows"];
+                                                    if (minimumRowsValue != null && minimumRowsValue.Type != JTokenType.Null)
+                                                    {
+                                                        long minimumRowsInstance = ((long)minimumRowsValue);
+                                                        validationInstance.MinimumRows = minimumRowsInstance;
+                                                    }
+                                                    
+                                                    JToken minimumSizeMBValue = validationValue["minimumSizeMB"];
+                                                    if (minimumSizeMBValue != null && minimumSizeMBValue.Type != JTokenType.Null)
+                                                    {
+                                                        double minimumSizeMBInstance = ((double)minimumSizeMBValue);
+                                                        validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                    }
+                                                    
+                                                    JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                    if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                    {
+                                                        string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                        validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken latencyValue = policyValue2["latency"];
+                                                if (latencyValue != null && latencyValue.Type != JTokenType.Null)
+                                                {
+                                                    LatencyPolicy latencyInstance = new LatencyPolicy();
+                                                    policyInstance2.Latency = latencyInstance;
+                                                    
+                                                    JToken latencyLengthValue = latencyValue["latencyLength"];
+                                                    if (latencyLengthValue != null && latencyLengthValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan latencyLengthInstance = TimeSpan.Parse(((string)latencyLengthValue), CultureInfo.InvariantCulture);
+                                                        latencyInstance.LatencyLength = latencyLengthInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken externalDataValue = policyValue2["externalData"];
+                                                if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                                {
+                                                    ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                    policyInstance2.ExternalData = externalDataInstance;
+                                                    
+                                                    JToken dataDelayValue = externalDataValue["dataDelay"];
+                                                    if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.DataDelay = dataDelayInstance;
+                                                    }
+                                                    
+                                                    JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                    }
+                                                    
+                                                    JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                                    if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                    }
+                                                    
+                                                    JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                                    if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                    {
+                                                        int maximumRetryInstance = ((int)maximumRetryValue);
+                                                        externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken externalValue = propertiesValue2["external"];
+                                            if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                            {
+                                                bool externalInstance = ((bool)externalValue);
+                                                propertiesInstance2.External = externalInstance;
+                                            }
+                                            
+                                            JToken createTimeValue = propertiesValue2["createTime"];
+                                            if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime createTimeInstance = ((DateTime)createTimeValue);
+                                                propertiesInstance2.CreateTime = createTimeInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
+                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                propertiesInstance2.ProvisioningState = provisioningStateInstance2;
+                                            }
+                                            
+                                            JToken errorMessageValue2 = propertiesValue2["errorMessage"];
+                                            if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                propertiesInstance2.ErrorMessage = errorMessageInstance2;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2116,6 +2892,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -2137,6 +2920,271 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
+                                }
+                                
+                                JToken datasetsArray = propertiesValue["datasets"];
+                                if (datasetsArray != null && datasetsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken datasetsValue in ((JArray)datasetsArray))
+                                    {
+                                        Dataset datasetInstance = new Dataset();
+                                        propertiesInstance.Datasets.Add(datasetInstance);
+                                        
+                                        JToken nameValue5 = datasetsValue["name"];
+                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance5 = ((string)nameValue5);
+                                            datasetInstance.Name = nameInstance5;
+                                        }
+                                        
+                                        JToken propertiesValue2 = datasetsValue["properties"];
+                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            DatasetProperties propertiesInstance2 = new DatasetProperties();
+                                            datasetInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken typeValue2 = propertiesValue2["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance2 = ((string)typeValue2);
+                                                propertiesInstance2.Type = typeInstance2;
+                                            }
+                                            
+                                            JToken typePropertiesValue2 = propertiesValue2["typeProperties"];
+                                            if (typePropertiesValue2 != null && typePropertiesValue2.Type != JTokenType.Null)
+                                            {
+                                                string typePropertiesInstance2 = typePropertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                propertiesInstance2.TypeProperties = typePropertiesInstance2;
+                                            }
+                                            
+                                            JToken linkedServiceNameValue2 = propertiesValue2["linkedServiceName"];
+                                            if (linkedServiceNameValue2 != null && linkedServiceNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string linkedServiceNameInstance2 = ((string)linkedServiceNameValue2);
+                                                propertiesInstance2.LinkedServiceName = linkedServiceNameInstance2;
+                                            }
+                                            
+                                            JToken descriptionValue3 = propertiesValue2["description"];
+                                            if (descriptionValue3 != null && descriptionValue3.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance3 = ((string)descriptionValue3);
+                                                propertiesInstance2.Description = descriptionInstance3;
+                                            }
+                                            
+                                            JToken structureArray = propertiesValue2["structure"];
+                                            if (structureArray != null && structureArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken structureValue in ((JArray)structureArray))
+                                                {
+                                                    DataElement dataElementInstance = new DataElement();
+                                                    propertiesInstance2.Structure.Add(dataElementInstance);
+                                                    
+                                                    JToken nameValue6 = structureValue["name"];
+                                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance6 = ((string)nameValue6);
+                                                        dataElementInstance.Name = nameInstance6;
+                                                    }
+                                                    
+                                                    JToken descriptionValue4 = structureValue["description"];
+                                                    if (descriptionValue4 != null && descriptionValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string descriptionInstance4 = ((string)descriptionValue4);
+                                                        dataElementInstance.Description = descriptionInstance4;
+                                                    }
+                                                    
+                                                    JToken typeValue3 = structureValue["type"];
+                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance3 = ((string)typeValue3);
+                                                        dataElementInstance.Type = typeInstance3;
+                                                    }
+                                                    
+                                                    JToken cultureValue = structureValue["culture"];
+                                                    if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                    {
+                                                        string cultureInstance = ((string)cultureValue);
+                                                        dataElementInstance.Culture = cultureInstance;
+                                                    }
+                                                    
+                                                    JToken formatValue = structureValue["format"];
+                                                    if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                    {
+                                                        string formatInstance = ((string)formatValue);
+                                                        dataElementInstance.Format = formatInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken availabilityValue = propertiesValue2["availability"];
+                                            if (availabilityValue != null && availabilityValue.Type != JTokenType.Null)
+                                            {
+                                                Availability availabilityInstance = new Availability();
+                                                propertiesInstance2.Availability = availabilityInstance;
+                                                
+                                                JToken frequencyValue2 = availabilityValue["frequency"];
+                                                if (frequencyValue2 != null && frequencyValue2.Type != JTokenType.Null)
+                                                {
+                                                    string frequencyInstance2 = ((string)frequencyValue2);
+                                                    availabilityInstance.Frequency = frequencyInstance2;
+                                                }
+                                                
+                                                JToken intervalValue2 = availabilityValue["interval"];
+                                                if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
+                                                {
+                                                    uint intervalInstance2 = ((uint)intervalValue2);
+                                                    availabilityInstance.Interval = intervalInstance2;
+                                                }
+                                                
+                                                JToken anchorDateTimeValue2 = availabilityValue["anchorDateTime"];
+                                                if (anchorDateTimeValue2 != null && anchorDateTimeValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime anchorDateTimeInstance2 = ((DateTime)anchorDateTimeValue2);
+                                                    availabilityInstance.AnchorDateTime = anchorDateTimeInstance2;
+                                                }
+                                                
+                                                JToken offsetValue2 = availabilityValue["offset"];
+                                                if (offsetValue2 != null && offsetValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan offsetInstance2 = TimeSpan.Parse(((string)offsetValue2), CultureInfo.InvariantCulture);
+                                                    availabilityInstance.Offset = offsetInstance2;
+                                                }
+                                                
+                                                JToken styleValue2 = availabilityValue["style"];
+                                                if (styleValue2 != null && styleValue2.Type != JTokenType.Null)
+                                                {
+                                                    string styleInstance2 = ((string)styleValue2);
+                                                    availabilityInstance.Style = styleInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken policyValue2 = propertiesValue2["policy"];
+                                            if (policyValue2 != null && policyValue2.Type != JTokenType.Null)
+                                            {
+                                                Policy policyInstance2 = new Policy();
+                                                propertiesInstance2.Policy = policyInstance2;
+                                                
+                                                JToken validationValue = policyValue2["validation"];
+                                                if (validationValue != null && validationValue.Type != JTokenType.Null)
+                                                {
+                                                    ValidationPolicy validationInstance = new ValidationPolicy();
+                                                    policyInstance2.Validation = validationInstance;
+                                                    
+                                                    JToken minimumRowsValue = validationValue["minimumRows"];
+                                                    if (minimumRowsValue != null && minimumRowsValue.Type != JTokenType.Null)
+                                                    {
+                                                        long minimumRowsInstance = ((long)minimumRowsValue);
+                                                        validationInstance.MinimumRows = minimumRowsInstance;
+                                                    }
+                                                    
+                                                    JToken minimumSizeMBValue = validationValue["minimumSizeMB"];
+                                                    if (minimumSizeMBValue != null && minimumSizeMBValue.Type != JTokenType.Null)
+                                                    {
+                                                        double minimumSizeMBInstance = ((double)minimumSizeMBValue);
+                                                        validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                    }
+                                                    
+                                                    JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                    if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                    {
+                                                        string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                        validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken latencyValue = policyValue2["latency"];
+                                                if (latencyValue != null && latencyValue.Type != JTokenType.Null)
+                                                {
+                                                    LatencyPolicy latencyInstance = new LatencyPolicy();
+                                                    policyInstance2.Latency = latencyInstance;
+                                                    
+                                                    JToken latencyLengthValue = latencyValue["latencyLength"];
+                                                    if (latencyLengthValue != null && latencyLengthValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan latencyLengthInstance = TimeSpan.Parse(((string)latencyLengthValue), CultureInfo.InvariantCulture);
+                                                        latencyInstance.LatencyLength = latencyLengthInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken externalDataValue = policyValue2["externalData"];
+                                                if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                                {
+                                                    ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                    policyInstance2.ExternalData = externalDataInstance;
+                                                    
+                                                    JToken dataDelayValue = externalDataValue["dataDelay"];
+                                                    if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.DataDelay = dataDelayInstance;
+                                                    }
+                                                    
+                                                    JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                    }
+                                                    
+                                                    JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                                    if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                    }
+                                                    
+                                                    JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                                    if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                    {
+                                                        int maximumRetryInstance = ((int)maximumRetryValue);
+                                                        externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken externalValue = propertiesValue2["external"];
+                                            if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                            {
+                                                bool externalInstance = ((bool)externalValue);
+                                                propertiesInstance2.External = externalInstance;
+                                            }
+                                            
+                                            JToken createTimeValue = propertiesValue2["createTime"];
+                                            if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime createTimeInstance = ((DateTime)createTimeValue);
+                                                propertiesInstance2.CreateTime = createTimeInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
+                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                propertiesInstance2.ProvisioningState = provisioningStateInstance2;
+                                            }
+                                            
+                                            JToken errorMessageValue2 = propertiesValue2["errorMessage"];
+                                            if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                propertiesInstance2.ErrorMessage = errorMessageInstance2;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2516,6 +3564,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                         runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                     }
+                                    
+                                    JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                    if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                    {
+                                        string pipelineStateInstance = ((string)pipelineStateValue);
+                                        runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -2537,6 +3592,271 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     string hubNameInstance = ((string)hubNameValue);
                                     propertiesInstance.HubName = hubNameInstance;
+                                }
+                                
+                                JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                {
+                                    string pipelineModeInstance = ((string)pipelineModeValue);
+                                    propertiesInstance.PipelineMode = pipelineModeInstance;
+                                }
+                                
+                                JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                    propertiesInstance.ExpirationTime = expirationTimeInstance;
+                                }
+                                
+                                JToken datasetsArray = propertiesValue["datasets"];
+                                if (datasetsArray != null && datasetsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken datasetsValue in ((JArray)datasetsArray))
+                                    {
+                                        Dataset datasetInstance = new Dataset();
+                                        propertiesInstance.Datasets.Add(datasetInstance);
+                                        
+                                        JToken nameValue5 = datasetsValue["name"];
+                                        if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance5 = ((string)nameValue5);
+                                            datasetInstance.Name = nameInstance5;
+                                        }
+                                        
+                                        JToken propertiesValue2 = datasetsValue["properties"];
+                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            DatasetProperties propertiesInstance2 = new DatasetProperties();
+                                            datasetInstance.Properties = propertiesInstance2;
+                                            
+                                            JToken typeValue2 = propertiesValue2["type"];
+                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            {
+                                                string typeInstance2 = ((string)typeValue2);
+                                                propertiesInstance2.Type = typeInstance2;
+                                            }
+                                            
+                                            JToken typePropertiesValue2 = propertiesValue2["typeProperties"];
+                                            if (typePropertiesValue2 != null && typePropertiesValue2.Type != JTokenType.Null)
+                                            {
+                                                string typePropertiesInstance2 = typePropertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                propertiesInstance2.TypeProperties = typePropertiesInstance2;
+                                            }
+                                            
+                                            JToken linkedServiceNameValue2 = propertiesValue2["linkedServiceName"];
+                                            if (linkedServiceNameValue2 != null && linkedServiceNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string linkedServiceNameInstance2 = ((string)linkedServiceNameValue2);
+                                                propertiesInstance2.LinkedServiceName = linkedServiceNameInstance2;
+                                            }
+                                            
+                                            JToken descriptionValue3 = propertiesValue2["description"];
+                                            if (descriptionValue3 != null && descriptionValue3.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance3 = ((string)descriptionValue3);
+                                                propertiesInstance2.Description = descriptionInstance3;
+                                            }
+                                            
+                                            JToken structureArray = propertiesValue2["structure"];
+                                            if (structureArray != null && structureArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken structureValue in ((JArray)structureArray))
+                                                {
+                                                    DataElement dataElementInstance = new DataElement();
+                                                    propertiesInstance2.Structure.Add(dataElementInstance);
+                                                    
+                                                    JToken nameValue6 = structureValue["name"];
+                                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance6 = ((string)nameValue6);
+                                                        dataElementInstance.Name = nameInstance6;
+                                                    }
+                                                    
+                                                    JToken descriptionValue4 = structureValue["description"];
+                                                    if (descriptionValue4 != null && descriptionValue4.Type != JTokenType.Null)
+                                                    {
+                                                        string descriptionInstance4 = ((string)descriptionValue4);
+                                                        dataElementInstance.Description = descriptionInstance4;
+                                                    }
+                                                    
+                                                    JToken typeValue3 = structureValue["type"];
+                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance3 = ((string)typeValue3);
+                                                        dataElementInstance.Type = typeInstance3;
+                                                    }
+                                                    
+                                                    JToken cultureValue = structureValue["culture"];
+                                                    if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                    {
+                                                        string cultureInstance = ((string)cultureValue);
+                                                        dataElementInstance.Culture = cultureInstance;
+                                                    }
+                                                    
+                                                    JToken formatValue = structureValue["format"];
+                                                    if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                    {
+                                                        string formatInstance = ((string)formatValue);
+                                                        dataElementInstance.Format = formatInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken availabilityValue = propertiesValue2["availability"];
+                                            if (availabilityValue != null && availabilityValue.Type != JTokenType.Null)
+                                            {
+                                                Availability availabilityInstance = new Availability();
+                                                propertiesInstance2.Availability = availabilityInstance;
+                                                
+                                                JToken frequencyValue2 = availabilityValue["frequency"];
+                                                if (frequencyValue2 != null && frequencyValue2.Type != JTokenType.Null)
+                                                {
+                                                    string frequencyInstance2 = ((string)frequencyValue2);
+                                                    availabilityInstance.Frequency = frequencyInstance2;
+                                                }
+                                                
+                                                JToken intervalValue2 = availabilityValue["interval"];
+                                                if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
+                                                {
+                                                    uint intervalInstance2 = ((uint)intervalValue2);
+                                                    availabilityInstance.Interval = intervalInstance2;
+                                                }
+                                                
+                                                JToken anchorDateTimeValue2 = availabilityValue["anchorDateTime"];
+                                                if (anchorDateTimeValue2 != null && anchorDateTimeValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime anchorDateTimeInstance2 = ((DateTime)anchorDateTimeValue2);
+                                                    availabilityInstance.AnchorDateTime = anchorDateTimeInstance2;
+                                                }
+                                                
+                                                JToken offsetValue2 = availabilityValue["offset"];
+                                                if (offsetValue2 != null && offsetValue2.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan offsetInstance2 = TimeSpan.Parse(((string)offsetValue2), CultureInfo.InvariantCulture);
+                                                    availabilityInstance.Offset = offsetInstance2;
+                                                }
+                                                
+                                                JToken styleValue2 = availabilityValue["style"];
+                                                if (styleValue2 != null && styleValue2.Type != JTokenType.Null)
+                                                {
+                                                    string styleInstance2 = ((string)styleValue2);
+                                                    availabilityInstance.Style = styleInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken policyValue2 = propertiesValue2["policy"];
+                                            if (policyValue2 != null && policyValue2.Type != JTokenType.Null)
+                                            {
+                                                Policy policyInstance2 = new Policy();
+                                                propertiesInstance2.Policy = policyInstance2;
+                                                
+                                                JToken validationValue = policyValue2["validation"];
+                                                if (validationValue != null && validationValue.Type != JTokenType.Null)
+                                                {
+                                                    ValidationPolicy validationInstance = new ValidationPolicy();
+                                                    policyInstance2.Validation = validationInstance;
+                                                    
+                                                    JToken minimumRowsValue = validationValue["minimumRows"];
+                                                    if (minimumRowsValue != null && minimumRowsValue.Type != JTokenType.Null)
+                                                    {
+                                                        long minimumRowsInstance = ((long)minimumRowsValue);
+                                                        validationInstance.MinimumRows = minimumRowsInstance;
+                                                    }
+                                                    
+                                                    JToken minimumSizeMBValue = validationValue["minimumSizeMB"];
+                                                    if (minimumSizeMBValue != null && minimumSizeMBValue.Type != JTokenType.Null)
+                                                    {
+                                                        double minimumSizeMBInstance = ((double)minimumSizeMBValue);
+                                                        validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                    }
+                                                    
+                                                    JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                    if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                    {
+                                                        string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                        validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken latencyValue = policyValue2["latency"];
+                                                if (latencyValue != null && latencyValue.Type != JTokenType.Null)
+                                                {
+                                                    LatencyPolicy latencyInstance = new LatencyPolicy();
+                                                    policyInstance2.Latency = latencyInstance;
+                                                    
+                                                    JToken latencyLengthValue = latencyValue["latencyLength"];
+                                                    if (latencyLengthValue != null && latencyLengthValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan latencyLengthInstance = TimeSpan.Parse(((string)latencyLengthValue), CultureInfo.InvariantCulture);
+                                                        latencyInstance.LatencyLength = latencyLengthInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken externalDataValue = policyValue2["externalData"];
+                                                if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                                {
+                                                    ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                    policyInstance2.ExternalData = externalDataInstance;
+                                                    
+                                                    JToken dataDelayValue = externalDataValue["dataDelay"];
+                                                    if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.DataDelay = dataDelayInstance;
+                                                    }
+                                                    
+                                                    JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                                    if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                    }
+                                                    
+                                                    JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                                    if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                        externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                    }
+                                                    
+                                                    JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                                    if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                    {
+                                                        int maximumRetryInstance = ((int)maximumRetryValue);
+                                                        externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken externalValue = propertiesValue2["external"];
+                                            if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                            {
+                                                bool externalInstance = ((bool)externalValue);
+                                                propertiesInstance2.External = externalInstance;
+                                            }
+                                            
+                                            JToken createTimeValue = propertiesValue2["createTime"];
+                                            if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime createTimeInstance = ((DateTime)createTimeValue);
+                                                propertiesInstance2.CreateTime = createTimeInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
+                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                propertiesInstance2.ProvisioningState = provisioningStateInstance2;
+                                            }
+                                            
+                                            JToken errorMessageValue2 = propertiesValue2["errorMessage"];
+                                            if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                propertiesInstance2.ErrorMessage = errorMessageInstance2;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2983,6 +4303,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                                 runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                             }
+                                            
+                                            JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                            if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                            {
+                                                string pipelineStateInstance = ((string)pipelineStateValue);
+                                                runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                            }
                                         }
                                         
                                         JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -3004,6 +4331,271 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string hubNameInstance = ((string)hubNameValue);
                                             propertiesInstance.HubName = hubNameInstance;
+                                        }
+                                        
+                                        JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                        if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                        {
+                                            string pipelineModeInstance = ((string)pipelineModeValue);
+                                            propertiesInstance.PipelineMode = pipelineModeInstance;
+                                        }
+                                        
+                                        JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                        if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                            propertiesInstance.ExpirationTime = expirationTimeInstance;
+                                        }
+                                        
+                                        JToken datasetsArray = propertiesValue["datasets"];
+                                        if (datasetsArray != null && datasetsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken datasetsValue in ((JArray)datasetsArray))
+                                            {
+                                                Dataset datasetInstance = new Dataset();
+                                                propertiesInstance.Datasets.Add(datasetInstance);
+                                                
+                                                JToken nameValue5 = datasetsValue["name"];
+                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance5 = ((string)nameValue5);
+                                                    datasetInstance.Name = nameInstance5;
+                                                }
+                                                
+                                                JToken propertiesValue2 = datasetsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    DatasetProperties propertiesInstance2 = new DatasetProperties();
+                                                    datasetInstance.Properties = propertiesInstance2;
+                                                    
+                                                    JToken typeValue2 = propertiesValue2["type"];
+                                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance2 = ((string)typeValue2);
+                                                        propertiesInstance2.Type = typeInstance2;
+                                                    }
+                                                    
+                                                    JToken typePropertiesValue2 = propertiesValue2["typeProperties"];
+                                                    if (typePropertiesValue2 != null && typePropertiesValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string typePropertiesInstance2 = typePropertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                        propertiesInstance2.TypeProperties = typePropertiesInstance2;
+                                                    }
+                                                    
+                                                    JToken linkedServiceNameValue2 = propertiesValue2["linkedServiceName"];
+                                                    if (linkedServiceNameValue2 != null && linkedServiceNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string linkedServiceNameInstance2 = ((string)linkedServiceNameValue2);
+                                                        propertiesInstance2.LinkedServiceName = linkedServiceNameInstance2;
+                                                    }
+                                                    
+                                                    JToken descriptionValue3 = propertiesValue2["description"];
+                                                    if (descriptionValue3 != null && descriptionValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string descriptionInstance3 = ((string)descriptionValue3);
+                                                        propertiesInstance2.Description = descriptionInstance3;
+                                                    }
+                                                    
+                                                    JToken structureArray = propertiesValue2["structure"];
+                                                    if (structureArray != null && structureArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken structureValue in ((JArray)structureArray))
+                                                        {
+                                                            DataElement dataElementInstance = new DataElement();
+                                                            propertiesInstance2.Structure.Add(dataElementInstance);
+                                                            
+                                                            JToken nameValue6 = structureValue["name"];
+                                                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance6 = ((string)nameValue6);
+                                                                dataElementInstance.Name = nameInstance6;
+                                                            }
+                                                            
+                                                            JToken descriptionValue4 = structureValue["description"];
+                                                            if (descriptionValue4 != null && descriptionValue4.Type != JTokenType.Null)
+                                                            {
+                                                                string descriptionInstance4 = ((string)descriptionValue4);
+                                                                dataElementInstance.Description = descriptionInstance4;
+                                                            }
+                                                            
+                                                            JToken typeValue3 = structureValue["type"];
+                                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance3 = ((string)typeValue3);
+                                                                dataElementInstance.Type = typeInstance3;
+                                                            }
+                                                            
+                                                            JToken cultureValue = structureValue["culture"];
+                                                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                            {
+                                                                string cultureInstance = ((string)cultureValue);
+                                                                dataElementInstance.Culture = cultureInstance;
+                                                            }
+                                                            
+                                                            JToken formatValue = structureValue["format"];
+                                                            if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                            {
+                                                                string formatInstance = ((string)formatValue);
+                                                                dataElementInstance.Format = formatInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken availabilityValue = propertiesValue2["availability"];
+                                                    if (availabilityValue != null && availabilityValue.Type != JTokenType.Null)
+                                                    {
+                                                        Availability availabilityInstance = new Availability();
+                                                        propertiesInstance2.Availability = availabilityInstance;
+                                                        
+                                                        JToken frequencyValue2 = availabilityValue["frequency"];
+                                                        if (frequencyValue2 != null && frequencyValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string frequencyInstance2 = ((string)frequencyValue2);
+                                                            availabilityInstance.Frequency = frequencyInstance2;
+                                                        }
+                                                        
+                                                        JToken intervalValue2 = availabilityValue["interval"];
+                                                        if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
+                                                        {
+                                                            uint intervalInstance2 = ((uint)intervalValue2);
+                                                            availabilityInstance.Interval = intervalInstance2;
+                                                        }
+                                                        
+                                                        JToken anchorDateTimeValue2 = availabilityValue["anchorDateTime"];
+                                                        if (anchorDateTimeValue2 != null && anchorDateTimeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime anchorDateTimeInstance2 = ((DateTime)anchorDateTimeValue2);
+                                                            availabilityInstance.AnchorDateTime = anchorDateTimeInstance2;
+                                                        }
+                                                        
+                                                        JToken offsetValue2 = availabilityValue["offset"];
+                                                        if (offsetValue2 != null && offsetValue2.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan offsetInstance2 = TimeSpan.Parse(((string)offsetValue2), CultureInfo.InvariantCulture);
+                                                            availabilityInstance.Offset = offsetInstance2;
+                                                        }
+                                                        
+                                                        JToken styleValue2 = availabilityValue["style"];
+                                                        if (styleValue2 != null && styleValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string styleInstance2 = ((string)styleValue2);
+                                                            availabilityInstance.Style = styleInstance2;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken policyValue2 = propertiesValue2["policy"];
+                                                    if (policyValue2 != null && policyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        Policy policyInstance2 = new Policy();
+                                                        propertiesInstance2.Policy = policyInstance2;
+                                                        
+                                                        JToken validationValue = policyValue2["validation"];
+                                                        if (validationValue != null && validationValue.Type != JTokenType.Null)
+                                                        {
+                                                            ValidationPolicy validationInstance = new ValidationPolicy();
+                                                            policyInstance2.Validation = validationInstance;
+                                                            
+                                                            JToken minimumRowsValue = validationValue["minimumRows"];
+                                                            if (minimumRowsValue != null && minimumRowsValue.Type != JTokenType.Null)
+                                                            {
+                                                                long minimumRowsInstance = ((long)minimumRowsValue);
+                                                                validationInstance.MinimumRows = minimumRowsInstance;
+                                                            }
+                                                            
+                                                            JToken minimumSizeMBValue = validationValue["minimumSizeMB"];
+                                                            if (minimumSizeMBValue != null && minimumSizeMBValue.Type != JTokenType.Null)
+                                                            {
+                                                                double minimumSizeMBInstance = ((double)minimumSizeMBValue);
+                                                                validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                            }
+                                                            
+                                                            JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                            if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                            {
+                                                                string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                                validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
+                                                            }
+                                                        }
+                                                        
+                                                        JToken latencyValue = policyValue2["latency"];
+                                                        if (latencyValue != null && latencyValue.Type != JTokenType.Null)
+                                                        {
+                                                            LatencyPolicy latencyInstance = new LatencyPolicy();
+                                                            policyInstance2.Latency = latencyInstance;
+                                                            
+                                                            JToken latencyLengthValue = latencyValue["latencyLength"];
+                                                            if (latencyLengthValue != null && latencyLengthValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan latencyLengthInstance = TimeSpan.Parse(((string)latencyLengthValue), CultureInfo.InvariantCulture);
+                                                                latencyInstance.LatencyLength = latencyLengthInstance;
+                                                            }
+                                                        }
+                                                        
+                                                        JToken externalDataValue = policyValue2["externalData"];
+                                                        if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                                        {
+                                                            ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                            policyInstance2.ExternalData = externalDataInstance;
+                                                            
+                                                            JToken dataDelayValue = externalDataValue["dataDelay"];
+                                                            if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                                externalDataInstance.DataDelay = dataDelayInstance;
+                                                            }
+                                                            
+                                                            JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                                            if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                                externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                            }
+                                                            
+                                                            JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                                            if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                                externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                            }
+                                                            
+                                                            JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                                            if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                            {
+                                                                int maximumRetryInstance = ((int)maximumRetryValue);
+                                                                externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken externalValue = propertiesValue2["external"];
+                                                    if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                                    {
+                                                        bool externalInstance = ((bool)externalValue);
+                                                        propertiesInstance2.External = externalInstance;
+                                                    }
+                                                    
+                                                    JToken createTimeValue = propertiesValue2["createTime"];
+                                                    if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime createTimeInstance = ((DateTime)createTimeValue);
+                                                        propertiesInstance2.CreateTime = createTimeInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
+                                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                        propertiesInstance2.ProvisioningState = provisioningStateInstance2;
+                                                    }
+                                                    
+                                                    JToken errorMessageValue2 = propertiesValue2["errorMessage"];
+                                                    if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                        propertiesInstance2.ErrorMessage = errorMessageInstance2;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -3400,6 +4992,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 DateTime deploymentTimeInstance = ((DateTime)deploymentTimeValue);
                                                 runtimeInfoInstance.DeploymentTime = deploymentTimeInstance;
                                             }
+                                            
+                                            JToken pipelineStateValue = runtimeInfoValue["pipelineState"];
+                                            if (pipelineStateValue != null && pipelineStateValue.Type != JTokenType.Null)
+                                            {
+                                                string pipelineStateInstance = ((string)pipelineStateValue);
+                                                runtimeInfoInstance.PipelineState = pipelineStateInstance;
+                                            }
                                         }
                                         
                                         JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -3421,6 +5020,271 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string hubNameInstance = ((string)hubNameValue);
                                             propertiesInstance.HubName = hubNameInstance;
+                                        }
+                                        
+                                        JToken pipelineModeValue = propertiesValue["pipelineMode"];
+                                        if (pipelineModeValue != null && pipelineModeValue.Type != JTokenType.Null)
+                                        {
+                                            string pipelineModeInstance = ((string)pipelineModeValue);
+                                            propertiesInstance.PipelineMode = pipelineModeInstance;
+                                        }
+                                        
+                                        JToken expirationTimeValue = propertiesValue["expirationTime"];
+                                        if (expirationTimeValue != null && expirationTimeValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan expirationTimeInstance = TimeSpan.Parse(((string)expirationTimeValue), CultureInfo.InvariantCulture);
+                                            propertiesInstance.ExpirationTime = expirationTimeInstance;
+                                        }
+                                        
+                                        JToken datasetsArray = propertiesValue["datasets"];
+                                        if (datasetsArray != null && datasetsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken datasetsValue in ((JArray)datasetsArray))
+                                            {
+                                                Dataset datasetInstance = new Dataset();
+                                                propertiesInstance.Datasets.Add(datasetInstance);
+                                                
+                                                JToken nameValue5 = datasetsValue["name"];
+                                                if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance5 = ((string)nameValue5);
+                                                    datasetInstance.Name = nameInstance5;
+                                                }
+                                                
+                                                JToken propertiesValue2 = datasetsValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    DatasetProperties propertiesInstance2 = new DatasetProperties();
+                                                    datasetInstance.Properties = propertiesInstance2;
+                                                    
+                                                    JToken typeValue2 = propertiesValue2["type"];
+                                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance2 = ((string)typeValue2);
+                                                        propertiesInstance2.Type = typeInstance2;
+                                                    }
+                                                    
+                                                    JToken typePropertiesValue2 = propertiesValue2["typeProperties"];
+                                                    if (typePropertiesValue2 != null && typePropertiesValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string typePropertiesInstance2 = typePropertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                        propertiesInstance2.TypeProperties = typePropertiesInstance2;
+                                                    }
+                                                    
+                                                    JToken linkedServiceNameValue2 = propertiesValue2["linkedServiceName"];
+                                                    if (linkedServiceNameValue2 != null && linkedServiceNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string linkedServiceNameInstance2 = ((string)linkedServiceNameValue2);
+                                                        propertiesInstance2.LinkedServiceName = linkedServiceNameInstance2;
+                                                    }
+                                                    
+                                                    JToken descriptionValue3 = propertiesValue2["description"];
+                                                    if (descriptionValue3 != null && descriptionValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string descriptionInstance3 = ((string)descriptionValue3);
+                                                        propertiesInstance2.Description = descriptionInstance3;
+                                                    }
+                                                    
+                                                    JToken structureArray = propertiesValue2["structure"];
+                                                    if (structureArray != null && structureArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken structureValue in ((JArray)structureArray))
+                                                        {
+                                                            DataElement dataElementInstance = new DataElement();
+                                                            propertiesInstance2.Structure.Add(dataElementInstance);
+                                                            
+                                                            JToken nameValue6 = structureValue["name"];
+                                                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance6 = ((string)nameValue6);
+                                                                dataElementInstance.Name = nameInstance6;
+                                                            }
+                                                            
+                                                            JToken descriptionValue4 = structureValue["description"];
+                                                            if (descriptionValue4 != null && descriptionValue4.Type != JTokenType.Null)
+                                                            {
+                                                                string descriptionInstance4 = ((string)descriptionValue4);
+                                                                dataElementInstance.Description = descriptionInstance4;
+                                                            }
+                                                            
+                                                            JToken typeValue3 = structureValue["type"];
+                                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance3 = ((string)typeValue3);
+                                                                dataElementInstance.Type = typeInstance3;
+                                                            }
+                                                            
+                                                            JToken cultureValue = structureValue["culture"];
+                                                            if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                            {
+                                                                string cultureInstance = ((string)cultureValue);
+                                                                dataElementInstance.Culture = cultureInstance;
+                                                            }
+                                                            
+                                                            JToken formatValue = structureValue["format"];
+                                                            if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                            {
+                                                                string formatInstance = ((string)formatValue);
+                                                                dataElementInstance.Format = formatInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken availabilityValue = propertiesValue2["availability"];
+                                                    if (availabilityValue != null && availabilityValue.Type != JTokenType.Null)
+                                                    {
+                                                        Availability availabilityInstance = new Availability();
+                                                        propertiesInstance2.Availability = availabilityInstance;
+                                                        
+                                                        JToken frequencyValue2 = availabilityValue["frequency"];
+                                                        if (frequencyValue2 != null && frequencyValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string frequencyInstance2 = ((string)frequencyValue2);
+                                                            availabilityInstance.Frequency = frequencyInstance2;
+                                                        }
+                                                        
+                                                        JToken intervalValue2 = availabilityValue["interval"];
+                                                        if (intervalValue2 != null && intervalValue2.Type != JTokenType.Null)
+                                                        {
+                                                            uint intervalInstance2 = ((uint)intervalValue2);
+                                                            availabilityInstance.Interval = intervalInstance2;
+                                                        }
+                                                        
+                                                        JToken anchorDateTimeValue2 = availabilityValue["anchorDateTime"];
+                                                        if (anchorDateTimeValue2 != null && anchorDateTimeValue2.Type != JTokenType.Null)
+                                                        {
+                                                            DateTime anchorDateTimeInstance2 = ((DateTime)anchorDateTimeValue2);
+                                                            availabilityInstance.AnchorDateTime = anchorDateTimeInstance2;
+                                                        }
+                                                        
+                                                        JToken offsetValue2 = availabilityValue["offset"];
+                                                        if (offsetValue2 != null && offsetValue2.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan offsetInstance2 = TimeSpan.Parse(((string)offsetValue2), CultureInfo.InvariantCulture);
+                                                            availabilityInstance.Offset = offsetInstance2;
+                                                        }
+                                                        
+                                                        JToken styleValue2 = availabilityValue["style"];
+                                                        if (styleValue2 != null && styleValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string styleInstance2 = ((string)styleValue2);
+                                                            availabilityInstance.Style = styleInstance2;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken policyValue2 = propertiesValue2["policy"];
+                                                    if (policyValue2 != null && policyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        Policy policyInstance2 = new Policy();
+                                                        propertiesInstance2.Policy = policyInstance2;
+                                                        
+                                                        JToken validationValue = policyValue2["validation"];
+                                                        if (validationValue != null && validationValue.Type != JTokenType.Null)
+                                                        {
+                                                            ValidationPolicy validationInstance = new ValidationPolicy();
+                                                            policyInstance2.Validation = validationInstance;
+                                                            
+                                                            JToken minimumRowsValue = validationValue["minimumRows"];
+                                                            if (minimumRowsValue != null && minimumRowsValue.Type != JTokenType.Null)
+                                                            {
+                                                                long minimumRowsInstance = ((long)minimumRowsValue);
+                                                                validationInstance.MinimumRows = minimumRowsInstance;
+                                                            }
+                                                            
+                                                            JToken minimumSizeMBValue = validationValue["minimumSizeMB"];
+                                                            if (minimumSizeMBValue != null && minimumSizeMBValue.Type != JTokenType.Null)
+                                                            {
+                                                                double minimumSizeMBInstance = ((double)minimumSizeMBValue);
+                                                                validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                            }
+                                                            
+                                                            JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                            if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                            {
+                                                                string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                                validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
+                                                            }
+                                                        }
+                                                        
+                                                        JToken latencyValue = policyValue2["latency"];
+                                                        if (latencyValue != null && latencyValue.Type != JTokenType.Null)
+                                                        {
+                                                            LatencyPolicy latencyInstance = new LatencyPolicy();
+                                                            policyInstance2.Latency = latencyInstance;
+                                                            
+                                                            JToken latencyLengthValue = latencyValue["latencyLength"];
+                                                            if (latencyLengthValue != null && latencyLengthValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan latencyLengthInstance = TimeSpan.Parse(((string)latencyLengthValue), CultureInfo.InvariantCulture);
+                                                                latencyInstance.LatencyLength = latencyLengthInstance;
+                                                            }
+                                                        }
+                                                        
+                                                        JToken externalDataValue = policyValue2["externalData"];
+                                                        if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                                        {
+                                                            ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                            policyInstance2.ExternalData = externalDataInstance;
+                                                            
+                                                            JToken dataDelayValue = externalDataValue["dataDelay"];
+                                                            if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                                externalDataInstance.DataDelay = dataDelayInstance;
+                                                            }
+                                                            
+                                                            JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                                            if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                                externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                            }
+                                                            
+                                                            JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                                            if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                                externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                            }
+                                                            
+                                                            JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                                            if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                            {
+                                                                int maximumRetryInstance = ((int)maximumRetryValue);
+                                                                externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken externalValue = propertiesValue2["external"];
+                                                    if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                                    {
+                                                        bool externalInstance = ((bool)externalValue);
+                                                        propertiesInstance2.External = externalInstance;
+                                                    }
+                                                    
+                                                    JToken createTimeValue = propertiesValue2["createTime"];
+                                                    if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime createTimeInstance = ((DateTime)createTimeValue);
+                                                        propertiesInstance2.CreateTime = createTimeInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
+                                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                        propertiesInstance2.ProvisioningState = provisioningStateInstance2;
+                                                    }
+                                                    
+                                                    JToken errorMessageValue2 = propertiesValue2["errorMessage"];
+                                                    if (errorMessageValue2 != null && errorMessageValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string errorMessageInstance2 = ((string)errorMessageValue2);
+                                                        propertiesInstance2.ErrorMessage = errorMessageInstance2;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
