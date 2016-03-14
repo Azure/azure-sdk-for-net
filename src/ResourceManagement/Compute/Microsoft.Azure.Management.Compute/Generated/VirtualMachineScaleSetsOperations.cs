@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -535,7 +535,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -897,7 +897,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "instanceIds");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceRequiredIDs);
             if (instanceIds != null)
             {
@@ -1056,7 +1056,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1229,7 +1229,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1396,7 +1396,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1572,7 +1572,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1783,7 +1783,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -1971,7 +1971,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -2159,7 +2159,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceIDs);
             if (instanceIds != null)
             {
@@ -2353,7 +2353,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "instanceIds");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs = default(VirtualMachineScaleSetVMInstanceRequiredIDs);
             if (instanceIds != null)
             {
@@ -2535,7 +2535,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-06-15";
+            string apiVersion = "2016-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
