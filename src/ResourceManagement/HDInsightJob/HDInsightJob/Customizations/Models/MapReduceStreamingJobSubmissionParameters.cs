@@ -31,52 +31,52 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     public partial class MapReduceStreamingJobSubmissionParameters
     {
         /// <summary>
-        /// Optional.
+        /// Optional. Gets the arguments for the jobDetails.
         /// </summary>
         public IList<string> Arguments { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional. Set list of environment variables.
         /// </summary>
         public IDictionary<string, string> CmdEnv { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets define parameters.
         /// </summary>
         public IDictionary<string, string> Defines { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. File to add to the distributed cache.
         /// </summary>
         public string File { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional. List of files to be copied to the cluster.
         /// </summary>
         public IList<string> Files { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Location of the input data in Hadoop.
         /// </summary>
         public string Input { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets Mapper executable or Java class name.
         /// </summary>
         public string Mapper { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Location in which to store the output data.
         /// </summary>
         public string Output { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets Reducer executable or Java class name.
         /// </summary>
         public string Reducer { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Status directory in the default storage account to store job files stderr, stdout and exit.
         /// </summary>
         public string StatusDir { get; set; }
         

@@ -18,6 +18,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Azure.Management.HDInsight.Job.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Job
 {

@@ -31,30 +31,30 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     public partial class SqoopJobSubmissionParameters
     {
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the command to use for a Sqoop job.
         /// </summary>
         public string Command { get; set; }
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the command file to use for a Sqoop job.
         /// </summary>
         public string File { get; set; }
 
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the files to be copied to the cluster.
         /// </summary>
         public IList<string> Files { get; set; }
-        
+
         /// <summary>
-        /// Optional.
+        /// Optional. Directory where libjar can be found to use by Sqoop.
+        /// </summary>
+        public string LibDir { get; set; }
+                
+        /// <summary>
+        /// Optional. Status directory in the default storage account to store job files stderr, stdout and exit.
         /// </summary>
         public string StatusDir { get; set; }
 
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string LibDir { get; set; }
-        
         /// <summary>
         /// Initializes a new instance of the SqoopJobSubmissionParameters
         /// class.

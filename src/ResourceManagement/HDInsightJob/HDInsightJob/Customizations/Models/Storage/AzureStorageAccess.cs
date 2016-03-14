@@ -14,22 +14,17 @@
 // limitations under the License.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace Microsoft.Azure.Management.HDInsight.Job
+namespace Microsoft.Azure.Management.HDInsight.Job.Models
 {
     /// <summary>
-    /// Operations for managing jobs against HDInsight clusters.
+    /// Manages storage access details for job operations against HDInsight clusters.
     /// </summary>
     public class AzureStorageAccess : IStorageAccess
     {
@@ -39,6 +34,18 @@ namespace Microsoft.Azure.Management.HDInsight.Job
 
         private string DefaultStorageContainer { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the AzureStorageAccess class.
+        /// </summary>
+        /// <param name='storageAccountName'>
+        /// Required. The storage account name.
+        /// </param>
+        /// <param name='storageAccountKey'>
+        /// Required. The storage account key.
+        /// </param>
+        /// <param name='defaultStorageContainer'>
+        /// Required. The default storage container name.
+        /// </param>
         public AzureStorageAccess(string storageAccountName, string storageAccountKey, string defaultStorageContainer)
         {
             this.StorageAccountName = storageAccountName;
@@ -72,13 +79,13 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         }
 
         /// <summary>
-        /// Gets the storage access url for a blob reference path.
+        /// Gets the file content from blob reference path.
         /// </summary>
         /// <param name='blobReferencePath'>
         /// Required. Blob reference path for which url to be generated.
         /// </param>
         /// <returns>
-        /// Uri object for the input blob reference path.
+        /// Content of the file for the input blob reference path.
         /// </returns>
         public Stream GetFileContent(string blobReferencePath)
         {
