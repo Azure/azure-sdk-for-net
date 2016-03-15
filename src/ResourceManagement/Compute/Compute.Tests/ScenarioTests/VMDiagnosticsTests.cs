@@ -62,7 +62,7 @@ namespace Compute.Tests
                         {
                             vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountOutput.Name);
                         });
-                    
+
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
                     
