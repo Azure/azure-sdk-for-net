@@ -129,7 +129,7 @@ namespace Compute.Tests
                     {
                         vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = userImageUrl };
                         vm.StorageProfile.OsDisk.Vhd = new VirtualHardDisk { Uri = ComputeManagementTestUtilities.GenerateName(userImageUrl) + ".vhd"};
-                        vm.StorageProfile.OsDisk.OsType = "Windows";
+                        vm.StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
                         vm.LicenseType = "Windows_Server";
                     };
 
