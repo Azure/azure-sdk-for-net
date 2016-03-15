@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the cluster tier.
         /// </summary>
-        public Tier Tier { get; set; }
+        public Tier ClusterTier { get; set; }
 
         /// <summary>
         /// Gets or sets SSH user name.

@@ -25,17 +25,19 @@ using System.Linq;
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// The cluster tier, default is standard.
+    /// The HDInsight cluster tier.
     /// </summary>
     public enum Tier
     {
         /// <summary>
-        /// Standard is a default value for all existing clusters.
+        /// Standard tier for HDInsight clusters. This is the default tier.
         /// </summary>
         Standard = 0,
         
         /// <summary>
-        /// Premium tier only for Linux OS type, supports Spark and RRE.
+        /// Premium tier for HDInsight clusters. Some new features are only
+        /// compatible with Premium clusters. This can only be used with Linux
+        /// clusters.
         /// </summary>
         Premium = 1,
     }

@@ -22,17 +22,18 @@ namespace HDInsight.Tests.Helpers
 {
     public static class GetClusterSpecHelpers
     {
-        private const string DefaultContainer = "";
-        private const string StorageAccountName = "";
-        private const string StorageAccountKey = "";
-        private const string SshKey = "";
-        private const string SshUser = "";
-        private const string SshPassword = "";
-        private const string HttpUser = "";
-        private const string HttpPassword = "";
-        private const string RdpUser = "";
-        private const string RdpPassword = "";
+        private const string DefaultContainer = "hdinsightxplatteststore";
+        private const string StorageAccountName = "hdinsightxplatteststore.blob.core.windows.net";
+        private const string StorageAccountKey = "Ax0K4yWikwbWXx6+bX/KJ9af2NNN14oiTn9YQFuFbHpc8TbXDLbJI6PkZvaMGWLR1WzfUKjIrzT0E9TyaLpB0w==";
+        private const string SshKey = "AAAAB3NzaC1yc2EAAAADAQABAAABAQDQdxir92ao4neLuSJH9eOqYF+8GaOhhfmqGKBd4dEuqyrd6ppXmihWZHY/HzMSfkRqQuYJsaJFRFo3P0ExasQoiBbnNOfsxOVrtjoW9NxG5JXeQrFatuYkhLnpLwjL+hNtZ9UWJPMJE2+xSO6Nb7QaOgY1ADfvK2eISAbbuMm1PM/zCQVg3Io2bSlD+DW4rLZZ389VHfzUSd6HNz4oS7czWLpOI/v0faMFMWTcimcN73vJSB5etTf7/JPqwNLq49ZCj0FddjjfeFeCK7z1eYQyfdJ/+wLInSsddfcJ6rXlQourQZfI0BvIn4x+XYpqMNtK6UnQylzwZ5NCu6oxx/c9";
+        private const string HttpUser = "hadoopuser";
+        private const string HttpPassword = "Password1!";
+        private const string RdpUser = "hdirp";
+        private const string RdpPassword = "Passw0rd!321";
 
+        private const string SshUser = "ahosny";
+        private const string SshPassword = "CsharpJava@12";
+   
         public static ClusterCreateParametersExtended GetIaasClusterSpec()
         {
             var cluster = new ClusterCreateParametersExtended

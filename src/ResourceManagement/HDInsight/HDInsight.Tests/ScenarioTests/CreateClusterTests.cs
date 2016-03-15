@@ -201,7 +201,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 var cluster = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
-                cluster.Tier= Tier.Premium;
+                cluster.ClusterTier= Tier.Premium;
                 const string dnsname = "hdisdk-LinuxClusterPremiumTest";
               
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
@@ -230,7 +230,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
 
                 var cluster = GetClusterSpecHelpers.GetCustomCreateParametersIaas();
-                cluster.Tier = Tier.Standard;
+                cluster.ClusterTier = Tier.Standard;
                 const string dnsname = "hdisdk-LinuxClusterStandardTest";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);

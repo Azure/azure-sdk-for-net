@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     },
                     ClusterVersion = clusterCreateParameters.Version,
                     OperatingSystemType = clusterCreateParameters.OSType,
-                    ClusterTier = clusterCreateParameters.Tier 
+                    ClusterTier = clusterCreateParameters.ClusterTier 
                 }
             };
 

@@ -28,13 +28,12 @@ namespace HDInsight.Tests
     public class DataLakeTests
     {
         //Since we are validating the fields these should have default values.
-        private string ApplicationId = "11111111-1111-1111-1111-111111111111";
-        private string AadTenantId = "11111111-1111-1111-1111-111111111111";
-        private byte[] CertificateFileBytes = { };
-        private string CertificatePassword = "";
-        private string ResourceUri = "";
-
-
+        private string ApplicationId = "90db4852-4c95-4acd-9e03-9458d092e7c1";
+        private string AadTenantId = "bd809f1c-a593-485a-bf3a-a25854020d54";
+        private byte[] CertificateFileBytes = System.IO.File.ReadAllBytes(@"C:\certs\CertFile.pfx");
+        private string CertificatePassword = "H@doop1234";
+        private string ResourceUri = "https://KonaCompute.net/";
+        
         [Fact]
         public void TestCreateDataLakeClusterUsingClusterCreateParametersExtended()
         {
@@ -79,6 +78,7 @@ namespace HDInsight.Tests
             };
 
             var spec = GetClusterSpecHelpers.AddConfigurations(cluster, ConfigurationKey.ClusterIdentity, dataLakeConfigs);
+            spec.Properties.ClusterVersion = "3.2";
             return spec;
         }
 
