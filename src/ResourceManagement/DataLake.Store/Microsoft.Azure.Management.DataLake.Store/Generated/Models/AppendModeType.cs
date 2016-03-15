@@ -6,21 +6,19 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.DataLake.Analytics.Models
+namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for DataLakeAnalyticsAccountState.
+    /// Defines values for AppendModeType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum DataLakeAnalyticsAccountState
+    public enum AppendModeType
     {
-        [EnumMember(Value = "active")]
-        Active,
-        [EnumMember(Value = "suspended")]
-        Suspended
+        [EnumMember(Value = "autocreate")]
+        Autocreate
     }
 }
