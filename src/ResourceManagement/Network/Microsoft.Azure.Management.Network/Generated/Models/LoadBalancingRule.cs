@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the LoadBalancingRule class.
         /// </summary>
-        public LoadBalancingRule(SubResource backendAddressPool, string protocol, int? frontendPort, bool? enableFloatingIP, string id = default(string), string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), string provisioningState = default(string))
+        public LoadBalancingRule(string protocol, int? frontendPort, string id = default(string), string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource backendAddressPool = default(SubResource), SubResource probe = default(SubResource), string loadDistribution = default(string), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string))
             : base(id)
         {
             Name = name;
@@ -150,10 +150,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (BackendAddressPool == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "BackendAddressPool");
-            }
             if (Protocol == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
@@ -161,10 +157,6 @@ namespace Microsoft.Azure.Management.Network.Models
             if (FrontendPort == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FrontendPort");
-            }
-            if (EnableFloatingIP == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EnableFloatingIP");
             }
         }
     }
