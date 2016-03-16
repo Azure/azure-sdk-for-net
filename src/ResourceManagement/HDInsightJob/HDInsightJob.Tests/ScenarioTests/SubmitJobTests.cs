@@ -15,13 +15,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
+using System.IO;
+using System.Threading;
 using Hyak.Common;
 using Microsoft.Azure.Management.HDInsight.Job;
 using Microsoft.Azure.Management.HDInsight.Job.Models;
 using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace HDInsightJob.Tests
 {
@@ -56,11 +58,10 @@ namespace HDInsightJob.Tests
 
                 var parameters = new MapReduceJobSubmissionParameters
                 {
-                    UserName = username,
                     JarFile = "/example/jars/hadoop-mapreduce-examples.jar",
                     JarClass = "pi",
-                    Defines = ConvertDefinesToString(defines),
-                    Arguments = ConvertArgsToString(args)
+                    Defines = defines,
+                    Arguments = args
                 };
 
                 var jobid = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
@@ -76,7 +77,37 @@ namespace HDInsightJob.Tests
         }
 
         [Fact]
+        public void SubmitHiveJob_Defines()
+        {
+            var defines = new Dictionary<string, string>
+                {
+                    { "hive.execution.engine", "ravi" },
+                    { "hive.exec.reducers.max", "1" },
+                    { "time", "10" },
+                    { "rows", "20" } 
+                };
+
+            var parameters = new HiveJobSubmissionParameters
+            {
+                Query = @"select * from hivesampletable where querydwelltime > ${hiveconf:time} limit ${hiveconf:rows}",
+                Defines = defines
+            };
+
+            SubmitHiveJobAndValidateOutput(parameters, "Massachusetts	United States");
+        }
+
+        [Fact]
         public void SubmitHiveJob()
+        {
+            var parameters = new HiveJobSubmissionParameters
+            {
+                Query = @"select querydwelltime+2 from hivesampletable where clientid = 8"
+            };
+
+            SubmitHiveJobAndValidateOutput(parameters, "15.92");
+        }
+
+        public void SubmitHiveJobAndValidateOutput(HiveJobSubmissionParameters parameters, string expectedOutputPart)
         {
             using (var context = UndoContext.Current)
             {
@@ -94,26 +125,38 @@ namespace HDInsightJob.Tests
 
                 var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
 
-                var defines = new Dictionary<string, string>
-                {
-                    {"hive.execution.engine", "ravi"},
-                    {"hive.exec.reducers.max", "1"}
-                };
-                var args = new List<string> {"argA", "argB"};
-
-                var parameters = new HiveJobSubmissionParameters
-                {
-                    UserName = username,
-                    Query = "SHOW TABLES;",
-                    Defines = ConvertDefinesToString(defines),
-                    Arguments = ConvertArgsToString(args)
-                };
-
                 var response = client.JobManagement.SubmitHiveJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
-                Assert.Contains("job_", response.JobSubmissionJsonResponse.Id, StringComparison.InvariantCulture);
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                var storageAccess = GetStorageAccessObject();
+
+                if (jobStatus.JobDetail.ExitValue == 0)
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Contains(expectedOutputPart));
+                    }
+                }
+                else
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
+                    Assert.True(false);
+                }
             }
         }
 
@@ -142,26 +185,52 @@ namespace HDInsightJob.Tests
                     {"mapreduce.reduce.maxattempts", "10"},
                     {"mapreduce.task.timeout", "60000"}
                 };
-                var args = new List<string> {"10", "1000"};
+                var args = new List<string> { "10", "1000" };
 
                 var parameters = new MapReduceJobSubmissionParameters
                 {
-                    UserName = username,
                     JarFile = "/example/jars/hadoop-mapreduce-examples.jar",
                     JarClass = "pi",
-                    Defines = ConvertDefinesToString(defines),
-                    Arguments = ConvertArgsToString(args)
+                    Defines = defines,
+                    Arguments = args
                 };
 
                 var response = client.JobManagement.SubmitMapReduceJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
-                Assert.Contains("job_", response.JobSubmissionJsonResponse.Id, StringComparison.InvariantCulture);
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                var storageAccess = GetStorageAccessObject();
+
+                if (jobStatus.JobDetail.ExitValue == 0)
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Contains("Estimated value of Pi is 3.14"));
+                    }
+                }
+                else
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
+                    Assert.True(false);
+                }
             }
         }
 
-       [Fact]
+        [Fact]
         public void SubmitMapReduceStreamingJob()
         {
             using (var context = UndoContext.Current)
@@ -182,18 +251,108 @@ namespace HDInsightJob.Tests
 
                 var parameters = new MapReduceStreamingJobSubmissionParameters
                 {
-                    UserName = username,
-                    Mapper = "cat.exe",
-                    Reducer = "wc.exe",
+                    Mapper = "cat",
+                    Reducer = "wc",
                     Input = "/example/data/gutenberg/davinci.txt",
-                    Output = "/example/data/gutenberg/wcout"
+                    Output = "/example/data/gutenberg/wcount"
                 };
 
                 var response = client.JobManagement.SubmitMapReduceStreamingJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
-                Assert.Contains("job_", response.JobSubmissionJsonResponse.Id, StringComparison.InvariantCulture);
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                var storageAccess = GetStorageAccessObject();
+
+                if (jobStatus.JobDetail.ExitValue == 0)
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Length > 0);
+                    }
+                }
+                else
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
+                    Assert.True(false);
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Category","Windows")]
+        public void SubmitMapReduceStreamingJobWithFilesParam()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var username = TestUtils.WinUserName;
+                var password = TestUtils.WinPassword;
+                var clustername = TestUtils.WinClusterName;
+
+                var credentials = new BasicAuthenticationCloudCredentials
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+
+                var parameters = new MapReduceStreamingJobSubmissionParameters
+                {
+                    Mapper = "cat.exe",
+                    Reducer = "wc.exe",
+                    Input = "/example/data/gutenberg/davinci.txt",
+                    Output = "/example/data/gutenberg/wcount",
+                    Files = new List<string> { "/example/apps/wc.exe", "/example/apps/cat.exe" }
+                };
+
+                var response = client.JobManagement.SubmitMapReduceStreamingJob(parameters);
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                var storageAccess = new AzureStorageAccess(TestUtils.WinStorageAccountName, TestUtils.WinStorageAccountKey, TestUtils.WinDefaultContainer);
+
+                if (jobStatus.JobDetail.ExitValue == 0)
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Length > 0);
+                    }
+                }
+                else
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
+                    Assert.True(false);
+                }
             }
         }
 
@@ -218,29 +377,198 @@ namespace HDInsightJob.Tests
 
                 var parameters = new PigJobSubmissionParameters()
                 {
-                    UserName = username,
-                    Query = "records = LOAD '/example/pig/sahara-paleo-fauna.txt' AS (DateBP:int, Loc:chararray, Coordinates:chararray, Samples:chararray, Country:chararray, Laboratory:chararray);" +
-                            "filtered_records = FILTER records by Country == 'Egypt' OR Country == 'Morocco';" +
-                            "grouped_records = GROUP filtered_records BY Country;" +
-                            "DUMP grouped_records;"
+                    Query = "LOGS = LOAD 'wasb:///example/data/sample.log';" +
+                                    "LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;" +
+                                    "FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;" +
+                                    "GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;" +
+                                    "FREQUENCIES = foreach GROUPEDLEVELS generate group as LOGLEVEL, COUNT(FILTEREDLEVELS.LOGLEVEL) as COUNT;" +
+                                    "RESULT = order FREQUENCIES by COUNT desc;" +
+                                    "DUMP RESULT;"
                 };
 
                 var response = client.JobManagement.SubmitPigJob(parameters);
                 Assert.NotNull(response);
                 Assert.Equal(response.StatusCode, HttpStatusCode.OK);
 
-                Assert.Contains("job_", response.JobSubmissionJsonResponse.Id, StringComparison.InvariantCulture);
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                var storageAccess = GetStorageAccessObject();
+
+                if (jobStatus.JobDetail.ExitValue == 0)
+                {
+                    // Retrieve Job Output
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Contains("(DEBUG,"));
+                    }
+                }
+                else
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
+                    Assert.True(false);
+                }
             }
         }
 
-        public static string ConvertDefinesToString(Dictionary<string, string> defines)
+        [Fact]
+        public void SubmitSqoopJob()
         {
-            return defines.Count == 0 ? null : string.Join("&define=", defines.Select(x => x.Key + "%3D" + x.Value).ToArray());
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var username = TestUtils.UserName;
+                var password = TestUtils.Password;
+                var clustername = TestUtils.ClusterName;
+
+                var credentials = new BasicAuthenticationCloudCredentials
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+
+                // Before we run this test in Record mode, we should run following commands on cluster
+                // hdfs dfs -mkdir /user/hcat/lib
+                // hadoop fs -copyFromLocal -f /usr/share/java/sqljdbc_4.1/enu/sqljdbc41.jar /user/hcat/lib
+                // Generate sqoopcommand.txt using content
+                // --connect
+                // <Connection string to DB which has table dept.>
+                // --table
+                // dept
+                // Keep these in separate lines otherwise, sqoop command will fail. Copy the sqoopcommand.txt
+                // hdfs dfs -mkdir /example/data/sqoop/
+                // hadoop fs -copyFromLocal -f sqoopcommand.txt /example/data/sqoop/
+
+                var parameters = new SqoopJobSubmissionParameters
+                {
+                    LibDir = "/user/hcat/lib",
+                    Files = new List<string>{"/example/data/sqoop/sqoopcommand.txt"},
+                    Command = "import --options-file sqoopcommand.txt --hive-import -m 1",
+                    StatusDir = "sqoopstatus",
+                };
+
+                var response = client.JobManagement.SubmitSqoopJob(parameters);
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                var storageAccess = GetStorageAccessObject();
+
+                if (jobStatus.JobDetail.ExitValue == 0)
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        // Retrieve Job Output
+                        var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
+                        string textOutput = Convert(output);
+                        Assert.True(textOutput.Length > 0);
+                    }
+                }
+                else
+                {
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                        string errorTextOutput = Convert(output);
+                        Assert.NotNull(errorTextOutput);
+                    }
+
+                    Assert.True(false);
+                }
+            }
         }
 
-        public static string ConvertArgsToString(List<string> args)
+        [Fact]
+        public void SubmitHiveJobError()
         {
-            return args.Count == 0 ? null : string.Join("&arg=", args.ToArray());
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var username = TestUtils.UserName;
+                var password = TestUtils.Password;
+                var clustername = TestUtils.ClusterName;
+
+                var credentials = new BasicAuthenticationCloudCredentials
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+
+                var parameters = new HiveJobSubmissionParameters
+                {
+                    Query = "FAKEQUERY;",
+                    StatusDir = "jobstatus"
+                };
+
+                var response = client.JobManagement.SubmitHiveJob(parameters);
+                Assert.NotNull(response);
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+
+                var jobId = response.JobSubmissionJsonResponse.Id;
+                Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
+
+                var jobStatus = GetJobFinalStatus(client, jobId);
+
+                Assert.True(jobStatus.JobDetail.ExitValue > 0);
+
+                var storageAccess = GetStorageAccessObject();
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
+                    Assert.NotNull(output);
+                    Assert.True(output.Length > 0);
+                    string errorTextOutput = Convert(output);
+                    Assert.True(!string.IsNullOrEmpty(errorTextOutput));
+                }
+            }
+        }
+
+        private static string Convert(Stream stream)
+        {
+            var reader = new StreamReader(stream);
+            var text = reader.ReadToEnd();
+            return text;
+        }
+
+        private JobGetResponse GetJobFinalStatus(HDInsightJobManagementClient client, string jobId)
+        {
+            var jobStatus = client.JobManagement.GetJob(jobId);
+
+            while (!jobStatus.JobDetail.Status.JobComplete)
+            {
+                jobStatus = client.JobManagement.GetJob(jobId);
+
+                // Optional to sleep here. Sleep for 1 sec instead of keep pooling. 
+                Thread.Sleep(1000);
+            }
+
+            return jobStatus;
+        }
+
+        private IStorageAccess GetStorageAccessObject()
+        {
+            return new AzureStorageAccess(TestUtils.StorageAccountName, TestUtils.StorageAccountKey, TestUtils.DefaultContainer);
         }
     }
 }

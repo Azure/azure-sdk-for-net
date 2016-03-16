@@ -233,7 +233,6 @@ namespace Insights.Tests.InMemoryTests
         {
             if (exp != null)
             {
-                AreEqual(exp.Action, act.Action);
                 AreEqual(exp.Condition, act.Condition);
                 Assert.Equal(exp.Description, act.Description);
                 Assert.Equal(exp.IsEnabled, act.IsEnabled);
@@ -282,19 +281,22 @@ namespace Insights.Tests.InMemoryTests
 
         private RuleCreateOrUpdateParameters GetCreateOrUpdateRuleParameter()
         {
-            return new RuleCreateOrUpdateParameters
-            {
-                Location = "location",
-                Properties = new Rule()
-                {
-                    Action = new RuleEmailAction()
+            List<RuleAction> actions = new List<RuleAction>();
+            actions.Add(new RuleEmailAction()
                     {
                         CustomEmails = new List<string>()
                         {
                             "emailid1"
                         },
                         SendToServiceOwners = true
-                    },
+                    });
+
+            return new RuleCreateOrUpdateParameters
+            {
+                Location = "location",
+                Properties = new Rule()
+                {
+                    Actions = actions,
                     Condition = new LocationThresholdRuleCondition()
                     {
                         DataSource = new RuleMetricDataSource()
@@ -320,6 +322,16 @@ namespace Insights.Tests.InMemoryTests
 
         private RuleResourceCollection GetRuleResourceCollection()
         {
+            List<RuleAction> actions = new List<RuleAction>();
+            actions.Add(new RuleEmailAction()
+            {
+                CustomEmails = new List<string>()
+                        {
+                            "eamil1"
+                        },
+                SendToServiceOwners = true
+            });
+
             return new RuleResourceCollection
             {
                 Value = new List<RuleResource>
@@ -331,11 +343,7 @@ namespace Insights.Tests.InMemoryTests
                         Name = "name1",
                         Properties = new Rule()
                         {
-                            Action = new RuleEmailAction()
-                            {
-                                CustomEmails = new List<string>() {"eamil1"},
-                                SendToServiceOwners = true
-                            },
+                            Actions = actions,
                             Condition = new LocationThresholdRuleCondition()
                             {
                                 DataSource = new RuleMetricDataSource()

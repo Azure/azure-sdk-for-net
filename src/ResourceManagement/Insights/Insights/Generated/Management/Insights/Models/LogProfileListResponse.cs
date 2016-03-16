@@ -21,32 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Insights.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// The cluster type.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
-    public enum HDInsightClusterType
+    public partial class LogProfileListResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Type Hadoop.
-        /// </summary>
-        Hadoop = 0,
+        private LogProfileCollection _logProfileCollection;
         
         /// <summary>
-        /// Type HBase.
+        /// Optional. Gets or sets the retrieved log profile collection.
         /// </summary>
-        HBase = 1,
+        public LogProfileCollection LogProfileCollection
+        {
+            get { return this._logProfileCollection; }
+            set { this._logProfileCollection = value; }
+        }
         
         /// <summary>
-        /// Type Spark.
+        /// Initializes a new instance of the LogProfileListResponse class.
         /// </summary>
-        Spark = 2,
-        
-        /// <summary>
-        /// Type Storm.
-        /// </summary>
-        Storm = 3,
+        public LogProfileListResponse()
+        {
+        }
     }
 }

@@ -66,16 +66,19 @@ namespace Microsoft.Azure.KeyVault
             {
                 _lock.EnterWriteLock();
 
-                // Cache before List as the cache may throw an exception
-                _cache.Add( key, value );
-                _list.AddLast( key );
-
-                if ( _list.Count > _capacity )
+                if ( !_cache.ContainsKey( key ) )
                 {
-                    LinkedListNode<K> lruKey = _list.First;
+                    // Cache before List as the cache may throw an exception
+                    _cache.Add(key, value);
+                    _list.AddLast( key );
 
-                    _cache.Remove( lruKey.Value );
-                    _list.RemoveFirst();
+                    if ( _list.Count > _capacity )
+                    {
+                        LinkedListNode<K> lruKey = _list.First;
+
+                        _cache.Remove( lruKey.Value );
+                        _list.RemoveFirst();
+                    }
                 }
             }
             finally
