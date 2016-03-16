@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the HostingEnvironment class.
         /// </summary>
-        public HostingEnvironment(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string hostingEnvironmentName = default(string), string hostingEnvironmentLocation = default(string), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), IList<WorkerPool> workerPools = default(IList<WorkerPool>), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), string apiManagementAccountId = default(string), bool? suspended = default(bool?))
+        public HostingEnvironment(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string hostingEnvironmentName = default(string), string hostingEnvironmentLocation = default(string), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), IList<WorkerPool> workerPools = default(IList<WorkerPool>), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), string apiManagementAccountId = default(string), bool? suspended = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>))
             : base(location, id, name, type, tags)
         {
             HostingEnvironmentName = hostingEnvironmentName;
@@ -62,6 +62,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ResourceGroup = resourceGroup;
             ApiManagementAccountId = apiManagementAccountId;
             Suspended = suspended;
+            ClusterSettings = clusterSettings;
         }
 
         /// <summary>
@@ -269,6 +270,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.suspended")]
         public bool? Suspended { get; set; }
+
+        /// <summary>
+        /// Custom settings for changing the behavior of the hosting
+        /// environment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clusterSettings")]
+        public IList<NameValuePair> ClusterSettings { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

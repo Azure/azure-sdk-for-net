@@ -3202,7 +3202,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of server farm
         /// </param>
         /// <param name='workerName'>
-        /// Name of worker machine, typically IP address
+        /// Name of worker machine, typically starts with RD
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3247,7 +3247,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{workerName}", Uri.EscapeDataString(workerName));

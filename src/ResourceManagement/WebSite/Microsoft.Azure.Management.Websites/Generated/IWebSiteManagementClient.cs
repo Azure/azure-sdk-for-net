@@ -96,6 +96,8 @@ namespace Microsoft.Azure.Management.WebSites
 
         IProviderOperations Provider { get; }
 
+        IRecommendationsOperations Recommendations { get; }
+
         IServerFarmsOperations ServerFarms { get; }
 
         ISitesOperations Sites { get; }

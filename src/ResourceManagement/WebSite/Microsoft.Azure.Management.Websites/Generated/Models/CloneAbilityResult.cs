@@ -13,20 +13,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for CloneAbilityResult.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProvisioningState
+    public enum CloneAbilityResult
     {
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Failed")]
-        Failed,
-        [EnumMember(Value = "Canceled")]
-        Canceled,
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-        [EnumMember(Value = "Deleting")]
-        Deleting
+        [EnumMember(Value = "Cloneable")]
+        Cloneable,
+        [EnumMember(Value = "PartiallyCloneable")]
+        PartiallyCloneable,
+        [EnumMember(Value = "NotCloneable")]
+        NotCloneable
     }
 }
