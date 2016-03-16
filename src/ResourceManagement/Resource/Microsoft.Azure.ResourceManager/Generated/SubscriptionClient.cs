@@ -50,13 +50,6 @@ namespace Microsoft.Azure.Management.Resources
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
         /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }

@@ -21,8 +21,8 @@ namespace Microsoft.Azure.Management.Resources
     public static partial class ResourcesOperationsExtensions
     {
             /// <summary>
-            /// Begin moving resources.To determine whether the operation has finished
-            /// processing the request, call GetLongRunningOperationStatus.
+            /// Move resources from one resource group to another. The resources being
+            /// moved should all be in the same resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin moving resources.To determine whether the operation has finished
-            /// processing the request, call GetLongRunningOperationStatus.
+            /// Move resources from one resource group to another. The resources being
+            /// moved should all be in the same resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin moving resources.To determine whether the operation has finished
-            /// processing the request, call GetLongRunningOperationStatus.
+            /// Move resources from one resource group to another. The resources being
+            /// moved should all be in the same resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin moving resources.To determine whether the operation has finished
-            /// processing the request, call GetLongRunningOperationStatus.
+            /// Move resources from one resource group to another. The resources being
+            /// moved should all be in the same resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

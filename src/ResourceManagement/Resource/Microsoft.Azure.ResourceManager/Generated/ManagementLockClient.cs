@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Resources
 
     /// <summary>
     /// </summary>
-    public partial class AuthorizationClient : ServiceClient<AuthorizationClient>, IAuthorizationClient, IAzureClient
+    public partial class ManagementLockClient : ServiceClient<ManagementLockClient>, IManagementLockClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -81,18 +81,18 @@ namespace Microsoft.Azure.Management.Resources
         public virtual IManagementLocksOperations ManagementLocks { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AuthorizationClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected ManagementLockClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -100,13 +100,13 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AuthorizationClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected ManagementLockClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AuthorizationClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected ManagementLockClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AuthorizationClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected ManagementLockClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public AuthorizationClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ManagementLockClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public AuthorizationClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ManagementLockClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public AuthorizationClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ManagementLockClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizationClient class.
+        /// Initializes a new instance of the ManagementLockClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public AuthorizationClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ManagementLockClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

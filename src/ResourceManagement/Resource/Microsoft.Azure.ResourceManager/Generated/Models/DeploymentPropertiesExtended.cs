@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Initializes a new instance of the DeploymentPropertiesExtended
         /// class.
         /// </summary>
-        public DeploymentPropertiesExtended(string provisioningState = default(string), string correlationId = default(string), DateTime? timestamp = default(DateTime?), object outputs = default(object), IList<Provider> providers = default(IList<Provider>), IList<Dependency> dependencies = default(IList<Dependency>), object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?))
+        public DeploymentPropertiesExtended(string provisioningState = default(string), string correlationId = default(string), DateTime? timestamp = default(DateTime?), object outputs = default(object), IList<Provider> providers = default(IList<Provider>), IList<Dependency> dependencies = default(IList<Dependency>), object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting))
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.Resources.Models
             Parameters = parameters;
             ParametersLink = parametersLink;
             Mode = mode;
+            DebugSetting = debugSetting;
         }
 
         /// <summary>
@@ -116,6 +117,12 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the debug setting of the deployment.
+        /// </summary>
+        [JsonProperty(PropertyName = "debugSetting")]
+        public DebugSetting DebugSetting { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

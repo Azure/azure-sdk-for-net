@@ -137,8 +137,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,8 +151,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -170,8 +168,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,8 +182,7 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
-            /// Begin deleting resource group.To determine whether the operation has
-            /// finished processing the request, call GetLongRunningOperationStatus.
+            /// Delete resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
