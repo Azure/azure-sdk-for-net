@@ -275,7 +275,7 @@ namespace HDInsight.Tests
 
             client.Clusters.Create(resourceGroup, dnsName, clusterCreateParams);
 
-            WaitForClusterToMoveToRunning(resourceGroup, dnsName, client);
+            HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsName, client);
           
             string storageAccountName =clusterCreateParams.DefaultStorageAccountName.Split('.')[0];
 
@@ -299,29 +299,7 @@ namespace HDInsight.Tests
 
             return clusterCreateParams;
         }
-
-        private void WaitForClusterToMoveToRunning(string resourceGroup, string dnsName, HDInsightManagementClient hdInsightClient)
-        {
-            TimeSpan timeout = TimeSpan.FromMinutes(10);
-
-            var stopwatch = Stopwatch.StartNew();
-            bool createError = false;
-            do
-            {
-                var cluster = hdInsightClient.Clusters.Get(resourceGroup, dnsName);
-
-                if (cluster.Cluster.Properties.ClusterState == "Error")
-                {
-                    createError = true;
-                    break;
-                }
-                if (cluster.Cluster.Properties.ClusterState =="Running") { return ; }
-                Thread.Sleep(2000);
-            }
-            while (stopwatch.Elapsed < timeout);
-
-            Assert.True(!createError);
-        }
+       
     }
 
 }
