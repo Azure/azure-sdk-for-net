@@ -378,7 +378,7 @@ namespace DataLakeStore.Tests
                     // Move file first
                     var moveFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Rename(filePath,
                         string.Format("{0}/{1}", targetFolder1, fileToMove), commonData.DataLakeStoreFileSystemAccountName);
-                    Assert.True(moveFileResponse.Boolean);
+                    Assert.True(moveFileResponse.OperationResult);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder1, fileToMove),
                         FileType.File,
@@ -393,7 +393,7 @@ namespace DataLakeStore.Tests
                     // Now move folder completely.
                     var moveFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Rename(targetFolder1,
                         targetFolder2, commonData.DataLakeStoreFileSystemAccountName);
-                    Assert.True(moveFolderResponse.Boolean);
+                    Assert.True(moveFolderResponse.OperationResult);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, targetFolder2,
                         FileType.Directory, 0);
@@ -714,7 +714,7 @@ namespace DataLakeStore.Tests
                 : folderToCreate;
 
             var response = commonData.DataLakeStoreFileSystemClient.FileSystem.Mkdirs(folderPath, caboAccountName);
-            Assert.True(response.Boolean);
+            Assert.True(response.OperationResult);
 
             return folderPath;
         }
@@ -768,7 +768,7 @@ namespace DataLakeStore.Tests
                 try
                 {
                     var deleteFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
-                    Assert.True(!deleteFolderResponse.Boolean);
+                    Assert.True(!deleteFolderResponse.OperationResult);
                 }
                 catch (Exception e)
                 {
@@ -779,7 +779,7 @@ namespace DataLakeStore.Tests
             {
                 // Delete a folder
                 var deleteFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(folderPath, caboAccountName, recursive);
-                Assert.True(deleteFolderResponse.Boolean);
+                Assert.True(deleteFolderResponse.OperationResult);
             }
         }
 
@@ -791,7 +791,7 @@ namespace DataLakeStore.Tests
                 try
                 {
                     var deleteFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
-                    Assert.True(!deleteFileResponse.Boolean);
+                    Assert.True(!deleteFileResponse.OperationResult);
                 }
                 catch (Exception e)
                 {
@@ -802,7 +802,7 @@ namespace DataLakeStore.Tests
             {
                 // Delete a file
                 var deleteFileResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.Delete(filePath, caboAccountName, false);
-                Assert.True(deleteFileResponse.Boolean);
+                Assert.True(deleteFileResponse.OperationResult);
             }
         }
 

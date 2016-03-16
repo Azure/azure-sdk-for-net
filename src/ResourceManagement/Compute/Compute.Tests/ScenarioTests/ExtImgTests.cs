@@ -161,7 +161,7 @@ namespace Compute.Tests
                 Assert.True(extImages.Count > 0);
 
                 string ver = extImages.First().Name;
-                var query = new Microsoft.Rest.Azure.OData.ODataQuery<Microsoft.Azure.Management.Compute.Models.VirtualMachineImageResource>();
+                var query = new Microsoft.Rest.Azure.OData.ODataQuery<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImage>();
 
                 query.SetFilter(f => f.Name.StartsWith(ver));
                 parameters.FilterExpression = "$filter=startswith(name,'" + ver + "')";

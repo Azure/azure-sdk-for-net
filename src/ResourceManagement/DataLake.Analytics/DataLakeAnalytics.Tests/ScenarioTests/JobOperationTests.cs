@@ -58,27 +58,27 @@ namespace DataLakeAnalytics.Tests
                     }
                 };
 
-                var jobCreateResponse = clientToUse.Job.Create(jobId.ToString(), jobToSubmit, commonData.SecondDataLakeAnalyticsAccountName);
+                var jobCreateResponse = clientToUse.Job.Create(jobId, jobToSubmit, commonData.SecondDataLakeAnalyticsAccountName);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Cancel the job
-                clientToUse.Job.Cancel(jobCreateResponse.JobId, commonData.SecondDataLakeAnalyticsAccountName);
+                clientToUse.Job.Cancel(jobCreateResponse.JobId.GetValueOrDefault(), commonData.SecondDataLakeAnalyticsAccountName);
 
                 // Get the job and ensure that it says it was cancelled.
-                var getCancelledJobResponse = clientToUse.Job.Get(jobCreateResponse.JobId, commonData.SecondDataLakeAnalyticsAccountName);
+                var getCancelledJobResponse = clientToUse.Job.Get(jobCreateResponse.JobId.GetValueOrDefault(), commonData.SecondDataLakeAnalyticsAccountName);
 
                 Assert.Equal(JobResult.Cancelled, getCancelledJobResponse.Result);
                 Assert.NotNull(getCancelledJobResponse.ErrorMessage);
                 Assert.NotEmpty(getCancelledJobResponse.ErrorMessage);
 
                 // Resubmit the job
-                jobCreateResponse = clientToUse.Job.Create(secondId.ToString(), jobToSubmit, commonData.SecondDataLakeAnalyticsAccountName);
+                jobCreateResponse = clientToUse.Job.Create(secondId, jobToSubmit, commonData.SecondDataLakeAnalyticsAccountName);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Poll the job until it finishes
-                var getJobResponse = clientToUse.Job.Get(jobCreateResponse.JobId, commonData.SecondDataLakeAnalyticsAccountName);
+                var getJobResponse = clientToUse.Job.Get(jobCreateResponse.JobId.GetValueOrDefault(), commonData.SecondDataLakeAnalyticsAccountName);
                 Assert.NotNull(getJobResponse);
 
                 int maxWaitInSeconds = 180; // 3 minutes should be long enough
@@ -88,7 +88,7 @@ namespace DataLakeAnalytics.Tests
                     // wait 5 seconds before polling again
                     TestUtilities.Wait(5000);
                     curWaitInSeconds += 5;
-                    getJobResponse = clientToUse.Job.Get(jobCreateResponse.JobId, commonData.SecondDataLakeAnalyticsAccountName);
+                    getJobResponse = clientToUse.Job.Get(jobCreateResponse.JobId.GetValueOrDefault(), commonData.SecondDataLakeAnalyticsAccountName);
                     Assert.NotNull(getJobResponse);
                 }
 
