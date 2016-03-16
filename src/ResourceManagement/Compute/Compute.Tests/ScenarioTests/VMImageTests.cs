@@ -25,8 +25,6 @@ namespace Compute.Tests
 {
     public class VMImagesTests
     {
-        private static readonly string[] AvailableWindowsServerImageVersions = new string[] { "4.0.201506", "4.0.201505", "4.0.201504" };
-
         [Fact]
         public void TestVMImageGet()
         {
@@ -35,14 +33,20 @@ namespace Compute.Tests
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
+                string[] availableWindowsServerImageVersions = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter").Select(t => t.Name).ToArray();
+
                 var vmimage = _pirClient.VirtualMachineImages.Get(
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer", 
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    AvailableWindowsServerImageVersions[0]);
+                    availableWindowsServerImageVersions[0]);
 
-                Assert.Equal(AvailableWindowsServerImageVersions[0], vmimage.Name);
+                Assert.Equal(availableWindowsServerImageVersions[0], vmimage.Name);
                 Assert.Equal(ComputeManagementTestUtilities.DefaultLocation, vmimage.Location, StringComparer.OrdinalIgnoreCase);
 
                 // FIXME: This doesn't work with a real Windows Server images, which is what's in the query parameters.
