@@ -10,7 +10,7 @@
           "en"
         ],
         "x-ms-client-request-id": [
-          "c52dc571-b1ee-4fa0-949d-fab279aee2ab"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c"
         ],
         "x-ms-version": [
           "2015-01-01"
@@ -19,10 +19,10 @@
           "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1\",\r\n      \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationFabrics\",\r\n      \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationFabrics/d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"s1\",\r\n        \"encryptionDetails\": {\r\n          \"kekState\": \"None\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"rolloverEncryptionDetails\": {\r\n          \"kekState\": \"None\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"internalIdentifier\": \"3af182c9-31c7-4684-8f58-d793ef07def7\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"HyperVSite\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1\",\r\n      \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationFabrics\",\r\n      \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationFabrics/d1c6436f69e9f30593938429bb639dbaf7a207e8ff21faa29a3feb4ef1ebc4e1\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"s1\",\r\n        \"encryptionDetails\": {\r\n          \"kekState\": \"None\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"rolloverEncryptionDetails\": {\r\n          \"kekState\": \"None\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"internalIdentifier\": \"3af182c9-31c7-4684-8f58-d793ef07def7\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"HyperVSite\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"site3\",\r\n      \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationFabrics\",\r\n      \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationFabrics/site3\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"site3\",\r\n        \"encryptionDetails\": {\r\n          \"kekState\": \"None\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"rolloverEncryptionDetails\": {\r\n          \"kekState\": \"None\",\r\n          \"kekCertThumbprint\": null\r\n        },\r\n        \"internalIdentifier\": \"51d73737-31af-47e4-84b6-564f08fe2f31\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"HyperVSite\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "758"
+          "1374"
         ],
         "Content-Type": [
           "application/json"
@@ -34,7 +34,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c52dc571-b1ee-4fa0-949d-fab279aee2ab 3/16/2016 7:58:02 PM"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c 3/17/2016 7:34:01 PM"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -53,19 +53,19 @@
           "ASP.NET"
         ],
         "x-ms-client-request-id": [
-          "c52dc571-b1ee-4fa0-949d-fab279aee2ab"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14953"
+          "14911"
         ],
         "x-ms-correlation-request-id": [
-          "19012175-3808-41bb-a04b-250652db9154"
+          "f1e991f9-edf0-47bb-8548-d8f5ae041b91"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160316T195803Z:19012175-3808-41bb-a04b-250652db9154"
+          "CENTRALUS:20160317T193402Z:f1e991f9-edf0-47bb-8548-d8f5ae041b91"
         ],
         "Date": [
-          "Wed, 16 Mar 2016 19:58:02 GMT"
+          "Thu, 17 Mar 2016 19:34:01 GMT"
         ]
       },
       "StatusCode": 200
@@ -80,7 +80,7 @@
           "en"
         ],
         "x-ms-client-request-id": [
-          "c52dc571-b1ee-4fa0-949d-fab279aee2ab"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c"
         ],
         "x-ms-version": [
           "2015-01-01"
@@ -104,7 +104,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c52dc571-b1ee-4fa0-949d-fab279aee2ab 3/16/2016 7:58:02 PM"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c 3/17/2016 7:34:02 PM"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,19 +123,19 @@
           "ASP.NET"
         ],
         "x-ms-client-request-id": [
-          "c52dc571-b1ee-4fa0-949d-fab279aee2ab"
+          "bc74dbb2-d0ab-4f50-b246-d719ee67711c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14952"
+          "14910"
         ],
         "x-ms-correlation-request-id": [
-          "85131f56-2a98-472d-98be-049bf767326a"
+          "8a31f912-1fc8-447e-a46a-689afb527017"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160316T195803Z:85131f56-2a98-472d-98be-049bf767326a"
+          "CENTRALUS:20160317T193403Z:8a31f912-1fc8-447e-a46a-689afb527017"
         ],
         "Date": [
-          "Wed, 16 Mar 2016 19:58:03 GMT"
+          "Thu, 17 Mar 2016 19:34:03 GMT"
         ]
       },
       "StatusCode": 200
