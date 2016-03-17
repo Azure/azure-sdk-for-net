@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Required if nameAvailable is false. 'Invalid' indicates the name
-        /// provided does not match Azure WebApp service's naming
+        /// provided does not match Azure WebApp serviceâ€™s naming
         /// requirements. 'AlreadyExists' indicates that the name is already
         /// in use and is therefore unavailable.
         /// </summary>

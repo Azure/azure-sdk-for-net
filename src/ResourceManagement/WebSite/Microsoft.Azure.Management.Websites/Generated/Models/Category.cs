@@ -13,20 +13,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for Category.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProvisioningState
+    public enum Category
     {
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Failed")]
-        Failed,
-        [EnumMember(Value = "Canceled")]
-        Canceled,
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-        [EnumMember(Value = "Deleting")]
-        Deleting
+        [EnumMember(Value = "Uncategorized")]
+        Uncategorized,
+        [EnumMember(Value = "Test")]
+        Test,
+        [EnumMember(Value = "UpSell")]
+        UpSell,
+        [EnumMember(Value = "CrossSell")]
+        CrossSell,
+        [EnumMember(Value = "LiveSite")]
+        LiveSite
     }
 }

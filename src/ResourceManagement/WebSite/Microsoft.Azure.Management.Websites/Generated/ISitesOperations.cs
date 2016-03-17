@@ -23,6 +23,43 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface ISitesOperations
     {
         /// <summary>
+        /// Retrieves a list of all Virtual Network Connections associated
+        /// with this web app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves a list of all Virtual Network Connections associated
+        /// with this web app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Retrieves a specific Virtual Network Connection associated with
         /// this web app.
         /// </summary>
@@ -214,13 +251,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='view'>
         /// The type of view. This can either be "summary" or "detailed".
         /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesWithHttpMessagesAsync(string resourceGroupName, string name, string view, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string view, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves a view of all network features in use on this web app.
         /// </summary>
@@ -233,35 +273,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='view'>
         /// The type of view. This can either be "summary" or "detailed".
         /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string view, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the operation for a web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='operationId'>
-        /// Id of an operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> GetSiteOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesWithHttpMessagesAsync(string resourceGroupName, string name, string view, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the operation for a web app
         /// </summary>
@@ -285,6 +303,25 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<object>> GetSiteOperationSlotWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the operation for a web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='operationId'>
+        /// Id of an operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> GetSiteOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Swaps web app slots
         /// </summary>
@@ -316,6 +353,25 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='slotSwapEntity'>
         /// Request body that contains the target slot name
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> BeginSwapSlotWithProductionWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Swaps web app slots
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='slotSwapEntity'>
+        /// Request body that contains the target slot name
+        /// </param>
         /// <param name='slot'>
         /// Name of source slot for the swap
         /// </param>
@@ -326,6 +382,28 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<object>> SwapSlotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Swaps web app slots
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='slotSwapEntity'>
+        /// Request body that contains the target slot name
+        /// </param>
+        /// <param name='slot'>
+        /// Name of source slot for the swap
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> BeginSwapSlotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the difference in configuration settings between two web app
         /// slots
@@ -425,6 +503,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> ResetProductionSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Resets the configuration settings of the current slot if they were
+        /// previously modified by calling ApplySlotConfig API
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to
         /// production slot.
@@ -436,23 +531,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<object>> ResetSlotConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Resets the configuration settings of the current slot if they were
-        /// previously modified by calling ApplySlotConfig API
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> ResetProductionSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the names of application settings and connection string that
         /// remain with the slot during swap operation
@@ -782,6 +860,42 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<object>> DeleteSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string deleteMetrics = default(string), string deleteEmptyServerFarm = default(string), string skipDnsRegistration = default(string), string deleteAllSlots = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Creates a new web app or modifies an existing web app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of the web app
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SiteCloneability>> IsSiteCloneableWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates a new web app or modifies an existing web app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of the web app
+        /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to
+        /// production slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SiteCloneability>> IsSiteCloneableSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Recovers a deleted web app
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -941,22 +1055,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<DeploymentCollection>> GetDeploymentsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List deployments
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to
         /// production slot.
@@ -968,6 +1066,22 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<DeploymentCollection>> GetDeploymentsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List deployments
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<DeploymentCollection>> GetDeploymentsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List deployments
         /// </summary>
@@ -1337,6 +1451,22 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get web app hostname bindings
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to
         /// production slot.
@@ -1348,22 +1478,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get web app hostname bindings
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get web app binding for a hostname
         /// </summary>
@@ -2272,47 +2386,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='premierAddOnName'>
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> GetSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='premierAddOnName'>
-        /// </param>
-        /// <param name='premierAddOn'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> AddSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='premierAddOnName'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> DeleteSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='premierAddOnName'>
-        /// </param>
         /// <param name='slot'>
         /// </param>
         /// <param name='customHeaders'>
@@ -2354,6 +2427,47 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<object>> DeleteSitePremierAddOnSlotWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='premierAddOnName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> GetSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='premierAddOnName'>
+        /// </param>
+        /// <param name='premierAddOn'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> AddSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='premierAddOnName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> DeleteSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the backup configuration for a web app
         /// </summary>
@@ -2402,17 +2516,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='request'>
         /// Information on backup request
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationSlotWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates backup configuration of web app
         /// </summary>
@@ -2425,24 +2535,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='request'>
         /// Information on backup request
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates web app backup
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='request'>
-        /// Information on backup request
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to
+        /// production slot.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2450,7 +2545,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<BackupItem>> BackupSiteDeprecatedWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationSlotWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates web app backup
         /// </summary>
@@ -2470,29 +2565,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<BackupItem>> BackupSiteWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates web app backup
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='request'>
-        /// Information on backup request
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupItem>> BackupSiteDeprecatedSlotWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates web app backup
         /// </summary>
@@ -2696,13 +2768,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='request'>
         /// Information on backup request
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to
+        /// production slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusSecretsWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusSecretsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets status of a web app backup that may be in progress, including
         /// secrets associated with the backup, such as the Azure Storage SAS
@@ -2721,17 +2797,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='request'>
         /// Information on backup request
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusSecretsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusSecretsWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restores a web app
         /// </summary>
@@ -2780,198 +2852,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<RestoreResponse>> RestoreSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, RestoreRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the backup configuration for a web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupRequest>> GetSiteBackupConfigurationDeprecatedWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates backup configuration of web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='request'>
-        /// Information on backup request
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationDeprecatedWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all backup configurations for a web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupRequest>> ListSiteBackupConfigurationDeprecatedWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the backup configuration for a web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupRequest>> GetSiteBackupConfigurationDeprecatedSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates backup configuration of web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='request'>
-        /// Information on backup request
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationDeprecatedSlotWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all backup configurations for a web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupRequest>> ListSiteBackupConfigurationDeprecatedSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all available backups for web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupItemCollection>> ListSiteBackupsDeprecatedSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all available backups for web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<BackupItemCollection>> ListSiteBackupsDeprecatedWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Discovers existing web app backups that can be restored
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='request'>
-        /// Information on restore request
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RestoreRequest>> DiscoverSiteRestoreDeprecatedWithHttpMessagesAsync(string resourceGroupName, string name, RestoreRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Discovers existing web app backups that can be restored
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='request'>
-        /// Information on restore request
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to
-        /// production slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RestoreRequest>> DiscoverSiteRestoreDeprecatedSlotWithHttpMessagesAsync(string resourceGroupName, string name, RestoreRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the quota usage numbers for web app
         /// </summary>
@@ -3169,6 +3049,30 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='softRestart'>
+        /// Soft restart applies the configuration settings and restarts the
+        /// app if necessary. Hard restart always restarts and reprovisions
+        /// the app
+        /// </param>
+        /// <param name='synchronous'>
+        /// If true then the API will block until the app has been restarted
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> RestartSiteWithHttpMessagesAsync(string resourceGroupName, string name, bool? softRestart = default(bool?), bool? synchronous = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Restarts web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to
         /// production slot.
@@ -3188,30 +3092,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<object>> RestartSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, bool? softRestart = default(bool?), bool? synchronous = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Restarts web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='softRestart'>
-        /// Soft restart applies the configuration settings and restarts the
-        /// app if necessary. Hard restart always restarts and reprovisions
-        /// the app
-        /// </param>
-        /// <param name='synchronous'>
-        /// If true then the API will block until the app has been restarted
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> RestartSiteWithHttpMessagesAsync(string resourceGroupName, string name, bool? softRestart = default(bool?), bool? synchronous = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Starts web app
         /// </summary>
@@ -3288,6 +3168,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='name'>
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> SyncSiteRepositoryWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
         /// <param name='slot'>
         /// </param>
         /// <param name='customHeaders'>
@@ -3297,17 +3188,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<object>> SyncSiteRepositorySlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> SyncSiteRepositoryWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Generates new random app publishing password
         /// </summary>
@@ -3538,6 +3418,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves all Biztalk Hybrid Connections associated with this web
+        /// app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
         /// <param name='slot'>
         /// The name of the slot for the web app.
         /// </param>
@@ -3549,8 +3446,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves all Biztalk Hybrid Connections associated with this web
-        /// app.
+        /// Retrieves a Virtual Network connection gateway associated with
+        /// this web app and virtual network.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name
@@ -3558,13 +3455,72 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetSiteVnetGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the Virtual Network Gateway.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the Virtual Network Gateway.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves a Virtual Network connection gateway associated with
         /// this web app and virtual network.
@@ -3650,118 +3606,5 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieves a Virtual Network connection gateway associated with
-        /// this web app and virtual network.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> GetSiteVnetGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates the Virtual Network Gateway.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates the Virtual Network Gateway.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieves a list of all Virtual Network Connections associated
-        /// with this web app.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieves a list of all Virtual Network Connections associated
-        /// with this web app.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

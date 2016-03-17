@@ -13,20 +13,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for NotificationLevel.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProvisioningState
+    public enum NotificationLevel
     {
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Failed")]
-        Failed,
-        [EnumMember(Value = "Canceled")]
-        Canceled,
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-        [EnumMember(Value = "Deleting")]
-        Deleting
+        [EnumMember(Value = "Critical")]
+        Critical,
+        [EnumMember(Value = "Warning")]
+        Warning,
+        [EnumMember(Value = "Information")]
+        Information,
+        [EnumMember(Value = "NonUrgentSuggestion")]
+        NonUrgentSuggestion
     }
 }
