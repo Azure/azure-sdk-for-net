@@ -131,7 +131,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void CreateHyperVAzureProfile()
         {
             using (UndoContext context = UndoContext.Current)
@@ -165,7 +164,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void DeleteProfile()
         {
             using (UndoContext context = UndoContext.Current)

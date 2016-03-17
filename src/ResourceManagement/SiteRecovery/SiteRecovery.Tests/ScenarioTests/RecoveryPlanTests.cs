@@ -26,6 +26,7 @@ namespace SiteRecovery.Tests.ScenarioTests
 {
     public class RecoveryPlanTests : SiteRecoveryTestsBase
     {
+        [Fact]
         public void RecoveryPlan_ValidateNames()
         {
             using (UndoContext context = UndoContext.Current)
@@ -33,13 +34,23 @@ namespace SiteRecovery.Tests.ScenarioTests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-                var rpName = Guid.NewGuid().ToString();
+                var rpName = "rpTest";
                 var fabrics = client.Fabrics.List(RequestHeaders).Fabrics.ToList();
+                var containers =
+                    client.ProtectionContainer.List(
+                        fabrics.First().Name,
+                        RequestHeaders)
+                    .ProtectionContainers
+                    .ToList();
+                var vms =
+                    client.ReplicationProtectedItem.List(
+                        fabrics.First().Name,
+                        containers.First().Name,
+                        RequestHeaders)
+                    .ReplicationProtectedItems
+                    .ToList();
 
-                CreateRecoveryPlanInput input = new CreateRecoveryPlanInput();
-                input.Properties = new CreateRecoveryPlanInputProperties();
-                input.Properties.PrimaryFabricId = fabrics.First().Id;
-                input.Properties.RecoveryFabricId = fabrics.First().Id;
+                var input = GetE2AInput(fabrics.First().Id, vms.First().Id);
 
                 client.RecoveryPlan.Create(rpName, input, RequestHeaders);
 
@@ -303,6 +314,7 @@ namespace SiteRecovery.Tests.ScenarioTests
             }
         }
 
+        [Fact]
         public void RecoveryPlan_ValidateGetProtectedItemsInRecoveryPlan()
         {
             using (UndoContext context = UndoContext.Current)
@@ -326,11 +338,11 @@ namespace SiteRecovery.Tests.ScenarioTests
                     .ToList();
 
                 // Create recovery plans.
-                var rpName1 = "Test-" + Guid.NewGuid().ToString();
+                var rpName1 = "Test-1";
                 var input1 = GetE2AInput(fabrics.First().Id, vms.First().Id);
                 client.RecoveryPlan.Create(rpName1, input1, RequestHeaders);
 
-                var rpName2 = "Test-" + Guid.NewGuid().ToString();
+                var rpName2 = "Test-2";
                 var input2 = GetE2AInput(fabrics.First().Id, vms.Last().Id);
                 client.RecoveryPlan.Create(rpName2, input2, RequestHeaders);
 
@@ -464,32 +476,36 @@ namespace SiteRecovery.Tests.ScenarioTests
                 GroupType = "Shutdown",
                 ReplicationProtectedItems = new List<RecoveryPlanProtectedItem>()
                 {
+                    new RecoveryPlanProtectedItem()
+                    {
+                        Id = vmId
+                    }
                 },
                 StartGroupActions = new List<RecoveryPlanAction>()
+                {
+                    new RecoveryPlanAction()
+                    {
+                        ActionName = "S2",
+                        FailoverTypes = new List<string>() { "PlannedFailover" },
+                        FailoverDirections = new List<string>() { "PrimaryToRecovery" },
+                        CustomDetails = new RecoveryPlanScriptActionDetails()
                         {
-                            new RecoveryPlanAction()
-                            {
-                                ActionName = "S2",
-                                FailoverTypes = new List<string>() { "PlannedFailover" },
-                                FailoverDirections = new List<string>() { "PrimaryToRecovery" },
-                                CustomDetails = new RecoveryPlanScriptActionDetails()
-                                {
-                                    FabricLocation = "Primary",
-                                    Path = "path2",
-                                    Timeout = null
-                                }
-                            },
-                            new RecoveryPlanAction()
-                            {
-                                ActionName = "M2",
-                                FailoverTypes = new List<string>() { "UnplannedFailover" },
-                                FailoverDirections = new List<string>() { "RecoveryToPrimary" },
-                                CustomDetails = new RecoveryPlanManualActionDetails()
-                                {
-                                    Description = "desc2"
-                                }
-                            }
-                        },
+                            FabricLocation = "Primary",
+                            Path = "path2",
+                            Timeout = null
+                        }
+                    },
+                    new RecoveryPlanAction()
+                    {
+                        ActionName = "M2",
+                        FailoverTypes = new List<string>() { "UnplannedFailover" },
+                        FailoverDirections = new List<string>() { "RecoveryToPrimary" },
+                        CustomDetails = new RecoveryPlanManualActionDetails()
+                        {
+                            Description = "desc2"
+                        }
+                    }
+                },
                 EndGroupActions = new List<RecoveryPlanAction>()
                 {
                 }

@@ -99,7 +99,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void GetProtectedContainerTest()
         {
             using (UndoContext context = UndoContext.Current)

@@ -1087,7 +1087,6 @@ namespace SiteRecovery.Tests
             return protectableItemList[0];
         }
 
-        [Fact]
         public void EndToEndSingleVME2E()
         {
             using (UndoContext context = UndoContext.Current)
@@ -1366,7 +1365,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EndToEndSingleVME2A()
         {
             using (UndoContext context = UndoContext.Current)
@@ -1565,7 +1563,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EndToEndSingleVMB2A()
         {
             using (UndoContext context = UndoContext.Current)

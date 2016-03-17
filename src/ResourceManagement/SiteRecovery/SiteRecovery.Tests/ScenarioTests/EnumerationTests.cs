@@ -53,7 +53,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EnumerateProtectedContainerTests()
         {
             using (UndoContext context = UndoContext.Current)
@@ -148,6 +147,7 @@ namespace SiteRecovery.Tests
             }
         }
 
+        [Fact]
         public void EnumerateProtectedItemsUnderVault()
         {
             using (UndoContext context = UndoContext.Current)
@@ -173,6 +173,7 @@ namespace SiteRecovery.Tests
             }
         }
 
+        [Fact]
         public void EnumerateProtectedItemsUnderFabric()
         {
             using (UndoContext context = UndoContext.Current)
@@ -180,10 +181,11 @@ namespace SiteRecovery.Tests
                 context.Start();
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
+                var fabrics = client.Fabrics.List(RequestHeaders).Fabrics.ToList();
                 List<ReplicationProtectedItem> itemsList = new List<ReplicationProtectedItem>();
                 var queryParams = new ProtectedItemsQueryParameter
                 {
-                    SourceFabricName = "2163c4b41217f3a2274ffa9914d6707b5a93b013683762e18378d0af4fe2ca0c"
+                    SourceFabricName = fabrics.First().Name
                 };
 
                 var protectedItemsResponse = client.ReplicationProtectedItem.ListAll(
@@ -202,7 +204,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EnumerateProtectedItemsUnderVmWareFabric()
         {
             using (UndoContext context = UndoContext.Current)
@@ -235,7 +236,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EnumerateNetworksUnderFabricTest()
         {
             using (UndoContext context = UndoContext.Current)

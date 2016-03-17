@@ -230,7 +230,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void InMageAzureV2UnplannedFailover()
         {
             using (UndoContext context = UndoContext.Current)
@@ -298,7 +297,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void InMageUnplannedFailover()
         {
             using (UndoContext context = UndoContext.Current)
@@ -366,7 +364,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void InMageReprotectTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -466,7 +463,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void InMageAzureV2ReprotectTest()
         {
             using (UndoContext context = UndoContext.Current)

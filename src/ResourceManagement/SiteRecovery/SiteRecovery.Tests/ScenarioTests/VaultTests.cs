@@ -29,7 +29,7 @@ namespace SiteRecovery.Tests
 {
     public class VaultTests : SiteRecoveryTestsBase
     {
-        string resourceGroupName = "S91-1";
+        string resourceGroupName = "RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US";
         string resourceName = "rsv5";
 
         [Fact]

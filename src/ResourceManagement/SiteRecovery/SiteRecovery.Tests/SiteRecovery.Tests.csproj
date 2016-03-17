@@ -49,7 +49,16 @@
     <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedContainerTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedItemsUnderFabric.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedItemsUnderVault.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateServersTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.ExportTests\ExportJobTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetProtectedContainerTest.json">
@@ -61,10 +70,21 @@
     <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetServerTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetStorageClassificationAndPairingsUnderVault.json" />
     <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\CreateHyperVAzureProfile.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\DeleteProfile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.ScenarioTests.RecoveryPlanTests\RecoveryPlan_ValidateGetProtectedItemsInRecoveryPlan.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.ScenarioTests.RecoveryPlanTests\RecoveryPlan_ValidateNames.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.SiteTests\CreateSite.json" />
+    <None Include="SessionRecords\SiteRecovery.Tests.SiteTests\DeleteSite.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.VaultTests\CreateAndRetrieveVaultExtendedInfo.json">

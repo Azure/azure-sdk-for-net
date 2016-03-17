@@ -122,7 +122,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void UpdateProtectionOfInMageAzureV2ProtectedItem()
         {
             using (UndoContext context = UndoContext.Current)
@@ -191,7 +190,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EnableProtectionForVMwareVM()
         {
             using (UndoContext context = UndoContext.Current)
@@ -291,7 +289,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void EnableProtectionForVMwareVMUsingInMageProvider()
         {
             using (UndoContext context = UndoContext.Current)
@@ -400,7 +397,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void RefreshVMWareFabric()
         {
             using (UndoContext context = UndoContext.Current)

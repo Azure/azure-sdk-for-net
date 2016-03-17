@@ -1,0 +1,222 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/export?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvN2I1NjQ0YTgtMjA4NC00OWE3LTk2ZjItNjQxZjJjNmY4Yzk3L3Jlc291cmNlR3JvdXBzL1JlY292ZXJ5U2VydmljZXMtV0hOT1dGNkxJNk5NNEI1NVFESVlSM1lHM1lBRVpOVERVT1dIUFFYN05KQjJMSERHVFhKQS1XZXN0LVVTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2l0ZVJlY292ZXJ5QlZURDIvU2l0ZVJlY292ZXJ5VmF1bHQvaHlkcmF0ZXN0L3JlcGxpY2F0aW9uSm9icy9leHBvcnQ/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
+      "RequestMethod": "POST",
+      "RequestBody": "{}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "Accept-Language": [
+          "en"
+        ],
+        "Agent-Authentication": [
+          ""
+        ],
+        "x-ms-client-request-id": [
+          "c52dc571-b1ee-4fa0-949d-fab279aee2ab"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3?api-version=2015-11-10"
+        ],
+        "x-ms-request-id": [
+          "c52dc571-b1ee-4fa0-949d-fab279aee2ab 3/16/2016 7:57:16 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "c52dc571-b1ee-4fa0-949d-fab279aee2ab"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1187"
+        ],
+        "x-ms-correlation-request-id": [
+          "35f6bc72-7ab6-4e73-827e-86377fb33b7a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160316T195717Z:35f6bc72-7ab6-4e73-827e-86377fb33b7a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Mar 2016 19:57:17 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3/operationresults/eb697210-21db-48b1-98c4-0c7891cf4aa3?api-version=2015-11-10"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3/operationresults/eb697210-21db-48b1-98c4-0c7891cf4aa3?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvN2I1NjQ0YTgtMjA4NC00OWE3LTk2ZjItNjQxZjJjNmY4Yzk3L3Jlc291cmNlR3JvdXBzL1JlY292ZXJ5U2VydmljZXMtV0hOT1dGNkxJNk5NNEI1NVFESVlSM1lHM1lBRVpOVERVT1dIUFFYN05KQjJMSERHVFhKQS1XZXN0LVVTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2l0ZVJlY292ZXJ5QlZURDIvU2l0ZVJlY292ZXJ5VmF1bHQvaHlkcmF0ZXN0L3JlcGxpY2F0aW9uSm9icy9lYjY5NzIxMC0yMWRiLTQ4YjEtOThjNC0wYzc4OTFjZjRhYTMvb3BlcmF0aW9ucmVzdWx0cy9lYjY5NzIxMC0yMWRiLTQ4YjEtOThjNC0wYzc4OTFjZjRhYTM/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "defeeecb-5e95-4718-815c-603f7a60dd3e"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3?api-version=2015-11-10"
+        ],
+        "x-ms-request-id": [
+          "defeeecb-5e95-4718-815c-603f7a60dd3e 3/16/2016 7:57:17 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-client-request-id": [
+          "defeeecb-5e95-4718-815c-603f7a60dd3e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14959"
+        ],
+        "x-ms-correlation-request-id": [
+          "5947b58b-5968-4889-a233-d01e27029605"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160316T195718Z:5947b58b-5968-4889-a233-d01e27029605"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Mar 2016 19:57:17 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3/operationresults/eb697210-21db-48b1-98c4-0c7891cf4aa3?api-version=2015-11-10"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3/operationresults/eb697210-21db-48b1-98c4-0c7891cf4aa3?api-version=2015-11-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvN2I1NjQ0YTgtMjA4NC00OWE3LTk2ZjItNjQxZjJjNmY4Yzk3L3Jlc291cmNlR3JvdXBzL1JlY292ZXJ5U2VydmljZXMtV0hOT1dGNkxJNk5NNEI1NVFESVlSM1lHM1lBRVpOVERVT1dIUFFYN05KQjJMSERHVFhKQS1XZXN0LVVTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2l0ZVJlY292ZXJ5QlZURDIvU2l0ZVJlY292ZXJ5VmF1bHQvaHlkcmF0ZXN0L3JlcGxpY2F0aW9uSm9icy9lYjY5NzIxMC0yMWRiLTQ4YjEtOThjNC0wYzc4OTFjZjRhYTMvb3BlcmF0aW9ucmVzdWx0cy9lYjY5NzIxMC0yMWRiLTQ4YjEtOThjNC0wYzc4OTFjZjRhYTM/YXBpLXZlcnNpb249MjAxNS0xMS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7680f629-c60b-4ef5-ad19-cf23b88acc4f"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3\",\r\n  \"name\": \"eb697210-21db-48b1-98c4-0c7891cf4aa3\",\r\n  \"type\": \"Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/replicationJobs\",\r\n  \"properties\": {\r\n    \"activityId\": \"c52dc571-b1ee-4fa0-949d-fab279aee2ab ActivityId: 35f6bc72-7ab6-4e73-827e-86377fb33b7a\",\r\n    \"scenarioName\": \"ExportJobs\",\r\n    \"friendlyName\": null,\r\n    \"state\": \"Succeeded\",\r\n    \"stateDescription\": \"Completed\",\r\n    \"tasks\": [],\r\n    \"errors\": [],\r\n    \"startTime\": \"2016-03-16T19:57:16.5083997Z\",\r\n    \"endTime\": \"2016-03-16T19:57:17Z\",\r\n    \"allowedActions\": [],\r\n    \"targetObjectId\": \"\",\r\n    \"targetObjectName\": \"\",\r\n    \"targetInstanceType\": \"Other\",\r\n    \"customDetails\": {\r\n      \"blobUri\": \"https://seabvtd2srs1pst56tl01new.blob.core.windows.net/datacontainer/Export_eb697210-21db-48b1-98c4-0c7891cf4aa3\",\r\n      \"sasToken\": \"?sv=2014-02-14&sr=c&si=mypolicy&sig=t5GCxFxhURo56alLrB2hlgcFlPGfTxEYwD%2FowAyUHTs%3D\",\r\n      \"instanceType\": \"ExportJobDetails\",\r\n      \"affectedObjectDetails\": {}\r\n    }\r\n  },\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null,\r\n  \"startTime\": \"2016-03-16T19:57:16.5083997Z\",\r\n  \"endTime\": \"2016-03-16T19:57:17Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1214"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/Subscriptions/7b5644a8-2084-49a7-96f2-641f2c6f8c97/resourceGroups/RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US/providers/Microsoft.SiteRecoveryBVTD2/SiteRecoveryVault/hydratest/replicationJobs/eb697210-21db-48b1-98c4-0c7891cf4aa3?api-version=2015-11-10"
+        ],
+        "x-ms-request-id": [
+          "7680f629-c60b-4ef5-ad19-cf23b88acc4f 3/16/2016 7:57:47 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "7680f629-c60b-4ef5-ad19-cf23b88acc4f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14958"
+        ],
+        "x-ms-correlation-request-id": [
+          "acbd7305-e3c9-49e9-9145-7a51c6d42020"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160316T195749Z:acbd7305-e3c9-49e9-9145-7a51c6d42020"
+        ],
+        "Date": [
+          "Wed, 16 Mar 2016 19:57:48 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "7b5644a8-2084-49a7-96f2-641f2c6f8c97"
+  }
+}
