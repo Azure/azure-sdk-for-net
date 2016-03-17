@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SiteAuthSettings class.
         /// </summary>
-        public SiteAuthSettings(bool? enabled = default(bool?), string httpApiPrefixPath = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), string clientId = default(string), string clientSecret = default(string), string issuer = default(string), IList<string> allowedAudiences = default(IList<string>), string aadClientId = default(string), string openIdIssuer = default(string), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
+        public SiteAuthSettings(bool? enabled = default(bool?), string httpApiPrefixPath = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), string clientId = default(string), string clientSecret = default(string), string issuer = default(string), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string aadClientId = default(string), string openIdIssuer = default(string), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
         {
             Enabled = enabled;
             HttpApiPrefixPath = httpApiPrefixPath;
@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ClientSecret = clientSecret;
             Issuer = issuer;
             AllowedAudiences = allowedAudiences;
+            AdditionalLoginParams = additionalLoginParams;
             AadClientId = aadClientId;
             OpenIdIssuer = openIdIssuer;
             GoogleClientId = googleClientId;
@@ -164,6 +165,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "allowedAudiences")]
         public IList<string> AllowedAudiences { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of login parameters to send to the OpenID
+        /// Connect authorization endpoint when
+        /// a user logs in. Each parameter must be in the form
+        /// "key=value".
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalLoginParams")]
+        public IList<string> AdditionalLoginParams { get; set; }
 
         /// <summary>
         /// </summary>

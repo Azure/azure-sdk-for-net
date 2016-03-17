@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Size of the machines. Possible values for this property include:
-        /// 'Small', 'Medium', 'Large'.
+        /// 'Default', 'Small', 'Medium', 'Large'.
         /// </summary>
         [JsonProperty(PropertyName = "workerSize")]
         public WorkerSizeOptions? WorkerSize { get; set; }

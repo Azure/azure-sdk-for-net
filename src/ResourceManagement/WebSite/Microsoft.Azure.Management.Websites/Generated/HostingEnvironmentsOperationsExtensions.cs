@@ -1120,48 +1120,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            public static ServerFarmCollection GetHostingEnvironmentServerFarms(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentServerFarmsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
-            /// Service Environment).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of hostingEnvironment (App Service Environment)
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerFarmCollection> GetHostingEnvironmentServerFarmsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
-            /// Service Environment).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of hostingEnvironment (App Service Environment)
-            /// </param>
             public static ServerFarmCollection GetHostingEnvironmentWebHostingPlans(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebHostingPlansAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -1186,6 +1144,48 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ServerFarmCollection> GetHostingEnvironmentWebHostingPlansAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
+            /// Service Environment).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            public static ServerFarmCollection GetHostingEnvironmentServerFarms(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentServerFarmsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all serverfarms (App Service Plans) on the hostingEnvironment (App
+            /// Service Environment).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerFarmCollection> GetHostingEnvironmentServerFarmsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
