@@ -99,7 +99,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "15.04");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "15.10");
             }
             return m_linuxImageReference;
         }
