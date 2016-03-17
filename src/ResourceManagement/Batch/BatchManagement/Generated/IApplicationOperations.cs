@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Batch
         /// The id of the application.
         /// </param>
         /// <param name='version'>
-        /// The version of the application to delete.
+        /// The version of the application package to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

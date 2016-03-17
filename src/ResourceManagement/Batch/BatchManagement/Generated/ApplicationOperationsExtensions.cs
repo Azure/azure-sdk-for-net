@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Batch
         /// Required. The id of the application.
         /// </param>
         /// <param name='version'>
-        /// Required. The version of the application to delete.
+        /// Required. The version of the application package to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.Batch
         /// Required. The id of the application.
         /// </param>
         /// <param name='version'>
-        /// Required. The version of the application to delete.
+        /// Required. The version of the application package to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
