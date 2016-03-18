@@ -25,27 +25,18 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyQueryParameters object.
+    /// The WorkloadType type.
     /// </summary>
-    public partial class ProtectionPolicyQueryParameters
+    public static partial class WorkloadType
     {
-        private string _backupManagementType;
+        /// <summary>
+        /// The VM Workload type.
+        /// </summary>
+        public const string VM = "VM";
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// The File Folder Workload type.
         /// </summary>
-        public string BackupManagementType
-        {
-            get { return this._backupManagementType; }
-            set { this._backupManagementType = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyQueryParameters
-        /// class.
-        /// </summary>
-        public ProtectionPolicyQueryParameters()
-        {
-        }
+        public const string FileFolder = "FileFolder";
     }
 }

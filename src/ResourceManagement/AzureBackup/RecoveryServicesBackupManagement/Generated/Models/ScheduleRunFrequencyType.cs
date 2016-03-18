@@ -25,27 +25,18 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyQueryParameters object.
+    /// The ScheduleRunFrequency type.
     /// </summary>
-    public partial class ProtectionPolicyQueryParameters
+    public static partial class ScheduleRunFrequencyType
     {
-        private string _backupManagementType;
+        /// <summary>
+        /// Daily Schedule Run Frequency.
+        /// </summary>
+        public const string Daily = "Daily";
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// Daily Schedule Run Frequency.
         /// </summary>
-        public string BackupManagementType
-        {
-            get { return this._backupManagementType; }
-            set { this._backupManagementType = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyQueryParameters
-        /// class.
-        /// </summary>
-        public ProtectionPolicyQueryParameters()
-        {
-        }
+        public const string Weekly = "Weekly";
     }
 }

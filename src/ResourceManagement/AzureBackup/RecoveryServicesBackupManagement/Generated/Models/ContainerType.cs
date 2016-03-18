@@ -25,27 +25,28 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicyQueryParameters object.
+    /// The Container type.
     /// </summary>
-    public partial class ProtectionPolicyQueryParameters
+    public static partial class ContainerType
     {
-        private string _backupManagementType;
+        /// <summary>
+        /// The Azure IaasVM container type.
+        /// </summary>
+        public const string IaasVMContainer = "IaasVMContainer";
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// The Microsoft AzureBackup container type.
         /// </summary>
-        public string BackupManagementType
-        {
-            get { return this._backupManagementType; }
-            set { this._backupManagementType = value; }
-        }
+        public const string MABContainer = "MABContainer";
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyQueryParameters
-        /// class.
+        /// The Data Protection Manager Container type.
         /// </summary>
-        public ProtectionPolicyQueryParameters()
-        {
-        }
+        public const string DPMContainer = "DPMContainer";
+        
+        /// <summary>
+        /// The  DPM Venus Container type.
+        /// </summary>
+        public const string DPMVenusContainer = "DPMVenusContainer";
     }
 }

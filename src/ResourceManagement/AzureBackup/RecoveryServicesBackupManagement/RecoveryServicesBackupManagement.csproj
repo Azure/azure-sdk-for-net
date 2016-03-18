@@ -82,10 +82,13 @@
     <Compile Include="Generated\Models\AzureIaaSVMProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMProtectionContainer.cs" />
     <Compile Include="Generated\Models\AzureIaaSVMProtectionPolicy.cs" />
+    <Compile Include="Generated\Models\AzureSqlProtectedItem.cs" />
+    <Compile Include="Generated\Models\AzureSqlProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
     <Compile Include="Generated\Models\CommonJobQueryFilters.cs" />
+    <Compile Include="Generated\Models\ContainerType.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
     <Compile Include="Generated\Models\DailyRetentionFormat.cs" />
     <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Generated\Models\DpmVenusProtectionContainer.cs" />
     <Compile Include="Generated\Models\ErrorInfo.cs" />
     <Compile Include="Generated\Models\ExportJobsOperationResultInfo.cs" />
+    <Compile Include="Generated\Models\GenericRecoveryPoint.cs" />
     <Compile Include="Generated\Models\GetOperationResultResponse.cs" />
     <Compile Include="Generated\Models\GetProtectedItemQueryParam.cs" />
     <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
@@ -172,12 +176,14 @@
     <Compile Include="Generated\Models\RetentionScheduleBase.cs" />
     <Compile Include="Generated\Models\RetentionScheduleFormat.cs" />
     <Compile Include="Generated\Models\SchedulePolicy.cs" />
+    <Compile Include="Generated\Models\ScheduleRunFrequencyType.cs" />
     <Compile Include="Generated\Models\SimpleRetentionPolicy.cs" />
     <Compile Include="Generated\Models\SimpleSchedulePolicy.cs" />
     <Compile Include="Generated\Models\TriggerRestoreRequest.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionFormat.cs" />
     <Compile Include="Generated\Models\WeeklyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\WeekNumber.cs" />
+    <Compile Include="Generated\Models\WorkloadType.cs" />
     <Compile Include="Generated\Models\YearlyRetentionSchedule.cs" />
     <Compile Include="Generated\ProtectableObjectOperations.cs" />
     <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs" />

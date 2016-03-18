@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of Protection policy operation by OperationId.
+        /// Get the result of Protection policy operation by OperationId.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of Protection policy operation by OperationId.
+        /// Get the result of Protection policy operation by OperationId.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -278,7 +278,117 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Get the status of Protection policy operation by OperationId.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. OperationId to get operation result.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static BackUpOperationStatusResponse GetOperationStatus(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionPolicyOperations)s).GetOperationStatusAsync(resourceGroupName, resourceName, policyName, operationId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the status of Protection policy operation by OperationId.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. OperationId to get operation result.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static Task<BackUpOperationStatusResponse> GetOperationStatusAsync(this IProtectionPolicyOperations operations, string resourceGroupName, string resourceName, string policyName, string operationId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetOperationStatusAsync(resourceGroupName, resourceName, policyName, operationId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static BackUpOperationStatusResponse GetOperationStatusByURL(this IProtectionPolicyOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionPolicyOperations)s).GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IProtectionPolicyOperations.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(this IProtectionPolicyOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the result of Protection policy operation by URL.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -303,7 +413,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of Protection policy operation by URL.
+        /// Get the result of Protection policy operation by URL.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
