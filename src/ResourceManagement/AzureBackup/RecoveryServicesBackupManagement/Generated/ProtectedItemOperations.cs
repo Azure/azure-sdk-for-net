@@ -505,6 +505,67 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["containerName"] = derived5.ContainerName;
                             }
                         }
+                        if (request.Item.Properties is AzureSqlProtectedItem)
+                        {
+                            propertiesValue["protectedItemType"] = "Microsoft.Sql/servers/databases";
+                            AzureSqlProtectedItem derived6 = ((AzureSqlProtectedItem)request.Item.Properties);
+                            
+                            if (derived6.ProtectedItemDataId != null)
+                            {
+                                propertiesValue["protectedItemDataId"] = derived6.ProtectedItemDataId;
+                            }
+                            
+                            if (derived6.PolicyName != null)
+                            {
+                                propertiesValue["policyName"] = derived6.PolicyName;
+                            }
+                            
+                            if (derived6.ProtectionState != null)
+                            {
+                                propertiesValue["protectionState"] = derived6.ProtectionState;
+                            }
+                            
+                            if (derived6.ExtendedInfo != null)
+                            {
+                                JObject extendedInfoValue5 = new JObject();
+                                propertiesValue["extendedInfo"] = extendedInfoValue5;
+                                
+                                if (derived6.ExtendedInfo.OldestRecoveryPoint != null)
+                                {
+                                    extendedInfoValue5["oldestRecoveryPoint"] = derived6.ExtendedInfo.OldestRecoveryPoint.Value;
+                                }
+                                
+                                if (derived6.ExtendedInfo.RecoveryPointCount != null)
+                                {
+                                    extendedInfoValue5["recoveryPointCount"] = derived6.ExtendedInfo.RecoveryPointCount.Value;
+                                }
+                                
+                                if (derived6.ExtendedInfo.PolicyState != null)
+                                {
+                                    extendedInfoValue5["policyState"] = derived6.ExtendedInfo.PolicyState;
+                                }
+                            }
+                            
+                            if (derived6.BackupManagementType != null)
+                            {
+                                propertiesValue["backupManagementType"] = derived6.BackupManagementType;
+                            }
+                            
+                            if (derived6.WorkloadType != null)
+                            {
+                                propertiesValue["workloadType"] = derived6.WorkloadType;
+                            }
+                            
+                            if (derived6.LastRecoveryPoint != null)
+                            {
+                                propertiesValue["lastRecoveryPoint"] = derived6.LastRecoveryPoint.Value;
+                            }
+                            
+                            if (derived6.ContainerName != null)
+                            {
+                                propertiesValue["containerName"] = derived6.ContainerName;
+                            }
+                        }
                     }
                     
                     if (request.Item.Id != null)
@@ -1497,6 +1558,88 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                     itemInstance.Properties = mabFileFolderProtectedItemInstance;
                                 }
+                                if (typeName == "Microsoft.Sql/servers/databases")
+                                {
+                                    AzureSqlProtectedItem azureSqlProtectedItemInstance = new AzureSqlProtectedItem();
+                                    
+                                    JToken protectedItemDataIdValue = propertiesValue["protectedItemDataId"];
+                                    if (protectedItemDataIdValue != null && protectedItemDataIdValue.Type != JTokenType.Null)
+                                    {
+                                        string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
+                                        azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
+                                    }
+                                    
+                                    JToken policyNameValue4 = propertiesValue["policyName"];
+                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance4 = ((string)policyNameValue4);
+                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
+                                    }
+                                    
+                                    JToken protectionStateValue4 = propertiesValue["protectionState"];
+                                    if (protectionStateValue4 != null && protectionStateValue4.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance4 = ((string)protectionStateValue4);
+                                        azureSqlProtectedItemInstance.ProtectionState = protectionStateInstance4;
+                                    }
+                                    
+                                    JToken extendedInfoValue5 = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue5 != null && extendedInfoValue5.Type != JTokenType.Null)
+                                    {
+                                        AzureSqlProtectedItemExtendedInfo extendedInfoInstance5 = new AzureSqlProtectedItemExtendedInfo();
+                                        azureSqlProtectedItemInstance.ExtendedInfo = extendedInfoInstance5;
+                                        
+                                        JToken oldestRecoveryPointValue5 = extendedInfoValue5["oldestRecoveryPoint"];
+                                        if (oldestRecoveryPointValue5 != null && oldestRecoveryPointValue5.Type != JTokenType.Null)
+                                        {
+                                            DateTime oldestRecoveryPointInstance5 = ((DateTime)oldestRecoveryPointValue5);
+                                            extendedInfoInstance5.OldestRecoveryPoint = oldestRecoveryPointInstance5;
+                                        }
+                                        
+                                        JToken recoveryPointCountValue5 = extendedInfoValue5["recoveryPointCount"];
+                                        if (recoveryPointCountValue5 != null && recoveryPointCountValue5.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointCountInstance5 = ((int)recoveryPointCountValue5);
+                                            extendedInfoInstance5.RecoveryPointCount = recoveryPointCountInstance5;
+                                        }
+                                        
+                                        JToken policyStateValue = extendedInfoValue5["policyState"];
+                                        if (policyStateValue != null && policyStateValue.Type != JTokenType.Null)
+                                        {
+                                            string policyStateInstance = ((string)policyStateValue);
+                                            extendedInfoInstance5.PolicyState = policyStateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue6 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue6 != null && backupManagementTypeValue6.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance6 = ((string)backupManagementTypeValue6);
+                                        azureSqlProtectedItemInstance.BackupManagementType = backupManagementTypeInstance6;
+                                    }
+                                    
+                                    JToken workloadTypeValue6 = propertiesValue["workloadType"];
+                                    if (workloadTypeValue6 != null && workloadTypeValue6.Type != JTokenType.Null)
+                                    {
+                                        string workloadTypeInstance6 = ((string)workloadTypeValue6);
+                                        azureSqlProtectedItemInstance.WorkloadType = workloadTypeInstance6;
+                                    }
+                                    
+                                    JToken lastRecoveryPointValue6 = propertiesValue["lastRecoveryPoint"];
+                                    if (lastRecoveryPointValue6 != null && lastRecoveryPointValue6.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
+                                        azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                    }
+                                    
+                                    JToken containerNameValue6 = propertiesValue["containerName"];
+                                    if (containerNameValue6 != null && containerNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string containerNameInstance6 = ((string)containerNameValue6);
+                                        azureSqlProtectedItemInstance.ContainerName = containerNameInstance6;
+                                    }
+                                    itemInstance.Properties = azureSqlProtectedItemInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -2205,6 +2348,88 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         mabFileFolderProtectedItemInstance.ContainerName = containerNameInstance5;
                                     }
                                     itemInstance.Properties = mabFileFolderProtectedItemInstance;
+                                }
+                                if (typeName == "Microsoft.Sql/servers/databases")
+                                {
+                                    AzureSqlProtectedItem azureSqlProtectedItemInstance = new AzureSqlProtectedItem();
+                                    
+                                    JToken protectedItemDataIdValue = propertiesValue["protectedItemDataId"];
+                                    if (protectedItemDataIdValue != null && protectedItemDataIdValue.Type != JTokenType.Null)
+                                    {
+                                        string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
+                                        azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
+                                    }
+                                    
+                                    JToken policyNameValue4 = propertiesValue["policyName"];
+                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance4 = ((string)policyNameValue4);
+                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
+                                    }
+                                    
+                                    JToken protectionStateValue4 = propertiesValue["protectionState"];
+                                    if (protectionStateValue4 != null && protectionStateValue4.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance4 = ((string)protectionStateValue4);
+                                        azureSqlProtectedItemInstance.ProtectionState = protectionStateInstance4;
+                                    }
+                                    
+                                    JToken extendedInfoValue5 = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue5 != null && extendedInfoValue5.Type != JTokenType.Null)
+                                    {
+                                        AzureSqlProtectedItemExtendedInfo extendedInfoInstance5 = new AzureSqlProtectedItemExtendedInfo();
+                                        azureSqlProtectedItemInstance.ExtendedInfo = extendedInfoInstance5;
+                                        
+                                        JToken oldestRecoveryPointValue5 = extendedInfoValue5["oldestRecoveryPoint"];
+                                        if (oldestRecoveryPointValue5 != null && oldestRecoveryPointValue5.Type != JTokenType.Null)
+                                        {
+                                            DateTime oldestRecoveryPointInstance5 = ((DateTime)oldestRecoveryPointValue5);
+                                            extendedInfoInstance5.OldestRecoveryPoint = oldestRecoveryPointInstance5;
+                                        }
+                                        
+                                        JToken recoveryPointCountValue5 = extendedInfoValue5["recoveryPointCount"];
+                                        if (recoveryPointCountValue5 != null && recoveryPointCountValue5.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointCountInstance5 = ((int)recoveryPointCountValue5);
+                                            extendedInfoInstance5.RecoveryPointCount = recoveryPointCountInstance5;
+                                        }
+                                        
+                                        JToken policyStateValue = extendedInfoValue5["policyState"];
+                                        if (policyStateValue != null && policyStateValue.Type != JTokenType.Null)
+                                        {
+                                            string policyStateInstance = ((string)policyStateValue);
+                                            extendedInfoInstance5.PolicyState = policyStateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue6 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue6 != null && backupManagementTypeValue6.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance6 = ((string)backupManagementTypeValue6);
+                                        azureSqlProtectedItemInstance.BackupManagementType = backupManagementTypeInstance6;
+                                    }
+                                    
+                                    JToken workloadTypeValue6 = propertiesValue["workloadType"];
+                                    if (workloadTypeValue6 != null && workloadTypeValue6.Type != JTokenType.Null)
+                                    {
+                                        string workloadTypeInstance6 = ((string)workloadTypeValue6);
+                                        azureSqlProtectedItemInstance.WorkloadType = workloadTypeInstance6;
+                                    }
+                                    
+                                    JToken lastRecoveryPointValue6 = propertiesValue["lastRecoveryPoint"];
+                                    if (lastRecoveryPointValue6 != null && lastRecoveryPointValue6.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
+                                        azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                    }
+                                    
+                                    JToken containerNameValue6 = propertiesValue["containerName"];
+                                    if (containerNameValue6 != null && containerNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string containerNameInstance6 = ((string)containerNameValue6);
+                                        azureSqlProtectedItemInstance.ContainerName = containerNameInstance6;
+                                    }
+                                    itemInstance.Properties = azureSqlProtectedItemInstance;
                                 }
                             }
                             
@@ -3331,6 +3556,88 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                     itemInstance.Properties = mabFileFolderProtectedItemInstance;
                                 }
+                                if (typeName == "Microsoft.Sql/servers/databases")
+                                {
+                                    AzureSqlProtectedItem azureSqlProtectedItemInstance = new AzureSqlProtectedItem();
+                                    
+                                    JToken protectedItemDataIdValue = propertiesValue["protectedItemDataId"];
+                                    if (protectedItemDataIdValue != null && protectedItemDataIdValue.Type != JTokenType.Null)
+                                    {
+                                        string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
+                                        azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
+                                    }
+                                    
+                                    JToken policyNameValue4 = propertiesValue["policyName"];
+                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance4 = ((string)policyNameValue4);
+                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
+                                    }
+                                    
+                                    JToken protectionStateValue4 = propertiesValue["protectionState"];
+                                    if (protectionStateValue4 != null && protectionStateValue4.Type != JTokenType.Null)
+                                    {
+                                        string protectionStateInstance4 = ((string)protectionStateValue4);
+                                        azureSqlProtectedItemInstance.ProtectionState = protectionStateInstance4;
+                                    }
+                                    
+                                    JToken extendedInfoValue5 = propertiesValue["extendedInfo"];
+                                    if (extendedInfoValue5 != null && extendedInfoValue5.Type != JTokenType.Null)
+                                    {
+                                        AzureSqlProtectedItemExtendedInfo extendedInfoInstance5 = new AzureSqlProtectedItemExtendedInfo();
+                                        azureSqlProtectedItemInstance.ExtendedInfo = extendedInfoInstance5;
+                                        
+                                        JToken oldestRecoveryPointValue5 = extendedInfoValue5["oldestRecoveryPoint"];
+                                        if (oldestRecoveryPointValue5 != null && oldestRecoveryPointValue5.Type != JTokenType.Null)
+                                        {
+                                            DateTime oldestRecoveryPointInstance5 = ((DateTime)oldestRecoveryPointValue5);
+                                            extendedInfoInstance5.OldestRecoveryPoint = oldestRecoveryPointInstance5;
+                                        }
+                                        
+                                        JToken recoveryPointCountValue5 = extendedInfoValue5["recoveryPointCount"];
+                                        if (recoveryPointCountValue5 != null && recoveryPointCountValue5.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointCountInstance5 = ((int)recoveryPointCountValue5);
+                                            extendedInfoInstance5.RecoveryPointCount = recoveryPointCountInstance5;
+                                        }
+                                        
+                                        JToken policyStateValue = extendedInfoValue5["policyState"];
+                                        if (policyStateValue != null && policyStateValue.Type != JTokenType.Null)
+                                        {
+                                            string policyStateInstance = ((string)policyStateValue);
+                                            extendedInfoInstance5.PolicyState = policyStateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken backupManagementTypeValue6 = propertiesValue["backupManagementType"];
+                                    if (backupManagementTypeValue6 != null && backupManagementTypeValue6.Type != JTokenType.Null)
+                                    {
+                                        string backupManagementTypeInstance6 = ((string)backupManagementTypeValue6);
+                                        azureSqlProtectedItemInstance.BackupManagementType = backupManagementTypeInstance6;
+                                    }
+                                    
+                                    JToken workloadTypeValue6 = propertiesValue["workloadType"];
+                                    if (workloadTypeValue6 != null && workloadTypeValue6.Type != JTokenType.Null)
+                                    {
+                                        string workloadTypeInstance6 = ((string)workloadTypeValue6);
+                                        azureSqlProtectedItemInstance.WorkloadType = workloadTypeInstance6;
+                                    }
+                                    
+                                    JToken lastRecoveryPointValue6 = propertiesValue["lastRecoveryPoint"];
+                                    if (lastRecoveryPointValue6 != null && lastRecoveryPointValue6.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
+                                        azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                    }
+                                    
+                                    JToken containerNameValue6 = propertiesValue["containerName"];
+                                    if (containerNameValue6 != null && containerNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string containerNameInstance6 = ((string)containerNameValue6);
+                                        azureSqlProtectedItemInstance.ContainerName = containerNameInstance6;
+                                    }
+                                    itemInstance.Properties = azureSqlProtectedItemInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -4053,6 +4360,88 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 mabFileFolderProtectedItemInstance.ContainerName = containerNameInstance5;
                                             }
                                             protectedItemResourceInstance.Properties = mabFileFolderProtectedItemInstance;
+                                        }
+                                        if (typeName == "Microsoft.Sql/servers/databases")
+                                        {
+                                            AzureSqlProtectedItem azureSqlProtectedItemInstance = new AzureSqlProtectedItem();
+                                            
+                                            JToken protectedItemDataIdValue = propertiesValue["protectedItemDataId"];
+                                            if (protectedItemDataIdValue != null && protectedItemDataIdValue.Type != JTokenType.Null)
+                                            {
+                                                string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
+                                                azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
+                                            }
+                                            
+                                            JToken policyNameValue4 = propertiesValue["policyName"];
+                                            if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance4 = ((string)policyNameValue4);
+                                                azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
+                                            }
+                                            
+                                            JToken protectionStateValue4 = propertiesValue["protectionState"];
+                                            if (protectionStateValue4 != null && protectionStateValue4.Type != JTokenType.Null)
+                                            {
+                                                string protectionStateInstance4 = ((string)protectionStateValue4);
+                                                azureSqlProtectedItemInstance.ProtectionState = protectionStateInstance4;
+                                            }
+                                            
+                                            JToken extendedInfoValue5 = propertiesValue["extendedInfo"];
+                                            if (extendedInfoValue5 != null && extendedInfoValue5.Type != JTokenType.Null)
+                                            {
+                                                AzureSqlProtectedItemExtendedInfo extendedInfoInstance5 = new AzureSqlProtectedItemExtendedInfo();
+                                                azureSqlProtectedItemInstance.ExtendedInfo = extendedInfoInstance5;
+                                                
+                                                JToken oldestRecoveryPointValue5 = extendedInfoValue5["oldestRecoveryPoint"];
+                                                if (oldestRecoveryPointValue5 != null && oldestRecoveryPointValue5.Type != JTokenType.Null)
+                                                {
+                                                    DateTime oldestRecoveryPointInstance5 = ((DateTime)oldestRecoveryPointValue5);
+                                                    extendedInfoInstance5.OldestRecoveryPoint = oldestRecoveryPointInstance5;
+                                                }
+                                                
+                                                JToken recoveryPointCountValue5 = extendedInfoValue5["recoveryPointCount"];
+                                                if (recoveryPointCountValue5 != null && recoveryPointCountValue5.Type != JTokenType.Null)
+                                                {
+                                                    int recoveryPointCountInstance5 = ((int)recoveryPointCountValue5);
+                                                    extendedInfoInstance5.RecoveryPointCount = recoveryPointCountInstance5;
+                                                }
+                                                
+                                                JToken policyStateValue = extendedInfoValue5["policyState"];
+                                                if (policyStateValue != null && policyStateValue.Type != JTokenType.Null)
+                                                {
+                                                    string policyStateInstance = ((string)policyStateValue);
+                                                    extendedInfoInstance5.PolicyState = policyStateInstance;
+                                                }
+                                            }
+                                            
+                                            JToken backupManagementTypeValue6 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue6 != null && backupManagementTypeValue6.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance6 = ((string)backupManagementTypeValue6);
+                                                azureSqlProtectedItemInstance.BackupManagementType = backupManagementTypeInstance6;
+                                            }
+                                            
+                                            JToken workloadTypeValue6 = propertiesValue["workloadType"];
+                                            if (workloadTypeValue6 != null && workloadTypeValue6.Type != JTokenType.Null)
+                                            {
+                                                string workloadTypeInstance6 = ((string)workloadTypeValue6);
+                                                azureSqlProtectedItemInstance.WorkloadType = workloadTypeInstance6;
+                                            }
+                                            
+                                            JToken lastRecoveryPointValue6 = propertiesValue["lastRecoveryPoint"];
+                                            if (lastRecoveryPointValue6 != null && lastRecoveryPointValue6.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
+                                                azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                            }
+                                            
+                                            JToken containerNameValue6 = propertiesValue["containerName"];
+                                            if (containerNameValue6 != null && containerNameValue6.Type != JTokenType.Null)
+                                            {
+                                                string containerNameInstance6 = ((string)containerNameValue6);
+                                                azureSqlProtectedItemInstance.ContainerName = containerNameInstance6;
+                                            }
+                                            protectedItemResourceInstance.Properties = azureSqlProtectedItemInstance;
                                         }
                                     }
                                     

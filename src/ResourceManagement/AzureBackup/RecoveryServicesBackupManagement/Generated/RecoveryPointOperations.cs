@@ -264,6 +264,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                     recPointInstance.Properties = recoveryPointInstance;
                                 }
+                                if (typeName == "GenericRecoveryPoint")
+                                {
+                                    GenericRecoveryPoint genericRecoveryPointInstance = new GenericRecoveryPoint();
+                                    
+                                    JToken recoveryPointTypeValue2 = propertiesValue["recoveryPointType"];
+                                    if (recoveryPointTypeValue2 != null && recoveryPointTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string recoveryPointTypeInstance2 = ((string)recoveryPointTypeValue2);
+                                        genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
+                                    }
+                                    
+                                    JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];
+                                    if (recoveryPointTimeValue2 != null && recoveryPointTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        string recoveryPointTimeInstance2 = ((string)recoveryPointTimeValue2);
+                                        genericRecoveryPointInstance.RecoveryPointTime = recoveryPointTimeInstance2;
+                                    }
+                                    
+                                    JToken recoveryPointAdditionalInfoValue2 = propertiesValue["recoveryPointAdditionalInfo"];
+                                    if (recoveryPointAdditionalInfoValue2 != null && recoveryPointAdditionalInfoValue2.Type != JTokenType.Null)
+                                    {
+                                        string recoveryPointAdditionalInfoInstance2 = ((string)recoveryPointAdditionalInfoValue2);
+                                        genericRecoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance2;
+                                    }
+                                    recPointInstance.Properties = genericRecoveryPointInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -580,6 +606,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 recoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
                                             }
                                             recoveryPointResourceInstance.Properties = recoveryPointInstance;
+                                        }
+                                        if (typeName == "GenericRecoveryPoint")
+                                        {
+                                            GenericRecoveryPoint genericRecoveryPointInstance = new GenericRecoveryPoint();
+                                            
+                                            JToken recoveryPointTypeValue2 = propertiesValue["recoveryPointType"];
+                                            if (recoveryPointTypeValue2 != null && recoveryPointTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string recoveryPointTypeInstance2 = ((string)recoveryPointTypeValue2);
+                                                genericRecoveryPointInstance.RecoveryPointType = recoveryPointTypeInstance2;
+                                            }
+                                            
+                                            JToken recoveryPointTimeValue2 = propertiesValue["recoveryPointTime"];
+                                            if (recoveryPointTimeValue2 != null && recoveryPointTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                string recoveryPointTimeInstance2 = ((string)recoveryPointTimeValue2);
+                                                genericRecoveryPointInstance.RecoveryPointTime = recoveryPointTimeInstance2;
+                                            }
+                                            
+                                            JToken recoveryPointAdditionalInfoValue2 = propertiesValue["recoveryPointAdditionalInfo"];
+                                            if (recoveryPointAdditionalInfoValue2 != null && recoveryPointAdditionalInfoValue2.Type != JTokenType.Null)
+                                            {
+                                                string recoveryPointAdditionalInfoInstance2 = ((string)recoveryPointAdditionalInfoValue2);
+                                                genericRecoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance2;
+                                            }
+                                            recoveryPointResourceInstance.Properties = genericRecoveryPointInstance;
                                         }
                                     }
                                     
