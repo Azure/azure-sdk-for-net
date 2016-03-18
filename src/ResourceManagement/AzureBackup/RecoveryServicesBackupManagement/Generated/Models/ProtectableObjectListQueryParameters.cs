@@ -26,6 +26,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     public partial class ProtectableObjectListQueryParameters
     {
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
         private string _providerType;
         
         /// <summary>
@@ -37,17 +48,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._providerType = value; }
         }
         
-        private string _skip;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Skip
-        {
-            get { return this._skip; }
-            set { this._skip = value; }
-        }
-        
         private string _status;
         
         /// <summary>
@@ -57,28 +57,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._status; }
             set { this._status = value; }
-        }
-        
-        private string _top;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Top
-        {
-            get { return this._top; }
-            set { this._top = value; }
-        }
-        
-        private string _workloadType;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string WorkloadType
-        {
-            get { return this._workloadType; }
-            set { this._workloadType = value; }
         }
         
         /// <summary>

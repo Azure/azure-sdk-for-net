@@ -73,6 +73,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryFilter'>
         /// Optional.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional. Pagination parameter for skip token and top.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -82,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectableObjectListResponse.
         /// </returns>
-        public async Task<ProtectableObjectListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ProtectableObjectListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -104,6 +107,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("queryFilter", queryFilter);
+                tracingParameters.Add("paginationParams", paginationParams);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -135,13 +139,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 odataFilter.Add("Status eq '" + Uri.EscapeDataString(queryFilter.Status) + "'");
             }
-            if (queryFilter != null && queryFilter.WorkloadType != null)
+            if (queryFilter != null && queryFilter.FriendlyName != null)
             {
-                odataFilter.Add("Type eq '" + Uri.EscapeDataString(queryFilter.WorkloadType) + "'");
+                odataFilter.Add("FriendlyName eq '" + Uri.EscapeDataString(queryFilter.FriendlyName) + "'");
             }
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
+            if (paginationParams != null && paginationParams.SkipToken != null)
+            {
+                queryParameters.Add("$skiptoken=" + Uri.EscapeDataString(paginationParams.SkipToken));
+            }
+            if (paginationParams != null && paginationParams.Top != null)
+            {
+                queryParameters.Add("$top=" + Uri.EscapeDataString(paginationParams.Top));
             }
             if (queryParameters.Count > 0)
             {
