@@ -1,21 +1,15 @@
-﻿using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Test;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using RemoteApp.Tests;
 
 namespace Microsoft.Azure.Management.RemoteApp.Tests
 {
     public class RemoteAppTestBase
     {
-        protected RemoteAppManagementClient GetClient()
+        protected RemoteAppManagementClient GetClient(MockContext context, RemoteAppDelegatingHandler handler)
         {
-            //RemoteAppManagementClient client = TestBase.GetServiceClient<RemoteAppManagementClient>(new CSMTestEnvironmentFactory());
+            RemoteAppManagementClient client = context.GetServiceClient<RemoteAppManagementClient>(handler);
 
-            //return client;
-            return null;
+            return client;
         }
     }
 }

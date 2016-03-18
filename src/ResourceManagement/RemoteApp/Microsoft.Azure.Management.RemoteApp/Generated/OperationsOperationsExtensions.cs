@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static OperationInfoList GetAvailableOperations(this IOperationsOperations operations)
+            public static OperationInfoList GetAvailable(this IOperationsOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IOperationsOperations)s).GetAvailableOperationsAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IOperationsOperations)s).GetAvailableAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationInfoList> GetAvailableOperationsAsync( this IOperationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationInfoList> GetAvailableAsync( this IOperationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAvailableOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAvailableWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

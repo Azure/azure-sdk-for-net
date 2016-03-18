@@ -1,10 +1,13 @@
 ﻿using Microsoft.Azure.Management.RemoteApp;
 using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using RemoteApp.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,18 +18,19 @@ namespace Microsoft.Azure.Management.RemoteApp.Tests
     {
         string groupName = "Default-RemoteApp-WestUS";
 
-        [Fact]
+        [Fact(Skip = "TODO, 6983662: Bring tests up to date with sdk")]
         public void GetCollectionListTest()
         {
             RemoteAppManagementClient raClient = null;
             CollectionListResult collections = null;
+            RemoteAppDelegatingHandler handler = new RemoteAppDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            //using (var undoContext = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                //undoContext.Start();
-                raClient = GetClient();
 
-                collections = raClient.Collection.ListResourceGroupCollections(groupName);
+                raClient = GetClient(context, handler);
+
+                collections = raClient.Collection.ListInResourceGroup(groupName);
 
                 Assert.NotNull(collections);
                 Assert.NotEmpty(collections.Value);
@@ -37,27 +41,5 @@ namespace Microsoft.Azure.Management.RemoteApp.Tests
                 }
             }
         }
-
-        //[Fact]
-        //public void GetCollectionTest()
-        //{
-        //    RemoteAppManagementClient raClient = null;
-        //    GetCollectionOperationResult collection = null;
-
-        //    using (var undoContext = UndoContext.Current)
-        //    {
-        //        undoContext.Start();
-        //        raClient = GetClient();
-
-        //        collection = raClient.CollectionOperations.Get("Microsoft.RemoteApp", "testcol2");
-
-        //        Assert.NotNull(collection);
-        //        Assert.Equal(HttpStatusCode.OK, collection.StatusCode);
-        //        Assert.NotNull(collection.Collection);
-        //        Assert.NotNull(collection.CollectionOperations.Properties);
-        //        Assert.Equal("collections", collection.CollectionOperations.Type);
-        //        Assert.Equal("testcol1", collection.CollectionOperations.Properties.Name);
-        //    }
-        //}
     }
 }

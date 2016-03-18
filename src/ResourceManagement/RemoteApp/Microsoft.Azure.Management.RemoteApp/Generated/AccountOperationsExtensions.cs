@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static AccountDetailsWrapperList GetAccountInfo(this IAccountOperations operations)
+            public static AccountDetailsWrapperList Get(this IAccountOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetAccountInfoAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAccountOperations)s).GetAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccountDetailsWrapperList> GetAccountInfoAsync( this IAccountOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccountDetailsWrapperList> GetAsync( this IAccountOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAccountInfoWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void ActivateAccountBilling(this IAccountOperations operations)
+            public static void ActivateBilling(this IAccountOperations operations)
             {
-                Task.Factory.StartNew(s => ((IAccountOperations)s).ActivateAccountBillingAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IAccountOperations)s).ActivateBillingAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ActivateAccountBillingAsync( this IAccountOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ActivateBillingAsync( this IAccountOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ActivateAccountBillingWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                await operations.ActivateBillingWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='accountInfo'>
             /// The new PrivacyUrl and WorkspaceName
             /// </param>
-            public static AccountDetailsWrapperList UpdateAccount(this IAccountOperations operations, AccountDetailsWrapper accountInfo)
+            public static AccountDetailsWrapperList Update(this IAccountOperations operations, AccountDetailsWrapper accountInfo)
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).UpdateAccountAsync(accountInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IAccountOperations)s).UpdateAsync(accountInfo), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,9 +98,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccountDetailsWrapperList> UpdateAccountAsync( this IAccountOperations operations, AccountDetailsWrapper accountInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccountDetailsWrapperList> UpdateAsync( this IAccountOperations operations, AccountDetailsWrapper accountInfo, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateAccountWithHttpMessagesAsync(accountInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(accountInfo, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

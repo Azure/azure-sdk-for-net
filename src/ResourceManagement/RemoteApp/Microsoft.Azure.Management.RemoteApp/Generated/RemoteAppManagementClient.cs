@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.RemoteApp
             this.Account = new AccountOperations(this);
             this.TemplateImage = new TemplateImageOperations(this);
             this.Collection = new CollectionOperations(this);
-            this.BaseUri = new Uri("https://management.azure.net");
+            this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2014-09-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

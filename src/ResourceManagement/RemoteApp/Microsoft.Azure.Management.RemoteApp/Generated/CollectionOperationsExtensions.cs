@@ -28,9 +28,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='resourceGroupName'>
             /// The name of the resource group
             /// </param>
-            public static CollectionListResult ListResourceGroupCollections(this ICollectionOperations operations, string resourceGroupName)
+            public static CollectionListResult ListInResourceGroup(this ICollectionOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListResourceGroupCollectionsAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListInResourceGroupAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CollectionListResult> ListResourceGroupCollectionsAsync( this ICollectionOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CollectionListResult> ListInResourceGroupAsync( this ICollectionOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListResourceGroupCollectionsWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListInResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static CollectionListResult ListCollections(this ICollectionOperations operations)
+            public static CollectionListResult ListInSubscription(this ICollectionOperations operations)
             {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListCollectionsAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListInSubscriptionAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CollectionListResult> ListCollectionsAsync( this ICollectionOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CollectionListResult> ListInSubscriptionAsync( this ICollectionOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListCollectionsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListInSubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='resourceGroupName'>
             /// The name of the resource group
             /// </param>
-            public static PublishedApplicationDetailsListResult ListPublishedApp(this ICollectionOperations operations, string collectionName, string resourceGroupName)
+            public static PublishedApplicationDetailsListResult ListPublishedApps(this ICollectionOperations operations, string collectionName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListPublishedAppAsync(collectionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListPublishedAppsAsync(collectionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -273,9 +273,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PublishedApplicationDetailsListResult> ListPublishedAppAsync( this ICollectionOperations operations, string collectionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublishedApplicationDetailsListResult> ListPublishedAppsAsync( this ICollectionOperations operations, string collectionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListPublishedAppWithHttpMessagesAsync(collectionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPublishedAppsWithHttpMessagesAsync(collectionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -439,9 +439,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='resourceGroupName'>
             /// The name of the resource group
             /// </param>
-            public static SessionList SessionList(this ICollectionOperations operations, string collectionName, string resourceGroupName)
+            public static SessionList ListSessions(this ICollectionOperations operations, string collectionName, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).SessionListAsync(collectionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListSessionsAsync(collectionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -459,9 +459,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SessionList> SessionListAsync( this ICollectionOperations operations, string collectionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SessionList> ListSessionsAsync( this ICollectionOperations operations, string collectionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SessionListWithHttpMessagesAsync(collectionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSessionsWithHttpMessagesAsync(collectionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1227,9 +1227,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='resourceGroupName'>
             /// The name of the resource group
             /// </param>
-            public static SecurityPrincipalOperationErrorDetails AddSecurityPrincipal(this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName)
+            public static SecurityPrincipalOperationErrorDetails AddUser(this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).AddSecurityPrincipalAsync(securityPrincipal, collectionName, userUpn, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICollectionOperations)s).AddUserAsync(securityPrincipal, collectionName, userUpn, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1253,9 +1253,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPrincipalOperationErrorDetails> AddSecurityPrincipalAsync( this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPrincipalOperationErrorDetails> AddUserAsync( this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddSecurityPrincipalWithHttpMessagesAsync(securityPrincipal, collectionName, userUpn, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddUserWithHttpMessagesAsync(securityPrincipal, collectionName, userUpn, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1279,9 +1279,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='resourceGroupName'>
             /// The name of the resource group
             /// </param>
-            public static SecurityPrincipalOperationErrorDetails DeleteSecurityPrincipal(this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName)
+            public static SecurityPrincipalOperationErrorDetails DeleteUser(this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).DeleteSecurityPrincipalAsync(securityPrincipal, collectionName, userUpn, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICollectionOperations)s).DeleteUserAsync(securityPrincipal, collectionName, userUpn, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1305,9 +1305,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecurityPrincipalOperationErrorDetails> DeleteSecurityPrincipalAsync( this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityPrincipalOperationErrorDetails> DeleteUserAsync( this ICollectionOperations operations, SecurityPrincipal securityPrincipal, string collectionName, string userUpn, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteSecurityPrincipalWithHttpMessagesAsync(securityPrincipal, collectionName, userUpn, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteUserWithHttpMessagesAsync(securityPrincipal, collectionName, userUpn, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static TemplateImageList GetTemplateImages(this ITemplateImageOperations operations)
+            public static IEnumerable<TemplateImage> List(this ITemplateImageOperations operations)
             {
-                return Task.Factory.StartNew(s => ((ITemplateImageOperations)s).GetTemplateImagesAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ITemplateImageOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TemplateImageList> GetTemplateImagesAsync( this ITemplateImageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<TemplateImage>> ListAsync( this ITemplateImageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTemplateImagesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -56,9 +56,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='templateImageName'>
             /// The name of the template image
             /// </param>
-            public static TemplateImage GetTemplateImage(this ITemplateImageOperations operations, string templateImageName)
+            public static TemplateImage Get(this ITemplateImageOperations operations, string templateImageName)
             {
-                return Task.Factory.StartNew(s => ((ITemplateImageOperations)s).GetTemplateImageAsync(templateImageName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ITemplateImageOperations)s).GetAsync(templateImageName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.RemoteApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TemplateImage> GetTemplateImageAsync( this ITemplateImageOperations operations, string templateImageName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TemplateImage> GetAsync( this ITemplateImageOperations operations, string templateImageName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTemplateImageWithHttpMessagesAsync(templateImageName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(templateImageName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
