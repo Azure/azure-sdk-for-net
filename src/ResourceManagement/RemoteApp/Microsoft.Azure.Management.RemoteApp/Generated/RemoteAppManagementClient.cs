@@ -85,9 +85,9 @@ namespace Microsoft.Azure.Management.RemoteApp
 
         public virtual IAccountOperations Account { get; private set; }
 
-        public virtual ICollectionOperations Collection { get; private set; }
-
         public virtual ITemplateImageOperations TemplateImage { get; private set; }
+
+        public virtual ICollectionOperations Collection { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the RemoteAppManagementClient class.
@@ -270,8 +270,8 @@ namespace Microsoft.Azure.Management.RemoteApp
         {
             this.Operations = new OperationsOperations(this);
             this.Account = new AccountOperations(this);
-            this.Collection = new CollectionOperations(this);
             this.TemplateImage = new TemplateImageOperations(this);
+            this.Collection = new CollectionOperations(this);
             this.BaseUri = new Uri("https://management.azure.net");
             this.ApiVersion = "2014-09-01";
             this.AcceptLanguage = "en-US";

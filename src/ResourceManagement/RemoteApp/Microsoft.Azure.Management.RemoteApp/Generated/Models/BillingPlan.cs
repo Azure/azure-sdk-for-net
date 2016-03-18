@@ -29,11 +29,14 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// <summary>
         /// Initializes a new instance of the BillingPlan class.
         /// </summary>
-        public BillingPlan(string planId = default(string), string planName = default(string), string addOns = default(string), double? coresPerUser = default(double?), int? minimumBilledUserCount = default(int?), IList<BillingMeterInformation> billingMeters = default(IList<BillingMeterInformation>))
+        public BillingPlan(string planId = default(string), string planName = default(string), string addOns = default(string), string specCode = default(string), string specString1 = default(string), string specString2 = default(string), double? coresPerUser = default(double?), int? minimumBilledUserCount = default(int?), IList<BillingMeterInformation> billingMeters = default(IList<BillingMeterInformation>))
         {
             PlanId = planId;
             PlanName = planName;
             AddOns = addOns;
+            SpecCode = specCode;
+            SpecString1 = specString1;
+            SpecString2 = specString2;
             CoresPerUser = coresPerUser;
             MinimumBilledUserCount = minimumBilledUserCount;
             BillingMeters = billingMeters;
@@ -56,6 +59,24 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "addOns")]
         public string AddOns { get; set; }
+
+        /// <summary>
+        /// Unique portal plan identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "specCode")]
+        public string SpecCode { get; set; }
+
+        /// <summary>
+        /// Some information displayed about the plan for portal use
+        /// </summary>
+        [JsonProperty(PropertyName = "specString1")]
+        public string SpecString1 { get; set; }
+
+        /// <summary>
+        /// Some information displayed about the plan for portal use
+        /// </summary>
+        [JsonProperty(PropertyName = "specString2")]
+        public string SpecString2 { get; set; }
 
         /// <summary>
         /// Computing cores per user.

@@ -28,11 +28,13 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// <summary>
         /// Initializes a new instance of the BillingMeterInformation class.
         /// </summary>
-        public BillingMeterInformation(string geo = default(string), string flatMeterId = default(string), string overageMeterId = default(string))
+        public BillingMeterInformation(string geo = default(string), string flatMeterId = default(string), string overageMeterId = default(string), string flatMeterKey = default(string), string overageMeterKey = default(string))
         {
             Geo = geo;
             FlatMeterId = flatMeterId;
             OverageMeterId = overageMeterId;
+            FlatMeterKey = flatMeterKey;
+            OverageMeterKey = overageMeterKey;
         }
 
         /// <summary>
@@ -52,6 +54,18 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "overageMeterId")]
         public string OverageMeterId { get; set; }
+
+        /// <summary>
+        /// Key for the flat meter for the billing system
+        /// </summary>
+        [JsonProperty(PropertyName = "flatMeterKey")]
+        public string FlatMeterKey { get; set; }
+
+        /// <summary>
+        /// Key for the flat meter for the billing system
+        /// </summary>
+        [JsonProperty(PropertyName = "overageMeterKey")]
+        public string OverageMeterKey { get; set; }
 
     }
 }

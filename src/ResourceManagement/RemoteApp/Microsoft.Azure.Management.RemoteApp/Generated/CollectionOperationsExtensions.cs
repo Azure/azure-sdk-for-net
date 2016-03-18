@@ -20,34 +20,6 @@ namespace Microsoft.Azure.Management.RemoteApp
     public static partial class CollectionOperationsExtensions
     {
             /// <summary>
-            /// Gets the list of collections details in the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static CollectionListResult ListCollections(this ICollectionOperations operations)
-            {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListCollectionsAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of collections details in the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CollectionListResult> ListCollectionsAsync( this ICollectionOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListCollectionsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the list of collections details in the resource group.
             /// </summary>
             /// <param name='operations'>
@@ -76,6 +48,34 @@ namespace Microsoft.Azure.Management.RemoteApp
             public static async Task<CollectionListResult> ListResourceGroupCollectionsAsync( this ICollectionOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListResourceGroupCollectionsWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of collections details in the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static CollectionListResult ListCollections(this ICollectionOperations operations)
+            {
+                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListCollectionsAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of collections details in the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CollectionListResult> ListCollectionsAsync( this ICollectionOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCollectionsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -162,52 +162,6 @@ namespace Microsoft.Azure.Management.RemoteApp
             public static async Task<CollectionCreationDetailsWrapper> CreateOrUpdateAsync( this ICollectionOperations operations, CollectionCreationDetailsWrapper details, string collectionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(details, collectionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Create or update a collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='details'>
-            /// The details of the created or updated collection
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            public static CollectionCreationDetailsWrapper BeginCreateOrUpdate(this ICollectionOperations operations, CollectionCreationDetailsWrapper details, string collectionName, string resourceGroupName)
-            {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).BeginCreateOrUpdateAsync(details, collectionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='details'>
-            /// The details of the created or updated collection
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CollectionCreationDetailsWrapper> BeginCreateOrUpdateAsync( this ICollectionOperations operations, CollectionCreationDetailsWrapper details, string collectionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(details, collectionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1357,190 +1311,6 @@ namespace Microsoft.Azure.Management.RemoteApp
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the list of virtual machines in this collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            public static VirtualMachineDetailsListResult ListVms(this ICollectionOperations operations, string collectionName, string resourceGroupName)
-            {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).ListVmsAsync(collectionName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of virtual machines in this collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VirtualMachineDetailsListResult> ListVmsAsync( this ICollectionOperations operations, string collectionName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListVmsWithHttpMessagesAsync(collectionName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the virtual machine in this collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='virtualMachine'>
-            /// The virtual machine name
-            /// </param>
-            public static VmDetails GetVm(this ICollectionOperations operations, string collectionName, string resourceGroupName, string virtualMachine)
-            {
-                return Task.Factory.StartNew(s => ((ICollectionOperations)s).GetVmAsync(collectionName, resourceGroupName, virtualMachine), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the virtual machine in this collection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='virtualMachine'>
-            /// The virtual machine name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VmDetails> GetVmAsync( this ICollectionOperations operations, string collectionName, string resourceGroupName, string virtualMachine, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetVmWithHttpMessagesAsync(collectionName, resourceGroupName, virtualMachine, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Restarts the virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='details'>
-            /// The LogoffMessage and time to wait before restarting the virtual machine
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='virtualMachine'>
-            /// The virtual machine name
-            /// </param>
-            public static void RestartVm(this ICollectionOperations operations, VmCommandDetailsWrapper details, string collectionName, string resourceGroupName, string virtualMachine)
-            {
-                Task.Factory.StartNew(s => ((ICollectionOperations)s).RestartVmAsync(details, collectionName, resourceGroupName, virtualMachine), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restarts the virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='details'>
-            /// The LogoffMessage and time to wait before restarting the virtual machine
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='virtualMachine'>
-            /// The virtual machine name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RestartVmAsync( this ICollectionOperations operations, VmCommandDetailsWrapper details, string collectionName, string resourceGroupName, string virtualMachine, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.RestartVmWithHttpMessagesAsync(details, collectionName, resourceGroupName, virtualMachine, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Restarts the virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='details'>
-            /// The LogoffMessage and time to wait before restarting the virtual machine
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='virtualMachine'>
-            /// The virtual machine name
-            /// </param>
-            public static void BeginRestartVm(this ICollectionOperations operations, VmCommandDetailsWrapper details, string collectionName, string resourceGroupName, string virtualMachine)
-            {
-                Task.Factory.StartNew(s => ((ICollectionOperations)s).BeginRestartVmAsync(details, collectionName, resourceGroupName, virtualMachine), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Restarts the virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='details'>
-            /// The LogoffMessage and time to wait before restarting the virtual machine
-            /// </param>
-            /// <param name='collectionName'>
-            /// The collection name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group
-            /// </param>
-            /// <param name='virtualMachine'>
-            /// The virtual machine name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginRestartVmAsync( this ICollectionOperations operations, VmCommandDetailsWrapper details, string collectionName, string resourceGroupName, string virtualMachine, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.BeginRestartVmWithHttpMessagesAsync(details, collectionName, resourceGroupName, virtualMachine, null, cancellationToken).ConfigureAwait(false);
             }
 
     }

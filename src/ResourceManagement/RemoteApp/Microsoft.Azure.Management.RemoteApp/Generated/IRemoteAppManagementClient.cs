@@ -80,9 +80,9 @@ namespace Microsoft.Azure.Management.RemoteApp
 
         IAccountOperations Account { get; }
 
-        ICollectionOperations Collection { get; }
-
         ITemplateImageOperations TemplateImage { get; }
+
+        ICollectionOperations Collection { get; }
 
     }
 }

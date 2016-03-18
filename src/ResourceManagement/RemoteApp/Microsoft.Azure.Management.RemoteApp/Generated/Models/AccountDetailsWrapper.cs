@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// <summary>
         /// Initializes a new instance of the AccountDetailsWrapper class.
         /// </summary>
-        public AccountDetailsWrapper(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string nextLink = default(string), AccountDetails accountInfo = default(AccountDetails), IList<BillingPlan> billingPlans = default(IList<BillingPlan>), IList<Location> locationList = default(IList<Location>), IList<string> features = default(IList<string>))
+        public AccountDetailsWrapper(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string nextLink = default(string), AccountDetails accountInfo = default(AccountDetails), IList<BillingPlan> billingPlans = default(IList<BillingPlan>), IList<Location> locationList = default(IList<Location>))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             AccountInfo = accountInfo;
             BillingPlans = billingPlans;
             LocationList = locationList;
-            Features = features;
         }
 
         /// <summary>
@@ -69,11 +68,6 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.locationList")]
         public IList<Location> LocationList { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.features")]
-        public IList<string> Features { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
