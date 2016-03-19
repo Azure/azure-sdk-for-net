@@ -35,6 +35,18 @@
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithSshUsernamePassword.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxClusterWithPremiumTier.json" >
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxClusterWithStandardTier.json" >
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWindowsClusterWithPremiumTier.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWindowsClusterWithStandardTier.json" >
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyParameters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

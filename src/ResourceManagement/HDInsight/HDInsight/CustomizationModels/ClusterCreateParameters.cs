@@ -153,6 +153,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public OSType OSType { get; set; }
         
         /// <summary>
+        /// Gets or sets the cluster tier.
+        /// </summary>
+        public Tier ClusterTier { get; set; }
+
+        /// <summary>
         /// Gets or sets SSH user name.
         /// </summary>
         public string SshUserName { get; set; }
