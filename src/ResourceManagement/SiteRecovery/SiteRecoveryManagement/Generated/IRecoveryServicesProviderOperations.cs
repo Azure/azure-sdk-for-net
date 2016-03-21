@@ -41,9 +41,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='providerName'>
         /// Provider Name.
         /// </param>
-        /// <param name='input'>
-        /// Deletion input.
-        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -53,7 +50,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginDeletingAsync(string fabricName, string providerName, RecoveryServicesProviderDeletionInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> BeginDeletingAsync(string fabricName, string providerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Purges a provider
@@ -104,9 +101,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='providerName'>
         /// Provider Name.
         /// </param>
-        /// <param name='input'>
-        /// Deletion input.
-        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -116,7 +110,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> DeleteAsync(string fabricName, string providerName, RecoveryServicesProviderDeletionInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> DeleteAsync(string fabricName, string providerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the server object by Id.

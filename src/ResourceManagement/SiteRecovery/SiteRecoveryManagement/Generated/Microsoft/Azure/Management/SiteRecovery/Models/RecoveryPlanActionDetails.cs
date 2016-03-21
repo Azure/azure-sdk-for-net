@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _instanceType;
         
         /// <summary>
-        /// Required. Type of recovery plan action.
+        /// Optional. Type of recovery plan action.
         /// </summary>
         public string InstanceType
         {
@@ -45,20 +45,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public RecoveryPlanActionDetails()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecoveryPlanActionDetails class
-        /// with required arguments.
-        /// </summary>
-        public RecoveryPlanActionDetails(string instanceType)
-            : this()
-        {
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
-            this.InstanceType = instanceType;
         }
     }
 }

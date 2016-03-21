@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._fabricLocation = value; }
         }
         
-        private string _scriptPath;
+        private string _path;
         
         /// <summary>
         /// Required. Script path.
         /// </summary>
-        public string ScriptPath
+        public string Path
         {
-            get { return this._scriptPath; }
-            set { this._scriptPath = value; }
+            get { return this._path; }
+            set { this._path = value; }
         }
         
         private System.TimeSpan? _timeout;
@@ -75,24 +75,19 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the RecoveryPlanScriptActionDetails
         /// class with required arguments.
         /// </summary>
-        public RecoveryPlanScriptActionDetails(string scriptPath, string fabricLocation, string instanceType)
+        public RecoveryPlanScriptActionDetails(string path, string fabricLocation)
             : this()
         {
-            if (scriptPath == null)
+            if (path == null)
             {
-                throw new ArgumentNullException("scriptPath");
+                throw new ArgumentNullException("path");
             }
             if (fabricLocation == null)
             {
                 throw new ArgumentNullException("fabricLocation");
             }
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException("instanceType");
-            }
-            this.ScriptPath = scriptPath;
+            this.Path = path;
             this.FabricLocation = fabricLocation;
-            this.InstanceType = instanceType;
         }
     }
 }
