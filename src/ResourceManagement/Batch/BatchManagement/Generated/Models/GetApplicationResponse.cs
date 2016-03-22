@@ -20,47 +20,33 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// Response to an ApplicationOperations.GetApplication request.
     /// </summary>
-    public partial class BatchAccountUpdateParameters
+    public partial class GetApplicationResponse : AzureOperationResponse
     {
-        private AccountBaseProperties _properties;
+        private Application _application;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Optional. Gets or sets the information about the application.
         /// </summary>
-        public AccountBaseProperties Properties
+        public Application Application
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._application; }
+            set { this._application = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountUpdateParameters
-        /// class.
+        /// Initializes a new instance of the GetApplicationResponse class.
         /// </summary>
-        public BatchAccountUpdateParameters()
+        public GetApplicationResponse()
         {
-            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

@@ -20,47 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// The properties of a Batch account.
     /// </summary>
-    public partial class BatchAccountUpdateParameters
+    public partial class AccountBaseProperties
     {
-        private AccountBaseProperties _properties;
+        private AutoStorageBaseProperties _autoStorage;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Optional. Gets or sets properties relating to auto storage.
         /// </summary>
-        public AccountBaseProperties Properties
+        public AutoStorageBaseProperties AutoStorage
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._autoStorage; }
+            set { this._autoStorage = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountUpdateParameters
-        /// class.
+        /// Initializes a new instance of the AccountBaseProperties class.
         /// </summary>
-        public BatchAccountUpdateParameters()
+        public AccountBaseProperties()
         {
-            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

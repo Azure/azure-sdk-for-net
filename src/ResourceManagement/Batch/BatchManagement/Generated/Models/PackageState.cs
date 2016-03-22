@@ -20,47 +20,29 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// The current state of an application package.
     /// </summary>
-    public partial class BatchAccountUpdateParameters
+    public enum PackageState
     {
-        private AccountBaseProperties _properties;
+        /// <summary>
+        /// The application package has never been activated.
+        /// </summary>
+        Pending = 0,
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// The application package is active and can be used by compute nodes.
         /// </summary>
-        public AccountBaseProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
+        Active = 1,
         
         /// <summary>
-        /// Optional. The user specified tags associated with the account.
+        /// The service reported a state that is not recognized by this version
+        /// of the Batch client.
         /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BatchAccountUpdateParameters
-        /// class.
-        /// </summary>
-        public BatchAccountUpdateParameters()
-        {
-            this.Tags = new LazyDictionary<string, string>();
-        }
+        Unmapped = 2,
     }
 }

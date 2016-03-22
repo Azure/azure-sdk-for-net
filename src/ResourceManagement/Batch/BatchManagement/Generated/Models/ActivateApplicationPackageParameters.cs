@@ -20,47 +20,48 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// Parameters for an ApplicationOperations.ActivateApplicationPackage
+    /// request.
     /// </summary>
-    public partial class BatchAccountUpdateParameters
+    public partial class ActivateApplicationPackageParameters
     {
-        private AccountBaseProperties _properties;
+        private string _format;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Required. Gets or sets the format of the application package binary
+        /// file.
         /// </summary>
-        public AccountBaseProperties Properties
+        public string Format
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._format; }
+            set { this._format = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountUpdateParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// ActivateApplicationPackageParameters class.
         /// </summary>
-        public BatchAccountUpdateParameters()
+        public ActivateApplicationPackageParameters()
         {
-            this.Tags = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ActivateApplicationPackageParameters class with required arguments.
+        /// </summary>
+        public ActivateApplicationPackageParameters(string format)
+            : this()
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+            this.Format = format;
         }
     }
 }

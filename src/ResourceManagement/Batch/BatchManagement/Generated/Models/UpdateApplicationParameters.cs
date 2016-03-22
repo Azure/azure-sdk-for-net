@@ -20,58 +20,55 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create operation.
+    /// Parameters for an ApplicationOperations.UpdateApplication request.
     /// </summary>
-    public partial class BatchAccountCreateParameters
+    public partial class UpdateApplicationParameters
     {
-        private string _location;
+        private bool _allowUpdates;
         
         /// <summary>
-        /// Optional. The region in which the account is created.
+        /// Optional. Gets or sets whether packages within the application may
+        /// be overwritten using the same version string.
         /// </summary>
-        public string Location
+        public bool AllowUpdates
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._allowUpdates; }
+            set { this._allowUpdates = value; }
         }
         
-        private AccountBaseProperties _properties;
+        private string _defaultVersion;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Optional. Gets or sets which package to use if a client requests
+        /// the application but does not specify a version.
         /// </summary>
-        public AccountBaseProperties Properties
+        public string DefaultVersion
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._defaultVersion; }
+            set { this._defaultVersion = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _displayName;
         
         /// <summary>
-        /// Optional. The user specified tags associated with the account.
+        /// Optional. Gets or sets the display name for the application.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string DisplayName
         {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._displayName; }
+            set { this._displayName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the UpdateApplicationParameters class.
         /// </summary>
-        public BatchAccountCreateParameters()
+        public UpdateApplicationParameters()
         {
-            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

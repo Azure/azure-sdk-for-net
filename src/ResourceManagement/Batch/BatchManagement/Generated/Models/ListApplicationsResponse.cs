@@ -22,56 +22,57 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create operation.
+    /// Response to an ApplicationOperations.ListApplications request.
     /// </summary>
-    public partial class BatchAccountCreateParameters
+    public partial class ListApplicationsResponse : AzureOperationResponse
     {
-        private string _location;
+        private IList<Application> _applications;
         
         /// <summary>
-        /// Optional. The region in which the account is created.
+        /// Required. Gets or sets the list of applications.
         /// </summary>
-        public string Location
+        public IList<Application> Applications
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._applications; }
+            set { this._applications = value; }
         }
         
-        private AccountBaseProperties _properties;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional. The properties of the account.
+        /// Optional. Gets or sets the URL to get the next set of results.
         /// </summary>
-        public AccountBaseProperties Properties
+        public string NextLink
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The user specified tags associated with the account.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the ListApplicationsResponse class.
         /// </summary>
-        public BatchAccountCreateParameters()
+        public ListApplicationsResponse()
         {
-            this.Tags = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ListApplicationsResponse class
+        /// with required arguments.
+        /// </summary>
+        public ListApplicationsResponse(IList<Application> applications)
+            : this()
+        {
+            if (applications == null)
+            {
+                throw new ArgumentNullException("applications");
+            }
+            this.Applications = applications;
         }
     }
 }
