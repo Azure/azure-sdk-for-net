@@ -7033,7 +7033,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement localNetworkGatewayElement = responseDoc.Element(XName.Get("LocalNetworkGateway", "http://schemas.microsoft.com/windowsazure"));
                         if (localNetworkGatewayElement != null)
                         {
-                            XElement addressSpaceSequenceElement = localNetworkGatewayElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                            XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
+                            XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
+
+                            var addressSpaceSequenceElementFormat = new XElement(defaultNs + "AddressSpace");
+                            addressSpaceSequenceElementFormat.Add(new XAttribute(XNamespace.Xmlns + "a", array));
+                            XElement addressSpaceSequenceElement = localNetworkGatewayElement.Element(XName.Get(addressSpaceSequenceElementFormat.Name.ToString()));
+
                             if (addressSpaceSequenceElement != null)
                             {
                                 foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
@@ -8467,8 +8473,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     string ipAddressInstance = ipAddressElement.Value;
                                     localNetworkGatewayInstance.IpAddress = ipAddressInstance;
                                 }
-                                
-                                XElement addressSpaceSequenceElement = localNetworkGatewaysElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+
+                                XNamespace defaultNs = "http://schemas.microsoft.com/windowsazure";
+                                XNamespace array = "http://schemas.microsoft.com/2003/10/Serialization/Arrays";
+                                var addressSpaceSequenceElementFormat = new XElement(defaultNs + "AddressSpace");
+                                addressSpaceSequenceElementFormat.Add(new XAttribute(XNamespace.Xmlns + "a", array));
+                                XElement addressSpaceSequenceElement = localNetworkGatewaysElement.Element(XName.Get(addressSpaceSequenceElementFormat.Name.ToString()));
+
                                 if (addressSpaceSequenceElement != null)
                                 {
                                     foreach (XElement addressSpaceElement in addressSpaceSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
