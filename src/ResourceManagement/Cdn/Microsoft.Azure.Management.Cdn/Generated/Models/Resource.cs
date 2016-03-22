@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// Resource Id
+        /// Resource ID
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Resource Name
+        /// Resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }

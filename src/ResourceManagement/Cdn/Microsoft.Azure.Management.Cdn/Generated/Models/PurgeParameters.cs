@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters required for endpoint purge
+    /// Parameters required for endpoint purge.
     /// </summary>
     public partial class PurgeParameters
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The path to the content to be purged, can describe a file path or
+        /// The path to the content to be purged. Can describe a file path or
         /// a wild card directory.
         /// </summary>
         [JsonProperty(PropertyName = "contentPaths")]

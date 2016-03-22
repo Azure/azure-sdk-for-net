@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available CDN REST API operations
+        /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// CDN Origin is the source of the content being delivered via CDN. When
-    /// the edge nodes represented by an Endpoint do not have the requested
+    /// CDN origin is the source of the content being delivered via CDN. When
+    /// the edge nodes represented by an endpoint do not have the requested
     /// content cached, they attempt to fetch it from one or more of the
-    /// configured Origins.
+    /// configured origins.
     /// </summary>
     public partial class Origin : Resource
     {
@@ -43,19 +43,20 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The host name of the origin
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6
+        /// addresses are supported.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; set; }
 
         /// <summary>
-        /// The value of the http port, must be between 1 and 65535
+        /// The value of the HTTP port. Must be between 1 and 65535.
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpPort")]
         public int? HttpPort { get; set; }
 
         /// <summary>
-        /// The value of the https port, must be between 1 and 65535
+        /// The value of the https port. Must be between 1 and 65535.
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpsPort")]
         public int? HttpsPort { get; set; }

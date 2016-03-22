@@ -50,16 +50,16 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the existing CDN Origins within an Endpoint
+        /// Lists the existing CDN origins within an endpoint.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -219,20 +219,20 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets an existing CDN Origin within an Endpoint
+        /// Gets an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='originName'>
         /// Name of the origin, an arbitrary value but it needs to be unique under
         /// endpoint
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN Origin within an Endpoint
+        /// Creates a new CDN origin within an endpoint.
         /// </summary>
         /// <param name='originName'>
         /// Name of the origin, an arbitrary value but it needs to be unique under
@@ -408,13 +408,13 @@ namespace Microsoft.Azure.Management.Cdn
         /// Origin properties
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN Origin within an Endpoint
+        /// Creates a new CDN origin within an endpoint.
         /// </summary>
         /// <param name='originName'>
         /// Name of the origin, an arbitrary value but it needs to be unique under
@@ -443,13 +443,13 @@ namespace Microsoft.Azure.Management.Cdn
         /// Origin properties
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -641,23 +641,56 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing CDN Origin within an Endpoint
+        /// Updates an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='originName'>
-        /// Name of the origin, an arbitrary value but it needs to be unique under
-        /// endpoint
+        /// Name of the origin. Must be unique within endpoint.
         /// </param>
         /// <param name='originProperties'>
         /// Origin properties
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<Origin>> UpdateWithHttpMessagesAsync(string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<Origin> _response = await BeginUpdateWithHttpMessagesAsync(
+                originName, originProperties, endpointName, profileName, resourceGroupName, customHeaders, cancellationToken);
+            return await this.Client.GetPutOrPatchOperationResultAsync(_response,
+                customHeaders,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates an existing CDN origin within an endpoint.
+        /// </summary>
+        /// <param name='originName'>
+        /// Name of the origin. Must be unique within endpoint.
+        /// </param>
+        /// <param name='originProperties'>
+        /// Origin properties
+        /// </param>
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='profileName'>
+        /// Name of the CDN profile within the resource group.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -665,7 +698,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Origin>> UpdateWithHttpMessagesAsync(string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Origin>> BeginUpdateWithHttpMessagesAsync(string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (originName == null)
             {
@@ -708,7 +741,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -845,20 +878,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN Origin within an Endpoint
+        /// Deletes an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='originName'>
-        /// Name of the origin, an arbitrary value but it needs to be unique under
-        /// endpoint
+        /// Name of the origin. Must be unique within endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -875,20 +907,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN Origin within an Endpoint
+        /// Deletes an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='originName'>
-        /// Name of the origin, an arbitrary value but it needs to be unique under
-        /// endpoint
+        /// Name of the origin. Must be unique within endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

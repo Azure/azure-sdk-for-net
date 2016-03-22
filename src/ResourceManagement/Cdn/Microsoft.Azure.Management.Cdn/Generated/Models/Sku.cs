@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Defines a pricing tier for a profile
+    /// The SKU (pricing tier) of the CDN profile.
     /// </summary>
     public partial class Sku
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// Name of the resource sku. Possible values for this property
+        /// Name of the pricing tier. Possible values for this property
         /// include: 'Standard', 'Premium'.
         /// </summary>
         [JsonProperty(PropertyName = "name")]

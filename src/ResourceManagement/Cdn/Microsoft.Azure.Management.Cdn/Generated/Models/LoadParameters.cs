@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters required for endpoint load
+    /// Parameters required for endpoint load.
     /// </summary>
     public partial class LoadParameters
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The path to the content to be loaded, should describe a file path.
+        /// The path to the content to be loaded. Should describe a file path.
         /// </summary>
         [JsonProperty(PropertyName = "contentPaths")]
         public IList<string> ContentPaths { get; set; }

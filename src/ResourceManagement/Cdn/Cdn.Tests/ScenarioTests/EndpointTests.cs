@@ -24,6 +24,7 @@ using Cdn.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Threading;
+using Microsoft.Rest;
 
 namespace Cdn.Tests.ScenarioTests
 {
@@ -140,7 +141,7 @@ namespace Cdn.Tests.ScenarioTests
                     Tags = new Dictionary<string, string> { { "kay1", "value1" } }
                 };
 
-                Assert.ThrowsAny<ErrorResponseException>(() => {
+                Assert.ThrowsAny<ValidationException>(() => {
                     cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName); });
 
                 // Create a cdn endpoint with both http and https disallowed should fail
@@ -155,7 +156,15 @@ namespace Cdn.Tests.ScenarioTests
                     OriginPath = "/photos",
                     QueryStringCachingBehavior = QueryStringCachingBehavior.BypassCaching,
                     ContentTypesToCompress = new List<string> { "text/html", "application/octet-stream" },
-                    Tags = new Dictionary<string, string> { { "kay1", "value1" } }
+                    Tags = new Dictionary<string, string> { { "kay1", "value1" } },
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    }
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Input of check name availability API
+    /// Input of CheckNameAvailability API.
     /// </summary>
     public partial class CheckNameAvailabilityInput
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The resource name to validate
+        /// The resource name to validate.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

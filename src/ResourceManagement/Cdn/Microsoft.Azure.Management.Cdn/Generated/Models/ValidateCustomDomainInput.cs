@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Input of the custom domain to be validated
+    /// Input of the custom domain to be validated.
     /// </summary>
     public partial class ValidateCustomDomainInput
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The host name of the custom domain
+        /// The host name of the custom domain. Must be a domain name.
         /// </summary>
         [JsonProperty(PropertyName = "hostName")]
         public string HostName { get; set; }

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class OperationsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available CDN REST API operations
+            /// Lists all of the available CDN REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists all of the available CDN REST API operations
+            /// Lists all of the available CDN REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

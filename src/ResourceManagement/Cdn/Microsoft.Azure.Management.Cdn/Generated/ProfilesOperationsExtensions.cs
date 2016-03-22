@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class ProfilesOperationsExtensions
     {
             /// <summary>
-            /// Lists the CDN Profiles within an Azure subscitption
+            /// Lists the CDN profiles within an Azure subscitption.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the CDN Profiles within an Azure subscitption
+            /// Lists the CDN profiles within an Azure subscitption.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the CDN Profiles within a resource group
+            /// Lists the CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static IEnumerable<Profile> ListByResourceGroup(this IProfilesOperations operations, string resourceGroupName)
             {
@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the CDN Profiles within a resource group
+            /// Lists the CDN profiles within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -78,16 +78,16 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets a CDN profile with the specified parameters
+            /// Gets a CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Profile Get(this IProfilesOperations operations, string profileName, string resourceGroupName)
             {
@@ -95,16 +95,16 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets a CDN profile with the specified parameters
+            /// Gets a CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -116,19 +116,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Profile with the specified parameters
+            /// Creates a new CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='profileProperties'>
-            /// Profile properties needed for creation
+            /// Profile properties needed for creation.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Profile Create(this IProfilesOperations operations, string profileName, ProfileCreateParameters profileProperties, string resourceGroupName)
             {
@@ -136,19 +136,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Profile with the specified parameters
+            /// Creates a new CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='profileProperties'>
-            /// Profile properties needed for creation
+            /// Profile properties needed for creation.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,19 +160,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Profile with the specified parameters
+            /// Creates a new CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='profileProperties'>
-            /// Profile properties needed for creation
+            /// Profile properties needed for creation.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Profile BeginCreate(this IProfilesOperations operations, string profileName, ProfileCreateParameters profileProperties, string resourceGroupName)
             {
@@ -180,19 +180,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Profile with the specified parameters
+            /// Creates a new CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='profileProperties'>
-            /// Profile properties needed for creation
+            /// Profile properties needed for creation.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -204,16 +204,16 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN Profile with the specified parameters
+            /// Updates an existing CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='tags'>
             /// Profile tags
@@ -224,16 +224,16 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN Profile with the specified parameters
+            /// Updates an existing CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='tags'>
             /// Profile tags
@@ -248,18 +248,64 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all sub resources including
-            /// endpoints, origins and CustomDomains
+            /// Updates an existing CDN profile with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='tags'>
+            /// Profile tags
+            /// </param>
+            public static Profile BeginUpdate(this IProfilesOperations operations, string profileName, string resourceGroupName, IDictionary<string, string> tags)
+            {
+                return Task.Factory.StartNew(s => ((IProfilesOperations)s).BeginUpdateAsync(profileName, resourceGroupName, tags), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing CDN profile with the specified parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='tags'>
+            /// Profile tags
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Profile> BeginUpdateAsync( this IProfilesOperations operations, string profileName, string resourceGroupName, IDictionary<string, string> tags, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(profileName, resourceGroupName, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an existing CDN profile with the specified parameters. Deleting a
+            /// profile will result in the deletion of all subresources including
+            /// endpoints, origins and custom domains.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void DeleteIfExists(this IProfilesOperations operations, string profileName, string resourceGroupName)
             {
@@ -267,18 +313,18 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all sub resources including
-            /// endpoints, origins and CustomDomains
+            /// Deletes an existing CDN profile with the specified parameters. Deleting a
+            /// profile will result in the deletion of all subresources including
+            /// endpoints, origins and custom domains.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -289,18 +335,18 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all sub resources including
-            /// endpoints, origins and CustomDomains
+            /// Deletes an existing CDN profile with the specified parameters. Deleting a
+            /// profile will result in the deletion of all subresources including
+            /// endpoints, origins and custom domains.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void BeginDeleteIfExists(this IProfilesOperations operations, string profileName, string resourceGroupName)
             {
@@ -308,18 +354,18 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all sub resources including
-            /// endpoints, origins and CustomDomains
+            /// Deletes an existing CDN profile with the specified parameters. Deleting a
+            /// profile will result in the deletion of all subresources including
+            /// endpoints, origins and custom domains.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -339,10 +385,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static SsoUri GenerateSsoUri(this IProfilesOperations operations, string profileName, string resourceGroupName)
             {
@@ -359,10 +405,10 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

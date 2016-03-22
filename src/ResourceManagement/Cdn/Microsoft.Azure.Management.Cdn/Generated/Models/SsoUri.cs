@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Sso uri required to login to third party web portal
+    /// SSO URI required to login to third party web portal.
     /// </summary>
     public partial class SsoUri
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The uri used to login to third party web portal
+        /// The URI used to login to third party web portal.
         /// </summary>
         [JsonProperty(PropertyName = "ssoUriValue")]
         public string SsoUriValue { get; set; }

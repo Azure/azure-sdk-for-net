@@ -20,16 +20,16 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class EndpointsOperationsExtensions
     {
             /// <summary>
-            /// Lists existing CDN endpoints within a profile
+            /// Lists existing CDN endpoints within a profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static IEnumerable<Endpoint> ListByProfile(this IEndpointsOperations operations, string profileName, string resourceGroupName)
             {
@@ -37,16 +37,16 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists existing CDN endpoints within a profile
+            /// Lists existing CDN endpoints within a profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -58,19 +58,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN endpoint with the specified parameters
+            /// Gets an existing CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Endpoint Get(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -78,19 +78,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN endpoint with the specified parameters
+            /// Gets an existing CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -102,22 +102,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters
+            /// Creates a new CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Endpoint Create(this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName)
             {
@@ -125,22 +125,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters
+            /// Creates a new CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -152,22 +152,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters
+            /// Creates a new CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Endpoint BeginCreate(this IEndpointsOperations operations, string endpointName, EndpointCreateParameters endpointProperties, string profileName, string resourceGroupName)
             {
@@ -175,22 +175,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN endpoint with the specified parameters
+            /// Creates a new CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -211,16 +211,16 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Endpoint Update(this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName)
             {
@@ -237,16 +237,16 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -258,19 +258,77 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// deletes an existing CDN endpoint with the specified parameters
+            /// Updates an existing CDN endpoint with the specified parameters. Only tags
+            /// and OriginHostHeader can be updated after creating an endpoint. To update
+            /// origins, use the Update Origin operation. To update custom domains, use
+            /// the Update Custom Domain operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='endpointProperties'>
+            /// Endpoint properties
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            public static Endpoint BeginUpdate(this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName)
+            {
+                return Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginUpdateAsync(endpointName, endpointProperties, profileName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing CDN endpoint with the specified parameters. Only tags
+            /// and OriginHostHeader can be updated after creating an endpoint. To update
+            /// origins, use the Update Origin operation. To update custom domains, use
+            /// the Update Custom Domain operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='endpointProperties'>
+            /// Endpoint properties
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Endpoint> BeginUpdateAsync( this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an existing CDN endpoint with the specified parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void DeleteIfExists(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -278,19 +336,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// deletes an existing CDN endpoint with the specified parameters
+            /// Deletes an existing CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -301,19 +359,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// deletes an existing CDN endpoint with the specified parameters
+            /// Deletes an existing CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void BeginDeleteIfExists(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -321,19 +379,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// deletes an existing CDN endpoint with the specified parameters
+            /// Deletes an existing CDN endpoint with the specified parameters.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -344,19 +402,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint
+            /// Starts an existing stopped CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void Start(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -364,19 +422,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint
+            /// Starts an existing stopped CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -387,19 +445,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint
+            /// Starts an existing stopped CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void BeginStart(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -407,19 +465,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Starts an existing stopped CDN endpoint
+            /// Starts an existing stopped CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -430,19 +488,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Stops an existing running CDN endpoint
+            /// Stops an existing running CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void Stop(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -450,19 +508,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Stops an existing running CDN endpoint
+            /// Stops an existing running CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -473,19 +531,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Stops an existing running CDN endpoint
+            /// Stops an existing running CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static void BeginStop(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -493,19 +551,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Stops an existing running CDN endpoint
+            /// Stops an existing running CDN endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -516,22 +574,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content
+            /// Forcibly purges CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be purged, can describe a file path or a wild
+            /// The path to the content to be purged. Can describe a file path or a wild
             /// card directory.
             /// </param>
             public static void PurgeContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, IList<string> contentPaths)
@@ -540,22 +598,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content
+            /// Forcibly purges CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be purged, can describe a file path or a wild
+            /// The path to the content to be purged. Can describe a file path or a wild
             /// card directory.
             /// </param>
             /// <param name='cancellationToken'>
@@ -567,22 +625,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content
+            /// Forcibly purges CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be purged, can describe a file path or a wild
+            /// The path to the content to be purged. Can describe a file path or a wild
             /// card directory.
             /// </param>
             public static void BeginPurgeContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, IList<string> contentPaths)
@@ -591,22 +649,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly purges CDN endpoint content
+            /// Forcibly purges CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be purged, can describe a file path or a wild
+            /// The path to the content to be purged. Can describe a file path or a wild
             /// card directory.
             /// </param>
             /// <param name='cancellationToken'>
@@ -618,22 +676,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content
+            /// Forcibly pre-loads CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded, should describe a file path.
+            /// The path to the content to be loaded. Should describe a file path.
             /// </param>
             public static void LoadContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, IList<string> contentPaths)
             {
@@ -641,22 +699,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content
+            /// Forcibly pre-loads CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded, should describe a file path.
+            /// The path to the content to be loaded. Should describe a file path.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -667,22 +725,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content
+            /// Forcibly pre-loads CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded, should describe a file path.
+            /// The path to the content to be loaded. Should describe a file path.
             /// </param>
             public static void BeginLoadContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, IList<string> contentPaths)
             {
@@ -690,22 +748,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Forcibly pre-loads CDN endpoint content
+            /// Forcibly pre-loads CDN endpoint content.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
-            /// The path to the content to be loaded, should describe a file path.
+            /// The path to the content to be loaded. Should describe a file path.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -716,23 +774,23 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Validates a Custom Domain mapping to ensure it maps to the correct CNAME
-            /// in DNS
+            /// Validates a custom domain mapping to ensure it maps to the correct CNAME
+            /// in DNS.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             public static ValidateCustomDomainOutput ValidateCustomDomain(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, string hostName)
             {
@@ -740,23 +798,23 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Validates a Custom Domain mapping to ensure it maps to the correct CNAME
-            /// in DNS
+            /// Validates a custom domain mapping to ensure it maps to the correct CNAME
+            /// in DNS.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

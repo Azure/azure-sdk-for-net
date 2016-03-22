@@ -20,19 +20,19 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class OriginsOperationsExtensions
     {
             /// <summary>
-            /// Lists the existing CDN Origins within an Endpoint
+            /// Lists the existing CDN origins within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static IEnumerable<Origin> ListByEndpoint(this IOriginsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -40,19 +40,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the existing CDN Origins within an Endpoint
+            /// Lists the existing CDN origins within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN Origin within an Endpoint
+            /// Gets an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,13 +74,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// endpoint
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Origin Get(this IOriginsOperations operations, string originName, string endpointName, string profileName, string resourceGroupName)
             {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN Origin within an Endpoint
+            /// Gets an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -98,13 +98,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// endpoint
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Origin within an Endpoint
+            /// Creates a new CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -129,13 +129,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// Origin properties
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Origin Create(this IOriginsOperations operations, string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName)
             {
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Origin within an Endpoint
+            /// Creates a new CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -156,13 +156,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// Origin properties
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Origin within an Endpoint
+            /// Creates a new CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,13 +187,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// Origin properties
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Origin BeginCreate(this IOriginsOperations operations, string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName)
             {
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Origin within an Endpoint
+            /// Creates a new CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -214,13 +214,13 @@ namespace Microsoft.Azure.Management.Cdn
             /// Origin properties
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -232,26 +232,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN Origin within an Endpoint
+            /// Updates an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='originName'>
-            /// Name of the origin, an arbitrary value but it needs to be unique under
-            /// endpoint
+            /// Name of the origin. Must be unique within endpoint.
             /// </param>
             /// <param name='originProperties'>
             /// Origin properties
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Origin Update(this IOriginsOperations operations, string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName)
             {
@@ -259,26 +258,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN Origin within an Endpoint
+            /// Updates an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='originName'>
-            /// Name of the origin, an arbitrary value but it needs to be unique under
-            /// endpoint
+            /// Name of the origin. Must be unique within endpoint.
             /// </param>
             /// <param name='originProperties'>
             /// Origin properties
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -290,23 +288,80 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Origin within an Endpoint
+            /// Updates an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='originName'>
-            /// Name of the origin, an arbitrary value but it needs to be unique under
-            /// endpoint
+            /// Name of the origin. Must be unique within endpoint.
+            /// </param>
+            /// <param name='originProperties'>
+            /// Origin properties
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            public static Origin BeginUpdate(this IOriginsOperations operations, string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName)
+            {
+                return Task.Factory.StartNew(s => ((IOriginsOperations)s).BeginUpdateAsync(originName, originProperties, endpointName, profileName, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing CDN origin within an endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin. Must be unique within endpoint.
+            /// </param>
+            /// <param name='originProperties'>
+            /// Origin properties
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Origin> BeginUpdateAsync( this IOriginsOperations operations, string originName, OriginParameters originProperties, string endpointName, string profileName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(originName, originProperties, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an existing CDN origin within an endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='originName'>
+            /// Name of the origin. Must be unique within endpoint.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Origin DeleteIfExists(this IOriginsOperations operations, string originName, string endpointName, string profileName, string resourceGroupName)
             {
@@ -314,23 +369,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Origin within an Endpoint
+            /// Deletes an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='originName'>
-            /// Name of the origin, an arbitrary value but it needs to be unique under
-            /// endpoint
+            /// Name of the origin. Must be unique within endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -342,23 +396,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Origin within an Endpoint
+            /// Deletes an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='originName'>
-            /// Name of the origin, an arbitrary value but it needs to be unique under
-            /// endpoint
+            /// Name of the origin. Must be unique within endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static Origin BeginDeleteIfExists(this IOriginsOperations operations, string originName, string endpointName, string profileName, string resourceGroupName)
             {
@@ -366,23 +419,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Origin within an Endpoint
+            /// Deletes an existing CDN origin within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='originName'>
-            /// Name of the origin, an arbitrary value but it needs to be unique under
-            /// endpoint
+            /// Name of the origin. Must be unique within endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

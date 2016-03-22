@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string Code { get; set; }
 
         /// <summary>
-        /// Error message indicating why the operation failed
+        /// Error message indicating why the operation failed.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

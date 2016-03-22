@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// CustomDomain properties required for custom domain creation or update
+    /// CustomDomain properties required for custom domain creation or update.
     /// </summary>
     public partial class CustomDomainParameters : IResource
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The host name of the custom domain
+        /// The host name of the custom domain. Must be a domain name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; set; }

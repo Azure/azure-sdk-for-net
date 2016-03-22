@@ -20,19 +20,19 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class CustomDomainsOperationsExtensions
     {
             /// <summary>
-            /// Lists the existing CDN Custom Domains within an Endpoint
+            /// Lists the existing CDN custom domains within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static IEnumerable<CustomDomain> ListByEndpoint(this ICustomDomainsOperations operations, string endpointName, string profileName, string resourceGroupName)
             {
@@ -40,19 +40,19 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Lists the existing CDN Custom Domains within an Endpoint
+            /// Lists the existing CDN custom domains within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,22 +64,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN Custom Domain within an Endpoint
+            /// Gets an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static CustomDomain Get(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName)
             {
@@ -87,22 +87,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Gets an existing CDN Custom Domain within an Endpoint
+            /// Gets an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -114,25 +114,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Custom Domain within an Endpoint
+            /// Creates a new CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             public static CustomDomain Create(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName)
             {
@@ -140,25 +140,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Custom Domain within an Endpoint
+            /// Creates a new CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -170,25 +170,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Custom Domain within an Endpoint
+            /// Creates a new CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             public static CustomDomain BeginCreate(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName)
             {
@@ -196,25 +196,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Creates a new CDN Custom Domain within an Endpoint
+            /// Creates a new CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -226,25 +226,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN Custom Domain within an Endpoint
+            /// Updates an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             public static ErrorResponse Update(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName)
             {
@@ -252,25 +252,25 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN Custom Domain within an Endpoint
+            /// Updates an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='hostName'>
-            /// The host name of the custom domain
+            /// The host name of the custom domain. Must be a domain name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -282,22 +282,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Custom Domain within an Endpoint
+            /// Deletes an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static CustomDomain DeleteIfExists(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName)
             {
@@ -305,22 +305,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Custom Domain within an Endpoint
+            /// Deletes an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -332,22 +332,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Custom Domain within an Endpoint
+            /// Deletes an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             public static CustomDomain BeginDeleteIfExists(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName)
             {
@@ -355,22 +355,22 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes an existing CDN Custom Domain within an Endpoint
+            /// Deletes an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group
+            /// Name of the CDN profile within the resource group.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

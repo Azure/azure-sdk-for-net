@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Output of custom domain validation
+    /// Output of custom domain validation.
     /// </summary>
     public partial class ValidateCustomDomainOutput
     {
@@ -37,21 +37,21 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// Indicates whether the custom domain is validated or not
+        /// Indicates whether the custom domain is validated or not.
         /// </summary>
-        [JsonProperty(PropertyName = "CustomDomainValidated")]
+        [JsonProperty(PropertyName = "customDomainValidated")]
         public bool? CustomDomainValidated { get; set; }
 
         /// <summary>
-        /// The reason why the custom domain is not valid
+        /// The reason why the custom domain is not valid.
         /// </summary>
-        [JsonProperty(PropertyName = "Reason")]
+        [JsonProperty(PropertyName = "reason")]
         public string Reason { get; set; }
 
         /// <summary>
-        /// The message on why the custom domain is not valid
+        /// The message describing why the custom domain is not valid.
         /// </summary>
-        [JsonProperty(PropertyName = "Message")]
+        [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
     }

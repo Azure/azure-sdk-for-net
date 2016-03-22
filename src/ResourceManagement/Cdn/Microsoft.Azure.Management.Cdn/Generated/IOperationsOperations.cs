@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Cdn
     public partial interface IOperationsOperations
     {
         /// <summary>
-        /// Lists all of the available CDN REST API operations
+        /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

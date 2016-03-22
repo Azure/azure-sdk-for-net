@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Endpoint properties required for new endpoint creation
+    /// Endpoint properties required for new endpoint creation.
     /// </summary>
     public partial class EndpointUpdateParameters : IResource
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the EndpointUpdateParameters class.
         /// </summary>
-        public EndpointUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), IList<DeepCreatedOrigin> origins = default(IList<DeepCreatedOrigin>))
+        public EndpointUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?))
         {
             Tags = tags;
             OriginHostHeader = originHostHeader;
@@ -39,7 +39,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             IsHttpAllowed = isHttpAllowed;
             IsHttpsAllowed = isHttpsAllowed;
             QueryStringCachingBehavior = queryStringCachingBehavior;
-            Origins = origins;
         }
 
         /// <summary>
@@ -49,46 +48,47 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// The host header CDN provider will send along with content requests
-        /// to origins. The default value would be the host name of the
+        /// The host header the CDN provider will send along with content
+        /// requests to origins. The default value is the host name of the
         /// origin.
         /// </summary>
         [JsonProperty(PropertyName = "properties.originHostHeader")]
         public string OriginHostHeader { get; set; }
 
         /// <summary>
-        /// The path used for origin requests
+        /// The path used for origin requests.
         /// </summary>
         [JsonProperty(PropertyName = "properties.originPath")]
         public string OriginPath { get; set; }
 
         /// <summary>
         /// List of content types on which compression will be applied. The
-        /// value for the elements should be Internet media type.
+        /// value for the elements should be a valid MIME type.
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentTypesToCompress")]
         public IList<string> ContentTypesToCompress { get; set; }
 
         /// <summary>
-        /// Indicates whether the compression is enabled. Default value is
+        /// Indicates whether content compression is enabled. Default value is
         /// false. If compression is enabled, the content transferred from
-        /// cdn endpoint to end user will be compressed. The requested
-        /// content must be larger than 1 byte and smaller than 1 MB.
+        /// the CDN endpoint to the end user will be compressed. The
+        /// requested content must be larger than 1 byte and smaller than 1
+        /// MB.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isCompressionEnabled")]
         public bool? IsCompressionEnabled { get; set; }
 
         /// <summary>
-        /// Indicates whether http traffic is allowed on the endpoint. Default
-        /// value is true. At least one protocol (http or https) must be
+        /// Indicates whether HTTP traffic is allowed on the endpoint. Default
+        /// value is true. At least one protocol (HTTP or HTTPS) must be
         /// allowed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isHttpAllowed")]
         public bool? IsHttpAllowed { get; set; }
 
         /// <summary>
-        /// Indicates whether https traffic is allowed on the endpoint.
-        /// Default value is true. At least one protocol (http or https) must
+        /// Indicates whether HTTPS traffic is allowed on the endpoint.
+        /// Default value is true. At least one protocol (HTTP or HTTPS) must
         /// be allowed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isHttpsAllowed")]
@@ -101,14 +101,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.queryStringCachingBehavior")]
         public QueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
-
-        /// <summary>
-        /// The set of origins of the CDN endpoint. When multiple origins
-        /// exist, the first origin will be used as primary and rest will be
-        /// used as failover options.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.origins")]
-        public IList<DeepCreatedOrigin> Origins { get; set; }
 
     }
 }

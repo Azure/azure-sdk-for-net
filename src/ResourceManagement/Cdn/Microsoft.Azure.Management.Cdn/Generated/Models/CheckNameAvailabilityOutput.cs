@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Output of check name availability API
+    /// Output of check name availability API.
     /// </summary>
     public partial class CheckNameAvailabilityOutput
     {
@@ -39,19 +39,20 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// Indicates whether the name is available
+        /// Indicates whether the name is available.
         /// </summary>
         [JsonProperty(PropertyName = "NameAvailable")]
         public bool? NameAvailable { get; set; }
 
         /// <summary>
-        /// The reason why the name is not available
+        /// The reason why the name is not available.
         /// </summary>
         [JsonProperty(PropertyName = "Reason")]
         public string Reason { get; set; }
 
         /// <summary>
-        /// The detailed error message on why the name is not available
+        /// The detailed error message describing why the name is not
+        /// available.
         /// </summary>
         [JsonProperty(PropertyName = "Message")]
         public string Message { get; set; }

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Deep created origins within a CDN endpoint
+    /// Deep created origins within a CDN endpoint.
     /// </summary>
     public partial class DeepCreatedOrigin : IResource
     {
@@ -44,19 +44,20 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The host name of the origin
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6
+        /// addresses are supported.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; set; }
 
         /// <summary>
-        /// The value of the http port, must be between 1 and 65535
+        /// The value of the HTTP port. Must be between 1 and 65535
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpPort")]
         public int? HttpPort { get; set; }
 
         /// <summary>
-        /// The value of the https port, must be between 1 and 65535
+        /// The value of the HTTPS port. Must be between 1 and 65535
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpsPort")]
         public int? HttpsPort { get; set; }

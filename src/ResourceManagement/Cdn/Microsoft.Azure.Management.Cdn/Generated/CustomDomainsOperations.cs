@@ -50,16 +50,16 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the existing CDN Custom Domains within an Endpoint
+        /// Lists the existing CDN custom domains within an endpoint.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -219,19 +219,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets an existing CDN Custom Domain within an Endpoint
+        /// Gets an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -397,22 +397,22 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN Custom Domain within an Endpoint
+        /// Creates a new CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='hostName'>
-        /// The host name of the custom domain
+        /// The host name of the custom domain. Must be a domain name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -431,22 +431,22 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN Custom Domain within an Endpoint
+        /// Creates a new CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='hostName'>
-        /// The host name of the custom domain
+        /// The host name of the custom domain. Must be a domain name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -640,22 +640,22 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing CDN Custom Domain within an Endpoint
+        /// Updates an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='hostName'>
-        /// The host name of the custom domain
+        /// The host name of the custom domain. Must be a domain name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -832,19 +832,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN Custom Domain within an Endpoint
+        /// Deletes an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -861,19 +861,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN Custom Domain within an Endpoint
+        /// Deletes an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

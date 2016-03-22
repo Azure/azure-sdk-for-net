@@ -55,12 +55,12 @@ namespace Microsoft.Azure.Management.Cdn
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Azure Subscription ID
+        /// Azure Subscription ID.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request, current version is
+        /// Version of the API to be used with the client request. Current version is
         /// 2015-06-01
         /// </summary>
         public string ApiVersion { get; private set; }

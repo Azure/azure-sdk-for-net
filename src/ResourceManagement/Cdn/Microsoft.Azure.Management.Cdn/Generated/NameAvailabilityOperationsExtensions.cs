@@ -20,15 +20,15 @@ namespace Microsoft.Azure.Management.Cdn
     public static partial class NameAvailabilityOperationsExtensions
     {
             /// <summary>
-            /// Check the availability of a resource name. This is needed for resources
-            /// where name is globally unique (ex: endpoint). With this operation checks
-            /// if the name is available or not without creating the resource.
+            /// Check the availability of a resource name without creating the resource.
+            /// This is needed for resources where name is globally unique, such as a CDN
+            /// endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
-            /// The resource name to validate
+            /// The resource name to validate.
             /// </param>
             /// <param name='type'>
             /// The type of the resource whose name is to be validated. Possible values
@@ -40,15 +40,15 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Check the availability of a resource name. This is needed for resources
-            /// where name is globally unique (ex: endpoint). With this operation checks
-            /// if the name is available or not without creating the resource.
+            /// Check the availability of a resource name without creating the resource.
+            /// This is needed for resources where name is globally unique, such as a CDN
+            /// endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
-            /// The resource name to validate
+            /// The resource name to validate.
             /// </param>
             /// <param name='type'>
             /// The type of the resource whose name is to be validated. Possible values

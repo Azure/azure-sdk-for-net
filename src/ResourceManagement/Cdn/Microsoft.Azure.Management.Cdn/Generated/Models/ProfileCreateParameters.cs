@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Profile properties required for profile creation
+    /// Profile properties required for profile creation.
     /// </summary>
     public partial class ProfileCreateParameters : IResource
     {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Profile sku
+        /// Profile SKU
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
         public Sku Sku { get; set; }

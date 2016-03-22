@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the CDN Profiles within an Azure subscitption
+        /// Lists the CDN profiles within an Azure subscitption.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -192,10 +192,10 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Lists the CDN Profiles within a resource group
+        /// Lists the CDN profiles within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -343,13 +343,13 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets a CDN profile with the specified parameters
+        /// Gets a CDN profile with the specified parameters.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -503,16 +503,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN Profile with the specified parameters
+        /// Creates a new CDN profile with the specified parameters.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='profileProperties'>
-        /// Profile properties needed for creation
+        /// Profile properties needed for creation.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -531,16 +531,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN Profile with the specified parameters
+        /// Creates a new CDN profile with the specified parameters.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='profileProperties'>
-        /// Profile properties needed for creation
+        /// Profile properties needed for creation.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -720,13 +720,41 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Updates an existing CDN Profile with the specified parameters
+        /// Updates an existing CDN profile with the specified parameters.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='tags'>
+        /// Profile tags
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<Profile>> UpdateWithHttpMessagesAsync(string profileName, string resourceGroupName, IDictionary<string, string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<Profile> _response = await BeginUpdateWithHttpMessagesAsync(
+                profileName, resourceGroupName, tags, customHeaders, cancellationToken);
+            return await this.Client.GetPutOrPatchOperationResultAsync(_response,
+                customHeaders,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates an existing CDN profile with the specified parameters.
+        /// </summary>
+        /// <param name='profileName'>
+        /// Name of the CDN profile within the resource group.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='tags'>
         /// Profile tags
@@ -737,7 +765,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Profile>> UpdateWithHttpMessagesAsync(string profileName, string resourceGroupName, IDictionary<string, string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Profile>> BeginUpdateWithHttpMessagesAsync(string profileName, string resourceGroupName, IDictionary<string, string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (profileName == null)
             {
@@ -776,7 +804,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileProperties", profileProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -898,15 +926,15 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN Profile with the specified parameters. Deleting a
-        /// profile will result in the deletion of all sub resources including
-        /// endpoints, origins and CustomDomains
+        /// Deletes an existing CDN profile with the specified parameters. Deleting a
+        /// profile will result in the deletion of all subresources including
+        /// endpoints, origins and custom domains.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -923,15 +951,15 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Deletes an existing CDN Profile with the specified parameters. Deleting a
-        /// profile will result in the deletion of all sub resources including
-        /// endpoints, origins and CustomDomains
+        /// Deletes an existing CDN profile with the specified parameters. Deleting a
+        /// profile will result in the deletion of all subresources including
+        /// endpoints, origins and custom domains.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1078,10 +1106,10 @@ namespace Microsoft.Azure.Management.Cdn
         /// approximately every 10 minutes.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

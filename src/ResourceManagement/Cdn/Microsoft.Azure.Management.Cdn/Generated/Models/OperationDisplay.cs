@@ -42,14 +42,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string Provider { get; set; }
 
         /// <summary>
-        /// Resource on which the operation is performed: profile, endpoint,..
-        /// etc
+        /// Resource on which the operation is performed: Profile, endpoint,
+        /// etc.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
-        /// Operation type: read, write, delete,.. etc
+        /// Operation type: Read, write, delete, etc.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }

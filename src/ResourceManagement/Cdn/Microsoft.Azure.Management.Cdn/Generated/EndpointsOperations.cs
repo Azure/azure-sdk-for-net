@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.Cdn
         public CdnManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists existing CDN endpoints within a profile
+        /// Lists existing CDN endpoints within a profile.
         /// </summary>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -111,6 +111,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -138,6 +139,8 @@ namespace Microsoft.Azure.Management.Cdn
                 }
             }
 
+            // Serialize Request
+            string _requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -150,19 +153,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -173,11 +177,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -192,14 +201,19 @@ namespace Microsoft.Azure.Management.Cdn
             // Deserialize Response
             if ((int)_statusCode == 200)
             {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     _result.Body = SafeJsonConvert.DeserializeObject<Page<Endpoint>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
@@ -210,16 +224,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets an existing CDN endpoint with the specified parameters
+        /// Gets an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -280,6 +294,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -307,6 +322,8 @@ namespace Microsoft.Azure.Management.Cdn
                 }
             }
 
+            // Serialize Request
+            string _requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -319,19 +336,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -342,11 +360,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -361,14 +384,19 @@ namespace Microsoft.Azure.Management.Cdn
             // Deserialize Response
             if ((int)_statusCode == 200)
             {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     _result.Body = SafeJsonConvert.DeserializeObject<Endpoint>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
@@ -379,19 +407,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN endpoint with the specified parameters
+        /// Creates a new CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='endpointProperties'>
         /// Endpoint properties
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -410,19 +438,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Creates a new CDN endpoint with the specified parameters
+        /// Creates a new CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='endpointProperties'>
         /// Endpoint properties
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -492,6 +520,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -520,7 +549,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             // Serialize Request
-            string _requestContent = SafeJsonConvert.SerializeObject(endpointProperties, this.Client.SerializationSettings);
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(endpointProperties, this.Client.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
@@ -535,19 +565,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -558,11 +589,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -577,27 +613,37 @@ namespace Microsoft.Azure.Management.Cdn
             // Deserialize Response
             if ((int)_statusCode == 201)
             {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     _result.Body = SafeJsonConvert.DeserializeObject<Endpoint>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             // Deserialize Response
             if ((int)_statusCode == 202)
             {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     _result.Body = SafeJsonConvert.DeserializeObject<Endpoint>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
@@ -614,16 +660,50 @@ namespace Microsoft.Azure.Management.Cdn
         /// the Update Custom Domain operation.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='endpointProperties'>
         /// Endpoint properties
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<Endpoint>> UpdateWithHttpMessagesAsync(string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<Endpoint> _response = await BeginUpdateWithHttpMessagesAsync(
+                endpointName, endpointProperties, profileName, resourceGroupName, customHeaders, cancellationToken);
+            return await this.Client.GetPutOrPatchOperationResultAsync(_response,
+                customHeaders,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates an existing CDN endpoint with the specified parameters. Only tags
+        /// and OriginHostHeader can be updated after creating an endpoint. To update
+        /// origins, use the Update Origin operation. To update custom domains, use
+        /// the Update Custom Domain operation.
+        /// </summary>
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='endpointProperties'>
+        /// Endpoint properties
+        /// </param>
+        /// <param name='profileName'>
+        /// Name of the CDN profile within the resource group.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -631,7 +711,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Endpoint>> UpdateWithHttpMessagesAsync(string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Endpoint>> BeginUpdateWithHttpMessagesAsync(string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (endpointName == null)
             {
@@ -669,7 +749,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -689,6 +769,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -717,7 +798,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             // Serialize Request
-            string _requestContent = SafeJsonConvert.SerializeObject(endpointProperties, this.Client.SerializationSettings);
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(endpointProperties, this.Client.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
@@ -732,19 +814,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if ((int)_statusCode != 202)
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -755,11 +838,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -772,16 +860,39 @@ namespace Microsoft.Azure.Management.Cdn
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 202)
+            if ((int)_statusCode == 200)
             {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     _result.Body = SafeJsonConvert.DeserializeObject<Endpoint>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Endpoint>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
@@ -792,16 +903,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// deletes an existing CDN endpoint with the specified parameters
+        /// Deletes an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -818,16 +929,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// deletes an existing CDN endpoint with the specified parameters
+        /// Deletes an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -888,6 +999,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -915,6 +1027,8 @@ namespace Microsoft.Azure.Management.Cdn
                 }
             }
 
+            // Serialize Request
+            string _requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -927,19 +1041,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -950,11 +1065,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -974,16 +1094,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Starts an existing stopped CDN endpoint
+        /// Starts an existing stopped CDN endpoint.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1000,16 +1120,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Starts an existing stopped CDN endpoint
+        /// Starts an existing stopped CDN endpoint.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1070,6 +1190,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -1097,6 +1218,8 @@ namespace Microsoft.Azure.Management.Cdn
                 }
             }
 
+            // Serialize Request
+            string _requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1109,19 +1232,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -1132,11 +1256,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -1156,16 +1285,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Stops an existing running CDN endpoint
+        /// Stops an existing running CDN endpoint.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1182,16 +1311,16 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Stops an existing running CDN endpoint
+        /// Stops an existing running CDN endpoint.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1252,6 +1381,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -1279,6 +1409,8 @@ namespace Microsoft.Azure.Management.Cdn
                 }
             }
 
+            // Serialize Request
+            string _requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1291,19 +1423,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -1314,11 +1447,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -1338,19 +1476,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Forcibly purges CDN endpoint content
+        /// Forcibly purges CDN endpoint content.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='contentPaths'>
-        /// The path to the content to be purged, can describe a file path or a wild
+        /// The path to the content to be purged. Can describe a file path or a wild
         /// card directory.
         /// </param>
         /// <param name='customHeaders'>
@@ -1368,19 +1506,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Forcibly purges CDN endpoint content
+        /// Forcibly purges CDN endpoint content.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='contentPaths'>
-        /// The path to the content to be purged, can describe a file path or a wild
+        /// The path to the content to be purged. Can describe a file path or a wild
         /// card directory.
         /// </param>
         /// <param name='customHeaders'>
@@ -1453,6 +1591,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -1481,7 +1620,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             // Serialize Request
-            string _requestContent = SafeJsonConvert.SerializeObject(contentFilePaths, this.Client.SerializationSettings);
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(contentFilePaths, this.Client.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
@@ -1496,19 +1636,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -1519,11 +1660,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -1543,19 +1689,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Forcibly pre-loads CDN endpoint content
+        /// Forcibly pre-loads CDN endpoint content.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='contentPaths'>
-        /// The path to the content to be loaded, should describe a file path.
+        /// The path to the content to be loaded. Should describe a file path.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1572,19 +1718,19 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Forcibly pre-loads CDN endpoint content
+        /// Forcibly pre-loads CDN endpoint content.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='contentPaths'>
-        /// The path to the content to be loaded, should describe a file path.
+        /// The path to the content to be loaded. Should describe a file path.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1656,6 +1802,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -1684,7 +1831,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             // Serialize Request
-            string _requestContent = SafeJsonConvert.SerializeObject(contentFilePaths, this.Client.SerializationSettings);
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(contentFilePaths, this.Client.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
@@ -1699,19 +1847,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -1722,11 +1871,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -1746,20 +1900,20 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Validates a Custom Domain mapping to ensure it maps to the correct CNAME
-        /// in DNS
+        /// Validates a custom domain mapping to ensure it maps to the correct CNAME
+        /// in DNS.
         /// </summary>
         /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group
+        /// Name of the CDN profile within the resource group.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='hostName'>
-        /// The host name of the custom domain
+        /// The host name of the custom domain. Must be a domain name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1831,6 +1985,7 @@ namespace Microsoft.Azure.Management.Cdn
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
@@ -1859,7 +2014,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             // Serialize Request
-            string _requestContent = SafeJsonConvert.SerializeObject(customDomainProperties, this.Client.SerializationSettings);
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(customDomainProperties, this.Client.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
@@ -1874,19 +2030,20 @@ namespace Microsoft.Azure.Management.Cdn
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
             if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     ErrorResponse _errorBody = SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
@@ -1897,11 +2054,16 @@ namespace Microsoft.Azure.Management.Cdn
                 {
                     // Ignore the exception
                 }
-                ex.Request = _httpRequest;
-                ex.Response = _httpResponse;
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
                 }
                 throw ex;
             }
@@ -1916,14 +2078,19 @@ namespace Microsoft.Azure.Management.Cdn
             // Deserialize Response
             if ((int)_statusCode == 200)
             {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    string _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     _result.Body = SafeJsonConvert.DeserializeObject<ValidateCustomDomainOutput>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
-                    throw new RestException("Unable to deserialize the response.", ex);
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)

@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
     /// <summary>
     /// CDN CustomDomain represents a mapping between a user specified domain
-    /// name and an Endpoint. It is a common practice to use custom domain
-    /// names to represent the URLs for branding purposes.
+    /// name and a CDN endpoint. This is to use custom domain names to
+    /// represent the URLs for branding purposes.
     /// </summary>
     public partial class CustomDomain : Resource
     {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// The host name of the custom domain
+        /// The host name of the custom domain. Must be a domain name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; set; }

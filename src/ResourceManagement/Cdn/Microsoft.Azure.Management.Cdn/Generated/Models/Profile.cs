@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// Profile sku
+        /// The SKU (pricing tier) of the CDN profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
         public Sku Sku { get; set; }
