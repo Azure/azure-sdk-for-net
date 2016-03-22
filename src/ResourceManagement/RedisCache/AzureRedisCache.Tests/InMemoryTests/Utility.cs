@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
+using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,8 +24,9 @@ namespace AzureRedisCache.Tests
             }
             httpResponse.StatusCode = statusCode;
 
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
-            RedisManagementClient client = new RedisManagementClient(token).WithHandler(new DummyResponseDelegatingHandler(httpResponse));
+            var token = new TokenCredentials(Guid.NewGuid().ToString(), "abc123");
+            RedisManagementClient client = new RedisManagementClient(token, new DummyResponseDelegatingHandler(httpResponse));
+            client.SubscriptionId = "a559b6fd-3a84-40bb-a450-b0db5ed37dfe";
             return client;
         }
 
