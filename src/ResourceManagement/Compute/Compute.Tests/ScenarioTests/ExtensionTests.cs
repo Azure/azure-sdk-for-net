@@ -37,7 +37,7 @@ namespace Compute.Tests
                 VirtualMachineExtensionType = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
-                ForceUpdateTag = ForceUpdateTagTypes.RerunExtension,
+                ForceUpdateTag = "RerunExtension",
                 Settings = "{}",
                 ProtectedSettings = "{}"
             };
