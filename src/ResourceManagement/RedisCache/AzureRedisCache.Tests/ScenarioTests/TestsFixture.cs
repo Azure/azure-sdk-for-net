@@ -1,6 +1,8 @@
 ﻿using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +11,25 @@ using System.Threading.Tasks;
 
 namespace AzureRedisCache.Tests
 {
-    public class TestsFixture: TestBase, IDisposable
+    public class TestsFixture : TestBase, IDisposable
     {
         public string ResourceGroupName { set; get; }
         public string RedisCacheName = "hydracache3";
         public string Location = "North Central US";
-        
+        private RedisCacheManagementHelper _redisCacheManagementHelper;
+        private MockContext _context;
+
         public TestsFixture()
         {
-            TestUtilities.StartTest();
+            _context = new MockContext();
+            MockContext.Start(this.GetType().FullName, ".ctor");
             try
             {
-                UndoContext.Current.Start();
+                _redisCacheManagementHelper = new RedisCacheManagementHelper(this, _context);
+                _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
 
-                RedisCacheManagementHelper redisCacheManagementHelper = new RedisCacheManagementHelper(this);
-                redisCacheManagementHelper.TryRegisterSubscriptionForResource();
-                
                 ResourceGroupName = TestUtilities.GenerateName("hydra2");
-                redisCacheManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+                _redisCacheManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
             }
             catch (Exception)
             {
@@ -35,17 +38,20 @@ namespace AzureRedisCache.Tests
             }
             finally
             {
-                TestUtilities.EndTest();
+                HttpMockServer.Flush();
             }
+
         }
 
         public void Dispose()
         {
-            Cleanup();    
+            Cleanup();
         }
+
         private void Cleanup()
         {
-            UndoContext.Current.UndoAll();
+            HttpMockServer.Initialize(this.GetType().FullName, ".cleanup");
+            _context.Dispose();
         }
     }
 }
