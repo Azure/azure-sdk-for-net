@@ -1,8 +1,8 @@
-﻿using Microsoft.Azure;
+﻿using FakeItEasy;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +23,9 @@ namespace AzureRedisCache.Tests
         {
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
             RedisManagementClient client = Utility.GetRedisManagementClient(null, requestIdHeader, HttpStatusCode.OK);
-            RedisListKeysResult response = client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary });
+            AzureOperationResponse response = client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary });
+            Assert.Equal(requestIdHeader, response.RequestId);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
@@ -37,11 +39,11 @@ namespace AzureRedisCache.Tests
         public void RegenerateKey_ParametersChecking()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Exception e = Assert.Throws<ValidationException>(() => client.Redis.RegenerateKey(resourceGroupName: null, name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary }));
+            Exception e = Assert.Throws<ArgumentNullException>(() => client.Redis.RegenerateKey(resourceGroupName: null, name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary }));
             Assert.Contains("resourceGroupName", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: null, parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary }));
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: null, parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary }));
             Assert.Contains("name", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: null));
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: null));
             Assert.Contains("parameters", e.Message);
         }
     }

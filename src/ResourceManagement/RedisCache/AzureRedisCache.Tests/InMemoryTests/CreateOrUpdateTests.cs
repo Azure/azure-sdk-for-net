@@ -1,7 +1,7 @@
-﻿using Microsoft.Azure.Management.Redis;
+﻿using FakeItEasy;
+using Hyak.Common;
+using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,7 +47,7 @@ namespace AzureRedisCache.Tests
             ");
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.Created);
-            RedisResourceWithAccessKey response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            RedisCreateOrUpdateResponse response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -62,24 +62,25 @@ namespace AzureRedisCache.Tests
                                                                                 }
                                                                             });
 
-            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Id);
-            Assert.Equal("North Europe", response.Location);
-            Assert.Equal("hydraradiscache", response.Name);
-            Assert.Equal("Microsoft.Cache/Redis", response.Type);
+            Assert.Equal(requestIdHeader, response.RequestId);
+            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Resource.Id);
+            Assert.Equal("North Europe", response.Resource.Location);
+            Assert.Equal("hydraradiscache", response.Resource.Name);
+            Assert.Equal("Microsoft.Cache/Redis", response.Resource.Type);
 
-            Assert.Equal("creating", response.Properties.ProvisioningState);
-            Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-            Assert.Equal(1, response.Properties.Sku.Capacity);
-            Assert.Equal("2.8", response.Properties.RedisVersion);
+            Assert.Equal("creating", response.Resource.Properties.ProvisioningState);
+            Assert.Equal(SkuName.Basic, response.Resource.Properties.Sku.Name);
+            Assert.Equal(SkuFamily.C, response.Resource.Properties.Sku.Family);
+            Assert.Equal(1, response.Resource.Properties.Sku.Capacity);
+            Assert.Equal("2.8", response.Resource.Properties.RedisVersion);
 
-            Assert.NotNull(response.Properties.AccessKeys);
-            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Properties.AccessKeys.PrimaryKey);
-            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Properties.AccessKeys.SecondaryKey);
+            Assert.NotNull(response.Resource.Properties.AccessKeys);
+            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Resource.Properties.AccessKeys.PrimaryKey);
+            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Resource.Properties.AccessKeys.SecondaryKey);
 
-            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Properties.HostName);
-            Assert.Equal(6379, response.Properties.Port);
-            Assert.Equal(6380, response.Properties.SslPort);
+            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Resource.Properties.HostName);
+            Assert.Equal(6379, response.Resource.Properties.Port);
+            Assert.Equal(6380, response.Resource.Properties.SslPort);
         }
 
         [Fact]
@@ -87,7 +88,7 @@ namespace AzureRedisCache.Tests
         {
             string responseString = (@"{}");
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            RedisResourceWithAccessKey response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            RedisCreateOrUpdateResponse response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -102,11 +103,12 @@ namespace AzureRedisCache.Tests
                                                                                     }
                                                                                 }
                                                                             });
-            Assert.Null(response.Id);
-            Assert.Null(response.Location);
-            Assert.Null(response.Name);
-            Assert.Null(response.Type);
-            Assert.Null(response.Properties); 
+            Assert.Null(response.RequestId);
+            Assert.Null(response.Resource.Id);
+            Assert.Null(response.Resource.Location);
+            Assert.Null(response.Resource.Name);
+            Assert.Null(response.Resource.Type);
+            Assert.Null(response.Resource.Properties); 
         }
 
         [Fact]
@@ -136,7 +138,7 @@ namespace AzureRedisCache.Tests
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
 
-            Exception e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: null, name: "cachename",
+            Exception e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: null, name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -152,7 +154,7 @@ namespace AzureRedisCache.Tests
                                                                                 }
                                                                             }));
             Assert.Contains("resourceGroupName", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: null,
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: null,
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -168,9 +170,9 @@ namespace AzureRedisCache.Tests
                                                                                 }
                                                                             }));
             Assert.Contains("name", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename", parameters: null));
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename", parameters: null));
             Assert.Contains("parameters", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = null,
@@ -185,15 +187,31 @@ namespace AzureRedisCache.Tests
                                                                                     }
                                                                                 }
                                                                             }));
-            Assert.Contains("Location", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            Assert.Contains("parameters.Location", e.Message);
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
                                                                                 Properties = null
                                                                             }));
-            Assert.Contains("Properties", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            Assert.Contains("parameters.Properties", e.Message);
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+                                                                            parameters: new RedisCreateOrUpdateParameters
+                                                                            {
+                                                                                Location = "North Europe",
+                                                                                Properties = new RedisProperties
+                                                                                {
+                                                                                    RedisVersion = null,
+                                                                                    Sku = new Sku()
+                                                                                    {
+                                                                                        Name = SkuName.Basic,
+                                                                                        Family = SkuFamily.C,
+                                                                                        Capacity = 1
+                                                                                    }
+                                                                                }
+                                                                            }));
+            Assert.Contains("parameters.Properties.RedisVersion", e.Message);
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -203,8 +221,8 @@ namespace AzureRedisCache.Tests
                                                                                     Sku = null
                                                                                 }
                                                                             }));
-            Assert.Contains("Sku", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            Assert.Contains("parameters.Properties.Sku", e.Message);
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -219,8 +237,8 @@ namespace AzureRedisCache.Tests
                                                                                     }
                                                                                 }
                                                                             }));
-            Assert.Contains("Name", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            Assert.Contains("parameters.Properties.Sku.Name", e.Message);
+            e = Assert.Throws<ArgumentNullException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -235,7 +253,7 @@ namespace AzureRedisCache.Tests
                                                                                     }
                                                                                 }
                                                                             }));
-            Assert.Contains("Family", e.Message);
+            Assert.Contains("parameters.Properties.Sku.Family", e.Message);
         }
 
         [Fact]
@@ -271,7 +289,7 @@ namespace AzureRedisCache.Tests
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
 
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.Created);
-            RedisResourceWithAccessKey response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            RedisCreateOrUpdateResponse response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -290,25 +308,26 @@ namespace AzureRedisCache.Tests
                                                                                 }
                                                                             });
 
-            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Id);
-            Assert.Equal("North Europe", response.Location);
-            Assert.Equal("hydraradiscache", response.Name);
-            Assert.Equal("Microsoft.Cache/Redis", response.Type);
+            Assert.Equal(requestIdHeader, response.RequestId);
+            Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Resource.Id);
+            Assert.Equal("North Europe", response.Resource.Location);
+            Assert.Equal("hydraradiscache", response.Resource.Name);
+            Assert.Equal("Microsoft.Cache/Redis", response.Resource.Type);
 
-            Assert.Equal("creating", response.Properties.ProvisioningState);
-            Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-            Assert.Equal(1, response.Properties.Sku.Capacity);
-            Assert.Equal("2.8", response.Properties.RedisVersion);
-            Assert.Equal("allkeys-lru", response.Properties.RedisConfiguration["maxmemory-policy"]);
+            Assert.Equal("creating", response.Resource.Properties.ProvisioningState);
+            Assert.Equal(SkuName.Basic, response.Resource.Properties.Sku.Name);
+            Assert.Equal(SkuFamily.C, response.Resource.Properties.Sku.Family);
+            Assert.Equal(1, response.Resource.Properties.Sku.Capacity);
+            Assert.Equal("2.8", response.Resource.Properties.RedisVersion);
+            Assert.Equal("allkeys-lru", response.Resource.Properties.RedisConfiguration["maxmemory-policy"]);
 
-            Assert.NotNull(response.Properties.AccessKeys);
-            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Properties.AccessKeys.PrimaryKey);
-            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Properties.AccessKeys.SecondaryKey);
+            Assert.NotNull(response.Resource.Properties.AccessKeys);
+            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Resource.Properties.AccessKeys.PrimaryKey);
+            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Resource.Properties.AccessKeys.SecondaryKey);
 
-            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Properties.HostName);
-            Assert.Equal(6379, response.Properties.Port);
-            Assert.Equal(6380, response.Properties.SslPort);
+            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Resource.Properties.HostName);
+            Assert.Equal(6379, response.Resource.Properties.Port);
+            Assert.Equal(6380, response.Resource.Properties.SslPort);
         }
     }
 }
