@@ -31,25 +31,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitArpTable
         /// class.
         /// </summary>
-        public ExpressRouteCircuitArpTable(int? age = default(int?), string interfaceProperty = default(string), string ipAddress = default(string), string macAddress = default(string))
+        public ExpressRouteCircuitArpTable(string ipAddress = default(string), string macAddress = default(string))
         {
-            Age = age;
-            InterfaceProperty = interfaceProperty;
             IpAddress = ipAddress;
             MacAddress = macAddress;
         }
-
-        /// <summary>
-        /// Age.
-        /// </summary>
-        [JsonProperty(PropertyName = "age")]
-        public int? Age { get; set; }
-
-        /// <summary>
-        /// Interface.
-        /// </summary>
-        [JsonProperty(PropertyName = "interface")]
-        public string InterfaceProperty { get; set; }
 
         /// <summary>
         /// Gets ipAddress.
