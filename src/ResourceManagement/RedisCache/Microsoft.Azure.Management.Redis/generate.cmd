@@ -6,7 +6,7 @@
 @echo off
 set autoRestVersion=0.16.0-Nightly20160316
 if  "%1" == "" (
-    set specFile="D:/GitCode/HydraRepo/azure-rest-api-specs/arm-redis/2015-08-01/swagger/redis.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-redis/2015-08-01/swagger/redis.json"
 ) else (
     set specFile="%1"
 )
