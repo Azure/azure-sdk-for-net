@@ -90,10 +90,8 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the list of parameter values to be used in scoring
-        /// functions (for example, referencePointParameter) using the format
-        /// name:value. For example, if the scoring profile defines a
-        /// function with a parameter called 'mylocation' the parameter
-        /// string would be "mylocation:-122.2,44.8"(without the quotes).
+        /// functions (for example, referencePointParameter). Each parameter is
+        /// a name/value pair encapsulated in a ScoringParameter object.
         /// </summary>
         public IList<ScoringParameter> ScoringParameters { get; set; }
 

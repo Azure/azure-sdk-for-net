@@ -59,7 +59,6 @@ namespace DataLakeAnalytics.Tests
                         !resultAfterRegister.RegistrationState.Equals("Registering"),
                 string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", resultAfterRegister.RegistrationState));
             ThrowIfTrue(resultAfterRegister.ResourceTypes == null || resultAfterRegister.ResourceTypes.Count == 0, "Provider.ResourceTypes is empty.");
-            ThrowIfTrue(resultAfterRegister.ResourceTypes[0].Locations == null || resultAfterRegister.ResourceTypes[0].Locations.Count == 0, "Provider.ResourceTypes[0].Locations is empty.");
         }
 
         public void TryCreateResourceGroup(string resourceGroupName, string location)
@@ -345,12 +344,12 @@ END;", dbName, tableName, tvfName, viewName, procName);
                     Script = scriptToRun
                 }
             };
-            var jobCreateResponse = jobClient.Job.Create(jobIdToUse.ToString(), createOrBuildParams, dataLakeAnalyticsAccountName);
+            var jobCreateResponse = jobClient.Job.Create(jobIdToUse, createOrBuildParams, dataLakeAnalyticsAccountName);
 
             Assert.NotNull(jobCreateResponse);
 
             // Poll the job until it finishes
-            var getJobResponse = jobClient.Job.Get(jobCreateResponse.JobId, dataLakeAnalyticsAccountName);
+            var getJobResponse = jobClient.Job.Get(jobCreateResponse.JobId.GetValueOrDefault(), dataLakeAnalyticsAccountName);
             Assert.NotNull(getJobResponse);
 
             int maxWaitInSeconds = 180; // 3 minutes should be long enough
@@ -360,7 +359,7 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 // wait 5 seconds before polling again
                 TestUtilities.Wait(5000);
                 curWaitInSeconds += 5;
-                getJobResponse = jobClient.Job.Get(jobCreateResponse.JobId, dataLakeAnalyticsAccountName);
+                getJobResponse = jobClient.Job.Get(jobCreateResponse.JobId.GetValueOrDefault(), dataLakeAnalyticsAccountName);
                 Assert.NotNull(getJobResponse);
             }
 

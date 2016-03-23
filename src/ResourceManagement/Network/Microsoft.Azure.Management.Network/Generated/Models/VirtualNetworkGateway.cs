@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGateway class.
         /// </summary>
-        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), string resourceGuid = default(string), string provisioningState = default(string))
+        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
             Etag = etag;
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
             GatewayDefaultSite = gatewayDefaultSite;
             Sku = sku;
             VpnClientConfiguration = vpnClientConfiguration;
+            BgpSettings = bgpSettings;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
@@ -99,6 +100,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnClientConfiguration")]
         public VpnClientConfiguration VpnClientConfiguration { get; set; }
+
+        /// <summary>
+        /// Virtual network gateway's BGP speaker settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.bgpSettings")]
+        public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the VirtualNetworkGateway

@@ -50,12 +50,12 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(dbListResponse.Count() >= 1);
 
                     // look for the DB we created
-                    Assert.True(dbListResponse.Any(db => db.DatabaseName.Equals(commonData.DatabaseName)));
+                    Assert.True(dbListResponse.Any(db => db.Name.Equals(commonData.DatabaseName)));
 
                     // Get the specific Database as well
                     var dbGetResponse = clientToUse.Catalog.GetDatabase(commonData.DatabaseName, commonData.SecondDataLakeAnalyticsAccountName);
 
-                    Assert.Equal(commonData.DatabaseName, dbGetResponse.DatabaseName);
+                    Assert.Equal(commonData.DatabaseName, dbGetResponse.Name);
 
                     // Get the table list
                     var tableListResponse = clientToUse.Catalog.ListTables(
@@ -64,13 +64,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tableListResponse.Count() >= 1);
 
                     // look for the table we created
-                    Assert.True(tableListResponse.Any(table => table.TableName.Equals(commonData.TableName)));
+                    Assert.True(tableListResponse.Any(table => table.Name.Equals(commonData.TableName)));
 
                     // Get the specific table as well
                     var tableGetResponse = clientToUse.Catalog.GetTable(
                         commonData.DatabaseName, "dbo", commonData.TableName, commonData.SecondDataLakeAnalyticsAccountName);
 
-                    Assert.Equal(commonData.TableName, tableGetResponse.TableName);
+                    Assert.Equal(commonData.TableName, tableGetResponse.Name);
 
                     // Get the TVF list
                     var tvfListResponse = clientToUse.Catalog.ListTableValuedFunctions(
@@ -79,13 +79,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(tvfListResponse.Count() >= 1);
 
                     // look for the tvf we created
-                    Assert.True(tvfListResponse.Any(tvf => tvf.TvfName.Equals(commonData.TvfName)));
+                    Assert.True(tvfListResponse.Any(tvf => tvf.Name.Equals(commonData.TvfName)));
 
                     // Get the specific TVF as well
                     var tvfGetResponse = clientToUse.Catalog.GetTableValuedFunction(
                         commonData.DatabaseName, "dbo", commonData.TvfName, commonData.SecondDataLakeAnalyticsAccountName);
 
-                    Assert.Equal(commonData.TvfName, tvfGetResponse.TvfName);
+                    Assert.Equal(commonData.TvfName, tvfGetResponse.Name);
 
                     // Get the View list
                     var viewListResponse = clientToUse.Catalog.ListViews(
@@ -94,13 +94,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(viewListResponse.Count() >= 1);
 
                     // look for the view we created
-                    Assert.True(viewListResponse.Any(view => view.ViewName.Equals(commonData.ViewName)));
+                    Assert.True(viewListResponse.Any(view => view.Name.Equals(commonData.ViewName)));
 
                     // Get the specific view as well
                     var viewGetResponse = clientToUse.Catalog.GetView(
                         commonData.DatabaseName, "dbo", commonData.ViewName, commonData.SecondDataLakeAnalyticsAccountName);
 
-                    Assert.Equal(commonData.ViewName, viewGetResponse.ViewName);
+                    Assert.Equal(commonData.ViewName, viewGetResponse.Name);
 
                     // Get the Procedure list
                     var procListResponse = clientToUse.Catalog.ListProcedures(
@@ -109,13 +109,13 @@ namespace DataLakeAnalytics.Tests
                     Assert.True(procListResponse.Count() >= 1);
 
                     // look for the procedure we created
-                    Assert.True(procListResponse.Any(proc => proc.ProcName.Equals(commonData.ProcName)));
+                    Assert.True(procListResponse.Any(proc => proc.Name.Equals(commonData.ProcName)));
 
                     // Get the specific procedure as well
                     var procGetResponse = clientToUse.Catalog.GetProcedure(
                         commonData.DatabaseName, "dbo", commonData.ProcName, commonData.SecondDataLakeAnalyticsAccountName);
 
-                    Assert.Equal(commonData.ProcName, procGetResponse.ProcName);
+                    Assert.Equal(commonData.ProcName, procGetResponse.Name);
 
                     // Get all the types
                     var typeGetResponse = clientToUse.Catalog.ListTypes(
@@ -199,12 +199,12 @@ namespace DataLakeAnalytics.Tests
                         Assert.True(credListResponse.Count() >= 1);
 
                         // look for the credential we created
-                        Assert.True(credListResponse.Any(cred => cred.CredentialName.Equals(commonData.CredentialName)));
+                        Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.CredentialName)));
 
                         // Get the specific credential as well
                         var credGetResponse = clientToUse.Catalog.GetCredential(
                             commonData.DatabaseName, commonData.CredentialName, commonData.SecondDataLakeAnalyticsAccountName);
-                        Assert.Equal(commonData.CredentialName, credGetResponse.CredentialName);
+                        Assert.Equal(commonData.CredentialName, credGetResponse.Name);
 
                         // Drop the credential (to enable secret deletion)
                         var credentialDropScript =

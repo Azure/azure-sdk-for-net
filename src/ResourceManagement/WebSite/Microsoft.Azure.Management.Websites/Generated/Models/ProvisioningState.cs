@@ -25,6 +25,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "Canceled")]
         Canceled,
         [EnumMember(Value = "InProgress")]
-        InProgress
+        InProgress,
+        [EnumMember(Value = "Deleting")]
+        Deleting
     }
 }

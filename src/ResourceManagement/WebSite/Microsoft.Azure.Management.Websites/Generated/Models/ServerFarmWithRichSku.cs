@@ -29,11 +29,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ServerFarmWithRichSku class.
         /// </summary>
-        public ServerFarmWithRichSku(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SkuDescription sku = default(SkuDescription), string serverFarmWithRichSkuName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), string resourceGroup = default(string))
+        public ServerFarmWithRichSku(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SkuDescription sku = default(SkuDescription), string serverFarmWithRichSkuName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), string resourceGroup = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             ServerFarmWithRichSkuName = serverFarmWithRichSkuName;
+            WorkerTierName = workerTierName;
             Status = status;
             Subscription = subscription;
             AdminSiteName = adminSiteName;
@@ -55,6 +56,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
         public string ServerFarmWithRichSkuName { get; set; }
+
+        /// <summary>
+        /// Target worker tier assigned to the App Service Plan
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.workerTierName")]
+        public string WorkerTierName { get; set; }
 
         /// <summary>
         /// App Service Plan Status. Possible values for this property

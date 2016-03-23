@@ -84,10 +84,11 @@ namespace Compute.Tests
                     }
                     catch (Exception ex)
                     {
-                        if (ex.Message.Contains("Legal terms have not been accepted for this item on this subscription."))
+                        if (ex.Message.Contains("User failed validation to purchase resources."))
                         {
                             return;
                         }
+                        throw;
                     }
 
                     // Validate the VMM Plan field
@@ -99,7 +100,7 @@ namespace Compute.Tests
                 {
                     // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with 
                     // the resources from this test.
-                    // m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                    //m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
                 }
             }
         }
@@ -111,14 +112,13 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
 
-                var userImageUrl = "https://mybyolosimage.blob.core.windows.net/vhdsrc/win2012-tag0.vhd";
-                ImageReference dummyImageRef = null;
-
                 // Create resource group
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
                 VirtualMachine inputVM;
+
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                ImageReference dummyImageRef = null;
 
                 // Create Storage Account, so that both the VMs can share it
                 var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
@@ -127,13 +127,23 @@ namespace Compute.Tests
                 {
                     Action<VirtualMachine> useVMMImage = vm =>
                     {
-                        vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = userImageUrl };
-                        vm.StorageProfile.OsDisk.Vhd = new VirtualHardDisk { Uri = ComputeManagementTestUtilities.GenerateName(userImageUrl) + ".vhd"};
-                        vm.StorageProfile.OsDisk.OsType = "Windows";
+                        vm.StorageProfile.ImageReference = GetPlatformVMImage(true);
                         vm.LicenseType = "Windows_Server";
                     };
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                    VirtualMachine vm1 = null;
+                    try
+                    {
+                        vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("License type cannot be specified when creating a virtual machine from platform image. Please use an image from on-premises instead."))
+                        {
+                            return;
+                        }
+                        throw;
+                    }
 
                     var getResponse = m_CrpClient.VirtualMachines.GetWithHttpMessagesAsync(rgName, vm1.Name).GetAwaiter().GetResult();
                     Assert.True(getResponse.Response.StatusCode == HttpStatusCode.OK);
@@ -147,9 +157,10 @@ namespace Compute.Tests
                 {
                     // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with
                     // the resources from this test.
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rgName);
-                    Assert.True(deleteResourceGroupResponse.Result.Response.StatusCode == HttpStatusCode.Accepted ||
-                        deleteResourceGroupResponse.Result.Response.StatusCode == HttpStatusCode.NotFound);
+                    //var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rgName);
+                    m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rgName);
+                    //Assert.True(deleteResourceGroupResponse.Result.Response.StatusCode == HttpStatusCode.Accepted ||
+                    //   deleteResourceGroupResponse.Result.Response.StatusCode == HttpStatusCode.NotFound);
                 }
             }
         }

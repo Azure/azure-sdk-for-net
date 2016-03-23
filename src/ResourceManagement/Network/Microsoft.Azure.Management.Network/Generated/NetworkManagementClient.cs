@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Network
             this.VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-06-15";
+            this.ApiVersion = "2016-03-30";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

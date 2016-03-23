@@ -77,7 +77,7 @@ namespace Compute.Tests
 
                     m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
 
-                    var getResponse = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet, extensionProfile);
+                    var getResponse = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet, extensionProfile, (vmScaleSet) => { vmScaleSet.OverProvision = true; });
 
                     ValidateVMScaleSet(inputVMScaleSet, getResponse);
 

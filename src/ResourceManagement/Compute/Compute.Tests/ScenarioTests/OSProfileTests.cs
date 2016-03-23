@@ -32,9 +32,9 @@ namespace Compute.Tests
     {
         private static readonly string CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("echo 'Hello World'"));
 
-        private const string OOBESystem = PassNames.OobeSystem;
-        private const string MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
-        private const string AutoLogon = SettingNames.AutoLogon;
+        private const PassNames OOBESystem = PassNames.OobeSystem;
+        private const ComponentNames MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
+        private const SettingNames AutoLogon = SettingNames.AutoLogon;
 
         private const string PacificStandardTime = "Pacific Standard Time";
 
@@ -284,7 +284,7 @@ namespace Compute.Tests
 
                 VirtualMachine vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmCustomizer);
 
-                var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                 ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
                 var lroResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, vm.Name, vm);

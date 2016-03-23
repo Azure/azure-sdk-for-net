@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ApplicationGatewayHttpListener
         /// class.
         /// </summary>
-        public ApplicationGatewayHttpListener(string id = default(string), string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), string requireServerNameIndication = default(string), string provisioningState = default(string))
+        public ApplicationGatewayHttpListener(string id = default(string), string name = default(string), string etag = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string))
             : base(id)
         {
             Name = name;
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the requireServerNameIndication of http listener
         /// </summary>
         [JsonProperty(PropertyName = "properties.requireServerNameIndication")]
-        public string RequireServerNameIndication { get; set; }
+        public bool? RequireServerNameIndication { get; set; }
 
         /// <summary>
         /// Gets or sets Provisioning state of the http listener resource

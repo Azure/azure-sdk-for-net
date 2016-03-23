@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the VirtualNetworkGatewayConnection
         /// class.
         /// </summary>
-        public VirtualNetworkGatewayConnection(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway1 = default(VirtualNetworkGateway), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string))
+        public VirtualNetworkGatewayConnection(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway1 = default(VirtualNetworkGateway), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
             Etag = etag;
@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Management.Network.Models
             EgressBytesTransferred = egressBytesTransferred;
             IngressBytesTransferred = ingressBytesTransferred;
             Peer = peer;
+            EnableBgp = enableBgp;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
         }
@@ -123,6 +124,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.peer")]
         public SubResource Peer { get; set; }
+
+        /// <summary>
+        /// EnableBgp Flag
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableBgp")]
+        public bool? EnableBgp { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the
