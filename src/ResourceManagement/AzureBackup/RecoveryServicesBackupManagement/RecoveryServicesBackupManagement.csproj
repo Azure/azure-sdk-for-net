@@ -124,6 +124,7 @@
     <Compile Include="Generated\Models\OperationStatusError.cs" />
     <Compile Include="Generated\Models\OperationStatusExtendedInfo.cs" />
     <Compile Include="Generated\Models\OperationStatusJobExtendedInfo.cs" />
+    <Compile Include="Generated\Models\OperationStatusJobsExtendedInfo.cs" />
     <Compile Include="Generated\Models\OperationStatusValues.cs" />
     <Compile Include="Generated\Models\PaginationRequest.cs" />
     <Compile Include="Generated\Models\PotectedItemRequestObject.cs" />

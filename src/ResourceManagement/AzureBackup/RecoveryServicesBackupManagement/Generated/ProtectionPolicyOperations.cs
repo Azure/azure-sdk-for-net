@@ -2660,6 +2660,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     }
                                     operationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
                                 }
+                                if (typeName == "OperationStatusJobsExtendedInfo")
+                                {
+                                    OperationStatusJobsExtendedInfo operationStatusJobsExtendedInfoInstance = new OperationStatusJobsExtendedInfo();
+                                    
+                                    JToken jobIdsArray = propertiesValue["jobIds"];
+                                    if (jobIdsArray != null && jobIdsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken jobIdsValue in ((JArray)jobIdsArray))
+                                        {
+                                            operationStatusJobsExtendedInfoInstance.JobIds.Add(((string)jobIdsValue));
+                                        }
+                                    }
+                                    
+                                    JToken failedJobsErrorSequenceElement = ((JToken)propertiesValue["failedJobsError"]);
+                                    if (failedJobsErrorSequenceElement != null && failedJobsErrorSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in failedJobsErrorSequenceElement)
+                                        {
+                                            string failedJobsErrorKey = ((string)property.Name);
+                                            string failedJobsErrorValue = ((string)property.Value);
+                                            operationStatusJobsExtendedInfoInstance.FailedJobsError.Add(failedJobsErrorKey, failedJobsErrorValue);
+                                        }
+                                    }
+                                    operationStatusInstance.Properties = operationStatusJobsExtendedInfoInstance;
+                                }
                             }
                         }
                         
@@ -2861,6 +2886,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
                                     }
                                     operationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
+                                }
+                                if (typeName == "OperationStatusJobsExtendedInfo")
+                                {
+                                    OperationStatusJobsExtendedInfo operationStatusJobsExtendedInfoInstance = new OperationStatusJobsExtendedInfo();
+                                    
+                                    JToken jobIdsArray = propertiesValue["jobIds"];
+                                    if (jobIdsArray != null && jobIdsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken jobIdsValue in ((JArray)jobIdsArray))
+                                        {
+                                            operationStatusJobsExtendedInfoInstance.JobIds.Add(((string)jobIdsValue));
+                                        }
+                                    }
+                                    
+                                    JToken failedJobsErrorSequenceElement = ((JToken)propertiesValue["failedJobsError"]);
+                                    if (failedJobsErrorSequenceElement != null && failedJobsErrorSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in failedJobsErrorSequenceElement)
+                                        {
+                                            string failedJobsErrorKey = ((string)property.Name);
+                                            string failedJobsErrorValue = ((string)property.Value);
+                                            operationStatusJobsExtendedInfoInstance.FailedJobsError.Add(failedJobsErrorKey, failedJobsErrorValue);
+                                        }
+                                    }
+                                    operationStatusInstance.Properties = operationStatusJobsExtendedInfoInstance;
                                 }
                             }
                         }
