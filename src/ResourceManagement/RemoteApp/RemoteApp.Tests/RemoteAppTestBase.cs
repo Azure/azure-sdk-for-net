@@ -7,11 +7,9 @@ namespace Microsoft.Azure.Management.RemoteApp.Tests
     {
         protected RemoteAppManagementClient GetClient(MockContext context, RemoteAppDelegatingHandler handler)
         {
-            //RemoteAppManagementClient client = context.GetServiceClient<RemoteAppManagementClient>(handler);
+            RemoteAppManagementClient client = context.GetServiceClient<RemoteAppManagementClient>(true, handler);
 
-            //return client;
-
-            return null;
+            return client;
         }
     }
 }
