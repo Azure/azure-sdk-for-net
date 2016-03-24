@@ -81,6 +81,7 @@
     <Compile Include="Helpers\TestConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ContainerTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\PolicyTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectedItemTest.cs" />
     <Compile Include="ScenarioTests\RecoveryServicesTestBase.cs" />
   </ItemGroup>
