@@ -1,0 +1,211 @@
+{
+  "location": "foo_Web_US--Code",
+  "tags": {
+    "Experiement Location": "https://foo-code.com"
+  },
+  "properties": {
+    "packageType": "Code",
+    "package": {
+      "language": "R-3.1",
+      "sourceCode": "fake code here",
+      "zipFileAssetId": "2"
+    },
+    "description": "test data",
+    "keys": {
+      "prmiary": "primary key here",
+      "secondary": "secondary key here"
+    },
+    "operationModes": [
+      "Realtime",
+      "Batch"
+    ],
+    "realtimeConfiguration": {
+      "maxConcurrentCalls": 100,
+      "maxMemoryInMB": 200,
+      "maxDurationInSeconds": 300
+    },
+    "batchConfiguration": {
+      "JobDriver": "x.y, optional",
+      "Cluster": {
+        "id": "cluster id"
+      }
+    },
+    "readOnly": true,
+    "diagnostics": {
+      "level": "level 2",
+      "expiry": "2/4/2007 2:20:15 AM"
+    },
+    "storageAccount": {
+      "id": "storage account id"
+    },
+    "machineLearningWorkspace": {
+      "id": "workspace ID"
+    },
+    "input": {
+      "title": "Input title",
+      "description": "Input Description",
+      "type": "object",
+      "properties": {
+        "in1": {
+          "title": "afxTable",
+          "description": "afx description",
+          "type": "object",
+          "properties": {
+            "column1": {
+              "type": "type1",
+              "format": "format1",
+              "enum": [
+                "aaa1",
+                "bbb1"
+              ]
+            },
+            "column2": {
+              "type": "type2",
+              "format": "format2",
+              "enum": [
+                "aaa2",
+                "bbb2"
+              ]
+            }
+          }
+        },
+        "in2": {
+          "title": "afxTable",
+          "description": "afx description",
+          "type": "object",
+          "properties": {
+            "column1": {
+              "type": "type3",
+              "format": "format3",
+              "enum": [
+                "aaa3",
+                "bbb3"
+              ]
+            },
+            "column2": {
+              "type": "type4",
+              "format": "format4",
+              "enum": [
+                "aaa4",
+                "bbb4"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "title": "Output title",
+      "description": "Output Description",
+      "type": "object",
+      "properties": {
+        "in1": {
+          "title": "afxTable",
+          "description": "afx description",
+          "type": "object",
+          "properties": {
+            "column1": {
+              "type": "type1",
+              "format": "format1",
+              "enum": [
+                "aaa1",
+                "bbb1"
+              ]
+            },
+            "column2": {
+              "type": "type2",
+              "format": "format2",
+              "enum": [
+                "aaa2",
+                "bbb2"
+              ]
+            }
+          }
+        },
+        "in2": {
+          "title": "afxTable",
+          "description": "afx description",
+          "type": "object",
+          "properties": {
+            "column1": {
+              "type": "type3",
+              "format": "format3",
+              "enum": [
+                "aaa3",
+                "bbb3"
+              ]
+            },
+            "column2": {
+              "type": "type4",
+              "format": "format4",
+              "enum": [
+                "aaa4",
+                "bbb4"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "assets": {
+      "1": {
+        "name": "Asset 1",
+        "type": "module",
+        "location": {
+          "uri": "idv://bar.com/foo"
+        },
+        "inputPorts": {
+          "p1": {
+            "type": "dataset"
+          },
+          "p2": {
+            "type": "zip"
+          }
+        },
+        "outputPorts": {
+          "p1": {
+            "type": "dataset"
+          },
+          "p2": {
+            "type": "zip"
+          }
+        },
+        "metadata": {
+          "key1": "value1",
+          "key2": "value2"
+        }
+      },
+      "2": {
+        "name": "Asset 2",
+        "type": "module",
+        "location": {
+          "uri": "idv://bar.com/foo"
+        },
+        "inputPorts": {
+          "p1": {
+            "type": "dataset"
+          },
+          "p2": {
+            "type": "zip"
+          }
+        },
+        "outputPorts": {
+          "p1": {
+            "type": "dataset"
+          },
+          "p2": {
+            "type": "zip"
+          }
+        },
+        "metadata": {
+          "key3": "value3",
+          "key4": "value4"
+        }
+      }
+    },
+    "parameters": {
+      "param1": "value1",
+      "param2": "value2"
+    }
+  }
+}
