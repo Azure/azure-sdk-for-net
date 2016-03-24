@@ -1,5 +1,5 @@
 {
-  "version": "0.0.28-preview",
+  "version": "0.0.28.0",
   "description": "Provides RemoteApp management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure RemoteApp management", "remoteApp management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
