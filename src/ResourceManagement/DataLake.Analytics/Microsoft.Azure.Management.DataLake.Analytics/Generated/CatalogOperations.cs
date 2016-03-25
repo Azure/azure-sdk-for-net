@@ -97,10 +97,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -149,14 +145,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
-            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
@@ -179,9 +167,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -312,10 +303,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -364,14 +351,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
-            }
             if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
@@ -394,9 +373,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -519,10 +501,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -569,14 +547,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -722,10 +692,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -772,14 +738,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -895,10 +853,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -945,14 +899,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1093,7 +1039,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -1119,10 +1065,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -1203,14 +1145,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1356,10 +1290,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1406,14 +1336,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1553,7 +1475,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -1579,10 +1501,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -1663,14 +1581,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1823,10 +1733,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1875,14 +1781,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2025,7 +1923,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -2055,10 +1953,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -2141,14 +2035,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2301,10 +2187,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -2353,14 +2235,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2503,7 +2377,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -2533,10 +2407,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -2619,14 +2489,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2779,10 +2641,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -2831,14 +2689,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2981,7 +2831,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -3011,10 +2861,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -3097,14 +2943,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3264,10 +3102,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -3318,14 +3152,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3471,7 +3297,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -3505,10 +3331,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -3593,14 +3415,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3759,10 +3573,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -3828,14 +3638,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3989,10 +3791,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -4041,14 +3839,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4192,7 +3982,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -4222,10 +4012,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -4308,14 +4094,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4461,10 +4239,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -4511,14 +4285,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4658,7 +4424,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -4684,10 +4450,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -4768,14 +4530,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4921,10 +4675,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -4971,14 +4721,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5118,7 +4860,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -5144,10 +4886,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -5228,14 +4966,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5374,10 +5104,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -5422,14 +5148,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5566,7 +5284,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an optional
-        /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+        /// "asc" (the default) or "desc" depending on the order you'd like the
         /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -5588,10 +5306,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (accountName == null)
             {
@@ -5670,14 +5384,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5810,10 +5516,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5842,14 +5544,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -5981,10 +5675,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6013,14 +5703,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6152,10 +5834,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6184,14 +5862,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6323,10 +5993,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6355,14 +6021,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6494,10 +6152,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6526,14 +6180,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6665,10 +6311,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6697,14 +6339,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -6837,10 +6471,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6869,14 +6499,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7009,10 +6631,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7041,14 +6659,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7180,10 +6790,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7212,14 +6818,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7351,10 +6949,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7383,14 +6977,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -7522,10 +7108,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7554,14 +7136,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.SubscriptionId != null)
-            {
-                if (_httpRequest.Headers.Contains("subscriptionId"))
-                {
-                    _httpRequest.Headers.Remove("subscriptionId");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("subscriptionId", this.Client.SubscriptionId);
             }
             if (this.Client.AcceptLanguage != null)
             {

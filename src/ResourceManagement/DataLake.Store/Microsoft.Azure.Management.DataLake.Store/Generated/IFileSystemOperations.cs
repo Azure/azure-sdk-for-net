@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string path, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Concatenates the list of source files into the destination file.
+        /// Concatenates the list of source files into the destination file,
+        /// removing all source files upon success.
         /// </summary>
         /// <param name='destinationPath'>
         /// The Data Lake Store path (starting with '/') of the destination
@@ -116,10 +117,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, IList<string> sources, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Concatenates the list of source files into the destination file.
-        /// This method accepts more source file paths than the Concat
-        /// method. This method and the parameters it accepts are subject to
-        /// change for usability in an upcoming version.
+        /// Concatenates the list of source files into the destination file,
+        /// deleting all source files upon success. This method accepts more
+        /// source file paths than the Concat method. This method and the
+        /// parameters it accepts are subject to change for usability in an
+        /// upcoming version.
         /// </summary>
         /// <param name='msConcatDestinationPath'>
         /// The Data Lake Store path (starting with '/') of the destination
@@ -133,9 +135,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The Azure Data Lake Store account to execute filesystem operations
         /// on.
         /// </param>
-        /// <param name='deletesourcedirectory'>
-        /// Caution: Setting this parameter to true will delete the parent
-        /// directory of all source files provided to the MsConcat method.
+        /// <param name='deleteSourceDirectory'>
+        /// Indicates that as an optimization instead of deleting each
+        /// individual source stream, delete the source stream folder if all
+        /// streams are in the same folder instead. This results in a
+        /// substantial performance improvement when the only streams in the
+        /// folder are part of the concatenation operation. WARNING: This
+        /// includes the deletion of any other files that are not source
+        /// files. Only set this to true when source files are the only files
+        /// in the source directory.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -143,7 +151,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string msConcatDestinationPath, System.IO.Stream streamContents, string accountName, bool? deletesourcedirectory = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string msConcatDestinationPath, System.IO.Stream streamContents, string accountName, bool? deleteSourceDirectory = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the list of file status objects specified by the file path,
         /// with optional pagination parameters

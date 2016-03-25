@@ -57,7 +57,7 @@ namespace DataLakeStore.Tests
                 {
                     var folderPath = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, folderPath,
-                        FileType.Directory, 0);
+                        FileType.DIRECTORY, 0);
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace DataLakeStore.Tests
                 {
                     
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
 
                     // verify it does not have an expiration
                     var fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
@@ -118,7 +118,7 @@ namespace DataLakeStore.Tests
                 using (commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
 
                     // verify it does not have an expiration
                     var fileInfo = commonData.DataLakeStoreFileSystemClient.FileSystem.GetFileInfo(filePath, commonData.DataLakeStoreFileSystemAccountName);
@@ -151,10 +151,10 @@ namespace DataLakeStore.Tests
                 {
                     var folderPath = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, folderPath,
-                        FileType.Directory, 0);
+                        FileType.DIRECTORY, 0);
 
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true, folderPath);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
 
                     // List all the contents in the folder
                     var listFolderResponse = commonData.DataLakeStoreFileSystemClient.FileSystem.ListFileStatus(folderPath,
@@ -162,7 +162,7 @@ namespace DataLakeStore.Tests
 
                     // We know that this directory is brand new, so the contents should only be the one file.
                     Assert.Equal(1, listFolderResponse.FileStatuses.FileStatus.Count);
-                    Assert.Equal(FileType.File, listFolderResponse.FileStatuses.FileStatus[0].Type);
+                    Assert.Equal(FileType.FILE, listFolderResponse.FileStatuses.FileStatus[0].Type);
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
                         fileContentsToAdd.Length);
                     CompareFileContents(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath,
                         fileContentsToAdd);
@@ -210,14 +210,14 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File, 0);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
 
                     // Append to the file that we created
                     commonData.DataLakeStoreFileSystemClient.FileSystem.Append(filePath,
                         new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAppend)),
                         commonData.DataLakeStoreFileSystemAccountName);
 
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
                         fileContentsToAppend.Length);
                 }
             }
@@ -233,11 +233,11 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath1 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     var filePath2 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     var targetFolder = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -249,7 +249,7 @@ namespace DataLakeStore.Tests
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
-                        FileType.File,
+                        FileType.FILE,
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
@@ -275,11 +275,11 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath1 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     var filePath2 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     var targetFolder = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -291,7 +291,7 @@ namespace DataLakeStore.Tests
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
-                        FileType.File,
+                        FileType.FILE,
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
@@ -320,12 +320,12 @@ namespace DataLakeStore.Tests
                         "msconcatFolder");
                     var filePath1 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true,
                         concatFolderPath);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath1, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     var filePath2 = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true,
                         concatFolderPath);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath2, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     var targetFolder = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -333,11 +333,11 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient.FileSystem.MsConcat(
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
                         new MemoryStream(Encoding.UTF8.GetBytes(string.Format("sources={0},{1}", filePath1, filePath2))),
-                        commonData.DataLakeStoreFileSystemAccountName, deletesourcedirectory: true);
+                        commonData.DataLakeStoreFileSystemAccountName, deleteSourceDirectory: true);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder, fileToConcatTo),
-                        FileType.File,
+                        FileType.FILE,
                         fileContentsToAdd.Length*2);
 
                     // Attempt to get the files that were concatted together, which should fail and throw
@@ -369,7 +369,7 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     var targetFolder1 = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
@@ -381,7 +381,7 @@ namespace DataLakeStore.Tests
                     Assert.True(moveFileResponse.OperationResult);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName,
                         string.Format("{0}/{1}", targetFolder1, fileToMove),
-                        FileType.File,
+                        FileType.FILE,
                         fileContentsToAdd.Length);
 
                     // Ensure the old file is gone
@@ -396,7 +396,7 @@ namespace DataLakeStore.Tests
                     Assert.True(moveFolderResponse.OperationResult);
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, targetFolder2,
-                        FileType.Directory, 0);
+                        FileType.DIRECTORY, 0);
 
                     // ensure all the contents of the folder moved
                     // List all the contents in the folder
@@ -405,7 +405,7 @@ namespace DataLakeStore.Tests
 
                     // We know that this directory is brand new, so the contents should only be the one file.
                     Assert.Equal(1, listFolderResponse.FileStatuses.FileStatus.Count);
-                    Assert.Equal(FileType.File, listFolderResponse.FileStatuses.FileStatus[0].Type);
+                    Assert.Equal(FileType.FILE, listFolderResponse.FileStatuses.FileStatus[0].Type);
 
                     Assert.Throws(typeof (CloudException),
                         () =>
@@ -426,7 +426,7 @@ namespace DataLakeStore.Tests
                 {
                     var folderPath = CreateFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, folderPath,
-                        FileType.Directory, 0);
+                        FileType.DIRECTORY, 0);
                     DeleteFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, folderPath, true, false);
                     //WORK AROUND: Bug 4717659 makes it so even empty folders have contents.
 
@@ -435,7 +435,7 @@ namespace DataLakeStore.Tests
 
                     // delete a folder with contents
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true, folderPath);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
                         fileContentsToAdd.Length);
 
                     // should fail if recurse is not set
@@ -460,7 +460,7 @@ namespace DataLakeStore.Tests
                     commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
                 {
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
-                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.File,
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
                         fileContentsToAdd.Length);
                     DeleteFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, false);
 

@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -460,7 +460,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -720,7 +720,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -789,7 +789,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -853,7 +853,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>

@@ -171,7 +171,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Concatenates the list of source files into the destination file.
+            /// Concatenates the list of source files into the destination file, removing
+            /// all source files upon success.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -193,7 +194,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Concatenates the list of source files into the destination file.
+            /// Concatenates the list of source files into the destination file, removing
+            /// all source files upon success.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,10 +220,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Concatenates the list of source files into the destination file. This
-            /// method accepts more source file paths than the Concat method. This method
-            /// and the parameters it accepts are subject to change for usability in an
-            /// upcoming version.
+            /// Concatenates the list of source files into the destination file, deleting
+            /// all source files upon success. This method accepts more source file paths
+            /// than the Concat method. This method and the parameters it accepts are
+            /// subject to change for usability in an upcoming version.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -237,20 +239,25 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The Azure Data Lake Store account to execute filesystem operations on.
             /// </param>
-            /// <param name='deletesourcedirectory'>
-            /// Caution: Setting this parameter to true will delete the parent directory
-            /// of all source files provided to the MsConcat method.
+            /// <param name='deleteSourceDirectory'>
+            /// Indicates that as an optimization instead of deleting each individual
+            /// source stream, delete the source stream folder if all streams are in the
+            /// same folder instead. This results in a substantial performance
+            /// improvement when the only streams in the folder are part of the
+            /// concatenation operation. WARNING: This includes the deletion of any other
+            /// files that are not source files. Only set this to true when source files
+            /// are the only files in the source directory.
             /// </param>
-            public static void MsConcat(this IFileSystemOperations operations, string msConcatDestinationPath, System.IO.Stream streamContents, string accountName, bool? deletesourcedirectory = default(bool?))
+            public static void MsConcat(this IFileSystemOperations operations, string msConcatDestinationPath, System.IO.Stream streamContents, string accountName, bool? deleteSourceDirectory = default(bool?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).MsConcatAsync(msConcatDestinationPath, streamContents, accountName, deletesourcedirectory), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).MsConcatAsync(msConcatDestinationPath, streamContents, accountName, deleteSourceDirectory), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Concatenates the list of source files into the destination file. This
-            /// method accepts more source file paths than the Concat method. This method
-            /// and the parameters it accepts are subject to change for usability in an
-            /// upcoming version.
+            /// Concatenates the list of source files into the destination file, deleting
+            /// all source files upon success. This method accepts more source file paths
+            /// than the Concat method. This method and the parameters it accepts are
+            /// subject to change for usability in an upcoming version.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -266,16 +273,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The Azure Data Lake Store account to execute filesystem operations on.
             /// </param>
-            /// <param name='deletesourcedirectory'>
-            /// Caution: Setting this parameter to true will delete the parent directory
-            /// of all source files provided to the MsConcat method.
+            /// <param name='deleteSourceDirectory'>
+            /// Indicates that as an optimization instead of deleting each individual
+            /// source stream, delete the source stream folder if all streams are in the
+            /// same folder instead. This results in a substantial performance
+            /// improvement when the only streams in the folder are part of the
+            /// concatenation operation. WARNING: This includes the deletion of any other
+            /// files that are not source files. Only set this to true when source files
+            /// are the only files in the source directory.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task MsConcatAsync(this IFileSystemOperations operations, string msConcatDestinationPath, System.IO.Stream streamContents, string accountName, bool? deletesourcedirectory = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task MsConcatAsync(this IFileSystemOperations operations, string msConcatDestinationPath, System.IO.Stream streamContents, string accountName, bool? deleteSourceDirectory = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.MsConcatWithHttpMessagesAsync(msConcatDestinationPath, streamContents, accountName, deletesourcedirectory, null, cancellationToken).ConfigureAwait(false);
+                await operations.MsConcatWithHttpMessagesAsync(msConcatDestinationPath, streamContents, accountName, deleteSourceDirectory, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobResource class.
         /// </summary>
-        public JobResource(string name = default(string), string resourcePath = default(string), string type = default(string))
+        public JobResource(string name = default(string), string resourcePath = default(string), JobResourceType? type = default(JobResourceType?))
         {
             Name = name;
             ResourcePath = resourcePath;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// 'VertexResource', 'StatisticsResource'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public JobResourceType? Type { get; set; }
 
     }
 }

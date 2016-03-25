@@ -13,11 +13,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Type.
+    /// Defines values for JobResourceType.
     /// </summary>
-    public static class Type
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum JobResourceType
     {
-        public const string VertexResource = "VertexResource";
-        public const string StatisticsResource = "StatisticsResource";
+        [EnumMember(Value = "VertexResource")]
+        VertexResource,
+        [EnumMember(Value = "StatisticsResource")]
+        StatisticsResource
     }
 }
