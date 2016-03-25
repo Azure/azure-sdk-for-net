@@ -325,6 +325,47 @@ namespace Compute.Tests
             return getSubnetResponse;
         }
 
+        protected VirtualNetwork CreateVNETWithSubnets(string rgName, int subnetCount = 2)
+        {
+            // Create Vnet
+            // Populate parameter for Put Vnet
+            string vnetName = ComputeManagementTestUtilities.GenerateName("vn");
+
+            var vnet = new VirtualNetwork()
+            {
+                Location = m_location,
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = new List<string>()
+                            {
+                                "10.0.0.0/16",
+                            }
+                },
+                DhcpOptions = new DhcpOptions()
+                {
+                    DnsServers = new List<string>()
+                            {
+                                "10.1.1.1",
+                                "10.1.2.4"
+                            }
+                },
+            };
+
+            vnet.Subnets = new List<Subnet>();
+            for (int i = 1; i <= subnetCount; i++)
+            {
+                Subnet subnet = new Subnet()
+                {
+                    Name = ComputeManagementTestUtilities.GenerateName("sn" + i),
+                    AddressPrefix = "10.0." + i + ".0/24",
+                };
+                vnet.Subnets.Add(subnet);
+            }
+
+            var putVnetResponse = m_NrpClient.VirtualNetworks.CreateOrUpdate(rgName, vnetName, vnet);
+            return putVnetResponse;
+        }
+
         protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
         {
             // Create Nic
@@ -357,6 +398,141 @@ namespace Compute.Tests
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
             var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicname);
             return getNicResponse;
+        }
+
+        private static string GetChildAppGwResourceId(string subscriptionId,
+                                                        string resourceGroupName,
+                                                        string appGwname,
+                                                        string childResourceType,
+                                                        string childResourceName)
+        {
+            return string.Format(
+                    "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/applicationGateways/{2}/{3}/{4}",
+                    subscriptionId,
+                    resourceGroupName,
+                    appGwname,
+                    childResourceType,
+                    childResourceName);
+        }
+
+        protected ApplicationGateway CreateApplicationGateway(string rgName, Subnet subnet, string gatewayName = null)
+        {
+            gatewayName = gatewayName ?? ComputeManagementTestUtilities.GenerateName("gw");
+            var gatewayIPConfigName = ComputeManagementTestUtilities.GenerateName("gwIp");
+            var frontendIPConfigName = ComputeManagementTestUtilities.GenerateName("fIp");
+            var frontendPortName = ComputeManagementTestUtilities.GenerateName("fPort");
+            var backendAddressPoolName = ComputeManagementTestUtilities.GenerateName("pool");
+            var backendHttpSettingsName = ComputeManagementTestUtilities.GenerateName("setting");
+            var requestRoutingRuleName = ComputeManagementTestUtilities.GenerateName("rule");
+            var httpListenerName = ComputeManagementTestUtilities.GenerateName("listener");
+
+            var gatewayIPConfig = new ApplicationGatewayIPConfiguration()
+            {
+                Name = gatewayIPConfigName,
+                Subnet = new Microsoft.Azure.Management.Network.Models.SubResource { Id = subnet.Id },
+            };
+
+            var frontendIPConfig = new ApplicationGatewayFrontendIPConfiguration()
+            {
+                Name = frontendIPConfigName,
+                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                Subnet = new Microsoft.Azure.Management.Network.Models.SubResource { Id = subnet.Id}
+            };
+
+            ApplicationGatewayFrontendPort frontendPort = new ApplicationGatewayFrontendPort()
+            {
+                Name = frontendPortName,
+                Port = 80
+            };
+
+            var backendAddressPool = new ApplicationGatewayBackendAddressPool()
+            {
+                Name = backendAddressPoolName,
+            };
+
+            var backendHttpSettings = new ApplicationGatewayBackendHttpSettings()
+            {
+                Name = backendHttpSettingsName,
+                Port = 80,
+                Protocol = ApplicationGatewayProtocol.Http,
+                CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
+            };
+
+            var httpListener = new ApplicationGatewayHttpListener()
+            {
+                Name = httpListenerName,
+                FrontendPort = new Microsoft.Azure.Management.Network.Models.SubResource
+                {
+                    Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "frontendPorts", frontendPortName)
+                },
+                FrontendIPConfiguration = new Microsoft.Azure.Management.Network.Models.SubResource
+                {
+                    Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "frontendIPConfigurations", frontendIPConfigName)
+                },
+                SslCertificate = null,
+                Protocol = ApplicationGatewayProtocol.Http
+            };
+
+            var requestRoutingRules = new ApplicationGatewayRequestRoutingRule()
+            {
+                Name = requestRoutingRuleName,
+                RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
+                HttpListener = new Microsoft.Azure.Management.Network.Models.SubResource
+                {
+                    Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "httpListeners", httpListenerName)
+                },
+                BackendAddressPool = new Microsoft.Azure.Management.Network.Models.SubResource
+                {
+                    Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "backendAddressPools", backendAddressPoolName)
+                },
+                BackendHttpSettings = new Microsoft.Azure.Management.Network.Models.SubResource
+                {
+                    Id = GetChildAppGwResourceId(m_subId, rgName, gatewayName, "backendHttpSettingsCollection", backendHttpSettingsName)
+                }
+            };
+
+            var appGw = new ApplicationGateway()
+            {
+                Location = m_location,
+                Sku = new ApplicationGatewaySku()
+                {
+                    Name = ApplicationGatewaySkuName.StandardSmall,
+                    Tier = ApplicationGatewayTier.Standard,
+                    Capacity = 2
+                },
+                GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
+                {
+                    gatewayIPConfig,
+                },
+                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>()
+                {
+                    frontendIPConfig,
+                },
+                FrontendPorts = new List<ApplicationGatewayFrontendPort>
+                {
+                    frontendPort,
+                },
+                BackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
+                {
+                    backendAddressPool,
+                },
+                BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings>
+                {
+                    backendHttpSettings,
+                },
+                HttpListeners = new List<ApplicationGatewayHttpListener>
+                {
+                    httpListener,
+                },
+                RequestRoutingRules = new List<ApplicationGatewayRequestRoutingRule>()
+                {
+                    requestRoutingRules,
+                }
+            };
+
+            var putGwResponse = m_NrpClient.ApplicationGateways.CreateOrUpdate(rgName, gatewayName, appGw);
+            var getGwResponse = m_NrpClient.ApplicationGateways.Get(rgName, gatewayName);
+            return getGwResponse;
         }
 
         protected string CreateAvailabilitySet(string rgName, string asName)

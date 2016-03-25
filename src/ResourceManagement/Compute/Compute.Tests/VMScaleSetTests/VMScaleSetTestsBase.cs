@@ -107,7 +107,8 @@ namespace Compute.Tests
                                         Subnet = new Microsoft.Azure.Management.Compute.Models.ApiEntityReference()
                                         {
                                             Id = subnetId
-                                        }
+                                        },
+                                        ApplicationGatewayBackendAddressPools = new List<Microsoft.Azure.Management.Compute.Models.SubResource>(),
                                     }
                                 }
                             }
@@ -126,7 +127,8 @@ namespace Compute.Tests
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            Subnet subnet = null)
         {
             try
             {
@@ -136,7 +138,9 @@ namespace Compute.Tests
                                                                                      imageRef, 
                                                                                      out inputVMScaleSet, 
                                                                                      extensionProfile,
-                                                                                     vmScaleSetCustomizer);
+                                                                                     vmScaleSetCustomizer,
+                                                                                     createWithPublicIpAddress,
+                                                                                     subnet);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -190,7 +194,8 @@ namespace Compute.Tests
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            Subnet subnet = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -202,7 +207,7 @@ namespace Compute.Tests
 
             var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
 
-            var subnetResponse = CreateVNET(rgName);
+            var subnetResponse = subnet ?? CreateVNET(rgName);
 
             var nicResponse = CreateNIC(
                 rgName,
