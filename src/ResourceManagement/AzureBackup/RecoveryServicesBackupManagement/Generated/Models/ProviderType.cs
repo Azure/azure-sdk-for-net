@@ -27,5 +27,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     public enum ProviderType
     {
         AzureIaasVM = 0,
+        
+        Mab = 1,
+        
+        Dpm = 2,
     }
 }

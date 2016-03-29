@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
@@ -398,10 +399,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static BaseRecoveryServicesJobResponse Unregister(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static AzureOperationResponse Unregister(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -430,10 +431,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<BaseRecoveryServicesJobResponse> UnregisterAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureOperationResponse> UnregisterAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.UnregisterAsync(resourceGroupName, resourceName, containerName, customRequestHeaders, CancellationToken.None);
         }
