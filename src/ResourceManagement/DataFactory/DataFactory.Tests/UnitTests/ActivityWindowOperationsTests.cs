@@ -25,7 +25,21 @@ namespace DataFactory.Tests.UnitTests
 {
     public class ActivityWindowOperationsTests : UnitTestBase
     {
-        [Theory, InlineData(@"{
+        [Theory, InlineData(
+@"{
+  ""resourceGroupName"": ""3d704657-08fe-4de4-b842-8b3e7fff9d93"",
+  ""dataFactoryName"": ""8fc9f7be-741d-4520-b72d-5df8215edbb9"",
+  ""top"": 4,
+  ""runStart"": ""2016-01-01T00:00:00"",
+  ""runEnd"": ""2016-02-01T00:00:00"",
+  ""windowStart"": ""2016-03-01T00:00:00"",
+  ""windowEnd"": ""2016-03-02T00:00:00"",
+  ""windowState"": ""pending"",
+  ""orderBy"": ""WindowState"",
+  ""filter"": ""WindowState eq Pending""
+}",
+
+@"{
   ""value"": {
     activityWindows: [
       {
@@ -61,9 +75,9 @@ namespace DataFactory.Tests.UnitTests
 ")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void TestListActivityWindowsDeserialize(string json)
+        public void TestListActivityWindowsDeserialize(string jsonRequest, string jsonResponse)
         {
-            ActivityWindowListResponse response = ConvertToWrapper(json);
+            ActivityWindowListResponse response = ConvertToWrapper(jsonRequest, jsonResponse);
             Assert.NotNull(response);
             Assert.NotNull(response.ActivityWindowListResponseValue);
             Assert.NotNull(response.NextLink);
@@ -71,10 +85,10 @@ namespace DataFactory.Tests.UnitTests
             Assert.NotNull(response.ActivityWindowListResponseValue.LastUpdate);
         }
 
-        private ActivityWindowListResponse ConvertToWrapper(string json)
+        private ActivityWindowListResponse ConvertToWrapper(string jsonRequest, string jsonResponse)
         {
             ActivityWindowListResponse listActivityWindows =
-                DataFactoryManagementClient.DeserializeActivityWindow(json);
+                DataFactoryManagementClient.DeserializeActivityWindow(jsonRequest, jsonResponse);
 
             return listActivityWindows;
         }
