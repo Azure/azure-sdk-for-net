@@ -294,6 +294,77 @@ namespace Compute.Tests
                     Assert.NotNull(vmExt);
                 }
             }
+
+            if (vmScaleSet.VirtualMachineProfile.NetworkProfile != null)
+            {
+                if (vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations != null)
+                {
+                    Assert.NotNull(vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations);
+                    Assert.Equal(
+                        vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count,
+                        vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count);
+
+                    foreach (var nicconfig in vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations)
+                    {
+                        var outnicconfig =
+                            vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.First(
+                                nc => string.Equals(nc.Name, nicconfig.Name, StringComparison.OrdinalIgnoreCase));
+                        Assert.NotNull(outnicconfig);
+                        CompareVmssNicConfig(nicconfig, outnicconfig);
+                    } 
+                }
+            }
+            else
+            {
+                Assert.Null(vmScaleSetOut.VirtualMachineProfile.NetworkProfile);
+            }
+        }
+
+        protected void CompareVmssNicConfig(VirtualMachineScaleSetNetworkConfiguration nicconfig,
+            VirtualMachineScaleSetNetworkConfiguration outnicconfig)
+        {
+            if (nicconfig.IpConfigurations != null)
+            {
+                Assert.NotNull(outnicconfig.IpConfigurations);
+
+                Assert.Equal(nicconfig.IpConfigurations.Count, outnicconfig.IpConfigurations.Count);
+
+                foreach (var ipconfig in nicconfig.IpConfigurations)
+                {
+                    var outipconfig =
+                        outnicconfig.IpConfigurations.First(
+                            ic => string.Equals(ic.Name, ipconfig.Name, StringComparison.OrdinalIgnoreCase));
+                    Assert.NotNull(outipconfig);
+                    CompareIpConfigApplicationGatewayPools(ipconfig, outipconfig);
+                }
+            }
+            else
+            {
+                Assert.Null(outnicconfig.IpConfigurations);
+            }
+        }
+
+        protected void CompareIpConfigApplicationGatewayPools(VirtualMachineScaleSetIPConfiguration ipconfig , VirtualMachineScaleSetIPConfiguration outipconfig )
+        {
+            if (ipconfig.ApplicationGatewayBackendAddressPools != null)
+            {
+                Assert.NotNull(outipconfig.ApplicationGatewayBackendAddressPools);
+
+                Assert.Equal(ipconfig.ApplicationGatewayBackendAddressPools.Count,
+                    outipconfig.ApplicationGatewayBackendAddressPools.Count);
+
+                foreach (var pool in ipconfig.ApplicationGatewayBackendAddressPools)
+                {
+                    var outPool =
+                        outipconfig.ApplicationGatewayBackendAddressPools.First(
+                            p => string.Equals(p.Id, pool.Id, StringComparison.OrdinalIgnoreCase));
+                    Assert.NotNull(outPool);
+                }
+            }
+            else
+            {
+                Assert.Null(outipconfig.ApplicationGatewayBackendAddressPools);
+            }
         }
     }
 }
