@@ -297,7 +297,7 @@ namespace Compute.Tests
 
             if (vmScaleSet.VirtualMachineProfile.NetworkProfile != null)
             {
-                if (vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations != null)
+                if (vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations != null && vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count > 0)
                 {
                     Assert.NotNull(vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations);
                     Assert.Equal(
@@ -316,14 +316,14 @@ namespace Compute.Tests
             }
             else
             {
-                Assert.Null(vmScaleSetOut.VirtualMachineProfile.NetworkProfile);
+                Assert.True((vmScaleSetOut.VirtualMachineProfile.NetworkProfile == null) || (vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count == 0));
             }
         }
 
         protected void CompareVmssNicConfig(VirtualMachineScaleSetNetworkConfiguration nicconfig,
             VirtualMachineScaleSetNetworkConfiguration outnicconfig)
         {
-            if (nicconfig.IpConfigurations != null)
+            if (nicconfig.IpConfigurations != null && nicconfig.IpConfigurations.Count > 0)
             {
                 Assert.NotNull(outnicconfig.IpConfigurations);
 
@@ -340,13 +340,13 @@ namespace Compute.Tests
             }
             else
             {
-                Assert.Null(outnicconfig.IpConfigurations);
+                Assert.True((outnicconfig.IpConfigurations == null) || (outnicconfig.IpConfigurations.Count == 0));
             }
         }
 
         protected void CompareIpConfigApplicationGatewayPools(VirtualMachineScaleSetIPConfiguration ipconfig , VirtualMachineScaleSetIPConfiguration outipconfig )
         {
-            if (ipconfig.ApplicationGatewayBackendAddressPools != null)
+            if (ipconfig.ApplicationGatewayBackendAddressPools != null && ipconfig.ApplicationGatewayBackendAddressPools.Count > 0)
             {
                 Assert.NotNull(outipconfig.ApplicationGatewayBackendAddressPools);
 
@@ -363,7 +363,7 @@ namespace Compute.Tests
             }
             else
             {
-                Assert.Null(outipconfig.ApplicationGatewayBackendAddressPools);
+                Assert.True((outipconfig.ApplicationGatewayBackendAddressPools == null) || (outipconfig.ApplicationGatewayBackendAddressPools.Count == 0));
             }
         }
     }
