@@ -13,11 +13,6 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
-using Microsoft.Azure.Management.RecoveryServices.Backup;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
-using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -26,6 +21,12 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Hyak.Common;
+using Microsoft.Azure.Management.RecoveryServices.Backup;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
+using Microsoft.Azure.Test;
+using RecoveryServices.Tests.Helpers;
+using Microsoft.Azure;
 
 namespace RecoveryServices.Tests
 {
@@ -34,43 +35,83 @@ namespace RecoveryServices.Tests
         [Fact]
         public void ListProtectionPolicyTest()
         {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-               
-            }
+            ExecuteTest(
+                client =>
+                {
+                    PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                    ProtectionPolicyQueryParameters queryParams = new ProtectionPolicyQueryParameters();
+
+                    ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(queryParams);
+
+                    // validations TBD
+                    // atleast one default policy is expected
+
+                    // do any other validations
+
+                });
         }
 
         [Fact]
-        public void AddProtectionPolicyTest()
+        public void AddAndUpdateProtectionPolicyTest()
         {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();               
-            }
+            ExecuteTest(
+               client =>
+               {
+                   PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                   SimpleSchedulePolicy schPolicy = GetRandomSimpleSchedulePolicy();
+                   LongTermRetentionPolicy retPolicy = GetRandomLTRRetentionPolicy();
+
+                   string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
+
+                   AzureIaaSVMProtectionPolicy policy = new AzureIaaSVMProtectionPolicy()
+                   {
+                       RetentionPolicy = retPolicy,
+                       SchedulePolicy = schPolicy
+                   };
+
+                   ProtectionPolicyRequest request = new ProtectionPolicyRequest()
+                   {
+                       Item = new ProtectionPolicyResource()
+                       {
+                           Properties = policy
+                       }
+                   };
+
+                   ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(policyName, request);
+
+                   // validations TBD
+
+
+                   // Update policy test - we will use same policy used above
+                   response = policyTestHelper.AddOrUpdateProtectionPolicy(policyName, request);
+
+               });
         }
 
         [Fact]
-        public void UpdateProtectionPolicyTest()
+        public void GetAndDeleteProtectionPolicyTest()
         {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                
-            }
+            ExecuteTest(
+               client =>
+               {
+                   PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                   string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
+
+                   ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(policyName);
+
+                   // TBD - do any validations
+
+                   // now delete the policy
+                   AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(policyName);
+
+                   // validations TBD
+
+               });
         }
 
-        [Fact]
-        public void DeleteProtectionPolicyTest()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-               
-            }
-        }
+        #region private
 
-        private SimpleSchedulePolicy GetBackupSchedule()
+        private SimpleSchedulePolicy GetRandomSimpleSchedulePolicy()
         {
             SimpleSchedulePolicy schPolicy = new SimpleSchedulePolicy()
             {
@@ -83,7 +124,7 @@ namespace RecoveryServices.Tests
             return schPolicy;
         }
 
-        private LongTermRetentionPolicy GetRetentionPolicy()
+        private LongTermRetentionPolicy GetRandomLTRRetentionPolicy()
         {            
             List<DateTime> retTimes = new List<DateTime> { DateTime.Parse(
                                        ConfigurationManager.AppSettings["ScheduleRunTime"]) };
@@ -144,6 +185,8 @@ namespace RecoveryServices.Tests
             };
 
             return retPolicy;
-        }      
+        }
+
+        #endregion
     }
 }
