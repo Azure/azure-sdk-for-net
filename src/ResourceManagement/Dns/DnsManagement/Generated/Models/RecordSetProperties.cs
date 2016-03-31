@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Dns.Models
         private uint _ttl;
         
         /// <summary>
-        /// Required. Gets or sets the TTL of the records in the RecordSet.
+        /// Optional. Gets or sets the TTL of the records in the RecordSet.
         /// </summary>
         public uint Ttl
         {
@@ -146,16 +146,6 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         public RecordSetProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecordSetProperties class with
-        /// required arguments.
-        /// </summary>
-        public RecordSetProperties(uint ttl)
-            : this()
-        {
-            this.Ttl = ttl;
         }
     }
 }
