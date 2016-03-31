@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class Sku
     {
         /// <summary>
@@ -27,8 +25,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or set the SKU. Possible values for this property include:
-        /// 'Standard', 'Free', 'Premium'.
+        /// Gets or set the SKU. Possible values include: 'Standard', 'Free',
+        /// 'P10Premium', 'P20Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public SkuDefinition? Name { get; set; }

@@ -33,7 +33,7 @@ namespace Scheduler.Test.ScenarioTests
 {
     public class JobTests
     {
-        private const string subscriptionId = "6c55a6f0-6593-472f-9b3e-a51a9a757b40";
+        private const string subscriptionId = "623d50f1-4fa8-4e46-a967-a9214aed43ab";
         private const string resourceGroupName = "CS-SouthCentralUS-scheduler";
         private const string type = "Microsoft.Scheduler/jobCollections/jobs";
         private const string location = "South Central US";
