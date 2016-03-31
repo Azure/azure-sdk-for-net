@@ -24,11 +24,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Newtonsoft.Json.Linq;
@@ -2532,14 +2531,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='fabricName'>
-        /// Required. Backup Fabric name for the backup item
-        /// </param>
         /// <param name='containerName'>
         /// Required. Container Name of protectionContainers
-        /// </param>
-        /// <param name='request'>
-        /// Required. Update request for protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -2548,10 +2541,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<BaseRecoveryServicesJobResponse> UnregisterAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, ProtectionContainerUpdateRequest request, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2562,17 +2555,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ArgumentNullException("resourceName");
             }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException("fabricName");
-            }
             if (containerName == null)
             {
                 throw new ArgumentNullException("containerName");
-            }
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
             }
             
             // Tracing
@@ -2584,9 +2569,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("request", request);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "UnregisterAsync", tracingParameters);
             }
@@ -2606,10 +2589,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/backupFabrics/";
-            url = url + Uri.EscapeDataString(fabricName);
-            url = url + "/protectionContainers/";
+            url = url + "/backupContainers/";
             url = url + Uri.EscapeDataString(containerName);
+            url = url + "/unregisterContainer";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
@@ -2634,7 +2616,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.Method = HttpMethod.Delete;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -2644,330 +2626,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                if (request.Item != null)
-                {
-                    JObject itemValue = new JObject();
-                    requestDoc = itemValue;
-                    
-                    if (request.Item.Properties != null)
-                    {
-                        JObject propertiesValue = new JObject();
-                        itemValue["properties"] = propertiesValue;
-                        if (request.Item.Properties is ProtectionContainer)
-                        {
-                            propertiesValue["containerType"] = "ProtectionContainer";
-                            ProtectionContainer derived = ((ProtectionContainer)request.Item.Properties);
-                            
-                            if (derived.FriendlyName != null)
-                            {
-                                propertiesValue["friendlyName"] = derived.FriendlyName;
-                            }
-                            
-                            if (derived.RegistrationStatus != null)
-                            {
-                                propertiesValue["registrationStatus"] = derived.RegistrationStatus;
-                            }
-                            
-                            if (derived.HealthStatus != null)
-                            {
-                                propertiesValue["healthStatus"] = derived.HealthStatus;
-                            }
-                            
-                            if (derived.ContainerType != null)
-                            {
-                                propertiesValue["containerType"] = derived.ContainerType;
-                            }
-                            
-                            if (derived.BackupManagementType != null)
-                            {
-                                propertiesValue["backupManagementType"] = derived.BackupManagementType;
-                            }
-                        }
-                        if (request.Item.Properties is AzureIaaSVMProtectionContainer)
-                        {
-                            propertiesValue["containerType"] = "IaaSVMContainer";
-                            AzureIaaSVMProtectionContainer derived2 = ((AzureIaaSVMProtectionContainer)request.Item.Properties);
-                            
-                            if (derived2.VirtualMachineVersion != null)
-                            {
-                                propertiesValue["virtualMachineVersion"] = derived2.VirtualMachineVersion;
-                            }
-                            
-                            if (derived2.ResourceGroup != null)
-                            {
-                                propertiesValue["resourceGroup"] = derived2.ResourceGroup;
-                            }
-                            
-                            if (derived2.VirtualMachineId != null)
-                            {
-                                propertiesValue["virtualMachineId"] = derived2.VirtualMachineId;
-                            }
-                            
-                            if (derived2.FriendlyName != null)
-                            {
-                                propertiesValue["friendlyName"] = derived2.FriendlyName;
-                            }
-                            
-                            if (derived2.RegistrationStatus != null)
-                            {
-                                propertiesValue["registrationStatus"] = derived2.RegistrationStatus;
-                            }
-                            
-                            if (derived2.HealthStatus != null)
-                            {
-                                propertiesValue["healthStatus"] = derived2.HealthStatus;
-                            }
-                            
-                            if (derived2.ContainerType != null)
-                            {
-                                propertiesValue["containerType"] = derived2.ContainerType;
-                            }
-                            
-                            if (derived2.BackupManagementType != null)
-                            {
-                                propertiesValue["backupManagementType"] = derived2.BackupManagementType;
-                            }
-                        }
-                        if (request.Item.Properties is AzureIaaSClassicComputeVMProtectionContainer)
-                        {
-                            propertiesValue["containerType"] = "Microsoft.ClassicCompute/virtualMachines";
-                            AzureIaaSClassicComputeVMProtectionContainer derived3 = ((AzureIaaSClassicComputeVMProtectionContainer)request.Item.Properties);
-                            
-                            if (derived3.VirtualMachineVersion != null)
-                            {
-                                propertiesValue["virtualMachineVersion"] = derived3.VirtualMachineVersion;
-                            }
-                            
-                            if (derived3.ResourceGroup != null)
-                            {
-                                propertiesValue["resourceGroup"] = derived3.ResourceGroup;
-                            }
-                            
-                            if (derived3.VirtualMachineId != null)
-                            {
-                                propertiesValue["virtualMachineId"] = derived3.VirtualMachineId;
-                            }
-                            
-                            if (derived3.FriendlyName != null)
-                            {
-                                propertiesValue["friendlyName"] = derived3.FriendlyName;
-                            }
-                            
-                            if (derived3.RegistrationStatus != null)
-                            {
-                                propertiesValue["registrationStatus"] = derived3.RegistrationStatus;
-                            }
-                            
-                            if (derived3.HealthStatus != null)
-                            {
-                                propertiesValue["healthStatus"] = derived3.HealthStatus;
-                            }
-                            
-                            if (derived3.ContainerType != null)
-                            {
-                                propertiesValue["containerType"] = derived3.ContainerType;
-                            }
-                            
-                            if (derived3.BackupManagementType != null)
-                            {
-                                propertiesValue["backupManagementType"] = derived3.BackupManagementType;
-                            }
-                        }
-                        if (request.Item.Properties is AzureIaaSComputeVMProtectionContainer)
-                        {
-                            propertiesValue["containerType"] = "Microsoft.Compute/virtualMachines";
-                            AzureIaaSComputeVMProtectionContainer derived4 = ((AzureIaaSComputeVMProtectionContainer)request.Item.Properties);
-                            
-                            if (derived4.VirtualMachineVersion != null)
-                            {
-                                propertiesValue["virtualMachineVersion"] = derived4.VirtualMachineVersion;
-                            }
-                            
-                            if (derived4.ResourceGroup != null)
-                            {
-                                propertiesValue["resourceGroup"] = derived4.ResourceGroup;
-                            }
-                            
-                            if (derived4.VirtualMachineId != null)
-                            {
-                                propertiesValue["virtualMachineId"] = derived4.VirtualMachineId;
-                            }
-                            
-                            if (derived4.FriendlyName != null)
-                            {
-                                propertiesValue["friendlyName"] = derived4.FriendlyName;
-                            }
-                            
-                            if (derived4.RegistrationStatus != null)
-                            {
-                                propertiesValue["registrationStatus"] = derived4.RegistrationStatus;
-                            }
-                            
-                            if (derived4.HealthStatus != null)
-                            {
-                                propertiesValue["healthStatus"] = derived4.HealthStatus;
-                            }
-                            
-                            if (derived4.ContainerType != null)
-                            {
-                                propertiesValue["containerType"] = derived4.ContainerType;
-                            }
-                            
-                            if (derived4.BackupManagementType != null)
-                            {
-                                propertiesValue["backupManagementType"] = derived4.BackupManagementType;
-                            }
-                        }
-                        if (request.Item.Properties is DpmProtectionContainer)
-                        {
-                            propertiesValue["containerType"] = "DPMContainer";
-                            DpmProtectionContainer derived5 = ((DpmProtectionContainer)request.Item.Properties);
-                            
-                            propertiesValue["canReRegister"] = derived5.CanReRegister;
-                            
-                            propertiesValue["containerId"] = derived5.ContainerId;
-                            
-                            if (derived5.FriendlyName != null)
-                            {
-                                propertiesValue["friendlyName"] = derived5.FriendlyName;
-                            }
-                            
-                            if (derived5.RegistrationStatus != null)
-                            {
-                                propertiesValue["registrationStatus"] = derived5.RegistrationStatus;
-                            }
-                            
-                            if (derived5.HealthStatus != null)
-                            {
-                                propertiesValue["healthStatus"] = derived5.HealthStatus;
-                            }
-                            
-                            if (derived5.ContainerType != null)
-                            {
-                                propertiesValue["containerType"] = derived5.ContainerType;
-                            }
-                            
-                            if (derived5.BackupManagementType != null)
-                            {
-                                propertiesValue["backupManagementType"] = derived5.BackupManagementType;
-                            }
-                        }
-                        if (request.Item.Properties is DpmVenusProtectionContainer)
-                        {
-                            propertiesValue["containerType"] = "DPMVenusContainer";
-                            DpmVenusProtectionContainer derived6 = ((DpmVenusProtectionContainer)request.Item.Properties);
-                            
-                            propertiesValue["canReRegister"] = derived6.CanReRegister;
-                            
-                            propertiesValue["containerId"] = derived6.ContainerId;
-                            
-                            if (derived6.FriendlyName != null)
-                            {
-                                propertiesValue["friendlyName"] = derived6.FriendlyName;
-                            }
-                            
-                            if (derived6.RegistrationStatus != null)
-                            {
-                                propertiesValue["registrationStatus"] = derived6.RegistrationStatus;
-                            }
-                            
-                            if (derived6.HealthStatus != null)
-                            {
-                                propertiesValue["healthStatus"] = derived6.HealthStatus;
-                            }
-                            
-                            if (derived6.ContainerType != null)
-                            {
-                                propertiesValue["containerType"] = derived6.ContainerType;
-                            }
-                            
-                            if (derived6.BackupManagementType != null)
-                            {
-                                propertiesValue["backupManagementType"] = derived6.BackupManagementType;
-                            }
-                        }
-                        if (request.Item.Properties is MabProtectionContainer)
-                        {
-                            propertiesValue["containerType"] = "MABContainer";
-                            MabProtectionContainer derived7 = ((MabProtectionContainer)request.Item.Properties);
-                            
-                            propertiesValue["canReRegister"] = derived7.CanReRegister;
-                            
-                            propertiesValue["containerId"] = derived7.ContainerId;
-                            
-                            if (derived7.FriendlyName != null)
-                            {
-                                propertiesValue["friendlyName"] = derived7.FriendlyName;
-                            }
-                            
-                            if (derived7.RegistrationStatus != null)
-                            {
-                                propertiesValue["registrationStatus"] = derived7.RegistrationStatus;
-                            }
-                            
-                            if (derived7.HealthStatus != null)
-                            {
-                                propertiesValue["healthStatus"] = derived7.HealthStatus;
-                            }
-                            
-                            if (derived7.ContainerType != null)
-                            {
-                                propertiesValue["containerType"] = derived7.ContainerType;
-                            }
-                            
-                            if (derived7.BackupManagementType != null)
-                            {
-                                propertiesValue["backupManagementType"] = derived7.BackupManagementType;
-                            }
-                        }
-                    }
-                    
-                    if (request.Item.Id != null)
-                    {
-                        itemValue["id"] = request.Item.Id;
-                    }
-                    
-                    if (request.Item.Name != null)
-                    {
-                        itemValue["name"] = request.Item.Name;
-                    }
-                    
-                    if (request.Item.Type != null)
-                    {
-                        itemValue["type"] = request.Item.Type;
-                    }
-                    
-                    if (request.Item.Location != null)
-                    {
-                        itemValue["location"] = request.Item.Location;
-                    }
-                    
-                    if (request.Item.Tags != null)
-                    {
-                        JObject tagsDictionary = new JObject();
-                        foreach (KeyValuePair<string, string> pair in request.Item.Tags)
-                        {
-                            string tagsKey = pair.Key;
-                            string tagsValue = pair.Value;
-                            tagsDictionary[tagsKey] = tagsValue;
-                        }
-                        itemValue["tags"] = tagsDictionary;
-                    }
-                    
-                    if (request.Item.ETag != null)
-                    {
-                        itemValue["eTag"] = request.Item.ETag;
-                    }
-                }
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2984,10 +2642,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -2996,57 +2654,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     }
                     
                     // Create Result
-                    BaseRecoveryServicesJobResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new BaseRecoveryServicesJobResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                result.Location = locationInstance;
-                            }
-                            
-                            JToken azureAsyncOperationValue = responseDoc["azureAsyncOperation"];
-                            if (azureAsyncOperationValue != null && azureAsyncOperationValue.Type != JTokenType.Null)
-                            {
-                                string azureAsyncOperationInstance = ((string)azureAsyncOperationValue);
-                                result.AzureAsyncOperation = azureAsyncOperationInstance;
-                            }
-                            
-                            JToken retryAfterValue = responseDoc["retryAfter"];
-                            if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
-                            {
-                                string retryAfterInstance = ((string)retryAfterValue);
-                                result.RetryAfter = retryAfterInstance;
-                            }
-                        }
-                        
-                    }
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
-                    {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Retry-After"))
-                    {
-                        result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {

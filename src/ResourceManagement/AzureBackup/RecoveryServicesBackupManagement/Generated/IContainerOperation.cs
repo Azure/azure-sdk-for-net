@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
@@ -180,14 +181,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='fabricName'>
-        /// Backup Fabric name for the backup item
-        /// </param>
         /// <param name='containerName'>
         /// Container Name of protectionContainers
-        /// </param>
-        /// <param name='request'>
-        /// Update request for protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -196,9 +191,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BaseRecoveryServicesJobResponse for Async
-        /// operations.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> UnregisterAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, ProtectionContainerUpdateRequest request, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
