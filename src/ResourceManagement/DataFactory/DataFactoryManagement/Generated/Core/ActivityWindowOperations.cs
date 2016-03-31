@@ -173,40 +173,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByDataFactoryListParametersValue = new JObject();
                 requestDoc = activityWindowsByDataFactoryListParametersValue;
                 
+                activityWindowsByDataFactoryListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByDataFactoryListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -563,40 +576,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByDatasetListParametersValue = new JObject();
                 requestDoc = activityWindowsByDatasetListParametersValue;
                 
+                activityWindowsByDatasetListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByDatasetListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByDatasetListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByDatasetListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByDatasetListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByDatasetListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByDatasetListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -953,40 +979,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByPipelineListParametersValue = new JObject();
                 requestDoc = activityWindowsByPipelineListParametersValue;
                 
+                activityWindowsByPipelineListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByPipelineListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByPipelineListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByPipelineListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByPipelineListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByPipelineListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByPipelineListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1357,40 +1396,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByActivityListParametersValue = new JObject();
                 requestDoc = activityWindowsByActivityListParametersValue;
                 
+                activityWindowsByActivityListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByActivityListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByActivityListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByActivityListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByActivityListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByActivityListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByActivityListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1715,40 +1767,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByDataFactoryListParametersValue = new JObject();
                 requestDoc = activityWindowsByDataFactoryListParametersValue;
                 
+                activityWindowsByDataFactoryListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByDataFactoryListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByDataFactoryListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -2085,40 +2150,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByDatasetListParametersValue = new JObject();
                 requestDoc = activityWindowsByDatasetListParametersValue;
                 
+                activityWindowsByDatasetListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByDatasetListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByDatasetListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByDatasetListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByDatasetListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByDatasetListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByDatasetListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByDatasetListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -2455,40 +2533,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByPipelineListParametersValue = new JObject();
                 requestDoc = activityWindowsByPipelineListParametersValue;
                 
+                activityWindowsByPipelineListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByPipelineListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByPipelineListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByPipelineListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByPipelineListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByPipelineListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByPipelineListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByPipelineListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -2837,40 +2928,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByActivityListParametersValue = new JObject();
                 requestDoc = activityWindowsByActivityListParametersValue;
                 
+                activityWindowsByActivityListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
+                
+                activityWindowsByActivityListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
+                
                 if (parameters.Top != null)
                 {
+                    activityWindowsByActivityListParametersValue["top"] = parameters.Top.Value;
                 }
                 
                 if (parameters.RunStart != null)
                 {
+                    activityWindowsByActivityListParametersValue["runStart"] = parameters.RunStart.Value;
                 }
                 
                 if (parameters.RunEnd != null)
                 {
+                    activityWindowsByActivityListParametersValue["runEnd"] = parameters.RunEnd.Value;
                 }
                 
                 if (parameters.WindowStart != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowStart"] = parameters.WindowStart.Value;
                 }
                 
                 if (parameters.WindowEnd != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowEnd"] = parameters.WindowEnd.Value;
                 }
                 
                 if (parameters.WindowState != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowState"] = parameters.WindowState;
                 }
                 
                 if (parameters.WindowSubstate != null)
                 {
+                    activityWindowsByActivityListParametersValue["windowSubstate"] = parameters.WindowSubstate;
                 }
                 
                 if (parameters.OrderBy != null)
                 {
+                    activityWindowsByActivityListParametersValue["orderBy"] = parameters.OrderBy;
                 }
                 
                 if (parameters.Filter != null)
                 {
+                    activityWindowsByActivityListParametersValue["filter"] = parameters.Filter;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

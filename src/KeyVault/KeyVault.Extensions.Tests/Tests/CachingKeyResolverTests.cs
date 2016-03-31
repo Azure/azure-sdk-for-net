@@ -105,6 +105,7 @@ namespace KeyVault.Extensions.Tests
                     .Returns(Task.FromResult<IKey>(new RsaKey(KeyId)));
                 await resolver.ResolveKeyAsync(KeyId, ct);
                 await resolver.ResolveKeyAsync(KeyId, ct);
+                resolver.Dispose();
             }
 
             mockedResolver.Verify(r => r.ResolveKeyAsync(KeyId, ct), Times.Exactly(3));
@@ -164,6 +165,56 @@ namespace KeyVault.Extensions.Tests
                 }
                 Task.WaitAll(tasks.ToArray());
             }
+        }
+
+        /// <summary>
+        /// Test disposing key after cache is disposed in <see cref="CachingKeyResolver"/>
+        /// </summary>
+        [Fact]
+        public async Task KeyVault_CachingKeyResolverKeyIsDisposed()
+        {
+            var mockedResolver = new Mock<IKeyResolver>();
+            var mockedKey = new Mock<IKey>();
+            var ct = default(CancellationToken);
+
+            mockedResolver.Setup(r => r.ResolveKeyAsync(KeyId, ct))
+                .Returns(Task.FromResult(mockedKey.Object));
+
+            using (var resolver = new CachingKeyResolver(2, mockedResolver.Object))
+            {
+                await resolver.ResolveKeyAsync(KeyId, ct);
+            }
+
+            mockedKey.Verify(k => k.Dispose(), Times.Once);
+        }
+
+        /// <summary>
+        /// Test disposing a key while it is cached in <see cref="CachingKeyResolver"/>
+        /// </summary>
+        [Fact]
+        public async Task KeyVault_CachingKeyResolverDisposeCachedKey()
+        {
+            var mockedResolver = new Mock<IKeyResolver>();
+            var mockedKey = new Mock<IKey>();
+            var ct = default(CancellationToken);
+
+            mockedResolver.Setup(r => r.ResolveKeyAsync(KeyId, ct))
+                .Returns(Task.FromResult(mockedKey.Object));
+
+            using (var resolver = new CachingKeyResolver(2, mockedResolver.Object))
+            {
+                var cachedKey = await resolver.ResolveKeyAsync(KeyId, ct);
+
+                // key doesn't get disposed because dispose of key is disabled
+                cachedKey.Dispose();
+                mockedKey.Verify(k => k.Dispose(), Times.Never);
+
+                await resolver.ResolveKeyAsync(KeyId, ct);
+            }
+
+            // Dispose on key is only called when cache is disposing
+            mockedKey.Verify(k => k.Dispose(), Times.Exactly(1));
+            mockedResolver.Verify(r => r.ResolveKeyAsync(KeyId, ct), Times.Exactly(1));
         }
     }
 }
