@@ -28,7 +28,7 @@ using Sql2.Tests.ScenarioTests;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Sql.Tests.ScenarioTests
+namespace Sql2.Tests.ScenarioTests
 {
     /// <summary>
     /// Contains tests for Import/Export Operations
