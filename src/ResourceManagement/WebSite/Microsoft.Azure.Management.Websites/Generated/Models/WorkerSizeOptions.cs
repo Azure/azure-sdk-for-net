@@ -18,6 +18,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum WorkerSizeOptions
     {
+        [EnumMember(Value = "Default")]
+        Default,
         [EnumMember(Value = "Small")]
         Small,
         [EnumMember(Value = "Medium")]

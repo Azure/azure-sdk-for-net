@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Domain provisioning state. Possible values for this property
-        /// include: 'Succeeded', 'Failed', 'Canceled', 'InProgress'.
+        /// include: 'Succeeded', 'Failed', 'Canceled', 'InProgress',
+        /// 'Deleting'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; set; }

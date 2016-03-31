@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of server farm
         /// </param>
         /// <param name='workerName'>
-        /// Name of worker machine, typically IP address
+        /// Name of worker machine, typically starts with RD
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

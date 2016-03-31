@@ -41,7 +41,7 @@ namespace Compute.Tests
             {
                 Name = "vmssext01",
                 Publisher = "Microsoft.Compute",
-                VirtualMachineScaleSetExtensionType = "VMAccessAgent",
+                Type = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
                 Settings = "{}",
@@ -66,6 +66,7 @@ namespace Compute.Tests
                     Capacity = 2,
                     Name = VirtualMachineSizeTypes.StandardA0,
                 },
+                OverProvision = false,
                 UpgradePolicy = new UpgradePolicy()
                 {
                     Mode = UpgradeMode.Automatic
@@ -235,7 +236,7 @@ namespace Compute.Tests
             // TODO: AutoRest
             Assert.NotNull(vmScaleSetInstanceView.Extensions);
             int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            Assert.True(instancesCount >= vmScaleSet.Sku.Capacity);
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut)

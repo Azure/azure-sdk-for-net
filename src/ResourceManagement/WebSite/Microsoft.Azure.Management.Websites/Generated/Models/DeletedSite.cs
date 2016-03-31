@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the DeletedSite class.
         /// </summary>
-        public DeletedSite(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? deletedTimestamp = default(DateTime?), string deletedSiteName = default(string), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), DateTime? lastModifiedTimeUtc = default(DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? premiumAppDeployed = default(bool?), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string microService = default(string), string gatewaySiteName = default(string), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), CloningInfo cloningInfo = default(CloningInfo))
+        public DeletedSite(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? deletedTimestamp = default(DateTime?), string deletedSiteName = default(string), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), DateTime? lastModifiedTimeUtc = default(DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? premiumAppDeployed = default(bool?), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string microService = default(string), string gatewaySiteName = default(string), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), int? containerSize = default(int?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string))
             : base(location, id, name, type, tags)
         {
             DeletedTimestamp = deletedTimestamp;
@@ -56,7 +56,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ClientCertEnabled = clientCertEnabled;
             HostNamesDisabled = hostNamesDisabled;
             OutboundIpAddresses = outboundIpAddresses;
+            ContainerSize = containerSize;
+            MaxNumberOfWorkers = maxNumberOfWorkers;
             CloningInfo = cloningInfo;
+            ResourceGroup = resourceGroup;
+            IsDefaultContainer = isDefaultContainer;
+            DefaultHostName = defaultHostName;
         }
 
         /// <summary>
@@ -224,12 +229,43 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string OutboundIpAddresses { get; private set; }
 
         /// <summary>
+        /// Size of a function container
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerSize")]
+        public int? ContainerSize { get; set; }
+
+        /// <summary>
+        /// Maximum number of workers
+        /// This only applies to function container
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxNumberOfWorkers")]
+        public int? MaxNumberOfWorkers { get; set; }
+
+        /// <summary>
         /// This is only valid for web app creation. If specified, web app is
         /// cloned from
         /// a source web app
         /// </summary>
         [JsonProperty(PropertyName = "properties.cloningInfo")]
         public CloningInfo CloningInfo { get; set; }
+
+        /// <summary>
+        /// Resource group web app belongs to
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceGroup")]
+        public string ResourceGroup { get; private set; }
+
+        /// <summary>
+        /// Site is a default container
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDefaultContainer")]
+        public bool? IsDefaultContainer { get; private set; }
+
+        /// <summary>
+        /// Default hostname of the web app
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultHostName")]
+        public string DefaultHostName { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SiteConfig class.
         /// </summary>
-        public SiteConfig(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), bool? requestTracingEnabled = default(bool?), DateTime? requestTracingExpirationTime = default(DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), string publishingPassword = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IList<NameValuePair> metadata = default(IList<NameValuePair>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), string autoSwapSlotName = default(string))
+        public SiteConfig(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), bool? requestTracingEnabled = default(bool?), DateTime? requestTracingExpirationTime = default(DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), string publishingPassword = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IList<NameValuePair> metadata = default(IList<NameValuePair>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), string autoSwapSlotName = default(string), bool? localMySqlEnabled = default(bool?), IList<IpSecurityRestriction> ipSecurityRestrictions = default(IList<IpSecurityRestriction>))
             : base(location, id, name, type, tags)
         {
             NumberOfWorkers = numberOfWorkers;
@@ -70,6 +70,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Cors = cors;
             ApiDefinition = apiDefinition;
             AutoSwapSlotName = autoSwapSlotName;
+            LocalMySqlEnabled = localMySqlEnabled;
+            IpSecurityRestrictions = ipSecurityRestrictions;
         }
 
         /// <summary>
@@ -302,6 +304,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoSwapSlotName")]
         public string AutoSwapSlotName { get; set; }
+
+        /// <summary>
+        /// Local mysql enabled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.localMySqlEnabled")]
+        public bool? LocalMySqlEnabled { get; set; }
+
+        /// <summary>
+        /// Ip Security restrictions
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipSecurityRestrictions")]
+        public IList<IpSecurityRestriction> IpSecurityRestrictions { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
