@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private string _queuedTime;
         
         /// <summary>
-        /// Optional. Gets or sets the operation queue time.
+        /// Optional. Gets or sets the operation queued time.
         /// </summary>
         public string QueuedTime
         {

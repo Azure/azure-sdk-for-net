@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Import/Export Azure SQL Database parameters.
     /// </summary>
-    public partial class ImportExtensionProperties : ImportExportRequestParametersBase
+    public partial class ImportExtensionProperties : ExportRequestParameters
     {
         private string _operrationMode;
         

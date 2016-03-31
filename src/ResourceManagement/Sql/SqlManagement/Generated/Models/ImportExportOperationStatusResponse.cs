@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private ImportExportOperationStatusResponseProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the request.
+        /// Optional. Gets or sets the properties of the response.
         /// </summary>
         public ImportExportOperationStatusResponseProperties Properties
         {

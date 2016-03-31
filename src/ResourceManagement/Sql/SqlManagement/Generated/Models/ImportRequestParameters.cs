@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Import Azure SQL Database parameters.
     /// </summary>
-    public partial class ImportRequestParameters : ImportExportRequestParametersBase
+    public partial class ImportRequestParameters : ExportRequestParameters
     {
         private long _databaseMaxSize;
         
