@@ -14,6 +14,7 @@
 //
 
 using Microsoft.Azure;
+using Microsoft.WindowsAzure.Testing;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Testing
 {
@@ -472,7 +473,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
                 {
                     AdminUserName = "testuser",
-                    AdminPassword = "@zur3R0ck5",
+                    AdminPassword = ComputeTestsUtilities.GenerateRandomPassword(),
                     ConfigurationSetType = ConfigurationSetTypes.WindowsProvisioningConfiguration,
                     ComputerName = serviceName,
                     HostName = string.Format("{0}.cloudapp.net", serviceName),
@@ -533,7 +534,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
                 {
                     AdminUserName = "testuser",
-                    AdminPassword = "@zur3R0ck5",
+                    AdminPassword = ComputeTestsUtilities.GenerateRandomPassword(),
                     ConfigurationSetType = ConfigurationSetTypes.WindowsProvisioningConfiguration,
                     ComputerName = serviceName,
                     HostName = string.Format("{0}.cloudapp.net", serviceName),

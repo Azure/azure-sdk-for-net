@@ -4,7 +4,7 @@
       "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices",
       "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcw==",
       "RequestMethod": "POST",
-      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>azsmnet9080</ServiceName>\r\n  <Label>YXpzbW5ldDkwODA=</Label>\r\n  <Location>East US 2 (Stage)</Location>\r\n</CreateHostedService>",
+      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>azsmnet4978</ServiceName>\r\n  <Label>YXpzbW5ldDQ5Nzg=</Label>\r\n  <Location>East US 2 (Stage)</Location>\r\n</CreateHostedService>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
@@ -31,20 +31,20 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5066cc91b5bf8b1b8de8b6058f924b1a"
+          "e43a50b5be6b9709b1714b3c7d6736ae"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:22:49 GMT"
+          "Thu, 31 Mar 2016 22:27:28 GMT"
         ],
         "Location": [
-          "https://management.core.windows.net/subscriptions/3de864df-1f7d-40d5-b3f0-1bfa713006fb/compute/azsmnet9080"
+          "https://management.core.windows.net/subscriptions/3de864df-1f7d-40d5-b3f0-1bfa713006fb/compute/azsmnet4978"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -78,17 +78,17 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "abf2fc3f8182817eb3f9111aa3059da8"
+          "900ddef8e08a8670b833ec343f7d63ec"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:22:52 GMT"
+          "Thu, 31 Mar 2016 22:27:29 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -122,33 +122,33 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "87a3702c94328eff81e654bd7af76b59"
+          "7442641ec228873d8ac5de0906502336"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:22:55 GMT"
+          "Thu, 31 Mar 2016 22:27:29 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet9080/deployments",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0OTA4MC9kZXBsb3ltZW50cw==",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet4978/deployments",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NDk3OC9kZXBsb3ltZW50cw==",
       "RequestMethod": "POST",
-      "RequestBody": "<Deployment xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>azsmnet9080</Name>\r\n  <DeploymentSlot>Production</DeploymentSlot>\r\n  <Label>Virtual machine azsmnet2178:Production  label</Label>\r\n  <RoleList>\r\n    <Role>\r\n      <RoleName>azsmnet9080</RoleName>\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet>\r\n          <ConfigurationSetType>WindowsProvisioningConfiguration</ConfigurationSetType>\r\n          <ComputerName>azsmnet9080</ComputerName>\r\n          <AdminPassword>@zur3R0ck5</AdminPassword>\r\n          <EnableAutomaticUpdates>false</EnableAutomaticUpdates>\r\n          <TimeZone>Pacific Standard Time</TimeZone>\r\n          <StoredCertificateSettings />\r\n          <AdminUsername>testuser</AdminUsername>\r\n          <HostName>azsmnet9080.cloudapp.net</HostName>\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <MediaLink>http://azsmnet3437.blob.core.windows.net/myvhds/azsmnet9080.vhd</MediaLink>\r\n        <SourceImageName>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201412.01-en.us-127GB.vhd</SourceImageName>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>true</ProvisionGuestAgent>\r\n    </Role>\r\n  </RoleList>\r\n</Deployment>",
+      "RequestBody": "<Deployment xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>azsmnet4978</Name>\r\n  <DeploymentSlot>Production</DeploymentSlot>\r\n  <Label>Virtual machine azsmnet1836:Production  label</Label>\r\n  <RoleList>\r\n    <Role>\r\n      <RoleName>azsmnet4978</RoleName>\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet>\r\n          <ConfigurationSetType>WindowsProvisioningConfiguration</ConfigurationSetType>\r\n          <ComputerName>azsmnet4978</ComputerName>\r\n          <AdminPassword>AzureSDK17826e341b014-3434-4269-bae9-b359ef3df37b</AdminPassword>\r\n          <EnableAutomaticUpdates>false</EnableAutomaticUpdates>\r\n          <TimeZone>Pacific Standard Time</TimeZone>\r\n          <StoredCertificateSettings />\r\n          <AdminUsername>testuser</AdminUsername>\r\n          <HostName>azsmnet4978.cloudapp.net</HostName>\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <MediaLink>http://azsmnet2940.blob.core.windows.net/myvhds/azsmnet4978.vhd</MediaLink>\r\n        <SourceImageName>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201412.01-en.us-127GB.vhd</SourceImageName>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>true</ProvisionGuestAgent>\r\n    </Role>\r\n  </RoleList>\r\n</Deployment>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "1343"
+          "1382"
         ],
         "x-ms-version": [
           "2016-03-01"
@@ -169,25 +169,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "16a22e04f8ff8261a991597be344aec3"
+          "209d31e164658848a2848f96b30c82c0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:22:57 GMT"
+          "Thu, 31 Mar 2016 22:27:31 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/16a22e04f8ff8261a991597be344aec3",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzE2YTIyZTA0ZjhmZjgyNjFhOTkxNTk3YmUzNDRhZWMz",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/209d31e164658848a2848f96b30c82c0",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzIwOWQzMWUxNjQ2NTg4NDhhMjg0OGY5NmIzMGM4MmMw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -198,7 +198,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>16a22e04-f8ff-8261-a991-597be344aec3</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>209d31e1-6465-8848-a284-8f96b30c82c0</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -213,25 +213,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5fda5e7c85fd8bfca2b41e65aa1e370a"
+          "b1f0952a22909904a0b2a0665f067b43"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:22:57 GMT"
+          "Thu, 31 Mar 2016 22:27:31 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/16a22e04f8ff8261a991597be344aec3",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzE2YTIyZTA0ZjhmZjgyNjFhOTkxNTk3YmUzNDRhZWMz",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/209d31e164658848a2848f96b30c82c0",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzIwOWQzMWUxNjQ2NTg4NDhhMjg0OGY5NmIzMGM4MmMw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -242,7 +242,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>16a22e04-f8ff-8261-a991-597be344aec3</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>209d31e1-6465-8848-a284-8f96b30c82c0</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -257,25 +257,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4ee095bccd20831a9f8e4638cc9926ad"
+          "6f09017c34a58fb7b34e03da7442c580"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:23:27 GMT"
+          "Thu, 31 Mar 2016 22:28:03 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet9080/deployments/azsmnet9080/migration?comp=prepare",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0OTA4MC9kZXBsb3ltZW50cy9henNtbmV0OTA4MC9taWdyYXRpb24/Y29tcD1wcmVwYXJl",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet4978/deployments/azsmnet4978/migration?comp=prepare",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NDk3OC9kZXBsb3ltZW50cy9henNtbmV0NDk3OC9taWdyYXRpb24/Y29tcD1wcmVwYXJl",
       "RequestMethod": "POST",
       "RequestBody": "<DeploymentNetworkResource xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ResourceGroupName></ResourceGroupName>\r\n  <VirtualNetworkName></VirtualNetworkName>\r\n  <SubNetName></SubNetName>\r\n  <DestinationVirtualNetwork>New</DestinationVirtualNetwork>\r\n</DeploymentNetworkResource>",
       "RequestHeaders": {
@@ -304,25 +304,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1cbe8729c04398d69b2185c7ead0fe2e"
+          "b43bd6ebdf5d9f8781ae340590a65b1b"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:23:28 GMT"
+          "Thu, 31 Mar 2016 22:28:03 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -333,7 +333,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -348,25 +348,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "21cba9611ba38f87bf863f6f99a19d96"
+          "f95703f2661a8c7abdb33d6618539734"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:23:28 GMT"
+          "Thu, 31 Mar 2016 22:28:03 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -377,7 +377,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -392,25 +392,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c0429dbab904851d89bd7ce6be0b4053"
+          "02c3eb54740b8a8688c7a1a7824a51c8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:23:59 GMT"
+          "Thu, 31 Mar 2016 22:28:33 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -421,7 +421,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -436,25 +436,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "603bb8b08dff85ae9c32b6fb3b51059f"
+          "e12231baa4b9884a8b5a4895fc99b381"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:24:29 GMT"
+          "Thu, 31 Mar 2016 22:29:03 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -465,7 +465,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -480,25 +480,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c0007c473a5c8305a4266aef14d296ea"
+          "e1a3cc8581919714be6e1f61c5fbba44"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:25:00 GMT"
+          "Thu, 31 Mar 2016 22:29:34 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -509,183 +509,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "197"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "56a3744e8fa88339b2b003f8a88d1f38"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 21 Mar 2016 23:25:29 GMT"
-        ],
-        "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2016-03-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "197"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "5665c421af9c9b8b831d0013ec0fe837"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 21 Mar 2016 23:26:00 GMT"
-        ],
-        "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2016-03-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "197"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "14b3636a3d6f90d68a162a0b5a6bd2d8"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 21 Mar 2016 23:26:29 GMT"
-        ],
-        "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2016-03-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "197"
-        ],
-        "Content-Type": [
-          "application/xml; charset=utf-8"
-        ],
-        "x-ms-servedbyregion": [
-          "ussouth3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "d5d53e1620208b429be387777ace2768"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 21 Mar 2016 23:27:00 GMT"
-        ],
-        "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
-          "Microsoft-HTTPAPI/2.0"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/1cbe8729c04398d69b2185c7ead0fe2e",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzFjYmU4NzI5YzA0Mzk4ZDY5YjIxODVjN2VhZDBmZTJl",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2016-03-01"
-        ],
-        "User-Agent": [
-          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
-        ]
-      },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>1cbe8729-c043-98d6-9b21-85c7ead0fe2e</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -700,25 +524,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "2bc804c552be861589cd85766ec405ef"
+          "ef08bb874195978d8eceeab843fd8648"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:27:30 GMT"
+          "Thu, 31 Mar 2016 22:30:04 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet9080/deployments/azsmnet9080/migration?comp=abort",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0OTA4MC9kZXBsb3ltZW50cy9henNtbmV0OTA4MC9taWdyYXRpb24/Y29tcD1hYm9ydA==",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet4978/deployments/azsmnet4978/migration?comp=abort",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NDk3OC9kZXBsb3ltZW50cy9henNtbmV0NDk3OC9taWdyYXRpb24/Y29tcD1hYm9ydA==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -741,25 +565,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f353868b8acd81cabb3d13190c5a9dab"
+          "c9dbb445e835990d91f1b324a9f5b0b8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:27:31 GMT"
+          "Thu, 31 Mar 2016 22:30:04 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/f353868b8acd81cabb3d13190c5a9dab",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2YzNTM4NjhiOGFjZDgxY2FiYjNkMTMxOTBjNWE5ZGFi",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -770,7 +594,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f353868b-8acd-81ca-bb3d-13190c5a9dab</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -785,25 +609,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "127f038a19718390b59bd44798a02964"
+          "8dbd65f9b8c69457b585c8632cf7855d"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:27:31 GMT"
+          "Thu, 31 Mar 2016 22:30:04 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/f353868b8acd81cabb3d13190c5a9dab",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2YzNTM4NjhiOGFjZDgxY2FiYjNkMTMxOTBjNWE5ZGFi",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -814,7 +638,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f353868b-8acd-81ca-bb3d-13190c5a9dab</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -829,25 +653,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d49bae939eac86ff816c51d646b6150a"
+          "4f7227164a1d9433b6a46da64153ffc5"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:28:03 GMT"
+          "Thu, 31 Mar 2016 22:30:35 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/f353868b8acd81cabb3d13190c5a9dab",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2YzNTM4NjhiOGFjZDgxY2FiYjNkMTMxOTBjNWE5ZGFi",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -858,7 +682,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f353868b-8acd-81ca-bb3d-13190c5a9dab</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -873,25 +697,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e5dcab351792820283281ee4956b845d"
+          "97143826a05186f981fa98f86a5510bc"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:28:34 GMT"
+          "Thu, 31 Mar 2016 22:31:05 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/f353868b8acd81cabb3d13190c5a9dab",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2YzNTM4NjhiOGFjZDgxY2FiYjNkMTMxOTBjNWE5ZGFi",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -902,7 +726,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f353868b-8acd-81ca-bb3d-13190c5a9dab</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "197"
@@ -917,25 +741,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "6684c6bbedc88d68a88c96ec05cc0189"
+          "ecbc6fe260999229baf19fcbc78f0f49"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:29:03 GMT"
+          "Thu, 31 Mar 2016 22:31:35 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/f353868b8acd81cabb3d13190c5a9dab",
-      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2YzNTM4NjhiOGFjZDgxY2FiYjNkMTMxOTBjNWE5ZGFi",
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -946,7 +770,7 @@
           "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
         ]
       },
-      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f353868b-8acd-81ca-bb3d-13190c5a9dab</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
       "ResponseHeaders": {
         "Content-Length": [
           "232"
@@ -961,17 +785,17 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e8eb6baa22268cc6b4bf60e739c3ab6c"
+          "82cdd82f740b91e082415ec3756c212c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 21 Mar 2016 23:29:33 GMT"
+          "Thu, 31 Mar 2016 22:32:05 GMT"
         ],
         "Server": [
-          "1.0.6198.340",
-          "(rd_rdfe_stable.160317-1539)",
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -980,7 +804,10 @@
   ],
   "Names": {
     "CanAbortVirtualMachineDeployment": [
-      "azsmnet9080"
+      "azsmnet4978"
+    ],
+    "GenerateRandomPassword": [
+      "AzureSDK17826"
     ]
   },
   "Variables": {
