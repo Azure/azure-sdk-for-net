@@ -39,20 +39,15 @@ namespace RecoveryServices.Tests
                 client =>
                 {
                     ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = ProviderType.Mab.ToString();
+                    queryParams.ProviderType = ProviderType.MAB.ToString();
 
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                     ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
 
-                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultIaasV1ContainerUniqueName);
-                    Assert.True(
-                        response.ItemList.ProtectionContainers.Any(
-                            protectionContainer =>
-                            {
-                                return protectionContainer.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectionContainer) &&
-                                       protectionContainer.Name == containerUniqueName;
-                            }),
-                            "Retrieved list of containers doesn't contain Mab test container");
+                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultMabContainerUniqueName);
+                    MabProtectionContainer container = response.ItemList.ProtectionContainers.FirstOrDefault().Properties as MabProtectionContainer;
+                    Assert.NotNull(container);
+                    Assert.Equal(containerUniqueName, container.FriendlyName);
                 });
         }
 
@@ -62,8 +57,6 @@ namespace RecoveryServices.Tests
             ExecuteTest(
                 client =>
                 {
-                    ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                     string mabContainerName = ConfigurationManager.AppSettings["MabContainerName"];
                     AzureOperationResponse response = containerTestHelper.UnregisterContainer(mabContainerName);
