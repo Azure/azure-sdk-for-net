@@ -46,6 +46,24 @@ namespace RecoveryServices.Tests.Helpers
                                                 policyName, request, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
+            if(response.StatusCode == HttpStatusCode.OK)
+            {
+                Assert.Null(response.Location);
+                Assert.Null(response.AzureAsyncOperation);
+                Assert.Null(response.RetryAfter);
+                Assert.NotNull(response.Item);
+                Assert.NotNull(response.Item.Id);
+                Assert.NotNull(response.Item.Name);
+                Assert.NotNull(response.Item.Type);
+            }
+            else
+            {
+                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+                Assert.NotNull(response.Location);
+                Assert.NotNull(response.AzureAsyncOperation);
+                Assert.NotNull(response.RetryAfter);
+            }            
+
             return response;
         }
 
@@ -56,7 +74,7 @@ namespace RecoveryServices.Tests.Helpers
 
             AzureOperationResponse response = Client.ProtectionPolicy.Delete(rsVaultRgName, rsVaultName,
                                                        policyName, CommonTestHelper.GetCustomRequestHeaders());
-            Assert.NotNull(response);
+            Assert.NotNull(response);            
             return response;
         }
 
@@ -69,6 +87,12 @@ namespace RecoveryServices.Tests.Helpers
                                                  policyName, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
+            Assert.Null(response.Location);
+            Assert.Null(response.AzureAsyncOperation);
+            Assert.Null(response.RetryAfter);
+            Assert.Equal(response.Item.Name, policyName);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
             return response;
         }
 
@@ -81,6 +105,7 @@ namespace RecoveryServices.Tests.Helpers
                                                  queryParams, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             return response;            
         }
     }
