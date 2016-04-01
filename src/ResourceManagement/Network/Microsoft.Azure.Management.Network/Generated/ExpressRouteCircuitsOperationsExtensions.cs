@@ -580,9 +580,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='circuitName'>
             /// The name of the circuit.
             /// </param>
-            public static ExpressRouteCircuitStats ListStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
+            public static ExpressRouteCircuitStats GetStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListStatsAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).GetStatsAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -601,9 +601,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitStats> ListStatsAsync( this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExpressRouteCircuitStats> GetStatsAsync( this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListStatsWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetStatsWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -625,9 +625,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='peeringName'>
             /// The name of the peering.
             /// </param>
-            public static ExpressRouteCircuitStats ListPeeringStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName)
+            public static ExpressRouteCircuitStats GetPeeringStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListPeeringStatsAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).GetPeeringStatsAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -649,9 +649,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitStats> ListPeeringStatsAsync( this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExpressRouteCircuitStats> GetPeeringStatsAsync( this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListPeeringStatsWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPeeringStatsWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -718,78 +718,6 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<IPage<ExpressRouteCircuit>> ListAllAsync( this IExpressRouteCircuitsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static ExpressRouteCircuitStats ListStatsNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListStatsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ExpressRouteCircuitStats> ListStatsNextAsync( this IExpressRouteCircuitsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListStatsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static ExpressRouteCircuitStats ListPeeringStatsNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitsOperations)s).ListPeeringStatsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ExpressRouteCircuitStats> ListPeeringStatsNextAsync( this IExpressRouteCircuitsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListPeeringStatsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
