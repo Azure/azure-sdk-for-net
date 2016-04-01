@@ -39,20 +39,16 @@ namespace RecoveryServices.Tests
                 client =>
                 {
                     ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = ProviderType.Dpm.ToString();
+                    queryParams.ProviderType = ProviderType.DPM.ToString();
 
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                    throw new NotImplementedException("To Call Get Backup engine hydra");
                     ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
-
-                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultIaasV1ContainerUniqueName);
-                    Assert.True(
-                        response.ItemList.ProtectionContainers.Any(
-                            protectionContainer =>
-                            {
-                                return protectionContainer.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectionContainer) &&
-                                       protectionContainer.Name == containerUniqueName;
-                            }),
-                            "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
+                    
+                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultDpmContainerUniqueName);
+                    DpmProtectionContainer container = response.ItemList.ProtectionContainers.FirstOrDefault().Properties as DpmProtectionContainer;
+                    Assert.NotNull(container);
+                    Assert.Equal(containerUniqueName, container.FriendlyName);
                 });
         }
 
@@ -62,11 +58,9 @@ namespace RecoveryServices.Tests
             ExecuteTest(
                 client =>
                 {
-                    ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    string mabContainerName = ConfigurationManager.AppSettings["MabContainerName"];
-                    AzureOperationResponse response = containerTestHelper.UnregisterContainer(mabContainerName);
+                    string dpmContainerName = ConfigurationManager.AppSettings["DpmContainerName"];
+                    AzureOperationResponse response = containerTestHelper.UnregisterContainer(dpmContainerName);
                 });
         }
     }
