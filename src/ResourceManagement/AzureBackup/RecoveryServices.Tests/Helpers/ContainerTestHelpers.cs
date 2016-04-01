@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.RecoveryServices.Backup;
+﻿using Microsoft.Azure;
+using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,19 @@ namespace RecoveryServices.Tests.Helpers
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(response.ItemList);
             return response;
+        }
+
+        public AzureOperationResponse UnregisterContainer(string containerName)
+        {
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+
+            AzureOperationResponse response = Client.Container.Unregister(rsVaultRgName, rsVaultName, containerName, CommonTestHelper.GetCustomRequestHeaders());
+
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            return response;
+
         }
     }
 }
