@@ -15,10 +15,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// <summary>
     /// Defines values for CompileMode.
     /// </summary>
-    public static class CompileMode
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum CompileMode
     {
-        public const string Semantic = "Semantic";
-        public const string Full = "Full";
-        public const string SingleBox = "SingleBox";
+        [EnumMember(Value = "Semantic")]
+        Semantic,
+        [EnumMember(Value = "Full")]
+        Full,
+        [EnumMember(Value = "SingleBox")]
+        SingleBox
     }
 }

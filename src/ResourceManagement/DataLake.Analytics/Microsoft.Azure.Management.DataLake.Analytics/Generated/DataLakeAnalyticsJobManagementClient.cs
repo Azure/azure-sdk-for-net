@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         {
             this.Job = new JobOperations(this);
             this.BaseUri = "https://{accountName}.{adlaJobDnsSuffix}";
-            this.ApiVersion = "2015-11-01-preview";
+            this.ApiVersion = "2016-03-20-preview";
             this.AdlaJobDnsSuffix = "azuredatalakeanalytics.net";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

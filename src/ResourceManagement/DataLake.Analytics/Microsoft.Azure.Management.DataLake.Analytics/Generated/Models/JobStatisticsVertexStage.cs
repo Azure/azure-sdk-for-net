@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobStatisticsVertexStage class.
         /// </summary>
-        public JobStatisticsVertexStage(long? dataRead = default(long?), long? dataReadCrossPod = default(long?), long? dataReadIntraPod = default(long?), long? dataToRead = default(long?), long? dataWritten = default(long?), int? duplicateDiscardCount = default(int?), int? failedCount = default(int?), long? maxVertexDataRead = default(long?), long? minVertexDataRead = default(long?), int? readFailureCount = default(int?), int? revocationCount = default(int?), int? runningCount = default(int?), int? scheduledCount = default(int?), string stageName = default(string), int? succeededCount = default(int?), long? tempDataWritten = default(long?), int? totalCount = default(int?), string totalFailedTime = default(string), int? totalProgress = default(int?), string totalSucceededTime = default(string))
+        public JobStatisticsVertexStage(long? dataRead = default(long?), long? dataReadCrossPod = default(long?), long? dataReadIntraPod = default(long?), long? dataToRead = default(long?), long? dataWritten = default(long?), int? duplicateDiscardCount = default(int?), int? failedCount = default(int?), long? maxVertexDataRead = default(long?), long? minVertexDataRead = default(long?), int? readFailureCount = default(int?), int? revocationCount = default(int?), int? runningCount = default(int?), int? scheduledCount = default(int?), string stageName = default(string), int? succeededCount = default(int?), long? tempDataWritten = default(long?), int? totalCount = default(int?), TimeSpan? totalFailedTime = default(TimeSpan?), int? totalProgress = default(int?), TimeSpan? totalSucceededTime = default(TimeSpan?))
         {
             DataRead = dataRead;
             DataReadCrossPod = dataReadCrossPod;
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets the amount of time that failed vertices took up in this stage.
         /// </summary>
         [JsonProperty(PropertyName = "totalFailedTime")]
-        public string TotalFailedTime { get; private set; }
+        public TimeSpan? TotalFailedTime { get; private set; }
 
         /// <summary>
         /// Gets the current progress of this stage, as a percentage.
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets the amount of time all successful vertices took in this stage.
         /// </summary>
         [JsonProperty(PropertyName = "totalSucceededTime")]
-        public string TotalSucceededTime { get; private set; }
+        public TimeSpan? TotalSucceededTime { get; private set; }
 
     }
 }
