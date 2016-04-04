@@ -98,6 +98,17 @@ namespace Microsoft.Azure.Management.RecoveryServices
             set { this._resourceNamespace = value; }
         }
         
+        private IReplicationUsagesOperations _replicationUsages;
+        
+        /// <summary>
+        /// Definition of vault usage operations for the Recovery Services
+        /// extension.
+        /// </summary>
+        public virtual IReplicationUsagesOperations ReplicationUsages
+        {
+            get { return this._replicationUsages; }
+        }
+        
         private IResourceGroupsOperations _resourceGroup;
         
         /// <summary>
@@ -137,6 +148,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public RecoveryServicesManagementClient()
             : base()
         {
+            this._replicationUsages = new ReplicationUsagesOperations(this);
             this._resourceGroup = new ResourceGroupsOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vaults = new VaultOperations(this);
@@ -224,6 +236,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public RecoveryServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._replicationUsages = new ReplicationUsagesOperations(this);
             this._resourceGroup = new ResourceGroupsOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vaults = new VaultOperations(this);

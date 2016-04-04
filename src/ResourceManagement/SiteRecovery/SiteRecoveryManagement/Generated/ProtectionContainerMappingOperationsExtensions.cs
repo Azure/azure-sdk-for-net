@@ -535,6 +535,46 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Get the list of all protection container mapping under a vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerMappingOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a Protection Container mapping collection object.
+        /// </returns>
+        public static ProtectionContainerMappingListResponse ListAll(this IProtectionContainerMappingOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionContainerMappingOperations)s).ListAllAsync(customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the list of all protection container mapping under a vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionContainerMappingOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a Protection Container mapping collection object.
+        /// </returns>
+        public static Task<ProtectionContainerMappingListResponse> ListAllAsync(this IProtectionContainerMappingOperations operations, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListAllAsync(customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Purges protection for given protection container
         /// </summary>
         /// <param name='operations'>

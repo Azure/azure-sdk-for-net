@@ -16,6 +16,8 @@
           Condition=" '$(Scope)' == 'all' "/>
   <Import Project="$(LibrarySourceFolder)\Authentication\**\*.nuget.proj"
           Condition=" '$(Scope)' == 'all' "/>
+  <Import Project="$(LibrarySourceFolder)\Graph.RBAC\**\*.nuget.proj"
+          Condition=" '$(Scope)' == 'all' "/>
   
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>

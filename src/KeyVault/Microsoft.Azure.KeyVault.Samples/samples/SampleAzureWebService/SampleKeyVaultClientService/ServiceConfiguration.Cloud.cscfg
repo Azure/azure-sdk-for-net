@@ -1,15 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ServiceConfiguration serviceName="SampleKeyVaultClientService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
+<ServiceConfiguration serviceName="SampleKeyVaultClientService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
   <Role name="SampleKeyVaultClientWebRole">
     <Instances count="1" />
     <ConfigurationSettings>
+      <!-- The name of the pre-created storage account to store the user-message data to -->
       <Setting name="StorageAccountName" value="" />
+
+      <!-- The Key Vault secret URL which contains storage key -->
       <Setting name="StorageAccountKeySecretUrl" value="" />
+
+      <!-- The duration (ttl) that Key Vault secret value will be cached e.g. 00:20:00 -->
+      <Setting name="KeyVaultSecretCacheDefaultTimeSpan" value=""/>
+
+      <!-- The authentication client ID which has the permission to access StorageAccountKeySecretUrl[-Secondary] -->
       <Setting name="KeyVaultAuthClientId" value="" />
+
+      <!-- The cert authentication thumbprint, used by client ID to authenticate -->
       <Setting name="KeyVaultAuthCertThumbprint" value="" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="KeyVaultAuthCert" thumbprint="6B862EADF8A215005109B6979A616F4B7B2874F2" thumbprintAlgorithm="sha1" />
+      <!-- The Key Vault authentication certificate definition - thumbprint must be set to the value of KeyVaultAuthCertThumbprint -->
+      <Certificate name="KeyVaultAuthCert" thumbprint="0000000000000000000000000000000000000000" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
 </ServiceConfiguration>

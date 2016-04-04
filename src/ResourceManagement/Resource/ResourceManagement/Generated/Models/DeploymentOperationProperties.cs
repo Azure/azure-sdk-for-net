@@ -41,6 +41,39 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._provisioningState = value; }
         }
         
+        private DeploymentOperationHttpMessage _request;
+        
+        /// <summary>
+        /// Optional. Gets or sets the deployment operation request.
+        /// </summary>
+        public DeploymentOperationHttpMessage Request
+        {
+            get { return this._request; }
+            set { this._request = value; }
+        }
+        
+        private DeploymentOperationHttpMessage _response;
+        
+        /// <summary>
+        /// Optional. Gets or sets the deployment operation response.
+        /// </summary>
+        public DeploymentOperationHttpMessage Response
+        {
+            get { return this._response; }
+            set { this._response = value; }
+        }
+        
+        private string _serviceRequestId;
+        
+        /// <summary>
+        /// Optional. Gets or sets deployment operation service request id.
+        /// </summary>
+        public string ServiceRequestId
+        {
+            get { return this._serviceRequestId; }
+            set { this._serviceRequestId = value; }
+        }
+        
         private string _statusCode;
         
         /// <summary>

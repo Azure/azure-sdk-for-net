@@ -17,7 +17,7 @@ using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Security;
-using Microsoft.Azure.Management.RecoveryServices;
+using Microsoft.Azure.Management.SiteRecoveryVault;
 using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Azure.Test
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A recovery services management client, created from the current context (environment variables)</returns>
-        public static RecoveryServicesManagementClient GetRecoveryServicesManagementClient(this TestBase testBase)
+        public static SiteRecoveryVaultManagementClient GetSiteRecoveryVaultManagementClient(this TestBase testBase)
         {
             TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
 
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Test
                     IgnoreCertificateErrorHandler;
             }
 
-            return new RecoveryServicesManagementClient(
-                "Microsoft.RecoveryServicesBVTD2",
-                "vaults",
+            return new SiteRecoveryVaultManagementClient(
+                "Microsoft.SiteRecoveryBVTD2",
+                "SiteRecoveryVault",
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }
@@ -69,19 +69,19 @@ namespace Microsoft.Azure.Test
 
 
             SiteRecoveryTestsBase.MyCloudService = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "rg1" :
+                "RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US" :
                 Environment.GetEnvironmentVariable("CLOUD_SERVICE_NAME");
 
             SiteRecoveryTestsBase.MyVaultName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "rsv" :
+                "hydratest" :
                 Environment.GetEnvironmentVariable("RESOURCE_NAME");
 
             SiteRecoveryTestsBase.VaultKey = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "otAYMXSEU7HNR8bjmj2tow==" :
+                "loMUdckuT9SEvpQKcSG07A==" :
                 Environment.GetEnvironmentVariable("CHANNEL_INTEGRITY_KEY");
 
             SiteRecoveryTestsBase.MyResourceGroupName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "rg1" :
+                "RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US" :
                 Environment.GetEnvironmentVariable("RESOURCE_GROUP_NAME");
 
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyCloudService))
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Test
             return new SiteRecoveryManagementClient(
                 SiteRecoveryTestsBase.MyVaultName,
                 SiteRecoveryTestsBase.MyResourceGroupName,
-                "Microsoft.RecoveryServicesBVTD2",
-                "vaults",
+                "Microsoft.SiteRecoveryBVTD2",
+                "SiteRecoveryVault",
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }

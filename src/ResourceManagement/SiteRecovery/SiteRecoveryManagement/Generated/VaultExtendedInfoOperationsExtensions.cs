@@ -24,10 +24,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices;
 using Microsoft.Azure.Management.SiteRecovery.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     public static partial class VaultExtendedInfoOperationsExtensions
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultExtendedInfoOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultExtendedInfoOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group containing the job

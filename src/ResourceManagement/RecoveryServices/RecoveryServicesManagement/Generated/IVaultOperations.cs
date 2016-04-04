@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Creates a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the (resource group?) cloud service containing the job
-        /// collection.
+        /// The name of the Resource group/ Cloud service containing the
+        /// resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the vault to create.
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Deletes a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the (Resource Group) cloud service containing the job
-        /// collection.
+        /// The name of the Resource group/ Cloud service containing the
+        /// resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the vault to delete.
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Creates a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the (resource group) cloud service containing the job
-        /// collection.
+        /// The name of the Resource group/ Cloud service containing the
+        /// resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the vault to create.
@@ -112,8 +112,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Deletes a vault
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the (Resource Group) cloud service containing the job
-        /// collection.
+        /// The name of the Resource group/ Cloud service containing the
+        /// resource/ Vault collection.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the vault to delete.
@@ -135,11 +135,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
         Task<RecoveryServicesOperationStatusResponse> DeleteAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the Vaults.
+        /// Get the Vault details.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the (resource group?) cloud service containing the
-        /// vault collection.
+        /// The name of the Resource group/ Cloud service containing the
+        /// resource/ Vault collection.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -150,6 +153,24 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <returns>
         /// The response model for Vault.
         /// </returns>
-        Task<VaultListResponse> GetAsync(string resourceGroupName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<VaultResponse> GetAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve a list of Vaults.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource group/ Cloud service containing the
+        /// resource/ Vault collection.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for Vault.
+        /// </returns>
+        Task<VaultListResponse> ListAsync(string resourceGroupName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

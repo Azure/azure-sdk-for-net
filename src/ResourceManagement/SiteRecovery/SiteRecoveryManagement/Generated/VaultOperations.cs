@@ -29,17 +29,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Models;
 using Microsoft.Azure.Management.SiteRecovery.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     /// <summary>
     /// Definition of vault operations for the Site Recovery extension.
     /// </summary>
-    internal partial class VaultOperations : IServiceOperations<RecoveryServicesManagementClient>, IVaultOperations
+    internal partial class VaultOperations : IServiceOperations<SiteRecoveryVaultManagementClient>, IVaultOperations
     {
         /// <summary>
         /// Initializes a new instance of the VaultOperations class.
@@ -47,18 +47,18 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal VaultOperations(RecoveryServicesManagementClient client)
+        internal VaultOperations(SiteRecoveryVaultManagementClient client)
         {
             this._client = client;
         }
         
-        private RecoveryServicesManagementClient _client;
+        private SiteRecoveryVaultManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.RecoveryServicesManagementClient.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.SiteRecoveryVaultManagementClient.
         /// </summary>
-        public RecoveryServicesManagementClient Client
+        public SiteRecoveryVaultManagementClient Client
         {
             get { return this._client; }
         }
@@ -463,7 +463,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -536,7 +536,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </returns>
         public async Task<RecoveryServicesOperationStatusResponse> CreateAsync(string resourceGroupName, string vaultName, VaultCreateArgs vaultCreationInput, CancellationToken cancellationToken)
         {
-            RecoveryServicesManagementClient client = this.Client;
+            SiteRecoveryVaultManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -631,7 +631,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </returns>
         public async Task<RecoveryServicesOperationStatusResponse> DeleteAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken)
         {
-            RecoveryServicesManagementClient client = this.Client;
+            SiteRecoveryVaultManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -779,6 +779,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2015-01-01");
                 

@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
+    /// <summary>
+    /// A web site's SSL state.
+    /// </summary>
     public enum WebSiteSslState
     {
         Disabled = 0,

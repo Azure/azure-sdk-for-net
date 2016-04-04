@@ -81,7 +81,7 @@ namespace ResourceGroups.Tests
             //Valid payload
             //Construct expected URL
             string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "/register?";
-            expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
+            expectedUrl = expectedUrl + "api-version=2015-12-01";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -142,7 +142,7 @@ namespace ResourceGroups.Tests
             //Valid payload
             //Construct expected URL
             string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/providers/"+Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "?";
-            expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
+            expectedUrl = expectedUrl + "api-version=2015-12-01";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -206,7 +206,7 @@ namespace ResourceGroups.Tests
             //Valid payload
             //Construct expected URL
             string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features?";
-            expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
+            expectedUrl = expectedUrl + "api-version=2015-12-01";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -264,7 +264,7 @@ namespace ResourceGroups.Tests
             //Valid payload
             //Construct expected URL
             string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/features?";
-            expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
+            expectedUrl = expectedUrl + "api-version=2015-12-01";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

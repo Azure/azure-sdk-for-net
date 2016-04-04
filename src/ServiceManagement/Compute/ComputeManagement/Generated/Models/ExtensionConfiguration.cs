@@ -85,6 +85,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._id = value; }
             }
             
+            private string _state;
+            
+            /// <summary>
+            /// Optional. Specifies the state of the extension. This element
+            /// only applies to JSON configured extensions. Possible values
+            /// are Enable, Disable, and Uninstall.
+            /// </summary>
+            public string State
+            {
+                get { return this._state; }
+                set { this._state = value; }
+            }
+            
             /// <summary>
             /// Initializes a new instance of the Extension class.
             /// </summary>

@@ -55,13 +55,13 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
             set { this._endTime = value; }
         }
         
-        private string _errorMessage;
+        private IList<JobErrorDetails> _errorMessage;
         
         /// <summary>
         /// Optional. Gets or sets the error message details for the job, if it
         /// failed.
         /// </summary>
-        public string ErrorMessage
+        public IList<JobErrorDetails> ErrorMessage
         {
             get { return this._errorMessage; }
             set { this._errorMessage = value; }
@@ -199,6 +199,7 @@ namespace Microsoft.Azure.Management.DataLake.AnalyticsJob.Models
         /// </summary>
         public JobInformation()
         {
+            this.ErrorMessage = new LazyList<JobErrorDetails>();
             this.StateAuditRecords = new LazyList<JobStateAuditRecord>();
         }
     }

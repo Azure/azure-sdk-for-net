@@ -158,6 +158,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 bandwidthElement.Value = parameters.Bandwidth.ToString();
                 createDedicatedCircuitElement.Add(bandwidthElement);
                 
+                XElement billingTypeElement = new XElement(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
+                billingTypeElement.Value = parameters.BillingType.ToString();
+                createDedicatedCircuitElement.Add(billingTypeElement);
+                
                 XElement circuitNameElement = new XElement(XName.Get("CircuitName", "http://schemas.microsoft.com/windowsazure"));
                 circuitNameElement.Value = parameters.CircuitName;
                 createDedicatedCircuitElement.Add(circuitNameElement);
@@ -173,10 +177,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 XElement skuElement = new XElement(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
                 skuElement.Value = parameters.Sku.ToString();
                 createDedicatedCircuitElement.Add(skuElement);
-                
-                XElement billingTypeElement = new XElement(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
-                billingTypeElement.Value = parameters.BillingType.ToString();
-                createDedicatedCircuitElement.Add(billingTypeElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -724,6 +724,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 dedicatedCircuitInstance.Bandwidth = bandwidthInstance;
                             }
                             
+                            XElement billingTypeElement = dedicatedCircuitElement.Element(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
+                            if (billingTypeElement != null)
+                            {
+                                string billingTypeInstance = billingTypeElement.Value;
+                                dedicatedCircuitInstance.BillingType = billingTypeInstance;
+                            }
+                            
                             XElement circuitNameElement = dedicatedCircuitElement.Element(XName.Get("CircuitName", "http://schemas.microsoft.com/windowsazure"));
                             if (circuitNameElement != null)
                             {
@@ -1117,6 +1124,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 {
                                     uint bandwidthInstance = uint.Parse(bandwidthElement.Value, CultureInfo.InvariantCulture);
                                     dedicatedCircuitInstance.Bandwidth = bandwidthInstance;
+                                }
+                                
+                                XElement billingTypeElement = dedicatedCircuitsElement.Element(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
+                                if (billingTypeElement != null)
+                                {
+                                    string billingTypeInstance = billingTypeElement.Value;
+                                    dedicatedCircuitInstance.BillingType = billingTypeInstance;
                                 }
                                 
                                 XElement circuitNameElement = dedicatedCircuitsElement.Element(XName.Get("CircuitName", "http://schemas.microsoft.com/windowsazure"));
