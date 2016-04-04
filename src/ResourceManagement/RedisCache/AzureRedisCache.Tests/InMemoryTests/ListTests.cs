@@ -1,6 +1,7 @@
-﻿using Hyak.Common;
-using Microsoft.Azure.Management.Redis;
+﻿using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
+using Microsoft.Rest;
+using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,23 +66,22 @@ namespace AzureRedisCache.Tests
             }");
 
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
-            
-            RedisListResponse[] list = new RedisListResponse[4];
+
+            IPage<RedisResource>[] list = new IPage<RedisResource>[4];
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.OK);
-            list[0] = client.Redis.List(resourceGroupName: "resource-group");
+            list[0] = client.Redis.ListByResourceGroup(resourceGroupName: "resource-group");
             client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.OK);
-            list[1] = client.Redis.ListNext(nextLink: nextLinkForAllInResourceGroup);
+            list[1] = client.Redis.ListByResourceGroupNext(nextPageLink: nextLinkForAllInResourceGroup);
             client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.OK);
-            list[2] = client.Redis.List(null);
+            list[2] = client.Redis.List();
             client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.OK);
-            list[3] = client.Redis.ListNext(nextLink: nextLinkForAllInSubscription);
+            list[3] = client.Redis.ListNext(nextPageLink: nextLinkForAllInSubscription);
 
-            foreach (RedisListResponse responseList in list)
+            foreach (IPage<RedisResource> responseList in list)
             {
-                Assert.Equal(requestIdHeader, responseList.RequestId);
-                Assert.Equal(2, responseList.Value.Count);
+                Assert.Equal(2, responseList.Count());
 
-                foreach (RedisResource response in responseList.Value)
+                foreach (RedisResource response in responseList)
                 {
                     Assert.Contains("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Id);
                     Assert.Contains("North", response.Location);
@@ -103,21 +103,21 @@ namespace AzureRedisCache.Tests
         public void List_ParametersChecking()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Exception e = Assert.Throws<ArgumentNullException>(() => client.Redis.ListNext(nextLink: null));
-            Assert.Contains("nextLink", e.Message);
+            Exception e = Assert.Throws<ValidationException>(() => client.Redis.ListNext(nextPageLink: null));
+            Assert.Contains("nextPageLink", e.Message);
         }
 
         [Fact]
         public void List_404()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Assert.Throws<CloudException>(() => client.Redis.List(resourceGroupName: "resource-group"));
+            Assert.Throws<CloudException>(() => client.Redis.ListByResourceGroup(resourceGroupName: "resource-group"));
             client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Assert.Throws<CloudException>(() => client.Redis.ListNext(nextLink: nextLinkForAllInResourceGroup));
+            Assert.Throws<CloudException>(() => client.Redis.ListByResourceGroupNext(nextPageLink: nextLinkForAllInResourceGroup));
             client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Assert.Throws<CloudException>(() => client.Redis.List(null));
+            Assert.Throws<CloudException>(() => client.Redis.List());
             client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Assert.Throws<CloudException>(() => client.Redis.ListNext(nextLink: nextLinkForAllInSubscription));
+            Assert.Throws<CloudException>(() => client.Redis.ListNext(nextPageLink: nextLinkForAllInSubscription));
         }
 
         [Fact]
@@ -125,34 +125,34 @@ namespace AzureRedisCache.Tests
         {
             string responseString = (@"Exception: Any exception from CSM");
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<Newtonsoft.Json.JsonReaderException>(() => client.Redis.List(resourceGroupName: "resource-group"));
+            Assert.Throws<SerializationException>(() => client.Redis.ListByResourceGroup(resourceGroupName: "resource-group"));
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<Newtonsoft.Json.JsonReaderException>(() => client.Redis.ListNext(nextLink: nextLinkForAllInResourceGroup));
+            Assert.Throws<SerializationException>(() => client.Redis.ListByResourceGroupNext(nextPageLink: nextLinkForAllInResourceGroup));
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<Newtonsoft.Json.JsonReaderException>(() => client.Redis.List(null));
+            Assert.Throws<SerializationException>(() => client.Redis.List());
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<Newtonsoft.Json.JsonReaderException>(() => client.Redis.ListNext(nextLink: nextLinkForAllInSubscription));
+            Assert.Throws<SerializationException>(() => client.Redis.ListNext(nextPageLink: nextLinkForAllInSubscription));
         }
         
         [Fact]
         public void List_EmptyJSONFromCSM()
         {
             string responseString = (@"{}");
-            RedisListResponse[] list = new RedisListResponse[4];
+            IPage<RedisResource>[] list = new IPage<RedisResource>[4];
             
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            list[0] = client.Redis.List(resourceGroupName: "resource-group");
+            list[0] = client.Redis.ListByResourceGroup(resourceGroupName: "resource-group");
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            list[1] = client.Redis.ListNext(nextLink: nextLinkForAllInResourceGroup);
+            list[1] = client.Redis.ListByResourceGroupNext(nextPageLink: nextLinkForAllInResourceGroup);
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            list[2] = client.Redis.List(null);
+            list[2] = client.Redis.List();
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            list[3] = client.Redis.ListNext(nextLink: nextLinkForAllInSubscription);
+            list[3] = client.Redis.ListNext(nextPageLink: nextLinkForAllInSubscription);
 
-            foreach (RedisListResponse responseList in list)
+            foreach (IPage<RedisResource> responseList in list)
             {
-                Assert.Equal(0, responseList.Value.Count);
-                Assert.Null(responseList.NextLink);
+                Assert.Equal(0, responseList.Count());
+                Assert.Null(responseList.NextPageLink);
             }
         }
 
@@ -161,13 +161,13 @@ namespace AzureRedisCache.Tests
         {
             string responseString = (@" {""value"" : ""Invalid Non-Array Value""} ");
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<System.InvalidCastException>(() => client.Redis.List(resourceGroupName: "resource-group"));
+            Assert.Throws<SerializationException>(() => client.Redis.ListByResourceGroup(resourceGroupName: "resource-group"));
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<System.InvalidCastException>(() => client.Redis.ListNext(nextLink: nextLinkForAllInResourceGroup));
+            Assert.Throws<SerializationException>(() => client.Redis.ListByResourceGroupNext(nextPageLink: nextLinkForAllInResourceGroup));
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<System.InvalidCastException>(() => client.Redis.List(null));
+            Assert.Throws<SerializationException>(() => client.Redis.List());
             client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            Assert.Throws<System.InvalidCastException>(() => client.Redis.ListNext(nextLink: nextLinkForAllInSubscription));
+            Assert.Throws<SerializationException>(() => client.Redis.ListNext(nextPageLink: nextLinkForAllInSubscription));
         }
         
     }

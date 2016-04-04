@@ -1,6 +1,8 @@
 ﻿using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,20 +16,21 @@ namespace AzureRedisCache.Tests
         public string ResourceGroupName { set; get; }
         public string RedisCacheName = "hydracache1";
         public string Location = "North Central US";
+        private RedisCacheManagementHelper _redisCacheManagementHelper;
+        private MockContext _context;
         
         public TestsFixtureWithCacheCreate()
         {
-            TestUtilities.StartTest();
+            _context = new MockContext();
+            MockContext.Start(this.GetType().FullName, ".ctor");
             try
             {
-                UndoContext.Current.Start();
+                _redisCacheManagementHelper = new RedisCacheManagementHelper(this, _context);
+                _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
 
-                RedisCacheManagementHelper redisCacheManagementHelper = new RedisCacheManagementHelper(this);
-                redisCacheManagementHelper.TryRegisterSubscriptionForResource();
-                
                 ResourceGroupName = TestUtilities.GenerateName("hydra1");
-                redisCacheManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
-                redisCacheManagementHelper.TryCreatingCache(ResourceGroupName, RedisCacheName, Location);
+                _redisCacheManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+                _redisCacheManagementHelper.TryCreatingCache(ResourceGroupName, RedisCacheName, Location);
             }
             catch (Exception)
             {
@@ -36,7 +39,7 @@ namespace AzureRedisCache.Tests
             }
             finally
             {
-                TestUtilities.EndTest();
+                HttpMockServer.Flush();
             }
         }
 
@@ -44,9 +47,11 @@ namespace AzureRedisCache.Tests
         {
             Cleanup();    
         }
+
         private void Cleanup()
         {
-            UndoContext.Current.UndoAll();
+            HttpMockServer.Initialize(this.GetType().FullName, ".cleanup");
+            _context.Dispose();
         }
     }
 }
