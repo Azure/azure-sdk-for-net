@@ -24,47 +24,36 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    public partial class ProtectableObjectListQueryParameters
+    public enum JobOperation
     {
-        private string _friendlyName;
+        /// <summary>
+        /// Invalid operation type
+        /// </summary>
+        Invalid = 0,
         
         /// <summary>
-        /// Optional. friendly name query parameter
+        /// Operation type of a backup configuration job.
         /// </summary>
-        public string FriendlyName
-        {
-            get { return this._friendlyName; }
-            set { this._friendlyName = value; }
-        }
-        
-        private string _providerType;
+        ConfigureBackup = 1,
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// Operation type of a backpu job.
         /// </summary>
-        public string ProviderType
-        {
-            get { return this._providerType; }
-            set { this._providerType = value; }
-        }
-        
-        private string _status;
+        Backup = 2,
         
         /// <summary>
-        /// Optional. status query parameter
+        /// Operation type of a restore job.
         /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
+        Restore = 3,
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectableObjectListQueryParameters class.
+        /// Operation type of a job that disables backup.
         /// </summary>
-        public ProtectableObjectListQueryParameters()
-        {
-        }
+        Unprotect = 4,
+        
+        /// <summary>
+        /// Operation type of a job that deletes backed up data.
+        /// </summary>
+        DeleteBackupData = 5,
     }
 }

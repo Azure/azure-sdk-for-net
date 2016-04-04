@@ -41,17 +41,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._backupManagementType = value; }
         }
         
-        private string _containerUri;
-        
-        /// <summary>
-        /// Optional. Container Uri
-        /// </summary>
-        public string ContainerUri
-        {
-            get { return this._containerUri; }
-            set { this._containerUri = value; }
-        }
-        
         private string _friendlyName;
         
         /// <summary>
@@ -72,17 +61,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._protectableItemType; }
             set { this._protectableItemType = value; }
-        }
-        
-        private string _protectableObjectUri;
-        
-        /// <summary>
-        /// Optional. ProtectableObject Uri
-        /// </summary>
-        public string ProtectableObjectUri
-        {
-            get { return this._protectableObjectUri; }
-            set { this._protectableObjectUri = value; }
         }
         
         private string _protectionState;

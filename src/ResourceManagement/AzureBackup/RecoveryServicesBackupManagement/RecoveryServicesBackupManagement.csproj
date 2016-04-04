@@ -67,7 +67,7 @@
     <Compile Include="Generated\IRestoreOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
-    <Compile Include="Generated\Models\AzureIaasClassicComputeVMProtectableItem.cs" />
+    <Compile Include="Generated\Models\AzureIaaSClassicComputeVMProtectableItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSClassicComputeVMProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSClassicComputeVMProtectionContainer.cs" />
     <Compile Include="Generated\Models\AzureIaaSComputeVMProtectableItem.cs" />
@@ -102,14 +102,17 @@
     <Compile Include="Generated\Models\GetProtectedItemQueryParam.cs" />
     <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
     <Compile Include="Generated\Models\Job.cs" />
+    <Compile Include="Generated\Models\JobBackupManagementType.cs" />
     <Compile Include="Generated\Models\JobBase.cs" />
     <Compile Include="Generated\Models\JobExtendedInfo.cs" />
     <Compile Include="Generated\Models\JobListResponse.cs" />
+    <Compile Include="Generated\Models\JobOperation.cs" />
     <Compile Include="Generated\Models\JobQueryFilters.cs" />
     <Compile Include="Generated\Models\JobRequestObject.cs" />
     <Compile Include="Generated\Models\JobResource.cs" />
     <Compile Include="Generated\Models\JobResourceList.cs" />
     <Compile Include="Generated\Models\JobResponse.cs" />
+    <Compile Include="Generated\Models\JobStatus.cs" />
     <Compile Include="Generated\Models\JobSupportedAction.cs" />
     <Compile Include="Generated\Models\JobTaskDetails.cs" />
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />
@@ -151,7 +154,6 @@
     <Compile Include="Generated\Models\ProtectionContainerResource.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResourceList.cs" />
     <Compile Include="Generated\Models\ProtectionContainerResponse.cs" />
-    <Compile Include="Generated\Models\ProtectionContainerUpdateRequest.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyBase.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs" />
     <Compile Include="Generated\Models\ProtectionPolicyQueryParameters.cs" />

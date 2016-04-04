@@ -240,6 +240,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["storageAccountName"] = derived.StorageAccountName;
                             }
                             
+                            if (derived.StorageAccountId != null)
+                            {
+                                propertiesValue["storageAccountId"] = derived.StorageAccountId;
+                            }
+                            
                             if (derived.VirtualMachineName != null)
                             {
                                 propertiesValue["virtualMachineName"] = derived.VirtualMachineName;
@@ -257,6 +262,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["virtualNetworkName"] = derived.VirtualNetworkName;
                             }
                             
+                            if (derived.VirtualNetworkId != null)
+                            {
+                                propertiesValue["virtualNetworkId"] = derived.VirtualNetworkId;
+                            }
+                            
                             if (derived.Region != null)
                             {
                                 propertiesValue["region"] = derived.Region;
@@ -270,6 +280,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived.SubnetName != null)
                             {
                                 propertiesValue["subnetName"] = derived.SubnetName;
+                            }
+                            
+                            if (derived.SubnetId != null)
+                            {
+                                propertiesValue["subnetId"] = derived.SubnetId;
                             }
                         }
                     }

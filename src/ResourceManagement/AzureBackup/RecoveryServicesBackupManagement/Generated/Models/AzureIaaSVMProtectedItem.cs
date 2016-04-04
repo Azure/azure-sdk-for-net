@@ -74,17 +74,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._lastBackupTime = value; }
         }
         
-        private string _policyName;
-        
-        /// <summary>
-        /// Optional. Policy name with which Object is protected
-        /// </summary>
-        public string PolicyName
-        {
-            get { return this._policyName; }
-            set { this._policyName = value; }
-        }
-        
         private string _protectionState;
         
         /// <summary>

@@ -263,20 +263,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 protectableItemInstance.ProtectionState = protectionStateInstance;
                                             }
                                             
-                                            JToken containerUriValue = propertiesValue["ContainerUri"];
-                                            if (containerUriValue != null && containerUriValue.Type != JTokenType.Null)
-                                            {
-                                                string containerUriInstance = ((string)containerUriValue);
-                                                protectableItemInstance.ContainerUri = containerUriInstance;
-                                            }
-                                            
-                                            JToken protectableObjectUriValue = propertiesValue["ProtectableObjectUri"];
-                                            if (protectableObjectUriValue != null && protectableObjectUriValue.Type != JTokenType.Null)
-                                            {
-                                                string protectableObjectUriInstance = ((string)protectableObjectUriValue);
-                                                protectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance;
-                                            }
-                                            
                                             JToken protectableItemTypeValue = propertiesValue["protectableItemType"];
                                             if (protectableItemTypeValue != null && protectableItemTypeValue.Type != JTokenType.Null)
                                             {
@@ -329,20 +315,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string protectionStateInstance2 = ((string)protectionStateValue2);
                                                 azureIaaSVMProtectableItemInstance.ProtectionState = protectionStateInstance2;
-                                            }
-                                            
-                                            JToken containerUriValue2 = propertiesValue["ContainerUri"];
-                                            if (containerUriValue2 != null && containerUriValue2.Type != JTokenType.Null)
-                                            {
-                                                string containerUriInstance2 = ((string)containerUriValue2);
-                                                azureIaaSVMProtectableItemInstance.ContainerUri = containerUriInstance2;
-                                            }
-                                            
-                                            JToken protectableObjectUriValue2 = propertiesValue["ProtectableObjectUri"];
-                                            if (protectableObjectUriValue2 != null && protectableObjectUriValue2.Type != JTokenType.Null)
-                                            {
-                                                string protectableObjectUriInstance2 = ((string)protectableObjectUriValue2);
-                                                azureIaaSVMProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance2;
                                             }
                                             
                                             JToken protectableItemTypeValue2 = propertiesValue["protectableItemType"];
@@ -399,20 +371,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 azureIaaSClassicComputeVMProtectableItemInstance.ProtectionState = protectionStateInstance3;
                                             }
                                             
-                                            JToken containerUriValue3 = propertiesValue["ContainerUri"];
-                                            if (containerUriValue3 != null && containerUriValue3.Type != JTokenType.Null)
-                                            {
-                                                string containerUriInstance3 = ((string)containerUriValue3);
-                                                azureIaaSClassicComputeVMProtectableItemInstance.ContainerUri = containerUriInstance3;
-                                            }
-                                            
-                                            JToken protectableObjectUriValue3 = propertiesValue["ProtectableObjectUri"];
-                                            if (protectableObjectUriValue3 != null && protectableObjectUriValue3.Type != JTokenType.Null)
-                                            {
-                                                string protectableObjectUriInstance3 = ((string)protectableObjectUriValue3);
-                                                azureIaaSClassicComputeVMProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance3;
-                                            }
-                                            
                                             JToken protectableItemTypeValue3 = propertiesValue["protectableItemType"];
                                             if (protectableItemTypeValue3 != null && protectableItemTypeValue3.Type != JTokenType.Null)
                                             {
@@ -465,20 +423,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string protectionStateInstance4 = ((string)protectionStateValue4);
                                                 azureIaaSComputeVMProtectableItemInstance.ProtectionState = protectionStateInstance4;
-                                            }
-                                            
-                                            JToken containerUriValue4 = propertiesValue["ContainerUri"];
-                                            if (containerUriValue4 != null && containerUriValue4.Type != JTokenType.Null)
-                                            {
-                                                string containerUriInstance4 = ((string)containerUriValue4);
-                                                azureIaaSComputeVMProtectableItemInstance.ContainerUri = containerUriInstance4;
-                                            }
-                                            
-                                            JToken protectableObjectUriValue4 = propertiesValue["ProtectableObjectUri"];
-                                            if (protectableObjectUriValue4 != null && protectableObjectUriValue4.Type != JTokenType.Null)
-                                            {
-                                                string protectableObjectUriInstance4 = ((string)protectableObjectUriValue4);
-                                                azureIaaSComputeVMProtectableItemInstance.ProtectableObjectUri = protectableObjectUriInstance4;
                                             }
                                             
                                             JToken protectableItemTypeValue4 = propertiesValue["protectableItemType"];

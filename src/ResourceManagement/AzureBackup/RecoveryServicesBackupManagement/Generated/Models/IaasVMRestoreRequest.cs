@@ -96,6 +96,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._region = value; }
         }
         
+        private string _storageAccountId;
+        
+        /// <summary>
+        /// Optional. StorageAccountId for IaasVMRestoreRequest
+        /// </summary>
+        public string StorageAccountId
+        {
+            get { return this._storageAccountId; }
+            set { this._storageAccountId = value; }
+        }
+        
         private string _storageAccountName;
         
         /// <summary>
@@ -105,6 +116,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._storageAccountName; }
             set { this._storageAccountName = value; }
+        }
+        
+        private string _subnetId;
+        
+        /// <summary>
+        /// Optional. SubnetId of IaasVMRestoreRequest
+        /// </summary>
+        public string SubnetId
+        {
+            get { return this._subnetId; }
+            set { this._subnetId = value; }
         }
         
         private string _subnetName;
@@ -127,6 +149,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._virtualMachineName; }
             set { this._virtualMachineName = value; }
+        }
+        
+        private string _virtualNetworkId;
+        
+        /// <summary>
+        /// Optional. VirtualNetworkId of IaasVMRestoreRequest
+        /// </summary>
+        public string VirtualNetworkId
+        {
+            get { return this._virtualNetworkId; }
+            set { this._virtualNetworkId = value; }
         }
         
         private string _virtualNetworkName;
