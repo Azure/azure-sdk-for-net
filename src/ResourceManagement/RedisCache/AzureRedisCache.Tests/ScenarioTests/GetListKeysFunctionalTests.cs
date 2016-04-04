@@ -34,14 +34,14 @@ namespace AzureRedisCache.Tests
                 Assert.Contains(fixture.RedisCacheName, response.Id);
                 Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                Assert.True("succeeded".Equals(response.Properties.ProvisioningState, StringComparison.OrdinalIgnoreCase));
-                Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-                Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-                Assert.Equal(0, response.Properties.Sku.Capacity);
+                Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                Assert.Equal(SkuName.Basic, response.Sku.Name);
+                Assert.Equal(SkuFamily.C, response.Sku.Family);
+                Assert.Equal(0, response.Sku.Capacity);
                 
-                Assert.Contains(fixture.RedisCacheName, response.Properties.HostName);
-                Assert.Equal(6379, response.Properties.Port);
-                Assert.Equal(6380, response.Properties.SslPort);
+                Assert.Contains(fixture.RedisCacheName, response.HostName);
+                Assert.Equal(6379, response.Port);
+                Assert.Equal(6380, response.SslPort);
             }
         }
 
@@ -64,14 +64,14 @@ namespace AzureRedisCache.Tests
                         Assert.Contains(fixture.RedisCacheName, response.Id);
                         Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                        Assert.True("succeeded".Equals(response.Properties.ProvisioningState, StringComparison.OrdinalIgnoreCase));
-                        Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-                        Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-                        Assert.Equal(0, response.Properties.Sku.Capacity);
+                        Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                        Assert.Equal(SkuName.Basic, response.Sku.Name);
+                        Assert.Equal(SkuFamily.C, response.Sku.Family);
+                        Assert.Equal(0, response.Sku.Capacity);
                         
-                        Assert.Contains(fixture.RedisCacheName, response.Properties.HostName);
-                        Assert.Equal(6379, response.Properties.Port);
-                        Assert.Equal(6380, response.Properties.SslPort);
+                        Assert.Contains(fixture.RedisCacheName, response.HostName);
+                        Assert.Equal(6379, response.Port);
+                        Assert.Equal(6380, response.SslPort);
                     }
                 }
                 Assert.True(found, "Cache created by fixture is not found.");
@@ -97,14 +97,14 @@ namespace AzureRedisCache.Tests
                         Assert.Contains(fixture.RedisCacheName, response.Id);
                         Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                        Assert.True("succeeded".Equals(response.Properties.ProvisioningState, StringComparison.OrdinalIgnoreCase));
-                        Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-                        Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-                        Assert.Equal(0, response.Properties.Sku.Capacity);
+                        Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                        Assert.Equal(SkuName.Basic, response.Sku.Name);
+                        Assert.Equal(SkuFamily.C, response.Sku.Family);
+                        Assert.Equal(0, response.Sku.Capacity);
                         
-                        Assert.Contains(fixture.RedisCacheName, response.Properties.HostName);
-                        Assert.Equal(6379, response.Properties.Port);
-                        Assert.Equal(6380, response.Properties.SslPort);
+                        Assert.Contains(fixture.RedisCacheName, response.HostName);
+                        Assert.Equal(6379, response.Port);
+                        Assert.Equal(6380, response.SslPort);
                     }
                 }
                 Assert.True(found, "Cache created by fixture is not found.");

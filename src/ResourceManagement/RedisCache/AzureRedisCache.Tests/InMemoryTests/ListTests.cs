@@ -87,14 +87,14 @@ namespace AzureRedisCache.Tests
                     Assert.Contains("North", response.Location);
                     Assert.Contains("hydraradiscache", response.Name);
                     Assert.Equal("Microsoft.Cache/Redis", response.Type);
-                    Assert.Equal("succeeded", response.Properties.ProvisioningState);
-                    Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-                    Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-                    Assert.Equal(1, response.Properties.Sku.Capacity);
-                    Assert.Equal("2.8", response.Properties.RedisVersion);
-                    Assert.Contains(".cache.icbbvt.windows-int.net", response.Properties.HostName);
-                    Assert.Equal(6379, response.Properties.Port);
-                    Assert.Equal(6380, response.Properties.SslPort);
+                    Assert.Equal("succeeded", response.ProvisioningState);
+                    Assert.Equal(SkuName.Basic, response.Sku.Name);
+                    Assert.Equal(SkuFamily.C, response.Sku.Family);
+                    Assert.Equal(1, response.Sku.Capacity);
+                    Assert.Equal("2.8", response.RedisVersion);
+                    Assert.Contains(".cache.icbbvt.windows-int.net", response.HostName);
+                    Assert.Equal(6379, response.Port);
+                    Assert.Equal(6380, response.SslPort);
                 }
             }
         }

@@ -283,6 +283,7 @@ namespace Microsoft.Azure.Management.Redis
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
@@ -295,6 +296,7 @@ namespace Microsoft.Azure.Management.Redis
                         new Iso8601TimeSpanConverter()
                     }
             };
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }
