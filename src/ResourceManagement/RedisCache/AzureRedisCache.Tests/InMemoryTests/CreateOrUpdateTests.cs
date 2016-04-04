@@ -51,14 +51,12 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku(){
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             });
 
@@ -67,19 +65,19 @@ namespace AzureRedisCache.Tests
             Assert.Equal("hydraradiscache", response.Name);
             Assert.Equal("Microsoft.Cache/Redis", response.Type);
 
-            Assert.Equal("creating", response.Properties.ProvisioningState);
-            Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-            Assert.Equal(1, response.Properties.Sku.Capacity);
-            Assert.Equal("2.8", response.Properties.RedisVersion);
+            Assert.Equal("creating", response.ProvisioningState);
+            Assert.Equal(SkuName.Basic, response.Sku.Name);
+            Assert.Equal(SkuFamily.C, response.Sku.Family);
+            Assert.Equal(1, response.Sku.Capacity);
+            Assert.Equal("2.8", response.RedisVersion);
 
-            Assert.NotNull(response.Properties.AccessKeys);
-            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Properties.AccessKeys.PrimaryKey);
-            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Properties.AccessKeys.SecondaryKey);
+            Assert.NotNull(response.AccessKeys);
+            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.AccessKeys.PrimaryKey);
+            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.AccessKeys.SecondaryKey);
 
-            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Properties.HostName);
-            Assert.Equal(6379, response.Properties.Port);
-            Assert.Equal(6380, response.Properties.SslPort);
+            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.HostName);
+            Assert.Equal(6379, response.Port);
+            Assert.Equal(6380, response.SslPort);
         }
 
         [Fact]
@@ -91,22 +89,18 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             });
             Assert.Null(response.Id);
             Assert.Null(response.Location);
             Assert.Null(response.Name);
-            Assert.Null(response.Type);
-            Assert.Null(response.Properties); 
+            Assert.Null(response.Type); 
         }
 
         [Fact]
@@ -117,15 +111,12 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             }));
 
@@ -140,15 +131,12 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             }));
             Assert.Contains("resourceGroupName", e.Message);
@@ -156,15 +144,12 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             }));
             Assert.Contains("name", e.Message);
@@ -174,15 +159,12 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = null,
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             }));
             Assert.Contains("Location", e.Message);
@@ -190,33 +172,20 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = null
-                                                                            }));
-            Assert.Contains("Properties", e.Message);
-            e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
-                                                                            parameters: new RedisCreateOrUpdateParameters
-                                                                            {
-                                                                                Location = "North Europe",
-                                                                                Properties = new RedisProperties
-                                                                                {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = null
-                                                                                }
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = null
                                                                             }));
             Assert.Contains("Sku", e.Message);
             e = Assert.Throws<ValidationException>(() => client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = null,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = null,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             }));
             Assert.Contains("Name", e.Message);
@@ -224,15 +193,12 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = null,
-                                                                                        Capacity = 1
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = null,
+                                                                                    Capacity = 1
                                                                                 }
                                                                             }));
             Assert.Contains("Family", e.Message);
@@ -275,18 +241,15 @@ namespace AzureRedisCache.Tests
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
-                                                                                Properties = new RedisProperties
+                                                                                RedisVersion = "2.8",
+                                                                                Sku = new Sku()
                                                                                 {
-                                                                                    RedisVersion = "2.8",
-                                                                                    Sku = new Sku()
-                                                                                    {
-                                                                                        Name = SkuName.Basic,
-                                                                                        Family = SkuFamily.C,
-                                                                                        Capacity = 1
-                                                                                    },
-                                                                                    RedisConfiguration = new Dictionary<string, string>() { 
-                                                                                        {"maxmemory-policy","allkeys-lru"}
-                                                                                    }
+                                                                                    Name = SkuName.Basic,
+                                                                                    Family = SkuFamily.C,
+                                                                                    Capacity = 1
+                                                                                },
+                                                                                RedisConfiguration = new Dictionary<string, string>() {
+                                                                                    {"maxmemory-policy","allkeys-lru"}
                                                                                 }
                                                                             });
 
@@ -295,20 +258,20 @@ namespace AzureRedisCache.Tests
             Assert.Equal("hydraradiscache", response.Name);
             Assert.Equal("Microsoft.Cache/Redis", response.Type);
 
-            Assert.Equal("creating", response.Properties.ProvisioningState);
-            Assert.Equal(SkuName.Basic, response.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, response.Properties.Sku.Family);
-            Assert.Equal(1, response.Properties.Sku.Capacity);
-            Assert.Equal("2.8", response.Properties.RedisVersion);
-            Assert.Equal("allkeys-lru", response.Properties.RedisConfiguration["maxmemory-policy"]);
+            Assert.Equal("creating", response.ProvisioningState);
+            Assert.Equal(SkuName.Basic, response.Sku.Name);
+            Assert.Equal(SkuFamily.C, response.Sku.Family);
+            Assert.Equal(1, response.Sku.Capacity);
+            Assert.Equal("2.8", response.RedisVersion);
+            Assert.Equal("allkeys-lru", response.RedisConfiguration["maxmemory-policy"]);
 
-            Assert.NotNull(response.Properties.AccessKeys);
-            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.Properties.AccessKeys.PrimaryKey);
-            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.Properties.AccessKeys.SecondaryKey);
+            Assert.NotNull(response.AccessKeys);
+            Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.AccessKeys.PrimaryKey);
+            Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.AccessKeys.SecondaryKey);
 
-            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.Properties.HostName);
-            Assert.Equal(6379, response.Properties.Port);
-            Assert.Equal(6380, response.Properties.SslPort);
+            Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.HostName);
+            Assert.Equal(6379, response.Port);
+            Assert.Equal(6380, response.SslPort);
         }
     }
 }

@@ -61,29 +61,26 @@ namespace AzureRedisCache.Tests
                                     parameters: new RedisCreateOrUpdateParameters
                                     {
                                         Location = location,
-                                        Properties = new RedisProperties
+                                        RedisVersion = "2.8",
+                                        Sku = new Sku()
                                         {
-                                            RedisVersion = "2.8",
-                                            Sku = new Sku()
-                                            {
-                                                Name = SkuName.Basic,
-                                                Family = SkuFamily.C,
-                                                Capacity = 0
-                                            }
+                                            Name = SkuName.Basic,
+                                            Family = SkuFamily.C,
+                                            Capacity = 0
                                         }
                                     });
 
             RedisResource response = redisClient.Redis.Get(resourceGroupName: resourceGroupName, name: cacheName);
             ThrowIfTrue(!response.Id.Contains(cacheName), "Cache name not found inside Id.");
             ThrowIfTrue(!response.Name.Equals(cacheName), string.Format("Cache name is not equal to {0}", cacheName));
-            ThrowIfTrue(!response.Properties.HostName.Contains(cacheName), "Cache name not found inside host name.");
+            ThrowIfTrue(!response.HostName.Contains(cacheName), "Cache name not found inside host name.");
 
             // wait for maximum 30 minutes for cache to create
             for (int i = 0; i < 60; i++)
             {
                 TestUtilities.Wait(new TimeSpan(0, 0, 30));
                 RedisResource responseGet = redisClient.Redis.Get(resourceGroupName: resourceGroupName, name: cacheName);
-                if ("succeeded".Equals(responseGet.Properties.ProvisioningState, StringComparison.OrdinalIgnoreCase))
+                if ("succeeded".Equals(responseGet.ProvisioningState, StringComparison.OrdinalIgnoreCase))
                 {
                     break;
                 }
