@@ -61,6 +61,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<JobDefinition>> GetWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
@@ -252,6 +255,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<JobDefinition>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
@@ -340,9 +346,12 @@ namespace Microsoft.Azure.Management.Scheduler
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(job, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            if(job != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(job, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -469,6 +478,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<JobDefinition>> PatchWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
@@ -557,9 +569,12 @@ namespace Microsoft.Azure.Management.Scheduler
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(job, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            if(job != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(job, this.Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -665,6 +680,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
@@ -771,6 +789,7 @@ namespace Microsoft.Azure.Management.Scheduler
             if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -821,6 +840,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse> RunWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
@@ -927,6 +949,7 @@ namespace Microsoft.Azure.Management.Scheduler
             if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -977,6 +1000,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<JobDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, ODataQuery<JobStateFilter> odataQuery = default(ODataQuery<JobStateFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
@@ -1171,6 +1197,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, string jobName, ODataQuery<JobHistoryFilter> odataQuery = default(ODataQuery<JobHistoryFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
@@ -1362,6 +1391,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<JobDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
@@ -1518,6 +1550,9 @@ namespace Microsoft.Azure.Management.Scheduler
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<IPage<JobHistoryDefinition>>> ListJobHistoryNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)

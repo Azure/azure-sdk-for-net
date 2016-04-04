@@ -3,8 +3,8 @@
 :: Copyright (C) Microsoft Corporation. All Rights Reserved.
 ::
  
-set autoRestVersion=0.14.0-Nightly20160125
-set specUrl="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-scheduler/2016-01-01/swagger/scheduler.json"
+set autoRestVersion=0.16.0-Nightly20160329
+set specUrl="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-scheduler/2016-03-01/swagger/scheduler.json"
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set repoRoot=%~dp0..\..\..\..

@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class ServiceBusAuthentication
     {
         /// <summary>
@@ -41,8 +39,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string SasKeyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the authentication type. Possible values for this
-        /// property include: 'NotSpecified', 'SharedAccessKey'.
+        /// Gets or sets the authentication type. Possible values include:
+        /// 'NotSpecified', 'SharedAccessKey'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ServiceBusAuthenticationType? Type { get; set; }

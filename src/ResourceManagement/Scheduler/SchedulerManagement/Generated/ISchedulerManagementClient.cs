@@ -63,8 +63,14 @@ namespace Microsoft.Azure.Management.Scheduler
         bool? GenerateClientRequestId { get; set; }
 
 
+        /// <summary>
+        /// Gets the IJobCollectionsOperations.
+        /// </summary>
         IJobCollectionsOperations JobCollections { get; }
 
+        /// <summary>
+        /// Gets the IJobsOperations.
+        /// </summary>
         IJobsOperations Jobs { get; }
 
     }
