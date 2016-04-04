@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     using System;
     using System.Linq;
@@ -17,34 +17,32 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response for ListStats from Express Route Circuits Api service call
+    /// A list of operation details
     /// </summary>
-    public partial class ExpressRouteCircuitsStatsListResult
+    public partial class OperationInfoList
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ExpressRouteCircuitsStatsListResult class.
+        /// Initializes a new instance of the OperationInfoList class.
         /// </summary>
-        public ExpressRouteCircuitsStatsListResult() { }
+        public OperationInfoList() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ExpressRouteCircuitsStatsListResult class.
+        /// Initializes a new instance of the OperationInfoList class.
         /// </summary>
-        public ExpressRouteCircuitsStatsListResult(IList<ExpressRouteCircuitStats> value = default(IList<ExpressRouteCircuitStats>), string nextLink = default(string))
+        public OperationInfoList(IList<OperationInfo> value = default(IList<OperationInfo>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary>
-        /// Gets List of Stats
+        /// A list of operation details
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<ExpressRouteCircuitStats> Value { get; set; }
+        public IList<OperationInfo> Value { get; set; }
 
         /// <summary>
-        /// Gets the URL to get the next set of results.
+        /// URL to use for request paging.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }

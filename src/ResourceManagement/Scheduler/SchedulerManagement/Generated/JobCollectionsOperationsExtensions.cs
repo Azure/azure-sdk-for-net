@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.Scheduler
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Extension methods for JobCollectionsOperations.
+    /// </summary>
     public static partial class JobCollectionsOperationsExtensions
     {
             /// <summary>
@@ -32,7 +35,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionAsync( this IJobCollectionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionAsync(this IJobCollectionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -66,7 +69,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupAsync( this IJobCollectionsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupAsync(this IJobCollectionsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -106,7 +109,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobCollectionDefinition> GetAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobCollectionDefinition> GetAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -152,7 +155,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobCollectionDefinition> CreateOrUpdateAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, JobCollectionDefinition jobCollection, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobCollectionDefinition> CreateOrUpdateAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, JobCollectionDefinition jobCollection, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobCollection, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -198,7 +201,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobCollectionDefinition> PatchAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, JobCollectionDefinition jobCollection, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobCollectionDefinition> PatchAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, JobCollectionDefinition jobCollection, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobCollection, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -238,9 +241,46 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Deletes a job collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='jobCollectionName'>
+            /// The job collection name.
+            /// </param>
+            public static void BeginDelete(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName)
+            {
+                Task.Factory.StartNew(s => ((IJobCollectionsOperations)s).BeginDeleteAsync(resourceGroupName, jobCollectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a job collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='jobCollectionName'>
+            /// The job collection name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -275,9 +315,46 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task EnableAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task EnableAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.EnableWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Enables all of the jobs in the job collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='jobCollectionName'>
+            /// The job collection name.
+            /// </param>
+            public static void BeginEnable(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName)
+            {
+                Task.Factory.StartNew(s => ((IJobCollectionsOperations)s).BeginEnableAsync(resourceGroupName, jobCollectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Enables all of the jobs in the job collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='jobCollectionName'>
+            /// The job collection name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginEnableAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginEnableWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -312,9 +389,46 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DisableAsync( this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DisableAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DisableWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Disables all of the jobs in the job collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='jobCollectionName'>
+            /// The job collection name.
+            /// </param>
+            public static void BeginDisable(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName)
+            {
+                Task.Factory.StartNew(s => ((IJobCollectionsOperations)s).BeginDisableAsync(resourceGroupName, jobCollectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disables all of the jobs in the job collection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='jobCollectionName'>
+            /// The job collection name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDisableAsync(this IJobCollectionsOperations operations, string resourceGroupName, string jobCollectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDisableWithHttpMessagesAsync(resourceGroupName, jobCollectionName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -343,7 +457,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionNextAsync( this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobCollectionDefinition>> ListBySubscriptionNextAsync(this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -377,7 +491,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupNextAsync( this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobCollectionDefinition>> ListByResourceGroupNextAsync(this IJobCollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

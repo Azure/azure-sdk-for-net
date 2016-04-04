@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class JobRecurrenceScheduleMonthlyOccurrence
     {
         /// <summary>
@@ -31,9 +29,9 @@ namespace Microsoft.Azure.Management.Scheduler.Models
 
         /// <summary>
         /// Gets or sets the day. Must be one of monday, tuesday, wednesday,
-        /// thursday, friday, saturday, sunday. Possible values for this
-        /// property include: 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-        /// 'Friday', 'Saturday', 'Sunday'.
+        /// thursday, friday, saturday, sunday. Possible values include:
+        /// 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+        /// 'Saturday', 'Sunday'
         /// </summary>
         [JsonProperty(PropertyName = "day")]
         public JobScheduleDay? Day { get; set; }
