@@ -29,11 +29,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the RealtimeConfiguration class.
         /// </summary>
-        public RealtimeConfiguration(int? maxConcurrentCalls = default(int?), int? maxMemoryInMB = default(int?), int? maxDurationInSeconds = default(int?))
+        public RealtimeConfiguration(int? maxConcurrentCalls = default(int?))
         {
             MaxConcurrentCalls = maxConcurrentCalls;
-            MaxMemoryInMB = maxMemoryInMB;
-            MaxDurationInSeconds = maxDurationInSeconds;
         }
 
         /// <summary>
@@ -41,18 +39,6 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxConcurrentCalls")]
         public int? MaxConcurrentCalls { get; set; }
-
-        /// <summary>
-        /// [TODO] Max Memory in MB
-        /// </summary>
-        [JsonProperty(PropertyName = "maxMemoryInMB")]
-        public int? MaxMemoryInMB { get; set; }
-
-        /// <summary>
-        /// [TODO] Max Duration in Seconds
-        /// </summary>
-        [JsonProperty(PropertyName = "maxDurationInSeconds")]
-        public int? MaxDurationInSeconds { get; set; }
 
     }
 }

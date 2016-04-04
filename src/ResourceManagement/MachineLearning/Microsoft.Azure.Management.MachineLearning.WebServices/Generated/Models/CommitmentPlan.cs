@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The tags associated with this web service.
+    /// [TODO] The commitment plan associated with this web service
     /// </summary>
-    public partial class Tags
+    public partial class CommitmentPlan
     {
         /// <summary>
-        /// Initializes a new instance of the Tags class.
+        /// Initializes a new instance of the CommitmentPlan class.
         /// </summary>
-        public Tags() { }
+        public CommitmentPlan() { }
 
         /// <summary>
-        /// Initializes a new instance of the Tags class.
+        /// Initializes a new instance of the CommitmentPlan class.
         /// </summary>
-        public Tags(string experiementLocation = default(string))
+        public CommitmentPlan(string id = default(string))
         {
-            ExperiementLocation = experiementLocation;
+            Id = id;
         }
 
         /// <summary>
-        /// [TODO] Experiement Run Location
+        /// [TODO] The plan's ID
         /// </summary>
-        [JsonProperty(PropertyName = "Experiement Location")]
-        public string ExperiementLocation { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

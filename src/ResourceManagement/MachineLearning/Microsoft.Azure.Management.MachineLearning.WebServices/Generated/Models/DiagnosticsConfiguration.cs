@@ -17,34 +17,36 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Batch Configuration
+    /// The Diagnostics Settings
     /// </summary>
-    public partial class BatchConfiguration
+    public partial class DiagnosticsConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the BatchConfiguration class.
+        /// Initializes a new instance of the DiagnosticsConfiguration class.
         /// </summary>
-        public BatchConfiguration() { }
+        public DiagnosticsConfiguration() { }
 
         /// <summary>
-        /// Initializes a new instance of the BatchConfiguration class.
+        /// Initializes a new instance of the DiagnosticsConfiguration class.
         /// </summary>
-        public BatchConfiguration(string jobDriver = default(string), ClusterDefinition cluster = default(ClusterDefinition))
+        public DiagnosticsConfiguration(DiagnosticsLevel? level = default(DiagnosticsLevel?), DateTime? expiry = default(DateTime?))
         {
-            JobDriver = jobDriver;
-            Cluster = cluster;
+            Level = level;
+            Expiry = expiry;
         }
 
         /// <summary>
-        /// [TODO] version, optional, etc.
+        /// Trace Level: None, Error, All. Possible values include: 'None',
+        /// 'Error', 'All'
         /// </summary>
-        [JsonProperty(PropertyName = "JobDriver")]
-        public string JobDriver { get; set; }
+        [JsonProperty(PropertyName = "level")]
+        public DiagnosticsLevel? Level { get; set; }
 
         /// <summary>
+        /// [TODO] Expiry date
         /// </summary>
-        [JsonProperty(PropertyName = "Cluster")]
-        public ClusterDefinition Cluster { get; set; }
+        [JsonProperty(PropertyName = "expiry")]
+        public DateTime? Expiry { get; set; }
 
     }
 }

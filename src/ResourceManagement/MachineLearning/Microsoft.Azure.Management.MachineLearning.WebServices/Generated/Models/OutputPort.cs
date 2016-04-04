@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Properties of GraphSharp
+    /// [TODO] Asset output port
     /// </summary>
-    public partial class ClusterDefinition
+    public partial class OutputPort
     {
         /// <summary>
-        /// Initializes a new instance of the ClusterDefinition class.
+        /// Initializes a new instance of the OutputPort class.
         /// </summary>
-        public ClusterDefinition() { }
+        public OutputPort() { }
 
         /// <summary>
-        /// Initializes a new instance of the ClusterDefinition class.
+        /// Initializes a new instance of the OutputPort class.
         /// </summary>
-        public ClusterDefinition(string id = default(string))
+        public OutputPort(string type = default(string))
         {
-            Id = id;
+            Type = type;
         }
 
         /// <summary>
-        /// ARM HDI cluster ID
+        /// [TODO] dataset or zip
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

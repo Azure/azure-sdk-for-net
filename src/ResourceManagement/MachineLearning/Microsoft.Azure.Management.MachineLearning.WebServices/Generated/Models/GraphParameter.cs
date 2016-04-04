@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Graph Parameter
+    /// [TODO] Graph Parameters
     /// </summary>
     public partial class GraphParameter
     {
@@ -29,10 +29,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the GraphParameter class.
         /// </summary>
-        public GraphParameter(string description = default(string), string defaultValue = default(string), IList<GraphParameterLink> links = default(IList<GraphParameterLink>))
+        public GraphParameter(string description = default(string), IList<GraphParameterLink> links = default(IList<GraphParameterLink>))
         {
             Description = description;
-            DefaultValue = defaultValue;
             Links = links;
         }
 
@@ -41,12 +40,6 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
-
-        /// <summary>
-        /// [TODO] The default value of this parameter. Could be null
-        /// </summary>
-        [JsonProperty(PropertyName = "defaultValue")]
-        public string DefaultValue { get; set; }
 
         /// <summary>
         /// [TODO] Links of this parameter

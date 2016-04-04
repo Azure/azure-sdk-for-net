@@ -1,8 +1,4 @@
 {
-  "location": "foo_Web_US--Code",
-  "tags": {
-    "Experiement Location": "https://foo-code.com"
-  },
   "properties": {
     "packageType": "Code",
     "package": {
@@ -12,83 +8,56 @@
     },
     "description": "test data",
     "keys": {
-      "prmiary": "primary key here",
+      "primary": "primary key here",
       "secondary": "secondary key here"
     },
-    "operationModes": [
-      "Realtime",
-      "Batch"
-    ],
-    "realtimeConfiguration": {
-      "maxConcurrentCalls": 100,
-      "maxMemoryInMB": 200,
-      "maxDurationInSeconds": 300
-    },
-    "batchConfiguration": {
-      "JobDriver": "x.y, optional",
-      "Cluster": {
-        "id": "cluster id"
-      }
-    },
     "readOnly": true,
+    "realtimeConfiguration": {
+      "maxConcurrentCalls": 100
+    },
     "diagnostics": {
-      "level": "level 2",
-      "expiry": "2/4/2007 2:20:15 AM"
+      "level": "Error",
+      "expiry": "2007-02-04T10:20:15Z"
     },
     "storageAccount": {
-      "id": "storage account id"
+      "name": "storage account id"
     },
     "machineLearningWorkspace": {
       "id": "workspace ID"
+    },
+    "commitmentPlan": {
+      "id": "commitmentPlanId"
     },
     "input": {
       "title": "Input title",
       "description": "Input Description",
       "type": "object",
       "properties": {
-        "in1": {
-          "title": "afxTable",
-          "description": "afx description",
+        "input1": {
+          "title": "input1 schema",
+          "description": "some description",
           "type": "object",
           "properties": {
-            "column1": {
-              "type": "type1",
-              "format": "format1",
-              "enum": [
-                "aaa1",
-                "bbb1"
-              ]
+            "the long column": {
+              "type": "integer",
+              "format": "Uint64"
             },
-            "column2": {
-              "type": "type2",
-              "format": "format2",
-              "enum": [
-                "aaa2",
-                "bbb2"
-              ]
+            "the string column": {
+              "type": "string"
             }
           }
         },
-        "in2": {
-          "title": "afxTable",
-          "description": "afx description",
+        "input2": {
+          "title": "input2 schema",
+          "description": "more description here",
           "type": "object",
           "properties": {
-            "column1": {
-              "type": "type3",
-              "format": "format3",
-              "enum": [
-                "aaa3",
-                "bbb3"
-              ]
+            "the string column": {
+              "type": "string"
             },
-            "column2": {
-              "type": "type4",
-              "format": "format4",
-              "enum": [
-                "aaa4",
-                "bbb4"
-              ]
+            "the double column": {
+              "type": "number",
+              "format": "double"
             }
           }
         }
@@ -99,60 +68,36 @@
       "description": "Output Description",
       "type": "object",
       "properties": {
-        "in1": {
-          "title": "afxTable",
-          "description": "afx description",
+        "output": {
+          "title": "output schema",
+          "description": "output description here",
           "type": "object",
           "properties": {
-            "column1": {
-              "type": "type1",
-              "format": "format1",
+            "the string column": {
+              "type": "string"
+            },
+            "the category column": {
+              "type": "string",
               "enum": [
-                "aaa1",
-                "bbb1"
+                "AA",
+                "BB",
+                "YY"
               ]
             },
-            "column2": {
-              "type": "type2",
-              "format": "format2",
-              "enum": [
-                "aaa2",
-                "bbb2"
-              ]
-            }
-          }
-        },
-        "in2": {
-          "title": "afxTable",
-          "description": "afx description",
-          "type": "object",
-          "properties": {
-            "column1": {
-              "type": "type3",
-              "format": "format3",
-              "enum": [
-                "aaa3",
-                "bbb3"
-              ]
-            },
-            "column2": {
-              "type": "type4",
-              "format": "format4",
-              "enum": [
-                "aaa4",
-                "bbb4"
-              ]
+            "another long column": {
+              "type": "integer",
+              "format": "Uint64"
             }
           }
         }
       }
     },
     "assets": {
-      "1": {
+      "asset1": {
         "name": "Asset 1",
         "type": "module",
         "location": {
-          "uri": "idv://bar.com/foo"
+          "uri": "idv://blah.com/blahblah"
         },
         "inputPorts": {
           "p1": {
@@ -169,17 +114,13 @@
           "p2": {
             "type": "zip"
           }
-        },
-        "metadata": {
-          "key1": "value1",
-          "key2": "value2"
         }
       },
-      "2": {
+      "asset2": {
         "name": "Asset 2",
         "type": "module",
         "location": {
-          "uri": "idv://bar.com/foo"
+          "uri": "idv://blahblah.com/blah"
         },
         "inputPorts": {
           "p1": {
@@ -196,10 +137,6 @@
           "p2": {
             "type": "zip"
           }
-        },
-        "metadata": {
-          "key3": "value3",
-          "key4": "value4"
         }
       }
     },
@@ -207,5 +144,9 @@
       "param1": "value1",
       "param2": "value2"
     }
+  },
+  "location": "foo_Web_US",
+  "tags": {
+    "tag1": "https://foo-code.com"
   }
 }

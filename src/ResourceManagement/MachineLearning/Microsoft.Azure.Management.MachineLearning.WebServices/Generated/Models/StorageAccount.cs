@@ -29,16 +29,30 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccount class.
         /// </summary>
-        public StorageAccount(string id = default(string))
+        public StorageAccount(string name = default(string), string primaryKey = default(string), string secondaryKey = default(string))
         {
-            Id = id;
+            Name = name;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
         }
 
         /// <summary>
-        /// [TODO] The Storage Account ID
+        /// [TODO] The storage account's name
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// [TODO] The storage account's primary key
+        /// </summary>
+        [JsonProperty(PropertyName = "primaryKey")]
+        public string PrimaryKey { get; set; }
+
+        /// <summary>
+        /// [TODO] The storage account's secondary key
+        /// </summary>
+        [JsonProperty(PropertyName = "secondaryKey")]
+        public string SecondaryKey { get; set; }
 
     }
 }

@@ -76,20 +76,14 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         string ApiVersion { get; }
 
         /// <summary>
-        /// The payload to create or update a Web Service
-        /// </summary>
-        WebService CreateOrUpdatePayload { get; set; }
-
-        /// <summary>
-        /// [TODO] Patch Web Service Request Payload. It indicates all fields
-        /// could be pacthed.
-        /// </summary>
-        PatchPayload PatchPayload { get; set; }
-
-        /// <summary>
         /// The payload to check name availability
         /// </summary>
         CheckNameAvailabilityPayload CheckNameAvailabilityPayload { get; set; }
+
+        /// <summary>
+        /// Continuation token for pagination.
+        /// </summary>
+        string Skiptoken { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -112,13 +106,30 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <summary>
         /// Create a new Web Service or update an existing one.
         /// </summary>
+        /// <param name='createOrUpdatePayload'>
+        /// The payload to create or update a Web Service
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Create a new Web Service or update an existing one.
+        /// </summary>
+        /// <param name='createOrUpdatePayload'>
+        /// The payload to create or update a Web Service
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<WebService>> BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Retrieve a Web Service information by its name
@@ -134,13 +145,30 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <summary>
         /// Patch an existing Web Service
         /// </summary>
+        /// <param name='patchPayload'>
+        /// [TODO] Patch Web Service Request Payload.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Patch an existing Web Service
+        /// </summary>
+        /// <param name='patchPayload'>
+        /// [TODO] Patch Web Service Request Payload.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<WebService>> BeginPatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete an existing Web Service
@@ -152,6 +180,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse> DeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Delete an existing Web Service
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get the primary and secondary keys of a particular Web Service
@@ -173,7 +212,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<GetWebServicesInResourceGroupOKResponse>> GetWebServicesInResourceGroupWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInResourceGroupWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get all Web Services' information in current Azure subscription
@@ -184,7 +223,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<GetWebServicesInSubscriptionOKResponse>> GetWebServicesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Check the Web Service Name is valid and not in use

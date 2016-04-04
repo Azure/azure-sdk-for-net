@@ -83,20 +83,14 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// The payload to create or update a Web Service
-        /// </summary>
-        public WebService CreateOrUpdatePayload { get; set; }
-
-        /// <summary>
-        /// [TODO] Patch Web Service Request Payload. It indicates all fields could be
-        /// pacthed.
-        /// </summary>
-        public PatchPayload PatchPayload { get; set; }
-
-        /// <summary>
         /// The payload to check name availability
         /// </summary>
         public CheckNameAvailabilityPayload CheckNameAvailabilityPayload { get; set; }
+
+        /// <summary>
+        /// Continuation token for pagination.
+        /// </summary>
+        public string Skiptoken { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -333,13 +327,41 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <summary>
         /// Create a new Web Service or update an existing one.
         /// </summary>
+        /// <param name='createOrUpdatePayload'>
+        /// The payload to create or update a Web Service
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<WebService> _response = await BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(
+                createOrUpdatePayload, customHeaders, cancellationToken);
+            return await this.GetPutOrPatchOperationResultAsync(_response,
+                customHeaders,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a new Web Service or update an existing one.
+        /// </summary>
+        /// <param name='createOrUpdatePayload'>
+        /// The payload to create or update a Web Service
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<WebService>> BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
             {
@@ -353,9 +375,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
             }
-            if (this.CreateOrUpdatePayload == null)
+            if (createOrUpdatePayload == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.CreateOrUpdatePayload");
+                throw new ValidationException(ValidationRules.CannotBeNull, "createOrUpdatePayload");
+            }
+            if (createOrUpdatePayload != null)
+            {
+                createOrUpdatePayload.Validate();
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -364,8 +394,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("createOrUpdatePayload", createOrUpdatePayload);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateWebService", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdateWebService", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.BaseUri.AbsoluteUri;
@@ -414,7 +445,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(this.CreateOrUpdatePayload, this.SerializationSettings);
+            _requestContent = SafeJsonConvert.SerializeObject(createOrUpdatePayload, this.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
@@ -437,7 +468,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -480,6 +511,24 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
             if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -513,6 +562,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<WebService>> GetWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
@@ -526,6 +578,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             if (this.WebServiceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -674,13 +730,41 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <summary>
         /// Patch an existing Web Service
         /// </summary>
+        /// <param name='patchPayload'>
+        /// [TODO] Patch Web Service Request Payload.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<WebService> _response = await BeginPatchWebServiceWithHttpMessagesAsync(
+                patchPayload, customHeaders, cancellationToken);
+            return await this.GetPutOrPatchOperationResultAsync(_response,
+                customHeaders,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Patch an existing Web Service
+        /// </summary>
+        /// <param name='patchPayload'>
+        /// [TODO] Patch Web Service Request Payload.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<WebService>> BeginPatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
             {
@@ -694,9 +778,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
             }
-            if (this.PatchPayload == null)
+            if (patchPayload == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.PatchPayload");
+                throw new ValidationException(ValidationRules.CannotBeNull, "patchPayload");
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -705,8 +793,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("patchPayload", patchPayload);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PatchWebService", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginPatchWebService", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.BaseUri.AbsoluteUri;
@@ -755,7 +844,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(this.PatchPayload, this.SerializationSettings);
+            _requestContent = SafeJsonConvert.SerializeObject(patchPayload, this.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
@@ -849,12 +938,32 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// Delete an existing Web Service
         /// </summary>
         /// <param name='customHeaders'>
-        /// Headers that will be added to request.
+        /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
         public async Task<AzureOperationResponse> DeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWebServiceWithHttpMessagesAsync(
+                customHeaders, cancellationToken);
+            return await this.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete an existing Web Service
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> BeginDeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
             {
@@ -868,6 +977,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
             }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -876,7 +989,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteWebService", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginDeleteWebService", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.BaseUri.AbsoluteUri;
@@ -945,7 +1058,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            if ((int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
@@ -989,6 +1102,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<WebServiceKeys>> GetWebServiceKeysWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
@@ -1002,6 +1118,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             if (this.WebServiceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1156,7 +1276,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<GetWebServicesInResourceGroupOKResponse>> GetWebServicesInResourceGroupWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInResourceGroupWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
             {
@@ -1165,6 +1288,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             if (this.ResourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ResourceGroupName");
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1185,6 +1312,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             if (this.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+            }
+            if (this.Skiptoken != null)
+            {
+                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Skiptoken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1277,7 +1408,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<GetWebServicesInResourceGroupOKResponse>();
+            var _result = new AzureOperationResponse<PaginatedWebServicesList>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1290,7 +1421,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<GetWebServicesInResourceGroupOKResponse>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<PaginatedWebServicesList>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1318,11 +1449,18 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<GetWebServicesInSubscriptionOKResponse>> GetWebServicesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1342,6 +1480,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             if (this.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+            }
+            if (this.Skiptoken != null)
+            {
+                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Skiptoken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1434,7 +1576,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<GetWebServicesInSubscriptionOKResponse>();
+            var _result = new AzureOperationResponse<PaginatedWebServicesList>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1447,7 +1589,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<GetWebServicesInSubscriptionOKResponse>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<PaginatedWebServicesList>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1475,11 +1617,18 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<CheckNameResult>> CheckNameAvaliabilityWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
             if (this.CheckNameAvailabilityPayload == null)
             {
@@ -1639,8 +1788,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
         public async Task<AzureOperationResponse<GetOperationsOKResponse>> GetOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

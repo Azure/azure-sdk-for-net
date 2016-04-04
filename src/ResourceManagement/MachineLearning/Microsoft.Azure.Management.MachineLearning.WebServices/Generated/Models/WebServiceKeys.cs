@@ -29,17 +29,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebServiceKeys class.
         /// </summary>
-        public WebServiceKeys(string prmiary = default(string), string secondary = default(string))
+        public WebServiceKeys(string primary = default(string), string secondary = default(string))
         {
-            Prmiary = prmiary;
+            Primary = primary;
             Secondary = secondary;
         }
 
         /// <summary>
         /// The Primary Key
         /// </summary>
-        [JsonProperty(PropertyName = "prmiary")]
-        public string Prmiary { get; set; }
+        [JsonProperty(PropertyName = "primary")]
+        public string Primary { get; set; }
 
         /// <summary>
         /// The Secondary Key

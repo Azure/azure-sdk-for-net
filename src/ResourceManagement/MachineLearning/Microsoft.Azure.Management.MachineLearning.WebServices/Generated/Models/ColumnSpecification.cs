@@ -17,19 +17,19 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Afx data table column
+    /// [TODO] input column.
     /// </summary>
-    public partial class AfxDataTableColumn
+    public partial class ColumnSpecification
     {
         /// <summary>
-        /// Initializes a new instance of the AfxDataTableColumn class.
+        /// Initializes a new instance of the ColumnSpecification class.
         /// </summary>
-        public AfxDataTableColumn() { }
+        public ColumnSpecification() { }
 
         /// <summary>
-        /// Initializes a new instance of the AfxDataTableColumn class.
+        /// Initializes a new instance of the ColumnSpecification class.
         /// </summary>
-        public AfxDataTableColumn(string type = default(string), string format = default(string), IList<string> enumProperty = default(IList<string>), bool? xMsIsnullable = default(bool?), bool? xMsIsordered = default(bool?))
+        public ColumnSpecification(string type = default(string), string format = default(string), IList<object> enumProperty = default(IList<object>), bool? xMsIsnullable = default(bool?), bool? xMsIsordered = default(bool?))
         {
             Type = type;
             Format = format;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// [TODO] Options
         /// </summary>
         [JsonProperty(PropertyName = "enum")]
-        public IList<string> EnumProperty { get; set; }
+        public IList<object> EnumProperty { get; set; }
 
         /// <summary>
         /// [TODO] Is nullable

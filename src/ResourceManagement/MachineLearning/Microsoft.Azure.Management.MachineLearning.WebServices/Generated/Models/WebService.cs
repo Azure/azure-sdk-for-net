@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
 
     /// <summary>
     /// </summary>
-    public partial class WebService
+    public partial class WebService : Resource
     {
         /// <summary>
         /// Initializes a new instance of the WebService class.
@@ -28,28 +28,23 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebService class.
         /// </summary>
-        public WebService(string location = default(string), Tags tags = default(Tags), WebServiceProperties properties = default(WebServiceProperties))
+        public WebService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), WebServiceProperties properties = default(WebServiceProperties))
+            : base(location, id, name, type, tags)
         {
-            Location = location;
-            Tags = tags;
             Properties = properties;
         }
-
-        /// <summary>
-        /// The Azure region where the web service is deployed.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public Tags Tags { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public WebServiceProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

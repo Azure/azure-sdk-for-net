@@ -29,37 +29,37 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the GraphEdge class.
         /// </summary>
-        public GraphEdge(string sourceNode = default(string), string sourceOutputPort = default(string), string targetNode = default(string), string targetInputPort = default(string))
+        public GraphEdge(string sourceNodeId = default(string), string sourcePortId = default(string), string targetNodeId = default(string), string targetPortId = default(string))
         {
-            SourceNode = sourceNode;
-            SourceOutputPort = sourceOutputPort;
-            TargetNode = targetNode;
-            TargetInputPort = targetInputPort;
+            SourceNodeId = sourceNodeId;
+            SourcePortId = sourcePortId;
+            TargetNodeId = targetNodeId;
+            TargetPortId = targetPortId;
         }
 
         /// <summary>
         /// [TODO] Edge source
         /// </summary>
-        [JsonProperty(PropertyName = "sourceNode")]
-        public string SourceNode { get; set; }
+        [JsonProperty(PropertyName = "sourceNodeId")]
+        public string SourceNodeId { get; set; }
 
         /// <summary>
-        /// [TODO] Source node output port
+        /// [TODO] Source node output port id
         /// </summary>
-        [JsonProperty(PropertyName = "sourceOutputPort")]
-        public string SourceOutputPort { get; set; }
+        [JsonProperty(PropertyName = "sourcePortId")]
+        public string SourcePortId { get; set; }
 
         /// <summary>
         /// [TODO] Edge target
         /// </summary>
-        [JsonProperty(PropertyName = "targetNode")]
-        public string TargetNode { get; set; }
+        [JsonProperty(PropertyName = "targetNodeId")]
+        public string TargetNodeId { get; set; }
 
         /// <summary>
-        /// [TODO] Target node input port
+        /// [TODO] Target node input port id
         /// </summary>
-        [JsonProperty(PropertyName = "targetInputPort")]
-        public string TargetInputPort { get; set; }
+        [JsonProperty(PropertyName = "targetPortId")]
+        public string TargetPortId { get; set; }
 
     }
 }

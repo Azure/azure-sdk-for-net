@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] The Machine Learning Workspace
+    /// [TODO] The machine learning workspace
     /// </summary>
     public partial class MachineLearningWorkspace
     {

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Asset Name
+    /// [TODO] Service asset details
     /// </summary>
     public partial class AssetItem
     {
@@ -29,14 +29,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the AssetItem class.
         /// </summary>
-        public AssetItem(string name = default(string), string type = default(string), AssetLocation location = default(AssetLocation), IDictionary<string, AssetPort> inputPorts = default(IDictionary<string, AssetPort>), IDictionary<string, AssetPort> outputPorts = default(IDictionary<string, AssetPort>), IDictionary<string, string> metadata = default(IDictionary<string, string>))
+        public AssetItem(string name = default(string), string type = default(string), AssetLocation location = default(AssetLocation), IDictionary<string, InputPort> inputPorts = default(IDictionary<string, InputPort>), IDictionary<string, OutputPort> outputPorts = default(IDictionary<string, OutputPort>))
         {
             Name = name;
             Type = type;
             Location = location;
             InputPorts = inputPorts;
             OutputPorts = outputPorts;
-            Metadata = metadata;
         }
 
         /// <summary>
@@ -59,17 +58,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "inputPorts")]
-        public IDictionary<string, AssetPort> InputPorts { get; set; }
+        public IDictionary<string, InputPort> InputPorts { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "outputPorts")]
-        public IDictionary<string, AssetPort> OutputPorts { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, OutputPort> OutputPorts { get; set; }
 
     }
 }

@@ -17,35 +17,28 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Diagnostics Settings
+    /// [TODO] Asset input port
     /// </summary>
-    public partial class Diagnostics
+    public partial class InputPort
     {
         /// <summary>
-        /// Initializes a new instance of the Diagnostics class.
+        /// Initializes a new instance of the InputPort class.
         /// </summary>
-        public Diagnostics() { }
+        public InputPort() { }
 
         /// <summary>
-        /// Initializes a new instance of the Diagnostics class.
+        /// Initializes a new instance of the InputPort class.
         /// </summary>
-        public Diagnostics(string level = default(string), string expiry = default(string))
+        public InputPort(string type = default(string))
         {
-            Level = level;
-            Expiry = expiry;
+            Type = type;
         }
 
         /// <summary>
-        /// Trace Level: None, Error, All
+        /// [TODO] dataset or zip
         /// </summary>
-        [JsonProperty(PropertyName = "level")]
-        public string Level { get; set; }
-
-        /// <summary>
-        /// [TODO] Expiry
-        /// </summary>
-        [JsonProperty(PropertyName = "expiry")]
-        public string Expiry { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

@@ -17,19 +17,21 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Afx data table
+    /// [TODO] The swagger schema describing the service's input.
     /// </summary>
-    public partial class AfxDataTable
+    public partial class ServiceInputOutputSpecification
     {
         /// <summary>
-        /// Initializes a new instance of the AfxDataTable class.
+        /// Initializes a new instance of the ServiceInputOutputSpecification
+        /// class.
         /// </summary>
-        public AfxDataTable() { }
+        public ServiceInputOutputSpecification() { }
 
         /// <summary>
-        /// Initializes a new instance of the AfxDataTable class.
+        /// Initializes a new instance of the ServiceInputOutputSpecification
+        /// class.
         /// </summary>
-        public AfxDataTable(string title = default(string), string description = default(string), string type = default(string), IDictionary<string, AfxDataTableColumn> properties = default(IDictionary<string, AfxDataTableColumn>))
+        public ServiceInputOutputSpecification(string title = default(string), string description = default(string), string type = default(string), IDictionary<string, TableSpecification> properties = default(IDictionary<string, TableSpecification>))
         {
             Title = title;
             Description = description;
@@ -38,27 +40,28 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// [TODO] Table title
+        /// [TODO] Interface title
         /// </summary>
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
         /// <summary>
-        /// [TODO] Table description
+        /// [TODO] Description of the interface
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// [TODO] Table properties' type. Always use 'object' here.
+        /// [TODO] Interface properties' type. Always use 'object' here.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
+        /// [TODO]
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public IDictionary<string, AfxDataTableColumn> Properties { get; set; }
+        public IDictionary<string, TableSpecification> Properties { get; set; }
 
     }
 }

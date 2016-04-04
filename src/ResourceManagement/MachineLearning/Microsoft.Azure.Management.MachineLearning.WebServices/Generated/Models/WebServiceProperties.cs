@@ -29,17 +29,20 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the WebServiceProperties class.
         /// </summary>
-        public WebServiceProperties(string description = default(string), WebServiceKeys keys = default(WebServiceKeys), IList<string> operationModes = default(IList<string>), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), BatchConfiguration batchConfiguration = default(BatchConfiguration), bool? readOnlyProperty = default(bool?), Diagnostics diagnostics = default(Diagnostics), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), ModuleInterface input = default(ModuleInterface), ModuleInterface output = default(ModuleInterface), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        public WebServiceProperties(string description = default(string), DateTime? createdOn = default(DateTime?), DateTime? modifiedOn = default(DateTime?), ProvisioningState? provisioningState = default(ProvisioningState?), WebServiceKeys keys = default(WebServiceKeys), bool? readOnlyProperty = default(bool?), string swaggerLocation = default(string), RealtimeConfiguration realtimeConfiguration = default(RealtimeConfiguration), DiagnosticsConfiguration diagnostics = default(DiagnosticsConfiguration), StorageAccount storageAccount = default(StorageAccount), MachineLearningWorkspace machineLearningWorkspace = default(MachineLearningWorkspace), CommitmentPlan commitmentPlan = default(CommitmentPlan), ServiceInputOutputSpecification input = default(ServiceInputOutputSpecification), ServiceInputOutputSpecification output = default(ServiceInputOutputSpecification), IDictionary<string, AssetItem> assets = default(IDictionary<string, AssetItem>), IDictionary<string, string> parameters = default(IDictionary<string, string>))
         {
             Description = description;
+            CreatedOn = createdOn;
+            ModifiedOn = modifiedOn;
+            ProvisioningState = provisioningState;
             Keys = keys;
-            OperationModes = operationModes;
-            RealtimeConfiguration = realtimeConfiguration;
-            BatchConfiguration = batchConfiguration;
             ReadOnlyProperty = readOnlyProperty;
+            SwaggerLocation = swaggerLocation;
+            RealtimeConfiguration = realtimeConfiguration;
             Diagnostics = diagnostics;
             StorageAccount = storageAccount;
             MachineLearningWorkspace = machineLearningWorkspace;
+            CommitmentPlan = commitmentPlan;
             Input = input;
             Output = output;
             Assets = assets;
@@ -47,31 +50,34 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// The description the Web Service
+        /// The description the web service
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
+        /// The moment of time the web service was created.
+        /// </summary>
+        [JsonProperty(PropertyName = "createdOn")]
+        public DateTime? CreatedOn { get; private set; }
+
+        /// <summary>
+        /// The last moment of time the web service was last modified.
+        /// </summary>
+        [JsonProperty(PropertyName = "modifiedOn")]
+        public DateTime? ModifiedOn { get; private set; }
+
+        /// <summary>
+        /// [TODO] web service's provisioning state. Possible values include:
+        /// 'Unknown', 'Provisioning'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public ProvisioningState? ProvisioningState { get; private set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "keys")]
         public WebServiceKeys Keys { get; set; }
-
-        /// <summary>
-        /// [TODO] Operation Modes
-        /// </summary>
-        [JsonProperty(PropertyName = "operationModes")]
-        public IList<string> OperationModes { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "realtimeConfiguration")]
-        public RealtimeConfiguration RealtimeConfiguration { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "batchConfiguration")]
-        public BatchConfiguration BatchConfiguration { get; set; }
 
         /// <summary>
         /// True, if the Web Service should be read-only; False, otherwise
@@ -80,31 +86,55 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public bool? ReadOnlyProperty { get; set; }
 
         /// <summary>
+        /// The uri for the swagger spec associated with this web service
         /// </summary>
-        [JsonProperty(PropertyName = "diagnostics")]
-        public Diagnostics Diagnostics { get; set; }
+        [JsonProperty(PropertyName = "swaggerLocation")]
+        public string SwaggerLocation { get; private set; }
 
         /// <summary>
+        /// [TODO] Realtime configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "realtimeConfiguration")]
+        public RealtimeConfiguration RealtimeConfiguration { get; set; }
+
+        /// <summary>
+        /// [TODO] Diagnostics settings
+        /// </summary>
+        [JsonProperty(PropertyName = "diagnostics")]
+        public DiagnosticsConfiguration Diagnostics { get; set; }
+
+        /// <summary>
+        /// [TODO] BYOS description
         /// </summary>
         [JsonProperty(PropertyName = "storageAccount")]
         public StorageAccount StorageAccount { get; set; }
 
         /// <summary>
+        /// [TODO] Service workspace data
         /// </summary>
         [JsonProperty(PropertyName = "machineLearningWorkspace")]
         public MachineLearningWorkspace MachineLearningWorkspace { get; set; }
 
         /// <summary>
+        /// [TODO] Service commitment plan data
+        /// </summary>
+        [JsonProperty(PropertyName = "commitmentPlan")]
+        public CommitmentPlan CommitmentPlan { get; set; }
+
+        /// <summary>
+        /// [TODO] Service input definition
         /// </summary>
         [JsonProperty(PropertyName = "input")]
-        public ModuleInterface Input { get; set; }
+        public ServiceInputOutputSpecification Input { get; set; }
 
         /// <summary>
+        /// [TODO] Service output definition
         /// </summary>
         [JsonProperty(PropertyName = "output")]
-        public ModuleInterface Output { get; set; }
+        public ServiceInputOutputSpecification Output { get; set; }
 
         /// <summary>
+        /// [TODO] Service assets
         /// </summary>
         [JsonProperty(PropertyName = "assets")]
         public IDictionary<string, AssetItem> Assets { get; set; }

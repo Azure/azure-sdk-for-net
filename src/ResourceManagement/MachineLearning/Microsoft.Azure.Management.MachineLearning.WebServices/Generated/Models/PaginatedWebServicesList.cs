@@ -17,28 +17,35 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] Asset Port
+    /// [TODO] Paginated list of web services
     /// </summary>
-    public partial class AssetPort
+    public partial class PaginatedWebServicesList
     {
         /// <summary>
-        /// Initializes a new instance of the AssetPort class.
+        /// Initializes a new instance of the PaginatedWebServicesList class.
         /// </summary>
-        public AssetPort() { }
+        public PaginatedWebServicesList() { }
 
         /// <summary>
-        /// Initializes a new instance of the AssetPort class.
+        /// Initializes a new instance of the PaginatedWebServicesList class.
         /// </summary>
-        public AssetPort(string type = default(string))
+        public PaginatedWebServicesList(IList<WebService> values = default(IList<WebService>), string nextLink = default(string))
         {
-            Type = type;
+            Values = values;
+            NextLink = nextLink;
         }
 
         /// <summary>
-        /// [TODO] dataset or zip
+        /// List of Web Services
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "values")]
+        public IList<WebService> Values { get; set; }
+
+        /// <summary>
+        /// [TODO] Next Link
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

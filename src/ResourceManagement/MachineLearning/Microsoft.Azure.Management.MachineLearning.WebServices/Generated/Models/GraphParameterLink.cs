@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// [TODO] The link in Graph Paramter
+    /// [TODO] The link in graph parameter
     /// </summary>
     public partial class GraphParameterLink
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the GraphParameterLink class.
         /// </summary>
-        public GraphParameterLink(string nodeId = default(string), string parameterId = default(string))
+        public GraphParameterLink(string nodeId = default(string), string parameterKey = default(string))
         {
             NodeId = nodeId;
-            ParameterId = parameterId;
+            ParameterKey = parameterKey;
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public string NodeId { get; set; }
 
         /// <summary>
-        /// [TODO] The parameter ID
+        /// [TODO] The parameter key
         /// </summary>
-        [JsonProperty(PropertyName = "parameterId")]
-        public string ParameterId { get; set; }
+        [JsonProperty(PropertyName = "parameterKey")]
+        public string ParameterKey { get; set; }
 
     }
 }

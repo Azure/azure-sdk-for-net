@@ -17,6 +17,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Extension methods for MachineLearningWebServicesManagementClientAPIs.
+    /// </summary>
     public static partial class MachineLearningWebServicesManagementClientAPIsExtensions
     {
             /// <summary>
@@ -25,9 +28,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static WebService CreateOrUpdateWebService(this IMachineLearningWebServicesManagementClientAPIs operations)
+            /// <param name='createOrUpdatePayload'>
+            /// The payload to create or update a Web Service
+            /// </param>
+            public static WebService CreateOrUpdateWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService createOrUpdatePayload)
             {
-                return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).CreateOrUpdateWebServiceAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).CreateOrUpdateWebServiceAsync(createOrUpdatePayload), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -36,12 +42,49 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='createOrUpdatePayload'>
+            /// The payload to create or update a Web Service
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WebService> CreateOrUpdateWebServiceAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WebService> CreateOrUpdateWebServiceAsync(this IMachineLearningWebServicesManagementClientAPIs operations, WebService createOrUpdatePayload, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWebServiceWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWebServiceWithHttpMessagesAsync(createOrUpdatePayload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create a new Web Service or update an existing one.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='createOrUpdatePayload'>
+            /// The payload to create or update a Web Service
+            /// </param>
+            public static WebService BeginCreateOrUpdateWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService createOrUpdatePayload)
+            {
+                return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).BeginCreateOrUpdateWebServiceAsync(createOrUpdatePayload), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new Web Service or update an existing one.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='createOrUpdatePayload'>
+            /// The payload to create or update a Web Service
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WebService> BeginCreateOrUpdateWebServiceAsync(this IMachineLearningWebServicesManagementClientAPIs operations, WebService createOrUpdatePayload, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(createOrUpdatePayload, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,7 +110,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WebService> GetWebServiceAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WebService> GetWebServiceAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWebServiceWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -81,9 +124,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static WebService PatchWebService(this IMachineLearningWebServicesManagementClientAPIs operations)
+            /// <param name='patchPayload'>
+            /// [TODO] Patch Web Service Request Payload.
+            /// </param>
+            public static WebService PatchWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService patchPayload)
             {
-                return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).PatchWebServiceAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).PatchWebServiceAsync(patchPayload), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -92,12 +138,49 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='patchPayload'>
+            /// [TODO] Patch Web Service Request Payload.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WebService> PatchWebServiceAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WebService> PatchWebServiceAsync(this IMachineLearningWebServicesManagementClientAPIs operations, WebService patchPayload, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PatchWebServiceWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PatchWebServiceWithHttpMessagesAsync(patchPayload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Patch an existing Web Service
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='patchPayload'>
+            /// [TODO] Patch Web Service Request Payload.
+            /// </param>
+            public static WebService BeginPatchWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService patchPayload)
+            {
+                return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).BeginPatchWebServiceAsync(patchPayload), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Patch an existing Web Service
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='patchPayload'>
+            /// [TODO] Patch Web Service Request Payload.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WebService> BeginPatchWebServiceAsync(this IMachineLearningWebServicesManagementClientAPIs operations, WebService patchPayload, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginPatchWebServiceWithHttpMessagesAsync(patchPayload, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -123,9 +206,34 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteWebServiceAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteWebServiceAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWebServiceWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Delete an existing Web Service
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static void BeginDeleteWebService(this IMachineLearningWebServicesManagementClientAPIs operations)
+            {
+                Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).BeginDeleteWebServiceAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete an existing Web Service
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteWebServiceAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWebServiceWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -148,7 +256,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WebServiceKeys> GetWebServiceKeysAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WebServiceKeys> GetWebServiceKeysAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWebServiceKeysWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -162,7 +270,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static GetWebServicesInResourceGroupOKResponse GetWebServicesInResourceGroup(this IMachineLearningWebServicesManagementClientAPIs operations)
+            public static PaginatedWebServicesList GetWebServicesInResourceGroup(this IMachineLearningWebServicesManagementClientAPIs operations)
             {
                 return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).GetWebServicesInResourceGroupAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -176,7 +284,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GetWebServicesInResourceGroupOKResponse> GetWebServicesInResourceGroupAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PaginatedWebServicesList> GetWebServicesInResourceGroupAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWebServicesInResourceGroupWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -190,7 +298,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static GetWebServicesInSubscriptionOKResponse GetWebServicesInSubscription(this IMachineLearningWebServicesManagementClientAPIs operations)
+            public static PaginatedWebServicesList GetWebServicesInSubscription(this IMachineLearningWebServicesManagementClientAPIs operations)
             {
                 return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).GetWebServicesInSubscriptionAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -204,7 +312,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GetWebServicesInSubscriptionOKResponse> GetWebServicesInSubscriptionAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PaginatedWebServicesList> GetWebServicesInSubscriptionAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWebServicesInSubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -232,7 +340,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameResult> CheckNameAvaliabilityAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameResult> CheckNameAvaliabilityAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvaliabilityWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -260,7 +368,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GetOperationsOKResponse> GetOperationsAsync( this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GetOperationsOKResponse> GetOperationsAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
