@@ -33,6 +33,26 @@ namespace RecoveryServices.Tests.Helpers
             return response;
         }
 
+        public BaseRecoveryServicesJobResponse RefreshContainer(string fabricName)
+        {
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+
+            BaseRecoveryServicesJobResponse response = Client.Container.Refresh(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(), fabricName);
+
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+
+            while (response.StatusCode == HttpStatusCode.Accepted)
+            {
+                response = Client.Container.GetRefreshOperationResultByURL(response.Location, CommonTestHelper.GetCustomRequestHeaders());
+                System.Threading.Thread.Sleep(5 * 1000);
+            }
+
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            return response;
+        }
+
         public AzureOperationResponse UnregisterContainer(string containerName)
         {
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);

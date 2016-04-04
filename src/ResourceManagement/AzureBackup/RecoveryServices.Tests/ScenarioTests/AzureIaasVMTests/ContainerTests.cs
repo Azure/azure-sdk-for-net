@@ -54,5 +54,17 @@ namespace RecoveryServices.Tests
                             "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
                 });
         }
+
+        [Fact]
+        public void RefreshContainerTest()
+        {
+            ExecuteTest(
+                client =>
+                {
+                    string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                    var response = containerTestHelper.RefreshContainer(fabricName);
+                });
+        }
     }
 }
