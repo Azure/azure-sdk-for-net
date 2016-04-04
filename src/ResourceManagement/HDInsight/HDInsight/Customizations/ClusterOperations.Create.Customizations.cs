@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -476,8 +477,11 @@ namespace Microsoft.Azure.Management.HDInsight
 
             if (clusterCreateParameters.OSType == OSType.Windows)
             {
-                if (clusterCreateParameters.ClusterType == "Hadoop" ||
-                    clusterCreateParameters.ClusterType == "Spark")
+                if (new[]
+                {
+                    "Hadoop",
+                    "Spark"
+                }.Contains(clusterCreateParameters.ClusterType, StringComparer.OrdinalIgnoreCase))
                 {
                     return roles;
                 }
@@ -485,8 +489,11 @@ namespace Microsoft.Azure.Management.HDInsight
 
             if (clusterCreateParameters.OSType == OSType.Linux)
             {
-                if (clusterCreateParameters.ClusterType == "Hadoop" ||
-                    clusterCreateParameters.ClusterType == "Spark")
+                if (new[]
+                {
+                    "Hadoop",
+                    "Spark"
+                }.Contains(clusterCreateParameters.ClusterType, StringComparer.OrdinalIgnoreCase))
                 {
                     clusterCreateParameters.ZookeeperNodeSize = "Small";
                 }
