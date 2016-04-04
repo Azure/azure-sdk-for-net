@@ -110,6 +110,10 @@ namespace Microsoft.AzureStack.Management
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.GalleryItem == null)
+            {
+                throw new ArgumentNullException("parameters.GalleryItem");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -169,9 +173,58 @@ namespace Microsoft.AzureStack.Management
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = parameters.Manifest;
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject galleryItemCreateOrUpdateParametersValue = new JObject();
+                requestDoc = galleryItemCreateOrUpdateParametersValue;
+                
+                if (parameters.GalleryItem.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    galleryItemCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.GalleryItem.Properties.GalleryItemUri != null)
+                    {
+                        propertiesValue["galleryItemUri"] = parameters.GalleryItem.Properties.GalleryItemUri;
+                    }
+                }
+                
+                if (parameters.GalleryItem.Id != null)
+                {
+                    galleryItemCreateOrUpdateParametersValue["id"] = parameters.GalleryItem.Id;
+                }
+                
+                if (parameters.GalleryItem.Name != null)
+                {
+                    galleryItemCreateOrUpdateParametersValue["name"] = parameters.GalleryItem.Name;
+                }
+                
+                if (parameters.GalleryItem.Type != null)
+                {
+                    galleryItemCreateOrUpdateParametersValue["type"] = parameters.GalleryItem.Type;
+                }
+                
+                if (parameters.GalleryItem.Location != null)
+                {
+                    galleryItemCreateOrUpdateParametersValue["location"] = parameters.GalleryItem.Location;
+                }
+                
+                if (parameters.GalleryItem.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.GalleryItem.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    galleryItemCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -518,188 +571,22 @@ namespace Microsoft.AzureStack.Management
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                GalleryItem propertiesInstance = new GalleryItem();
+                                GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
                                 galleryItemInstance.Properties = propertiesInstance;
                                 
-                                JToken additionalPropertiesSequenceElement = ((JToken)propertiesValue["additionalProperties"]);
-                                if (additionalPropertiesSequenceElement != null && additionalPropertiesSequenceElement.Type != JTokenType.Null)
+                                JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
+                                if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property in additionalPropertiesSequenceElement)
-                                    {
-                                        string additionalPropertiesKey = ((string)property.Name);
-                                        string additionalPropertiesValue = ((string)property.Value);
-                                        propertiesInstance.AdditionalProperties.Add(additionalPropertiesKey, additionalPropertiesValue);
-                                    }
-                                }
-                                
-                                JToken categoryIdsArray = propertiesValue["categoryIds"];
-                                if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
-                                    {
-                                        propertiesInstance.CategoryIds.Add(((string)categoryIdsValue));
-                                    }
-                                }
-                                
-                                JToken definitionTemplatesValue = propertiesValue["definitionTemplates"];
-                                if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
-                                {
-                                    DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
-                                    propertiesInstance.DefinitionTemplates = definitionTemplatesInstance;
-                                    
-                                    JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
-                                    if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
-                                    {
-                                        string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
-                                        definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
-                                    }
-                                    
-                                    JToken deploymentFragmentFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentFragmentFileUris"]);
-                                    if (deploymentFragmentFileUrisSequenceElement != null && deploymentFragmentFileUrisSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property2 in deploymentFragmentFileUrisSequenceElement)
-                                        {
-                                            string deploymentFragmentFileUrisKey = ((string)property2.Name);
-                                            string deploymentFragmentFileUrisValue = ((string)property2.Value);
-                                            definitionTemplatesInstance.DeploymentFragmentFileUris.Add(deploymentFragmentFileUrisKey, deploymentFragmentFileUrisValue);
-                                        }
-                                    }
-                                    
-                                    JToken deploymentTemplateFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUris"]);
-                                    if (deploymentTemplateFileUrisSequenceElement != null && deploymentTemplateFileUrisSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property3 in deploymentTemplateFileUrisSequenceElement)
-                                        {
-                                            string deploymentTemplateFileUrisKey = ((string)property3.Name);
-                                            string deploymentTemplateFileUrisValue = ((string)property3.Value);
-                                            definitionTemplatesInstance.DeploymentTemplateFileUris.Add(deploymentTemplateFileUrisKey, deploymentTemplateFileUrisValue);
-                                        }
-                                    }
-                                    
-                                    JToken uiDefinitionFileUriValue = definitionTemplatesValue["uiDefinitionFileUri"];
-                                    if (uiDefinitionFileUriValue != null && uiDefinitionFileUriValue.Type != JTokenType.Null)
-                                    {
-                                        string uiDefinitionFileUriInstance = ((string)uiDefinitionFileUriValue);
-                                        definitionTemplatesInstance.UiDefinitionFileUri = uiDefinitionFileUriInstance;
-                                    }
-                                }
-                                
-                                JToken descriptionValue = propertiesValue["description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    propertiesInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken identityValue = propertiesValue["identity"];
-                                if (identityValue != null && identityValue.Type != JTokenType.Null)
-                                {
-                                    string identityInstance = ((string)identityValue);
-                                    propertiesInstance.Identity = identityInstance;
-                                }
-                                
-                                JToken itemDisplayNameValue = propertiesValue["itemDisplayName"];
-                                if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
-                                {
-                                    string itemDisplayNameInstance = ((string)itemDisplayNameValue);
-                                    propertiesInstance.ItemDisplayName = itemDisplayNameInstance;
-                                }
-                                
-                                JToken itemNameValue = propertiesValue["itemName"];
-                                if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
-                                {
-                                    string itemNameInstance = ((string)itemNameValue);
-                                    propertiesInstance.ItemName = itemNameInstance;
-                                }
-                                
-                                JToken linksArray = propertiesValue["links"];
-                                if (linksArray != null && linksArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken linksValue in ((JArray)linksArray))
-                                    {
-                                        LinkProperties linkPropertiesInstance = new LinkProperties();
-                                        propertiesInstance.Links.Add(linkPropertiesInstance);
-                                        
-                                        JToken displayNameValue = linksValue["displayName"];
-                                        if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string displayNameInstance = ((string)displayNameValue);
-                                            linkPropertiesInstance.DisplayName = displayNameInstance;
-                                        }
-                                        
-                                        JToken idValue = linksValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            linkPropertiesInstance.Id = idInstance;
-                                        }
-                                        
-                                        JToken uriValue = linksValue["uri"];
-                                        if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                        {
-                                            string uriInstance = ((string)uriValue);
-                                            linkPropertiesInstance.Uri = uriInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken longSummaryValue = propertiesValue["longSummary"];
-                                if (longSummaryValue != null && longSummaryValue.Type != JTokenType.Null)
-                                {
-                                    string longSummaryInstance = ((string)longSummaryValue);
-                                    propertiesInstance.LongSummary = longSummaryInstance;
-                                }
-                                
-                                JToken publisherValue = propertiesValue["publisher"];
-                                if (publisherValue != null && publisherValue.Type != JTokenType.Null)
-                                {
-                                    string publisherInstance = ((string)publisherValue);
-                                    propertiesInstance.Publisher = publisherInstance;
-                                }
-                                
-                                JToken publisherDisplayNameValue = propertiesValue["publisherDisplayName"];
-                                if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
-                                {
-                                    string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
-                                    propertiesInstance.PublisherDisplayName = publisherDisplayNameInstance;
-                                }
-                                
-                                JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                {
-                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                    propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
-                                }
-                                
-                                JToken screenshotUrisArray = propertiesValue["screenshotUris"];
-                                if (screenshotUrisArray != null && screenshotUrisArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken screenshotUrisValue in ((JArray)screenshotUrisArray))
-                                    {
-                                        propertiesInstance.ScreenshotUris.Add(((string)screenshotUrisValue));
-                                    }
-                                }
-                                
-                                JToken summaryValue = propertiesValue["summary"];
-                                if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                {
-                                    string summaryInstance = ((string)summaryValue);
-                                    propertiesInstance.Summary = summaryInstance;
-                                }
-                                
-                                JToken versionValue = propertiesValue["version"];
-                                if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                {
-                                    string versionInstance = ((string)versionValue);
-                                    propertiesInstance.Version = versionInstance;
+                                    string galleryItemUriInstance = ((string)galleryItemUriValue);
+                                    propertiesInstance.GalleryItemUri = galleryItemUriInstance;
                                 }
                             }
                             
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string idInstance2 = ((string)idValue2);
-                                galleryItemInstance.Id = idInstance2;
+                                string idInstance = ((string)idValue);
+                                galleryItemInstance.Id = idInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
@@ -726,10 +613,10 @@ namespace Microsoft.AzureStack.Management
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property4 in tagsSequenceElement)
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey = ((string)property4.Name);
-                                    string tagsValue = ((string)property4.Value);
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
                                     galleryItemInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
@@ -898,188 +785,22 @@ namespace Microsoft.AzureStack.Management
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        GalleryItem propertiesInstance = new GalleryItem();
+                                        GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
                                         galleryItemModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken additionalPropertiesSequenceElement = ((JToken)propertiesValue["additionalProperties"]);
-                                        if (additionalPropertiesSequenceElement != null && additionalPropertiesSequenceElement.Type != JTokenType.Null)
+                                        JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
+                                        if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in additionalPropertiesSequenceElement)
-                                            {
-                                                string additionalPropertiesKey = ((string)property.Name);
-                                                string additionalPropertiesValue = ((string)property.Value);
-                                                propertiesInstance.AdditionalProperties.Add(additionalPropertiesKey, additionalPropertiesValue);
-                                            }
-                                        }
-                                        
-                                        JToken categoryIdsArray = propertiesValue["categoryIds"];
-                                        if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
-                                            {
-                                                propertiesInstance.CategoryIds.Add(((string)categoryIdsValue));
-                                            }
-                                        }
-                                        
-                                        JToken definitionTemplatesValue = propertiesValue["definitionTemplates"];
-                                        if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
-                                        {
-                                            DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
-                                            propertiesInstance.DefinitionTemplates = definitionTemplatesInstance;
-                                            
-                                            JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
-                                            if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
-                                            {
-                                                string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
-                                                definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
-                                            }
-                                            
-                                            JToken deploymentFragmentFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentFragmentFileUris"]);
-                                            if (deploymentFragmentFileUrisSequenceElement != null && deploymentFragmentFileUrisSequenceElement.Type != JTokenType.Null)
-                                            {
-                                                foreach (JProperty property2 in deploymentFragmentFileUrisSequenceElement)
-                                                {
-                                                    string deploymentFragmentFileUrisKey = ((string)property2.Name);
-                                                    string deploymentFragmentFileUrisValue = ((string)property2.Value);
-                                                    definitionTemplatesInstance.DeploymentFragmentFileUris.Add(deploymentFragmentFileUrisKey, deploymentFragmentFileUrisValue);
-                                                }
-                                            }
-                                            
-                                            JToken deploymentTemplateFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUris"]);
-                                            if (deploymentTemplateFileUrisSequenceElement != null && deploymentTemplateFileUrisSequenceElement.Type != JTokenType.Null)
-                                            {
-                                                foreach (JProperty property3 in deploymentTemplateFileUrisSequenceElement)
-                                                {
-                                                    string deploymentTemplateFileUrisKey = ((string)property3.Name);
-                                                    string deploymentTemplateFileUrisValue = ((string)property3.Value);
-                                                    definitionTemplatesInstance.DeploymentTemplateFileUris.Add(deploymentTemplateFileUrisKey, deploymentTemplateFileUrisValue);
-                                                }
-                                            }
-                                            
-                                            JToken uiDefinitionFileUriValue = definitionTemplatesValue["uiDefinitionFileUri"];
-                                            if (uiDefinitionFileUriValue != null && uiDefinitionFileUriValue.Type != JTokenType.Null)
-                                            {
-                                                string uiDefinitionFileUriInstance = ((string)uiDefinitionFileUriValue);
-                                                definitionTemplatesInstance.UiDefinitionFileUri = uiDefinitionFileUriInstance;
-                                            }
-                                        }
-                                        
-                                        JToken descriptionValue = propertiesValue["description"];
-                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance = ((string)descriptionValue);
-                                            propertiesInstance.Description = descriptionInstance;
-                                        }
-                                        
-                                        JToken identityValue = propertiesValue["identity"];
-                                        if (identityValue != null && identityValue.Type != JTokenType.Null)
-                                        {
-                                            string identityInstance = ((string)identityValue);
-                                            propertiesInstance.Identity = identityInstance;
-                                        }
-                                        
-                                        JToken itemDisplayNameValue = propertiesValue["itemDisplayName"];
-                                        if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string itemDisplayNameInstance = ((string)itemDisplayNameValue);
-                                            propertiesInstance.ItemDisplayName = itemDisplayNameInstance;
-                                        }
-                                        
-                                        JToken itemNameValue = propertiesValue["itemName"];
-                                        if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
-                                        {
-                                            string itemNameInstance = ((string)itemNameValue);
-                                            propertiesInstance.ItemName = itemNameInstance;
-                                        }
-                                        
-                                        JToken linksArray = propertiesValue["links"];
-                                        if (linksArray != null && linksArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken linksValue in ((JArray)linksArray))
-                                            {
-                                                LinkProperties linkPropertiesInstance = new LinkProperties();
-                                                propertiesInstance.Links.Add(linkPropertiesInstance);
-                                                
-                                                JToken displayNameValue = linksValue["displayName"];
-                                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string displayNameInstance = ((string)displayNameValue);
-                                                    linkPropertiesInstance.DisplayName = displayNameInstance;
-                                                }
-                                                
-                                                JToken idValue = linksValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    linkPropertiesInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken uriValue = linksValue["uri"];
-                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                                {
-                                                    string uriInstance = ((string)uriValue);
-                                                    linkPropertiesInstance.Uri = uriInstance;
-                                                }
-                                            }
-                                        }
-                                        
-                                        JToken longSummaryValue = propertiesValue["longSummary"];
-                                        if (longSummaryValue != null && longSummaryValue.Type != JTokenType.Null)
-                                        {
-                                            string longSummaryInstance = ((string)longSummaryValue);
-                                            propertiesInstance.LongSummary = longSummaryInstance;
-                                        }
-                                        
-                                        JToken publisherValue = propertiesValue["publisher"];
-                                        if (publisherValue != null && publisherValue.Type != JTokenType.Null)
-                                        {
-                                            string publisherInstance = ((string)publisherValue);
-                                            propertiesInstance.Publisher = publisherInstance;
-                                        }
-                                        
-                                        JToken publisherDisplayNameValue = propertiesValue["publisherDisplayName"];
-                                        if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
-                                            propertiesInstance.PublisherDisplayName = publisherDisplayNameInstance;
-                                        }
-                                        
-                                        JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
-                                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                            propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
-                                        }
-                                        
-                                        JToken screenshotUrisArray = propertiesValue["screenshotUris"];
-                                        if (screenshotUrisArray != null && screenshotUrisArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken screenshotUrisValue in ((JArray)screenshotUrisArray))
-                                            {
-                                                propertiesInstance.ScreenshotUris.Add(((string)screenshotUrisValue));
-                                            }
-                                        }
-                                        
-                                        JToken summaryValue = propertiesValue["summary"];
-                                        if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                        {
-                                            string summaryInstance = ((string)summaryValue);
-                                            propertiesInstance.Summary = summaryInstance;
-                                        }
-                                        
-                                        JToken versionValue = propertiesValue["version"];
-                                        if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                        {
-                                            string versionInstance = ((string)versionValue);
-                                            propertiesInstance.Version = versionInstance;
+                                            string galleryItemUriInstance = ((string)galleryItemUriValue);
+                                            propertiesInstance.GalleryItemUri = galleryItemUriInstance;
                                         }
                                     }
                                     
-                                    JToken idValue2 = valueValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        galleryItemModelInstance.Id = idInstance2;
+                                        string idInstance = ((string)idValue);
+                                        galleryItemModelInstance.Id = idInstance;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];
@@ -1106,10 +827,10 @@ namespace Microsoft.AzureStack.Management
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                     if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property4 in tagsSequenceElement)
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            string tagsKey = ((string)property4.Name);
-                                            string tagsValue = ((string)property4.Value);
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
                                             galleryItemModelInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
@@ -1257,188 +978,22 @@ namespace Microsoft.AzureStack.Management
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        GalleryItem propertiesInstance = new GalleryItem();
+                                        GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
                                         galleryItemModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken additionalPropertiesSequenceElement = ((JToken)propertiesValue["additionalProperties"]);
-                                        if (additionalPropertiesSequenceElement != null && additionalPropertiesSequenceElement.Type != JTokenType.Null)
+                                        JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
+                                        if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in additionalPropertiesSequenceElement)
-                                            {
-                                                string additionalPropertiesKey = ((string)property.Name);
-                                                string additionalPropertiesValue = ((string)property.Value);
-                                                propertiesInstance.AdditionalProperties.Add(additionalPropertiesKey, additionalPropertiesValue);
-                                            }
-                                        }
-                                        
-                                        JToken categoryIdsArray = propertiesValue["categoryIds"];
-                                        if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
-                                            {
-                                                propertiesInstance.CategoryIds.Add(((string)categoryIdsValue));
-                                            }
-                                        }
-                                        
-                                        JToken definitionTemplatesValue = propertiesValue["definitionTemplates"];
-                                        if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
-                                        {
-                                            DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
-                                            propertiesInstance.DefinitionTemplates = definitionTemplatesInstance;
-                                            
-                                            JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
-                                            if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
-                                            {
-                                                string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
-                                                definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
-                                            }
-                                            
-                                            JToken deploymentFragmentFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentFragmentFileUris"]);
-                                            if (deploymentFragmentFileUrisSequenceElement != null && deploymentFragmentFileUrisSequenceElement.Type != JTokenType.Null)
-                                            {
-                                                foreach (JProperty property2 in deploymentFragmentFileUrisSequenceElement)
-                                                {
-                                                    string deploymentFragmentFileUrisKey = ((string)property2.Name);
-                                                    string deploymentFragmentFileUrisValue = ((string)property2.Value);
-                                                    definitionTemplatesInstance.DeploymentFragmentFileUris.Add(deploymentFragmentFileUrisKey, deploymentFragmentFileUrisValue);
-                                                }
-                                            }
-                                            
-                                            JToken deploymentTemplateFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUris"]);
-                                            if (deploymentTemplateFileUrisSequenceElement != null && deploymentTemplateFileUrisSequenceElement.Type != JTokenType.Null)
-                                            {
-                                                foreach (JProperty property3 in deploymentTemplateFileUrisSequenceElement)
-                                                {
-                                                    string deploymentTemplateFileUrisKey = ((string)property3.Name);
-                                                    string deploymentTemplateFileUrisValue = ((string)property3.Value);
-                                                    definitionTemplatesInstance.DeploymentTemplateFileUris.Add(deploymentTemplateFileUrisKey, deploymentTemplateFileUrisValue);
-                                                }
-                                            }
-                                            
-                                            JToken uiDefinitionFileUriValue = definitionTemplatesValue["uiDefinitionFileUri"];
-                                            if (uiDefinitionFileUriValue != null && uiDefinitionFileUriValue.Type != JTokenType.Null)
-                                            {
-                                                string uiDefinitionFileUriInstance = ((string)uiDefinitionFileUriValue);
-                                                definitionTemplatesInstance.UiDefinitionFileUri = uiDefinitionFileUriInstance;
-                                            }
-                                        }
-                                        
-                                        JToken descriptionValue = propertiesValue["description"];
-                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance = ((string)descriptionValue);
-                                            propertiesInstance.Description = descriptionInstance;
-                                        }
-                                        
-                                        JToken identityValue = propertiesValue["identity"];
-                                        if (identityValue != null && identityValue.Type != JTokenType.Null)
-                                        {
-                                            string identityInstance = ((string)identityValue);
-                                            propertiesInstance.Identity = identityInstance;
-                                        }
-                                        
-                                        JToken itemDisplayNameValue = propertiesValue["itemDisplayName"];
-                                        if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string itemDisplayNameInstance = ((string)itemDisplayNameValue);
-                                            propertiesInstance.ItemDisplayName = itemDisplayNameInstance;
-                                        }
-                                        
-                                        JToken itemNameValue = propertiesValue["itemName"];
-                                        if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
-                                        {
-                                            string itemNameInstance = ((string)itemNameValue);
-                                            propertiesInstance.ItemName = itemNameInstance;
-                                        }
-                                        
-                                        JToken linksArray = propertiesValue["links"];
-                                        if (linksArray != null && linksArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken linksValue in ((JArray)linksArray))
-                                            {
-                                                LinkProperties linkPropertiesInstance = new LinkProperties();
-                                                propertiesInstance.Links.Add(linkPropertiesInstance);
-                                                
-                                                JToken displayNameValue = linksValue["displayName"];
-                                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string displayNameInstance = ((string)displayNameValue);
-                                                    linkPropertiesInstance.DisplayName = displayNameInstance;
-                                                }
-                                                
-                                                JToken idValue = linksValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    linkPropertiesInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken uriValue = linksValue["uri"];
-                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                                {
-                                                    string uriInstance = ((string)uriValue);
-                                                    linkPropertiesInstance.Uri = uriInstance;
-                                                }
-                                            }
-                                        }
-                                        
-                                        JToken longSummaryValue = propertiesValue["longSummary"];
-                                        if (longSummaryValue != null && longSummaryValue.Type != JTokenType.Null)
-                                        {
-                                            string longSummaryInstance = ((string)longSummaryValue);
-                                            propertiesInstance.LongSummary = longSummaryInstance;
-                                        }
-                                        
-                                        JToken publisherValue = propertiesValue["publisher"];
-                                        if (publisherValue != null && publisherValue.Type != JTokenType.Null)
-                                        {
-                                            string publisherInstance = ((string)publisherValue);
-                                            propertiesInstance.Publisher = publisherInstance;
-                                        }
-                                        
-                                        JToken publisherDisplayNameValue = propertiesValue["publisherDisplayName"];
-                                        if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
-                                            propertiesInstance.PublisherDisplayName = publisherDisplayNameInstance;
-                                        }
-                                        
-                                        JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
-                                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                            propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
-                                        }
-                                        
-                                        JToken screenshotUrisArray = propertiesValue["screenshotUris"];
-                                        if (screenshotUrisArray != null && screenshotUrisArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken screenshotUrisValue in ((JArray)screenshotUrisArray))
-                                            {
-                                                propertiesInstance.ScreenshotUris.Add(((string)screenshotUrisValue));
-                                            }
-                                        }
-                                        
-                                        JToken summaryValue = propertiesValue["summary"];
-                                        if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                        {
-                                            string summaryInstance = ((string)summaryValue);
-                                            propertiesInstance.Summary = summaryInstance;
-                                        }
-                                        
-                                        JToken versionValue = propertiesValue["version"];
-                                        if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                        {
-                                            string versionInstance = ((string)versionValue);
-                                            propertiesInstance.Version = versionInstance;
+                                            string galleryItemUriInstance = ((string)galleryItemUriValue);
+                                            propertiesInstance.GalleryItemUri = galleryItemUriInstance;
                                         }
                                     }
                                     
-                                    JToken idValue2 = valueValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        galleryItemModelInstance.Id = idInstance2;
+                                        string idInstance = ((string)idValue);
+                                        galleryItemModelInstance.Id = idInstance;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];
@@ -1465,10 +1020,10 @@ namespace Microsoft.AzureStack.Management
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                     if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property4 in tagsSequenceElement)
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            string tagsKey = ((string)property4.Name);
-                                            string tagsValue = ((string)property4.Value);
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
                                             galleryItemModelInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
@@ -1628,188 +1183,22 @@ namespace Microsoft.AzureStack.Management
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        GalleryItem propertiesInstance = new GalleryItem();
+                                        GalleryItemUriPayload propertiesInstance = new GalleryItemUriPayload();
                                         galleryItemModelInstance.Properties = propertiesInstance;
                                         
-                                        JToken additionalPropertiesSequenceElement = ((JToken)propertiesValue["additionalProperties"]);
-                                        if (additionalPropertiesSequenceElement != null && additionalPropertiesSequenceElement.Type != JTokenType.Null)
+                                        JToken galleryItemUriValue = propertiesValue["galleryItemUri"];
+                                        if (galleryItemUriValue != null && galleryItemUriValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JProperty property in additionalPropertiesSequenceElement)
-                                            {
-                                                string additionalPropertiesKey = ((string)property.Name);
-                                                string additionalPropertiesValue = ((string)property.Value);
-                                                propertiesInstance.AdditionalProperties.Add(additionalPropertiesKey, additionalPropertiesValue);
-                                            }
-                                        }
-                                        
-                                        JToken categoryIdsArray = propertiesValue["categoryIds"];
-                                        if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
-                                            {
-                                                propertiesInstance.CategoryIds.Add(((string)categoryIdsValue));
-                                            }
-                                        }
-                                        
-                                        JToken definitionTemplatesValue = propertiesValue["definitionTemplates"];
-                                        if (definitionTemplatesValue != null && definitionTemplatesValue.Type != JTokenType.Null)
-                                        {
-                                            DefinitionTemplates definitionTemplatesInstance = new DefinitionTemplates();
-                                            propertiesInstance.DefinitionTemplates = definitionTemplatesInstance;
-                                            
-                                            JToken defaultDeploymentTemplateIdValue = definitionTemplatesValue["defaultDeploymentTemplateId"];
-                                            if (defaultDeploymentTemplateIdValue != null && defaultDeploymentTemplateIdValue.Type != JTokenType.Null)
-                                            {
-                                                string defaultDeploymentTemplateIdInstance = ((string)defaultDeploymentTemplateIdValue);
-                                                definitionTemplatesInstance.DefaultDeploymentTemplateId = defaultDeploymentTemplateIdInstance;
-                                            }
-                                            
-                                            JToken deploymentFragmentFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentFragmentFileUris"]);
-                                            if (deploymentFragmentFileUrisSequenceElement != null && deploymentFragmentFileUrisSequenceElement.Type != JTokenType.Null)
-                                            {
-                                                foreach (JProperty property2 in deploymentFragmentFileUrisSequenceElement)
-                                                {
-                                                    string deploymentFragmentFileUrisKey = ((string)property2.Name);
-                                                    string deploymentFragmentFileUrisValue = ((string)property2.Value);
-                                                    definitionTemplatesInstance.DeploymentFragmentFileUris.Add(deploymentFragmentFileUrisKey, deploymentFragmentFileUrisValue);
-                                                }
-                                            }
-                                            
-                                            JToken deploymentTemplateFileUrisSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUris"]);
-                                            if (deploymentTemplateFileUrisSequenceElement != null && deploymentTemplateFileUrisSequenceElement.Type != JTokenType.Null)
-                                            {
-                                                foreach (JProperty property3 in deploymentTemplateFileUrisSequenceElement)
-                                                {
-                                                    string deploymentTemplateFileUrisKey = ((string)property3.Name);
-                                                    string deploymentTemplateFileUrisValue = ((string)property3.Value);
-                                                    definitionTemplatesInstance.DeploymentTemplateFileUris.Add(deploymentTemplateFileUrisKey, deploymentTemplateFileUrisValue);
-                                                }
-                                            }
-                                            
-                                            JToken uiDefinitionFileUriValue = definitionTemplatesValue["uiDefinitionFileUri"];
-                                            if (uiDefinitionFileUriValue != null && uiDefinitionFileUriValue.Type != JTokenType.Null)
-                                            {
-                                                string uiDefinitionFileUriInstance = ((string)uiDefinitionFileUriValue);
-                                                definitionTemplatesInstance.UiDefinitionFileUri = uiDefinitionFileUriInstance;
-                                            }
-                                        }
-                                        
-                                        JToken descriptionValue = propertiesValue["description"];
-                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance = ((string)descriptionValue);
-                                            propertiesInstance.Description = descriptionInstance;
-                                        }
-                                        
-                                        JToken identityValue = propertiesValue["identity"];
-                                        if (identityValue != null && identityValue.Type != JTokenType.Null)
-                                        {
-                                            string identityInstance = ((string)identityValue);
-                                            propertiesInstance.Identity = identityInstance;
-                                        }
-                                        
-                                        JToken itemDisplayNameValue = propertiesValue["itemDisplayName"];
-                                        if (itemDisplayNameValue != null && itemDisplayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string itemDisplayNameInstance = ((string)itemDisplayNameValue);
-                                            propertiesInstance.ItemDisplayName = itemDisplayNameInstance;
-                                        }
-                                        
-                                        JToken itemNameValue = propertiesValue["itemName"];
-                                        if (itemNameValue != null && itemNameValue.Type != JTokenType.Null)
-                                        {
-                                            string itemNameInstance = ((string)itemNameValue);
-                                            propertiesInstance.ItemName = itemNameInstance;
-                                        }
-                                        
-                                        JToken linksArray = propertiesValue["links"];
-                                        if (linksArray != null && linksArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken linksValue in ((JArray)linksArray))
-                                            {
-                                                LinkProperties linkPropertiesInstance = new LinkProperties();
-                                                propertiesInstance.Links.Add(linkPropertiesInstance);
-                                                
-                                                JToken displayNameValue = linksValue["displayName"];
-                                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string displayNameInstance = ((string)displayNameValue);
-                                                    linkPropertiesInstance.DisplayName = displayNameInstance;
-                                                }
-                                                
-                                                JToken idValue = linksValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    linkPropertiesInstance.Id = idInstance;
-                                                }
-                                                
-                                                JToken uriValue = linksValue["uri"];
-                                                if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                                {
-                                                    string uriInstance = ((string)uriValue);
-                                                    linkPropertiesInstance.Uri = uriInstance;
-                                                }
-                                            }
-                                        }
-                                        
-                                        JToken longSummaryValue = propertiesValue["longSummary"];
-                                        if (longSummaryValue != null && longSummaryValue.Type != JTokenType.Null)
-                                        {
-                                            string longSummaryInstance = ((string)longSummaryValue);
-                                            propertiesInstance.LongSummary = longSummaryInstance;
-                                        }
-                                        
-                                        JToken publisherValue = propertiesValue["publisher"];
-                                        if (publisherValue != null && publisherValue.Type != JTokenType.Null)
-                                        {
-                                            string publisherInstance = ((string)publisherValue);
-                                            propertiesInstance.Publisher = publisherInstance;
-                                        }
-                                        
-                                        JToken publisherDisplayNameValue = propertiesValue["publisherDisplayName"];
-                                        if (publisherDisplayNameValue != null && publisherDisplayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string publisherDisplayNameInstance = ((string)publisherDisplayNameValue);
-                                            propertiesInstance.PublisherDisplayName = publisherDisplayNameInstance;
-                                        }
-                                        
-                                        JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
-                                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                        {
-                                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                            propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
-                                        }
-                                        
-                                        JToken screenshotUrisArray = propertiesValue["screenshotUris"];
-                                        if (screenshotUrisArray != null && screenshotUrisArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken screenshotUrisValue in ((JArray)screenshotUrisArray))
-                                            {
-                                                propertiesInstance.ScreenshotUris.Add(((string)screenshotUrisValue));
-                                            }
-                                        }
-                                        
-                                        JToken summaryValue = propertiesValue["summary"];
-                                        if (summaryValue != null && summaryValue.Type != JTokenType.Null)
-                                        {
-                                            string summaryInstance = ((string)summaryValue);
-                                            propertiesInstance.Summary = summaryInstance;
-                                        }
-                                        
-                                        JToken versionValue = propertiesValue["version"];
-                                        if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                        {
-                                            string versionInstance = ((string)versionValue);
-                                            propertiesInstance.Version = versionInstance;
+                                            string galleryItemUriInstance = ((string)galleryItemUriValue);
+                                            propertiesInstance.GalleryItemUri = galleryItemUriInstance;
                                         }
                                     }
                                     
-                                    JToken idValue2 = valueValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        galleryItemModelInstance.Id = idInstance2;
+                                        string idInstance = ((string)idValue);
+                                        galleryItemModelInstance.Id = idInstance;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];
@@ -1836,10 +1225,10 @@ namespace Microsoft.AzureStack.Management
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                     if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property4 in tagsSequenceElement)
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            string tagsKey = ((string)property4.Name);
-                                            string tagsValue = ((string)property4.Value);
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
                                             galleryItemModelInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }

@@ -21,46 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
     /// Your documentation here.
     /// </summary>
-    public partial class GalleryItemCreateOrUpdateParameters
+    public partial class GalleryItemUriPayload
     {
-        private GalleryItemModel _galleryItem;
+        private string _galleryItemUri;
         
         /// <summary>
-        /// Required. Your documentation here.
+        /// Optional. Your documentation here.
         /// </summary>
-        public GalleryItemModel GalleryItem
+        public string GalleryItemUri
         {
-            get { return this._galleryItem; }
-            set { this._galleryItem = value; }
+            get { return this._galleryItemUri; }
+            set { this._galleryItemUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// GalleryItemCreateOrUpdateParameters class.
+        /// Initializes a new instance of the GalleryItemUriPayload class.
         /// </summary>
-        public GalleryItemCreateOrUpdateParameters()
+        public GalleryItemUriPayload()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// GalleryItemCreateOrUpdateParameters class with required arguments.
-        /// </summary>
-        public GalleryItemCreateOrUpdateParameters(GalleryItemModel galleryItem)
-            : this()
-        {
-            if (galleryItem == null)
-            {
-                throw new ArgumentNullException("galleryItem");
-            }
-            this.GalleryItem = galleryItem;
         }
     }
 }

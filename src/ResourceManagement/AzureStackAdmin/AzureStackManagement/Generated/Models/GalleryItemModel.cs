@@ -30,12 +30,12 @@ namespace Microsoft.AzureStack.Management.Models
     /// </summary>
     public partial class GalleryItemModel : ResourceBase
     {
-        private GalleryItem _properties;
+        private GalleryItemUriPayload _properties;
         
         /// <summary>
         /// Optional. Your documentation here.
         /// </summary>
-        public GalleryItem Properties
+        public GalleryItemUriPayload Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
