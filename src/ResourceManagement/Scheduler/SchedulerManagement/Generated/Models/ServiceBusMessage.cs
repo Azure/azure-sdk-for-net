@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class ServiceBusMessage
     {
         /// <summary>
@@ -62,8 +60,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public string NamespaceProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the transport type. Possible values for this property
-        /// include: 'NotSpecified', 'NetMessaging', 'AMQP'.
+        /// Gets or sets the transport type. Possible values include:
+        /// 'NotSpecified', 'NetMessaging', 'AMQP'
         /// </summary>
         [JsonProperty(PropertyName = "transportType")]
         public ServiceBusTransportType? TransportType { get; set; }

@@ -110,6 +110,22 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Deletes a job collection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='jobCollectionName'>
+        /// The job collection name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Enables all of the jobs in the job collection.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -126,6 +142,22 @@ namespace Microsoft.Azure.Management.Scheduler
         /// </param>
         Task<AzureOperationResponse> EnableWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Enables all of the jobs in the job collection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='jobCollectionName'>
+        /// The job collection name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginEnableWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Disables all of the jobs in the job collection.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -141,6 +173,22 @@ namespace Microsoft.Azure.Management.Scheduler
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse> DisableWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Disables all of the jobs in the job collection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='jobCollectionName'>
+        /// The job collection name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDisableWithHttpMessagesAsync(string resourceGroupName, string jobCollectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all job collections under specified subscription.
         /// </summary>

@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class JobAction
     {
         /// <summary>
@@ -33,9 +31,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the job action type. Possible values for this
-        /// property include: 'Http', 'Https', 'StorageQueue',
-        /// 'ServiceBusQueue', 'ServiceBusTopic'.
+        /// Gets or sets the job action type. Possible values include: 'Http',
+        /// 'Https', 'StorageQueue', 'ServiceBusQueue', 'ServiceBusTopic'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public JobActionType? Type { get; set; }

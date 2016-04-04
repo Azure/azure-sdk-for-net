@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class JobCollectionProperties
     {
         /// <summary>
@@ -35,8 +33,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the state. Possible values for this property include:
-        /// 'Enabled', 'Disabled', 'Suspended', 'Deleted'.
+        /// Gets or sets the state. Possible values include: 'Enabled',
+        /// 'Disabled', 'Suspended', 'Deleted'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public JobCollectionState? State { get; set; }

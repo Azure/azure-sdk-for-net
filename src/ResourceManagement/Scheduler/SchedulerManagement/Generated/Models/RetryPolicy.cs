@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class RetryPolicy
     {
         /// <summary>
@@ -29,8 +27,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the retry strategy to be used. Possible values for
-        /// this property include: 'None', 'Fixed'.
+        /// Gets or sets the retry strategy to be used. Possible values
+        /// include: 'None', 'Fixed'
         /// </summary>
         [JsonProperty(PropertyName = "retryType")]
         public RetryType? RetryType { get; set; }
