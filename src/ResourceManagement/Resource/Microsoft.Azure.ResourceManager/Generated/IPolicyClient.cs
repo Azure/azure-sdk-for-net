@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Resources
 
     /// <summary>
     /// </summary>
-    public partial interface IResourceManagementClient : IDisposable
+    public partial interface IPolicyClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -72,19 +72,9 @@ namespace Microsoft.Azure.Management.Resources
         bool? GenerateClientRequestId { get; set; }
 
 
-        IDeploymentsOperations Deployments { get; }
+        IPolicyAssignmentsOperations PolicyAssignments { get; }
 
-        IProvidersOperations Providers { get; }
-
-        IResourceGroupsOperations ResourceGroups { get; }
-
-        IResourcesOperations Resources { get; }
-
-        ITagsOperations Tags { get; }
-
-        IDeploymentOperationsOperations DeploymentOperations { get; }
-
-        IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails { get; }
+        IPolicyDefinitionsOperations PolicyDefinitions { get; }
 
     }
 }

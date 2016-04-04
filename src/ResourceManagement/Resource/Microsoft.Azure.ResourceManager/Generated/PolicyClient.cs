@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Resources
 
     /// <summary>
     /// </summary>
-    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient, IAzureClient
+    public partial class PolicyClient : ServiceClient<PolicyClient>, IPolicyClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -48,6 +48,13 @@ namespace Microsoft.Azure.Management.Resources
         /// Gets Azure subscription credentials.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft Azure
+        /// subscription. The subscription ID forms part of the URI for every service
+        /// call.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// Client Api Version.
@@ -71,23 +78,23 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
-        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
+        public virtual IPolicyAssignmentsOperations PolicyAssignments { get; private set; }
 
-        public virtual ITenantsOperations Tenants { get; private set; }
+        public virtual IPolicyDefinitionsOperations PolicyDefinitions { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SubscriptionClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected PolicyClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -95,13 +102,13 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SubscriptionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected PolicyClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -109,7 +116,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SubscriptionClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected PolicyClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -119,7 +126,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -130,7 +137,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SubscriptionClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected PolicyClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -140,7 +147,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -148,7 +155,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SubscriptionClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public PolicyClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -162,7 +169,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets Azure subscription credentials.
@@ -173,7 +180,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SubscriptionClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public PolicyClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -187,7 +194,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -198,7 +205,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SubscriptionClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public PolicyClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -217,7 +224,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the PolicyClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -231,7 +238,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SubscriptionClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public PolicyClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -254,10 +261,10 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         private void Initialize()
         {
-            this.Subscriptions = new SubscriptionsOperations(this);
-            this.Tenants = new TenantsOperations(this);
+            this.PolicyAssignments = new PolicyAssignmentsOperations(this);
+            this.PolicyDefinitions = new PolicyDefinitionsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-11-01";
+            this.ApiVersion = "2015-10-01-preview";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

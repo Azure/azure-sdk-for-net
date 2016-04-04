@@ -71,9 +71,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse<ResourceGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Begin deleting resource group.To determine whether the operation
-        /// has finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Delete resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case
@@ -87,9 +85,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Begin deleting resource group.To determine whether the operation
-        /// has finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Delete resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case
@@ -137,6 +133,23 @@ namespace Microsoft.Azure.Management.Resources
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<ResourceGroup>> PatchWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Captures the specified resource group as a template.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to be created or updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the export template resource group
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceGroupExportResult>> ExportTemplateWithHttpMessagesAsync(string resourceGroupName, ExportTemplateRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a collection of resource groups.
         /// </summary>

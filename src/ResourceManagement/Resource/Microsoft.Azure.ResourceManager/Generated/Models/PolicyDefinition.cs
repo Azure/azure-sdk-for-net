@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Policy definition.
+    /// The policy definition.
     /// </summary>
-    public partial class PolicyDefinition
+    public partial class PolicyDefinition : IResource
     {
         /// <summary>
         /// Initializes a new instance of the PolicyDefinition class.
@@ -29,23 +29,45 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Initializes a new instance of the PolicyDefinition class.
         /// </summary>
-        public PolicyDefinition(PolicyDefinitionProperties properties = default(PolicyDefinitionProperties), string name = default(string))
+        public PolicyDefinition(string name = default(string), string policyType = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object))
         {
-            Properties = properties;
             Name = name;
+            PolicyType = policyType;
+            DisplayName = displayName;
+            Description = description;
+            PolicyRule = policyRule;
         }
 
         /// <summary>
-        /// Gets or sets the policy definition properties.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public PolicyDefinitionProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy definition name.
+        /// Gets or sets the name of the policy definition.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy definition policy type. Possible values for
+        /// this property include: 'NotSpecified', 'BuiltIn', 'Custom'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.policyType")]
+        public string PolicyType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy definition display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.displayName")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy definition description.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.policyRule")]
+        public object PolicyRule { get; set; }
 
     }
 }
