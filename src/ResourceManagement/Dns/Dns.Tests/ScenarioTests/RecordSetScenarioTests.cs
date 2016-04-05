@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         private static SingleRecordSetTestContext SetupSingleRecordSetTest()
         {
             var testContext = new SingleRecordSetTestContext();
-            testContext.ZoneName = TestUtilities.GenerateName("hydratestdnszone");
+            testContext.ZoneName = TestUtilities.GenerateName("hydratestdnszone.com");
             testContext.RecordSetName = TestUtilities.GenerateName("hydratestdnsrec");
             testContext.Location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
             testContext.ResourceGroup = ResourceGroupHelper.CreateResourceGroup();
@@ -310,8 +310,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 createParams.RecordSet.Properties.TxtRecords = new List<TxtRecord> 
                     {    
-                        new TxtRecord { Value = { "lorem" } }, 
-                        new TxtRecord { Value = { "ipsum" } },
+                        new TxtRecord { Value = new[] {"lorem"}.ToList() }, 
+                        new TxtRecord { Value = new[] {"ipsum"}.ToList() }, 
                 };
 
                 return;
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 const string suffix = ".com";
 
-                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec") + suffix, TestUtilities.GenerateName("hydratestrec") + ".con", TestUtilities.GenerateName("hydratestrec") + ".con" };
+                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec") + suffix, TestUtilities.GenerateName("hydratestrec") + ".com", TestUtilities.GenerateName("hydratestrec") + ".com" };
 
                 RecordSetScenarioTests.CreateRecordSets(testContext, recordSetNames);
 
@@ -729,9 +729,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public static void CreateRecordSets(SingleRecordSetTestContext testContext, string[] recordSetNames)
         {
             RecordSetCreateOrUpdateParameters createParameters1 = testContext.GetNewTestRecordSkeleton(recordSetNames[0]);
-            createParameters1.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = { "text1" } } };
+            createParameters1.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = new [] { "text1" }.ToList() } };
             RecordSetCreateOrUpdateParameters createParameters2 = testContext.GetNewTestRecordSkeleton(recordSetNames[1]);
-            createParameters2.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = { "text2" } } };
+            createParameters2.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = new[] { "text1" }.ToList() } };
             RecordSetCreateOrUpdateParameters createParameters3 = testContext.GetNewTestRecordSkeleton(recordSetNames[2]);
             createParameters3.RecordSet.Properties.AaaaRecords = new List<AaaaRecord> { new AaaaRecord { Ipv6Address = "123::45" } };
 

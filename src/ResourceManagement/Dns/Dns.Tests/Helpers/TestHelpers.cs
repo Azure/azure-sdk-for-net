@@ -15,6 +15,7 @@ using Microsoft.Azure.Management.Dns.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Xunit;
 
 namespace Microsoft.Azure.Management.Dns.Testing
@@ -201,7 +202,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 for (int i = 0; i < first.Count; i++)
                 {
-                    if (first[i].Ipv6Address != second[i].Ipv6Address)
+                    var firstAddress = IPAddress.Parse(first[i].Ipv6Address);
+                    var secondAddress = IPAddress.Parse(second[i].Ipv6Address);
+                    if (!firstAddress.Equals(secondAddress))
                     {
                         return false;
                     }

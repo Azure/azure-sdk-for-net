@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns;
 using Microsoft.Azure.Management.Dns.Models;
@@ -120,7 +121,7 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (parameters.RecordSet.Location == null)
             {
-                throw new ArgumentNullException("parameters.RecordSet.Location");
+                throw new ArgumentNullException("parameters.RecordSet.");
             }
             if (parameters.RecordSet.Properties != null)
             {
@@ -130,7 +131,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aaaaRecordsParameterItem.Ipv6Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.AaaaRecords.Ipv6Address");
+                            throw new ArgumentNullException("parameters.RecordSet..AaaaRecords.Ipv6Address");
                         }
                     }
                 }
@@ -140,7 +141,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aRecordsParameterItem.Ipv4Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.ARecords.Ipv4Address");
+                            throw new ArgumentNullException("parameters.RecordSet..ARecords.Ipv4Address");
                         }
                     }
                 }
@@ -148,7 +149,7 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.CnameRecord.Cname == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet.Properties.CnameRecord.Cname");
+                        throw new ArgumentNullException("parameters.RecordSet..CnameRecord.Cname");
                     }
                 }
                 if (parameters.RecordSet.Properties.MxRecords != null)
@@ -157,7 +158,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (mxRecordsParameterItem.Exchange == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.MxRecords.Exchange");
+                            throw new ArgumentNullException("parameters.RecordSet..MxRecords.Exchange");
                         }
                     }
                 }
@@ -167,7 +168,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (nsRecordsParameterItem.Nsdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.NsRecords.Nsdname");
+                            throw new ArgumentNullException("parameters.RecordSet..NsRecords.Nsdname");
                         }
                     }
                 }
@@ -177,7 +178,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (ptrRecordsParameterItem.Ptrdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.PtrRecords.Ptrdname");
+                            throw new ArgumentNullException("parameters.RecordSet..PtrRecords.Ptrdname");
                         }
                     }
                 }
@@ -185,11 +186,11 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.SoaRecord.Email == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Email");
+                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Email");
                     }
                     if (parameters.RecordSet.Properties.SoaRecord.Host == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Host");
+                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Host");
                     }
                 }
                 if (parameters.RecordSet.Properties.SrvRecords != null)
@@ -198,7 +199,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (srvRecordsParameterItem.Target == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.SrvRecords.Target");
+                            throw new ArgumentNullException("parameters.RecordSet..SrvRecords.Target");
                         }
                     }
                 }
@@ -208,7 +209,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (txtRecordsParameterItem.Value == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.TxtRecords.Value");
+                            throw new ArgumentNullException("parameters.RecordSet..TxtRecords.Value");
                         }
                     }
                 }
@@ -290,15 +291,47 @@ namespace Microsoft.Azure.Management.Dns
                 JObject recordSetCreateOrUpdateParametersValue = new JObject();
                 requestDoc = recordSetCreateOrUpdateParametersValue;
                 
+                if (parameters.RecordSet.Id != null)
+                {
+                    recordSetCreateOrUpdateParametersValue["id"] = parameters.RecordSet.Id;
+                }
+                
+                if (parameters.RecordSet.Name != null)
+                {
+                    recordSetCreateOrUpdateParametersValue["name"] = parameters.RecordSet.Name;
+                }
+                
+                if (parameters.RecordSet.Type != null)
+                {
+                    recordSetCreateOrUpdateParametersValue["type"] = parameters.RecordSet.Type;
+                }
+                
                 if (parameters.RecordSet.ETag != null)
                 {
                     recordSetCreateOrUpdateParametersValue["etag"] = parameters.RecordSet.ETag;
                 }
                 
+                recordSetCreateOrUpdateParametersValue["location"] = parameters.RecordSet.Location;
+                
                 if (parameters.RecordSet.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
                     recordSetCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.RecordSet.Properties.Metadata != null)
+                    {
+                        if (parameters.RecordSet.Properties.Metadata is ILazyCollection == false || ((ILazyCollection)parameters.RecordSet.Properties.Metadata).IsInitialized)
+                        {
+                            JObject metadataDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair in parameters.RecordSet.Properties.Metadata)
+                            {
+                                string metadataKey = pair.Key;
+                                string metadataValue = pair.Value;
+                                metadataDictionary[metadataKey] = metadataValue;
+                            }
+                            propertiesValue["metadata"] = metadataDictionary;
+                        }
+                    }
                     
                     propertiesValue["TTL"] = parameters.RecordSet.Properties.Ttl;
                     
@@ -438,35 +471,6 @@ namespace Microsoft.Azure.Management.Dns
                     }
                 }
                 
-                if (parameters.RecordSet.Id != null)
-                {
-                    recordSetCreateOrUpdateParametersValue["id"] = parameters.RecordSet.Id;
-                }
-                
-                if (parameters.RecordSet.Name != null)
-                {
-                    recordSetCreateOrUpdateParametersValue["name"] = parameters.RecordSet.Name;
-                }
-                
-                if (parameters.RecordSet.Type != null)
-                {
-                    recordSetCreateOrUpdateParametersValue["type"] = parameters.RecordSet.Type;
-                }
-                
-                recordSetCreateOrUpdateParametersValue["location"] = parameters.RecordSet.Location;
-                
-                if (parameters.RecordSet.Tags != null)
-                {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.RecordSet.Tags)
-                    {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
-                    }
-                    recordSetCreateOrUpdateParametersValue["tags"] = tagsDictionary;
-                }
-                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -516,6 +520,27 @@ namespace Microsoft.Azure.Management.Dns
                             RecordSet recordSetInstance = new RecordSet();
                             result.RecordSet = recordSetInstance;
                             
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                recordSetInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                recordSetInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                recordSetInstance.Type = typeInstance;
+                            }
+                            
                             JToken etagValue = responseDoc["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
                             {
@@ -523,11 +548,29 @@ namespace Microsoft.Azure.Management.Dns
                                 recordSetInstance.ETag = etagInstance;
                             }
                             
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                recordSetInstance.Location = locationInstance;
+                            }
+                            
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
                                 RecordSetProperties propertiesInstance = new RecordSetProperties();
                                 recordSetInstance.Properties = propertiesInstance;
+                                
+                                JToken metadataSequenceElement = ((JToken)propertiesValue2["metadata"]);
+                                if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in metadataSequenceElement)
+                                    {
+                                        string metadataKey2 = ((string)property.Name);
+                                        string metadataValue2 = ((string)property.Value);
+                                        propertiesInstance.Metadata.Add(metadataKey2, metadataValue2);
+                                    }
+                                }
                                 
                                 JToken tTLValue = propertiesValue2["TTL"];
                                 if (tTLValue != null && tTLValue.Type != JTokenType.Null)
@@ -761,45 +804,6 @@ namespace Microsoft.Azure.Management.Dns
                                         uint minimumTTLInstance = ((uint)minimumTTLValue);
                                         sOARecordInstance.MinimumTtl = minimumTTLInstance;
                                     }
-                                }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                recordSetInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                recordSetInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                recordSetInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                recordSetInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey2 = ((string)property.Name);
-                                    string tagsValue2 = ((string)property.Value);
-                                    recordSetInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
                         }
@@ -1157,6 +1161,27 @@ namespace Microsoft.Azure.Management.Dns
                             RecordSet recordSetInstance = new RecordSet();
                             result.RecordSet = recordSetInstance;
                             
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                recordSetInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                recordSetInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                recordSetInstance.Type = typeInstance;
+                            }
+                            
                             JToken etagValue = responseDoc["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
                             {
@@ -1164,11 +1189,29 @@ namespace Microsoft.Azure.Management.Dns
                                 recordSetInstance.ETag = etagInstance;
                             }
                             
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                recordSetInstance.Location = locationInstance;
+                            }
+                            
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
                                 RecordSetProperties propertiesInstance = new RecordSetProperties();
                                 recordSetInstance.Properties = propertiesInstance;
+                                
+                                JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in metadataSequenceElement)
+                                    {
+                                        string metadataKey = ((string)property.Name);
+                                        string metadataValue = ((string)property.Value);
+                                        propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                    }
+                                }
                                 
                                 JToken tTLValue = propertiesValue["TTL"];
                                 if (tTLValue != null && tTLValue.Type != JTokenType.Null)
@@ -1404,45 +1447,6 @@ namespace Microsoft.Azure.Management.Dns
                                     }
                                 }
                             }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                recordSetInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                recordSetInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                recordSetInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                recordSetInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    recordSetInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
                         }
                         
                     }
@@ -1634,6 +1638,27 @@ namespace Microsoft.Azure.Management.Dns
                                     RecordSet recordSetInstance = new RecordSet();
                                     result.RecordSets.Add(recordSetInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        recordSetInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        recordSetInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        recordSetInstance.Type = typeInstance;
+                                    }
+                                    
                                     JToken etagValue = valueValue["etag"];
                                     if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
@@ -1641,11 +1666,29 @@ namespace Microsoft.Azure.Management.Dns
                                         recordSetInstance.ETag = etagInstance;
                                     }
                                     
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        recordSetInstance.Location = locationInstance;
+                                    }
+                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
                                         RecordSetProperties propertiesInstance = new RecordSetProperties();
                                         recordSetInstance.Properties = propertiesInstance;
+                                        
+                                        JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                        if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in metadataSequenceElement)
+                                            {
+                                                string metadataKey = ((string)property.Name);
+                                                string metadataValue = ((string)property.Value);
+                                                propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                            }
+                                        }
                                         
                                         JToken tTLValue = propertiesValue["TTL"];
                                         if (tTLValue != null && tTLValue.Type != JTokenType.Null)
@@ -1879,45 +1922,6 @@ namespace Microsoft.Azure.Management.Dns
                                                 uint minimumTTLInstance = ((uint)minimumTTLValue);
                                                 sOARecordInstance.MinimumTtl = minimumTTLInstance;
                                             }
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        recordSetInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        recordSetInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        recordSetInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        recordSetInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            recordSetInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
@@ -2115,6 +2119,27 @@ namespace Microsoft.Azure.Management.Dns
                                     RecordSet recordSetInstance = new RecordSet();
                                     result.RecordSets.Add(recordSetInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        recordSetInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        recordSetInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        recordSetInstance.Type = typeInstance;
+                                    }
+                                    
                                     JToken etagValue = valueValue["etag"];
                                     if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
@@ -2122,11 +2147,29 @@ namespace Microsoft.Azure.Management.Dns
                                         recordSetInstance.ETag = etagInstance;
                                     }
                                     
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        recordSetInstance.Location = locationInstance;
+                                    }
+                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
                                         RecordSetProperties propertiesInstance = new RecordSetProperties();
                                         recordSetInstance.Properties = propertiesInstance;
+                                        
+                                        JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                        if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in metadataSequenceElement)
+                                            {
+                                                string metadataKey = ((string)property.Name);
+                                                string metadataValue = ((string)property.Value);
+                                                propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                            }
+                                        }
                                         
                                         JToken tTLValue = propertiesValue["TTL"];
                                         if (tTLValue != null && tTLValue.Type != JTokenType.Null)
@@ -2360,45 +2403,6 @@ namespace Microsoft.Azure.Management.Dns
                                                 uint minimumTTLInstance = ((uint)minimumTTLValue);
                                                 sOARecordInstance.MinimumTtl = minimumTTLInstance;
                                             }
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        recordSetInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        recordSetInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        recordSetInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        recordSetInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            recordSetInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
@@ -2544,6 +2548,27 @@ namespace Microsoft.Azure.Management.Dns
                                     RecordSet recordSetInstance = new RecordSet();
                                     result.RecordSets.Add(recordSetInstance);
                                     
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        recordSetInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        recordSetInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        recordSetInstance.Type = typeInstance;
+                                    }
+                                    
                                     JToken etagValue = valueValue["etag"];
                                     if (etagValue != null && etagValue.Type != JTokenType.Null)
                                     {
@@ -2551,11 +2576,29 @@ namespace Microsoft.Azure.Management.Dns
                                         recordSetInstance.ETag = etagInstance;
                                     }
                                     
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        recordSetInstance.Location = locationInstance;
+                                    }
+                                    
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
                                         RecordSetProperties propertiesInstance = new RecordSetProperties();
                                         recordSetInstance.Properties = propertiesInstance;
+                                        
+                                        JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                                        if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in metadataSequenceElement)
+                                            {
+                                                string metadataKey = ((string)property.Name);
+                                                string metadataValue = ((string)property.Value);
+                                                propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                            }
+                                        }
                                         
                                         JToken tTLValue = propertiesValue["TTL"];
                                         if (tTLValue != null && tTLValue.Type != JTokenType.Null)
@@ -2791,45 +2834,6 @@ namespace Microsoft.Azure.Management.Dns
                                             }
                                         }
                                     }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        recordSetInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        recordSetInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        recordSetInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        recordSetInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            recordSetInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
                                 }
                             }
                             
@@ -2928,7 +2932,7 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (parameters.RecordSet.Location == null)
             {
-                throw new ArgumentNullException("parameters.RecordSet.Location");
+                throw new ArgumentNullException("parameters.RecordSet.");
             }
             if (parameters.RecordSet.Properties != null)
             {
@@ -2938,7 +2942,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aaaaRecordsParameterItem.Ipv6Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.AaaaRecords.Ipv6Address");
+                            throw new ArgumentNullException("parameters.RecordSet..AaaaRecords.Ipv6Address");
                         }
                     }
                 }
@@ -2948,7 +2952,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aRecordsParameterItem.Ipv4Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.ARecords.Ipv4Address");
+                            throw new ArgumentNullException("parameters.RecordSet..ARecords.Ipv4Address");
                         }
                     }
                 }
@@ -2956,7 +2960,7 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.CnameRecord.Cname == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet.Properties.CnameRecord.Cname");
+                        throw new ArgumentNullException("parameters.RecordSet..CnameRecord.Cname");
                     }
                 }
                 if (parameters.RecordSet.Properties.MxRecords != null)
@@ -2965,7 +2969,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (mxRecordsParameterItem.Exchange == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.MxRecords.Exchange");
+                            throw new ArgumentNullException("parameters.RecordSet..MxRecords.Exchange");
                         }
                     }
                 }
@@ -2975,7 +2979,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (nsRecordsParameterItem.Nsdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.NsRecords.Nsdname");
+                            throw new ArgumentNullException("parameters.RecordSet..NsRecords.Nsdname");
                         }
                     }
                 }
@@ -2985,7 +2989,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (ptrRecordsParameterItem.Ptrdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.PtrRecords.Ptrdname");
+                            throw new ArgumentNullException("parameters.RecordSet..PtrRecords.Ptrdname");
                         }
                     }
                 }
@@ -2993,11 +2997,11 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.SoaRecord.Email == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Email");
+                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Email");
                     }
                     if (parameters.RecordSet.Properties.SoaRecord.Host == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Host");
+                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Host");
                     }
                 }
                 if (parameters.RecordSet.Properties.SrvRecords != null)
@@ -3006,7 +3010,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (srvRecordsParameterItem.Target == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.SrvRecords.Target");
+                            throw new ArgumentNullException("parameters.RecordSet..SrvRecords.Target");
                         }
                     }
                 }
@@ -3016,7 +3020,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (txtRecordsParameterItem.Value == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet.Properties.TxtRecords.Value");
+                            throw new ArgumentNullException("parameters.RecordSet..TxtRecords.Value");
                         }
                     }
                 }
@@ -3098,15 +3102,47 @@ namespace Microsoft.Azure.Management.Dns
                 JObject recordSetUpdateParametersValue = new JObject();
                 requestDoc = recordSetUpdateParametersValue;
                 
+                if (parameters.RecordSet.Id != null)
+                {
+                    recordSetUpdateParametersValue["id"] = parameters.RecordSet.Id;
+                }
+                
+                if (parameters.RecordSet.Name != null)
+                {
+                    recordSetUpdateParametersValue["name"] = parameters.RecordSet.Name;
+                }
+                
+                if (parameters.RecordSet.Type != null)
+                {
+                    recordSetUpdateParametersValue["type"] = parameters.RecordSet.Type;
+                }
+                
                 if (parameters.RecordSet.ETag != null)
                 {
                     recordSetUpdateParametersValue["etag"] = parameters.RecordSet.ETag;
                 }
                 
+                recordSetUpdateParametersValue["location"] = parameters.RecordSet.Location;
+                
                 if (parameters.RecordSet.Properties != null)
                 {
                     JObject propertiesValue = new JObject();
                     recordSetUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.RecordSet.Properties.Metadata != null)
+                    {
+                        if (parameters.RecordSet.Properties.Metadata is ILazyCollection == false || ((ILazyCollection)parameters.RecordSet.Properties.Metadata).IsInitialized)
+                        {
+                            JObject metadataDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair in parameters.RecordSet.Properties.Metadata)
+                            {
+                                string metadataKey = pair.Key;
+                                string metadataValue = pair.Value;
+                                metadataDictionary[metadataKey] = metadataValue;
+                            }
+                            propertiesValue["metadata"] = metadataDictionary;
+                        }
+                    }
                     
                     propertiesValue["TTL"] = parameters.RecordSet.Properties.Ttl;
                     
@@ -3246,35 +3282,6 @@ namespace Microsoft.Azure.Management.Dns
                     }
                 }
                 
-                if (parameters.RecordSet.Id != null)
-                {
-                    recordSetUpdateParametersValue["id"] = parameters.RecordSet.Id;
-                }
-                
-                if (parameters.RecordSet.Name != null)
-                {
-                    recordSetUpdateParametersValue["name"] = parameters.RecordSet.Name;
-                }
-                
-                if (parameters.RecordSet.Type != null)
-                {
-                    recordSetUpdateParametersValue["type"] = parameters.RecordSet.Type;
-                }
-                
-                recordSetUpdateParametersValue["location"] = parameters.RecordSet.Location;
-                
-                if (parameters.RecordSet.Tags != null)
-                {
-                    JObject tagsDictionary = new JObject();
-                    foreach (KeyValuePair<string, string> pair in parameters.RecordSet.Tags)
-                    {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
-                    }
-                    recordSetUpdateParametersValue["tags"] = tagsDictionary;
-                }
-                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -3324,6 +3331,27 @@ namespace Microsoft.Azure.Management.Dns
                             RecordSet recordSetInstance = new RecordSet();
                             result.RecordSet = recordSetInstance;
                             
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                recordSetInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                recordSetInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                recordSetInstance.Type = typeInstance;
+                            }
+                            
                             JToken etagValue = responseDoc["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
                             {
@@ -3331,11 +3359,29 @@ namespace Microsoft.Azure.Management.Dns
                                 recordSetInstance.ETag = etagInstance;
                             }
                             
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                recordSetInstance.Location = locationInstance;
+                            }
+                            
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
                                 RecordSetProperties propertiesInstance = new RecordSetProperties();
                                 recordSetInstance.Properties = propertiesInstance;
+                                
+                                JToken metadataSequenceElement = ((JToken)propertiesValue2["metadata"]);
+                                if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in metadataSequenceElement)
+                                    {
+                                        string metadataKey2 = ((string)property.Name);
+                                        string metadataValue2 = ((string)property.Value);
+                                        propertiesInstance.Metadata.Add(metadataKey2, metadataValue2);
+                                    }
+                                }
                                 
                                 JToken tTLValue = propertiesValue2["TTL"];
                                 if (tTLValue != null && tTLValue.Type != JTokenType.Null)
@@ -3569,45 +3615,6 @@ namespace Microsoft.Azure.Management.Dns
                                         uint minimumTTLInstance = ((uint)minimumTTLValue);
                                         sOARecordInstance.MinimumTtl = minimumTTLInstance;
                                     }
-                                }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                recordSetInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                recordSetInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                recordSetInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                recordSetInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey2 = ((string)property.Name);
-                                    string tagsValue2 = ((string)property.Value);
-                                    recordSetInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
                         }

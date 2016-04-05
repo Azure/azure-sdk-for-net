@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 context.Start();
                 DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
 
-                string zoneName = TestUtilities.GenerateName("hydratestdnszone");
+                string zoneName = TestUtilities.GenerateName("hydratestdnszone.com");
                 string location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
                 ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
 
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 context.Start();
                 DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
 
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone"), TestUtilities.GenerateName("hydratestdnszone") };
+                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone.com"), TestUtilities.GenerateName("hydratestdnszone.com") };
                 ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
                 ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
 
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 context.Start();
                 DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
 
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone"), TestUtilities.GenerateName("hydratestdnszone") };
+                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone.com"), TestUtilities.GenerateName("hydratestdnszone.com") };
                 ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
                 ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
 
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 context.Start();
                 DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
 
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone"), TestUtilities.GenerateName("hydratestdnszone") };
+                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone.com"), TestUtilities.GenerateName("hydratestdnszone.com") };
                 ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
                 ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
 
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 context.Start();
                 DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
 
-                string zoneName = TestUtilities.GenerateName("hydratestdnszone");
+                string zoneName = TestUtilities.GenerateName("hydratestdnszone.com");
                 string location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
                 ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
                 ZoneCreateOrUpdateResponse createresponse = ResourceGroupHelper.CreateZone(dnsClient, zoneName, location, resourceGroup);
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 context.Start();
                 DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
 
-                string zoneName = TestUtilities.GenerateName("hydratestdnszone");
+                string zoneName = TestUtilities.GenerateName("hydratestdnszone.com");
                 string location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
                 ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
 
