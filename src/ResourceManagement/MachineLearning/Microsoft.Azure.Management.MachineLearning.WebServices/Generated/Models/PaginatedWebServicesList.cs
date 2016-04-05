@@ -29,17 +29,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the PaginatedWebServicesList class.
         /// </summary>
-        public PaginatedWebServicesList(IList<WebService> values = default(IList<WebService>), string nextLink = default(string))
+        public PaginatedWebServicesList(IList<WebService> value = default(IList<WebService>), string nextLink = default(string))
         {
-            Values = values;
+            Value = value;
             NextLink = nextLink;
         }
 
         /// <summary>
         /// List of Web Services
         /// </summary>
-        [JsonProperty(PropertyName = "values")]
-        public IList<WebService> Values { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<WebService> Value { get; set; }
 
         /// <summary>
         /// [TODO] Next Link
