@@ -102,14 +102,17 @@
     <Compile Include="Generated\Models\GetProtectedItemQueryParam.cs" />
     <Compile Include="Generated\Models\IaasVMRestoreRequest.cs" />
     <Compile Include="Generated\Models\Job.cs" />
+    <Compile Include="Generated\Models\JobBackupManagementType.cs" />
     <Compile Include="Generated\Models\JobBase.cs" />
     <Compile Include="Generated\Models\JobExtendedInfo.cs" />
     <Compile Include="Generated\Models\JobListResponse.cs" />
+    <Compile Include="Generated\Models\JobOperation.cs" />
     <Compile Include="Generated\Models\JobQueryFilters.cs" />
     <Compile Include="Generated\Models\JobRequestObject.cs" />
     <Compile Include="Generated\Models\JobResource.cs" />
     <Compile Include="Generated\Models\JobResourceList.cs" />
     <Compile Include="Generated\Models\JobResponse.cs" />
+    <Compile Include="Generated\Models\JobStatus.cs" />
     <Compile Include="Generated\Models\JobSupportedAction.cs" />
     <Compile Include="Generated\Models\JobTaskDetails.cs" />
     <Compile Include="Generated\Models\LongTermRetentionPolicy.cs" />

@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Helpers\ContainerTestHelpers.cs" />
     <Compile Include="Helpers\CommonTestHelpers.cs" />
+    <Compile Include="Helpers\JobTestHelper.cs" />
     <Compile Include="Helpers\PolicyTesthelper.cs" />
     <Compile Include="Helpers\ProtectedItemTestHelper.cs" />
     <Compile Include="Helpers\TestConstants.cs" />
@@ -84,10 +85,13 @@
     <Compile Include="ScenarioTests\AzureIaasVMTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\PolicyTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectedItemTest.cs" />
+    <Compile Include="ScenarioTests\JobTests.cs" />
     <Compile Include="ScenarioTests\RecoveryServicesTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RecoveryServicesBackupManagement\RecoveryServicesBackupManagement.csproj">
