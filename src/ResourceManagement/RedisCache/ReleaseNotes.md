@@ -1,7 +1,9 @@
-Below is a summary of the the main features/bug fixes in the most recent releases of Microsoft.Azure.Management.Redis.
+Below is a summary of the changes in the most recent release of Microsoft.Azure.Management.Redis.
 
 ## v2.0.0-Preview
-We have change underlying mechanism of generating code for .NET, So there are breaking changes related to that. We have also flatten all properties directly as first class citizen to be consistent with other services. 
+We have changed underlying mechanism of generating code for .NET. There are breaking changes in this preview. 
+We have flattened all properties so they can be accessed as first class properties. This was done to be consistent with other services.
+Following is a summary of the high-level changes. 
 
 * "CreateOrUpdate" operation will return type "RedisResourceWithAccessKey" instead of "RedisCreateOrUpdateResponse".
 * "Get" operation will have return type "RedisResource" instead of "RedisGetResponse".
