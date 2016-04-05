@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             
                             if (derived2.VirtualMachineId != null)
                             {
-                                propertiesValue["VirtualMachineId"] = derived2.VirtualMachineId;
+                                propertiesValue["virtualMachineId"] = derived2.VirtualMachineId;
                             }
                             
                             if (derived2.FriendlyName != null)
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             
                             if (derived3.VirtualMachineId != null)
                             {
-                                propertiesValue["VirtualMachineId"] = derived3.VirtualMachineId;
+                                propertiesValue["virtualMachineId"] = derived3.VirtualMachineId;
                             }
                             
                             if (derived3.FriendlyName != null)
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             
                             if (derived4.VirtualMachineId != null)
                             {
-                                propertiesValue["VirtualMachineId"] = derived4.VirtualMachineId;
+                                propertiesValue["virtualMachineId"] = derived4.VirtualMachineId;
                             }
                             
                             if (derived4.FriendlyName != null)
@@ -1218,7 +1218,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSVMProtectedItem azureIaaSVMProtectedItemInstance = new AzureIaaSVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance = ((string)virtualMachineIdValue);
@@ -1335,7 +1335,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSComputeVMProtectedItem azureIaaSComputeVMProtectedItemInstance = new AzureIaaSComputeVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue2 = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
@@ -1452,7 +1452,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSClassicComputeVMProtectedItem azureIaaSClassicComputeVMProtectedItemInstance = new AzureIaaSClassicComputeVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue3 = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
@@ -2065,7 +2065,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSVMProtectedItem azureIaaSVMProtectedItemInstance = new AzureIaaSVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance = ((string)virtualMachineIdValue);
@@ -2182,7 +2182,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSComputeVMProtectedItem azureIaaSComputeVMProtectedItemInstance = new AzureIaaSComputeVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue2 = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
@@ -2299,7 +2299,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSClassicComputeVMProtectedItem azureIaaSClassicComputeVMProtectedItemInstance = new AzureIaaSClassicComputeVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue3 = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
@@ -3378,7 +3378,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSVMProtectedItem azureIaaSVMProtectedItemInstance = new AzureIaaSVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance = ((string)virtualMachineIdValue);
@@ -3495,7 +3495,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSComputeVMProtectedItem azureIaaSComputeVMProtectedItemInstance = new AzureIaaSComputeVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue2 = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
@@ -3612,7 +3612,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 {
                                     AzureIaaSClassicComputeVMProtectedItem azureIaaSClassicComputeVMProtectedItemInstance = new AzureIaaSClassicComputeVMProtectedItem();
                                     
-                                    JToken virtualMachineIdValue3 = propertiesValue["VirtualMachineId"];
+                                    JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
                                     if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
                                     {
                                         string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
@@ -4239,7 +4239,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         {
                                             AzureIaaSVMProtectedItem azureIaaSVMProtectedItemInstance = new AzureIaaSVMProtectedItem();
                                             
-                                            JToken virtualMachineIdValue = propertiesValue["VirtualMachineId"];
+                                            JToken virtualMachineIdValue = propertiesValue["virtualMachineId"];
                                             if (virtualMachineIdValue != null && virtualMachineIdValue.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineIdInstance = ((string)virtualMachineIdValue);
@@ -4356,7 +4356,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         {
                                             AzureIaaSComputeVMProtectedItem azureIaaSComputeVMProtectedItemInstance = new AzureIaaSComputeVMProtectedItem();
                                             
-                                            JToken virtualMachineIdValue2 = propertiesValue["VirtualMachineId"];
+                                            JToken virtualMachineIdValue2 = propertiesValue["virtualMachineId"];
                                             if (virtualMachineIdValue2 != null && virtualMachineIdValue2.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineIdInstance2 = ((string)virtualMachineIdValue2);
@@ -4473,7 +4473,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         {
                                             AzureIaaSClassicComputeVMProtectedItem azureIaaSClassicComputeVMProtectedItemInstance = new AzureIaaSClassicComputeVMProtectedItem();
                                             
-                                            JToken virtualMachineIdValue3 = propertiesValue["VirtualMachineId"];
+                                            JToken virtualMachineIdValue3 = propertiesValue["virtualMachineId"];
                                             if (virtualMachineIdValue3 != null && virtualMachineIdValue3.Type != JTokenType.Null)
                                             {
                                                 string virtualMachineIdInstance3 = ((string)virtualMachineIdValue3);
