@@ -63,6 +63,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._lastRecoveryPoint = value; }
         }
         
+        private string _policyId;
+        
+        /// <summary>
+        /// Optional. Policy Id with which Object is protected
+        /// </summary>
+        public string PolicyId
+        {
+            get { return this._policyId; }
+            set { this._policyId = value; }
+        }
+        
+        private string _policyName;
+        
+        /// <summary>
+        /// Optional. Policy name with which Object is protected
+        /// </summary>
+        public string PolicyName
+        {
+            get { return this._policyName; }
+            set { this._policyName = value; }
+        }
+        
         private string _workloadType;
         
         /// <summary>

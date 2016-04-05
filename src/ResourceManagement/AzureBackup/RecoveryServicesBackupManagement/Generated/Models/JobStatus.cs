@@ -21,32 +21,44 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    /// <summary>
-    /// The definition of a ProtectionContainerUpdateRequest.
-    /// </summary>
-    public partial class ProtectionContainerUpdateRequest
+    public enum JobStatus
     {
-        private ProtectionContainerResource _item;
+        /// <summary>
+        /// Invalid status of Job.
+        /// </summary>
+        Invalid = 0,
         
         /// <summary>
-        /// Optional. Item
+        /// Status of job when it is running normally.
         /// </summary>
-        public ProtectionContainerResource Item
-        {
-            get { return this._item; }
-            set { this._item = value; }
-        }
+        InProgress = 1,
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionContainerUpdateRequest
-        /// class.
+        /// Status of job when it has completed running successfully.
         /// </summary>
-        public ProtectionContainerUpdateRequest()
-        {
-        }
+        Completed = 2,
+        
+        /// <summary>
+        /// Status of job when it failed to run successfully.
+        /// </summary>
+        Failed = 3,
+        
+        /// <summary>
+        /// Status of job when it completes execution but with few warnings.
+        /// </summary>
+        CompletedWithWarnings = 4,
+        
+        /// <summary>
+        /// Status of a job which has been cancelled
+        /// </summary>
+        Cancelled = 5,
+        
+        /// <summary>
+        /// Status of a job which is getting cancelled.
+        /// </summary>
+        Cancelling = 6,
     }
 }

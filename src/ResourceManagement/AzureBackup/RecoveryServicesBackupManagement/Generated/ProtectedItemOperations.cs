@@ -227,6 +227,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["lastRecoveryPoint"] = derived.LastRecoveryPoint.Value;
                             }
                             
+                            if (derived.PolicyName != null)
+                            {
+                                propertiesValue["policyName"] = derived.PolicyName;
+                            }
+                            
+                            if (derived.PolicyId != null)
+                            {
+                                propertiesValue["policyId"] = derived.PolicyId;
+                            }
+                            
                             if (derived.ContainerName != null)
                             {
                                 propertiesValue["containerName"] = derived.ContainerName;
@@ -267,11 +277,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["lastBackupTime"] = derived2.LastBackupTime.Value;
                             }
                             
-                            if (derived2.PolicyName != null)
-                            {
-                                propertiesValue["policyName"] = derived2.PolicyName;
-                            }
-                            
                             if (derived2.ExtendedInfo != null)
                             {
                                 JObject extendedInfoValue = new JObject();
@@ -300,6 +305,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived2.LastRecoveryPoint != null)
                             {
                                 propertiesValue["lastRecoveryPoint"] = derived2.LastRecoveryPoint.Value;
+                            }
+                            
+                            if (derived2.PolicyName != null)
+                            {
+                                propertiesValue["policyName"] = derived2.PolicyName;
+                            }
+                            
+                            if (derived2.PolicyId != null)
+                            {
+                                propertiesValue["policyId"] = derived2.PolicyId;
                             }
                             
                             if (derived2.ContainerName != null)
@@ -342,11 +357,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["lastBackupTime"] = derived3.LastBackupTime.Value;
                             }
                             
-                            if (derived3.PolicyName != null)
-                            {
-                                propertiesValue["policyName"] = derived3.PolicyName;
-                            }
-                            
                             if (derived3.ExtendedInfo != null)
                             {
                                 JObject extendedInfoValue2 = new JObject();
@@ -375,6 +385,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived3.LastRecoveryPoint != null)
                             {
                                 propertiesValue["lastRecoveryPoint"] = derived3.LastRecoveryPoint.Value;
+                            }
+                            
+                            if (derived3.PolicyName != null)
+                            {
+                                propertiesValue["policyName"] = derived3.PolicyName;
+                            }
+                            
+                            if (derived3.PolicyId != null)
+                            {
+                                propertiesValue["policyId"] = derived3.PolicyId;
                             }
                             
                             if (derived3.ContainerName != null)
@@ -417,11 +437,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["lastBackupTime"] = derived4.LastBackupTime.Value;
                             }
                             
-                            if (derived4.PolicyName != null)
-                            {
-                                propertiesValue["policyName"] = derived4.PolicyName;
-                            }
-                            
                             if (derived4.ExtendedInfo != null)
                             {
                                 JObject extendedInfoValue3 = new JObject();
@@ -450,6 +465,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived4.LastRecoveryPoint != null)
                             {
                                 propertiesValue["lastRecoveryPoint"] = derived4.LastRecoveryPoint.Value;
+                            }
+                            
+                            if (derived4.PolicyName != null)
+                            {
+                                propertiesValue["policyName"] = derived4.PolicyName;
+                            }
+                            
+                            if (derived4.PolicyId != null)
+                            {
+                                propertiesValue["policyId"] = derived4.PolicyId;
                             }
                             
                             if (derived4.ContainerName != null)
@@ -500,6 +525,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["lastRecoveryPoint"] = derived5.LastRecoveryPoint.Value;
                             }
                             
+                            if (derived5.PolicyName != null)
+                            {
+                                propertiesValue["policyName"] = derived5.PolicyName;
+                            }
+                            
+                            if (derived5.PolicyId != null)
+                            {
+                                propertiesValue["policyId"] = derived5.PolicyId;
+                            }
+                            
                             if (derived5.ContainerName != null)
                             {
                                 propertiesValue["containerName"] = derived5.ContainerName;
@@ -513,11 +548,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived6.ProtectedItemDataId != null)
                             {
                                 propertiesValue["protectedItemDataId"] = derived6.ProtectedItemDataId;
-                            }
-                            
-                            if (derived6.PolicyName != null)
-                            {
-                                propertiesValue["policyName"] = derived6.PolicyName;
                             }
                             
                             if (derived6.ProtectionState != null)
@@ -559,6 +589,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived6.LastRecoveryPoint != null)
                             {
                                 propertiesValue["lastRecoveryPoint"] = derived6.LastRecoveryPoint.Value;
+                            }
+                            
+                            if (derived6.PolicyName != null)
+                            {
+                                propertiesValue["policyName"] = derived6.PolicyName;
+                            }
+                            
+                            if (derived6.PolicyId != null)
+                            {
+                                propertiesValue["policyId"] = derived6.PolicyId;
                             }
                             
                             if (derived6.ContainerName != null)
@@ -1152,6 +1192,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
                                     }
                                     
+                                    JToken policyNameValue = propertiesValue["policyName"];
+                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance = ((string)policyNameValue);
+                                        protectedItemInstance.PolicyName = policyNameInstance;
+                                    }
+                                    
+                                    JToken policyIdValue = propertiesValue["policyId"];
+                                    if (policyIdValue != null && policyIdValue.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance = ((string)policyIdValue);
+                                        protectedItemInstance.PolicyId = policyIdInstance;
+                                    }
+                                    
                                     JToken containerNameValue = propertiesValue["containerName"];
                                     if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
                                     {
@@ -1206,13 +1260,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance;
                                     }
                                     
-                                    JToken policyNameValue = propertiesValue["policyName"];
-                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance = ((string)policyNameValue);
-                                        azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance;
-                                    }
-                                    
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
@@ -1260,6 +1307,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance2 = ((DateTime)lastRecoveryPointValue2);
                                         azureIaaSVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance2;
+                                    }
+                                    
+                                    JToken policyNameValue2 = propertiesValue["policyName"];
+                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance2 = ((string)policyNameValue2);
+                                        azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance2;
+                                    }
+                                    
+                                    JToken policyIdValue2 = propertiesValue["policyId"];
+                                    if (policyIdValue2 != null && policyIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance2 = ((string)policyIdValue2);
+                                        azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
                                     }
                                     
                                     JToken containerNameValue2 = propertiesValue["containerName"];
@@ -1316,13 +1377,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance2;
                                     }
                                     
-                                    JToken policyNameValue2 = propertiesValue["policyName"];
-                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance2 = ((string)policyNameValue2);
-                                        azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance2;
-                                    }
-                                    
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
@@ -1370,6 +1424,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance3 = ((DateTime)lastRecoveryPointValue3);
                                         azureIaaSComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance3;
+                                    }
+                                    
+                                    JToken policyNameValue3 = propertiesValue["policyName"];
+                                    if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance3 = ((string)policyNameValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
+                                    }
+                                    
+                                    JToken policyIdValue3 = propertiesValue["policyId"];
+                                    if (policyIdValue3 != null && policyIdValue3.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance3 = ((string)policyIdValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                     }
                                     
                                     JToken containerNameValue3 = propertiesValue["containerName"];
@@ -1426,13 +1494,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSClassicComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance3;
                                     }
                                     
-                                    JToken policyNameValue3 = propertiesValue["policyName"];
-                                    if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance3 = ((string)policyNameValue3);
-                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
-                                    }
-                                    
                                     JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                     {
@@ -1480,6 +1541,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance4 = ((DateTime)lastRecoveryPointValue4);
                                         azureIaaSClassicComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance4;
+                                    }
+                                    
+                                    JToken policyNameValue4 = propertiesValue["policyName"];
+                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance4 = ((string)policyNameValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance4;
+                                    }
+                                    
+                                    JToken policyIdValue4 = propertiesValue["policyId"];
+                                    if (policyIdValue4 != null && policyIdValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance4 = ((string)policyIdValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                     }
                                     
                                     JToken containerNameValue4 = propertiesValue["containerName"];
@@ -1550,6 +1625,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         mabFileFolderProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance5;
                                     }
                                     
+                                    JToken policyNameValue5 = propertiesValue["policyName"];
+                                    if (policyNameValue5 != null && policyNameValue5.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance5 = ((string)policyNameValue5);
+                                        mabFileFolderProtectedItemInstance.PolicyName = policyNameInstance5;
+                                    }
+                                    
+                                    JToken policyIdValue5 = propertiesValue["policyId"];
+                                    if (policyIdValue5 != null && policyIdValue5.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance5 = ((string)policyIdValue5);
+                                        mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                    }
+                                    
                                     JToken containerNameValue5 = propertiesValue["containerName"];
                                     if (containerNameValue5 != null && containerNameValue5.Type != JTokenType.Null)
                                     {
@@ -1567,13 +1656,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
                                         azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
-                                    }
-                                    
-                                    JToken policyNameValue4 = propertiesValue["policyName"];
-                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance4 = ((string)policyNameValue4);
-                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
                                     }
                                     
                                     JToken protectionStateValue4 = propertiesValue["protectionState"];
@@ -1630,6 +1712,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
                                         azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                    }
+                                    
+                                    JToken policyNameValue6 = propertiesValue["policyName"];
+                                    if (policyNameValue6 != null && policyNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance6 = ((string)policyNameValue6);
+                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance6;
+                                    }
+                                    
+                                    JToken policyIdValue6 = propertiesValue["policyId"];
+                                    if (policyIdValue6 != null && policyIdValue6.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance6 = ((string)policyIdValue6);
+                                        azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
                                     }
                                     
                                     JToken containerNameValue6 = propertiesValue["containerName"];
@@ -1943,6 +2039,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
                                     }
                                     
+                                    JToken policyNameValue = propertiesValue["policyName"];
+                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance = ((string)policyNameValue);
+                                        protectedItemInstance.PolicyName = policyNameInstance;
+                                    }
+                                    
+                                    JToken policyIdValue = propertiesValue["policyId"];
+                                    if (policyIdValue != null && policyIdValue.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance = ((string)policyIdValue);
+                                        protectedItemInstance.PolicyId = policyIdInstance;
+                                    }
+                                    
                                     JToken containerNameValue = propertiesValue["containerName"];
                                     if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
                                     {
@@ -1997,13 +2107,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance;
                                     }
                                     
-                                    JToken policyNameValue = propertiesValue["policyName"];
-                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance = ((string)policyNameValue);
-                                        azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance;
-                                    }
-                                    
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
@@ -2051,6 +2154,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance2 = ((DateTime)lastRecoveryPointValue2);
                                         azureIaaSVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance2;
+                                    }
+                                    
+                                    JToken policyNameValue2 = propertiesValue["policyName"];
+                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance2 = ((string)policyNameValue2);
+                                        azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance2;
+                                    }
+                                    
+                                    JToken policyIdValue2 = propertiesValue["policyId"];
+                                    if (policyIdValue2 != null && policyIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance2 = ((string)policyIdValue2);
+                                        azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
                                     }
                                     
                                     JToken containerNameValue2 = propertiesValue["containerName"];
@@ -2107,13 +2224,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance2;
                                     }
                                     
-                                    JToken policyNameValue2 = propertiesValue["policyName"];
-                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance2 = ((string)policyNameValue2);
-                                        azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance2;
-                                    }
-                                    
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
@@ -2161,6 +2271,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance3 = ((DateTime)lastRecoveryPointValue3);
                                         azureIaaSComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance3;
+                                    }
+                                    
+                                    JToken policyNameValue3 = propertiesValue["policyName"];
+                                    if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance3 = ((string)policyNameValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
+                                    }
+                                    
+                                    JToken policyIdValue3 = propertiesValue["policyId"];
+                                    if (policyIdValue3 != null && policyIdValue3.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance3 = ((string)policyIdValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                     }
                                     
                                     JToken containerNameValue3 = propertiesValue["containerName"];
@@ -2217,13 +2341,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSClassicComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance3;
                                     }
                                     
-                                    JToken policyNameValue3 = propertiesValue["policyName"];
-                                    if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance3 = ((string)policyNameValue3);
-                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
-                                    }
-                                    
                                     JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                     {
@@ -2271,6 +2388,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance4 = ((DateTime)lastRecoveryPointValue4);
                                         azureIaaSClassicComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance4;
+                                    }
+                                    
+                                    JToken policyNameValue4 = propertiesValue["policyName"];
+                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance4 = ((string)policyNameValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance4;
+                                    }
+                                    
+                                    JToken policyIdValue4 = propertiesValue["policyId"];
+                                    if (policyIdValue4 != null && policyIdValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance4 = ((string)policyIdValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                     }
                                     
                                     JToken containerNameValue4 = propertiesValue["containerName"];
@@ -2341,6 +2472,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         mabFileFolderProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance5;
                                     }
                                     
+                                    JToken policyNameValue5 = propertiesValue["policyName"];
+                                    if (policyNameValue5 != null && policyNameValue5.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance5 = ((string)policyNameValue5);
+                                        mabFileFolderProtectedItemInstance.PolicyName = policyNameInstance5;
+                                    }
+                                    
+                                    JToken policyIdValue5 = propertiesValue["policyId"];
+                                    if (policyIdValue5 != null && policyIdValue5.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance5 = ((string)policyIdValue5);
+                                        mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                    }
+                                    
                                     JToken containerNameValue5 = propertiesValue["containerName"];
                                     if (containerNameValue5 != null && containerNameValue5.Type != JTokenType.Null)
                                     {
@@ -2358,13 +2503,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
                                         azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
-                                    }
-                                    
-                                    JToken policyNameValue4 = propertiesValue["policyName"];
-                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance4 = ((string)policyNameValue4);
-                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
                                     }
                                     
                                     JToken protectionStateValue4 = propertiesValue["protectionState"];
@@ -2421,6 +2559,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
                                         azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                    }
+                                    
+                                    JToken policyNameValue6 = propertiesValue["policyName"];
+                                    if (policyNameValue6 != null && policyNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance6 = ((string)policyNameValue6);
+                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance6;
+                                    }
+                                    
+                                    JToken policyIdValue6 = propertiesValue["policyId"];
+                                    if (policyIdValue6 != null && policyIdValue6.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance6 = ((string)policyIdValue6);
+                                        azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
                                     }
                                     
                                     JToken containerNameValue6 = propertiesValue["containerName"];
@@ -3200,6 +3352,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
                                     }
                                     
+                                    JToken policyNameValue = propertiesValue["policyName"];
+                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance = ((string)policyNameValue);
+                                        protectedItemInstance.PolicyName = policyNameInstance;
+                                    }
+                                    
+                                    JToken policyIdValue = propertiesValue["policyId"];
+                                    if (policyIdValue != null && policyIdValue.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance = ((string)policyIdValue);
+                                        protectedItemInstance.PolicyId = policyIdInstance;
+                                    }
+                                    
                                     JToken containerNameValue = propertiesValue["containerName"];
                                     if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
                                     {
@@ -3254,13 +3420,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance;
                                     }
                                     
-                                    JToken policyNameValue = propertiesValue["policyName"];
-                                    if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance = ((string)policyNameValue);
-                                        azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance;
-                                    }
-                                    
                                     JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                     {
@@ -3308,6 +3467,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance2 = ((DateTime)lastRecoveryPointValue2);
                                         azureIaaSVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance2;
+                                    }
+                                    
+                                    JToken policyNameValue2 = propertiesValue["policyName"];
+                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance2 = ((string)policyNameValue2);
+                                        azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance2;
+                                    }
+                                    
+                                    JToken policyIdValue2 = propertiesValue["policyId"];
+                                    if (policyIdValue2 != null && policyIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance2 = ((string)policyIdValue2);
+                                        azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
                                     }
                                     
                                     JToken containerNameValue2 = propertiesValue["containerName"];
@@ -3364,13 +3537,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance2;
                                     }
                                     
-                                    JToken policyNameValue2 = propertiesValue["policyName"];
-                                    if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance2 = ((string)policyNameValue2);
-                                        azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance2;
-                                    }
-                                    
                                     JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                     {
@@ -3418,6 +3584,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance3 = ((DateTime)lastRecoveryPointValue3);
                                         azureIaaSComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance3;
+                                    }
+                                    
+                                    JToken policyNameValue3 = propertiesValue["policyName"];
+                                    if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance3 = ((string)policyNameValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
+                                    }
+                                    
+                                    JToken policyIdValue3 = propertiesValue["policyId"];
+                                    if (policyIdValue3 != null && policyIdValue3.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance3 = ((string)policyIdValue3);
+                                        azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                     }
                                     
                                     JToken containerNameValue3 = propertiesValue["containerName"];
@@ -3474,13 +3654,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         azureIaaSClassicComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance3;
                                     }
                                     
-                                    JToken policyNameValue3 = propertiesValue["policyName"];
-                                    if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance3 = ((string)policyNameValue3);
-                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
-                                    }
-                                    
                                     JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                     if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                     {
@@ -3528,6 +3701,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance4 = ((DateTime)lastRecoveryPointValue4);
                                         azureIaaSClassicComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance4;
+                                    }
+                                    
+                                    JToken policyNameValue4 = propertiesValue["policyName"];
+                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance4 = ((string)policyNameValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance4;
+                                    }
+                                    
+                                    JToken policyIdValue4 = propertiesValue["policyId"];
+                                    if (policyIdValue4 != null && policyIdValue4.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance4 = ((string)policyIdValue4);
+                                        azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                     }
                                     
                                     JToken containerNameValue4 = propertiesValue["containerName"];
@@ -3598,6 +3785,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         mabFileFolderProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance5;
                                     }
                                     
+                                    JToken policyNameValue5 = propertiesValue["policyName"];
+                                    if (policyNameValue5 != null && policyNameValue5.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance5 = ((string)policyNameValue5);
+                                        mabFileFolderProtectedItemInstance.PolicyName = policyNameInstance5;
+                                    }
+                                    
+                                    JToken policyIdValue5 = propertiesValue["policyId"];
+                                    if (policyIdValue5 != null && policyIdValue5.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance5 = ((string)policyIdValue5);
+                                        mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                    }
+                                    
                                     JToken containerNameValue5 = propertiesValue["containerName"];
                                     if (containerNameValue5 != null && containerNameValue5.Type != JTokenType.Null)
                                     {
@@ -3615,13 +3816,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
                                         azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
-                                    }
-                                    
-                                    JToken policyNameValue4 = propertiesValue["policyName"];
-                                    if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
-                                    {
-                                        string policyNameInstance4 = ((string)policyNameValue4);
-                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
                                     }
                                     
                                     JToken protectionStateValue4 = propertiesValue["protectionState"];
@@ -3678,6 +3872,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                     {
                                         DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
                                         azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                    }
+                                    
+                                    JToken policyNameValue6 = propertiesValue["policyName"];
+                                    if (policyNameValue6 != null && policyNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string policyNameInstance6 = ((string)policyNameValue6);
+                                        azureSqlProtectedItemInstance.PolicyName = policyNameInstance6;
+                                    }
+                                    
+                                    JToken policyIdValue6 = propertiesValue["policyId"];
+                                    if (policyIdValue6 != null && policyIdValue6.Type != JTokenType.Null)
+                                    {
+                                        string policyIdInstance6 = ((string)policyIdValue6);
+                                        azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
                                     }
                                     
                                     JToken containerNameValue6 = propertiesValue["containerName"];
@@ -4005,6 +4213,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 protectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance;
                                             }
                                             
+                                            JToken policyNameValue = propertiesValue["policyName"];
+                                            if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance = ((string)policyNameValue);
+                                                protectedItemInstance.PolicyName = policyNameInstance;
+                                            }
+                                            
+                                            JToken policyIdValue = propertiesValue["policyId"];
+                                            if (policyIdValue != null && policyIdValue.Type != JTokenType.Null)
+                                            {
+                                                string policyIdInstance = ((string)policyIdValue);
+                                                protectedItemInstance.PolicyId = policyIdInstance;
+                                            }
+                                            
                                             JToken containerNameValue = propertiesValue["containerName"];
                                             if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
                                             {
@@ -4059,13 +4281,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 azureIaaSVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance;
                                             }
                                             
-                                            JToken policyNameValue = propertiesValue["policyName"];
-                                            if (policyNameValue != null && policyNameValue.Type != JTokenType.Null)
-                                            {
-                                                string policyNameInstance = ((string)policyNameValue);
-                                                azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance;
-                                            }
-                                            
                                             JToken extendedInfoValue = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue != null && extendedInfoValue.Type != JTokenType.Null)
                                             {
@@ -4113,6 +4328,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 DateTime lastRecoveryPointInstance2 = ((DateTime)lastRecoveryPointValue2);
                                                 azureIaaSVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance2;
+                                            }
+                                            
+                                            JToken policyNameValue2 = propertiesValue["policyName"];
+                                            if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance2 = ((string)policyNameValue2);
+                                                azureIaaSVMProtectedItemInstance.PolicyName = policyNameInstance2;
+                                            }
+                                            
+                                            JToken policyIdValue2 = propertiesValue["policyId"];
+                                            if (policyIdValue2 != null && policyIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string policyIdInstance2 = ((string)policyIdValue2);
+                                                azureIaaSVMProtectedItemInstance.PolicyId = policyIdInstance2;
                                             }
                                             
                                             JToken containerNameValue2 = propertiesValue["containerName"];
@@ -4169,13 +4398,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 azureIaaSComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance2;
                                             }
                                             
-                                            JToken policyNameValue2 = propertiesValue["policyName"];
-                                            if (policyNameValue2 != null && policyNameValue2.Type != JTokenType.Null)
-                                            {
-                                                string policyNameInstance2 = ((string)policyNameValue2);
-                                                azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance2;
-                                            }
-                                            
                                             JToken extendedInfoValue2 = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue2 != null && extendedInfoValue2.Type != JTokenType.Null)
                                             {
@@ -4223,6 +4445,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 DateTime lastRecoveryPointInstance3 = ((DateTime)lastRecoveryPointValue3);
                                                 azureIaaSComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance3;
+                                            }
+                                            
+                                            JToken policyNameValue3 = propertiesValue["policyName"];
+                                            if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance3 = ((string)policyNameValue3);
+                                                azureIaaSComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
+                                            }
+                                            
+                                            JToken policyIdValue3 = propertiesValue["policyId"];
+                                            if (policyIdValue3 != null && policyIdValue3.Type != JTokenType.Null)
+                                            {
+                                                string policyIdInstance3 = ((string)policyIdValue3);
+                                                azureIaaSComputeVMProtectedItemInstance.PolicyId = policyIdInstance3;
                                             }
                                             
                                             JToken containerNameValue3 = propertiesValue["containerName"];
@@ -4279,13 +4515,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 azureIaaSClassicComputeVMProtectedItemInstance.LastBackupTime = lastBackupTimeInstance3;
                                             }
                                             
-                                            JToken policyNameValue3 = propertiesValue["policyName"];
-                                            if (policyNameValue3 != null && policyNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string policyNameInstance3 = ((string)policyNameValue3);
-                                                azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance3;
-                                            }
-                                            
                                             JToken extendedInfoValue3 = propertiesValue["extendedInfo"];
                                             if (extendedInfoValue3 != null && extendedInfoValue3.Type != JTokenType.Null)
                                             {
@@ -4333,6 +4562,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 DateTime lastRecoveryPointInstance4 = ((DateTime)lastRecoveryPointValue4);
                                                 azureIaaSClassicComputeVMProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance4;
+                                            }
+                                            
+                                            JToken policyNameValue4 = propertiesValue["policyName"];
+                                            if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance4 = ((string)policyNameValue4);
+                                                azureIaaSClassicComputeVMProtectedItemInstance.PolicyName = policyNameInstance4;
+                                            }
+                                            
+                                            JToken policyIdValue4 = propertiesValue["policyId"];
+                                            if (policyIdValue4 != null && policyIdValue4.Type != JTokenType.Null)
+                                            {
+                                                string policyIdInstance4 = ((string)policyIdValue4);
+                                                azureIaaSClassicComputeVMProtectedItemInstance.PolicyId = policyIdInstance4;
                                             }
                                             
                                             JToken containerNameValue4 = propertiesValue["containerName"];
@@ -4403,6 +4646,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 mabFileFolderProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance5;
                                             }
                                             
+                                            JToken policyNameValue5 = propertiesValue["policyName"];
+                                            if (policyNameValue5 != null && policyNameValue5.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance5 = ((string)policyNameValue5);
+                                                mabFileFolderProtectedItemInstance.PolicyName = policyNameInstance5;
+                                            }
+                                            
+                                            JToken policyIdValue5 = propertiesValue["policyId"];
+                                            if (policyIdValue5 != null && policyIdValue5.Type != JTokenType.Null)
+                                            {
+                                                string policyIdInstance5 = ((string)policyIdValue5);
+                                                mabFileFolderProtectedItemInstance.PolicyId = policyIdInstance5;
+                                            }
+                                            
                                             JToken containerNameValue5 = propertiesValue["containerName"];
                                             if (containerNameValue5 != null && containerNameValue5.Type != JTokenType.Null)
                                             {
@@ -4420,13 +4677,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string protectedItemDataIdInstance = ((string)protectedItemDataIdValue);
                                                 azureSqlProtectedItemInstance.ProtectedItemDataId = protectedItemDataIdInstance;
-                                            }
-                                            
-                                            JToken policyNameValue4 = propertiesValue["policyName"];
-                                            if (policyNameValue4 != null && policyNameValue4.Type != JTokenType.Null)
-                                            {
-                                                string policyNameInstance4 = ((string)policyNameValue4);
-                                                azureSqlProtectedItemInstance.PolicyName = policyNameInstance4;
                                             }
                                             
                                             JToken protectionStateValue4 = propertiesValue["protectionState"];
@@ -4483,6 +4733,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 DateTime lastRecoveryPointInstance6 = ((DateTime)lastRecoveryPointValue6);
                                                 azureSqlProtectedItemInstance.LastRecoveryPoint = lastRecoveryPointInstance6;
+                                            }
+                                            
+                                            JToken policyNameValue6 = propertiesValue["policyName"];
+                                            if (policyNameValue6 != null && policyNameValue6.Type != JTokenType.Null)
+                                            {
+                                                string policyNameInstance6 = ((string)policyNameValue6);
+                                                azureSqlProtectedItemInstance.PolicyName = policyNameInstance6;
+                                            }
+                                            
+                                            JToken policyIdValue6 = propertiesValue["policyId"];
+                                            if (policyIdValue6 != null && policyIdValue6.Type != JTokenType.Null)
+                                            {
+                                                string policyIdInstance6 = ((string)policyIdValue6);
+                                                azureSqlProtectedItemInstance.PolicyId = policyIdInstance6;
                                             }
                                             
                                             JToken containerNameValue6 = propertiesValue["containerName"];

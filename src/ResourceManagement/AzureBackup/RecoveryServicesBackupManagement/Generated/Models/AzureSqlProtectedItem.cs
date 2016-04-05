@@ -41,17 +41,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._extendedInfo = value; }
         }
         
-        private string _policyName;
-        
-        /// <summary>
-        /// Optional. policyName
-        /// </summary>
-        public string PolicyName
-        {
-            get { return this._policyName; }
-            set { this._policyName = value; }
-        }
-        
         private string _protectedItemDataId;
         
         /// <summary>
