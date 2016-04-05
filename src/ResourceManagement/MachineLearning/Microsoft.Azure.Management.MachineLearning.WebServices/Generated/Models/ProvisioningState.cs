@@ -21,6 +21,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         [EnumMember(Value = "Unknown")]
         Unknown,
         [EnumMember(Value = "Provisioning")]
-        Provisioning
+        Provisioning,
+        [EnumMember(Value = "Succeeded")]
+        Succeeded,
+        [EnumMember(Value = "Failed")]
+        Failed,
+        [EnumMember(Value = "Canceled")]
+        Canceled
     }
 }

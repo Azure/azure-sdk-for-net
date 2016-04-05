@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
 
         /// <summary>
         /// [TODO] web service's provisioning state. Possible values include:
-        /// 'Unknown', 'Provisioning'
+        /// 'Unknown', 'Provisioning', 'Succeeded', 'Failed', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public ProvisioningState? ProvisioningState { get; private set; }
