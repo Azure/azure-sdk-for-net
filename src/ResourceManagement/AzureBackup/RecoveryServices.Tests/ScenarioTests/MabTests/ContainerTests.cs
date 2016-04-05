@@ -14,6 +14,7 @@
 //
 
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
@@ -29,7 +30,7 @@ using Xunit;
 
 namespace RecoveryServices.Tests
 {
-    public class ContainerTests : RecoveryServicesTestsBase
+    public class MabContainerTests : RecoveryServicesTestsBase
     {
         [Fact]
         public void ListContainersTest()
@@ -38,32 +39,27 @@ namespace RecoveryServices.Tests
                 client =>
                 {
                     ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+                    queryParams.ProviderType = ProviderType.MAB.ToString();
 
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
                     ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
 
-                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultIaasV1ContainerUniqueName);
-                    Assert.True(
-                        response.ItemList.ProtectionContainers.Any(
-                            protectionContainer =>
-                            {
-                                return protectionContainer.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectionContainer) &&
-                                       protectionContainer.Name == containerUniqueName;
-                            }),
-                            "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
+                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultMabContainerUniqueName);
+                    MabProtectionContainer container = response.ItemList.ProtectionContainers.FirstOrDefault().Properties as MabProtectionContainer;
+                    Assert.NotNull(container);
+                    Assert.Equal(containerUniqueName, container.FriendlyName);
                 });
         }
 
         [Fact]
-        public void RefreshContainerTest()
+        public void UnregisterContainersTest()
         {
             ExecuteTest(
                 client =>
                 {
-                    string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    var response = containerTestHelper.RefreshContainer(fabricName);
+                    string mabContainerName = ConfigurationManager.AppSettings["MabContainerName"];
+                    AzureOperationResponse response = containerTestHelper.UnregisterContainer(mabContainerName);
                 });
         }
     }

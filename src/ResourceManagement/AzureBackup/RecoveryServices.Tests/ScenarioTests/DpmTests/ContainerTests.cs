@@ -14,6 +14,7 @@
 //
 
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
@@ -29,7 +30,7 @@ using Xunit;
 
 namespace RecoveryServices.Tests
 {
-    public class ContainerTests : RecoveryServicesTestsBase
+    public class DpmContainerTests : RecoveryServicesTestsBase
     {
         [Fact]
         public void ListContainersTest()
@@ -38,32 +39,28 @@ namespace RecoveryServices.Tests
                 client =>
                 {
                     ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+                    queryParams.ProviderType = ProviderType.DPM.ToString();
 
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                    throw new NotImplementedException("To Call Get Backup engine hydra");
                     ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
-
-                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultIaasV1ContainerUniqueName);
-                    Assert.True(
-                        response.ItemList.ProtectionContainers.Any(
-                            protectionContainer =>
-                            {
-                                return protectionContainer.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectionContainer) &&
-                                       protectionContainer.Name == containerUniqueName;
-                            }),
-                            "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
+                    
+                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultDpmContainerUniqueName);
+                    DpmProtectionContainer container = response.ItemList.ProtectionContainers.FirstOrDefault().Properties as DpmProtectionContainer;
+                    Assert.NotNull(container);
+                    Assert.Equal(containerUniqueName, container.FriendlyName);
                 });
         }
 
         [Fact]
-        public void RefreshContainerTest()
+        public void UnregisterContainersTest()
         {
             ExecuteTest(
                 client =>
                 {
-                    string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    var response = containerTestHelper.RefreshContainer(fabricName);
+                    string dpmContainerName = ConfigurationManager.AppSettings["DpmContainerName"];
+                    AzureOperationResponse response = containerTestHelper.UnregisterContainer(dpmContainerName);
                 });
         }
     }

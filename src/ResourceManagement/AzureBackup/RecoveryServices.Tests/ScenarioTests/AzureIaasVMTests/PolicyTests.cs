@@ -33,7 +33,7 @@ namespace RecoveryServices.Tests
     class IaaSVMPolicyTests : RecoveryServicesTestsBase
     {
         [Fact]
-        public void ListProtectionPolicyTest()
+        public void ListRecoveryServicesProtectionPolicyTest()
         {
             ExecuteTest(
                 client =>
@@ -42,17 +42,29 @@ namespace RecoveryServices.Tests
                     ProtectionPolicyQueryParameters queryParams = new ProtectionPolicyQueryParameters();
 
                     ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(queryParams);
-
+                    
                     // validations TBD
                     // atleast one default policy is expected
+                    Assert.NotNull(response.ItemList);
+                    Assert.NotNull(response.ItemList.Value);
 
-                    // do any other validations
-
+                    IList<ProtectionPolicyResource> policyList = response.ItemList.Value;
+                   
+                    // atleast one default policy should be there
+                    Assert.Empty(policyList);
+                   
+                    foreach(ProtectionPolicyResource resource in policyList)
+                    {
+                        Assert.NotNull(resource.Id);
+                        Assert.NotNull(resource.Name);
+                        Assert.NotNull(resource.Type);
+                        Assert.NotNull(resource.Properties);
+                    }
                 });
         }
 
         [Fact]
-        public void AddAndUpdateProtectionPolicyTest()
+        public void AddAndUpdateIaaSVMPolicyTest()
         {
             ExecuteTest(
                client =>
@@ -77,19 +89,22 @@ namespace RecoveryServices.Tests
                        }
                    };
 
-                   ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(policyName, request);
-
-                   // validations TBD
-
+                   ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(
+                                                          policyName,
+                                                          request);
+                   // validations
+                   Assert.Equal(response.Item.Name, policyName);                   
 
                    // Update policy test - we will use same policy used above
                    response = policyTestHelper.AddOrUpdateProtectionPolicy(policyName, request);
 
+                   // validations
+                   Assert.Equal(response.Item.Name, policyName);
                });
         }
 
         [Fact]
-        public void GetAndDeleteProtectionPolicyTest()
+        public void GetAndDeleteIaaSVMPolicyTest()
         {
             ExecuteTest(
                client =>
@@ -97,15 +112,12 @@ namespace RecoveryServices.Tests
                    PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
                    string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
 
-                   ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(policyName);
-
-                   // TBD - do any validations
+                   ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(policyName);                   
 
                    // now delete the policy
                    AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(policyName);
 
-                   // validations TBD
-
+                   Assert.Equal(response.StatusCode, HttpStatusCode.OK);
                });
         }
 

@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     {
         AzureIaasVM = 0,
         
-        Mab = 1,
+        MAB = 1,
         
-        Dpm = 2,
+        DPM = 2,
     }
 }

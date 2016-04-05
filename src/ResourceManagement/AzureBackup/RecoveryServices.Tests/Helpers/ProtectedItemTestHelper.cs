@@ -33,6 +33,18 @@ namespace RecoveryServices.Tests.Helpers
             Assert.NotNull(response.Location);
             Assert.NotNull(response.AzureAsyncOperation);
             Assert.NotNull(response.RetryAfter);
+
+            var operationResponse = Client.ProtectedItem.GetProtectedItemOperationResultByURLAsync(response.Location, CommonTestHelper.GetCustomRequestHeaders());
+            while(operationResponse.Result.StatusCode == HttpStatusCode.Accepted)
+            {
+                System.Threading.Thread.Sleep(5 * 1000);
+                operationResponse = Client.ProtectedItem.GetProtectedItemOperationResultByURLAsync(response.Location, CommonTestHelper.GetCustomRequestHeaders());
+            }
+
+            var operationStatusResponse = Client.ProtectedItem.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
+            var operationJobResponse = (OperationStatusJobExtendedInfo)operationStatusResponse.Result.OperationStatus.Properties;
+            Assert.NotNull(operationJobResponse.JobId);
+
             return response;
         }
 
@@ -50,6 +62,16 @@ namespace RecoveryServices.Tests.Helpers
             Assert.NotNull(response.Location);
             Assert.NotNull(response.AzureAsyncOperation);
             Assert.NotNull(response.RetryAfter);
+
+            var operationStatusResponse = Client.ProtectedItem.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
+            while (operationStatusResponse.Result.OperationStatus.Status == OperationStatusValues.InProgress)
+            {
+                System.Threading.Thread.Sleep(5 * 1000);
+                operationStatusResponse = Client.ProtectedItem.GetOperationStatusByURLAsync(response.AzureAsyncOperation, CommonTestHelper.GetCustomRequestHeaders());
+            }
+
+            var operationJobResponse = (OperationStatusJobExtendedInfo)operationStatusResponse.Result.OperationStatus.Properties;
+            Assert.NotNull(operationJobResponse.JobId);
             return response;
         }
     }

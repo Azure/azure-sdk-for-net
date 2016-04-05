@@ -12,5 +12,8 @@ namespace RecoveryServices.Tests.Helpers
         public static string RsVaultRgName = "RsVaultRgName";
         public static string RsVaultName = "RsVaultName";
         public static string RsVaultIaasV1ContainerUniqueName = "RsVaultIaasV1ContainerUniqueName";
+        public static string RsVaultMabContainerUniqueName = "MabContainerName";
+        public static string RsVaultDpmContainerUniqueName = "DpmContainerName";
+        public static string RsVaultIaasV1POFriendlyName = "RsVaultIaasV1POFriendlyName";
     }
 }
