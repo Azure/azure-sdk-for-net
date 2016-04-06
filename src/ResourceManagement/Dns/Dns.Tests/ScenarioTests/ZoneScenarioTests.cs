@@ -158,27 +158,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
         }
 
         [Fact]
-        public void ListZonesWithFilterParameter()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
-
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone.com"), TestUtilities.GenerateName("hydratestdnszone.com") };
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
-                ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
-
-                ZoneListResponse listresponse = dnsClient.Zones.ListZonesInResourceGroup(resourceGroup.Name, new ZoneListParameters { Filter = string.Format("endswith(Name,'{0}')", zoneNames[0]) });
-
-                Assert.NotNull(listresponse);
-                Assert.Equal(1, listresponse.Zones.Count);
-
-                ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
-            }
-        }
-
-        [Fact]
         public void ListZonesWithListNext()
         {
             using (UndoContext context = UndoContext.Current)
@@ -221,11 +200,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 // expect Precondition Failed 412
                 TestHelpers.AssertThrows<CloudException>(
                     () => dnsClient.Zones.CreateOrUpdate(resourceGroup.Name, zoneName, ifMatch: null, ifNoneMatch: null, parameters: updateParameters),
-                    ex => ex.Error.Code == "PreconditionFailed");
-
-                // expect Precondition Failed 412
-                TestHelpers.AssertThrows<CloudException>(
-                    () => dnsClient.Zones.Delete(resourceGroup.Name, zoneName, ifMatch: null, ifNoneMatch: null),
                     ex => ex.Error.Code == "PreconditionFailed");
 
                 dnsClient.Zones.Delete(resourceGroup.Name, zoneName, ifMatch: null, ifNoneMatch: null);
