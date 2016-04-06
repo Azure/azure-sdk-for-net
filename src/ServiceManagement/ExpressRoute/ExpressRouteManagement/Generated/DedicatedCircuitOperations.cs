@@ -519,6 +519,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     updateDedicatedCircuitElement.Add(skuElement);
                 }
                 
+                if (parameters.BillingType != null)
+                {
+                    XElement billingTypeElement = new XElement(XName.Get("BillingType", "http://schemas.microsoft.com/windowsazure"));
+                    billingTypeElement.Value = parameters.BillingType;
+                    updateDedicatedCircuitElement.Add(billingTypeElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
