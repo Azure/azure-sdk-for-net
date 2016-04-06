@@ -168,5 +168,122 @@ namespace OperationalInsights.Tests.OperationTests
                 Assert.Equal("P1D", metric.QuotaPeriod);
             }
         }
+
+        [Fact]
+        public void CanEnableDisableListIntelligencePacks()
+        {
+            BasicDelegatingHandler handler = new BasicDelegatingHandler();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                var resourceClient = TestHelper.GetResourceClient(handler);
+                var client = TestHelper.GetOperationalInsightsManagementClient(handler);
+
+                string resourceGroupName = TestUtilities.GenerateName("OIHyak");
+                var resourceGroup = TestHelper.CreateResourceGroup(resourceGroupName, resourceClient);
+
+                // Create a workspace
+                string workspaceName = TestUtilities.GenerateName("AzTest");
+                var workspaceCreateParameters = new WorkspaceCreateOrUpdateParameters
+                {
+                    Workspace =
+                        new Workspace
+                        {
+                            Name = workspaceName,
+                            Location = resourceGroup.Location,
+                            Tags = new Dictionary<string, string> { { "tag1", "val1" } },
+                            Properties = new WorkspaceProperties { Sku = new Sku(SkuNameEnum.Free) }
+                        }
+                };
+
+                var createResponse = client.Workspaces.CreateOrUpdate(resourceGroupName, workspaceCreateParameters);
+                Assert.True(
+                    HttpStatusCode.Created == createResponse.StatusCode
+                    || HttpStatusCode.OK == createResponse.StatusCode);
+                TestHelper.ValidateWorkspace(workspaceCreateParameters.Workspace, createResponse.Workspace);
+
+                // Enable an intelligence pack
+                var enableResponse = client.Workspaces.EnableIntelligencePackAsync(
+                    resourceGroupName,
+                    workspaceName,
+                    "ChangeTracking");
+                Assert.True(enableResponse != null && HttpStatusCode.OK == enableResponse.Result.StatusCode);
+
+                enableResponse = client.Workspaces.EnableIntelligencePackAsync(
+                    resourceGroupName,
+                    workspaceName,
+                    "SiteRecovery");
+                Assert.True(enableResponse != null && HttpStatusCode.OK == enableResponse.Result.StatusCode);
+
+                var listResponse = client.Workspaces.ListIntelligencePacks(resourceGroupName, workspaceName);
+                Assert.NotNull(listResponse);
+                Assert.NotNull(listResponse.IntelligencePacks);
+
+                foreach (var ip in listResponse.IntelligencePacks)
+                {
+
+                    if (ip.Name.Equals("ChangeTracking"))
+                    {
+                        Assert.True(ip.Enabled);
+                    }
+                    else if (ip.Name.Equals("SiteRecovery"))
+                    {
+                        Assert.True(ip.Enabled);
+                    }
+                    else if (ip.Name.Equals("LogManagement"))
+                    {
+                        Assert.True(ip.Enabled);
+                    }
+                    else
+                    {
+                        Assert.False(ip.Enabled);
+                    }
+                }
+
+                var disableResponse = client.Workspaces.DisableIntelligencePackAsync(
+                    resourceGroupName,
+                    workspaceName,
+                    "ChangeTracking");
+                Assert.True(disableResponse != null && HttpStatusCode.OK == disableResponse.Result.StatusCode);
+
+                disableResponse = client.Workspaces.DisableIntelligencePackAsync(
+                    resourceGroupName,
+                    workspaceName,
+                    "SiteRecovery");
+                Assert.True(disableResponse != null && HttpStatusCode.OK == disableResponse.Result.StatusCode);
+
+                listResponse = client.Workspaces.ListIntelligencePacks(resourceGroupName, workspaceName);
+                Assert.NotNull(listResponse);
+                Assert.NotNull(listResponse.IntelligencePacks);
+
+                foreach (var ip in listResponse.IntelligencePacks)
+                {
+                    if (ip.Name.Equals("ChangeTracking"))
+                    {
+                        Assert.False(ip.Enabled);
+                    }
+                    else if (ip.Name.Equals("SiteRecovery"))
+                    {
+                        Assert.False(ip.Enabled);
+                    }
+                    else if (ip.Name.Equals("LogManagement"))
+                    {
+                        Assert.True(ip.Enabled);
+                    }
+                    else
+                    {
+                        Assert.False(ip.Enabled);
+                    }
+                }
+                // Delete a workspace
+                var deleteResponse = client.Workspaces.Delete(resourceGroupName, workspaceName);
+                Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
+
+                // Verify the workspace is gone
+                TestHelper.VerifyCloudException(HttpStatusCode.NotFound, () => client.Workspaces.Get(resourceGroupName, workspaceName));
+            }
+        }
     }
 }

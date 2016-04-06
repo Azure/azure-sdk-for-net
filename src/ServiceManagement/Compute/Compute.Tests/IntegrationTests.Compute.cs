@@ -18,24 +18,22 @@ using Microsoft.WindowsAzure.Testing;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Testing
 {
-    using Microsoft.Azure.Test.HttpRecorder;
-    using Microsoft.WindowsAzure.Management.Compute;
     using Microsoft.WindowsAzure.Management.Compute.Models;
     using Microsoft.WindowsAzure.Management.Storage;
     using Microsoft.WindowsAzure.Management.Storage.Models;
     using Microsoft.Azure.Test;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net;
     using Xunit;
 
-    /// <summary>
-    /// TODO: Fix these tests
-    /// </summary>
     public class IntegrationTests : IUseFixture<IntegrationTestFixtureData>
     {
         private IntegrationTestFixtureData fixture;
+        private const string TestDeploymentsBlobStorageContainerName = "deployments";
+        private Uri _blobUri;
 
         public void SetFixture(IntegrationTestFixtureData data)
         {
@@ -43,17 +41,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             fixture = data;
         }
 
-
-        [Fact(Skip = "TODO: Re-record the entire fixture")]
+        [Fact]
         public void CanCreateStorageAccount()
         {
             TestUtilities.StartTest();
-            var accountListResult = fixture.StorageManagementClient.StorageAccounts.List();
-            Assert.True(accountListResult.StorageAccounts.Any(x => x.Name == fixture.NewStorageAccountName));
+            var newStorageAccountName = TestUtilities.GenerateName();
+            CreateStorageAccount(newStorageAccountName);
+            var accountListResult = fixture.GetStorageManagementClient().StorageAccounts.List();
+            Assert.True(accountListResult.StorageAccounts.Any(x => x.Name == newStorageAccountName));
             TestUtilities.EndTest();
         }
 
-        [Fact(Skip = "TODO: Re-record the entire fixture")]
+        [Fact]
         public void CanGetHostedServiceList()
         {
             TestUtilities.StartTest();
@@ -66,13 +65,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             TestUtilities.EndTest();
         }
 
-        [Fact (Skip = "TODO: Re-record the entire fixture")]
+        [Fact]
         public void CanCreateHostedService()
         {
             TestUtilities.StartTest();
+            var newStorageAccountName = TestUtilities.GenerateName();
+            var newServiceName = TestUtilities.GenerateName();
+            CreateStorageAccount(newStorageAccountName);
+            CreateHostedService(newServiceName);
+
             // verify the service was created
             var computeMgmtClient = fixture.GetComputeManagementClient();
-            var getResult = computeMgmtClient.HostedServices.Get(fixture.NewServiceName);
+            var getResult = computeMgmtClient.HostedServices.Get(newServiceName);
             Assert.Equal(getResult.StatusCode, HttpStatusCode.OK);
             TestUtilities.EndTest();
         }
@@ -177,36 +181,102 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             TestUtilities.EndTest();
         }
 
-        [Fact(Skip = "TODO: Re-record the entire fixture")]
+        [Fact]
         public void CanServicesBeDeployed()
         {
             TestUtilities.StartTest();
+            var newStorageAccountName = TestUtilities.GenerateName();
+            var newServiceName = TestUtilities.GenerateName();
+            var newDeploymentName = TestUtilities.GenerateName();
+            CreateStorageAccount(newStorageAccountName);
+            CreateHostedService(newServiceName);
+            CreateDeployment(newStorageAccountName, newServiceName, newDeploymentName);
+
             var computeMgmtClient = fixture.GetComputeManagementClient();
-            var deploymentResult = computeMgmtClient.Deployments.GetByName(fixture.NewServiceName, string.Format(fixture.DeploymentNameTemplate, fixture.NewServiceName));
+            var deploymentResult = computeMgmtClient.Deployments.GetByName(newServiceName, newDeploymentName);
             Assert.Equal(deploymentResult.StatusCode, HttpStatusCode.OK);
             TestUtilities.EndTest();
         }
 
-        [Fact(Skip = "TODO: Re-record the entire fixture")]
+        [Fact]
         public void DeploymentHasExtensionConfiguration()
         {
             TestUtilities.StartTest();
+            var newStorageAccountName = TestUtilities.GenerateName();
+            var newServiceName = TestUtilities.GenerateName();
+            var newDeploymentName = TestUtilities.GenerateName();
+            CreateStorageAccount(newStorageAccountName);
+            CreateHostedService(newServiceName);
+            CreateDeployment(newStorageAccountName, newServiceName, newDeploymentName);
+
             var computeMgmtClient = fixture.GetComputeManagementClient();
-            var deploymentResult = computeMgmtClient.Deployments.GetByName(fixture.NewServiceName, string.Format(fixture.DeploymentNameTemplate, fixture.NewServiceName));
+            var deploymentResult = computeMgmtClient.Deployments.GetByName(newServiceName, newDeploymentName);
             Assert.NotNull(deploymentResult.ExtensionConfiguration);
             Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles.Count, 1);
             Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles[0].Id, "RDPExtensionTest");
             TestUtilities.EndTest();
         }
 
-        [Fact(Skip = "TODO: Re-record the entire fixture")]
+        [Fact]
+        public void DeploymentUpgradeWithUninstallExtension()
+        {
+            TestUtilities.StartTest();
+            var newStorageAccountName = TestUtilities.GenerateName();
+            var newServiceName = TestUtilities.GenerateName();
+            var newDeploymentName = TestUtilities.GenerateName();
+            CreateStorageAccount(newStorageAccountName);
+            CreateHostedService(newServiceName);
+            CreateDeployment(newStorageAccountName, newServiceName, newDeploymentName);
+
+            var computeMgmtClient = fixture.GetComputeManagementClient();
+            var deploymentResult = computeMgmtClient.Deployments.GetByName(newServiceName, newDeploymentName);
+            Assert.NotNull(deploymentResult.ExtensionConfiguration);
+            Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles.Count, 1);
+            Assert.Equal(deploymentResult.ExtensionConfiguration.AllRoles[0].Id, "RDPExtensionTest");
+
+            var extension = new ExtensionConfiguration.Extension
+            {
+                Id = "RDPExtensionTest",
+                State = "Uninstall"
+            };
+
+            var extensionList = new List<ExtensionConfiguration.Extension>();
+            extensionList.Add(extension);
+            var _blobUri = StorageTestUtilities.UploadFileToBlobStorage(newStorageAccountName,
+                        "deployments", @"SampleService\SMNetTestAppProject.cspkg");
+
+            computeMgmtClient.Deployments.UpgradeBySlot(newServiceName, DeploymentSlot.Production,
+                new DeploymentUpgradeParameters
+                {
+                    Configuration = File.ReadAllText(@"SampleService\ServiceConfiguration.Cloud.cscfg"),
+                    PackageUri = _blobUri,
+                    Label = "UpgradeBySlot",
+                    Force = true,
+                    Mode = DeploymentUpgradeMode.Auto,
+                    ExtensionConfiguration = new ExtensionConfiguration
+                    {
+                        AllRoles = extensionList
+                    }
+                });
+            deploymentResult = computeMgmtClient.Deployments.GetBySlot(newServiceName, DeploymentSlot.Production);
+            TestUtilities.EndTest();
+        }
+
+        [Fact]
         public void CanUpdateStatusByDeploymentName()
         {
             TestUtilities.StartTest();
+            var newStorageAccountName = TestUtilities.GenerateName();
+            var newServiceName = TestUtilities.GenerateName();
+            var newDeploymentName = TestUtilities.GenerateName();
+            CreateStorageAccount(newStorageAccountName);
+            CreateHostedService(newServiceName);
+            CreateDeployment(newStorageAccountName, newServiceName, newDeploymentName);
+
             var computeMgmtClient = fixture.GetComputeManagementClient();
             var r = computeMgmtClient.Deployments.UpdateStatusByDeploymentName(
-                fixture.NewServiceName,
-                fixture.ServiceDeploymentName,
+                newServiceName,
+                newDeploymentName,
                 new DeploymentUpdateStatusParameters
                 {
                     Status = UpdatedDeploymentStatus.Suspended
@@ -215,25 +285,91 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             Assert.Equal(r.Status, OperationStatus.Succeeded);
             TestUtilities.EndTest();
         }
+
+        private void CreateStorageAccount(string storageAccountName)
+        {
+            using (var storageMgmtClient = fixture.GetStorageManagementClient())
+            {
+                // create a storage account
+                var storageAccountResult = storageMgmtClient.StorageAccounts.Create(
+                    new StorageAccountCreateParameters
+                    {
+                        Location = fixture.DefaultLocation,
+                        Name = storageAccountName,
+                        AccountType = "Standard_LRS"
+                    });
+            }
+        }
+
+        private void CreateHostedService(string serviceName)
+        {
+            using (var computeMgmtClient = fixture.GetComputeManagementClient())
+            {
+                // create a storage account
+                var result = computeMgmtClient.HostedServices.Create(new HostedServiceCreateParameters
+                {
+                    Location = fixture.DefaultLocation,
+                    Label = serviceName,
+                    ServiceName = serviceName
+                });
+
+                // assert that the call worked
+                Assert.Equal(result.StatusCode, HttpStatusCode.Created);
+            }
+        }
+
+        private void CreateDeployment(string storageAccountName, string serviceName, string deploymentName)
+        {
+            using (var computeMgmtClient = fixture.GetComputeManagementClient())
+            {
+                _blobUri = StorageTestUtilities.UploadFileToBlobStorage(storageAccountName,
+                    TestDeploymentsBlobStorageContainerName, @"SampleService\SMNetTestAppProject.cspkg");
+                // upload the compute service package file
+                // persist the XML of the configuration file to a variable
+                var configXml = File.ReadAllText(@"SampleService\ServiceConfiguration.Cloud.cscfg");
+
+                // Get an extension for our deployment
+                computeMgmtClient.HostedServices.AddExtension(
+                    serviceName,
+                    new HostedServiceAddExtensionParameters
+                    {
+                        Id = "RDPExtensionTest",
+                        Type = "RDP",
+                        ProviderNamespace = "Microsoft.Windows.Azure.Extensions",
+                        PublicConfiguration =
+                            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PublicConfig><UserName>WilliamGatesIII</UserName><Expiration>2020-11-20</Expiration></PublicConfig>",
+                        PrivateConfiguration =
+                            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PrivateConfig><Password>WindowsAzure1277!</Password></PrivateConfig>",
+                        Version = "*"
+                    });
+                ExtensionConfiguration extensionConfig = new ExtensionConfiguration();
+                extensionConfig.AllRoles.Add(new ExtensionConfiguration.Extension() {Id = "RDPExtensionTest"});
+
+                // create the hosted service deployment
+                var deploymentResult = computeMgmtClient.Deployments.Create(serviceName,
+                    DeploymentSlot.Production,
+                    new DeploymentCreateParameters
+                    {
+                        Configuration = configXml,
+                        Name = deploymentName,
+                        Label = deploymentName,
+                        StartDeployment = true,
+                        ExtensionConfiguration = extensionConfig,
+                        PackageUri = _blobUri
+                    });
+
+                // assert that nothing went wrong
+                var error = deploymentResult.Error;
+                Assert.True(error == null, "Unexpected error: " + (error == null ? "" : error.Message));
+            }
+        }
     }
 
     public class IntegrationTestFixtureData : TestBase, IDisposable
     {
         private ManagementClient managementClient;
-        private ComputeManagementClient computeMgmtClient;
-        private StorageManagementClient storageMgmtClient;
-
-        private string _storageConnectionStringTemplate = "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1}";
-        private string _storageAccountConnectionString = string.Empty;
-        public string DeploymentNameTemplate;
-        private string _testDeploymentsBlobStorageContainerName = "deployments";
-        public string NewServiceName;
-        private string _serviceDeploymentName = string.Empty;
-        public string NewStorageAccountName;
         public string DefaultLocation;
 
-        private Uri _blobUri;
-        
         public void Instantiate(string className)
         {
             try
@@ -241,82 +377,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 using (UndoContext context = UndoContext.Current)
                 {
                     context.Start(className, "FixtureSetup");
-
                     this.managementClient = this.GetManagementClient();
-                    this.computeMgmtClient = this.GetComputeManagementClient();
-                    this.storageMgmtClient = this.GetStorageManagementClient();
-
-                    NewStorageAccountName = TestUtilities.GenerateName();
-                    NewServiceName = TestUtilities.GenerateName();
-                    DeploymentNameTemplate = TestUtilities.GenerateName();
                     this.DefaultLocation = managementClient.GetDefaultLocation("Compute", "Storage");
-                    // create a storage account
-                    var storageAccountResult = storageMgmtClient.StorageAccounts.Create(
-                        new StorageAccountCreateParameters
-                        {
-                            Location = this.DefaultLocation,
-                            Name = NewStorageAccountName,
-                            AccountType = "Standard_LRS"
-                        });
-
-                    // get the storage account
-                    var keyResult = storageMgmtClient.StorageAccounts.GetKeys(NewStorageAccountName);
-
-                    // build the connection string
-                    _storageAccountConnectionString = string.Format(_storageConnectionStringTemplate,
-                        NewStorageAccountName, keyResult.PrimaryKey);
-
-                    _blobUri = StorageTestUtilities.UploadFileToBlobStorage(NewStorageAccountName,
-                        _testDeploymentsBlobStorageContainerName, @"SampleService\SMNetTestAppProject.cspkg");
-                    // upload the compute service package file
-                    // persist the XML of the configuration file to a variable
-                    var configXml = File.ReadAllText(@"SampleService\ServiceConfiguration.Cloud.cscfg");
-
-                    // create a hosted service for the tests to use
-                    var result = computeMgmtClient.HostedServices.Create(new HostedServiceCreateParameters
-                    {
-                        Location = this.DefaultLocation,
-                        Label = NewServiceName,
-                        ServiceName = NewServiceName
-                    });
-
-                    // assert that the call worked
-                    Assert.Equal(result.StatusCode, HttpStatusCode.Created);
-
-                    // Get an extension for our deployment
-                    computeMgmtClient.HostedServices.AddExtension(
-                        NewServiceName,
-                        new HostedServiceAddExtensionParameters
-                        {
-                            Id = "RDPExtensionTest",
-                            Type = "RDP",
-                            ProviderNamespace = "Microsoft.Windows.Azure.Extensions",
-                            PublicConfiguration =
-                                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PublicConfig><UserName>WilliamGatesIII</UserName><Expiration>2020-11-20</Expiration></PublicConfig>",
-                            PrivateConfiguration =
-                                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PrivateConfig><Password>WindowsAzure1277!</Password></PrivateConfig>",
-                            Version = "*"
-                        });
-                    ExtensionConfiguration extensionConfig = new ExtensionConfiguration();
-                    extensionConfig.AllRoles.Add(new ExtensionConfiguration.Extension() {Id = "RDPExtensionTest"});
-                    _serviceDeploymentName = string.Format(DeploymentNameTemplate, NewServiceName);
-
-                    // create the hosted service deployment
-                    var deploymentResult = computeMgmtClient.Deployments.Create(NewServiceName,
-                        DeploymentSlot.Production,
-                        new DeploymentCreateParameters
-                        {
-                            Configuration = configXml,
-                            Name = _serviceDeploymentName,
-                            Label = _serviceDeploymentName,
-                            StartDeployment = true,
-                            ExtensionConfiguration = extensionConfig,
-                            PackageUri = _blobUri
-                        });
-
-                    // assert that nothing went wrong
-                    var error = deploymentResult.Error;
-                    Assert.True(error == null, "Unexpected error: " + (error == null ? "" : error.Message));
                 }
             }
             catch (Exception)
@@ -338,14 +400,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
         private void Cleanup()
         {
             UndoContext.Current.UndoAll();
-            computeMgmtClient.Dispose();
-            storageMgmtClient.Dispose();
             managementClient.Dispose();
         }
-
-        public StorageManagementClient StorageManagementClient { get { return storageMgmtClient; } }
-        public ComputeManagementClient ComputeManagementClient { get { return computeMgmtClient; } }
-        public ManagementClient ManagementClient { get { return managementClient; } }
-        public string ServiceDeploymentName { get { return _serviceDeploymentName; } }
     }
 }

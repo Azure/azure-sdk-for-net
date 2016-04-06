@@ -360,7 +360,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         }
 
 
-        private static void ConfigHiveComponent(HiveComponent hive, HDInsight.ClusterCreateParametersV2 inputs)
+        private static void ConfigHiveComponent(HiveComponent hive, ClusterCreateParametersV2 inputs)
         {
             hive.HiveSiteXmlProperties.AddRange(
                 inputs.HiveConfiguration.ConfigurationCollection.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));

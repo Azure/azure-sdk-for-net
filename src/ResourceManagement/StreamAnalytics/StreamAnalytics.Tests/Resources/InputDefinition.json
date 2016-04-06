@@ -8,7 +8,7 @@
         "storageAccounts": [
           {
             "accountName": "exchangeevent",
-            "accountKey": "LVn3eQSK8GoBkPG4zpHEESzaoI3L2HnzuWIm2rkEA9ybnxlA1EJ3VeB6kld4OH+aR1COn0/aeZz+ynldcgMJSg=="
+            "accountKey": "$TestStringToBeReplaced"
           }
         ],
         "container": "state",

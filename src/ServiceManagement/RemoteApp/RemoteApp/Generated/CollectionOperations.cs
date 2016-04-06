@@ -1033,6 +1033,13 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
                                 string subnetNameInstance = ((string)subnetNameValue);
                                 collectionInstance.SubnetName = subnetNameInstance;
                             }
+                            
+                            JToken aclLevelValue = responseDoc["AclLevel"];
+                            if (aclLevelValue != null && aclLevelValue.Type != JTokenType.Null)
+                            {
+                                CollectionAclLevel aclLevelInstance = ((CollectionAclLevel)(((int)aclLevelValue)));
+                                collectionInstance.AclLevel = aclLevelInstance;
+                            }
                         }
                         
                     }
@@ -1959,6 +1966,13 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
                                     {
                                         string subnetNameInstance = ((string)subnetNameValue);
                                         collectionInstance.SubnetName = subnetNameInstance;
+                                    }
+                                    
+                                    JToken aclLevelValue = collectionsValue["AclLevel"];
+                                    if (aclLevelValue != null && aclLevelValue.Type != JTokenType.Null)
+                                    {
+                                        CollectionAclLevel aclLevelInstance = ((CollectionAclLevel)(((int)aclLevelValue)));
+                                        collectionInstance.AclLevel = aclLevelInstance;
                                     }
                                 }
                             }
@@ -3209,6 +3223,13 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
                 }
                 
                 collectionUpdateDetailsValue["WaitBeforeShutdownInMinutes"] = collectionDetails.WaitBeforeShutdownInMinutes;
+                
+                if (collectionDetails.SubnetName != null)
+                {
+                    collectionUpdateDetailsValue["SubnetName"] = collectionDetails.SubnetName;
+                }
+                
+                collectionUpdateDetailsValue["AclLevel"] = ((int)collectionDetails.AclLevel);
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

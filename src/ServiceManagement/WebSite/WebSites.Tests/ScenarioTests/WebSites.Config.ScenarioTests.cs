@@ -95,6 +95,7 @@ namespace WebSites.Tests.ScenarioTests
             Assert.NotNull(siteAuthSettings);
             Assert.Equal("00000000-0000-0000-0000-7984e05b758c", siteAuthSettings.AADClientId);
             Assert.Equal("https://sts.windows.net/00000000-0000-0000-0000-19d76fef90d7/", siteAuthSettings.OpenIdIssuer);
+            Assert.Equal(RemoteDebuggingVersion.VS2015, result.RemoteDebuggingVersion);
         }
 
         [Fact]

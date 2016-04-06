@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// The on-premises SQL Server database.
     /// </summary>
     [AdfTypeName("SqlServerTable")]
-    public class SqlServerDataset : DatasetTypeProperties
+    public class SqlServerTableDataset : DatasetTypeProperties
     {
         /// <summary>
         /// The table name of the on-premises SQL database.
@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfRequired]
         public string TableName { get; set; }
 
-        public SqlServerDataset()
+        public SqlServerTableDataset()
         {
         }
 
-        public SqlServerDataset(string tableName)
+        public SqlServerTableDataset(string tableName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(tableName, "tableName");

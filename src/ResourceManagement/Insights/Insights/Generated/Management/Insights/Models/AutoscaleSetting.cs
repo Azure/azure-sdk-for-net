@@ -56,6 +56,17 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._name = value; }
         }
         
+        private IList<AutoscaleNotification> _notifications;
+        
+        /// <summary>
+        /// Optional. Gets or sets the collection of notifications.
+        /// </summary>
+        public IList<AutoscaleNotification> Notifications
+        {
+            get { return this._notifications; }
+            set { this._notifications = value; }
+        }
+        
         private IList<AutoscaleProfile> _profiles;
         
         /// <summary>
@@ -86,6 +97,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public AutoscaleSetting()
         {
+            this.Notifications = new LazyList<AutoscaleNotification>();
             this.Profiles = new LazyList<AutoscaleProfile>();
         }
     }

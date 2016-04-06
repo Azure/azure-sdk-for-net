@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// The on-premises Oracle database.
     /// </summary>
     [AdfTypeName("OracleTable")]
-    public class OracleDatasetDataset : DatasetTypeProperties
+    public class OracleTableDataset : DatasetTypeProperties
     {
         /// <summary>
         /// The table name of the on-premises Oracle database.
@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         [AdfRequired]
         public string TableName { get; set; }
 
-        public OracleDatasetDataset()
+        public OracleTableDataset()
         {
         }
 
-        public OracleDatasetDataset(string tableName)
+        public OracleTableDataset(string tableName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(tableName, "tableName");

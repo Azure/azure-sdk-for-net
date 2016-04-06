@@ -316,6 +316,269 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         }
         
         /// <summary>
+        /// Adds a list of principals to the given collection.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Required. Application alias.
+        /// </param>
+        /// <param name='securityPrincipalList'>
+        /// Required. A list of RemoteApp principals to add to the published
+        /// app.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response for the collection user operation.
+        /// </returns>
+        public async Task<SecurityPrincipalOperationsResult> AddToAppAsync(string collectionName, string appAlias, SecurityPrincipalList securityPrincipalList, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException("collectionName");
+            }
+            if (appAlias == null)
+            {
+                throw new ArgumentNullException("appAlias");
+            }
+            if (securityPrincipalList == null)
+            {
+                throw new ArgumentNullException("securityPrincipalList");
+            }
+            if (securityPrincipalList.SecurityPrincipals != null)
+            {
+                foreach (SecurityPrincipal securityPrincipalsParameterItem in securityPrincipalList.SecurityPrincipals)
+                {
+                    if (securityPrincipalsParameterItem.Name == null)
+                    {
+                        throw new ArgumentNullException("securityPrincipalList.SecurityPrincipals.Name");
+                    }
+                }
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("collectionName", collectionName);
+                tracingParameters.Add("appAlias", appAlias);
+                tracingParameters.Add("securityPrincipalList", securityPrincipalList);
+                TracingAdapter.Enter(invocationId, this, "AddToAppAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/";
+            if (this.Client.RdfeNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.RdfeNamespace);
+            }
+            url = url + "/collections/";
+            url = url + Uri.EscapeDataString(collectionName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(appAlias);
+            url = url + "/securityPrincipals";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json; charset=utf-8");
+                httpRequest.Headers.Add("x-ms-version", "2014-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                if (securityPrincipalList.SecurityPrincipals != null)
+                {
+                    if (securityPrincipalList.SecurityPrincipals is ILazyCollection == false || ((ILazyCollection)securityPrincipalList.SecurityPrincipals).IsInitialized)
+                    {
+                        JArray securityPrincipalsArray = new JArray();
+                        foreach (SecurityPrincipal securityPrincipalsItem in securityPrincipalList.SecurityPrincipals)
+                        {
+                            JObject securityPrincipalValue = new JObject();
+                            securityPrincipalsArray.Add(securityPrincipalValue);
+                            
+                            securityPrincipalValue["SecurityPrincipalType"] = ((int)securityPrincipalsItem.SecurityPrincipalType);
+                            
+                            securityPrincipalValue["UserIdType"] = ((int)securityPrincipalsItem.UserIdType);
+                            
+                            securityPrincipalValue["Name"] = securityPrincipalsItem.Name;
+                            
+                            if (securityPrincipalsItem.AadObjectId != null)
+                            {
+                                securityPrincipalValue["AadObjectId"] = securityPrincipalsItem.AadObjectId;
+                            }
+                            
+                            if (securityPrincipalsItem.Description != null)
+                            {
+                                securityPrincipalValue["Description"] = securityPrincipalsItem.Description;
+                            }
+                        }
+                        requestDoc = securityPrincipalsArray;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SecurityPrincipalOperationsResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SecurityPrincipalOperationsResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken failedSecurityPrincipalsArray = responseDoc["FailedSecurityPrincipals"];
+                            if (failedSecurityPrincipalsArray != null && failedSecurityPrincipalsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken failedSecurityPrincipalsValue in ((JArray)failedSecurityPrincipalsArray))
+                                {
+                                    SecurityPrincipalOperationErrorDetails securityPrincipalOperationErrorDetailsInstance = new SecurityPrincipalOperationErrorDetails();
+                                    result.Errors.Add(securityPrincipalOperationErrorDetailsInstance);
+                                    
+                                    JToken securityPrincipalValue2 = failedSecurityPrincipalsValue["SecurityPrincipal"];
+                                    if (securityPrincipalValue2 != null && securityPrincipalValue2.Type != JTokenType.Null)
+                                    {
+                                        string securityPrincipalInstance = ((string)securityPrincipalValue2);
+                                        securityPrincipalOperationErrorDetailsInstance.SecurityPrincipal = securityPrincipalInstance;
+                                    }
+                                    
+                                    JToken errorValue = failedSecurityPrincipalsValue["Error"];
+                                    if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                    {
+                                        SecurityPrincipalOperationError errorInstance = ((SecurityPrincipalOperationError)(((int)errorValue)));
+                                        securityPrincipalOperationErrorDetailsInstance.Error = errorInstance;
+                                    }
+                                    
+                                    JToken errorDetailsValue = failedSecurityPrincipalsValue["ErrorDetails"];
+                                    if (errorDetailsValue != null && errorDetailsValue.Type != JTokenType.Null)
+                                    {
+                                        string errorDetailsInstance = ((string)errorDetailsValue);
+                                        securityPrincipalOperationErrorDetailsInstance.ErrorDetails = errorDetailsInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken trackingIdValue = responseDoc["TrackingId"];
+                            if (trackingIdValue != null && trackingIdValue.Type != JTokenType.Null)
+                            {
+                                string trackingIdInstance = ((string)trackingIdValue);
+                                result.TrackingId = trackingIdInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-remoteapp-operation-tracking-id"))
+                    {
+                        result.TrackingId = httpResponse.Headers.GetValues("x-remoteapp-operation-tracking-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Deletes a list of principals from the given collection.
         /// </summary>
         /// <param name='collectionName'>
@@ -378,6 +641,269 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
             }
             url = url + "/collections/";
             url = url + Uri.EscapeDataString(collectionName);
+            url = url + "/securityPrincipals";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json; charset=utf-8");
+                httpRequest.Headers.Add("x-ms-version", "2014-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                if (securityPrincipalList.SecurityPrincipals != null)
+                {
+                    if (securityPrincipalList.SecurityPrincipals is ILazyCollection == false || ((ILazyCollection)securityPrincipalList.SecurityPrincipals).IsInitialized)
+                    {
+                        JArray securityPrincipalsArray = new JArray();
+                        foreach (SecurityPrincipal securityPrincipalsItem in securityPrincipalList.SecurityPrincipals)
+                        {
+                            JObject securityPrincipalValue = new JObject();
+                            securityPrincipalsArray.Add(securityPrincipalValue);
+                            
+                            securityPrincipalValue["SecurityPrincipalType"] = ((int)securityPrincipalsItem.SecurityPrincipalType);
+                            
+                            securityPrincipalValue["UserIdType"] = ((int)securityPrincipalsItem.UserIdType);
+                            
+                            securityPrincipalValue["Name"] = securityPrincipalsItem.Name;
+                            
+                            if (securityPrincipalsItem.AadObjectId != null)
+                            {
+                                securityPrincipalValue["AadObjectId"] = securityPrincipalsItem.AadObjectId;
+                            }
+                            
+                            if (securityPrincipalsItem.Description != null)
+                            {
+                                securityPrincipalValue["Description"] = securityPrincipalsItem.Description;
+                            }
+                        }
+                        requestDoc = securityPrincipalsArray;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SecurityPrincipalOperationsResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SecurityPrincipalOperationsResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken failedSecurityPrincipalsArray = responseDoc["FailedSecurityPrincipals"];
+                            if (failedSecurityPrincipalsArray != null && failedSecurityPrincipalsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken failedSecurityPrincipalsValue in ((JArray)failedSecurityPrincipalsArray))
+                                {
+                                    SecurityPrincipalOperationErrorDetails securityPrincipalOperationErrorDetailsInstance = new SecurityPrincipalOperationErrorDetails();
+                                    result.Errors.Add(securityPrincipalOperationErrorDetailsInstance);
+                                    
+                                    JToken securityPrincipalValue2 = failedSecurityPrincipalsValue["SecurityPrincipal"];
+                                    if (securityPrincipalValue2 != null && securityPrincipalValue2.Type != JTokenType.Null)
+                                    {
+                                        string securityPrincipalInstance = ((string)securityPrincipalValue2);
+                                        securityPrincipalOperationErrorDetailsInstance.SecurityPrincipal = securityPrincipalInstance;
+                                    }
+                                    
+                                    JToken errorValue = failedSecurityPrincipalsValue["Error"];
+                                    if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                    {
+                                        SecurityPrincipalOperationError errorInstance = ((SecurityPrincipalOperationError)(((int)errorValue)));
+                                        securityPrincipalOperationErrorDetailsInstance.Error = errorInstance;
+                                    }
+                                    
+                                    JToken errorDetailsValue = failedSecurityPrincipalsValue["ErrorDetails"];
+                                    if (errorDetailsValue != null && errorDetailsValue.Type != JTokenType.Null)
+                                    {
+                                        string errorDetailsInstance = ((string)errorDetailsValue);
+                                        securityPrincipalOperationErrorDetailsInstance.ErrorDetails = errorDetailsInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken trackingIdValue = responseDoc["TrackingId"];
+                            if (trackingIdValue != null && trackingIdValue.Type != JTokenType.Null)
+                            {
+                                string trackingIdInstance = ((string)trackingIdValue);
+                                result.TrackingId = trackingIdInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-remoteapp-operation-tracking-id"))
+                    {
+                        result.TrackingId = httpResponse.Headers.GetValues("x-remoteapp-operation-tracking-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Deletes a list of principals from the given app.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Required. Application alias.
+        /// </param>
+        /// <param name='securityPrincipalList'>
+        /// Required. A list of RemoteApp principals to delete from the
+        /// published app.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response for the collection user operation.
+        /// </returns>
+        public async Task<SecurityPrincipalOperationsResult> DeleteFromAppAsync(string collectionName, string appAlias, SecurityPrincipalList securityPrincipalList, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException("collectionName");
+            }
+            if (appAlias == null)
+            {
+                throw new ArgumentNullException("appAlias");
+            }
+            if (securityPrincipalList == null)
+            {
+                throw new ArgumentNullException("securityPrincipalList");
+            }
+            if (securityPrincipalList.SecurityPrincipals != null)
+            {
+                foreach (SecurityPrincipal securityPrincipalsParameterItem in securityPrincipalList.SecurityPrincipals)
+                {
+                    if (securityPrincipalsParameterItem.Name == null)
+                    {
+                        throw new ArgumentNullException("securityPrincipalList.SecurityPrincipals.Name");
+                    }
+                }
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("collectionName", collectionName);
+                tracingParameters.Add("appAlias", appAlias);
+                tracingParameters.Add("securityPrincipalList", securityPrincipalList);
+                TracingAdapter.Enter(invocationId, this, "DeleteFromAppAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/";
+            if (this.Client.RdfeNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.RdfeNamespace);
+            }
+            url = url + "/collections/";
+            url = url + Uri.EscapeDataString(collectionName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(appAlias);
             url = url + "/securityPrincipals";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
@@ -748,6 +1274,704 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
                                         securityPrincipalInfoInstance.Status = statusInstance;
                                     }
                                 }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// app in a collection.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Required. Application alias.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status.
+        /// </returns>
+        public async Task<SecurityPrincipalInfoListResult> ListForAppAsync(string collectionName, string appAlias, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException("collectionName");
+            }
+            if (appAlias == null)
+            {
+                throw new ArgumentNullException("appAlias");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("collectionName", collectionName);
+                tracingParameters.Add("appAlias", appAlias);
+                TracingAdapter.Enter(invocationId, this, "ListForAppAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/";
+            if (this.Client.RdfeNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.RdfeNamespace);
+            }
+            url = url + "/collections/";
+            url = url + Uri.EscapeDataString(collectionName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(appAlias);
+            url = url + "/securityPrincipals";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json; charset=utf-8");
+                httpRequest.Headers.Add("x-ms-version", "2014-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SecurityPrincipalInfoListResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SecurityPrincipalInfoListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken securityPrincipalInfoListArray = responseDoc;
+                            if (securityPrincipalInfoListArray != null && securityPrincipalInfoListArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken securityPrincipalInfoListValue in ((JArray)securityPrincipalInfoListArray))
+                                {
+                                    SecurityPrincipalInfo securityPrincipalInfoInstance = new SecurityPrincipalInfo();
+                                    result.SecurityPrincipalInfoList.Add(securityPrincipalInfoInstance);
+                                    
+                                    JToken userValue = securityPrincipalInfoListValue["User"];
+                                    if (userValue != null && userValue.Type != JTokenType.Null)
+                                    {
+                                        SecurityPrincipal userInstance = new SecurityPrincipal();
+                                        securityPrincipalInfoInstance.SecurityPrincipal = userInstance;
+                                        
+                                        JToken securityPrincipalTypeValue = userValue["SecurityPrincipalType"];
+                                        if (securityPrincipalTypeValue != null && securityPrincipalTypeValue.Type != JTokenType.Null)
+                                        {
+                                            PrincipalType securityPrincipalTypeInstance = ((PrincipalType)(((int)securityPrincipalTypeValue)));
+                                            userInstance.SecurityPrincipalType = securityPrincipalTypeInstance;
+                                        }
+                                        
+                                        JToken userIdTypeValue = userValue["UserIdType"];
+                                        if (userIdTypeValue != null && userIdTypeValue.Type != JTokenType.Null)
+                                        {
+                                            PrincipalProviderType userIdTypeInstance = ((PrincipalProviderType)(((int)userIdTypeValue)));
+                                            userInstance.UserIdType = userIdTypeInstance;
+                                        }
+                                        
+                                        JToken nameValue = userValue["Name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            userInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken aadObjectIdValue = userValue["AadObjectId"];
+                                        if (aadObjectIdValue != null && aadObjectIdValue.Type != JTokenType.Null)
+                                        {
+                                            string aadObjectIdInstance = ((string)aadObjectIdValue);
+                                            userInstance.AadObjectId = aadObjectIdInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = userValue["Description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            userInstance.Description = descriptionInstance;
+                                        }
+                                    }
+                                    
+                                    JToken statusValue = securityPrincipalInfoListValue["Status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        ConsentStatus statusInstance = ((ConsentStatus)(((int)statusValue)));
+                                        securityPrincipalInfoInstance.Status = statusInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// app in a collection using continuation token.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Required. Application alias.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Optional. Continuation token.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        public async Task<SecurityPrincipalInfoListWithTokenResult> ListForAppWithTokenAsync(string collectionName, string appAlias, string previousContinuationToken, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException("collectionName");
+            }
+            if (appAlias == null)
+            {
+                throw new ArgumentNullException("appAlias");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("collectionName", collectionName);
+                tracingParameters.Add("appAlias", appAlias);
+                tracingParameters.Add("previousContinuationToken", previousContinuationToken);
+                TracingAdapter.Enter(invocationId, this, "ListForAppWithTokenAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/";
+            if (this.Client.RdfeNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.RdfeNamespace);
+            }
+            url = url + "/collections/";
+            url = url + Uri.EscapeDataString(collectionName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(appAlias);
+            url = url + "/securityPrincipals/ContinuationToken";
+            List<string> queryParameters = new List<string>();
+            if (previousContinuationToken != null)
+            {
+                queryParameters.Add("PreviousContinuationToken=" + Uri.EscapeDataString(previousContinuationToken));
+            }
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json; charset=utf-8");
+                httpRequest.Headers.Add("x-ms-version", "2014-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SecurityPrincipalInfoListWithTokenResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SecurityPrincipalInfoListWithTokenResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            SecurityPrincipalInfoListWithToken securityPrincipalInfoListWithTokenInstance = new SecurityPrincipalInfoListWithToken();
+                            result.SecurityPrincipalInfoListWithToken = securityPrincipalInfoListWithTokenInstance;
+                            
+                            JToken userConsentStatusListArray = responseDoc["UserConsentStatusList"];
+                            if (userConsentStatusListArray != null && userConsentStatusListArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken userConsentStatusListValue in ((JArray)userConsentStatusListArray))
+                                {
+                                    SecurityPrincipalInfo securityPrincipalInfoInstance = new SecurityPrincipalInfo();
+                                    securityPrincipalInfoListWithTokenInstance.SecurityPrincipalInfoList.Add(securityPrincipalInfoInstance);
+                                    
+                                    JToken userValue = userConsentStatusListValue["User"];
+                                    if (userValue != null && userValue.Type != JTokenType.Null)
+                                    {
+                                        SecurityPrincipal userInstance = new SecurityPrincipal();
+                                        securityPrincipalInfoInstance.SecurityPrincipal = userInstance;
+                                        
+                                        JToken securityPrincipalTypeValue = userValue["SecurityPrincipalType"];
+                                        if (securityPrincipalTypeValue != null && securityPrincipalTypeValue.Type != JTokenType.Null)
+                                        {
+                                            PrincipalType securityPrincipalTypeInstance = ((PrincipalType)(((int)securityPrincipalTypeValue)));
+                                            userInstance.SecurityPrincipalType = securityPrincipalTypeInstance;
+                                        }
+                                        
+                                        JToken userIdTypeValue = userValue["UserIdType"];
+                                        if (userIdTypeValue != null && userIdTypeValue.Type != JTokenType.Null)
+                                        {
+                                            PrincipalProviderType userIdTypeInstance = ((PrincipalProviderType)(((int)userIdTypeValue)));
+                                            userInstance.UserIdType = userIdTypeInstance;
+                                        }
+                                        
+                                        JToken nameValue = userValue["Name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            userInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken aadObjectIdValue = userValue["AadObjectId"];
+                                        if (aadObjectIdValue != null && aadObjectIdValue.Type != JTokenType.Null)
+                                        {
+                                            string aadObjectIdInstance = ((string)aadObjectIdValue);
+                                            userInstance.AadObjectId = aadObjectIdInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = userValue["Description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            userInstance.Description = descriptionInstance;
+                                        }
+                                    }
+                                    
+                                    JToken statusValue = userConsentStatusListValue["Status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        ConsentStatus statusInstance = ((ConsentStatus)(((int)statusValue)));
+                                        securityPrincipalInfoInstance.Status = statusInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken newContinuationTokenValue = responseDoc["NewContinuationToken"];
+                            if (newContinuationTokenValue != null && newContinuationTokenValue.Type != JTokenType.Null)
+                            {
+                                string newContinuationTokenInstance = ((string)newContinuationTokenValue);
+                                securityPrincipalInfoListWithTokenInstance.NewContinuationToken = newContinuationTokenInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// collection using continuation token.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// Required. The RemoteApp collection name.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Optional. Continuation token.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        public async Task<SecurityPrincipalInfoListWithTokenResult> ListWithTokenAsync(string collectionName, string previousContinuationToken, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException("collectionName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("collectionName", collectionName);
+                tracingParameters.Add("previousContinuationToken", previousContinuationToken);
+                TracingAdapter.Enter(invocationId, this, "ListWithTokenAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/";
+            if (this.Client.RdfeNamespace != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.RdfeNamespace);
+            }
+            url = url + "/collections/";
+            url = url + Uri.EscapeDataString(collectionName);
+            url = url + "/securityPrincipals/ContinuationToken";
+            List<string> queryParameters = new List<string>();
+            if (previousContinuationToken != null)
+            {
+                queryParameters.Add("PreviousContinuationToken=" + Uri.EscapeDataString(previousContinuationToken));
+            }
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json; charset=utf-8");
+                httpRequest.Headers.Add("x-ms-version", "2014-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SecurityPrincipalInfoListWithTokenResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SecurityPrincipalInfoListWithTokenResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            SecurityPrincipalInfoListWithToken securityPrincipalInfoListWithTokenInstance = new SecurityPrincipalInfoListWithToken();
+                            result.SecurityPrincipalInfoListWithToken = securityPrincipalInfoListWithTokenInstance;
+                            
+                            JToken userConsentStatusListArray = responseDoc["UserConsentStatusList"];
+                            if (userConsentStatusListArray != null && userConsentStatusListArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken userConsentStatusListValue in ((JArray)userConsentStatusListArray))
+                                {
+                                    SecurityPrincipalInfo securityPrincipalInfoInstance = new SecurityPrincipalInfo();
+                                    securityPrincipalInfoListWithTokenInstance.SecurityPrincipalInfoList.Add(securityPrincipalInfoInstance);
+                                    
+                                    JToken userValue = userConsentStatusListValue["User"];
+                                    if (userValue != null && userValue.Type != JTokenType.Null)
+                                    {
+                                        SecurityPrincipal userInstance = new SecurityPrincipal();
+                                        securityPrincipalInfoInstance.SecurityPrincipal = userInstance;
+                                        
+                                        JToken securityPrincipalTypeValue = userValue["SecurityPrincipalType"];
+                                        if (securityPrincipalTypeValue != null && securityPrincipalTypeValue.Type != JTokenType.Null)
+                                        {
+                                            PrincipalType securityPrincipalTypeInstance = ((PrincipalType)(((int)securityPrincipalTypeValue)));
+                                            userInstance.SecurityPrincipalType = securityPrincipalTypeInstance;
+                                        }
+                                        
+                                        JToken userIdTypeValue = userValue["UserIdType"];
+                                        if (userIdTypeValue != null && userIdTypeValue.Type != JTokenType.Null)
+                                        {
+                                            PrincipalProviderType userIdTypeInstance = ((PrincipalProviderType)(((int)userIdTypeValue)));
+                                            userInstance.UserIdType = userIdTypeInstance;
+                                        }
+                                        
+                                        JToken nameValue = userValue["Name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            userInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken aadObjectIdValue = userValue["AadObjectId"];
+                                        if (aadObjectIdValue != null && aadObjectIdValue.Type != JTokenType.Null)
+                                        {
+                                            string aadObjectIdInstance = ((string)aadObjectIdValue);
+                                            userInstance.AadObjectId = aadObjectIdInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = userValue["Description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            userInstance.Description = descriptionInstance;
+                                        }
+                                    }
+                                    
+                                    JToken statusValue = userConsentStatusListValue["Status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        ConsentStatus statusInstance = ((ConsentStatus)(((int)statusValue)));
+                                        securityPrincipalInfoInstance.Status = statusInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken newContinuationTokenValue = responseDoc["NewContinuationToken"];
+                            if (newContinuationTokenValue != null && newContinuationTokenValue.Type != JTokenType.Null)
+                            {
+                                string newContinuationTokenInstance = ((string)newContinuationTokenValue);
+                                securityPrincipalInfoListWithTokenInstance.NewContinuationToken = newContinuationTokenInstance;
                             }
                         }
                         

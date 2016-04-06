@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{0836E83C-7683-4DAB-BF28-7A5A5CB97404}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>DataLakeAnalyticsCatalog.Tests</RootNamespace>
+  </PropertyGroup>
+  <Import Project="..\..\packages\xunit.runner.visualstudio.2.0.0-rc1-build1030\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.0.0-rc1-build1030\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\CatalogOperationTests.cs" />
+    <Compile Include="TestHelpers\ClientManagementUtilities.cs" />
+    <Compile Include="TestHelpers\CommonTestFixture.cs" />
+    <Compile Include="TestHelpers\DataLakeAnalyticsCatalogManagementHelper.cs" />
+    <Compile Include="TestHelpers\DataLakeAnalyticsCatalogTestBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
+      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
+      <Name>TestDependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataLake.AnalyticsJob\DataLakeAnalyticsJobManagement\DataLakeAnalyticsJobManagement.csproj">
+      <Project>{F76883F5-C27D-4A9B-B650-C95BCF82F1C6}</Project>
+      <Name>DataLakeAnalyticsJobManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataLake.Store\DataLakeStoreManagement\DataLakeStoreManagement.csproj">
+      <Project>{f8dde40d-b5b4-4a37-8131-9ef8f18a4a6a}</Project>
+      <Name>DataLakeManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataLake.Analytics\DataLakeAnalyticsManagement\DataLakeAnalyticsManagement.csproj">
+      <Project>{8d1f3ce6-b697-4ce4-a1a3-38b675d4566b}</Project>
+      <Name>DataLakeAnalyticsManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLakeAnalyticsCatalogManagement\DataLakeAnalyticsCatalogManagement.csproj">
+      <Project>{8d1f3ce6-b697-4ce4-a1a3-38b675d4566b}</Project>
+      <Name>DataLakeAnalyticsCatalogManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\GetCatalogItemsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CatalogOperationTests\SecretAndCredentialCRUDTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\DataLakeAnalyticsCatalog.Tests.CommonTestFixture\.ctor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

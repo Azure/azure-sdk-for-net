@@ -109,10 +109,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
             if ( self == null )
                 throw new ArgumentNullException( "self" );
 
-            for ( var i = 0; i < self.Length; i++ )
-            {
-                self[i] = 0;
-            }
+            Array.Clear(self, 0, self.Length);
         }
     }
 }

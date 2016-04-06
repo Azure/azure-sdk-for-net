@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/30da001a-1a9e-48a1-8b77-e5abcfe38bdc/services/rdsm54westus/collections/testd165/867aca6b-9b32-4db8-b5b2-2160ec986169/securityPrincipals?api-version=2014-09-01",
+      "EncodedRequestUri": "LzMwZGEwMDFhLTFhOWUtNDhhMS04Yjc3LWU1YWJjZmUzOGJkYy9zZXJ2aWNlcy9yZHNtNTR3ZXN0dXMvY29sbGVjdGlvbnMvdGVzdGQxNjUvODY3YWNhNmItOWIzMi00ZGI4LWI1YjItMjE2MGVjOTg2MTY5L3NlY3VyaXR5UHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDE0LTA5LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-version": [
+          "2014-08-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.RemoteApp.RemoteAppManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Status\": 3,\r\n    \"User\": {\r\n      \"AadObjectId\": \"c991fff5-f0df-4727-9bd7-86cc4cde8fe8\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"tstestuser1@rdvmohoro.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 0\r\n    }\r\n  },\r\n  {\r\n    \"Status\": 3,\r\n    \"User\": {\r\n      \"AadObjectId\": \"dcef612f-4100-462d-b2e9-3a6f5e6fd7cc\",\r\n      \"Description\": \"\",\r\n      \"Name\": \"tstestuser24@rdvmohoro.com\",\r\n      \"SecurityPrincipalType\": 0,\r\n      \"UserIdType\": 0\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "338"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "uswest"
+        ],
+        "x-ms-request-id": [
+          "49e38cb5aad25b5880625b631c8b807a"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Dec 2015 20:46:11 GMT"
+        ],
+        "Server": [
+          "1.0.6198.295",
+          "(rd_rdfe_stable.151209-1439)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "30da001a-1a9e-48a1-8b77-e5abcfe38bdc"
+  }
+}

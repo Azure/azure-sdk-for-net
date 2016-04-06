@@ -30,15 +30,26 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class Usage
     {
-        private long _currentValue;
+        private double _currentValue;
         
         /// <summary>
         /// Optional. Gets or sets the current usage value.
         /// </summary>
-        public long CurrentValue
+        public double CurrentValue
         {
             get { return this._currentValue; }
             set { this._currentValue = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private long _limit;

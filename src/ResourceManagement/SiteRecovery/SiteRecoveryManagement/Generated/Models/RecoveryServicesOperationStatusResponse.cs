@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Models
+namespace Microsoft.Azure.Management.SiteRecoveryVault.Models
 {
     /// <summary>
     /// The response body contains the status of the specified asynchronous

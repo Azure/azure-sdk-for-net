@@ -30,6 +30,28 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public partial class VirtualNetworkGatewayConnection : TopLevelResource
     {
+        private string _authorizationKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the authorization key
+        /// </summary>
+        public string AuthorizationKey
+        {
+            get { return this._authorizationKey; }
+            set { this._authorizationKey = value; }
+        }
+        
+        private string _connectionStatus;
+        
+        /// <summary>
+        /// Optional. Virtual network Gateway connection status
+        /// </summary>
+        public string ConnectionStatus
+        {
+            get { return this._connectionStatus; }
+            set { this._connectionStatus = value; }
+        }
+        
         private string _connectionType;
         
         /// <summary>
@@ -40,6 +62,28 @@ namespace Microsoft.Azure.Management.Network.Models
         {
             get { return this._connectionType; }
             set { this._connectionType = value; }
+        }
+        
+        private ulong _egressBytesTransferred;
+        
+        /// <summary>
+        /// Optional. The Egress Bytes Transferred in this connection
+        /// </summary>
+        public ulong EgressBytesTransferred
+        {
+            get { return this._egressBytesTransferred; }
+            set { this._egressBytesTransferred = value; }
+        }
+        
+        private ulong _ingressBytesTransferred;
+        
+        /// <summary>
+        /// Optional. The Ingress Bytes Transferred in this connection
+        /// </summary>
+        public ulong IngressBytesTransferred
+        {
+            get { return this._ingressBytesTransferred; }
+            set { this._ingressBytesTransferred = value; }
         }
         
         private LocalNetworkGateway _localNetworkGateway2;

@@ -57,5 +57,28 @@ namespace HDInsight.Tests.Helpers
 
             return rgname;
         }
+
+        public static void WaitForClusterToMoveToRunning(string resourceGroup, string dnsName, HDInsightManagementClient hdInsightClient)
+        {
+            System.TimeSpan timeout = System.TimeSpan.FromMinutes(10);
+
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            bool createError = false;
+            do
+            {
+                var cluster = hdInsightClient.Clusters.Get(resourceGroup, dnsName);
+
+                if (cluster.Cluster.Properties.ClusterState == "Error")
+                {
+                    createError = true;
+                    break;
+                }
+                if (cluster.Cluster.Properties.ClusterState == "Running") { return; }
+                System.Threading.Thread.Sleep(2000);
+            }
+            while (stopwatch.Elapsed < timeout);
+
+            Xunit.Assert.True(!createError);
+        }
     }
 }

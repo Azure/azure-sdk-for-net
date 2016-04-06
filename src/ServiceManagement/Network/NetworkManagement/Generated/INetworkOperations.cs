@@ -37,6 +37,77 @@ namespace Microsoft.WindowsAzure.Management.Network
     public partial interface INetworkOperations
     {
         /// <summary>
+        /// Abort Virtual Network migration api validates and aborts the given
+        /// virtual network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> AbortMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Abort Virtual Network migration api validates and aborts the given
+        /// virtual network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginAbortMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Commit Virtual Network migration api validates and commits the
+        /// given virtual network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginCommitMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Prepare Virtual Network migration api validates and prepare the
+        /// given virtual network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginPrepareMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Setting Network Configuration operation asynchronously
         /// configures the virtual network.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
@@ -53,6 +124,29 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// request ID.
         /// </returns>
         Task<AzureOperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Commit Virtual Network migration api validates and commits the
+        /// given virtual network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> CommitMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Network Configuration operation retrieves the network
@@ -81,6 +175,29 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response structure for the Network Operations List operation.
         /// </returns>
         Task<NetworkListResponse> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Prepare Virtual Network migration api validates and prepare the
+        /// given virtual network for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// Name of the Virtual Network to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> PrepareMigrationAsync(string virtualNetworkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Set Network Configuration operation asynchronously configures

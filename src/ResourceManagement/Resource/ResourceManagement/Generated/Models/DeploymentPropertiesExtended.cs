@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._correlationId = value; }
         }
         
+        private DeploymentDebugSetting _debugSettingResponse;
+        
+        /// <summary>
+        /// Optional. Gets or sets the deployment debug setting.
+        /// </summary>
+        public DeploymentDebugSetting DebugSettingResponse
+        {
+            get { return this._debugSettingResponse; }
+            set { this._debugSettingResponse = value; }
+        }
+        
         private IList<Dependency> _dependencies;
         
         /// <summary>
@@ -52,6 +63,17 @@ namespace Microsoft.Azure.Management.Resources.Models
         {
             get { return this._dependencies; }
             set { this._dependencies = value; }
+        }
+        
+        private TimeSpan _duration;
+        
+        /// <summary>
+        /// Optional. Gets or sets the duration of the deployment.
+        /// </summary>
+        public TimeSpan Duration
+        {
+            get { return this._duration; }
+            set { this._duration = value; }
         }
         
         private string _outputs;
@@ -100,6 +122,17 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._timestamp = value; }
         }
         
+        private IList<DeploymentPreFlightResource> _validatedResources;
+        
+        /// <summary>
+        /// Optional. Gets the list of validated resources.
+        /// </summary>
+        public IList<DeploymentPreFlightResource> ValidatedResources
+        {
+            get { return this._validatedResources; }
+            set { this._validatedResources = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the DeploymentPropertiesExtended
         /// class.
@@ -108,6 +141,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         {
             this.Dependencies = new LazyList<Dependency>();
             this.Providers = new LazyList<Provider>();
+            this.ValidatedResources = new LazyList<DeploymentPreFlightResource>();
         }
     }
 }

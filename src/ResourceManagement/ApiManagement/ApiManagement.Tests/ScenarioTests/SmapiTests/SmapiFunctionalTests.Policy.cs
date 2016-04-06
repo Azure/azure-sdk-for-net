@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     format,
                     policyDoc.ToStream(),
-                    null);
+                    "*");
 
                 Assert.NotNull(setResponse);
 
@@ -178,7 +178,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     api.Id,
                     format,
-                    policyDoc.ToStream());
+                    policyDoc.ToStream(),
+                    "*");
 
                 Assert.NotNull(setResponse);
 
@@ -251,7 +252,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     operation.OperationId,
                     format,
                     policyDoc.ToStream(),
-                    null);
+                    "*");
 
                 Assert.NotNull(setResponse);
 
@@ -330,7 +331,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     product.Id,
                     format,
-                    policyDoc.ToStream());
+                    policyDoc.ToStream(),
+                    "*");
 
                 Assert.NotNull(setResponse);
 

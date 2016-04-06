@@ -107,6 +107,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._eventsOutOfOrderPolicy = value; }
         }
         
+        private IList<Function> _functions;
+        
+        /// <summary>
+        /// Optional. Gets or sets a list of functions.
+        /// </summary>
+        public IList<Function> Functions
+        {
+            get { return this._functions; }
+            set { this._functions = value; }
+        }
+        
         private IList<Input> _inputs;
         
         /// <summary>
