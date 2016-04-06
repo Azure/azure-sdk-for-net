@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets the severity level of the failure. Possible values include:
-        /// 'Warning', 'Error'
+        /// 'Warning', 'Error', 'Info'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public SeverityTypes? Severity { get; private set; }

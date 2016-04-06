@@ -21,6 +21,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [EnumMember(Value = "Warning")]
         Warning,
         [EnumMember(Value = "Error")]
-        Error
+        Error,
+        [EnumMember(Value = "Info")]
+        Info
     }
 }

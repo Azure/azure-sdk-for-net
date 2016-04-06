@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ea65d78c-13bc-42a7-a93c-153de1bd1871"
+          "bda15703-1c13-4e3b-abbf-8eb535570074"
         ],
         "accept-language": [
           "en-US"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:06 GMT"
+          "Wed, 06 Apr 2016 20:33:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,16 +37,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "907"
+          "1007"
         ],
         "x-ms-request-id": [
-          "7b0a118b-a40c-48a5-83c6-097659ec359b"
+          "687bd6b4-da96-44bd-8a32-faa4e428a6fe"
         ],
         "x-ms-correlation-request-id": [
-          "7b0a118b-a40c-48a5-83c6-097659ec359b"
+          "687bd6b4-da96-44bd-8a32-faa4e428a6fe"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163907Z:7b0a118b-a40c-48a5-83c6-097659ec359b"
+          "CENTRALUS:20160406T203332Z:687bd6b4-da96-44bd-8a32-faa4e428a6fe"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,7 +61,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0b1955da-6523-415d-929e-167471443fa4"
+          "b02ca61d-c2c8-4b86-9b0e-a15f98941e2c"
         ],
         "accept-language": [
           "en-US"
@@ -82,7 +82,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:06 GMT"
+          "Wed, 06 Apr 2016 20:33:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -91,16 +91,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12452"
+          "14592"
         ],
         "x-ms-request-id": [
-          "fa13eda3-7824-4bfc-bf9a-9dd6e6948b51"
+          "159d06b4-e16f-4ca1-b4ba-85c83acbe7e0"
         ],
         "x-ms-correlation-request-id": [
-          "fa13eda3-7824-4bfc-bf9a-9dd6e6948b51"
+          "159d06b4-e16f-4ca1-b4ba-85c83acbe7e0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163907Z:fa13eda3-7824-4bfc-bf9a-9dd6e6948b51"
+          "CENTRALUS:20160406T203332Z:159d06b4-e16f-4ca1-b4ba-85c83acbe7e0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -115,7 +115,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e7a16dc6-ba7a-4127-ac0f-6f47bab988db"
+          "f1f64016-3161-4a8c-9e37-bd7d147ab651"
         ],
         "accept-language": [
           "en-US"
@@ -136,7 +136,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:06 GMT"
+          "Wed, 06 Apr 2016 20:33:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -145,16 +145,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "906"
+          "1006"
         ],
         "x-ms-request-id": [
-          "e038f6ff-1aa2-443e-ac87-7bd16456ec43"
+          "5f36f158-ba04-4176-97be-df1dcdbfe5d4"
         ],
         "x-ms-correlation-request-id": [
-          "e038f6ff-1aa2-443e-ac87-7bd16456ec43"
+          "5f36f158-ba04-4176-97be-df1dcdbfe5d4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163907Z:e038f6ff-1aa2-443e-ac87-7bd16456ec43"
+          "CENTRALUS:20160406T203332Z:5f36f158-ba04-4176-97be-df1dcdbfe5d4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -169,7 +169,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "de8ecfb0-a5a7-425d-903b-029d768ead20"
+          "ae4d757a-6374-4285-b961-dc84f8c887b6"
         ],
         "accept-language": [
           "en-US"
@@ -190,7 +190,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:08 GMT"
+          "Wed, 06 Apr 2016 20:33:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -199,16 +199,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12451"
+          "14591"
         ],
         "x-ms-request-id": [
-          "5775606a-94f9-49b5-b29f-a4b141d0b15d"
+          "0149d824-71ef-4acb-b0e8-704e0ed8c1d1"
         ],
         "x-ms-correlation-request-id": [
-          "5775606a-94f9-49b5-b29f-a4b141d0b15d"
+          "0149d824-71ef-4acb-b0e8-704e0ed8c1d1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163908Z:5775606a-94f9-49b5-b29f-a4b141d0b15d"
+          "CENTRALUS:20160406T203332Z:0149d824-71ef-4acb-b0e8-704e0ed8c1d1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -223,7 +223,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3c631edc-2619-4b80-bbb0-ef1f6834457e"
+          "3c72430c-96ed-4443-bec0-f529df335128"
         ],
         "accept-language": [
           "en-US"
@@ -244,7 +244,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:08 GMT"
+          "Wed, 06 Apr 2016 20:33:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -253,16 +253,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "905"
+          "1005"
         ],
         "x-ms-request-id": [
-          "574900bb-c399-445f-be40-e3572892e1d4"
+          "db4d8835-4fc1-4bc8-84e3-a7c13aa83b67"
         ],
         "x-ms-correlation-request-id": [
-          "574900bb-c399-445f-be40-e3572892e1d4"
+          "db4d8835-4fc1-4bc8-84e3-a7c13aa83b67"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163908Z:574900bb-c399-445f-be40-e3572892e1d4"
+          "CENTRALUS:20160406T203333Z:db4d8835-4fc1-4bc8-84e3-a7c13aa83b67"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -277,7 +277,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e1e2b05d-9c48-4a9c-b47f-e8f95f5a7370"
+          "91acf249-072d-444b-8a50-9006abb023a0"
         ],
         "accept-language": [
           "en-US"
@@ -298,7 +298,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:08 GMT"
+          "Wed, 06 Apr 2016 20:33:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -307,16 +307,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12449"
+          "14590"
         ],
         "x-ms-request-id": [
-          "7099d622-ca79-4df7-95b2-200e91a83d7b"
+          "044d5f10-087f-4d1e-b01e-81ef9e92a60f"
         ],
         "x-ms-correlation-request-id": [
-          "7099d622-ca79-4df7-95b2-200e91a83d7b"
+          "044d5f10-087f-4d1e-b01e-81ef9e92a60f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163908Z:7099d622-ca79-4df7-95b2-200e91a83d7b"
+          "CENTRALUS:20160406T203333Z:044d5f10-087f-4d1e-b01e-81ef9e92a60f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -325,13 +325,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba17368?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlZ3JvdXBzL3JnYWJhMTczNjg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba12565?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlZ3JvdXBzL3JnYWJhMTI1NjU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bf558026-a21b-423d-8252-e43a5d2f40da"
+          "a5555119-6c6a-4155-86ff-4a01c32e4c58"
         ],
         "accept-language": [
           "en-US"
@@ -340,7 +340,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'rgaba17368' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'rgaba12565' could not be found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "102"
@@ -355,7 +355,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:08 GMT"
+          "Wed, 06 Apr 2016 20:33:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -364,16 +364,16 @@
           "gateway"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12448"
+          "14589"
         ],
         "x-ms-request-id": [
-          "ed53c02c-df74-4fdc-97e6-7b8e60337236"
+          "8bbf99a0-5c59-4d3a-8345-1a8a9ddd1638"
         ],
         "x-ms-correlation-request-id": [
-          "ed53c02c-df74-4fdc-97e6-7b8e60337236"
+          "8bbf99a0-5c59-4d3a-8345-1a8a9ddd1638"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163909Z:ed53c02c-df74-4fdc-97e6-7b8e60337236"
+          "CENTRALUS:20160406T203333Z:8bbf99a0-5c59-4d3a-8345-1a8a9ddd1638"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -382,13 +382,13 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba17368?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlZ3JvdXBzL3JnYWJhMTczNjg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba12565?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlZ3JvdXBzL3JnYWJhMTI1NjU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9046f006-2e07-49fc-ac15-5855aba09072"
+          "20d35491-511b-4419-8b17-ebb958216a32"
         ],
         "accept-language": [
           "en-US"
@@ -397,7 +397,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368\",\r\n  \"name\": \"rgaba17368\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565\",\r\n  \"name\": \"rgaba12565\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -409,7 +409,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:09 GMT"
+          "Wed, 06 Apr 2016 20:33:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -418,16 +418,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12447"
+          "14588"
         ],
         "x-ms-request-id": [
-          "b1e5109d-1f5e-4a91-bb7a-c8286c72e092"
+          "4203eb1d-29c9-4038-bedb-00cd7d46b93d"
         ],
         "x-ms-correlation-request-id": [
-          "b1e5109d-1f5e-4a91-bb7a-c8286c72e092"
+          "4203eb1d-29c9-4038-bedb-00cd7d46b93d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163909Z:b1e5109d-1f5e-4a91-bb7a-c8286c72e092"
+          "CENTRALUS:20160406T203334Z:4203eb1d-29c9-4038-bedb-00cd7d46b93d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -436,8 +436,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba17368?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlZ3JvdXBzL3JnYWJhMTczNjg/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba12565?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlZ3JvdXBzL3JnYWJhMTI1NjU/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
       "RequestHeaders": {
@@ -448,7 +448,7 @@
           "31"
         ],
         "x-ms-client-request-id": [
-          "278367c2-09ce-4932-a659-4cfc082953a4"
+          "59409aa0-a281-4d27-90e5-51d5c8ccca25"
         ],
         "accept-language": [
           "en-US"
@@ -457,7 +457,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368\",\r\n  \"name\": \"rgaba17368\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565\",\r\n  \"name\": \"rgaba12565\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "174"
@@ -472,22 +472,22 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:09 GMT"
+          "Wed, 06 Apr 2016 20:33:33 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "903"
+          "1004"
         ],
         "x-ms-request-id": [
-          "53c83d57-3564-43b7-a76f-fd5f75696de0"
+          "4746750a-ef3a-4782-82b5-27d56863a6ea"
         ],
         "x-ms-correlation-request-id": [
-          "53c83d57-3564-43b7-a76f-fd5f75696de0"
+          "4746750a-ef3a-4782-82b5-27d56863a6ea"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163909Z:53c83d57-3564-43b7-a76f-fd5f75696de0"
+          "CENTRALUS:20160406T203334Z:4746750a-ef3a-4782-82b5-27d56863a6ea"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -496,13 +496,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTEzMDQ0P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTE4OTIyP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c3b2ec5d-de2a-4ed1-8343-2d806cb58a78"
+          "1ec5a3e0-55da-45c4-8422-a4083d8195b2"
         ],
         "accept-language": [
           "en-US"
@@ -511,7 +511,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DataLakeStore/accounts/testdatalake13044' under resource group 'rgaba17368' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DataLakeStore/accounts/testdatalake18922' under resource group 'rgaba12565' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "164"
@@ -526,7 +526,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:09 GMT"
+          "Wed, 06 Apr 2016 20:33:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -535,13 +535,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "85f8d19b-af62-462b-af5a-adc6a6431799"
+          "10ed1a4a-f291-41b4-bd9b-7e456b79cad4"
         ],
         "x-ms-correlation-request-id": [
-          "85f8d19b-af62-462b-af5a-adc6a6431799"
+          "10ed1a4a-f291-41b4-bd9b-7e456b79cad4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163909Z:85f8d19b-af62-462b-af5a-adc6a6431799"
+          "CENTRALUS:20160406T203334Z:10ed1a4a-f291-41b4-bd9b-7e456b79cad4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -550,8 +550,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTEzMDQ0P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTE4OTIyP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -559,7 +559,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake13044.caboaccountdogfood.net\",\r\n    \"accountId\": \"a5e37d4c-3cde-4cb1-827c-7868200cdc11\",\r\n    \"creationTime\": \"2016-04-01T16:39:12.8907303Z\",\r\n    \"lastModifiedTime\": \"2016-04-01T16:39:12.8907303Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044\",\r\n  \"name\": \"testdatalake13044\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake18922.caboaccountdogfood.net\",\r\n    \"accountId\": \"1abd23f4-d6cb-46e6-94de-dffd40c623a9\",\r\n    \"creationTime\": \"2016-04-06T20:33:39.3376501Z\",\r\n    \"lastModifiedTime\": \"2016-04-06T20:33:39.3376501Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922\",\r\n  \"name\": \"testdatalake18922\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -571,7 +571,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:41 GMT"
+          "Wed, 06 Apr 2016 20:34:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -586,7 +586,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "5cacc0cd-8493-4208-8ad0-29fc11fa772e"
+          "8674ba6c-6cd4-4ce0-98cc-5eff7e6cb461"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -595,13 +595,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12412"
+          "14568"
         ],
         "x-ms-correlation-request-id": [
-          "6ef4d95e-0e99-4257-8b61-0a1c5cf6e8ea"
+          "2ad2893e-02fe-4a5e-8d7a-767102648b29"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163941Z:6ef4d95e-0e99-4257-8b61-0a1c5cf6e8ea"
+          "CENTRALUS:20160406T203405Z:2ad2893e-02fe-4a5e-8d7a-767102648b29"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -610,13 +610,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTEzMDQ0P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTE4OTIyP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "af3383bf-8bc5-4f75-8d24-4aa280c3c2a6"
+          "d0bed4f3-4148-45de-b183-776eb34ff81b"
         ],
         "accept-language": [
           "en-US"
@@ -625,7 +625,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake13044.caboaccountdogfood.net\",\r\n    \"accountId\": \"a5e37d4c-3cde-4cb1-827c-7868200cdc11\",\r\n    \"creationTime\": \"2016-04-01T16:39:12.8907303Z\",\r\n    \"lastModifiedTime\": \"2016-04-01T16:39:12.8907303Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044\",\r\n  \"name\": \"testdatalake13044\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake18922.caboaccountdogfood.net\",\r\n    \"accountId\": \"1abd23f4-d6cb-46e6-94de-dffd40c623a9\",\r\n    \"creationTime\": \"2016-04-06T20:33:39.3376501Z\",\r\n    \"lastModifiedTime\": \"2016-04-06T20:33:39.3376501Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922\",\r\n  \"name\": \"testdatalake18922\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -637,7 +637,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:41 GMT"
+          "Wed, 06 Apr 2016 20:34:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -652,7 +652,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "90246ce8-5de1-4a77-8ddc-898804e2d192"
+          "456989af-a542-4153-b2c3-55bfad6efdf7"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -661,13 +661,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12411"
+          "14565"
         ],
         "x-ms-correlation-request-id": [
-          "034b97c2-be79-4d12-84ef-58e386aed883"
+          "79dd8071-dc2c-4993-af65-f2a22d12a131"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163941Z:034b97c2-be79-4d12-84ef-58e386aed883"
+          "CENTRALUS:20160406T203405Z:79dd8071-dc2c-4993-af65-f2a22d12a131"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -676,13 +676,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTEzMDQ0P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTE4OTIyP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9bd19d15-97d1-421f-a452-bb9af66e58c7"
+          "09d5decd-67c4-4a0f-ae0b-cf74681a48be"
         ],
         "accept-language": [
           "en-US"
@@ -691,7 +691,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake13044.caboaccountdogfood.net\",\r\n    \"accountId\": \"a5e37d4c-3cde-4cb1-827c-7868200cdc11\",\r\n    \"creationTime\": \"2016-04-01T16:39:12.8907303Z\",\r\n    \"lastModifiedTime\": \"2016-04-01T16:39:12.8907303Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044\",\r\n  \"name\": \"testdatalake13044\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake18922.caboaccountdogfood.net\",\r\n    \"accountId\": \"1abd23f4-d6cb-46e6-94de-dffd40c623a9\",\r\n    \"creationTime\": \"2016-04-06T20:33:39.3376501Z\",\r\n    \"lastModifiedTime\": \"2016-04-06T20:33:39.3376501Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922\",\r\n  \"name\": \"testdatalake18922\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -703,7 +703,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:13 GMT"
+          "Wed, 06 Apr 2016 20:34:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -718,7 +718,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "9390f571-0738-4957-9cc9-0f8c111aa9a9"
+          "ace4ea2e-bd55-46c7-8389-690783861ee3"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -727,13 +727,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12538"
+          "14544"
         ],
         "x-ms-correlation-request-id": [
-          "0a98963c-5112-49a0-8bcb-077ce29ad990"
+          "de494477-4a1d-4297-917a-c60949ca7ddc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164013Z:0a98963c-5112-49a0-8bcb-077ce29ad990"
+          "CENTRALUS:20160406T203438Z:de494477-4a1d-4297-917a-c60949ca7ddc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -742,10 +742,10 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTEzMDQ0P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTE4OTIyP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testdatalake13044\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testdatalake18922\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -754,7 +754,7 @@
           "63"
         ],
         "x-ms-client-request-id": [
-          "f42e4681-314a-4e4a-ac28-9de9d77f82a3"
+          "51629428-6e99-4e72-bd75-1304db7d7163"
         ],
         "accept-language": [
           "en-US"
@@ -763,7 +763,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"a5e37d4c-3cde-4cb1-827c-7868200cdc11\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044\",\r\n  \"name\": \"testdatalake13044\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"1abd23f4-d6cb-46e6-94de-dffd40c623a9\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922\",\r\n  \"name\": \"testdatalake18922\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "421"
@@ -778,13 +778,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:10 GMT"
+          "Wed, 06 Apr 2016 20:33:34 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake13044/operationresults/0?api-version=2015-10-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake18922/operationresults/0?api-version=2015-10-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -793,10 +793,10 @@
           "Microsoft-IIS/8.5"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/a5e37d4c-3cde-4cb1-827c-7868200cdc110?api-version=2015-10-01-preview&expanded=true"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/1abd23f4-d6cb-46e6-94de-dffd40c623a90?api-version=2015-10-01-preview&expanded=true"
         ],
         "x-ms-request-id": [
-          "f1e84b63-f07c-4a66-97a9-cb587fa3fcbb"
+          "a52aeae3-8d95-4357-96ce-262fe65ee2a2"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -805,13 +805,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "902"
+          "1003"
         ],
         "x-ms-correlation-request-id": [
-          "995c6411-7309-4f4c-bf70-5a21726a0979"
+          "ba6c0c9f-b0ea-4716-98d6-17fc0c3790f2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163910Z:995c6411-7309-4f4c-bf70-5a21726a0979"
+          "CENTRALUS:20160406T203335Z:ba6c0c9f-b0ea-4716-98d6-17fc0c3790f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -820,8 +820,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/a5e37d4c-3cde-4cb1-827c-7868200cdc110?api-version=2015-10-01-preview&expanded=true",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzL2E1ZTM3ZDRjLTNjZGUtNGNiMS04MjdjLTc4NjgyMDBjZGMxMTA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/1abd23f4-d6cb-46e6-94de-dffd40c623a90?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzLzFhYmQyM2Y0LWQ2Y2ItNDZlNi05NGRlLWRmZmQ0MGM2MjNhOTA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -841,7 +841,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:40 GMT"
+          "Wed, 06 Apr 2016 20:34:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -856,7 +856,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "7163f7d9-0d6c-4b2f-be79-c908ae12a4b1"
+          "e85923a8-90cf-46b2-b90b-7a6b43136110"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -865,13 +865,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12414"
+          "14571"
         ],
         "x-ms-correlation-request-id": [
-          "4a4b4735-9400-43f8-8fe4-ebacb01acc75"
+          "b95ca160-026c-4f3c-bb73-39041a6d8104"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163940Z:4a4b4735-9400-43f8-8fe4-ebacb01acc75"
+          "CENTRALUS:20160406T203405Z:b95ca160-026c-4f3c-bb73-39041a6d8104"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -880,13 +880,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIzMjcxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIyODUxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "224e6b2f-8c0a-44be-8385-0f570d345dc7"
+          "f3a4589d-60a6-4d85-b71b-382681ee7cb7"
         ],
         "accept-language": [
           "en-US"
@@ -895,7 +895,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DataLakeStore/accounts/testdatalake23271' under resource group 'rgaba17368' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DataLakeStore/accounts/testdatalake22851' under resource group 'rgaba12565' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "164"
@@ -910,7 +910,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:41 GMT"
+          "Wed, 06 Apr 2016 20:34:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -919,13 +919,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "4b636c8a-781e-4fb4-92a4-c0e315ff0141"
+          "bb85809d-d359-4255-9a26-8106cb4c8937"
         ],
         "x-ms-correlation-request-id": [
-          "4b636c8a-781e-4fb4-92a4-c0e315ff0141"
+          "bb85809d-d359-4255-9a26-8106cb4c8937"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163941Z:4b636c8a-781e-4fb4-92a4-c0e315ff0141"
+          "CENTRALUS:20160406T203405Z:bb85809d-d359-4255-9a26-8106cb4c8937"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -934,8 +934,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIzMjcxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIyODUxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -943,7 +943,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake23271.caboaccountdogfood.net\",\r\n    \"accountId\": \"84e5bc36-3fa5-408d-8a4a-d521bb5ddaec\",\r\n    \"creationTime\": \"2016-04-01T16:39:45.4441422Z\",\r\n    \"lastModifiedTime\": \"2016-04-01T16:39:45.4441422Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271\",\r\n  \"name\": \"testdatalake23271\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake22851.caboaccountdogfood.net\",\r\n    \"accountId\": \"73508f12-5116-4331-8bb3-149e401debe8\",\r\n    \"creationTime\": \"2016-04-06T20:34:10.7459781Z\",\r\n    \"lastModifiedTime\": \"2016-04-06T20:34:10.7459781Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851\",\r\n  \"name\": \"testdatalake22851\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -955,7 +955,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:11 GMT"
+          "Wed, 06 Apr 2016 20:34:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -970,7 +970,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "7e50cff1-3d61-46ad-99a5-4774ec2d2285"
+          "2b1e9ed5-b166-48b5-8a83-60c8c2a7a944"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -979,13 +979,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12541"
+          "14546"
         ],
         "x-ms-correlation-request-id": [
-          "58f79259-d148-4cd3-862b-5f721b74f3ae"
+          "4503723d-f55f-424c-8798-ac78c2f7f065"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164012Z:58f79259-d148-4cd3-862b-5f721b74f3ae"
+          "CENTRALUS:20160406T203438Z:4503723d-f55f-424c-8798-ac78c2f7f065"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -994,13 +994,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIzMjcxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIyODUxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9641732b-e8c9-4d4f-ad4b-b9c982fe20b3"
+          "704cbba9-4819-40ac-82a4-5cfb8eaa07f7"
         ],
         "accept-language": [
           "en-US"
@@ -1009,7 +1009,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake23271.caboaccountdogfood.net\",\r\n    \"accountId\": \"84e5bc36-3fa5-408d-8a4a-d521bb5ddaec\",\r\n    \"creationTime\": \"2016-04-01T16:39:45.4441422Z\",\r\n    \"lastModifiedTime\": \"2016-04-01T16:39:45.4441422Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271\",\r\n  \"name\": \"testdatalake23271\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"folderLevelAclState\": \"Disabled\",\r\n    \"trustedTenants\": [],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testdatalake22851.caboaccountdogfood.net\",\r\n    \"accountId\": \"73508f12-5116-4331-8bb3-149e401debe8\",\r\n    \"creationTime\": \"2016-04-06T20:34:10.7459781Z\",\r\n    \"lastModifiedTime\": \"2016-04-06T20:34:10.7459781Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851\",\r\n  \"name\": \"testdatalake22851\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -1021,7 +1021,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:13 GMT"
+          "Wed, 06 Apr 2016 20:34:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1036,7 +1036,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "539851bf-809a-4e63-ac67-43d993ccf09d"
+          "8d911b62-4319-4d1c-88eb-4322b3000f32"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -1045,13 +1045,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12540"
+          "14545"
         ],
         "x-ms-correlation-request-id": [
-          "67b62876-3094-4562-8032-fc564da6d9da"
+          "f8c0c638-7af6-4839-86d2-5602ab55673d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164013Z:67b62876-3094-4562-8032-fc564da6d9da"
+          "CENTRALUS:20160406T203438Z:f8c0c638-7af6-4839-86d2-5602ab55673d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1060,10 +1060,10 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIzMjcxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZVN0b3JlL2FjY291bnRzL3Rlc3RkYXRhbGFrZTIyODUxP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testdatalake23271\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testdatalake22851\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1072,7 +1072,7 @@
           "63"
         ],
         "x-ms-client-request-id": [
-          "673fdd03-ae75-4b8c-9c14-1728e72dde29"
+          "9839ceab-9ae2-408b-b1b7-8954f6db321f"
         ],
         "accept-language": [
           "en-US"
@@ -1081,7 +1081,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"84e5bc36-3fa5-408d-8a4a-d521bb5ddaec\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271\",\r\n  \"name\": \"testdatalake23271\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"73508f12-5116-4331-8bb3-149e401debe8\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851\",\r\n  \"name\": \"testdatalake22851\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "421"
@@ -1096,13 +1096,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:39:42 GMT"
+          "Wed, 06 Apr 2016 20:34:07 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba17368/providers/Microsoft.DataLakeStore/accounts/testdatalake23271/operationresults/0?api-version=2015-10-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba12565/providers/Microsoft.DataLakeStore/accounts/testdatalake22851/operationresults/0?api-version=2015-10-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -1111,10 +1111,10 @@
           "Microsoft-IIS/8.5"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/84e5bc36-3fa5-408d-8a4a-d521bb5ddaec0?api-version=2015-10-01-preview&expanded=true"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/73508f12-5116-4331-8bb3-149e401debe80?api-version=2015-10-01-preview&expanded=true"
         ],
         "x-ms-request-id": [
-          "65d03bdd-dbaf-40a2-996b-4e16547c4a70"
+          "767c1a89-cbea-44bc-8a13-3b75f7cdcb53"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -1123,13 +1123,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "899"
+          "1001"
         ],
         "x-ms-correlation-request-id": [
-          "1fa66b98-0ddb-49a7-b9dd-79bab6698c69"
+          "92d2a0ad-fb90-468d-aa77-5775d25104f3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T163942Z:1fa66b98-0ddb-49a7-b9dd-79bab6698c69"
+          "CENTRALUS:20160406T203407Z:92d2a0ad-fb90-468d-aa77-5775d25104f3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1138,8 +1138,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/84e5bc36-3fa5-408d-8a4a-d521bb5ddaec0?api-version=2015-10-01-preview&expanded=true",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzLzg0ZTViYzM2LTNmYTUtNDA4ZC04YTRhLWQ1MjFiYjVkZGFlYzA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/73508f12-5116-4331-8bb3-149e401debe80?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzLzczNTA4ZjEyLTUxMTYtNDMzMS04YmIzLTE0OWU0MDFkZWJlODA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1159,7 +1159,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:11 GMT"
+          "Wed, 06 Apr 2016 20:34:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1174,7 +1174,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "c11f2ec6-da9c-47d3-822e-d4298de013e7"
+          "cd1c9935-42f8-4741-b153-b895338354e3"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -1183,13 +1183,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "12542"
+          "14548"
         ],
         "x-ms-correlation-request-id": [
-          "e35e9386-bc26-4923-9608-d42c7b93772e"
+          "3b84011a-53f4-4fde-a6f8-e5c45fa42af4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164012Z:e35e9386-bc26-4923-9608-d42c7b93772e"
+          "CENTRALUS:20160406T203438Z:3b84011a-53f4-4fde-a6f8-e5c45fa42af4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1198,10 +1198,10 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeAnalytics/accounts/testaba22289?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMjIyODk/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeAnalytics/accounts/testaba28065?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMjgwNjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testaba22289\",\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake13044\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"name\": \"testdatalake13044\",\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testaba28065\",\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake18922\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"name\": \"testdatalake18922\",\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1210,7 +1210,7 @@
           "317"
         ],
         "x-ms-client-request-id": [
-          "7a5e0544-0105-425c-9704-bbfa96e18a29"
+          "a3b01393-48d9-4426-88bf-7964b066ba9d"
         ],
         "accept-language": [
           "en-US"
@@ -1219,7 +1219,7 @@
           "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake13044\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        },\r\n        \"name\": \"testdatalake13044\"\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"509b7c26-da07-4ea8-9734-97e1a99690a8\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeAnalytics/accounts/testaba22289\",\r\n  \"name\": \"testaba22289\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake18922\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        },\r\n        \"name\": \"testdatalake18922\"\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"e4abffc1-0432-4332-b56b-33ecb7b6dd88\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeAnalytics/accounts/testaba28065\",\r\n  \"name\": \"testaba28065\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "573"
@@ -1234,13 +1234,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:13 GMT"
+          "Wed, 06 Apr 2016 20:34:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba17368/providers/Microsoft.DataLakeAnalytics/accounts/testaba22289/operationresults/0?api-version=2015-10-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourcegroups/rgaba12565/providers/Microsoft.DataLakeAnalytics/accounts/testaba28065/operationresults/0?api-version=2015-10-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -1249,10 +1249,10 @@
           "Microsoft-IIS/8.5"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/509b7c26-da07-4ea8-9734-97e1a99690a80?api-version=2015-10-01-preview&expanded=true"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/e4abffc1-0432-4332-b56b-33ecb7b6dd880?api-version=2015-10-01-preview&expanded=true"
         ],
         "x-ms-request-id": [
-          "82ba2b5e-efb1-4aff-aebc-c3ddfe109000"
+          "91be398c-e063-4fd5-91de-9503f3d872db"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -1261,13 +1261,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "896"
+          "1128"
         ],
         "x-ms-correlation-request-id": [
-          "028f5008-460d-423b-9e2a-53e490b5fc03"
+          "ad5ca54d-ec14-44ef-8f93-46d3cc20dcdd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164013Z:028f5008-460d-423b-9e2a-53e490b5fc03"
+          "CENTRALUS:20160406T203440Z:ad5ca54d-ec14-44ef-8f93-46d3cc20dcdd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1276,8 +1276,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/509b7c26-da07-4ea8-9734-97e1a99690a80?api-version=2015-10-01-preview&expanded=true",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvbG9jYXRpb25zL0Vhc3RVUzIvb3BlcmF0aW9uUmVzdWx0cy81MDliN2MyNi1kYTA3LTRlYTgtOTczNC05N2UxYTk5NjkwYTgwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZleHBhbmRlZD10cnVl",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/providers/Microsoft.DataLakeAnalytics/locations/EastUS2/operationResults/e4abffc1-0432-4332-b56b-33ecb7b6dd880?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvbG9jYXRpb25zL0Vhc3RVUzIvb3BlcmF0aW9uUmVzdWx0cy9lNGFiZmZjMS0wNDMyLTQzMzItYjU2Yi0zM2VjYjdiNmRkODgwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldyZleHBhbmRlZD10cnVl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1297,7 +1297,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:43 GMT"
+          "Wed, 06 Apr 2016 20:35:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1312,7 +1312,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "1c449e28-1305-49a3-bf55-a66bdca45688"
+          "daa603f2-55eb-46b0-8475-45f43468706a"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -1321,13 +1321,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14003"
+          "14389"
         ],
         "x-ms-correlation-request-id": [
-          "38f2ae11-9522-4ea8-bad7-27c12ef6de0b"
+          "c835af8e-297d-46b2-89b5-2db9da5fd973"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164044Z:38f2ae11-9522-4ea8-bad7-27c12ef6de0b"
+          "CENTRALUS:20160406T203510Z:c835af8e-297d-46b2-89b5-2db9da5fd973"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1336,8 +1336,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeAnalytics/accounts/testaba22289?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMjIyODk/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeAnalytics/accounts/testaba28065?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMjgwNjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1345,7 +1345,7 @@
           "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake13044\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        },\r\n        \"name\": \"testdatalake13044\"\r\n      }\r\n    ],\r\n    \"storageAccounts\": [],\r\n    \"maxDegreeOfParallelism\": 20,\r\n    \"maxJobCount\": 3,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testaba22289.konaaccountdogfood.net\",\r\n    \"accountId\": \"509b7c26-da07-4ea8-9734-97e1a99690a8\",\r\n    \"creationTime\": \"2016-04-01T16:40:15.6013033Z\",\r\n    \"lastModifiedTime\": \"2016-04-01T16:40:15.6013033Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeAnalytics/accounts/testaba22289\",\r\n  \"name\": \"testaba22289\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake18922\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        },\r\n        \"name\": \"testdatalake18922\"\r\n      }\r\n    ],\r\n    \"storageAccounts\": [],\r\n    \"maxDegreeOfParallelism\": 20,\r\n    \"maxJobCount\": 3,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testaba28065.konaaccountdogfood.net\",\r\n    \"accountId\": \"e4abffc1-0432-4332-b56b-33ecb7b6dd88\",\r\n    \"creationTime\": \"2016-04-06T20:34:41.7278874Z\",\r\n    \"lastModifiedTime\": \"2016-04-06T20:34:41.7278874Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeAnalytics/accounts/testaba28065\",\r\n  \"name\": \"testaba28065\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -1357,7 +1357,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:43 GMT"
+          "Wed, 06 Apr 2016 20:35:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1372,7 +1372,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "b69f4dc5-6b7d-4557-b136-98ac3ecd50f0"
+          "2c2e5d31-cb3a-4ba8-b89d-a6e4a74fe4f1"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -1381,13 +1381,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14002"
+          "14388"
         ],
         "x-ms-correlation-request-id": [
-          "a8b6626b-c8bf-4b28-b307-6f25be7521f1"
+          "c9ddd50d-1064-4d95-a678-ab5078721c41"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164044Z:a8b6626b-c8bf-4b28-b307-6f25be7521f1"
+          "CENTRALUS:20160406T203510Z:c9ddd50d-1064-4d95-a678-ab5078721c41"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1396,13 +1396,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeAnalytics/accounts/testaba22289?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTczNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMjIyODk/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeAnalytics/accounts/testaba28065?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM1M2QyNmQtZTMzOC00NjlhLWE4N2EtYmQzNTA3NDcxMTU1L3Jlc291cmNlR3JvdXBzL3JnYWJhMTI1NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhTGFrZUFuYWx5dGljcy9hY2NvdW50cy90ZXN0YWJhMjgwNjU/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "06f97ec5-c236-4243-a739-ebee9b5ff511"
+          "abfac644-18f3-4987-9a6a-4b0edd377903"
         ],
         "accept-language": [
           "en-US"
@@ -1411,7 +1411,7 @@
           "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsAccountManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake13044\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        },\r\n        \"name\": \"testdatalake13044\"\r\n      }\r\n    ],\r\n    \"storageAccounts\": [],\r\n    \"maxDegreeOfParallelism\": 20,\r\n    \"maxJobCount\": 3,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testaba22289.konaaccountdogfood.net\",\r\n    \"accountId\": \"509b7c26-da07-4ea8-9734-97e1a99690a8\",\r\n    \"creationTime\": \"2016-04-01T16:40:15.6013033Z\",\r\n    \"lastModifiedTime\": \"2016-04-01T16:40:15.6013033Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba17368/providers/Microsoft.DataLakeAnalytics/accounts/testaba22289\",\r\n  \"name\": \"testaba22289\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStoreAccount\": \"testdatalake18922\",\r\n    \"dataLakeStoreAccounts\": [\r\n      {\r\n        \"properties\": {\r\n          \"suffix\": \"caboaccountdogfood.net\"\r\n        },\r\n        \"name\": \"testdatalake18922\"\r\n      }\r\n    ],\r\n    \"storageAccounts\": [],\r\n    \"maxDegreeOfParallelism\": 20,\r\n    \"maxJobCount\": 3,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testaba28065.konaaccountdogfood.net\",\r\n    \"accountId\": \"e4abffc1-0432-4332-b56b-33ecb7b6dd88\",\r\n    \"creationTime\": \"2016-04-06T20:34:41.7278874Z\",\r\n    \"lastModifiedTime\": \"2016-04-06T20:34:41.7278874Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/0353d26d-e338-469a-a87a-bd3507471155/resourceGroups/rgaba12565/providers/Microsoft.DataLakeAnalytics/accounts/testaba28065\",\r\n  \"name\": \"testaba28065\",\r\n  \"type\": \"Microsoft.DataLakeAnalytics/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -1423,7 +1423,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:40:43 GMT"
+          "Wed, 06 Apr 2016 20:35:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1438,7 +1438,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "464d07f6-7d20-48e1-a5ed-f07a0d60dfc9"
+          "093edf14-bbaf-4753-b430-87286f3c7754"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -1447,13 +1447,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14001"
+          "14386"
         ],
         "x-ms-correlation-request-id": [
-          "826ef6a3-b6fe-4c68-ba51-8693a6797be9"
+          "16706b80-f0fc-4e1a-b381-b3fca5a8e6cb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160401T164044Z:826ef6a3-b6fe-4c68-ba51-8693a6797be9"
+          "CENTRALUS:20160406T203510Z:16706b80-f0fc-4e1a-b381-b3fca5a8e6cb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1462,8 +1462,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/8ba20f0a-19ba-4e98-9e3f-227c43e86c54?api-version=2016-03-20-preview",
-      "EncodedRequestUri": "L0pvYnMvOGJhMjBmMGEtMTliYS00ZTk4LTllM2YtMjI3YzQzZTg2YzU0P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestUri": "/Jobs/1ce65317-2276-4665-b6ab-f12392c9d0c9?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvMWNlNjUzMTctMjI3Ni00NjY1LWI2YWItZjEyMzkyYzlkMGM5P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -1474,7 +1474,7 @@
           "218"
         ],
         "x-ms-client-request-id": [
-          "41289e3c-8ab3-4be3-a601-b2f857b60058"
+          "2648a7da-a333-4402-9931-2ec09e8c73d3"
         ],
         "accept-language": [
           "en-US"
@@ -1483,7 +1483,7 @@
           "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
         ]
       },
-      "ResponseBody": "\"{\\\"jobId\\\":\\\"8ba20f0a-19ba-4e98-9e3f-227c43e86c54\\\",\\\"name\\\":\\\"azure sdk data lake analytics job\\\",\\\"type\\\":\\\"USql\\\",\\\"submitter\\\":\\\"admin@aad264.ccsctp.net\\\",\\\"degreeOfParallelism\\\":2,\\\"priority\\\":0,\\\"submitTime\\\":\\\"2016-04-01T16:42:46.197389+00:00\\\",\\\"state\\\":\\\"Compiling\\\",\\\"result\\\":\\\"Succeeded\\\",\\\"stateAuditRecords\\\":[{\\\"newState\\\":\\\"New\\\",\\\"timeStamp\\\":\\\"2016-04-01T16:42:46.197389+00:00\\\",\\\"details\\\":\\\"userName:admin@aad264.ccsctp.net;submitMachine:N/A\\\"}],\\\"properties\\\":{\\\"owner\\\":\\\"admin@aad264.ccsctp.net\\\",\\\"resources\\\":[],\\\"runtimeVersion\\\":\\\"default\\\",\\\"rootProcessNodeId\\\":\\\"00000000-0000-0000-0000-000000000000\\\",\\\"algebraFilePath\\\":\\\"adl://testdatalake13044.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/01/16/42/8ba20f0a-19ba-4e98-9e3f-227c43e86c54/algebra.xml\\\",\\\"userPrincipals\\\":[],\\\"compileMode\\\":0,\\\"errorSource\\\":0,\\\"totalCompilationTime\\\":\\\"PT0S\\\",\\\"totalPausedTime\\\":\\\"PT0S\\\",\\\"totalQueuedTime\\\":\\\"PT0S\\\",\\\"totalRunningTime\\\":\\\"PT0S\\\",\\\"type\\\":0}}\"",
+      "ResponseBody": "{\r\n  \"jobId\": \"1ce65317-2276-4665-b6ab-f12392c9d0c9\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:12.152387-07:00\",\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:12.152387-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/1ce65317-2276-4665-b6ab-f12392c9d0c9/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT0S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1495,7 +1495,7 @@
           "private"
         ],
         "Date": [
-          "Fri, 01 Apr 2016 16:42:47 GMT"
+          "Wed, 06 Apr 2016 20:37:12 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1504,7 +1504,688 @@
           "chunked"
         ],
         "x-ms-request-id": [
-          "1d95c1e3-e894-4ba3-a617-4e183922e869"
+          "7a896e66-443e-4811-b1e3-f1cf87db9b5b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/1ce65317-2276-4665-b6ab-f12392c9d0c9/CancelJob?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvMWNlNjUzMTctMjI3Ni00NjY1LWI2YWItZjEyMzkyYzlkMGM5L0NhbmNlbEpvYj9hcGktdmVyc2lvbj0yMDE2LTAzLTIwLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "91259b18-2ca2-4c27-8d0e-cd56ef869c46"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "d3aa30c4-70c8-4774-b0e5-cea564b36b01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/1ce65317-2276-4665-b6ab-f12392c9d0c9?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvMWNlNjUzMTctMjI3Ni00NjY1LWI2YWItZjEyMzkyYzlkMGM5P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "aaf164f4-9c5e-4406-acbd-4616a6a96e7b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"1ce65317-2276-4665-b6ab-f12392c9d0c9\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:12.152387-07:00\",\r\n  \"endTime\": \"2016-04-06T13:37:14.0688977-07:00\",\r\n  \"state\": \"Ended\",\r\n  \"result\": \"Cancelled\",\r\n  \"errorMessage\": [\r\n    {\r\n      \"errorId\": \"I_USER_CJS_CANCELEDBYUSER\",\r\n      \"name\": \"CANCELED_BY_USER\",\r\n      \"severity\": \"Info\",\r\n      \"source\": \"User\",\r\n      \"component\": \"CJS\",\r\n      \"message\": \"Job was cancelled.\",\r\n      \"details\": \"\",\r\n      \"description\": \"Job was cancelled by {0}.\",\r\n      \"resolution\": \"\",\r\n      \"helpLink\": \"\",\r\n      \"innerError\": null\r\n    }\r\n  ],\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:12.152387-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:13.4814356-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Ended\",\r\n      \"timeStamp\": \"2016-04-06T13:37:14.0688977-07:00\",\r\n      \"details\": \"result:CanceledByUser\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/1ce65317-2276-4665-b6ab-f12392c9d0c9/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/1ce65317-2276-4665-b6ab-f12392c9d0c9/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/1ce65317-2276-4665-b6ab-f12392c9d0c9/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT0.5874621S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:14 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "8f6ba109-8709-45ee-b644-47770546f581"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "218"
+        ],
+        "x-ms-client-request-id": [
+          "073b07f4-e0b0-4b8a-8f05-8dce319e7217"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT0S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:15 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "c3cae8e6-14a4-49d0-8f96-76cc5aa1534f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d2c67c1e-45bf-403a-9904-b181ee67433d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT0.1538709S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:15 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "49641796-bf89-4c95-9bc0-096999aab74b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "117560c7-bf59-4b59-a87b-0e23ebba435b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT5.3883199S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "d44cb97b-e7ce-44b5-a824-8fd1799a2e8d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "195a293e-6517-42dc-b93e-8941c7c3e2cc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Compiling\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"default\",\r\n    \"rootProcessNodeId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT10.6227714S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "c226b193-96d3-4616-89bb-5a85b4ad0f81"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "54207664-af45-43ac-9b5f-f369a031b3d1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Starting\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.7963594-07:00\"\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8113721-07:00\",\r\n      \"details\": \"Detail:Dispatching job to cluster.;rootProcessId:d9e2e73f-9b45-4792-8138-170d1f920852\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8183776-07:00\",\r\n      \"details\": \"runtimeVersion:bl_4810612_160405200837015\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"bl_4810612_160405200837015\",\r\n    \"rootProcessNodeId\": \"d9e2e73f-9b45-4792-8138-170d1f920852\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"yarnApplicationId\": 52,\r\n    \"yarnApplicationTimeStamp\": 1459972588050,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT13.7939325S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0.0150127S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "7443b106-881c-4405-8b73-01cace572a29"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e8ea0407-2c09-42a7-8ae3-4de9be89d619"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Starting\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.7963594-07:00\"\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8113721-07:00\",\r\n      \"details\": \"Detail:Dispatching job to cluster.;rootProcessId:d9e2e73f-9b45-4792-8138-170d1f920852\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8183776-07:00\",\r\n      \"details\": \"runtimeVersion:bl_4810612_160405200837015\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"bl_4810612_160405200837015\",\r\n    \"rootProcessNodeId\": \"d9e2e73f-9b45-4792-8138-170d1f920852\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"yarnApplicationId\": 52,\r\n    \"yarnApplicationTimeStamp\": 1459972588050,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT13.7939325S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0.0150127S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "111d7c0e-ca70-45d8-978c-e2182c991852"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "477fb2b5-b93e-4f40-ba5a-7fc5536de6d2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Starting\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.7963594-07:00\"\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8113721-07:00\",\r\n      \"details\": \"Detail:Dispatching job to cluster.;rootProcessId:d9e2e73f-9b45-4792-8138-170d1f920852\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8183776-07:00\",\r\n      \"details\": \"runtimeVersion:bl_4810612_160405200837015\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"bl_4810612_160405200837015\",\r\n    \"rootProcessNodeId\": \"d9e2e73f-9b45-4792-8138-170d1f920852\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"yarnApplicationId\": 52,\r\n    \"yarnApplicationTimeStamp\": 1459972588050,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT13.7939325S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0.0150127S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "2901a7af-f22a-4439-9ac7-0351269bff2e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b67d4bfa-26d8-458b-bfae-3bca171ac91d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"state\": \"Starting\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.7963594-07:00\"\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8113721-07:00\",\r\n      \"details\": \"Detail:Dispatching job to cluster.;rootProcessId:d9e2e73f-9b45-4792-8138-170d1f920852\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8183776-07:00\",\r\n      \"details\": \"runtimeVersion:bl_4810612_160405200837015\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"bl_4810612_160405200837015\",\r\n    \"rootProcessNodeId\": \"d9e2e73f-9b45-4792-8138-170d1f920852\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"yarnApplicationId\": 52,\r\n    \"yarnApplicationTimeStamp\": 1459972588050,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT13.7939325S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0.0150127S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "98ae1a7f-c31c-4e4a-b386-7d57a5426f1d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs/9431ce26-7a40-41a9-b207-a817d88d36e6?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnMvOTQzMWNlMjYtN2E0MC00MWE5LWIyMDctYTgxN2Q4OGQzNmU2P2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "eff10205-d6ec-440b-a20b-229cf9c10c53"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n  \"startTime\": \"2016-04-06T13:37:47.587476-07:00\",\r\n  \"endTime\": \"2016-04-06T13:37:47.5984847-07:00\",\r\n  \"state\": \"Ended\",\r\n  \"result\": \"Succeeded\",\r\n  \"stateAuditRecords\": [\r\n    {\r\n      \"newState\": \"New\",\r\n      \"timeStamp\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"details\": \"userName:admin@aad264.ccsctp.net;submitMachine:N/A\"\r\n    },\r\n    {\r\n      \"newState\": \"Compiling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:16.0024269-07:00\",\r\n      \"details\": \"CcsAttempts:1;Status:Dispatched\"\r\n    },\r\n    {\r\n      \"newState\": \"Queued\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.7963594-07:00\"\r\n    },\r\n    {\r\n      \"newState\": \"Scheduling\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8113721-07:00\",\r\n      \"details\": \"Detail:Dispatching job to cluster.;rootProcessId:d9e2e73f-9b45-4792-8138-170d1f920852\"\r\n    },\r\n    {\r\n      \"newState\": \"Starting\",\r\n      \"timeStamp\": \"2016-04-06T13:37:29.8183776-07:00\",\r\n      \"details\": \"runtimeVersion:bl_4810612_160405200837015\"\r\n    },\r\n    {\r\n      \"newState\": \"Running\",\r\n      \"timeStamp\": \"2016-04-06T13:37:47.587476-07:00\",\r\n      \"details\": \"runAttempt:1\"\r\n    },\r\n    {\r\n      \"newState\": \"Ended\",\r\n      \"timeStamp\": \"2016-04-06T13:37:47.5984847-07:00\",\r\n      \"details\": \"result:Succeeded\"\r\n    }\r\n  ],\r\n  \"properties\": {\r\n    \"owner\": \"admin@aad264.ccsctp.net\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.pdb\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.pdb\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"ScopeVertexDef.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/ScopeVertexDef.xml\",\r\n        \"type\": \"VertexResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGen__.dll.cs\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGen__.dll.cs\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.dll.cpp\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOutput__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOutput__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenCompileOptions__.txt\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenCompileOptions__.txt\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeCodeGenEngine__.cppresources\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeCodeGenEngine__.cppresources\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__Ast__.bin\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__Ast__.bin\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__SystemInternalInfo__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__SystemInternalInfo__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"Profile\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/profile\",\r\n        \"type\": \"StatisticsResource\"\r\n      },\r\n      {\r\n        \"name\": \"__ScopeRuntimeStatistics__.xml\",\r\n        \"resourcePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/__ScopeRuntimeStatistics__.xml\",\r\n        \"type\": \"StatisticsResource\"\r\n      }\r\n    ],\r\n    \"runtimeVersion\": \"bl_4810612_160405200837015\",\r\n    \"rootProcessNodeId\": \"d9e2e73f-9b45-4792-8138-170d1f920852\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"adl://testdatalake18922.caboaccountdogfood.net/system/jobservice/jobs/Usql/2016/04/06/20/37/9431ce26-7a40-41a9-b207-a817d88d36e6/algebra.xml\",\r\n    \"yarnApplicationId\": 52,\r\n    \"yarnApplicationTimeStamp\": 1459972588050,\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT13.7939325S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0.0150127S\",\r\n    \"totalRunningTime\": \"PT0.0110087S\",\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "2be1dbea-777d-43ef-b368-8ffc76109bb4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnM/YXBpLXZlcnNpb249MjAxNi0wMy0yMC1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "79998cc2-256d-4a3f-8af9-d77d26206951"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n      \"name\": \"azure sdk data lake analytics job\",\r\n      \"type\": \"USql\",\r\n      \"submitter\": \"admin@aad264.ccsctp.net\",\r\n      \"degreeOfParallelism\": 2,\r\n      \"priority\": 0,\r\n      \"submitTime\": \"2016-04-06T13:37:15.2708457-07:00\",\r\n      \"startTime\": \"2016-04-06T13:37:47.587476-07:00\",\r\n      \"endTime\": \"2016-04-06T13:37:47.5984847-07:00\",\r\n      \"state\": \"Ended\",\r\n      \"result\": \"Succeeded\"\r\n    },\r\n    {\r\n      \"jobId\": \"1ce65317-2276-4665-b6ab-f12392c9d0c9\",\r\n      \"name\": \"azure sdk data lake analytics job\",\r\n      \"type\": \"USql\",\r\n      \"submitter\": \"admin@aad264.ccsctp.net\",\r\n      \"degreeOfParallelism\": 2,\r\n      \"priority\": 0,\r\n      \"submitTime\": \"2016-04-06T13:37:12.152387-07:00\",\r\n      \"endTime\": \"2016-04-06T13:37:14.0688977-07:00\",\r\n      \"state\": \"Ended\",\r\n      \"result\": \"Cancelled\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:37:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "68a74488-e1bd-46cf-886e-e7e8d72d00cb"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/BuildJob?api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0J1aWxkSm9iP2FwaS12ZXJzaW9uPTIwMTYtMDMtMjAtcHJldmlldw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "270"
+        ],
+        "x-ms-client-request-id": [
+          "dad739a4-dab9-4ff3-b5b3-44c265189254"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"submitter\": \"admin@aad264.ccsctp.net\",\r\n  \"degreeOfParallelism\": 0,\r\n  \"priority\": 0,\r\n  \"submitTime\": \"0001-01-01T00:00:00-08:00\",\r\n  \"state\": \"Ended\",\r\n  \"result\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"resources\": [],\r\n    \"runtimeVersion\": \"bl_4810612_160405200837015\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\",\r\n    \"algebraFilePath\": \"mafs://accounts/testdatalake18922/fs/system/jobservice/jobs/Sqlip/9431ce26-7a40-41a9-b207-a817d88d36e6/2016/04/06/20/37/algebra.xml\",\r\n    \"compileMode\": \"Semantic\",\r\n    \"errorSource\": \"Unknown\",\r\n    \"totalCompilationTime\": \"PT0S\",\r\n    \"totalPausedTime\": \"PT0S\",\r\n    \"totalQueuedTime\": \"PT0S\",\r\n    \"totalRunningTime\": \"PT0S\",\r\n    \"diagnostics\": [],\r\n    \"type\": \"USql\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:38:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "af9bc1be-e08e-4e20-81e9-2cdfd96d2dbb"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Jobs?$select=jobId&api-version=2016-03-20-preview",
+      "EncodedRequestUri": "L0pvYnM/JHNlbGVjdD1qb2JJZCZhcGktdmVyc2lvbj0yMDE2LTAzLTIwLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "824c6eb5-4f53-4282-a740-67f1367410a1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataLake.Analytics.DataLakeAnalyticsJobManagementClient/0.11.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"jobId\": \"9431ce26-7a40-41a9-b207-a817d88d36e6\"\r\n    },\r\n    {\r\n      \"jobId\": \"1ce65317-2276-4665-b6ab-f12392c9d0c9\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Wed, 06 Apr 2016 20:38:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-request-id": [
+          "19b6d8a3-809f-4dec-9c8d-95e8ac32f964"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1518,25 +2199,25 @@
   ],
   "Names": {
     ".ctor": [
-      "rgaba17368",
-      "testaba13960",
-      "testaba22289",
-      "teststorage12075",
-      "testdatalake13044",
-      "testdatalake23271",
-      "testazureblob15924",
-      "testdb12958",
-      "testtbl19507",
-      "testtvf18388",
-      "testproc19603",
-      "testview14472",
-      "testcred11175",
-      "testsecret17744",
-      "testsecretpwd13378"
+      "rgaba12565",
+      "testaba14845",
+      "testaba28065",
+      "teststorage12819",
+      "testdatalake18922",
+      "testdatalake22851",
+      "testazureblob11444",
+      "testdb1943",
+      "testtbl11705",
+      "testtvf1216",
+      "testproc12315",
+      "testview19149",
+      "testcred17907",
+      "testsecret13561",
+      "testsecretpwd16105"
     ],
     "SubmitGetListCancelTest": [
-      "8ba20f0a-19ba-4e98-9e3f-227c43e86c54",
-      "528e3696-2955-4d68-8046-85ae37cf0b56"
+      "1ce65317-2276-4665-b6ab-f12392c9d0c9",
+      "9431ce26-7a40-41a9-b207-a817d88d36e6"
     ]
   },
   "Variables": {

@@ -30,20 +30,56 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="length">The number of bytes to search, starting from the given startOffset.</param>
         /// <param name="reverse">If true, searches from the startOffset down to the beginning of the buffer. If false, searches upwards.</param>
         /// <returns>The index of the closest newline character in the sequence (based on direction) that was found. Returns -1 if not found. </returns>
-        public static int FindNewline(byte[] buffer, int startOffset, int length, bool reverse)
+        public static int FindNewline(byte[] buffer, int startOffset, int length, bool reverse, System.Text.Encoding encoding)
         {
-            if (buffer.Length == 0)
+            if (buffer.Length == 0 || length == 0)
             {
                 return -1;
             }
 
-            if (startOffset < 0 || startOffset >= buffer.Length)
+            // define the bytes per character to use
+            int bytesPerChar;
+            switch (encoding.CodePage)
             {
-                throw new ArgumentOutOfRangeException("startOffset", "Given start offset is outside the bounds of the given buffer.");
+                // Big Endian Unicode (UTF-16)
+                case 1201:
+                // Unicode (UTF-16)
+                case 1200:
+                    bytesPerChar = 2;
+                    break;
+                // UTF-32
+                case 12000:
+                    bytesPerChar = 4;
+                    break;
+                // ASCII
+                case 20127:
+                // UTF-8
+                case 65001:
+                // UTF-7
+                case 65000:
+                // Default to UTF-8
+                default:
+                    bytesPerChar = 1;
+                    break;
             }
 
             //endOffset is a 'sentinel' value; we use that to figure out when to stop searching 
             int endOffset = reverse ? startOffset - length : startOffset + length;
+
+            // if we are starting at the end, we need to move toward the front enough to grab the right number of bytes
+            startOffset = reverse ? startOffset - (bytesPerChar - 1) : startOffset;
+
+            if (startOffset < 0 || startOffset >= buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException("startOffset", "Given start offset is outside the bounds of the given buffer. In reverse cases, the start offset is modified to ensure it ");
+            }
+
+            // make sure that the length we are traversing is at least as long as a single character
+            if( length < bytesPerChar)
+            {
+                throw new ArgumentOutOfRangeException("length", "Length must be at least as long as the length, in bytes, of a single character");
+            }
+
             if (endOffset < -1 || endOffset > buffer.Length)
             {
                 throw new ArgumentOutOfRangeException("length", "Given combination of startOffset and length would execute the search outside the bounds of the given buffer.");
@@ -51,20 +87,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             int bufferEndOffset = reverse ? startOffset : startOffset + length;
             int result = -1;
-            for (int charPos = startOffset; charPos != endOffset; charPos = reverse ? charPos - 1 : charPos + 1)
+            for (int charPos = startOffset; reverse ? charPos != endOffset : charPos + bytesPerChar - 1 < endOffset; charPos = reverse ? charPos - 1 : charPos + 1)
             {
-                char c = (char)buffer[charPos];
+                char c = bytesPerChar == 1 ? (char)buffer[charPos] : encoding.GetString(buffer, charPos, bytesPerChar).ToCharArray()[0];
                 if (IsNewline(c))
                 {
-                    result = charPos;
+                    result = charPos + bytesPerChar -1;
                     break;
                 }
             }
 
-            if (!reverse && result < bufferEndOffset - 1 && IsNewline((char)buffer[result + 1]))
+            if (!reverse && result < bufferEndOffset - bytesPerChar && IsNewline(bytesPerChar == 1 ? (char)buffer[result + bytesPerChar] : encoding.GetString(buffer, result + 1, bytesPerChar).ToCharArray()[0]))
             {
                 //we originally landed on a \r character; if we have a \r\n character, advance one position to include that
-                result++;
+                result+= bytesPerChar;
             }
 
             return result;

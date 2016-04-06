@@ -303,9 +303,24 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The Azure Data Lake Store account to execute filesystem operations on.
             /// </param>
-            public static FileStatusesResult ListFileStatus(this IFileSystemOperations operations, string listFilePath, string accountName)
+            /// <param name='listSize'>
+            /// Gets or sets the number of items to return. Optional.
+            /// </param>
+            /// <param name='listAfter'>
+            /// Gets or sets the item or lexographical index after which to begin
+            /// returning results. For example, a file list of 'a','b','d' and
+            /// listAfter='b' will return 'd', and a listAfter='c' will also return 'd'.
+            /// Optional.
+            /// </param>
+            /// <param name='listBefore'>
+            /// Gets or sets the item or lexographical index before which to begin
+            /// returning results. For example, a file list of 'a','b','d' and
+            /// listBefore='d' will return 'a','b', and a listBefore='c' will also return
+            /// 'a','b'. Optional.
+            /// </param>
+            public static FileStatusesResult ListFileStatus(this IFileSystemOperations operations, string listFilePath, string accountName, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string))
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).ListFileStatusAsync(listFilePath, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).ListFileStatusAsync(listFilePath, accountName, listSize, listAfter, listBefore), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,12 +336,27 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The Azure Data Lake Store account to execute filesystem operations on.
             /// </param>
+            /// <param name='listSize'>
+            /// Gets or sets the number of items to return. Optional.
+            /// </param>
+            /// <param name='listAfter'>
+            /// Gets or sets the item or lexographical index after which to begin
+            /// returning results. For example, a file list of 'a','b','d' and
+            /// listAfter='b' will return 'd', and a listAfter='c' will also return 'd'.
+            /// Optional.
+            /// </param>
+            /// <param name='listBefore'>
+            /// Gets or sets the item or lexographical index before which to begin
+            /// returning results. For example, a file list of 'a','b','d' and
+            /// listBefore='d' will return 'a','b', and a listBefore='c' will also return
+            /// 'a','b'. Optional.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileStatusesResult> ListFileStatusAsync(this IFileSystemOperations operations, string listFilePath, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileStatusesResult> ListFileStatusAsync(this IFileSystemOperations operations, string listFilePath, string accountName, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListFileStatusWithHttpMessagesAsync(listFilePath, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListFileStatusWithHttpMessagesAsync(listFilePath, accountName, listSize, listAfter, listBefore, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
