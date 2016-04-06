@@ -42,6 +42,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._clientRequestId = value; }
         }
         
+        private string _culture;
+        
+        /// <summary>
+        /// Optional. Culture in which service has to return the output
+        /// </summary>
+        public string Culture
+        {
+            get { return this._culture; }
+            set { this._culture = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the CustomRequestHeaders class.
         /// </summary>
