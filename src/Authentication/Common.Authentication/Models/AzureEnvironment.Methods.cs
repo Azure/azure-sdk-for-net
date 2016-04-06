@@ -123,6 +123,29 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.ChinaAzureKeyVaultServiceEndpointResourceId }
                     }
                 }
+            },
+            {
+                EnvironmentName.AzureGermanCloud,
+                new AzureEnvironment
+                {
+                    Name = EnvironmentName.AzureGermanCloud,
+                    Endpoints = new Dictionary<AzureEnvironment.Endpoint, string>
+                    {
+                        { AzureEnvironment.Endpoint.PublishSettingsFileUrl, AzureEnvironmentConstants.GermanPublishSettingsFileUrl },
+                        { AzureEnvironment.Endpoint.ServiceManagement, AzureEnvironmentConstants.GermanServiceEndpoint },
+                        { AzureEnvironment.Endpoint.ResourceManager, AzureEnvironmentConstants.GermanResourceManagerEndpoint },
+                        { AzureEnvironment.Endpoint.ManagementPortalUrl, AzureEnvironmentConstants.GermanManagementPortalUrl },
+                        { AzureEnvironment.Endpoint.ActiveDirectory, AzureEnvironmentConstants.GermanActiveDirectoryEndpoint },
+                        { AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId, AzureEnvironmentConstants.GermanServiceEndpoint },
+                        { AzureEnvironment.Endpoint.StorageEndpointSuffix, AzureEnvironmentConstants.GermanStorageEndpointSuffix },
+                        { AzureEnvironment.Endpoint.Gallery, AzureEnvironmentConstants.GermanGalleryEndpoint },
+                        { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.GermanSqlDatabaseDnsSuffix },
+                        { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.GermanGraphEndpoint },
+                        { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.GermanTrafficManagerDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.GermanAzureKeyVaultDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.GermanAzureKeyVaultServiceEndpointResourceId }
+                    }
+                }
             }
         };
 
@@ -300,49 +323,73 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public const string AzureServiceEndpoint = "https://management.core.windows.net/";
 
         public const string ChinaServiceEndpoint = "https://management.core.chinacloudapi.cn/";
+        
+        public const string GermanServiceEndpoint = "https://management.core.cloudapi.de/";
 
         public const string AzureResourceManagerEndpoint = "https://management.azure.com/";
 
         public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn";
+        
+        public const string GermanResourceManagerEndpoint = "https://management.microsoftazure.de/";
 
         public const string GalleryEndpoint = "https://gallery.azure.com/";
 
         public const string ChinaGalleryEndpoint = "https://gallery.chinacloudapi.cn/";
+        
+        public const string GermanGalleryEndpoint = "https://gallery.cloudapi.de/";
 
         public const string AzurePublishSettingsFileUrl = "http://go.microsoft.com/fwlink/?LinkID=301775";
 
         public const string ChinaPublishSettingsFileUrl = "http://go.microsoft.com/fwlink/?LinkID=301776";
+        
+        public const string GermanPublishSettingsFileUrl = "https://manage.microsoftazure.de/publishsettings/index";
 
         public const string AzureManagementPortalUrl = "http://go.microsoft.com/fwlink/?LinkId=254433";
 
         public const string ChinaManagementPortalUrl = "http://go.microsoft.com/fwlink/?LinkId=301902";
+        
+        public const string GermanManagementPortalUrl = "http://portal.microsoftazure.de/";
 
         public const string AzureStorageEndpointSuffix = "core.windows.net";
 
         public const string ChinaStorageEndpointSuffix = "core.chinacloudapi.cn";
+        
+        public const string GermanStorageEndpointSuffix = "core.cloudapi.de";
 
         public const string AzureSqlDatabaseDnsSuffix = ".database.windows.net";
 
         public const string ChinaSqlDatabaseDnsSuffix = ".database.chinacloudapi.cn";
+        
+        public const string GermanSqlDatabaseDnsSuffix = ".database.cloudapi.de";
 
         public const string AzureActiveDirectoryEndpoint = "https://login.windows.net/";
 
         public const string ChinaActiveDirectoryEndpoint = "https://login.chinacloudapi.cn/";
+        
+        public const string GermanActiveDirectoryEndpoint = "https://login.microsoftonline.de/";
 
         public const string AzureGraphEndpoint = "https://graph.windows.net/";
 
         public const string ChinaGraphEndpoint = "https://graph.chinacloudapi.cn/";
+        
+        public const string GermanGraphEndpoint = "https://graph.cloudapi.de/";
 
         public const string AzureTrafficManagerDnsSuffix = "trafficmanager.net";
 
         public const string ChinaTrafficManagerDnsSuffix = "trafficmanager.cn";
+        
+        public const string GermanTrafficManagerDnsSuffix = "azuretrafficmanager.de";
 
         public const string AzureKeyVaultDnsSuffix = "vault.azure.net";
 
         public const string ChinaAzureKeyVaultDnsSuffix = "vault.azure.cn";
+        
+        public const string GermanAzureKeyVaultDnsSuffix = "vault.microsoftazure.de";
 
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
 
         public const string ChinaAzureKeyVaultServiceEndpointResourceId = "https://vault.azure.cn";
+        
+        public const string GermanAzureKeyVaultServiceEndpointResourceId = "https://vault.microsoftazure.de";
     }
 }
