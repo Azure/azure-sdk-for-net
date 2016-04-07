@@ -46,17 +46,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryParams'>
         /// Required. Query params for backup engine.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional. Pagination parameter for skip token and top.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a BackupEngineListResponse.
         /// </returns>
-        public static BackupEngineListResponse List(this IBackupEngineOperations operations, string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
+        public static BackupEngineListResponse List(this IBackupEngineOperations operations, string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBackupEngineOperations)s).ListAsync(resourceGroupName, resourceName, queryParams, customRequestHeaders);
+                return ((IBackupEngineOperations)s).ListAsync(resourceGroupName, resourceName, queryParams, paginationParams, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -77,15 +80,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryParams'>
         /// Required. Query params for backup engine.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional. Pagination parameter for skip token and top.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a BackupEngineListResponse.
         /// </returns>
-        public static Task<BackupEngineListResponse> ListAsync(this IBackupEngineOperations operations, string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
+        public static Task<BackupEngineListResponse> ListAsync(this IBackupEngineOperations operations, string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(resourceGroupName, resourceName, queryParams, customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, resourceName, queryParams, paginationParams, customRequestHeaders, CancellationToken.None);
         }
     }
 }

@@ -73,6 +73,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryParams'>
         /// Required. Query params for backup engine.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Optional. Pagination parameter for skip token and top.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
         /// </param>
@@ -82,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a BackupEngineListResponse.
         /// </returns>
-        public async Task<BackupEngineListResponse> ListAsync(string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<BackupEngineListResponse> ListAsync(string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -112,6 +115,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("queryParams", queryParams);
+                tracingParameters.Add("paginationParams", paginationParams);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -142,6 +146,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             if (odataFilter.Count > 0)
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (paginationParams != null && paginationParams.SkipToken != null)
+            {
+                queryParameters.Add("$skiptoken=" + Uri.EscapeDataString(paginationParams.SkipToken));
+            }
+            if (paginationParams != null && paginationParams.Top != null)
+            {
+                queryParameters.Add("$top=" + Uri.EscapeDataString(paginationParams.Top));
             }
             if (queryParameters.Count > 0)
             {

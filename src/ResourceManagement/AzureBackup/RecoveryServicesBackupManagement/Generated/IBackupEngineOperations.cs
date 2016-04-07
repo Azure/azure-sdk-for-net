@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='queryParams'>
         /// Query params for backup engine.
         /// </param>
+        /// <param name='paginationParams'>
+        /// Pagination parameter for skip token and top.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -54,6 +57,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a BackupEngineListResponse.
         /// </returns>
-        Task<BackupEngineListResponse> ListAsync(string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<BackupEngineListResponse> ListAsync(string resourceGroupName, string resourceName, BackupEngineListQueryParams queryParams, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
