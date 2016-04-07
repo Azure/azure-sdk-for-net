@@ -20,12 +20,12 @@ namespace RecoveryServices.Tests.Helpers
             Client = client;
         }
 
-        public BackupEngineListResponse ListBackupEngine(BackupEngineListQueryParams queryParams)
+        public BackupEngineListResponse ListBackupEngine(BackupEngineListQueryParams queryParams, PaginationRequest paginationParam)
         {
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            BackupEngineListResponse response = Client.BackupEngine.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
+            BackupEngineListResponse response = Client.BackupEngine.List(rsVaultRgName, rsVaultName, queryParams, paginationParam, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

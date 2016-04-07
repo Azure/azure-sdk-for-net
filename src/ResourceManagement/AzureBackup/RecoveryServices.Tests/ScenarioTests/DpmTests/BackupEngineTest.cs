@@ -41,7 +41,9 @@ namespace RecoveryServices.Tests
                     BackupEngineHelpers containerTestHelper = new BackupEngineHelpers(client);
                     BackupEngineListQueryParams queryParam = new BackupEngineListQueryParams();
                     queryParam.ProviderType = "DPM";
-                    AzureOperationResponse response = containerTestHelper.ListBackupEngine(queryParam);
+                    PaginationRequest paginationParam = new PaginationRequest();
+                    paginationParam.Top = "200";
+                    AzureOperationResponse response = containerTestHelper.ListBackupEngine(queryParam, paginationParam);
                 });
         }
     }
