@@ -21,47 +21,38 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Dns.Models;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Dns.Models
 {
     /// <summary>
-    /// Parameters supplied to create or update a RecordSet.
+    /// The response body contains the status of the specified asynchronous
+    /// operation, indicating whether it has succeeded, is inprogress, or has
+    /// failed. Note that this status is distinct from the HTTP status code
+    /// returned for the Get Operation Status operation itself. If the
+    /// asynchronous operation succeeded, the response body includes the HTTP
+    /// status code for the successful request. If the asynchronous operation
+    /// failed, the response body includes the HTTP status code for the failed
+    /// request and error information regarding the failure.
     /// </summary>
-    public partial class RecordSetCreateOrUpdateParameters
+    public partial class AzureAsyncOperationResponse : AzureOperationResponse
     {
-        private RecordSet _recordSet;
+        private string _status;
         
         /// <summary>
-        /// Required. Gets or sets information about the RecordSet being
-        /// created or updated.
+        /// Optional. Status of the AzureAsuncOperation
         /// </summary>
-        public RecordSet RecordSet
+        public string Status
         {
-            get { return this._recordSet; }
-            set { this._recordSet = value; }
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the AzureAsyncOperationResponse class.
         /// </summary>
-        public RecordSetCreateOrUpdateParameters()
+        public AzureAsyncOperationResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class with required arguments.
-        /// </summary>
-        public RecordSetCreateOrUpdateParameters(RecordSet recordSet)
-            : this()
-        {
-            if (recordSet == null)
-            {
-                throw new ArgumentNullException("recordSet");
-            }
-            this.RecordSet = recordSet;
         }
     }
 }

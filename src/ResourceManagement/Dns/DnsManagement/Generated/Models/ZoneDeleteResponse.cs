@@ -21,47 +21,43 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Dns.Models;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Dns.Models
 {
     /// <summary>
-    /// Parameters supplied to create or update a RecordSet.
+    /// The response to a Zone Delete operation.
     /// </summary>
-    public partial class RecordSetCreateOrUpdateParameters
+    public partial class ZoneDeleteResponse : AzureOperationResponse
     {
-        private RecordSet _recordSet;
+        private string _azureAsyncOperation;
         
         /// <summary>
-        /// Required. Gets or sets information about the RecordSet being
-        /// created or updated.
+        /// Optional. Users can perform a Get on Azure-AsyncOperation to get
+        /// the status of their delete Zone operations
         /// </summary>
-        public RecordSet RecordSet
+        public string AzureAsyncOperation
         {
-            get { return this._recordSet; }
-            set { this._recordSet = value; }
+            get { return this._azureAsyncOperation; }
+            set { this._azureAsyncOperation = value; }
+        }
+        
+        private OperationStatus _status;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public OperationStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the ZoneDeleteResponse class.
         /// </summary>
-        public RecordSetCreateOrUpdateParameters()
+        public ZoneDeleteResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class with required arguments.
-        /// </summary>
-        public RecordSetCreateOrUpdateParameters(RecordSet recordSet)
-            : this()
-        {
-            if (recordSet == null)
-            {
-                throw new ArgumentNullException("recordSet");
-            }
-            this.RecordSet = recordSet;
         }
     }
 }

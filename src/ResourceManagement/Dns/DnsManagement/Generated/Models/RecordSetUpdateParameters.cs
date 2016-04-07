@@ -26,15 +26,15 @@ using Microsoft.Azure.Management.Dns.Models;
 namespace Microsoft.Azure.Management.Dns.Models
 {
     /// <summary>
-    /// Parameters supplied to create or update a RecordSet.
+    /// Parameters supplied to update a RecordSet.
     /// </summary>
-    public partial class RecordSetCreateOrUpdateParameters
+    public partial class RecordSetUpdateParameters
     {
         private RecordSet _recordSet;
         
         /// <summary>
         /// Required. Gets or sets information about the RecordSet being
-        /// created or updated.
+        /// updated.
         /// </summary>
         public RecordSet RecordSet
         {
@@ -43,18 +43,17 @@ namespace Microsoft.Azure.Management.Dns.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the RecordSetUpdateParameters class.
         /// </summary>
-        public RecordSetCreateOrUpdateParameters()
+        public RecordSetUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class with required arguments.
+        /// Initializes a new instance of the RecordSetUpdateParameters class
+        /// with required arguments.
         /// </summary>
-        public RecordSetCreateOrUpdateParameters(RecordSet recordSet)
+        public RecordSetUpdateParameters(RecordSet recordSet)
             : this()
         {
             if (recordSet == null)
