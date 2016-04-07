@@ -216,6 +216,14 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
                     
                     if (shouldTrace)
                     {
@@ -576,10 +584,9 @@ namespace Microsoft.Azure.Management.Dns
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+        public async Task<ZoneDeleteResponse> DeleteAsync(string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
         {
             DnsManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -597,20 +604,24 @@ namespace Microsoft.Azure.Management.Dns
             
             cancellationToken.ThrowIfCancellationRequested();
             ZoneDeleteResponse response = await client.Zones.BeginDeletingAsync(resourceGroupName, zoneName, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = 30;
+            ZoneDeleteResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 3;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while (result.Status == DnsOperationStatus.InProgress)
+            while (result.Status == OperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = 15;
+                delayInSeconds = 2;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
                     delayInSeconds = client.LongRunningOperationRetryTimeout;

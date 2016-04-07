@@ -61,6 +61,29 @@ namespace Microsoft.Azure.Management.Dns.Testing
             return true;
         }
 
+        public static bool AreEqualPrereq(
+           RecordSet first,
+           RecordSet second,
+           bool ignoreEtag = false)
+        {
+            if (first == null && second == null)
+            {
+                return true;
+            }
+            else if (first == null || second == null)
+            {
+                return false;
+            }
+
+            if (first.Location != second.Location
+                || first.Name != second.Name)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool AreEqual(Zone first, Zone second, bool ignoreEtag = false)
         {
             if (!AreEqualPrereq(first, second))

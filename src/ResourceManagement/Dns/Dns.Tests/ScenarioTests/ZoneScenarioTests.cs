@@ -202,7 +202,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     () => dnsClient.Zones.CreateOrUpdate(resourceGroup.Name, zoneName, ifMatch: null, ifNoneMatch: null, parameters: updateParameters),
                     ex => ex.Error.Code == "PreconditionFailed");
 
-                dnsClient.Zones.Delete(resourceGroup.Name, zoneName, ifMatch: null, ifNoneMatch: null);
+                var result = dnsClient.Zones.Delete(resourceGroup.Name, zoneName, ifMatch: null, ifNoneMatch: null);
+                Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+                result = dnsClient.Zones.Delete(resourceGroup.Name, "hiya.com", ifMatch: null, ifNoneMatch: null);
+                Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
             }
         }
 

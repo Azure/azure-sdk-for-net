@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (parameters.RecordSet.Location == null)
             {
-                throw new ArgumentNullException("parameters.RecordSet.");
+                throw new ArgumentNullException("parameters.RecordSet.Location");
             }
             if (parameters.RecordSet.Properties != null)
             {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aaaaRecordsParameterItem.Ipv6Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..AaaaRecords.Ipv6Address");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.AaaaRecords.Ipv6Address");
                         }
                     }
                 }
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aRecordsParameterItem.Ipv4Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..ARecords.Ipv4Address");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.ARecords.Ipv4Address");
                         }
                     }
                 }
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.CnameRecord.Cname == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet..CnameRecord.Cname");
+                        throw new ArgumentNullException("parameters.RecordSet.Properties.CnameRecord.Cname");
                     }
                 }
                 if (parameters.RecordSet.Properties.MxRecords != null)
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (mxRecordsParameterItem.Exchange == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..MxRecords.Exchange");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.MxRecords.Exchange");
                         }
                     }
                 }
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (nsRecordsParameterItem.Nsdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..NsRecords.Nsdname");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.NsRecords.Nsdname");
                         }
                     }
                 }
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (ptrRecordsParameterItem.Ptrdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..PtrRecords.Ptrdname");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.PtrRecords.Ptrdname");
                         }
                     }
                 }
@@ -186,11 +186,7 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.SoaRecord.Email == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Email");
-                    }
-                    if (parameters.RecordSet.Properties.SoaRecord.Host == null)
-                    {
-                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Host");
+                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Email");
                     }
                 }
                 if (parameters.RecordSet.Properties.SrvRecords != null)
@@ -199,7 +195,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (srvRecordsParameterItem.Target == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..SrvRecords.Target");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.SrvRecords.Target");
                         }
                     }
                 }
@@ -209,7 +205,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (txtRecordsParameterItem.Value == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..TxtRecords.Value");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.TxtRecords.Value");
                         }
                     }
                 }
@@ -455,7 +451,10 @@ namespace Microsoft.Azure.Management.Dns
                         JObject sOARecordValue = new JObject();
                         propertiesValue["SOARecord"] = sOARecordValue;
                         
-                        sOARecordValue["host"] = parameters.RecordSet.Properties.SoaRecord.Host;
+                        if (parameters.RecordSet.Properties.SoaRecord.Host != null)
+                        {
+                            sOARecordValue["host"] = parameters.RecordSet.Properties.SoaRecord.Host;
+                        }
                         
                         sOARecordValue["email"] = parameters.RecordSet.Properties.SoaRecord.Email;
                         
@@ -2932,7 +2931,7 @@ namespace Microsoft.Azure.Management.Dns
             }
             if (parameters.RecordSet.Location == null)
             {
-                throw new ArgumentNullException("parameters.RecordSet.");
+                throw new ArgumentNullException("parameters.RecordSet.Location");
             }
             if (parameters.RecordSet.Properties != null)
             {
@@ -2942,7 +2941,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aaaaRecordsParameterItem.Ipv6Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..AaaaRecords.Ipv6Address");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.AaaaRecords.Ipv6Address");
                         }
                     }
                 }
@@ -2952,7 +2951,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (aRecordsParameterItem.Ipv4Address == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..ARecords.Ipv4Address");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.ARecords.Ipv4Address");
                         }
                     }
                 }
@@ -2960,7 +2959,7 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.CnameRecord.Cname == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet..CnameRecord.Cname");
+                        throw new ArgumentNullException("parameters.RecordSet.Properties.CnameRecord.Cname");
                     }
                 }
                 if (parameters.RecordSet.Properties.MxRecords != null)
@@ -2969,7 +2968,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (mxRecordsParameterItem.Exchange == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..MxRecords.Exchange");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.MxRecords.Exchange");
                         }
                     }
                 }
@@ -2979,7 +2978,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (nsRecordsParameterItem.Nsdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..NsRecords.Nsdname");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.NsRecords.Nsdname");
                         }
                     }
                 }
@@ -2989,7 +2988,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (ptrRecordsParameterItem.Ptrdname == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..PtrRecords.Ptrdname");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.PtrRecords.Ptrdname");
                         }
                     }
                 }
@@ -2997,11 +2996,7 @@ namespace Microsoft.Azure.Management.Dns
                 {
                     if (parameters.RecordSet.Properties.SoaRecord.Email == null)
                     {
-                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Email");
-                    }
-                    if (parameters.RecordSet.Properties.SoaRecord.Host == null)
-                    {
-                        throw new ArgumentNullException("parameters.RecordSet..SoaRecord.Host");
+                        throw new ArgumentNullException("parameters.RecordSet.Properties.SoaRecord.Email");
                     }
                 }
                 if (parameters.RecordSet.Properties.SrvRecords != null)
@@ -3010,7 +3005,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (srvRecordsParameterItem.Target == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..SrvRecords.Target");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.SrvRecords.Target");
                         }
                     }
                 }
@@ -3020,7 +3015,7 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         if (txtRecordsParameterItem.Value == null)
                         {
-                            throw new ArgumentNullException("parameters.RecordSet..TxtRecords.Value");
+                            throw new ArgumentNullException("parameters.RecordSet.Properties.TxtRecords.Value");
                         }
                     }
                 }
@@ -3266,7 +3261,10 @@ namespace Microsoft.Azure.Management.Dns
                         JObject sOARecordValue = new JObject();
                         propertiesValue["SOARecord"] = sOARecordValue;
                         
-                        sOARecordValue["host"] = parameters.RecordSet.Properties.SoaRecord.Host;
+                        if (parameters.RecordSet.Properties.SoaRecord.Host != null)
+                        {
+                            sOARecordValue["host"] = parameters.RecordSet.Properties.SoaRecord.Host;
+                        }
                         
                         sOARecordValue["email"] = parameters.RecordSet.Properties.SoaRecord.Email;
                         

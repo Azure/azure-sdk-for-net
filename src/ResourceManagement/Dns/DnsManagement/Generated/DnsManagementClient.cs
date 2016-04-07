@@ -30,7 +30,6 @@ using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns;
 using Microsoft.Azure.Management.Dns.Models;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Dns
 {
@@ -288,17 +287,9 @@ namespace Microsoft.Azure.Management.Dns
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request and error information regarding
-        /// the failure.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        public async Task<AzureAsyncOperationResponse> GetLongRunningOperationStatusAsync(string azureAsyncOperation, CancellationToken cancellationToken)
+        public async Task<ZoneDeleteResponse> GetLongRunningOperationStatusAsync(string azureAsyncOperation, CancellationToken cancellationToken)
         {
             // Validate
             if (azureAsyncOperation == null)
@@ -352,7 +343,7 @@ namespace Microsoft.Azure.Management.Dns
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -364,34 +355,21 @@ namespace Microsoft.Azure.Management.Dns
                     }
                     
                     // Create Result
-                    AzureAsyncOperationResponse result = null;
+                    ZoneDeleteResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new AzureAsyncOperationResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken statusValue = responseDoc["status"];
-                            if (statusValue != null && statusValue.Type != JTokenType.Null)
-                            {
-                                string statusInstance = ((string)statusValue);
-                                result.Status = statusInstance;
-                            }
-                        }
-                        
-                    }
+                    result = new ZoneDeleteResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.NoContent)
+                    {
+                        result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)

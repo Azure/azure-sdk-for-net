@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns;
 using Microsoft.Azure.Management.Dns.Models;
 
@@ -182,10 +181,9 @@ namespace Microsoft.Azure.Management.Dns
         /// not match this value.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        public static AzureOperationResponse Delete(this IZoneOperations operations, string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch)
+        public static ZoneDeleteResponse Delete(this IZoneOperations operations, string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -214,10 +212,9 @@ namespace Microsoft.Azure.Management.Dns
         /// not match this value.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IZoneOperations operations, string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch)
+        public static Task<ZoneDeleteResponse> DeleteAsync(this IZoneOperations operations, string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch)
         {
             return operations.DeleteAsync(resourceGroupName, zoneName, ifMatch, ifNoneMatch, CancellationToken.None);
         }

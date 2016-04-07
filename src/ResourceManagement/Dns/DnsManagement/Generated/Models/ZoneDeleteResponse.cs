@@ -42,6 +42,17 @@ namespace Microsoft.Azure.Management.Dns.Models
             set { this._azureAsyncOperation = value; }
         }
         
+        private OperationStatus _status;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public OperationStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ZoneDeleteResponse class.
         /// </summary>

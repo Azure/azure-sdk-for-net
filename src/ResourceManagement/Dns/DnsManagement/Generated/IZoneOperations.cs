@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns
@@ -107,10 +106,9 @@ namespace Microsoft.Azure.Management.Dns
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
+        Task<ZoneDeleteResponse> DeleteAsync(string resourceGroupName, string zoneName, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets a DNS zone.

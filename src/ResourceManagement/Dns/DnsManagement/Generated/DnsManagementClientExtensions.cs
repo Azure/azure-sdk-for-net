@@ -47,17 +47,9 @@ namespace Microsoft.Azure.Management.Dns
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request and error information regarding
-        /// the failure.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        public static AzureAsyncOperationResponse GetLongRunningOperationStatus(this IDnsManagementClient operations, string azureAsyncOperation)
+        public static ZoneDeleteResponse GetLongRunningOperationStatus(this IDnsManagementClient operations, string azureAsyncOperation)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -80,17 +72,9 @@ namespace Microsoft.Azure.Management.Dns
         /// Required. Location value returned by the Begin operation.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request and error information regarding
-        /// the failure.
+        /// The response to a Zone Delete operation.
         /// </returns>
-        public static Task<AzureAsyncOperationResponse> GetLongRunningOperationStatusAsync(this IDnsManagementClient operations, string azureAsyncOperation)
+        public static Task<ZoneDeleteResponse> GetLongRunningOperationStatusAsync(this IDnsManagementClient operations, string azureAsyncOperation)
         {
             return operations.GetLongRunningOperationStatusAsync(azureAsyncOperation, CancellationToken.None);
         }
