@@ -121,9 +121,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 // Call Update on the object returned by Create (important distinction from Get below)
                 Models.RecordSet createdRecordSet = createResponse.RecordSet;
 
-                // Tags doesn't work due to API change.
-                //createdRecordSet.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } };
                 createdRecordSet.Properties.Ttl = 120;
+                createdRecordSet.Properties.Metadata = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } };
                 createdRecordSet.Properties.ARecords = new List<ARecord> 
                 { 
                     new ARecord { Ipv4Address = "123.32.1.0" }, 
@@ -159,7 +158,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 // Call Update on the object returned by Get (important distinction from Create above)
                 Models.RecordSet retrievedRecordSet = getresponse.RecordSet;
-                // retrievedRecordSet.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
                 retrievedRecordSet.Properties.Ttl = 180;
                 retrievedRecordSet.Properties.ARecords = new List<ARecord> 
                 { 

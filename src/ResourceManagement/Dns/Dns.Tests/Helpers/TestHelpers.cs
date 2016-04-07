@@ -81,6 +81,22 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return false;
             }
 
+            if (first.Properties.Metadata != null || second.Properties.Metadata != null)
+            {
+                if (first.Properties.Metadata == null || second.Properties.Metadata == null || first.Properties.Metadata.Count != second.Properties.Metadata.Count)
+                {
+                    return false;
+                }
+
+                foreach (string key in first.Properties.Metadata.Keys)
+                {
+                    if (!second.Properties.Metadata.ContainsKey(key) || first.Properties.Metadata[key] != second.Properties.Metadata[key])
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
 
