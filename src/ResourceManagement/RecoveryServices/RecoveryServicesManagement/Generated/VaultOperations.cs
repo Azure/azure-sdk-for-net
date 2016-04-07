@@ -1091,6 +1091,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
                                     string storageTypeStateInstance = ((string)storageTypeStateValue);
                                     propertiesInstance.StorageTypeState = storageTypeStateInstance;
                                 }
+                                
+                                JToken dedupStateValue = propertiesValue["dedupState"];
+                                if (dedupStateValue != null && dedupStateValue.Type != JTokenType.Null)
+                                {
+                                    string dedupStateInstance = ((string)dedupStateValue);
+                                    propertiesInstance.DedupState = dedupStateInstance;
+                                }
                             }
                         }
                         
@@ -1465,6 +1472,11 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 if (updateVaultStorageTypeRequest.Properties.StorageModelType != null)
                 {
                     propertiesValue["storageModelType"] = updateVaultStorageTypeRequest.Properties.StorageModelType;
+                }
+                
+                if (updateVaultStorageTypeRequest.Properties.DedupState != null)
+                {
+                    propertiesValue["dedupState"] = updateVaultStorageTypeRequest.Properties.DedupState;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);

@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// </summary>
     public partial class StorageTypeProperties
     {
+        private string _dedupState;
+        
+        /// <summary>
+        /// Optional. Gets or sets the dedup state type.
+        /// </summary>
+        public string DedupState
+        {
+            get { return this._dedupState; }
+            set { this._dedupState = value; }
+        }
+        
         private string _storageModelType;
         
         /// <summary>

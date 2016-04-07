@@ -20,6 +20,7 @@
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="Helpers\RecoveryServicesManagementTestUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\BackupStorageConfigTests.cs" />
     <Compile Include="ScenarioTests\RecoveryServicesTestsBase.cs" />
     <Compile Include="ScenarioTests\VaultTests.cs" />
     <Compile Include="ScenarioTests\VaultUsageTests.cs" />
@@ -41,6 +42,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupStorageConfigTests\GetBackupStorageConfig.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupStorageConfigTests\SetBackupStorageConfig.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.VaultTests\CreateAndRetrieveVaultExtendedInfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -52,7 +55,7 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.VaultTests\RetrieveVault.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>  
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.VaultUsageTests\RetrieveVaultUsage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
