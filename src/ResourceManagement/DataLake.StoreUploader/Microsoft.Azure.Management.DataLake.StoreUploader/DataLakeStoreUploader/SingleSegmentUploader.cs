@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             var encoding = Encoding.GetEncoding(_metadata.EncodingCodePage);
             //NOTE: we return an offset, but everywhere else below we treat it as a byte count; in order for that to work, we need to add 1 to the result of FindNewLine.
-            int uploadCutoff = StringExtensions.FindNewline(buffer, bufferDataLength - 1, bufferDataLength, true, encoding) + 1;
+            int uploadCutoff = StringExtensions.FindNewline(buffer, bufferDataLength - 1, bufferDataLength, true, encoding, _metadata.Delimiter) + 1;
             if (uploadCutoff <= 0 && (_metadata.SegmentCount > 1 || bufferDataLength >= MaxRecordLength))
             {
                 throw new UploadFailedException(string.Format("Found a record that exceeds the maximum allowed record length around offset {0}", inputStream.Position));
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             //a corner case here is when the newline is 2 chars long, and the first of those lands on the last byte of the buffer. If so, let's try to find another 
             //newline inside the buffer, because we might be splitting this wrongly.
-            if (uploadCutoff == buffer.Length && buffer[buffer.Length - 1] == (byte)'\r')
+            if (string.IsNullOrEmpty(_metadata.Delimiter) && uploadCutoff == buffer.Length && buffer[buffer.Length - 1] == (byte)'\r')
             {
                 int newCutoff = StringExtensions.FindNewline(buffer, bufferDataLength - 2, bufferDataLength - 1, true, encoding) + 1;
                 if (newCutoff > 0)

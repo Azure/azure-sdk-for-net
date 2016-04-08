@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     else
                     {
                         //figure out how much do we need to adjust the length of the segment so it ends on a record boundary (this can be negative or positive)
-                        int lengthAdjustment = DetermineLengthAdjustment(segment, stream, Encoding.GetEncoding(metadata.EncodingCodePage)) + 1;
+                        int lengthAdjustment = DetermineLengthAdjustment(segment, stream, Encoding.GetEncoding(metadata.EncodingCodePage), metadata.Delimiter) + 1;
 
                         //adjust segment length and offset
                         segment.Length += lengthAdjustment;
@@ -152,9 +152,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="segment"></param>
         /// <param name="stream"></param>
         /// <param name="encoding"></param>
+        /// <param name="delimiter"></param>
         /// <returns></returns>
         /// <exception cref="Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException">If no record boundary could be located on either side of the segment end offset within the allowed distance.</exception>
-        private int DetermineLengthAdjustment(UploadSegmentMetadata segment, FileStream stream, Encoding encoding)
+        private int DetermineLengthAdjustment(UploadSegmentMetadata segment, FileStream stream, Encoding encoding, string delimiter = null)
         {
             long referenceFileOffset = segment.Offset + segment.Length;
             byte[] buffer = new byte[_maxAppendLength];
@@ -165,11 +166,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 int middlePoint = bytesRead / 2;
                 //search for newline in it
-                int newLinePosBefore = StringExtensions.FindNewline(buffer, middlePoint + 1, middlePoint + 1, true, encoding);
+                int newLinePosBefore = StringExtensions.FindNewline(buffer, middlePoint + 1, middlePoint + 1, true, encoding, delimiter);
                 
                 //in some cases, we may have a newline that is 2 characters long, and it occurrs exactly on the midpoint, which means we won't be able to find its end.
                 //see if that's the case, and then search for a new candidate before it.
-                if (newLinePosBefore == middlePoint + 1 && buffer[newLinePosBefore] == (byte)'\r')
+                if (string.IsNullOrEmpty(delimiter) && newLinePosBefore == middlePoint + 1 && buffer[newLinePosBefore] == (byte)'\r')
                 {
                     int newNewLinePosBefore = StringExtensions.FindNewline(buffer, middlePoint, middlePoint, true, encoding);
                     if (newNewLinePosBefore >= 0)
@@ -178,8 +179,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     }
                 }
 
-                int newLinePosAfter = StringExtensions.FindNewline(buffer, middlePoint, middlePoint, false, encoding);
-                if (newLinePosAfter == buffer.Length - 1 && buffer[newLinePosAfter] == (byte)'\r' && newLinePosBefore >= 0)
+                int newLinePosAfter = StringExtensions.FindNewline(buffer, middlePoint, middlePoint, false, encoding, delimiter);
+                if (string.IsNullOrEmpty(delimiter) && newLinePosAfter == buffer.Length - 1 && buffer[newLinePosAfter] == (byte)'\r' && newLinePosBefore >= 0)
                 {
                     newLinePosAfter = -1;
                 }

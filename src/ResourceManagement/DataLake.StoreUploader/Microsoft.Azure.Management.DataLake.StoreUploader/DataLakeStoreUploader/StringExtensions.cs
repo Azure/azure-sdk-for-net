@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="length">The number of bytes to search, starting from the given startOffset.</param>
         /// <param name="reverse">If true, searches from the startOffset down to the beginning of the buffer. If false, searches upwards.</param>
         /// <returns>The index of the closest newline character in the sequence (based on direction) that was found. Returns -1 if not found. </returns>
-        public static int FindNewline(byte[] buffer, int startOffset, int length, bool reverse, System.Text.Encoding encoding)
+        public static int FindNewline(byte[] buffer, int startOffset, int length, bool reverse, System.Text.Encoding encoding, string delimiter = null)
         {
             if (buffer.Length == 0 || length == 0)
             {
@@ -63,6 +63,35 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     break;
             }
 
+            if(!string.IsNullOrEmpty(delimiter) && delimiter.Length > 1)
+            {
+                throw new ArgumentException("delimiter", "The delimiter must only be a single character or unspecified to represent the CRLF delimiter");
+            }
+
+            if (!string.IsNullOrEmpty(delimiter))
+            {
+                // convert the byte array back to a string
+                var startOfSegment = reverse ? startOffset - length + 1 : startOffset;
+                var bytesToString = encoding.GetString(buffer, startOfSegment, length);
+                if(!bytesToString.Contains(delimiter))
+                {
+                    // didn't find the delimiter.
+                    return -1;
+                }
+
+                // the index is returned, which is 0 based, so our loop must include the zero case.
+                var numCharsToDelim = reverse ? bytesToString.LastIndexOf(delimiter) : bytesToString.IndexOf(delimiter);
+                var toReturn = 0;
+                for (int i = 0; i <= numCharsToDelim; i++)
+                {
+                    toReturn += encoding.GetByteCount(bytesToString[startOfSegment + i].ToString());
+                }
+
+                // we get the total number of bytes, but we want to return the index (which starts at 0)
+                // so we subtract 1 from the total number of bytes to get the final byte index.
+                return toReturn - 1;
+            }
+
             //endOffset is a 'sentinel' value; we use that to figure out when to stop searching 
             int endOffset = reverse ? startOffset - length : startOffset + length;
 
@@ -71,11 +100,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             if (startOffset < 0 || startOffset >= buffer.Length)
             {
-                throw new ArgumentOutOfRangeException("startOffset", "Given start offset is outside the bounds of the given buffer. In reverse cases, the start offset is modified to ensure it ");
+                throw new ArgumentOutOfRangeException("startOffset", "Given start offset is outside the bounds of the given buffer. In reverse cases, the start offset is modified to ensure we check the full size of the last character");
             }
 
             // make sure that the length we are traversing is at least as long as a single character
-            if( length < bytesPerChar)
+            if ( length < bytesPerChar)
             {
                 throw new ArgumentOutOfRangeException("length", "Length must be at least as long as the length, in bytes, of a single character");
             }
@@ -90,14 +119,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             for (int charPos = startOffset; reverse ? charPos != endOffset : charPos + bytesPerChar - 1 < endOffset; charPos = reverse ? charPos - 1 : charPos + 1)
             {
                 char c = bytesPerChar == 1 ? (char)buffer[charPos] : encoding.GetString(buffer, charPos, bytesPerChar).ToCharArray()[0];
-                if (IsNewline(c))
+                if (IsNewline(c, delimiter))
                 {
                     result = charPos + bytesPerChar -1;
                     break;
                 }
             }
 
-            if (!reverse && result < bufferEndOffset - bytesPerChar && IsNewline(bytesPerChar == 1 ? (char)buffer[result + bytesPerChar] : encoding.GetString(buffer, result + 1, bytesPerChar).ToCharArray()[0]))
+            if (string.IsNullOrEmpty(delimiter) && !reverse && result < bufferEndOffset - bytesPerChar && IsNewline(bytesPerChar == 1 ? (char)buffer[result + bytesPerChar] : encoding.GetString(buffer, result + 1, bytesPerChar).ToCharArray()[0]))
             {
                 //we originally landed on a \r character; if we have a \r\n character, advance one position to include that
                 result+= bytesPerChar;
@@ -111,9 +140,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         /// <param name="c">The character.</param>
         /// <returns></returns>
-        private static bool IsNewline(char c)
+        private static bool IsNewline(char c, string delimiter = null)
         {
-            return c == '\r' || c == '\n';
+            if (string.IsNullOrEmpty(delimiter))
+            {
+                return c == '\r' || c == '\n';
+            }
+
+            return c == delimiter[0];
         }
     }
 }

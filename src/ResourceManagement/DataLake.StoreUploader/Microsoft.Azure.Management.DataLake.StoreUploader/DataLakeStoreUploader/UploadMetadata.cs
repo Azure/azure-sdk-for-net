@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
     /// <summary>
     /// Represents general metadata pertaining to an upload.
     /// </summary>
-    [DebuggerDisplay("Segments = {SegmentCount}, SegmentLength = {SegmentLength}, UploadId = {UploadId}, FileLength = {FileLength}, FilePath = {FilePath}, EncodingCodePage = {EncodingCodePage}")]
+    [DebuggerDisplay("Segments = {SegmentCount}, SegmentLength = {SegmentLength}, UploadId = {UploadId}, FileLength = {FileLength}, FilePath = {FilePath}, EncodingCodePage = {EncodingCodePage}, Delimiter = {Delimiter}")]
     [DataContract]
     public class UploadMetadata
     {
@@ -192,6 +192,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </value>
         [DataMember(Name = "EncodingCodePage")]
         public int EncodingCodePage { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating the record boundary delimiter for the file, if any.
+        /// </summary>
+        /// <value>
+        /// The record boundary delimiter
+        /// </value>
+        [DataMember(Name = "Delimiter")]
+        public string Delimiter { get; set; }
 
         /// <summary>
         /// Gets a value indicating the path where this metadata file is located.
