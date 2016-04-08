@@ -30,7 +30,7 @@ using Xunit;
 
 namespace RecoveryServices.Tests
 {
-    public class DpmContainerTests : RecoveryServicesTestsBase
+    public class BackupEngineTest : RecoveryServicesTestsBase
     {
         [Fact]
         public void UnregisterContainersTest()
@@ -38,9 +38,12 @@ namespace RecoveryServices.Tests
             ExecuteTest(
                 client =>
                 {
-                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    string dpmContainerName = ConfigurationManager.AppSettings["DpmContainerName"];
-                    AzureOperationResponse response = containerTestHelper.UnregisterContainer(dpmContainerName);
+                    BackupEngineHelpers containerTestHelper = new BackupEngineHelpers(client);
+                    BackupEngineListQueryParams queryParam = new BackupEngineListQueryParams();
+                    queryParam.ProviderType = "DPM";
+                    PaginationRequest paginationParam = new PaginationRequest();
+                    paginationParam.Top = "200";
+                    AzureOperationResponse response = containerTestHelper.ListBackupEngine(queryParam, paginationParam);
                 });
         }
     }
