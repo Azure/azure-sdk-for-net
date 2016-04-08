@@ -92,6 +92,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             set { this._resourceNamespace = value; }
         }
         
+        private IBackupEngineOperations _backupEngine;
+        
+        /// <summary>
+        /// Definition of BackupEningOperations for the Azure Backup extension
+        /// with RecoveryService Vault.
+        /// </summary>
+        public virtual IBackupEngineOperations BackupEngine
+        {
+            get { return this._backupEngine; }
+        }
+        
         private IBackupOperationResults _backupOperationResults;
         
         /// <summary>
@@ -194,6 +205,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient()
             : base()
         {
+            this._backupEngine = new BackupEngineOperations(this);
             this._backupOperationResults = new BackupOperationResults(this);
             this._backup = new BackupOperations(this);
             this._container = new ContainerOperation(this);
@@ -287,6 +299,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._backupEngine = new BackupEngineOperations(this);
             this._backupOperationResults = new BackupOperationResults(this);
             this._backup = new BackupOperations(this);
             this._container = new ContainerOperation(this);

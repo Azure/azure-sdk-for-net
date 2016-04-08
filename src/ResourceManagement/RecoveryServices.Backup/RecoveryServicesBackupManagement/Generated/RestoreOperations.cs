@@ -257,6 +257,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["cloudServiceOrResourceGroup"] = derived.CloudServiceOrResourceGroup;
                             }
                             
+                            if (derived.CloudServiceOrResourceGroupId != null)
+                            {
+                                propertiesValue["cloudServiceOrResourceGroupId"] = derived.CloudServiceOrResourceGroupId;
+                            }
+                            
                             if (derived.VirtualNetworkName != null)
                             {
                                 propertiesValue["virtualNetworkName"] = derived.VirtualNetworkName;

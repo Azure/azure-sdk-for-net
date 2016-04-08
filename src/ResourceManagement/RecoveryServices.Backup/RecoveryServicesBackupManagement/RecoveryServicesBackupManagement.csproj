@@ -50,12 +50,15 @@
     <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\BackupEngineOperations.cs" />
+    <Compile Include="Generated\BackupEngineOperationsExtensions.cs" />
     <Compile Include="Generated\BackupOperationResults.cs" />
     <Compile Include="Generated\BackupOperationResultsExtensions.cs" />
     <Compile Include="Generated\BackupOperations.cs" />
     <Compile Include="Generated\BackupOperationsExtensions.cs" />
     <Compile Include="Generated\ContainerOperation.cs" />
     <Compile Include="Generated\ContainerOperationExtensions.cs" />
+    <Compile Include="Generated\IBackupEngineOperations.cs" />
     <Compile Include="Generated\IBackupOperationResults.cs" />
     <Compile Include="Generated\IBackupOperations.cs" />
     <Compile Include="Generated\IContainerOperation.cs" />
@@ -85,6 +88,13 @@
     <Compile Include="Generated\Models\AzureIaaSVMProtectionPolicy.cs" />
     <Compile Include="Generated\Models\AzureSqlProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureSqlProtectedItemExtendedInfo.cs" />
+    <Compile Include="Generated\Models\BackupEngine.cs" />
+    <Compile Include="Generated\Models\BackupEngineBase.cs" />
+    <Compile Include="Generated\Models\BackupEngineListQueryParams.cs" />
+    <Compile Include="Generated\Models\BackupEngineListResponse.cs" />
+    <Compile Include="Generated\Models\BackupEngineRepsonse.cs" />
+    <Compile Include="Generated\Models\BackupEngineResource.cs" />
+    <Compile Include="Generated\Models\BackupEngineResourceList.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatus.cs" />
     <Compile Include="Generated\Models\BackUpOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\BaseRecoveryServicesJobResponse.cs" />
@@ -94,6 +104,7 @@
     <Compile Include="Generated\Models\DailyRetentionFormat.cs" />
     <Compile Include="Generated\Models\DailyRetentionSchedule.cs" />
     <Compile Include="Generated\Models\Day.cs" />
+    <Compile Include="Generated\Models\DpmBackupEngine.cs" />
     <Compile Include="Generated\Models\DpmProtectionContainer.cs" />
     <Compile Include="Generated\Models\DpmVenusProtectionContainer.cs" />
     <Compile Include="Generated\Models\ErrorInfo.cs" />

@@ -76,6 +76,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
+        /// Definition of BackupEningOperations for the Azure Backup extension
+        /// with RecoveryService Vault.
+        /// </summary>
+        IBackupEngineOperations BackupEngine
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of OperationResults operations for the Azure Backup
         /// extension.
         /// </summary>

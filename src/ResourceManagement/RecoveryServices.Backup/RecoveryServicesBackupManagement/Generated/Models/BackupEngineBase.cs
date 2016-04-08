@@ -26,25 +26,25 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The common class for Job.
+    /// The definition for BackupEngineBase class.
     /// </summary>
-    public partial class Job : JobBase
+    public partial class BackupEngineBase : BackupEngine
     {
-        private string _activityId;
+        private string _backupEngineType;
         
         /// <summary>
-        /// Optional. Job ActivityId
+        /// Optional. BackupEngineType of the managed item.
         /// </summary>
-        public string ActivityId
+        public string BackupEngineType
         {
-            get { return this._activityId; }
-            set { this._activityId = value; }
+            get { return this._backupEngineType; }
+            set { this._backupEngineType = value; }
         }
         
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. Job Type
+        /// Optional. BackupManagement Type of the managed item.
         /// </summary>
         public string BackupManagementType
         {
@@ -52,65 +52,43 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._backupManagementType = value; }
         }
         
-        private DateTime _endTime;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. Job EndTimestamp
+        /// Optional. Friendly name of the managed item.
         /// </summary>
-        public DateTime EndTime
+        public string FriendlyName
         {
-            get { return this._endTime; }
-            set { this._endTime = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
         }
         
-        private string _entityFriendlyName;
+        private string _healthStatus;
         
         /// <summary>
-        /// Optional. Job EntityFriendlyName
+        /// Optional. Health Status of the managed item.
         /// </summary>
-        public string EntityFriendlyName
+        public string HealthStatus
         {
-            get { return this._entityFriendlyName; }
-            set { this._entityFriendlyName = value; }
+            get { return this._healthStatus; }
+            set { this._healthStatus = value; }
         }
         
-        private string _operation;
+        private string _registrationStatus;
         
         /// <summary>
-        /// Optional. Job Operation
+        /// Optional. Registration Status of the managed item.
         /// </summary>
-        public string Operation
+        public string RegistrationStatus
         {
-            get { return this._operation; }
-            set { this._operation = value; }
-        }
-        
-        private DateTime _startTime;
-        
-        /// <summary>
-        /// Optional. Job StartTimestamp
-        /// </summary>
-        public DateTime StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional. Job Status
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._registrationStatus; }
+            set { this._registrationStatus = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Job class.
+        /// Initializes a new instance of the BackupEngineBase class.
         /// </summary>
-        public Job()
+        public BackupEngineBase()
         {
         }
     }
