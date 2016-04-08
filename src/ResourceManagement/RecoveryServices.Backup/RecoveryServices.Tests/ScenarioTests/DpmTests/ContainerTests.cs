@@ -42,7 +42,7 @@ namespace RecoveryServices.Tests
                     queryParams.ProviderType = ProviderType.DPM.ToString();
 
                     ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    throw new NotImplementedException("To Call Get Backup engine hydra");
+                    //throw new NotImplementedException("To Call Get Backup engine hydra");
                     ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
                     
                     string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultDpmContainerUniqueName);
