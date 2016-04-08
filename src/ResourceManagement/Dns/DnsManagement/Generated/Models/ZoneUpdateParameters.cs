@@ -26,42 +26,40 @@ using Microsoft.Azure.Management.Dns.Models;
 namespace Microsoft.Azure.Management.Dns.Models
 {
     /// <summary>
-    /// Parameters supplied to create or update a RecordSet.
+    /// Parameters supplied to update a zone.
     /// </summary>
-    public partial class RecordSetCreateOrUpdateParameters
+    public partial class ZoneUpdateParameters
     {
-        private RecordSet _recordSet;
+        private Zone _zone;
         
         /// <summary>
-        /// Required. Gets or sets information about the RecordSet being
-        /// created or updated.
+        /// Required. Gets or sets information about the zone being updated.
         /// </summary>
-        public RecordSet RecordSet
+        public Zone Zone
         {
-            get { return this._recordSet; }
-            set { this._recordSet = value; }
+            get { return this._zone; }
+            set { this._zone = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the ZoneUpdateParameters class.
         /// </summary>
-        public RecordSetCreateOrUpdateParameters()
+        public ZoneUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecordSetCreateOrUpdateParameters
-        /// class with required arguments.
+        /// Initializes a new instance of the ZoneUpdateParameters class with
+        /// required arguments.
         /// </summary>
-        public RecordSetCreateOrUpdateParameters(RecordSet recordSet)
+        public ZoneUpdateParameters(Zone zone)
             : this()
         {
-            if (recordSet == null)
+            if (zone == null)
             {
-                throw new ArgumentNullException("recordSet");
+                throw new ArgumentNullException("zone");
             }
-            this.RecordSet = recordSet;
+            this.Zone = zone;
         }
     }
 }

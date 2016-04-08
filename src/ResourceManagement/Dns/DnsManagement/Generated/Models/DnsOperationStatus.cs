@@ -20,46 +20,19 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.Dns.Models
 {
     /// <summary>
-    /// A TXT record.
+    /// The status of the asynchronous request.
     /// </summary>
-    public partial class TxtRecord
+    public static partial class DnsOperationStatus
     {
-        private IList<string> _value;
+        public const string InProgress = "InProgress";
         
-        /// <summary>
-        /// Required. Gets or sets the text value of this record.
-        /// </summary>
-        public IList<string> Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
+        public const string Succeeded = "Succeeded";
         
-        /// <summary>
-        /// Initializes a new instance of the TxtRecord class.
-        /// </summary>
-        public TxtRecord()
-        {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the TxtRecord class with required
-        /// arguments.
-        /// </summary>
-        public TxtRecord(IList<string> value)
-            : this()
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            this.Value = value;
-        }
+        public const string Failed = "Failed";
     }
 }
