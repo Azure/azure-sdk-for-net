@@ -17,6 +17,7 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Linq;
 using Xunit;
 
 namespace Compute.Tests
@@ -39,6 +40,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
+                m_location = "australiasoutheast"; // TODO: For now, APIs nly work in this region under BU endpoint
                 
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
@@ -65,7 +67,12 @@ namespace Compute.Tests
 
                     containerService = m_CrpClient.ContainerService.Get(rgName, containerService.Name);
                     ValidateContainerService(inputContainerService, containerService);
+
+                    var listResult = m_CrpClient.ContainerService.List(rgName);
+                    Assert.True(listResult.Any(a => a.Name == containerService.Name));
                     m_CrpClient.ContainerService.Delete(rgName, containerService.Name);
+                    var listResultAfterDeletion = m_CrpClient.ContainerService.List(rgName);
+                    Assert.True(!listResultAfterDeletion.Any());
                 }
                 finally
                 {
