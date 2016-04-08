@@ -1,5 +1,5 @@
 {
-  "version": "4.1.0-preview",
+  "version": "2.0.0-preview",
   "description": "Microsoft Azure Management TrafficManager Library",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure TrafficManager management", "TrafficManager", "TrafficManager management", "REST HTTP client", "windowsazureofficial" ],
@@ -12,7 +12,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.0.2,4.0)"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0)"
   },
 
   "frameworks": {
