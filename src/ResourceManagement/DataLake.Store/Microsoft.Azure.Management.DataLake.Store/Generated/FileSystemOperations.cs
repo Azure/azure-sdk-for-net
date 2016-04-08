@@ -102,6 +102,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             string op = "CONCURRENTAPPEND";
+            string transferEncoding = "chunked";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -113,6 +114,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("appendMode", appendMode);
                 tracingParameters.Add("op", op);
+                tracingParameters.Add("transferEncoding", transferEncoding);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ConcurrentAppend", tracingParameters);
@@ -149,6 +151,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (transferEncoding != null)
+            {
+                if (_httpRequest.Headers.Contains("Transfer-Encoding"))
+                {
+                    _httpRequest.Headers.Remove("Transfer-Encoding");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Transfer-Encoding", transferEncoding);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1593,6 +1603,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             string op = "APPEND";
             string append = "true";
+            string transferEncoding = "chunked";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1604,6 +1615,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
+                tracingParameters.Add("transferEncoding", transferEncoding);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Append", tracingParameters);
@@ -1640,6 +1652,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (transferEncoding != null)
+            {
+                if (_httpRequest.Headers.Contains("Transfer-Encoding"))
+                {
+                    _httpRequest.Headers.Remove("Transfer-Encoding");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Transfer-Encoding", transferEncoding);
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1767,6 +1787,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             string op = "CREATE";
             string write = "true";
+            string transferEncoding = "chunked";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1779,6 +1800,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("overwrite", overwrite);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("write", write);
+                tracingParameters.Add("transferEncoding", transferEncoding);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
@@ -1819,6 +1841,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (transferEncoding != null)
+            {
+                if (_httpRequest.Headers.Contains("Transfer-Encoding"))
+                {
+                    _httpRequest.Headers.Remove("Transfer-Encoding");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Transfer-Encoding", transferEncoding);
             }
             if (this.Client.AcceptLanguage != null)
             {
