@@ -52,12 +52,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._backupManagementType = value; }
         }
         
-        private System.DateTime? _endTime;
+        private DateTime _endTime;
         
         /// <summary>
         /// Optional. Job EndTimestamp
         /// </summary>
-        public System.DateTime? EndTime
+        public DateTime EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }

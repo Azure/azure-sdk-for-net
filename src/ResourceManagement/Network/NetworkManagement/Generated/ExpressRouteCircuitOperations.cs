@@ -102,6 +102,10 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.BillingType == null)
+            {
+                throw new ArgumentNullException("parameters.BillingType");
+            }
             if (parameters.Location == null)
             {
                 throw new ArgumentNullException("parameters.Location");

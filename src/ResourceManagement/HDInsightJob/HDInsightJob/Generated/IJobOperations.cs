@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
     public partial interface IJobOperations
     {
         /// <summary>
-        /// Gets the list of jobs from the specified HDInsight cluster.
+        /// Gets job details from the specified HDInsight cluster.
         /// </summary>
         /// <param name='jobId'>
         /// The id of the job.
@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         Task<JobGetResponse> GetJobAsync(string jobId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the list of jobs from the specified HDInsight cluster.
+        /// Initiates cancel on given running job in the specified HDInsight
+        /// cluster.
         /// </summary>
         /// <param name='jobId'>
         /// The id of the job.
@@ -72,6 +73,23 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         Task<JobListResponse> ListJobsAsync(CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets numOfJobs after jobId from the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='jobId'>
+        /// jobId from where to list jobs.
+        /// </param>
+        /// <param name='numOfJobs'>
+        /// Number of jobs to fetch. Use -1 to get all.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Job operation response.
+        /// </returns>
+        Task<JobListResponse> ListJobsAfterJobIdAsync(string jobId, int numOfJobs, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Submits an Hive job to an HDINSIGHT cluster.
         /// </summary>
         /// <param name='parameters'>
@@ -83,7 +101,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        Task<JobSubmissionResponse> SubmitHiveJobAsync(HiveJobSubmissionParameters parameters, CancellationToken cancellationToken);
+        Task<JobSubmissionResponse> SubmitHiveJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Submits a MapReduce job to an HDINSIGHT cluster.
@@ -97,7 +115,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        Task<JobSubmissionResponse> SubmitMapReduceJobAsync(MapReduceJobSubmissionParameters parameters, CancellationToken cancellationToken);
+        Task<JobSubmissionResponse> SubmitMapReduceJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Submits a MapReduce streaming job to an HDINSIGHT cluster.
@@ -111,7 +129,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(MapReduceStreamingJobSubmissionParameters parameters, CancellationToken cancellationToken);
+        Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Submits an Hive job to an HDINSIGHT cluster.
@@ -125,7 +143,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        Task<JobSubmissionResponse> SubmitPigJobAsync(PigJobSubmissionParameters parameters, CancellationToken cancellationToken);
+        Task<JobSubmissionResponse> SubmitPigJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Submits an Sqoop job to an HDINSIGHT cluster.
@@ -139,6 +157,6 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        Task<JobSubmissionResponse> SubmitSqoopJobAsync(SqoopJobSubmissionParameters parameters, CancellationToken cancellationToken);
+        Task<JobSubmissionResponse> SubmitSqoopJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken);
     }
 }

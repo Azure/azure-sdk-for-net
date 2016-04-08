@@ -33,26 +33,6 @@ namespace RecoveryServices.Tests
     public class DpmContainerTests : RecoveryServicesTestsBase
     {
         [Fact]
-        public void ListContainersTest()
-        {
-            ExecuteTest(
-                client =>
-                {
-                    ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = ProviderType.DPM.ToString();
-
-                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    throw new NotImplementedException("To Call Get Backup engine hydra");
-                    ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
-                    
-                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultDpmContainerUniqueName);
-                    DpmProtectionContainer container = response.ItemList.ProtectionContainers.FirstOrDefault().Properties as DpmProtectionContainer;
-                    Assert.NotNull(container);
-                    Assert.Equal(containerUniqueName, container.FriendlyName);
-                });
-        }
-
-        [Fact]
         public void UnregisterContainersTest()
         {
             ExecuteTest(

@@ -11,9 +11,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. Provides management capabilities for Traffic Manager services.</summary>
-    <description>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. 
-CSM/Resource Groups-compatible library.
+    <summary>Provides management capabilities for Traffic Manager services.</summary>
+    <description>CSM/Resource Groups-compatible library.
 Provides management capabilities for Traffic Manager services.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Traffic Manager management "Traffic Manager" "Traffic Manager management" REST HTTP client windowsazureofficial</tags>

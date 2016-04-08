@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation
@@ -34,6 +35,29 @@ namespace Microsoft.Azure.Management.Automation
     /// </summary>
     public partial interface IHybridRunbookWorkerGroupOperations
     {
+        /// <summary>
+        /// Delete a hybrid runbook worker group.  (see
+        /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Automation account name.
+        /// </param>
+        /// <param name='hybridRunbookWorkerGroupName'>
+        /// The hybrid runbook worker group name
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccount, string hybridRunbookWorkerGroupName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Retrieve a hybrid runbook worker group.  (see
         /// http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations

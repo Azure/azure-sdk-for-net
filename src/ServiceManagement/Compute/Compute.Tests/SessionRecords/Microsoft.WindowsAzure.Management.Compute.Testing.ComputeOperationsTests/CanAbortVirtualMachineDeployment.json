@@ -1,0 +1,816 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcw==",
+      "RequestMethod": "POST",
+      "RequestBody": "<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServiceName>azsmnet4978</ServiceName>\r\n  <Label>YXpzbW5ldDQ5Nzg=</Label>\r\n  <Location>East US 2 (Stage)</Location>\r\n</CreateHostedService>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "214"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e43a50b5be6b9709b1714b3c7d6736ae"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:27:28 GMT"
+        ],
+        "Location": [
+          "https://management.core.windows.net/subscriptions/3de864df-1f7d-40d5-b3f0-1bfa713006fb/compute/azsmnet4978"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/images",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9pbWFnZXM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Images xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2008 R2 SP1, December 2014</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201412.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n    <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n    <PublishedDate>2014-12-16T08:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2008 R2 SP1, March 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201503.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n    <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n    <PublishedDate>2015-03-16T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2008 R2 SP1, May 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201505.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n    <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n    <PublishedDate>2015-05-22T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2008 R2 SP1, July 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-20150726-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n    <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n    <PublishedDate>2015-07-26T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2008 R2 SP1, September 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-20150916-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n    <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n    <PublishedDate>2015-09-16T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2008 R2 SP1, October 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-20151021-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n    <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n    <PublishedDate>2015-10-21T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2008 R2 SP1, January 2016</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-20160125-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n    <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n    <PublishedDate>2016-01-25T08:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 Datacenter, December 2014</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-Datacenter-201412.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2012 incorporates Microsoft's experience building and operating public clouds, resulting in a dynamic, highly available server platform. It offers a scalable, dynamic and multi-tenant-aware infrastructure that helps securely connect across premises.</Description>\r\n    <ImageFamily>Windows Server 2012 Datacenter</ImageFamily>\r\n    <PublishedDate>2014-12-16T08:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012_100.png</IconUri>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 Datacenter, March 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-Datacenter-201503.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2012 incorporates Microsoft's experience building and operating public clouds, resulting in a dynamic, highly available server platform. It offers a scalable, dynamic and multi-tenant-aware infrastructure that helps securely connect across premises.</Description>\r\n    <ImageFamily>Windows Server 2012 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-03-16T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 Datacenter, May 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-Datacenter-201505.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2012 incorporates Microsoft's experience building and operating public clouds, resulting in a dynamic, highly available server platform. It offers a scalable, dynamic and multi-tenant-aware infrastructure that helps securely connect across premises.</Description>\r\n    <ImageFamily>Windows Server 2012 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-05-22T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 Datacenter, July 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-Datacenter-20150726-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2012 incorporates Microsoft's experience building and operating public clouds, resulting in a dynamic, highly available server platform. It offers a scalable, dynamic and multi-tenant-aware infrastructure that helps securely connect across premises.</Description>\r\n    <ImageFamily>Windows Server 2012 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-07-26T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 Datacenter, September 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-Datacenter-20150916-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2012 incorporates Microsoft's experience building and operating public clouds, resulting in a dynamic, highly available server platform. It offers a scalable, dynamic and multi-tenant-aware infrastructure that helps securely connect across premises.</Description>\r\n    <ImageFamily>Windows Server 2012 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-09-16T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 Datacenter, October 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-Datacenter-20151021-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2012 incorporates Microsoft's experience building and operating public clouds, resulting in a dynamic, highly available server platform. It offers a scalable, dynamic and multi-tenant-aware infrastructure that helps securely connect across premises.</Description>\r\n    <ImageFamily>Windows Server 2012 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-10-21T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 Datacenter, January 2016</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-Datacenter-20160125-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows Server 2012 incorporates Microsoft's experience building and operating public clouds, resulting in a dynamic, highly available server platform. It offers a scalable, dynamic and multi-tenant-aware infrastructure that helps securely connect across premises.</Description>\r\n    <ImageFamily>Windows Server 2012 Datacenter</ImageFamily>\r\n    <PublishedDate>2016-01-25T08:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 R2 Datacenter, December 2014</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-R2-201412.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server 2012 R2 brings Microsoft's experience delivering global-scale cloud services into your infrastructure. It offers enterprise-class performance, flexibility for your applications and excellent economics for your datacenter and hybrid cloud environment. This image includes Windows Server 2012 R2 Update.</Description>\r\n    <ImageFamily>Windows Server 2012 R2 Datacenter</ImageFamily>\r\n    <PublishedDate>2014-12-16T08:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 R2 Datacenter, March 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-R2-201503.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server 2012 R2 brings Microsoft's experience delivering global-scale cloud services into your infrastructure. It offers enterprise-class performance, flexibility for your applications and excellent economics for your datacenter and hybrid cloud environment. This image includes Windows Server 2012 R2 Update.</Description>\r\n    <ImageFamily>Windows Server 2012 R2 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-03-16T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 R2 Datacenter, May 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-R2-201505.03-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server 2012 R2 brings Microsoft's experience delivering global-scale cloud services into your infrastructure. It offers enterprise-class performance, flexibility for your applications and excellent economics for your datacenter and hybrid cloud environment. This image includes Windows Server 2012 R2 Update.</Description>\r\n    <ImageFamily>Windows Server 2012 R2 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-05-22T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 R2 Datacenter, July 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-R2-20150726-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server 2012 R2 brings Microsoft's experience delivering global-scale cloud services into your infrastructure. It offers enterprise-class performance, flexibility for your applications and excellent economics for your datacenter and hybrid cloud environment. This image includes Windows Server 2012 R2 Update.</Description>\r\n    <ImageFamily>Windows Server 2012 R2 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-07-26T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 R2 Datacenter, September 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-R2-20150916-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server 2012 R2 brings Microsoft's experience delivering global-scale cloud services into your infrastructure. It offers enterprise-class performance, flexibility for your applications and excellent economics for your datacenter and hybrid cloud environment. This image includes Windows Server 2012 R2 Update.</Description>\r\n    <ImageFamily>Windows Server 2012 R2 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-09-16T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 R2 Datacenter, October 2015</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-R2-20151021-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server 2012 R2 brings Microsoft's experience delivering global-scale cloud services into your infrastructure. It offers enterprise-class performance, flexibility for your applications and excellent economics for your datacenter and hybrid cloud environment. This image includes Windows Server 2012 R2 Update.</Description>\r\n    <ImageFamily>Windows Server 2012 R2 Datacenter</ImageFamily>\r\n    <PublishedDate>2015-10-21T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server 2012 R2 Datacenter, January 2016</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-2012-R2-20160125-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server 2012 R2 brings Microsoft's experience delivering global-scale cloud services into your infrastructure. It offers enterprise-class performance, flexibility for your applications and excellent economics for your datacenter and hybrid cloud environment. This image includes Windows Server 2012 R2 Update.</Description>\r\n    <ImageFamily>Windows Server 2012 R2 Datacenter</ImageFamily>\r\n    <PublishedDate>2016-01-25T08:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <RecommendedVMSize>Standard_D1</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows Server Technical Preview</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>17aff74e61fe427dbdea23e1d7dba807__Windows-Server-Technical-Preview-201504.01-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>At the heart of the Microsoft Cloud OS vision, Windows Server brings the breadth and depth of Microsoft’s experience delivering global-scale cloud services to your datacenter infrastructure.  Windows Server Technical Preview provides a range of new and enhanced capabilities and features spanning server virtualization, storage, networking, server management and automation, web and application platform, access and information protection, remote desktop infrastructure, and more. This VHD contains a preview release and should strictly be used for testing purposes. The VHD won’t be serviced or supported for production use and the trial period expires on October 1, 2015.</Description>\r\n    <ImageFamily>Windows Server Technical Preview</ImageFamily>\r\n    <PublishedDate>2015-04-11T07:00:00Z</PublishedDate>\r\n    <IsPremium>false</IsPremium>\r\n    <IconUri>WindowsServer2012R2_100.png</IconUri>\r\n    <RecommendedVMSize>Medium</RecommendedVMSize>\r\n    <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n    <SmallIconUri>WindowsServer2012R2_45.png</SmallIconUri>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>CoreOS-Stable-766.4.0</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>31</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__CoreOS-Stable-766.4.0</Name>\r\n    <OS>Linux</OS>\r\n    <Description>CoreOS-Stable-766.4.0</Description>\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Staged-Ubuntu-14_10-amd64-server-20150620-en-us-30GB.vhd</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>30</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__Staged-Ubuntu-14_10-amd64-server-20150620-en-us-30GB.vhd</Name>\r\n    <OS>Linux</OS>\r\n    <Description>Staged-Ubuntu-14_10-amd64-server-20150620-en-us-30GB.vhd</Description>\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Staged-Windows-Server-2012-R2-201505.02-en.us-127GB.vhd</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__Staged-Windows-Server-2012-R2-201505.02-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Staged windows server 2012 R2 201505.02 </Description>\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Ubuntu-14_04_3-LTS-amd64-server-20151020-en-us-30GB</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>30</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__Ubuntu-14_04_3-LTS-amd64-server-20151020-en-us-30GB</Name>\r\n    <OS>Linux</OS>\r\n    <Description>Ubuntu-14_04_3-LTS-amd64-server-20151020-en-us-30GB</Description>\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Ubuntu-14_10-amd64-server-20150620-en-us-30GB.vhd</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>30</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__Ubuntu-14_10-amd64-server-20150620-en-us-30GB.vhd</Name>\r\n    <OS>Linux</OS>\r\n    <Description />\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>VS-2015-Enterprise-AzureSDK-2.7-WS2012R2</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__VS-2015-Enterprise-AzureSDK-2.7-WS2012R2</Name>\r\n    <OS>Windows</OS>\r\n    <Description>VS-2015-Enterprise-AzureSDK-2.7-WS2012R2</Description>\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows-Server-2012-R2-2015.10.22-en.us-127GB.vhd</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__Windows-Server-2012-R2-2015.10.22-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>Windows-Server-2012-R2-2015.10.22-en.us-127GB.vhd</Description>\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n  <OSImage>\r\n    <Category>Public</Category>\r\n    <Label>Windows-Server-2012-R2-201505.02-en.us-127GB.vhd</Label>\r\n    <Location>East US 2 (Stage)</Location>\r\n    <LogicalSizeInGB>128</LogicalSizeInGB>\r\n    <Name>c1707bd14a6a40379f03cc0ccf2f7e02__Windows-Server-2012-R2-201505.02-en.us-127GB.vhd</Name>\r\n    <OS>Windows</OS>\r\n    <Description>WindowsServer 2012-R2-201505.02 for stage env test</Description>\r\n    <IsPremium>false</IsPremium>\r\n    <PublisherName>AzureRT PIR Core Test</PublisherName>\r\n    <IOType>Standard_LRS</IOType>\r\n  </OSImage>\r\n</Images>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "25864"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "900ddef8e08a8670b833ec343f7d63ec"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:27:29 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/images/17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201412.01-en.us-127GB.vhd",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9pbWFnZXMvMTdhZmY3NGU2MWZlNDI3ZGJkZWEyM2UxZDdkYmE4MDdfX1dpbjJLOFIyU1AxLURhdGFjZW50ZXItMjAxNDEyLjAxLWVuLnVzLTEyN0dCLnZoZA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<OSImage xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Category>Public</Category>\r\n  <Label>Windows Server 2008 R2 SP1, December 2014</Label>\r\n  <Location>East US 2 (Stage)</Location>\r\n  <LogicalSizeInGB>128</LogicalSizeInGB>\r\n  <Name>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201412.01-en.us-127GB.vhd</Name>\r\n  <OS>Windows</OS>\r\n  <Description>Windows Server 2008 R2 is a multi-purpose server designed to increase the reliability and flexibility of your server or private cloud infrastructure, helping you to save time and reduce costs.  It provides you with powerful tools to react to business needs with greater control and confidence.</Description>\r\n  <ImageFamily>Windows Server 2008 R2 SP1</ImageFamily>\r\n  <PublishedDate>2014-12-16T08:00:00Z</PublishedDate>\r\n  <IsPremium>false</IsPremium>\r\n  <IconUri>WindowsServer2008R2_100.png</IconUri>\r\n  <PublisherName>Microsoft RDOS WAStage</PublisherName>\r\n  <SmallIconUri>WindowsServer2008R2_45.png</SmallIconUri>\r\n  <IOType>Standard_LRS</IOType>\r\n</OSImage>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1026"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "7442641ec228873d8ac5de0906502336"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:27:29 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet4978/deployments",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NDk3OC9kZXBsb3ltZW50cw==",
+      "RequestMethod": "POST",
+      "RequestBody": "<Deployment xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Name>azsmnet4978</Name>\r\n  <DeploymentSlot>Production</DeploymentSlot>\r\n  <Label>Virtual machine azsmnet1836:Production  label</Label>\r\n  <RoleList>\r\n    <Role>\r\n      <RoleName>azsmnet4978</RoleName>\r\n      <RoleType>PersistentVMRole</RoleType>\r\n      <ConfigurationSets>\r\n        <ConfigurationSet>\r\n          <ConfigurationSetType>WindowsProvisioningConfiguration</ConfigurationSetType>\r\n          <ComputerName>azsmnet4978</ComputerName>\r\n          <AdminPassword>AzureSDK17826e341b014-3434-4269-bae9-b359ef3df37b</AdminPassword>\r\n          <EnableAutomaticUpdates>false</EnableAutomaticUpdates>\r\n          <TimeZone>Pacific Standard Time</TimeZone>\r\n          <StoredCertificateSettings />\r\n          <AdminUsername>testuser</AdminUsername>\r\n          <HostName>azsmnet4978.cloudapp.net</HostName>\r\n        </ConfigurationSet>\r\n      </ConfigurationSets>\r\n      <OSVirtualHardDisk>\r\n        <HostCaching>ReadWrite</HostCaching>\r\n        <MediaLink>http://azsmnet2940.blob.core.windows.net/myvhds/azsmnet4978.vhd</MediaLink>\r\n        <SourceImageName>17aff74e61fe427dbdea23e1d7dba807__Win2K8R2SP1-Datacenter-201412.01-en.us-127GB.vhd</SourceImageName>\r\n      </OSVirtualHardDisk>\r\n      <RoleSize>Large</RoleSize>\r\n      <ProvisionGuestAgent>true</ProvisionGuestAgent>\r\n    </Role>\r\n  </RoleList>\r\n</Deployment>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "1382"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "209d31e164658848a2848f96b30c82c0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:27:31 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/209d31e164658848a2848f96b30c82c0",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzIwOWQzMWUxNjQ2NTg4NDhhMjg0OGY5NmIzMGM4MmMw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>209d31e1-6465-8848-a284-8f96b30c82c0</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b1f0952a22909904a0b2a0665f067b43"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:27:31 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/209d31e164658848a2848f96b30c82c0",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zLzIwOWQzMWUxNjQ2NTg4NDhhMjg0OGY5NmIzMGM4MmMw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>209d31e1-6465-8848-a284-8f96b30c82c0</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6f09017c34a58fb7b34e03da7442c580"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:28:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet4978/deployments/azsmnet4978/migration?comp=prepare",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NDk3OC9kZXBsb3ltZW50cy9henNtbmV0NDk3OC9taWdyYXRpb24/Y29tcD1wcmVwYXJl",
+      "RequestMethod": "POST",
+      "RequestBody": "<DeploymentNetworkResource xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ResourceGroupName></ResourceGroupName>\r\n  <VirtualNetworkName></VirtualNetworkName>\r\n  <SubNetName></SubNetName>\r\n  <DestinationVirtualNetwork>New</DestinationVirtualNetwork>\r\n</DeploymentNetworkResource>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "286"
+        ],
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b43bd6ebdf5d9f8781ae340590a65b1b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:28:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f95703f2661a8c7abdb33d6618539734"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:28:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "02c3eb54740b8a8688c7a1a7824a51c8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:28:33 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e12231baa4b9884a8b5a4895fc99b381"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:29:03 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e1a3cc8581919714be6e1f61c5fbba44"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:29:34 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/b43bd6ebdf5d9f8781ae340590a65b1b",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2I0M2JkNmViZGY1ZDlmODc4MWFlMzQwNTkwYTY1YjFi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>b43bd6eb-df5d-9f87-81ae-340590a65b1b</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ef08bb874195978d8eceeab843fd8648"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:30:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/services/hostedservices/azsmnet4978/deployments/azsmnet4978/migration?comp=abort",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9zZXJ2aWNlcy9ob3N0ZWRzZXJ2aWNlcy9henNtbmV0NDk3OC9kZXBsb3ltZW50cy9henNtbmV0NDk3OC9taWdyYXRpb24/Y29tcD1hYm9ydA==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "c9dbb445e835990d91f1b324a9f5b0b8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:30:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "8dbd65f9b8c69457b585c8632cf7855d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:30:04 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4f7227164a1d9433b6a46da64153ffc5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:30:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "97143826a05186f981fa98f86a5510bc"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:31:05 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>InProgress</Status>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "197"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ecbc6fe260999229baf19fcbc78f0f49"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:31:35 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/3de864df-1f7d-40d5-b3f0-1bfa713006fb/operations/c9dbb445e835990d91f1b324a9f5b0b8",
+      "EncodedRequestUri": "LzNkZTg2NGRmLTFmN2QtNDBkNS1iM2YwLTFiZmE3MTMwMDZmYi9vcGVyYXRpb25zL2M5ZGJiNDQ1ZTgzNTk5MGQ5MWYxYjMyNGE5ZjViMGI4",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2016-03-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient/12.0.0.0"
+        ]
+      },
+      "ResponseBody": "<Operation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c9dbb445-e835-990d-91f1-b324a9f5b0b8</ID>\r\n  <Status>Succeeded</Status>\r\n  <HttpStatusCode>200</HttpStatusCode>\r\n</Operation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "82cdd82f740b91e082415ec3756c212c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 31 Mar 2016 22:32:05 GMT"
+        ],
+        "Server": [
+          "1.0.6198.344",
+          "(rd_rdfe_stable.160323-1803)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanAbortVirtualMachineDeployment": [
+      "azsmnet4978"
+    ],
+    "GenerateRandomPassword": [
+      "AzureSDK17826"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "3de864df-1f7d-40d5-b3f0-1bfa713006fb"
+  }
+}

@@ -1,4 +1,21 @@
-﻿using System;
+﻿//
+// Copyright © Microsoft Corporation, All Rights Reserved
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+// OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+// ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+// PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+//
+// See the Apache License, Version 2.0 for the specific language
+// governing permissions and limitations under the License.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Graph.RBAC;
@@ -17,6 +34,7 @@ namespace KeyVault.Tests
     {
         // Required in test code
         public string vaultAddress;
+        public bool standardVaultOnly;
         public ClientCredential _ClientCredential;
 
         // Required for cleaning up at the end of the test
@@ -56,7 +74,7 @@ namespace KeyVault.Tests
                     var secret = Guid.NewGuid().ToString();
                     var mgmtClient = TestBase.GetServiceClient<KeyVaultManagementClient>(testFactory);
                     var resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(testFactory);
-                    var tenantId = testEnv.AuthorizationContext.TenatId;
+                    var tenantId = testEnv.AuthorizationContext.TenantId;
                     var graphClient = TestBase.GetGraphServiceClient<GraphRbacManagementClient>(testFactory, tenantId);
                     var appDisplayName = TestUtilities.GenerateName("sdktestapp");
 
@@ -177,6 +195,12 @@ namespace KeyVault.Tests
             string vault = TestConfigurationManager.TryGetEnvironmentOrAppSetting("VaultUrl");
             string authClientId = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientId");
             string authSecret = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientSecret");
+            string standardVaultOnlyString = TestConfigurationManager.TryGetEnvironmentOrAppSetting("StandardVaultOnly");
+            bool result;
+            if (!bool.TryParse(standardVaultOnlyString, out result))
+            {
+                result = false;
+            }
 
             if (string.IsNullOrWhiteSpace(vault) || string.IsNullOrWhiteSpace(authClientId) || string.IsNullOrWhiteSpace(authSecret))
                 return false;
@@ -184,6 +208,7 @@ namespace KeyVault.Tests
             {
                 this.vaultAddress = vault;
                 this._ClientCredential = new ClientCredential(authClientId, authSecret);
+                this.standardVaultOnly = result;
                 return true;
             }
         }
@@ -196,7 +221,7 @@ namespace KeyVault.Tests
                 var testEnv = testFactory.GetTestEnvironment();
                 var mgmtClient = TestBase.GetServiceClient<KeyVaultManagementClient>(testFactory);
                 var resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(testFactory);
-                var tenantId = testEnv.AuthorizationContext.TenatId;
+                var tenantId = testEnv.AuthorizationContext.TenantId;
                 var graphClient = TestBase.GetGraphServiceClient<GraphRbacManagementClient>(testFactory, tenantId);
 
                 mgmtClient.Vaults.Delete(rgName, vaultName);

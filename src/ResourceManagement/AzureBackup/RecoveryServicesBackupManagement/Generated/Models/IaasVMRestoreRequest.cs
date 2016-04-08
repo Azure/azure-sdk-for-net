@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._cloudServiceOrResourceGroup = value; }
         }
         
+        private string _cloudServiceOrResourceGroupId;
+        
+        /// <summary>
+        /// Optional. CloudServiceOrResourceGroupId of IaasVMRestoreRequest
+        /// </summary>
+        public string CloudServiceOrResourceGroupId
+        {
+            get { return this._cloudServiceOrResourceGroupId; }
+            set { this._cloudServiceOrResourceGroupId = value; }
+        }
+        
         private bool _createNewCloudService;
         
         /// <summary>

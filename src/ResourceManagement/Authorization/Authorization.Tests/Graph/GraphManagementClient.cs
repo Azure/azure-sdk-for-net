@@ -80,14 +80,17 @@ namespace Authorization.Tests
             }
 
             this.testEnvironment = testEnv;
-            if (testEnv.AuthorizationContext != null)
+            if (this.testEnvironment != null 
+                && this.testEnvironment.AuthorizationContext != null 
+                && this.testEnvironment.AuthorizationContext.UserId != null)
             {
-                var atIndex = this.testEnvironment.AuthorizationContext.UserId.IndexOf("@");
+                var username = this.testEnvironment.AuthorizationContext.UserId;
+                var atIndex = username.IndexOf("@");
 
                 if (atIndex != -1 &&
-                    atIndex != this.testEnvironment.AuthorizationContext.UserId.Length - 1)
+                    atIndex != username.Length - 1)
                 {
-                    this.UserDomain = this.testEnvironment.AuthorizationContext.UserId.Substring(atIndex);
+                    this.UserDomain = username.Substring(atIndex);
                 }
             }
             else
@@ -247,9 +250,9 @@ namespace Authorization.Tests
             return string.Format(
                 GraphUriFormatter,
                 this.testEnvironment.Endpoints.GraphUri.ToString(),
-                this.testEnvironment.AuthorizationContext == null ?
+                this.testEnvironment.AuthorizationContext == null || this.testEnvironment.AuthorizationContext.TenantId == null ?
                 GraphManagementClient.DefaultTenantId :
-                    this.testEnvironment.AuthorizationContext.TenatId,
+                    this.testEnvironment.AuthorizationContext.TenantId,
                 suffix,
                 GraphManagementClient.GraphApiVersion);
         }

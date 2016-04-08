@@ -312,13 +312,18 @@ namespace Microsoft.Hadoop.Avro.Serializers
 
         private void EncodeAvroEnum(IEncoder encoder, AvroEnum enumeration)
         {
+            var enumSchema = enumeration.Schema as EnumSchema;
             for (int i = 0; i < this.itemSchemas.Count; ++i)
             {
-                if (this.itemSchemas[i] == enumeration.Schema)
+                var itemEnumSchema = this.itemSchemas[i] as EnumSchema;
+                if (itemEnumSchema != null)
                 {
-                    encoder.Encode(i);
-                    this.itemSchemas[i].Serializer.Serialize(encoder, enumeration);
-                    return;
+                    if (itemEnumSchema.FullName == enumSchema.FullName)
+                    {
+                        encoder.Encode(i);
+                        this.itemSchemas[i].Serializer.Serialize(encoder, enumeration);
+                        return;
+                    }
                 }
             }
 
@@ -328,13 +333,19 @@ namespace Microsoft.Hadoop.Avro.Serializers
 
         private void EncodeAvroRecord(IEncoder encoder, AvroRecord record)
         {
+            var recordSchema = record.Schema as RecordSchema;
+
             for (int i = 0; i < this.itemSchemas.Count; ++i)
             {
-                if (this.Schema.Schemas[i] == record.Schema)
+                var itemRecordSchema = this.itemSchemas[i] as RecordSchema;
+                if (itemRecordSchema != null)
                 {
-                    encoder.Encode(i);
-                    this.itemSchemas[i].Serializer.Serialize(encoder, record);
-                    return;
+                    if (itemRecordSchema.FullName == recordSchema.FullName)
+                    {
+                        encoder.Encode(i);
+                        this.itemSchemas[i].Serializer.Serialize(encoder, record);
+                        return;
+                    }
                 }
             }
 

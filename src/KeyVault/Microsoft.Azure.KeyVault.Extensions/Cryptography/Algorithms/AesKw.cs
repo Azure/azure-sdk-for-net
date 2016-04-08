@@ -16,7 +16,6 @@
 // governing permissions and limitations under the License.
 
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
@@ -90,15 +89,32 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             return temp;
         }
 
+        protected static byte[] Take( int count, byte[] source )
+        {
+            if ( source.Length == count )
+                return source;
+
+            var target = new byte[count];
+
+            Array.Copy( source, target, count );
+
+            return target;
+        }
+
         class AesKwEncryptor : ICryptoTransform
         {
-            private RijndaelManaged _aes;
-            private byte[]          _iv;
+            private Aes    _aes;
+            private byte[] _iv;
 
             internal AesKwEncryptor( byte[] keyBytes, byte[] iv )
             {
                 // Create the AES provider
-                _aes = new RijndaelManaged { Mode = CipherMode.ECB, Padding = PaddingMode.None, KeySize = keyBytes.Length*8, Key = keyBytes };
+                _aes = Aes.Create();
+
+                _aes.Mode    = CipherMode.ECB;
+                _aes.Padding = PaddingMode.None;
+                _aes.KeySize = keyBytes.Length * 8;
+                _aes.Key     = keyBytes;
 
                 // Set the AES IV to Zeroes
                 var aesIv = new byte[_aes.BlockSize >> 3];
@@ -255,13 +271,18 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
         class AesKwDecryptor : ICryptoTransform
         {
-            private RijndaelManaged _aes;
-            private byte[]          _iv;
+            private Aes    _aes;
+            private byte[] _iv;
 
             internal AesKwDecryptor( byte[] keyBytes, byte[] iv )
             {
                 // Create the AES provider
-                _aes = new RijndaelManaged { Mode = CipherMode.ECB, Padding = PaddingMode.None, KeySize = keyBytes.Length*8, Key = keyBytes };
+                _aes = Aes.Create();
+
+                _aes.Mode    = CipherMode.ECB;
+                _aes.Padding = PaddingMode.None;
+                _aes.KeySize = keyBytes.Length * 8;
+                _aes.Key     = keyBytes;
 
                 // Set the AES IV to Zeroes
                 var aesIv = new byte[_aes.BlockSize >> 3];

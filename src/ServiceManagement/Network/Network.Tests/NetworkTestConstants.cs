@@ -29,8 +29,10 @@ namespace Network.Tests
         public const string PointToSiteNetworkConfigurationFilePath = @"TestData\PointToSiteNetworkConfiguration.xml";
         public const string WideVNetNetworkConfigurationFilePath = @"TestData\WideVNetNetworkConfiguration.xml";
         public const string SimpleNetworkConfigurationFilePath = @"TestData\SimpleNetworkConfiguration.xml";
+        public const string SimpleMigrationNetworkConfigurationFilePath = @"TestData\SimpleMigrationNetworkConfiguration.xml";
         public const string DeleteNetworkConfigurationFilePath = @"TestData\DeleteNetworkConfiguration.xml";
         public const string CoexistenceFeatureNetworkConfigurationFilePath = @"TestData\CoexistenceFeatureNetworkConfiguration.xml";
+        public const string GatewayNetworkConfigurationFilePath = @"TestData\GatewayNetworkConfiguration.xml";
 
         public const string VnetOneWebOneWorkerCscfgFilePath = @"TestData\VnetOneWebOneWorker.cscfg";
         public const string OneWebOneWorkerPkgFilePath = @"OneWebOneWorker.cspkg";
@@ -45,10 +47,14 @@ namespace Network.Tests
             CreateSetConfigurationParametersFromFile(WideVNetNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters SimpleNetworkConfigurationParameters =
             CreateSetConfigurationParametersFromFile(SimpleNetworkConfigurationFilePath);
+        public static readonly NetworkSetConfigurationParameters SimpleMigrationNetworkConfigurationParameters =
+    CreateSetConfigurationParametersFromFile(SimpleMigrationNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters DeleteNetworkConfigurationParameters =
             CreateSetConfigurationParametersFromFile(DeleteNetworkConfigurationFilePath);
         public static readonly NetworkSetConfigurationParameters CoexistenceFeatureNetworkConfigurationParameters =
             CreateSetConfigurationParametersFromFile(CoexistenceFeatureNetworkConfigurationFilePath);
+        public static readonly NetworkSetConfigurationParameters GatewayNetworkConfigurationParameters =
+            CreateSetConfigurationParametersFromFile(GatewayNetworkConfigurationFilePath);
 
         public static readonly GatewayCreateParameters StaticRoutingGatewayParameters =
             CreateGatewayParameters(GatewayType.StaticRouting);

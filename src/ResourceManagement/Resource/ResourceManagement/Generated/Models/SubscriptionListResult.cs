@@ -33,6 +33,17 @@ namespace Microsoft.Azure.Subscriptions.Models
     /// </summary>
     public partial class SubscriptionListResult : AzureOperationResponse
     {
+        private string _nextLink;
+        
+        /// <summary>
+        /// Optional. Gets or sets the URL to get the next set of results.
+        /// </summary>
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
         private IList<Subscription> _subscriptions;
         
         /// <summary>

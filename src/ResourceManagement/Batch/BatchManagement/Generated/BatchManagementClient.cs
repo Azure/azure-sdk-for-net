@@ -100,6 +100,27 @@ namespace Microsoft.Azure.Management.Batch
             get { return this._accounts; }
         }
         
+        private IApplicationOperations _applications;
+        
+        /// <summary>
+        /// Operations for managing applications.
+        /// </summary>
+        public virtual IApplicationOperations Applications
+        {
+            get { return this._applications; }
+        }
+        
+        private ISubscriptionOperations _subscriptions;
+        
+        /// <summary>
+        /// Operations for managing Batch service properties at the
+        /// subscription level.
+        /// </summary>
+        public virtual ISubscriptionOperations Subscriptions
+        {
+            get { return this._subscriptions; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the BatchManagementClient class.
         /// </summary>
@@ -107,7 +128,9 @@ namespace Microsoft.Azure.Management.Batch
             : base()
         {
             this._accounts = new AccountOperations(this);
-            this._apiVersion = "2015-07-01";
+            this._applications = new ApplicationOperations(this);
+            this._subscriptions = new SubscriptionOperations(this);
+            this._apiVersion = "2015-12-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -173,7 +196,9 @@ namespace Microsoft.Azure.Management.Batch
             : base(httpClient)
         {
             this._accounts = new AccountOperations(this);
-            this._apiVersion = "2015-07-01";
+            this._applications = new ApplicationOperations(this);
+            this._subscriptions = new SubscriptionOperations(this);
+            this._apiVersion = "2015-12-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -261,6 +286,58 @@ namespace Microsoft.Azure.Management.Batch
         }
         
         /// <summary>
+        /// Parse enum values for type PackageState.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static PackageState ParsePackageState(string value)
+        {
+            if ("pending".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return PackageState.Pending;
+            }
+            if ("active".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return PackageState.Active;
+            }
+            if ("unmapped".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return PackageState.Unmapped;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type PackageState to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string PackageStateToString(PackageState value)
+        {
+            if (value == PackageState.Pending)
+            {
+                return "pending";
+            }
+            if (value == PackageState.Active)
+            {
+                return "active";
+            }
+            if (value == PackageState.Unmapped)
+            {
+                return "unmapped";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
         /// The Get Account Create Operation Status operation returns the
         /// status of the account creation operation. After calling an
         /// asynchronous operation, you can call this method to determine
@@ -309,7 +386,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -417,6 +494,48 @@ namespace Microsoft.Azure.Management.Batch
                                 {
                                     AccountProvisioningState provisioningStateInstance = ((AccountProvisioningState)Enum.Parse(typeof(AccountProvisioningState), ((string)provisioningStateValue), true));
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken autoStorageValue = propertiesValue["autoStorage"];
+                                if (autoStorageValue != null && autoStorageValue.Type != JTokenType.Null)
+                                {
+                                    AutoStorageProperties autoStorageInstance = new AutoStorageProperties();
+                                    propertiesInstance.AutoStorage = autoStorageInstance;
+                                    
+                                    JToken storageAccountIdValue = autoStorageValue["storageAccountId"];
+                                    if (storageAccountIdValue != null && storageAccountIdValue.Type != JTokenType.Null)
+                                    {
+                                        string storageAccountIdInstance = ((string)storageAccountIdValue);
+                                        autoStorageInstance.StorageAccountId = storageAccountIdInstance;
+                                    }
+                                    
+                                    JToken lastKeySyncValue = autoStorageValue["lastKeySync"];
+                                    if (lastKeySyncValue != null && lastKeySyncValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastKeySyncInstance = ((DateTime)lastKeySyncValue);
+                                        autoStorageInstance.LastKeySync = lastKeySyncInstance;
+                                    }
+                                }
+                                
+                                JToken coreQuotaValue = propertiesValue["coreQuota"];
+                                if (coreQuotaValue != null && coreQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int coreQuotaInstance = ((int)coreQuotaValue);
+                                    propertiesInstance.CoreQuota = coreQuotaInstance;
+                                }
+                                
+                                JToken poolQuotaValue = propertiesValue["poolQuota"];
+                                if (poolQuotaValue != null && poolQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int poolQuotaInstance = ((int)poolQuotaValue);
+                                    propertiesInstance.PoolQuota = poolQuotaInstance;
+                                }
+                                
+                                JToken activeJobAndJobScheduleQuotaValue = propertiesValue["activeJobAndJobScheduleQuota"];
+                                if (activeJobAndJobScheduleQuotaValue != null && activeJobAndJobScheduleQuotaValue.Type != JTokenType.Null)
+                                {
+                                    int activeJobAndJobScheduleQuotaInstance = ((int)activeJobAndJobScheduleQuotaValue);
+                                    propertiesInstance.ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuotaInstance;
                                 }
                             }
                             
@@ -527,7 +646,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -568,11 +687,11 @@ namespace Microsoft.Azure.Management.Batch
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

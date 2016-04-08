@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The response of the get stream analytics intput operation.
+    /// The response of the get stream analytics input operation.
     /// </summary>
     public partial class InputGetResponse : AzureOperationResponse
     {

@@ -1021,7 +1021,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1115,7 +1115,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            while (result.Status == ExpressRouteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);

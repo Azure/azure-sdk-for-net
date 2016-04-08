@@ -50,6 +50,26 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         Task<SecurityPrincipalOperationsResult> AddAsync(string collectionName, SecurityPrincipalList securityPrincipalList, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Adds a list of principals to the given collection.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Application alias.
+        /// </param>
+        /// <param name='securityPrincipalList'>
+        /// A list of RemoteApp principals to add to the published app.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response for the collection user operation.
+        /// </returns>
+        Task<SecurityPrincipalOperationsResult> AddToAppAsync(string collectionName, string appAlias, SecurityPrincipalList securityPrincipalList, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Deletes a list of principals from the given collection.
         /// </summary>
         /// <param name='collectionName'>
@@ -67,6 +87,26 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         Task<SecurityPrincipalOperationsResult> DeleteAsync(string collectionName, SecurityPrincipalList securityPrincipalList, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Deletes a list of principals from the given app.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Application alias.
+        /// </param>
+        /// <param name='securityPrincipalList'>
+        /// A list of RemoteApp principals to delete from the published app.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response for the collection user operation.
+        /// </returns>
+        Task<SecurityPrincipalOperationsResult> DeleteFromAppAsync(string collectionName, string appAlias, SecurityPrincipalList securityPrincipalList, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets a list of all RemoteApp principals associated with the given
         /// collection.
         /// </summary>
@@ -80,5 +120,62 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         /// The list of principals with consent status.
         /// </returns>
         Task<SecurityPrincipalInfoListResult> ListAsync(string collectionName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// app in a collection.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Application alias.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status.
+        /// </returns>
+        Task<SecurityPrincipalInfoListResult> ListForAppAsync(string collectionName, string appAlias, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// app in a collection using continuation token.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
+        /// </param>
+        /// <param name='appAlias'>
+        /// Application alias.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Continuation token.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        Task<SecurityPrincipalInfoListWithTokenResult> ListForAppWithTokenAsync(string collectionName, string appAlias, string previousContinuationToken, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a list of all RemoteApp principals associated with the given
+        /// collection using continuation token.
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The RemoteApp collection name.
+        /// </param>
+        /// <param name='previousContinuationToken'>
+        /// Continuation token.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of principals with consent status and continuation token.
+        /// </returns>
+        Task<SecurityPrincipalInfoListWithTokenResult> ListWithTokenAsync(string collectionName, string previousContinuationToken, CancellationToken cancellationToken);
     }
 }

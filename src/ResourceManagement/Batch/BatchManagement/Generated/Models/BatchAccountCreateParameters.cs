@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure.Management.Batch.Models;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
@@ -40,6 +41,17 @@ namespace Microsoft.Azure.Management.Batch.Models
         {
             get { return this._location; }
             set { this._location = value; }
+        }
+        
+        private AccountBaseProperties _properties;
+        
+        /// <summary>
+        /// Optional. The properties of the account.
+        /// </summary>
+        public AccountBaseProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         private IDictionary<string, string> _tags;

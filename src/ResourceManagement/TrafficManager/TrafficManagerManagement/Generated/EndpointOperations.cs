@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -246,6 +246,11 @@ namespace Microsoft.Azure.Management.TrafficManager
                     if (parameters.Endpoint.Properties.EndpointMonitorStatus != null)
                     {
                         propertiesValue["endpointMonitorStatus"] = parameters.Endpoint.Properties.EndpointMonitorStatus;
+                    }
+                    
+                    if (parameters.Endpoint.Properties.MinChildEndpoints != null)
+                    {
+                        propertiesValue["minChildEndpoints"] = parameters.Endpoint.Properties.MinChildEndpoints.Value;
                     }
                 }
                 
@@ -371,6 +376,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                 propertiesInstance.EndpointMonitorStatus = endpointMonitorStatusInstance;
                             }
+                            
+                            JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                            if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                            {
+                                uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                propertiesInstance.MinChildEndpoints = minChildEndpointsInstance;
+                            }
                         }
                     }
                     
@@ -478,7 +490,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -643,7 +655,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -793,6 +805,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                                 string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                 propertiesInstance.EndpointMonitorStatus = endpointMonitorStatusInstance;
                             }
+                            
+                            JToken minChildEndpointsValue = propertiesValue["minChildEndpoints"];
+                            if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                            {
+                                uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                propertiesInstance.MinChildEndpoints = minChildEndpointsInstance;
+                            }
                         }
                     }
                     
@@ -916,7 +935,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             url = url + "/";
             url = url + Uri.EscapeDataString(endpointName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-04-28-preview");
+            queryParameters.Add("api-version=2015-11-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1008,6 +1027,11 @@ namespace Microsoft.Azure.Management.TrafficManager
                     if (parameters.Endpoint.Properties.EndpointMonitorStatus != null)
                     {
                         propertiesValue["endpointMonitorStatus"] = parameters.Endpoint.Properties.EndpointMonitorStatus;
+                    }
+                    
+                    if (parameters.Endpoint.Properties.MinChildEndpoints != null)
+                    {
+                        propertiesValue["minChildEndpoints"] = parameters.Endpoint.Properties.MinChildEndpoints.Value;
                     }
                 }
                 
@@ -1132,6 +1156,13 @@ namespace Microsoft.Azure.Management.TrafficManager
                             {
                                 string endpointMonitorStatusInstance = ((string)endpointMonitorStatusValue);
                                 propertiesInstance.EndpointMonitorStatus = endpointMonitorStatusInstance;
+                            }
+                            
+                            JToken minChildEndpointsValue = propertiesValue2["minChildEndpoints"];
+                            if (minChildEndpointsValue != null && minChildEndpointsValue.Type != JTokenType.Null)
+                            {
+                                uint minChildEndpointsInstance = ((uint)minChildEndpointsValue);
+                                propertiesInstance.MinChildEndpoints = minChildEndpointsInstance;
                             }
                         }
                     }

@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -216,11 +216,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -349,7 +345,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -467,11 +463,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -626,7 +618,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -670,6 +662,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     }
                     
                     propertiesValue["osType"] = clusterCreateParameters.Properties.OperatingSystemType.ToString();
+                    
+                    propertiesValue["tier"] = clusterCreateParameters.Properties.ClusterTier.ToString();
                     
                     if (clusterCreateParameters.Properties.ClusterDefinition != null)
                     {
@@ -951,6 +945,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                 {
                                     OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                     propertiesInstance.OperatingSystemType = osTypeInstance;
+                                }
+                                
+                                JToken tierValue = propertiesValue2["tier"];
+                                if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                {
+                                    Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                    propertiesInstance.ClusterTier = tierInstance;
                                 }
                                 
                                 JToken clusterDefinitionValue2 = propertiesValue2["clusterDefinition"];
@@ -1378,7 +1379,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1415,9 +1416,242 @@ namespace Microsoft.Azure.Management.HDInsight
                     // Deserialize Response
                     result = new HDInsightOperationResponse();
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("Location"))
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("RetryAfter"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("RetryAfter").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Begins executing script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// Required. The parameters for executing script actions.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public async Task<HDInsightOperationResponse> BeginExecuteScriptActionsAsync(string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+            if (executeScriptActionParameters == null)
+            {
+                throw new ArgumentNullException("executeScriptActionParameters");
+            }
+            if (executeScriptActionParameters.ScriptActions != null)
+            {
+                foreach (RuntimeScriptAction scriptActionsParameterItem in executeScriptActionParameters.ScriptActions)
+                {
+                    if (scriptActionsParameterItem.Name == null)
+                    {
+                        throw new ArgumentNullException("executeScriptActionParameters.ScriptActions.Name");
+                    }
+                    if (scriptActionsParameterItem.Roles == null)
+                    {
+                        throw new ArgumentNullException("executeScriptActionParameters.ScriptActions.Roles");
+                    }
+                    if (scriptActionsParameterItem.Uri == null)
+                    {
+                        throw new ArgumentNullException("executeScriptActionParameters.ScriptActions.Uri");
+                    }
+                }
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("executeScriptActionParameters", executeScriptActionParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginExecuteScriptActionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "/clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/executeScriptActions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject executeScriptActionParametersValue = new JObject();
+                requestDoc = executeScriptActionParametersValue;
+                
+                if (executeScriptActionParameters.ScriptActions != null)
+                {
+                    if (executeScriptActionParameters.ScriptActions is ILazyCollection == false || ((ILazyCollection)executeScriptActionParameters.ScriptActions).IsInitialized)
+                    {
+                        JArray scriptActionsArray = new JArray();
+                        foreach (RuntimeScriptAction scriptActionsItem in executeScriptActionParameters.ScriptActions)
+                        {
+                            JObject runtimeScriptActionValue = new JObject();
+                            scriptActionsArray.Add(runtimeScriptActionValue);
+                            
+                            runtimeScriptActionValue["name"] = scriptActionsItem.Name;
+                            
+                            runtimeScriptActionValue["uri"] = scriptActionsItem.Uri.AbsoluteUri;
+                            
+                            if (scriptActionsItem.Parameters != null)
+                            {
+                                runtimeScriptActionValue["parameters"] = scriptActionsItem.Parameters;
+                            }
+                            
+                            if (scriptActionsItem.Roles != null)
+                            {
+                                if (scriptActionsItem.Roles is ILazyCollection == false || ((ILazyCollection)scriptActionsItem.Roles).IsInitialized)
+                                {
+                                    JArray rolesArray = new JArray();
+                                    foreach (string rolesItem in scriptActionsItem.Roles)
+                                    {
+                                        rolesArray.Add(rolesItem);
+                                    }
+                                    runtimeScriptActionValue["roles"] = rolesArray;
+                                }
+                            }
+                            
+                            if (scriptActionsItem.ApplicationName != null)
+                            {
+                                runtimeScriptActionValue["applicationName"] = scriptActionsItem.ApplicationName;
+                            }
+                        }
+                        executeScriptActionParametersValue["scriptActions"] = scriptActionsArray;
+                    }
+                }
+                
+                executeScriptActionParametersValue["persistOnSuccess"] = executeScriptActionParameters.PersistOnSuccess;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    HDInsightOperationResponse result = null;
+                    // Deserialize Response
+                    result = new HDInsightOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -1540,7 +1774,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1592,11 +1826,7 @@ namespace Microsoft.Azure.Management.HDInsight
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
                     {
-                        result.AzureAsyncOperation = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
-                    }
-                    if (httpResponse.Headers.Contains("Location"))
-                    {
-                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("RetryAfter"))
                     {
@@ -1646,9 +1876,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
+        public async Task<OperationResource> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1666,27 +1896,19 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginConfiguringHttpSettingsAsync(resourceGroupName, clusterName, httpSettingsParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            HDInsightLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 60;
-            }
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while (result.State == AsyncOperationState.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 60;
-                }
+                delayInSeconds = 60;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
                     delayInSeconds = client.LongRunningOperationRetryTimeout;
@@ -1717,9 +1939,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> ConfigureRdpSettingsAsync(string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters, CancellationToken cancellationToken)
+        public async Task<OperationResource> ConfigureRdpSettingsAsync(string resourceGroupName, string clusterName, RDPSettingsParameters rdpParameters, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1737,27 +1959,19 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginConfiguringRdpSettingsAsync(resourceGroupName, clusterName, rdpParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            HDInsightLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 60;
-            }
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while (result.State == AsyncOperationState.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 60;
-                }
+                delayInSeconds = 60;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
                     delayInSeconds = client.LongRunningOperationRetryTimeout;
@@ -1814,7 +2028,7 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Cluster.Properties.ProvisioningState != Microsoft.Azure.Management.HDInsight.Models.HDInsightClusterProvisioningState.InProgress) == false)
+            while (result.Cluster.Properties.ProvisioningState == HDInsightClusterProvisioningState.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -1848,9 +2062,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<ClusterGetResponse> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        public async Task<OperationResource> DeleteAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1867,18 +2081,236 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginDeletingAsync(resourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            ClusterGetResponse result = await client.Clusters.GetDeleteStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            OperationResource result = await client.Clusters.GetDeleteStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.StatusCode != System.Net.HttpStatusCode.Accepted) == false)
+            while (result.State == AsyncOperationState.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.Clusters.GetDeleteStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 60;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Deletes a given persisted script action of the cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptName'>
+        /// Required. The name of the script.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> DeletePersistedScriptAsync(string resourceGroupName, string clusterName, string scriptName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+            if (scriptName == null)
+            {
+                throw new ArgumentNullException("scriptName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("scriptName", scriptName);
+                TracingAdapter.Enter(invocationId, this, "DeletePersistedScriptAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "//clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/scriptActions/";
+            url = url + Uri.EscapeDataString(scriptName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Executes script actions on the specified HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='executeScriptActionParameters'>
+        /// Required. The parameters for executing script actions.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public async Task<OperationResource> ExecuteScriptActionsAsync(string resourceGroupName, string clusterName, ExecuteScriptActionParameters executeScriptActionParameters, CancellationToken cancellationToken)
+        {
+            HDInsightManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("executeScriptActionParameters", executeScriptActionParameters);
+                TracingAdapter.Enter(invocationId, this, "ExecuteScriptActionsAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            HDInsightOperationResponse response = await client.Clusters.BeginExecuteScriptActionsAsync(resourceGroupName, clusterName, executeScriptActionParameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.State == AsyncOperationState.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = 60;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
@@ -1974,7 +2406,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2089,6 +2521,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                 {
                                     OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                     propertiesInstance.OperatingSystemType = osTypeInstance;
+                                }
+                                
+                                JToken tierValue = propertiesValue["tier"];
+                                if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                {
+                                    Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                    propertiesInstance.ClusterTier = tierInstance;
                                 }
                                 
                                 JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
@@ -2503,7 +2942,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2877,6 +3316,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3047,7 +3487,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3192,7 +3632,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3307,6 +3747,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                 {
                                     OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                     propertiesInstance.OperatingSystemType = osTypeInstance;
+                                }
+                                
+                                JToken tierValue = propertiesValue["tier"];
+                                if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                {
+                                    Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                    propertiesInstance.ClusterTier = tierInstance;
                                 }
                                 
                                 JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
@@ -3660,9 +4107,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The GetCluster operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<ClusterGetResponse> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        public async Task<OperationResource> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
         {
             // Validate
             if (operationStatusLink == null)
@@ -3695,7 +4142,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
@@ -3717,7 +4164,7 @@ namespace Microsoft.Azure.Management.HDInsight
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -3729,13 +4176,13 @@ namespace Microsoft.Azure.Management.HDInsight
                     }
                     
                     // Create Result
-                    ClusterGetResponse result = null;
+                    OperationResource result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ClusterGetResponse();
+                        result = new OperationResource();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -3744,383 +4191,302 @@ namespace Microsoft.Azure.Management.HDInsight
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Cluster clusterInstance = new Cluster();
-                            result.Cluster = clusterInstance;
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
-                                string idInstance = ((string)idValue);
-                                clusterInstance.Id = idInstance;
+                                AsyncOperationState statusInstance = ((AsyncOperationState)Enum.Parse(typeof(AsyncOperationState), ((string)statusValue), true));
+                                result.State = statusInstance;
+                            }
+                            
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                            {
+                                ErrorInfo errorInstance = new ErrorInfo();
+                                result.ErrorInfo = errorInstance;
+                                
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                {
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                {
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets the script execution detail for the given script execution id.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// Required. The script execution Id
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The GetScriptExecutionDetail operation response.
+        /// </returns>
+        public async Task<ClusterRuntimeScriptActionDetailResponse> GetScriptExecutionDetailAsync(string resourceGroupName, string clusterName, long scriptExecutionId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("scriptExecutionId", scriptExecutionId);
+                TracingAdapter.Enter(invocationId, this, "GetScriptExecutionDetailAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "//clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/scriptExecutionHistory/";
+            url = url + Uri.EscapeDataString(scriptExecutionId.ToString());
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ClusterRuntimeScriptActionDetailResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ClusterRuntimeScriptActionDetailResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            RuntimeScriptActionDetail runtimeScriptActionDetailInstance = new RuntimeScriptActionDetail();
+                            result.RuntimeScriptActionDetail = runtimeScriptActionDetailInstance;
+                            
+                            JToken scriptExecutionIdValue = responseDoc["scriptExecutionId"];
+                            if (scriptExecutionIdValue != null && scriptExecutionIdValue.Type != JTokenType.Null)
+                            {
+                                long scriptExecutionIdInstance = ((long)scriptExecutionIdValue);
+                                runtimeScriptActionDetailInstance.ScriptExecutionId = scriptExecutionIdInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                runtimeScriptActionDetailInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = responseDoc["endTime"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                runtimeScriptActionDetailInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                runtimeScriptActionDetailInstance.Status = statusInstance;
+                            }
+                            
+                            JToken operationValue = responseDoc["operation"];
+                            if (operationValue != null && operationValue.Type != JTokenType.Null)
+                            {
+                                string operationInstance = ((string)operationValue);
+                                runtimeScriptActionDetailInstance.Operation = operationInstance;
+                            }
+                            
+                            JToken executionSummaryArray = responseDoc["executionSummary"];
+                            if (executionSummaryArray != null && executionSummaryArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken executionSummaryValue in ((JArray)executionSummaryArray))
+                                {
+                                    ScriptActionExecutionSummary scriptActionExecutionSummaryInstance = new ScriptActionExecutionSummary();
+                                    runtimeScriptActionDetailInstance.ExecutionSummary.Add(scriptActionExecutionSummaryInstance);
+                                    
+                                    JToken statusValue2 = executionSummaryValue["status"];
+                                    if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance2 = ((string)statusValue2);
+                                        scriptActionExecutionSummaryInstance.Status = statusInstance2;
+                                    }
+                                    
+                                    JToken instanceCountValue = executionSummaryValue["instanceCount"];
+                                    if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                    {
+                                        int instanceCountInstance = ((int)instanceCountValue);
+                                        scriptActionExecutionSummaryInstance.InstanceCount = instanceCountInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken debugInformationValue = responseDoc["debugInformation"];
+                            if (debugInformationValue != null && debugInformationValue.Type != JTokenType.Null)
+                            {
+                                string debugInformationInstance = ((string)debugInformationValue);
+                                runtimeScriptActionDetailInstance.DebugInformation = debugInformationInstance;
                             }
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                clusterInstance.Name = nameInstance;
+                                runtimeScriptActionDetailInstance.Name = nameInstance;
                             }
                             
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            JToken uriValue = responseDoc["uri"];
+                            if (uriValue != null && uriValue.Type != JTokenType.Null)
                             {
-                                string typeInstance = ((string)typeValue);
-                                clusterInstance.Type = typeInstance;
+                                Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                runtimeScriptActionDetailInstance.Uri = uriInstance;
                             }
                             
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            JToken parametersValue = responseDoc["parameters"];
+                            if (parametersValue != null && parametersValue.Type != JTokenType.Null)
                             {
-                                string locationInstance = ((string)locationValue);
-                                clusterInstance.Location = locationInstance;
+                                string parametersInstance = ((string)parametersValue);
+                                runtimeScriptActionDetailInstance.Parameters = parametersInstance;
                             }
                             
-                            JToken etagValue = responseDoc["etag"];
-                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            JToken rolesArray = responseDoc["roles"];
+                            if (rolesArray != null && rolesArray.Type != JTokenType.Null)
                             {
-                                string etagInstance = ((string)etagValue);
-                                clusterInstance.ETag = etagInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
+                                foreach (JToken rolesValue in ((JArray)rolesArray))
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    clusterInstance.Tags.Add(tagsKey, tagsValue);
+                                    runtimeScriptActionDetailInstance.Roles.Add(((string)rolesValue));
                                 }
                             }
                             
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            JToken applicationNameValue = responseDoc["applicationName"];
+                            if (applicationNameValue != null && applicationNameValue.Type != JTokenType.Null)
                             {
-                                ClusterGetProperties propertiesInstance = new ClusterGetProperties();
-                                clusterInstance.Properties = propertiesInstance;
-                                
-                                JToken clusterVersionValue = propertiesValue["clusterVersion"];
-                                if (clusterVersionValue != null && clusterVersionValue.Type != JTokenType.Null)
-                                {
-                                    string clusterVersionInstance = ((string)clusterVersionValue);
-                                    propertiesInstance.ClusterVersion = clusterVersionInstance;
-                                }
-                                
-                                JToken osTypeValue = propertiesValue["osType"];
-                                if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
-                                {
-                                    OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
-                                    propertiesInstance.OperatingSystemType = osTypeInstance;
-                                }
-                                
-                                JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
-                                if (clusterDefinitionValue != null && clusterDefinitionValue.Type != JTokenType.Null)
-                                {
-                                    ClusterDefinition clusterDefinitionInstance = new ClusterDefinition();
-                                    propertiesInstance.ClusterDefinition = clusterDefinitionInstance;
-                                    
-                                    JToken blueprintValue = clusterDefinitionValue["blueprint"];
-                                    if (blueprintValue != null && blueprintValue.Type != JTokenType.Null)
-                                    {
-                                        Uri blueprintInstance = TypeConversion.TryParseUri(((string)blueprintValue));
-                                        clusterDefinitionInstance.BlueprintUri = blueprintInstance;
-                                    }
-                                    
-                                    JToken kindValue = clusterDefinitionValue["kind"];
-                                    if (kindValue != null && kindValue.Type != JTokenType.Null)
-                                    {
-                                        string kindInstance = ((string)kindValue);
-                                        clusterDefinitionInstance.ClusterType = kindInstance;
-                                    }
-                                    
-                                    JToken configurationsValue = clusterDefinitionValue["configurations"];
-                                    if (configurationsValue != null && configurationsValue.Type != JTokenType.Null)
-                                    {
-                                        string configurationsInstance = configurationsValue.ToString(Newtonsoft.Json.Formatting.Indented);
-                                        clusterDefinitionInstance.Configurations = configurationsInstance;
-                                    }
-                                }
-                                
-                                JToken computeProfileValue = propertiesValue["computeProfile"];
-                                if (computeProfileValue != null && computeProfileValue.Type != JTokenType.Null)
-                                {
-                                    ComputeProfile computeProfileInstance = new ComputeProfile();
-                                    propertiesInstance.ComputeProfile = computeProfileInstance;
-                                    
-                                    JToken rolesArray = computeProfileValue["roles"];
-                                    if (rolesArray != null && rolesArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken rolesValue in ((JArray)rolesArray))
-                                        {
-                                            Role roleInstance = new Role();
-                                            computeProfileInstance.Roles.Add(roleInstance);
-                                            
-                                            JToken nameValue2 = rolesValue["name"];
-                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                            {
-                                                string nameInstance2 = ((string)nameValue2);
-                                                roleInstance.Name = nameInstance2;
-                                            }
-                                            
-                                            JToken targetInstanceCountValue = rolesValue["targetInstanceCount"];
-                                            if (targetInstanceCountValue != null && targetInstanceCountValue.Type != JTokenType.Null)
-                                            {
-                                                int targetInstanceCountInstance = ((int)targetInstanceCountValue);
-                                                roleInstance.TargetInstanceCount = targetInstanceCountInstance;
-                                            }
-                                            
-                                            JToken hardwareProfileValue = rolesValue["hardwareProfile"];
-                                            if (hardwareProfileValue != null && hardwareProfileValue.Type != JTokenType.Null)
-                                            {
-                                                HardwareProfile hardwareProfileInstance = new HardwareProfile();
-                                                roleInstance.HardwareProfile = hardwareProfileInstance;
-                                                
-                                                JToken vmSizeValue = hardwareProfileValue["vmSize"];
-                                                if (vmSizeValue != null && vmSizeValue.Type != JTokenType.Null)
-                                                {
-                                                    string vmSizeInstance = ((string)vmSizeValue);
-                                                    hardwareProfileInstance.VmSize = vmSizeInstance;
-                                                }
-                                            }
-                                            
-                                            JToken osProfileValue = rolesValue["osProfile"];
-                                            if (osProfileValue != null && osProfileValue.Type != JTokenType.Null)
-                                            {
-                                                OsProfile osProfileInstance = new OsProfile();
-                                                roleInstance.OsProfile = osProfileInstance;
-                                                
-                                                JToken windowsOperatingSystemProfileValue = osProfileValue["windowsOperatingSystemProfile"];
-                                                if (windowsOperatingSystemProfileValue != null && windowsOperatingSystemProfileValue.Type != JTokenType.Null)
-                                                {
-                                                    WindowsOperatingSystemProfile windowsOperatingSystemProfileInstance = new WindowsOperatingSystemProfile();
-                                                    osProfileInstance.WindowsOperatingSystemProfile = windowsOperatingSystemProfileInstance;
-                                                    
-                                                    JToken rdpSettingsValue = windowsOperatingSystemProfileValue["rdpSettings"];
-                                                    if (rdpSettingsValue != null && rdpSettingsValue.Type != JTokenType.Null)
-                                                    {
-                                                        RdpSettings rdpSettingsInstance = new RdpSettings();
-                                                        windowsOperatingSystemProfileInstance.RdpSettings = rdpSettingsInstance;
-                                                        
-                                                        JToken usernameValue = rdpSettingsValue["username"];
-                                                        if (usernameValue != null && usernameValue.Type != JTokenType.Null)
-                                                        {
-                                                            string usernameInstance = ((string)usernameValue);
-                                                            rdpSettingsInstance.UserName = usernameInstance;
-                                                        }
-                                                        
-                                                        JToken passwordValue = rdpSettingsValue["password"];
-                                                        if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                                        {
-                                                            string passwordInstance = ((string)passwordValue);
-                                                            rdpSettingsInstance.Password = passwordInstance;
-                                                        }
-                                                        
-                                                        JToken expiryDateValue = rdpSettingsValue["expiryDate"];
-                                                        if (expiryDateValue != null && expiryDateValue.Type != JTokenType.Null)
-                                                        {
-                                                            DateTime expiryDateInstance = ((DateTime)expiryDateValue);
-                                                            rdpSettingsInstance.ExpiryDate = expiryDateInstance;
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                JToken linuxOperatingSystemProfileValue = osProfileValue["linuxOperatingSystemProfile"];
-                                                if (linuxOperatingSystemProfileValue != null && linuxOperatingSystemProfileValue.Type != JTokenType.Null)
-                                                {
-                                                    LinuxOperatingSystemProfile linuxOperatingSystemProfileInstance = new LinuxOperatingSystemProfile();
-                                                    osProfileInstance.LinuxOperatingSystemProfile = linuxOperatingSystemProfileInstance;
-                                                    
-                                                    JToken usernameValue2 = linuxOperatingSystemProfileValue["username"];
-                                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string usernameInstance2 = ((string)usernameValue2);
-                                                        linuxOperatingSystemProfileInstance.UserName = usernameInstance2;
-                                                    }
-                                                    
-                                                    JToken passwordValue2 = linuxOperatingSystemProfileValue["password"];
-                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
-                                                    {
-                                                        string passwordInstance2 = ((string)passwordValue2);
-                                                        linuxOperatingSystemProfileInstance.Password = passwordInstance2;
-                                                    }
-                                                    
-                                                    JToken sshProfileValue = linuxOperatingSystemProfileValue["sshProfile"];
-                                                    if (sshProfileValue != null && sshProfileValue.Type != JTokenType.Null)
-                                                    {
-                                                        SshProfile sshProfileInstance = new SshProfile();
-                                                        linuxOperatingSystemProfileInstance.SshProfile = sshProfileInstance;
-                                                        
-                                                        JToken publicKeysArray = sshProfileValue["publicKeys"];
-                                                        if (publicKeysArray != null && publicKeysArray.Type != JTokenType.Null)
-                                                        {
-                                                            foreach (JToken publicKeysValue in ((JArray)publicKeysArray))
-                                                            {
-                                                                SshPublicKey sshPublicKeyInstance = new SshPublicKey();
-                                                                sshProfileInstance.SshPublicKeys.Add(sshPublicKeyInstance);
-                                                                
-                                                                JToken certificateDataValue = publicKeysValue["certificateData"];
-                                                                if (certificateDataValue != null && certificateDataValue.Type != JTokenType.Null)
-                                                                {
-                                                                    string certificateDataInstance = ((string)certificateDataValue);
-                                                                    sshPublicKeyInstance.CertificateData = certificateDataInstance;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken virtualNetworkProfileValue = rolesValue["virtualNetworkProfile"];
-                                            if (virtualNetworkProfileValue != null && virtualNetworkProfileValue.Type != JTokenType.Null)
-                                            {
-                                                VirtualNetworkProfile virtualNetworkProfileInstance = new VirtualNetworkProfile();
-                                                roleInstance.VirtualNetworkProfile = virtualNetworkProfileInstance;
-                                                
-                                                JToken idValue2 = virtualNetworkProfileValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    virtualNetworkProfileInstance.Id = idInstance2;
-                                                }
-                                                
-                                                JToken subnetValue = virtualNetworkProfileValue["subnet"];
-                                                if (subnetValue != null && subnetValue.Type != JTokenType.Null)
-                                                {
-                                                    string subnetInstance = ((string)subnetValue);
-                                                    virtualNetworkProfileInstance.SubnetName = subnetInstance;
-                                                }
-                                            }
-                                            
-                                            JToken scriptActionsArray = rolesValue["scriptActions"];
-                                            if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken scriptActionsValue in ((JArray)scriptActionsArray))
-                                                {
-                                                    ScriptAction scriptActionInstance = new ScriptAction();
-                                                    roleInstance.ScriptActions.Add(scriptActionInstance);
-                                                    
-                                                    JToken nameValue3 = scriptActionsValue["name"];
-                                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string nameInstance3 = ((string)nameValue3);
-                                                        scriptActionInstance.Name = nameInstance3;
-                                                    }
-                                                    
-                                                    JToken uriValue = scriptActionsValue["uri"];
-                                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
-                                                    {
-                                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
-                                                        scriptActionInstance.Uri = uriInstance;
-                                                    }
-                                                    
-                                                    JToken parametersValue = scriptActionsValue["parameters"];
-                                                    if (parametersValue != null && parametersValue.Type != JTokenType.Null)
-                                                    {
-                                                        string parametersInstance = ((string)parametersValue);
-                                                        scriptActionInstance.Parameters = parametersInstance;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    HDInsightClusterProvisioningState provisioningStateInstance = ((HDInsightClusterProvisioningState)Enum.Parse(typeof(HDInsightClusterProvisioningState), ((string)provisioningStateValue), true));
-                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                                
-                                JToken createdDateValue = propertiesValue["createdDate"];
-                                if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
-                                {
-                                    DateTime createdDateInstance = ((DateTime)createdDateValue);
-                                    propertiesInstance.CreatedDate = createdDateInstance;
-                                }
-                                
-                                JToken clusterStateValue = propertiesValue["clusterState"];
-                                if (clusterStateValue != null && clusterStateValue.Type != JTokenType.Null)
-                                {
-                                    string clusterStateInstance = ((string)clusterStateValue);
-                                    propertiesInstance.ClusterState = clusterStateInstance;
-                                }
-                                
-                                JToken quotaInfoValue = propertiesValue["quotaInfo"];
-                                if (quotaInfoValue != null && quotaInfoValue.Type != JTokenType.Null)
-                                {
-                                    QuotaInfo quotaInfoInstance = new QuotaInfo();
-                                    propertiesInstance.QuotaInfo = quotaInfoInstance;
-                                    
-                                    JToken coresUsedValue = quotaInfoValue["coresUsed"];
-                                    if (coresUsedValue != null && coresUsedValue.Type != JTokenType.Null)
-                                    {
-                                        int coresUsedInstance = ((int)coresUsedValue);
-                                        quotaInfoInstance.CoresUsed = coresUsedInstance;
-                                    }
-                                }
-                                
-                                JToken errorsArray = propertiesValue["errors"];
-                                if (errorsArray != null && errorsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken errorsValue in ((JArray)errorsArray))
-                                    {
-                                        ErrorInfo errorInfoInstance = new ErrorInfo();
-                                        propertiesInstance.ErrorInfos.Add(errorInfoInstance);
-                                        
-                                        JToken codeValue = errorsValue["code"];
-                                        if (codeValue != null && codeValue.Type != JTokenType.Null)
-                                        {
-                                            string codeInstance = ((string)codeValue);
-                                            errorInfoInstance.Code = codeInstance;
-                                        }
-                                        
-                                        JToken messageValue = errorsValue["message"];
-                                        if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                        {
-                                            string messageInstance = ((string)messageValue);
-                                            errorInfoInstance.Message = messageInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken connectivityEndpointsArray = propertiesValue["connectivityEndpoints"];
-                                if (connectivityEndpointsArray != null && connectivityEndpointsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken connectivityEndpointsValue in ((JArray)connectivityEndpointsArray))
-                                    {
-                                        ConnectivityEndpoint connectivityEndpointInstance = new ConnectivityEndpoint();
-                                        propertiesInstance.ConnectivityEndpoints.Add(connectivityEndpointInstance);
-                                        
-                                        JToken nameValue4 = connectivityEndpointsValue["name"];
-                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance4 = ((string)nameValue4);
-                                            connectivityEndpointInstance.Name = nameInstance4;
-                                        }
-                                        
-                                        JToken protocolValue = connectivityEndpointsValue["protocol"];
-                                        if (protocolValue != null && protocolValue.Type != JTokenType.Null)
-                                        {
-                                            string protocolInstance = ((string)protocolValue);
-                                            connectivityEndpointInstance.Protocol = protocolInstance;
-                                        }
-                                        
-                                        JToken locationValue2 = connectivityEndpointsValue["location"];
-                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance2 = ((string)locationValue2);
-                                            connectivityEndpointInstance.Location = locationInstance2;
-                                        }
-                                        
-                                        JToken portValue = connectivityEndpointsValue["port"];
-                                        if (portValue != null && portValue.Type != JTokenType.Null)
-                                        {
-                                            int portInstance = ((int)portValue);
-                                            connectivityEndpointInstance.Port = portInstance;
-                                        }
-                                    }
-                                }
+                                string applicationNameInstance = ((string)applicationNameValue);
+                                runtimeScriptActionDetailInstance.ApplicationName = applicationNameInstance;
                             }
                         }
                         
@@ -4215,7 +4581,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4335,6 +4701,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                         {
                                             OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                             propertiesInstance.OperatingSystemType = osTypeInstance;
+                                        }
+                                        
+                                        JToken tierValue = propertiesValue["tier"];
+                                        if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                        {
+                                            Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                            propertiesInstance.ClusterTier = tierInstance;
                                         }
                                         
                                         JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
@@ -4751,7 +5124,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.7-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4871,6 +5244,13 @@ namespace Microsoft.Azure.Management.HDInsight
                                         {
                                             OSType osTypeInstance = ((OSType)Enum.Parse(typeof(OSType), ((string)osTypeValue), true));
                                             propertiesInstance.OperatingSystemType = osTypeInstance;
+                                        }
+                                        
+                                        JToken tierValue = propertiesValue["tier"];
+                                        if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                        {
+                                            Tier tierInstance = ((Tier)Enum.Parse(typeof(Tier), ((string)tierValue), true));
+                                            propertiesInstance.ClusterTier = tierInstance;
                                         }
                                         
                                         JToken clusterDefinitionValue = propertiesValue["clusterDefinition"];
@@ -5217,6 +5597,636 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
+        /// Lists all persisted script actions for the given cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List PersistedScriptActions operations response.
+        /// </returns>
+        public async Task<ClusterListPersistedScriptActionsResponse> ListPersistedScriptsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                TracingAdapter.Enter(invocationId, this, "ListPersistedScriptsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "/clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/scriptActions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ClusterListPersistedScriptActionsResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ClusterListPersistedScriptActionsResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RuntimeScriptAction runtimeScriptActionInstance = new RuntimeScriptAction();
+                                    result.PersistedScriptActions.Add(runtimeScriptActionInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        runtimeScriptActionInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken uriValue = valueValue["uri"];
+                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                    {
+                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                        runtimeScriptActionInstance.Uri = uriInstance;
+                                    }
+                                    
+                                    JToken parametersValue = valueValue["parameters"];
+                                    if (parametersValue != null && parametersValue.Type != JTokenType.Null)
+                                    {
+                                        string parametersInstance = ((string)parametersValue);
+                                        runtimeScriptActionInstance.Parameters = parametersInstance;
+                                    }
+                                    
+                                    JToken rolesArray = valueValue["roles"];
+                                    if (rolesArray != null && rolesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken rolesValue in ((JArray)rolesArray))
+                                        {
+                                            runtimeScriptActionInstance.Roles.Add(((string)rolesValue));
+                                        }
+                                    }
+                                    
+                                    JToken applicationNameValue = valueValue["applicationName"];
+                                    if (applicationNameValue != null && applicationNameValue.Type != JTokenType.Null)
+                                    {
+                                        string applicationNameInstance = ((string)applicationNameValue);
+                                        runtimeScriptActionInstance.ApplicationName = applicationNameInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Lists all scripts execution history for the given cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The ListScriptExecutionHistory response.
+        /// </returns>
+        public async Task<ClusterListRuntimeScriptActionDetailResponse> ListScriptExecutionHistoryAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                TracingAdapter.Enter(invocationId, this, "ListScriptExecutionHistoryAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "//clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/scriptExecutionHistory";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ClusterListRuntimeScriptActionDetailResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ClusterListRuntimeScriptActionDetailResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    RuntimeScriptActionDetail runtimeScriptActionDetailInstance = new RuntimeScriptActionDetail();
+                                    result.RuntimeScriptActionDetail.Add(runtimeScriptActionDetailInstance);
+                                    
+                                    JToken scriptExecutionIdValue = valueValue["scriptExecutionId"];
+                                    if (scriptExecutionIdValue != null && scriptExecutionIdValue.Type != JTokenType.Null)
+                                    {
+                                        long scriptExecutionIdInstance = ((long)scriptExecutionIdValue);
+                                        runtimeScriptActionDetailInstance.ScriptExecutionId = scriptExecutionIdInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = valueValue["startTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        runtimeScriptActionDetailInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = valueValue["endTime"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                        runtimeScriptActionDetailInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken statusValue = valueValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        runtimeScriptActionDetailInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken operationValue = valueValue["operation"];
+                                    if (operationValue != null && operationValue.Type != JTokenType.Null)
+                                    {
+                                        string operationInstance = ((string)operationValue);
+                                        runtimeScriptActionDetailInstance.Operation = operationInstance;
+                                    }
+                                    
+                                    JToken executionSummaryArray = valueValue["executionSummary"];
+                                    if (executionSummaryArray != null && executionSummaryArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken executionSummaryValue in ((JArray)executionSummaryArray))
+                                        {
+                                            ScriptActionExecutionSummary scriptActionExecutionSummaryInstance = new ScriptActionExecutionSummary();
+                                            runtimeScriptActionDetailInstance.ExecutionSummary.Add(scriptActionExecutionSummaryInstance);
+                                            
+                                            JToken statusValue2 = executionSummaryValue["status"];
+                                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                            {
+                                                string statusInstance2 = ((string)statusValue2);
+                                                scriptActionExecutionSummaryInstance.Status = statusInstance2;
+                                            }
+                                            
+                                            JToken instanceCountValue = executionSummaryValue["instanceCount"];
+                                            if (instanceCountValue != null && instanceCountValue.Type != JTokenType.Null)
+                                            {
+                                                int instanceCountInstance = ((int)instanceCountValue);
+                                                scriptActionExecutionSummaryInstance.InstanceCount = instanceCountInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken debugInformationValue = valueValue["debugInformation"];
+                                    if (debugInformationValue != null && debugInformationValue.Type != JTokenType.Null)
+                                    {
+                                        string debugInformationInstance = ((string)debugInformationValue);
+                                        runtimeScriptActionDetailInstance.DebugInformation = debugInformationInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        runtimeScriptActionDetailInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken uriValue = valueValue["uri"];
+                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
+                                    {
+                                        Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
+                                        runtimeScriptActionDetailInstance.Uri = uriInstance;
+                                    }
+                                    
+                                    JToken parametersValue = valueValue["parameters"];
+                                    if (parametersValue != null && parametersValue.Type != JTokenType.Null)
+                                    {
+                                        string parametersInstance = ((string)parametersValue);
+                                        runtimeScriptActionDetailInstance.Parameters = parametersInstance;
+                                    }
+                                    
+                                    JToken rolesArray = valueValue["roles"];
+                                    if (rolesArray != null && rolesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken rolesValue in ((JArray)rolesArray))
+                                        {
+                                            runtimeScriptActionDetailInstance.Roles.Add(((string)rolesValue));
+                                        }
+                                    }
+                                    
+                                    JToken applicationNameValue = valueValue["applicationName"];
+                                    if (applicationNameValue != null && applicationNameValue.Type != JTokenType.Null)
+                                    {
+                                        string applicationNameInstance = ((string)applicationNameValue);
+                                        runtimeScriptActionDetailInstance.ApplicationName = applicationNameInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Promote ad-hoc script execution to a persisted script.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='scriptExecutionId'>
+        /// Required. The script execution Id
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> PromoteScriptAsync(string resourceGroupName, string clusterName, long scriptExecutionId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("scriptExecutionId", scriptExecutionId);
+                TracingAdapter.Enter(invocationId, this, "PromoteScriptAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "//clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/scriptExecutionHistory/";
+            url = url + Uri.EscapeDataString(scriptExecutionId.ToString());
+            url = url + "/promote";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Resizes the specified HDInsight cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -5232,9 +6242,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> ResizeAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken)
+        public async Task<OperationResource> ResizeAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -5252,27 +6262,19 @@ namespace Microsoft.Azure.Management.HDInsight
             cancellationToken.ThrowIfCancellationRequested();
             HDInsightOperationResponse response = await client.Clusters.BeginResizingAsync(resourceGroupName, clusterName, resizeParameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            HDInsightLongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 60;
-            }
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while (result.State == AsyncOperationState.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 60;
-                }
+                delayInSeconds = 60;
                 if (client.LongRunningOperationRetryTimeout >= 0)
                 {
                     delayInSeconds = client.LongRunningOperationRetryTimeout;

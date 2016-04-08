@@ -7,7 +7,7 @@
         "server": "z102fk12be",
         "database": "HydraSdkTest",
         "user": "customersolution",
-        "password": "y3%rNk9*",
+        "password": "$TestStringToBeReplaced",
         "table": "StateInfo"
       }
     }

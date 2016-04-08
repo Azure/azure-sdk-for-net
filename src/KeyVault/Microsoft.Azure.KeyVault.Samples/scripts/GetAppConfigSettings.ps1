@@ -16,6 +16,17 @@ $applicationPassword = '' # If not specified, script will generate a random pass
 $location            = 'East US'                          # Get-AzureLocation
 
 # **********************************************************************************************
+# Generates a secure 32-byte symmetric key for authentication
+# **********************************************************************************************
+Function GenerateSymmetricKey()
+{
+    $key = New-Object byte[](32)
+    $rng = [System.Security.Cryptography.RNGCryptoServiceProvider]::Create()
+    $rng.GetBytes($key)
+    return [System.Convert]::ToBase64String($key)
+}
+
+# **********************************************************************************************
 # Should we bounce this script execution?
 # **********************************************************************************************
 if (($vaultName -eq 'MyVaultName') -or ($resourceGroupName -eq 'MyResourceGroupName') -or ($applicationName -eq 'MyAppName'))
@@ -27,10 +38,9 @@ if (($vaultName -eq 'MyVaultName') -or ($resourceGroupName -eq 'MyResourceGroupN
 # **********************************************************************************************
 # Log into Azure
 # **********************************************************************************************
-Write-Host 'Please log into Azure now' -foregroundcolor Green
-Add-AzureAccount
+Write-Host 'Please log into Azure Resource Manager now' -foregroundcolor Green
+Login-AzureRmAccount
 $VerbosePreference = "SilentlyContinue"
-Switch-AzureMode AzureResourceManager
 
 # **********************************************************************************************
 # Prep the cert credential data
@@ -41,17 +51,21 @@ $oneYearFromNow = $now.AddYears(1)
 # **********************************************************************************************
 # Create application in AAD if needed
 # **********************************************************************************************
-$SvcPrincipals = (Get-AzureADServicePrincipal -SearchString $applicationName)
+$SvcPrincipals = (Get-AzureRmADServicePrincipal -SearchString $applicationName)
 if(-not $SvcPrincipals)
 {
+	if(-not $applicationPassword)
+	{
+		$applicationPassword = GenerateSymmetricKey
+	}
+	
     # Create a new AD application if not created before
     $identifierUri = [string]::Format("http://localhost:8080/{0}",[Guid]::NewGuid().ToString("N"))
     $homePage = "http://contoso.com"
     Write-Host "Creating a new AAD Application"
-    $applicationPassword = [Guid]::NewGuid()
-    $ADApp = New-AzureADApplication -DisplayName $applicationName -HomePage $homePage -IdentifierUris $identifierUri  -StartDate $now -EndDate $oneYearFromNow -Password $applicationPassword
+    $ADApp = New-AzureRmADApplication -DisplayName $applicationName -HomePage $homePage -IdentifierUris $identifierUri  -StartDate $now -EndDate $oneYearFromNow -Password $applicationPassword
     Write-Host "Creating a new AAD service principal"
-    $servicePrincipal = New-AzureADServicePrincipal -ApplicationId $ADApp.ApplicationId
+    $servicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $ADApp.ApplicationId
 }
 else
 {
@@ -71,23 +85,25 @@ else
 # **********************************************************************************************
 # Create the resource group and vault if needed
 # **********************************************************************************************
-$rg = Get-AzureResourceGroup -Name $resourceGroupName -ErrorAction SilentlyContinue
+$rg = Get-AzureRmResourceGroup -Name $resourceGroupName -ErrorAction SilentlyContinue
 if (-not $rg)
 {
-    New-AzureResourceGroup -Name $resourceGroupName -Location $location   
+    New-AzureRmResourceGroup -Name $resourceGroupName -Location $location   
 }
 
-$vault = Get-AzureKeyVault -VaultName $vaultName -ErrorAction SilentlyContinue
+$vault = Get-AzureRmKeyVault -VaultName $vaultName -ErrorAction SilentlyContinue
 if (-not $vault)
 {
-  $vault = New-AzureKeyVault -VaultName $vaultName `
+    Write-Host "Creating vault $vaultName"
+    $vault = New-AzureRmKeyVault -VaultName $vaultName `
                              -ResourceGroupName $resourceGroupName `
                              -Sku premium `
                              -Location $location
 }
 
 # Specify full privileges to the vault for the application
-Set-AzureKeyVaultAccessPolicy -VaultName $vaultName `
+Write-Host "Setting access policy"
+Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName `
 	-ObjectId $servicePrincipal.Id `
 	-PermissionsToKeys all `
 	-PermissionsToSecrets all

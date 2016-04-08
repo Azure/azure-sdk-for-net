@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/jobSchedules/";
             url = url + Guid.NewGuid().ToString();
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -276,6 +276,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             JobSchedule jobScheduleInstance = new JobSchedule();
                             result.JobSchedule = jobScheduleInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobScheduleInstance.Id = idInstance;
+                            }
                             
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
@@ -433,7 +440,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/jobSchedules/";
             url = url + Uri.EscapeDataString(jobScheduleName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -590,7 +597,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/jobSchedules/";
             url = url + Uri.EscapeDataString(jobScheduleName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -668,6 +675,13 @@ namespace Microsoft.Azure.Management.Automation
                         {
                             JobSchedule jobScheduleInstance = new JobSchedule();
                             result.JobSchedule = jobScheduleInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                jobScheduleInstance.Id = idInstance;
+                            }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -819,7 +833,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/jobSchedules";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -903,6 +917,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     JobSchedule jobScheduleInstance = new JobSchedule();
                                     result.JobSchedules.Add(jobScheduleInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        jobScheduleInstance.Id = idInstance;
+                                    }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
@@ -1115,6 +1136,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     JobSchedule jobScheduleInstance = new JobSchedule();
                                     result.JobSchedules.Add(jobScheduleInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        jobScheduleInstance.Id = idInstance;
+                                    }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)

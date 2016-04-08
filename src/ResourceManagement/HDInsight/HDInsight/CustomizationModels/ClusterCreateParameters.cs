@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the flavor for a cluster.
         /// </summary>
-        public HDInsightClusterType ClusterType { get; set; }
+        public string ClusterType { get; set; }
         
         /// <summary>
         /// Gets or sets the virtual network guid for this HDInsight cluster.
@@ -153,6 +153,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public OSType OSType { get; set; }
         
         /// <summary>
+        /// Gets or sets the cluster tier.
+        /// </summary>
+        public Tier ClusterTier { get; set; }
+
+        /// <summary>
         /// Gets or sets SSH user name.
         /// </summary>
         public string SshUserName { get; set; }
@@ -166,6 +171,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Gets or sets the public key to be used for SSH.
         /// </summary>
         public string SshPublicKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the prinicipal to be used for getting OAuth2 token to access Azure DataLake (ADL)
+        /// </summary>
+        public Principal Principal { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
