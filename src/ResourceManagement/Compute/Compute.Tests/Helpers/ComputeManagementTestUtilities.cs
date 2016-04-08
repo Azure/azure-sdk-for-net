@@ -34,8 +34,10 @@ namespace Compute.Tests
             {
                 handler.IsPassThrough = true;
             }
-            return context.GetServiceClient<ComputeManagementClient>(handlers: 
+
+            var client = context.GetServiceClient<ComputeManagementClient>(handlers: 
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+            return client;
         }
         
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)

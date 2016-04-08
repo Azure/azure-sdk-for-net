@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Profile for Windows jumpbox
+    /// Profile for Windows VMs
     /// </summary>
     public partial class ContainerServiceWindowsProfile
     {
@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// The administrator username to use for Windows jumpbox
+        /// The administrator username to use for Windows VMs
         /// </summary>
         [JsonProperty(PropertyName = "adminUsername")]
         public string AdminUsername { get; set; }
 
         /// <summary>
-        /// The administrator password to use for Windows jumpbox
+        /// The administrator password to use for Windows VMs
         /// </summary>
         [JsonProperty(PropertyName = "adminPassword")]
         public string AdminPassword { get; set; }
