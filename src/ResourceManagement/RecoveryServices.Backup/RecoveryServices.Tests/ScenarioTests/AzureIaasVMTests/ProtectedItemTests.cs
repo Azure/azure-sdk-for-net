@@ -31,7 +31,6 @@ namespace RecoveryServices.Tests
 {
     class ProtectedItemTest : RecoveryServicesTestsBase
     {
-        [Fact]
         public void EnableAzureBackupProtectionTest()
         {
              ExecuteTest(
@@ -63,7 +62,6 @@ namespace RecoveryServices.Tests
                 });
         }
 
-        [Fact]
         public void RemoveAzureBackupProtectionTest()
         {
             ExecuteTest(

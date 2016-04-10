@@ -32,7 +32,6 @@ namespace RecoveryServices.Tests
 {
     public class MabContainerTests : RecoveryServicesTestsBase
     {
-        [Fact]
         public void ListContainersTest()
         {
             ExecuteTest(
@@ -51,7 +50,6 @@ namespace RecoveryServices.Tests
                 });
         }
 
-        [Fact]
         public void UnregisterContainersTest()
         {
             ExecuteTest(

@@ -32,7 +32,6 @@ namespace RecoveryServices.Tests
 {
     public class JobTests : RecoveryServicesTestsBase
     {
-        [Fact]
         public void ListJobsAndGetJobTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -71,7 +70,6 @@ namespace RecoveryServices.Tests
             }
         }
 
-        [Fact]
         public void CancelJobTest()
         {
             using (UndoContext context = UndoContext.Current)

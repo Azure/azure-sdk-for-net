@@ -22,8 +22,8 @@ namespace RecoveryServices.Tests.Helpers
 
         public ProtectionContainerListResponse ListContainers(ProtectionContainerListQueryParams queryParams)
         {
-            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+            string rsVaultRgName = "pstestrg";
+            string rsVaultName = "pstestrsvault";
 
             ProtectionContainerListResponse response = Client.Container.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
 
@@ -35,8 +35,8 @@ namespace RecoveryServices.Tests.Helpers
 
         public BaseRecoveryServicesJobResponse RefreshContainer(string fabricName)
         {
-            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+            string rsVaultRgName = "pstestrg";
+            string rsVaultName = "pstestrsvault";
 
             BaseRecoveryServicesJobResponse response = Client.Container.Refresh(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(), fabricName);
 

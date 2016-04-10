@@ -34,37 +34,46 @@ namespace RecoveryServices.Tests
         [Fact]
         public void ListContainersTest()
         {
-            ExecuteTest(
-                client =>
-                {
-                    ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
 
-                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
 
-                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultIaasV1ContainerUniqueName);
-                    Assert.True(
-                        response.ItemList.ProtectionContainers.Any(
-                            protectionContainer =>
-                            {
-                                return protectionContainer.Properties.GetType() == typeof(AzureIaaSClassicComputeVMProtectionContainer) &&
-                                       protectionContainer.Name == containerUniqueName;
-                            }),
-                            "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
-                });
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+
+                ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
+                queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+
+                ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
+
+                string containerName = "pstestv2vm1";
+                Assert.True(
+                    response.ItemList.ProtectionContainers.Any(
+                        protectionContainer =>
+                        {
+                            return protectionContainer.Properties.GetType().IsSubclassOf(typeof(AzureIaaSVMProtectionContainer)) &&
+                                   protectionContainer.Name.Contains(containerName);
+                        }),
+                        "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
+            }
         }
 
         [Fact]
         public void RefreshContainerTest()
         {
-            ExecuteTest(
-                client =>
-                {
-                    string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
-                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    var response = containerTestHelper.RefreshContainer(fabricName);
-                });
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                var response = containerTestHelper.RefreshContainer(fabricName);
+            }
         }
     }
 }

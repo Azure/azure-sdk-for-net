@@ -32,7 +32,6 @@ namespace RecoveryServices.Tests
 {
     public class DpmContainerTests : RecoveryServicesTestsBase
     {
-        [Fact]
         public void ListContainersTest()
         {
             ExecuteTest(
@@ -52,7 +51,6 @@ namespace RecoveryServices.Tests
                 });
         }
 
-        [Fact]
         public void UnregisterContainersTest()
         {
             ExecuteTest(

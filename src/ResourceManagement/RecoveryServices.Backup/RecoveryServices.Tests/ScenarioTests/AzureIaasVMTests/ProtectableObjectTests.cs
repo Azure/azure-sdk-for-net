@@ -31,7 +31,6 @@ namespace RecoveryServices.Tests
 {
     public class ProtectableObjectTests : RecoveryServicesTestsBase
     {
-        [Fact]
         public void ListProtectableObjectTest()
         {
             ExecuteTest(

@@ -97,6 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\ListContainersTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\RefreshContainerTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json" />
   </ItemGroup>

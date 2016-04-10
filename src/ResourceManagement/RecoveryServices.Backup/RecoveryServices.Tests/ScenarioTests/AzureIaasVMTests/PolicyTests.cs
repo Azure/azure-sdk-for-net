@@ -32,7 +32,6 @@ namespace RecoveryServices.Tests
 {
     class IaaSVMPolicyTests : RecoveryServicesTestsBase
     {
-        [Fact]
         public void ListRecoveryServicesProtectionPolicyTest()
         {
             ExecuteTest(
@@ -63,7 +62,6 @@ namespace RecoveryServices.Tests
                 });
         }
 
-        [Fact]
         public void AddAndUpdateIaaSVMPolicyTest()
         {
             ExecuteTest(
@@ -103,7 +101,6 @@ namespace RecoveryServices.Tests
                });
         }
 
-        [Fact]
         public void GetAndDeleteIaaSVMPolicyTest()
         {
             ExecuteTest(
