@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/ASRRG1/providers/Microsoft.RecoveryServices/vaults/hello5/backupJobs?api-version=2015-03-15&$filter=backupManagementType%20eq%20'AzureIaasVM'%20and%20startTime%20eq%20'2016-03-30%2006:30:00%20AM'%20and%20endTime%20eq%20'2016-03-31%2006:30:00%20AM'",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL0FTUlJHMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL2hlbGxvNS9iYWNrdXBKb2JzP2FwaS12ZXJzaW9uPTIwMTUtMDMtMTUmJGZpbHRlcj1iYWNrdXBNYW5hZ2VtZW50VHlwZSUyMGVxJTIwJ0F6dXJlSWFhc1ZNJyUyMGFuZCUyMHN0YXJ0VGltZSUyMGVxJTIwJzIwMTYtMDMtMzAlMjAwNiUzQTMwJTNBMDAlMjBBTSclMjBhbmQlMjBlbmRUaW1lJTIwZXElMjAnMjAxNi0wMy0zMSUyMDA2JTNBMzAlM0EwMCUyMEFNJw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "2cbf1338-a7fb-4f80-8bc8-0c8e7a5a41c2"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "28"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2bd8455d-e524-482c-8f83-c4bb455c7e8e"
+        ],
+        "x-ms-client-request-id": [
+          "2cbf1338-a7fb-4f80-8bc8-0c8e7a5a41c2",
+          "2cbf1338-a7fb-4f80-8bc8-0c8e7a5a41c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11498"
+        ],
+        "x-ms-correlation-request-id": [
+          "2bd8455d-e524-482c-8f83-c4bb455c7e8e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160405T072645Z:2bd8455d-e524-482c-8f83-c4bb455c7e8e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 05 Apr 2016 07:26:45 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "04cf684a-d41f-4550-9f70-7708a3a2283b"
+  }
+}
