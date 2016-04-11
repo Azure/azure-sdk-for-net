@@ -23,13 +23,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     public static partial class MachineLearningWebServicesManagementClientAPIsExtensions
     {
             /// <summary>
-            /// Create a new Web Service or update an existing one.
+            /// Create a new Azure ML web service or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='createOrUpdatePayload'>
-            /// The payload to create or update a Web Service
+            /// The payload to create or update the Azure ML web service.
             /// </param>
             public static WebService CreateOrUpdateWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService createOrUpdatePayload)
             {
@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Create a new Web Service or update an existing one.
+            /// Create a new Azure ML web service or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='createOrUpdatePayload'>
-            /// The payload to create or update a Web Service
+            /// The payload to create or update the Azure ML web service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -57,13 +57,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Create a new Web Service or update an existing one.
+            /// Create a new Azure ML web service or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='createOrUpdatePayload'>
-            /// The payload to create or update a Web Service
+            /// The payload to create or update the Azure ML web service.
             /// </param>
             public static WebService BeginCreateOrUpdateWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService createOrUpdatePayload)
             {
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Create a new Web Service or update an existing one.
+            /// Create a new Azure ML web service or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='createOrUpdatePayload'>
-            /// The payload to create or update a Web Service
+            /// The payload to create or update the Azure ML web service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -91,7 +91,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Retrieve a Web Service information by its name
+            /// Retrieve an Azure ML web service definition by its subscription, resource
+            /// group and name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,7 +103,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Retrieve a Web Service information by its name
+            /// Retrieve an Azure ML web service definition by its subscription, resource
+            /// group and name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,13 +121,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Web Service
+            /// Patch an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// [TODO] Patch Web Service Request Payload.
+            /// The payload to patch the Azure ML with.
             /// </param>
             public static WebService PatchWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService patchPayload)
             {
@@ -133,13 +135,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Web Service
+            /// Patch an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// [TODO] Patch Web Service Request Payload.
+            /// The payload to patch the Azure ML with.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -153,13 +155,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Web Service
+            /// Patch an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// [TODO] Patch Web Service Request Payload.
+            /// The payload to patch the Azure ML with.
             /// </param>
             public static WebService BeginPatchWebService(this IMachineLearningWebServicesManagementClientAPIs operations, WebService patchPayload)
             {
@@ -167,13 +169,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Patch an existing Web Service
+            /// Patch an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='patchPayload'>
-            /// [TODO] Patch Web Service Request Payload.
+            /// The payload to patch the Azure ML with.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -187,7 +189,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Delete an existing Web Service
+            /// Remove an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -198,7 +200,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Delete an existing Web Service
+            /// Remove an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -212,7 +214,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Delete an existing Web Service
+            /// Remove an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -223,7 +225,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Delete an existing Web Service
+            /// Remove an existing Azure ML web service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -237,7 +239,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Get the primary and secondary keys of a particular Web Service
+            /// Get the primary and secondary access keys of a particular Azure ML web
+            /// service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -248,7 +251,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Get the primary and secondary keys of a particular Web Service
+            /// Get the primary and secondary access keys of a particular Azure ML web
+            /// service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -265,7 +269,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Retrieve all Web Services' information in a given Resource Group
+            /// Retrieve all Azure ML web services in a given resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -276,7 +280,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Retrieve all Web Services' information in a given Resource Group
+            /// Retrieve all Azure ML web services in a given resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -293,7 +297,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Get all Web Services' information in current Azure subscription
+            /// Retrieve all Azure ML web services in the current Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -304,7 +308,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Get all Web Services' information in current Azure subscription
+            /// Retrieve all Azure ML web services in the current Azure subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -321,35 +325,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Check the Web Service Name is valid and not in use
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static CheckNameResult CheckNameAvaliability(this IMachineLearningWebServicesManagementClientAPIs operations)
-            {
-                return Task.Factory.StartNew(s => ((IMachineLearningWebServicesManagementClientAPIs)s).CheckNameAvaliabilityAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check the Web Service Name is valid and not in use
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckNameResult> CheckNameAvaliabilityAsync(this IMachineLearningWebServicesManagementClientAPIs operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvaliabilityWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get all available operations of a Web Service
+            /// Get all available operations for the Microsoft.MachineLearning provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -360,7 +336,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             }
 
             /// <summary>
-            /// Get all available operations of a Web Service
+            /// Get all available operations for the Microsoft.MachineLearning provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -26,12 +26,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     using Models;
 
     /// <summary>
-    /// These APIs allows end users to operate on Web Services in Azure ML.
-    /// They support the following operations:&lt;ul&gt;&lt;li&gt;Create a
-    /// Web Service&lt;/li&gt;&lt;li&gt;Get a Web
-    /// Service&lt;/li&gt;&lt;li&gt;Patch a Web
-    /// Service&lt;/li&gt;&lt;li&gt;Delete a Web
-    /// Service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
+    /// [TODO] These APIs allows end users to operate on Web Services in Azure
+    /// ML. They support the following operations:&lt;ul&gt;&lt;li&gt;Create
+    /// a web service&lt;/li&gt;&lt;li&gt;Get a web
+    /// service&lt;/li&gt;&lt;li&gt;Patch a web
+    /// service&lt;/li&gt;&lt;li&gt;Delete a web
+    /// service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
     /// &lt;/li&gt;&lt;li&gt;Get All Web Services in a
     /// Subscription&lt;/li&gt;&lt;li&gt;Get Web Services
     /// Keys&lt;/li&gt;&lt;li&gt;Check Name
@@ -61,9 +61,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// Id of the Microsoft Azure subscription on which to perform ARM operations.
+        /// The subscription ID forms part of the URI for every service call.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -73,19 +72,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public string ResourceGroupName { get; set; }
 
         /// <summary>
-        /// The Web Service name which you want to reach.
+        /// The Azure ML web service name which you want to reach.
         /// </summary>
         public string WebServiceName { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The versiong of the Microsoft.MachineLearning resource provider API to be
+        /// used.
         /// </summary>
         public string ApiVersion { get; private set; }
-
-        /// <summary>
-        /// The payload to check name availability
-        /// </summary>
-        public CheckNameAvailabilityPayload CheckNameAvailabilityPayload { get; set; }
 
         /// <summary>
         /// Continuation token for pagination.
@@ -325,10 +320,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
         /// <summary>
-        /// Create a new Web Service or update an existing one.
+        /// Create a new Azure ML web service or update an existing one.
         /// </summary>
         /// <param name='createOrUpdatePayload'>
-        /// The payload to create or update a Web Service
+        /// The payload to create or update the Azure ML web service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -347,10 +342,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Create a new Web Service or update an existing one.
+        /// Create a new Azure ML web service or update an existing one.
         /// </summary>
         /// <param name='createOrUpdatePayload'>
-        /// The payload to create or update a Web Service
+        /// The payload to create or update the Azure ML web service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -554,7 +549,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Retrieve a Web Service information by its name
+        /// Retrieve an Azure ML web service definition by its subscription, resource
+        /// group and name.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -728,10 +724,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Patch an existing Web Service
+        /// Patch an existing Azure ML web service.
         /// </summary>
         /// <param name='patchPayload'>
-        /// [TODO] Patch Web Service Request Payload.
+        /// The payload to patch the Azure ML with.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -750,10 +746,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Patch an existing Web Service
+        /// Patch an existing Azure ML web service.
         /// </summary>
         /// <param name='patchPayload'>
-        /// [TODO] Patch Web Service Request Payload.
+        /// The payload to patch the Azure ML with.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -935,7 +931,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Delete an existing Web Service
+        /// Remove an existing Azure ML web service.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -952,7 +948,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Delete an existing Web Service
+        /// Remove an existing Azure ML web service.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1094,7 +1090,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Get the primary and secondary keys of a particular Web Service
+        /// Get the primary and secondary access keys of a particular Azure ML web
+        /// service
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1268,7 +1265,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Retrieve all Web Services' information in a given Resource Group
+        /// Retrieve all Azure ML web services in a given resource group.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1441,7 +1438,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Get all Web Services' information in current Azure subscription
+        /// Retrieve all Azure ML web services in the current Azure subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1609,178 +1606,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Check the Web Service Name is valid and not in use
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<CheckNameResult>> CheckNameAvaliabilityWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (this.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
-            }
-            if (this.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
-            if (this.CheckNameAvailabilityPayload == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.CheckNameAvailabilityPayload");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvaliability", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft/MachineLearning/checkNameAvailability").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(this.CheckNameAvailabilityPayload, this.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<CheckNameResult>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<CheckNameResult>(_responseContent, this.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Get all available operations of a Web Service
+        /// Get all available operations for the Microsoft.MachineLearning provider.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

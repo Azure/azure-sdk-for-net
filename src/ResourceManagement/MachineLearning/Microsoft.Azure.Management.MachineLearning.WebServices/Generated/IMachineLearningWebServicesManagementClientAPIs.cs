@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     using Models;
 
     /// <summary>
-    /// These APIs allows end users to operate on Web Services in Azure ML.
-    /// They support the following operations:&lt;ul&gt;&lt;li&gt;Create a
-    /// Web Service&lt;/li&gt;&lt;li&gt;Get a Web
-    /// Service&lt;/li&gt;&lt;li&gt;Patch a Web
-    /// Service&lt;/li&gt;&lt;li&gt;Delete a Web
-    /// Service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
+    /// [TODO] These APIs allows end users to operate on Web Services in Azure
+    /// ML. They support the following operations:&lt;ul&gt;&lt;li&gt;Create
+    /// a web service&lt;/li&gt;&lt;li&gt;Get a web
+    /// service&lt;/li&gt;&lt;li&gt;Patch a web
+    /// service&lt;/li&gt;&lt;li&gt;Delete a web
+    /// service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
     /// &lt;/li&gt;&lt;li&gt;Get All Web Services in a
     /// Subscription&lt;/li&gt;&lt;li&gt;Get Web Services
     /// Keys&lt;/li&gt;&lt;li&gt;Check Name
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// Id of the Microsoft Azure subscription on which to perform ARM
+        /// operations. The subscription ID forms part of the URI for every
+        /// service call.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -66,19 +66,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         string ResourceGroupName { get; set; }
 
         /// <summary>
-        /// The Web Service name which you want to reach.
+        /// The Azure ML web service name which you want to reach.
         /// </summary>
         string WebServiceName { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The versiong of the Microsoft.MachineLearning resource provider
+        /// API to be used.
         /// </summary>
         string ApiVersion { get; }
-
-        /// <summary>
-        /// The payload to check name availability
-        /// </summary>
-        CheckNameAvailabilityPayload CheckNameAvailabilityPayload { get; set; }
 
         /// <summary>
         /// Continuation token for pagination.
@@ -104,10 +100,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
 
 
             /// <summary>
-        /// Create a new Web Service or update an existing one.
+        /// Create a new Azure ML web service or update an existing one.
         /// </summary>
         /// <param name='createOrUpdatePayload'>
-        /// The payload to create or update a Web Service
+        /// The payload to create or update the Azure ML web service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -118,10 +114,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Create a new Web Service or update an existing one.
+        /// Create a new Azure ML web service or update an existing one.
         /// </summary>
         /// <param name='createOrUpdatePayload'>
-        /// The payload to create or update a Web Service
+        /// The payload to create or update the Azure ML web service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -132,7 +128,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<WebService>> BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Retrieve a Web Service information by its name
+        /// Retrieve an Azure ML web service definition by its subscription,
+        /// resource group and name.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -143,10 +140,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<WebService>> GetWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Patch an existing Web Service
+        /// Patch an existing Azure ML web service.
         /// </summary>
         /// <param name='patchPayload'>
-        /// [TODO] Patch Web Service Request Payload.
+        /// The payload to patch the Azure ML with.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,10 +154,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Patch an existing Web Service
+        /// Patch an existing Azure ML web service.
         /// </summary>
         /// <param name='patchPayload'>
-        /// [TODO] Patch Web Service Request Payload.
+        /// The payload to patch the Azure ML with.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -171,7 +168,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<WebService>> BeginPatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Delete an existing Web Service
+        /// Remove an existing Azure ML web service.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -182,7 +179,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse> DeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Delete an existing Web Service
+        /// Remove an existing Azure ML web service.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -193,7 +190,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse> BeginDeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Get the primary and secondary keys of a particular Web Service
+        /// Get the primary and secondary access keys of a particular Azure ML
+        /// web service
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -204,7 +202,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<WebServiceKeys>> GetWebServiceKeysWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Retrieve all Web Services' information in a given Resource Group
+        /// Retrieve all Azure ML web services in a given resource group.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -215,7 +213,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInResourceGroupWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Get all Web Services' information in current Azure subscription
+        /// Retrieve all Azure ML web services in the current Azure
+        /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -226,18 +225,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Check the Web Service Name is valid and not in use
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<CheckNameResult>> CheckNameAvaliabilityWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get all available operations of a Web Service
+        /// Get all available operations for the Microsoft.MachineLearning
+        /// provider.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

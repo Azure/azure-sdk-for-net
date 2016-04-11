@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Web Service Keys
+    /// web service Keys
     /// </summary>
     public partial class WebServiceKeys
     {

@@ -29,17 +29,26 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         /// <summary>
         /// Initializes a new instance of the GraphParameter class.
         /// </summary>
-        public GraphParameter(string description = default(string), IList<GraphParameterLink> links = default(IList<GraphParameterLink>))
+        public GraphParameter(string description = default(string), ParameterType? type = default(ParameterType?), IList<GraphParameterLink> links = default(IList<GraphParameterLink>))
         {
             Description = description;
+            Type = type;
             Links = links;
         }
 
         /// <summary>
-        /// [TODO] Description of this Graph parameter
+        /// Description for this graph parameter.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Graph parameter's type. Possible values include: 'String', 'Int',
+        /// 'Float', 'Enumerated', 'Script', 'Mode', 'Credential', 'Boolean',
+        /// 'Double', 'ColumnPicker', 'ParameterRange', 'DataGatewayName'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public ParameterType? Type { get; set; }
 
         /// <summary>
         /// [TODO] Links of this parameter

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The definition of the web service being deployed.
+    /// The set of properties specific to the Azure ML web service resource.
     /// </summary>
     public partial class WebServiceProperties
     {
@@ -50,26 +50,27 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         }
 
         /// <summary>
-        /// The description the web service
+        /// The description the Azure ML web service
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// The moment of time the web service was created.
+        /// The moment of time the Azure ML web service was created.
         /// </summary>
         [JsonProperty(PropertyName = "createdOn")]
         public DateTime? CreatedOn { get; private set; }
 
         /// <summary>
-        /// The last moment of time the web service was last modified.
+        /// The moment of time the web service was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "modifiedOn")]
         public DateTime? ModifiedOn { get; private set; }
 
         /// <summary>
-        /// [TODO] web service's provisioning state. Possible values include:
-        /// 'Unknown', 'Provisioning', 'Succeeded', 'Failed', 'Canceled'
+        /// The web service resource's provisioning state. Possible values
+        /// include: 'Unknown', 'Provisioning', 'Succeeded', 'Failed',
+        /// 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public ProvisioningState? ProvisioningState { get; private set; }
@@ -80,13 +81,14 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
         public WebServiceKeys Keys { get; set; }
 
         /// <summary>
-        /// True, if the Web Service should be read-only; False, otherwise
+        /// True, if the web service should be read-only; False, otherwise
         /// </summary>
         [JsonProperty(PropertyName = "readOnly")]
         public bool? ReadOnlyProperty { get; set; }
 
         /// <summary>
-        /// The uri for the swagger spec associated with this web service
+        /// The uri for the swagger spec associated with this Azure ML web
+        /// service.
         /// </summary>
         [JsonProperty(PropertyName = "swaggerLocation")]
         public string SwaggerLocation { get; private set; }
