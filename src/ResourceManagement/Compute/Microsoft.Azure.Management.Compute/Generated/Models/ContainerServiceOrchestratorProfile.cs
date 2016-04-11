@@ -38,8 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Specifies what orchestrator will be used to manage container
-        /// cluster resources. Possible values include: 'Mesos',
-        /// 'SwarmPreview', 'DCOS'
+        /// cluster resources. Possible values include: 'SwarmPreview', 'DCOS'
         /// </summary>
         [JsonProperty(PropertyName = "orchestratorType")]
         public ContainerServiceOchestratorTypes? OrchestratorType { get; set; }

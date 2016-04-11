@@ -11,6 +11,9 @@ namespace Microsoft.Azure.Management.Scheduler
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Extension methods for JobsOperations.
+    /// </summary>
     public static partial class JobsOperationsExtensions
     {
             /// <summary>
@@ -51,7 +54,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDefinition> GetAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobDefinition> GetAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -103,7 +106,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDefinition> CreateOrUpdateAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobDefinition> CreateOrUpdateAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, job, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -155,7 +158,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDefinition> PatchAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobDefinition> PatchAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, JobDefinition job, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, job, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -201,7 +204,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -244,7 +247,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RunAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RunAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.RunWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -287,7 +290,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobDefinition>> ListAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, ODataQuery<JobStateFilter> odataQuery = default(ODataQuery<JobStateFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobDefinition>> ListAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, ODataQuery<JobStateFilter> odataQuery = default(ODataQuery<JobStateFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, jobCollectionName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -339,7 +342,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobHistoryDefinition>> ListJobHistoryAsync( this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, ODataQuery<JobHistoryFilter> odataQuery = default(ODataQuery<JobHistoryFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobHistoryDefinition>> ListJobHistoryAsync(this IJobsOperations operations, string resourceGroupName, string jobCollectionName, string jobName, ODataQuery<JobHistoryFilter> odataQuery = default(ODataQuery<JobHistoryFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListJobHistoryWithHttpMessagesAsync(resourceGroupName, jobCollectionName, jobName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -373,7 +376,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobDefinition>> ListNextAsync( this IJobsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobDefinition>> ListNextAsync(this IJobsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -407,7 +410,7 @@ namespace Microsoft.Azure.Management.Scheduler
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobHistoryDefinition>> ListJobHistoryNextAsync( this IJobsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobHistoryDefinition>> ListJobHistoryNextAsync(this IJobsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListJobHistoryNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

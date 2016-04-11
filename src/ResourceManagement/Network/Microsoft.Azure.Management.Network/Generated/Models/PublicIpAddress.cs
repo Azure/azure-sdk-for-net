@@ -29,11 +29,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PublicIPAddress class.
         /// </summary>
-        public PublicIPAddress(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string publicIPAllocationMethod = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
+        public PublicIPAddress(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string publicIPAllocationMethod = default(string), string publicIPAddressVersion = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
             Etag = etag;
             PublicIPAllocationMethod = publicIPAllocationMethod;
+            PublicIPAddressVersion = publicIPAddressVersion;
             IpConfiguration = ipConfiguration;
             DnsSettings = dnsSettings;
             IpAddress = ipAddress;
@@ -55,6 +56,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAllocationMethod")]
         public string PublicIPAllocationMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets PublicIP address version (IPv4/IPv6). Possible values
+        /// for this property include: 'IPv4', 'IPv6'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIPAddressVersion")]
+        public string PublicIPAddressVersion { get; set; }
 
         /// <summary>
         /// </summary>

@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class JobHistoryFilter
     {
         /// <summary>
@@ -27,8 +25,8 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         }
 
         /// <summary>
-        /// Gets or sets the job execution status. Possible values for this
-        /// property include: 'Completed', 'Failed', 'Postponed'.
+        /// Gets or sets the job execution status. Possible values include:
+        /// 'Completed', 'Failed', 'Postponed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public JobExecutionStatus? Status { get; set; }

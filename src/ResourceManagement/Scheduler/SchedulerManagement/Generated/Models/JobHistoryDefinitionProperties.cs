@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Scheduler.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    /// <summary>
-    /// </summary>
     public partial class JobHistoryDefinitionProperties
     {
         /// <summary>
@@ -54,15 +52,15 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         public DateTime? ExpectedExecutionTime { get; private set; }
 
         /// <summary>
-        /// Gets the job history action name. Possible values for this
-        /// property include: 'MainAction', 'ErrorAction'.
+        /// Gets the job history action name. Possible values include:
+        /// 'MainAction', 'ErrorAction'
         /// </summary>
         [JsonProperty(PropertyName = "actionName")]
         public JobHistoryActionName? ActionName { get; private set; }
 
         /// <summary>
-        /// Gets the job history status. Possible values for this property
-        /// include: 'Completed', 'Failed', 'Postponed'.
+        /// Gets the job history status. Possible values include: 'Completed',
+        /// 'Failed', 'Postponed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public JobExecutionStatus? Status { get; private set; }

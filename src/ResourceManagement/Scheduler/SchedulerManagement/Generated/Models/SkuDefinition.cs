@@ -15,7 +15,9 @@ namespace Microsoft.Azure.Management.Scheduler.Models
         Standard,
         [EnumMember(Value = "Free")]
         Free,
-        [EnumMember(Value = "Premium")]
-        Premium
+        [EnumMember(Value = "P10Premium")]
+        P10Premium,
+        [EnumMember(Value = "P20Premium")]
+        P20Premium
     }
 }
