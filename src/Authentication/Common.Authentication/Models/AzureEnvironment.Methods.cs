@@ -316,6 +316,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public const string AzureCloud = "AzureCloud";
 
         public const string AzureChinaCloud = "AzureChinaCloud";
+        
+        public const string AzureGermanCloud ="AzureGermanCloud"; 
     }
 
     public static class AzureEnvironmentConstants
