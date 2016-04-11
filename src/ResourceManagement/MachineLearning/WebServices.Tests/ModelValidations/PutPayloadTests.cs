@@ -28,7 +28,7 @@ namespace WebServices.Tests
         [Fact]
         public void WebServiceSerializationGraph()
         {
-            var payload = CreateWebServiceGraph();
+            var payload = WebServiceTests.CreateWebServiceGraph();
 
             string output = JsonConvert.SerializeObject(payload, client.SerializationSettings);
             ValidateJson(output, "TestData\\WebServiceGraph.json");
@@ -37,7 +37,7 @@ namespace WebServices.Tests
         [Fact]
         public void WebServiceSerializationCode()
         {
-            var payload = CreateWebServiceCode();
+            var payload = WebServiceTests.CreateWebServiceCode();
 
             string output = JsonConvert.SerializeObject(payload, client.SerializationSettings);
             ValidateJson(output, "TestData\\WebServiceCode.json");
@@ -102,11 +102,11 @@ namespace WebServices.Tests
                 var edge2 = new GraphEdge("E1", "p7", "1", null);
                 graphPackage.Edges = new List<GraphEdge> { edge1, edge2 };
 
-                var param1 = new GraphParameter("Param1 description");
+                var param1 = new GraphParameter("Param1 description", ParameterType.Int);
                 var link1 = new GraphParameterLink("2", "paramId1");
                 var link2 = new GraphParameterLink("4", "paramId3");
                 param1.Links = new List<GraphParameterLink> { link1, link2 };
-                var param2 = new GraphParameter("Param2 description");
+                var param2 = new GraphParameter("Param2 description", ParameterType.Script);
                 var link3 = new GraphParameterLink("7", "paramId5");
                 var link4 = new GraphParameterLink("9", "paramId11");
                 param2.Links = new List<GraphParameterLink> { link3, link4 };

@@ -33,6 +33,7 @@
       "graphParameters": {
         "id1": {
           "description": "Param1 description",
+          "type": "Int",
           "links": [
             {
               "nodeId": "2",
@@ -46,6 +47,7 @@
         },
         "id2": {
           "description": "Param2 description",
+          "type": "Script",
           "links": [
             {
               "nodeId": "7",
