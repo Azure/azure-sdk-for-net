@@ -8,7 +8,7 @@ _Release date: _
 
 * The following optional properties have been added to CopyActivity to to enable tuning of copy performance: 
     * ParallelCopies
-    * CloudUnits
+    * CloudDataMovementUnits
 
 ## Version 4.5.0
 _Release date: 2016.02.24_

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Optional. Maximum number of cloud data movement units (DMU) to use for performing copy between two cloud data sources.
         /// When the resource allocated to the default single DMU is the bottleneck, using a larger value can achieve higher throughput.
         /// </summary>
-        public uint? CloudUnits { get; set; }
+        public uint? CloudDataMovementUnits { get; set; }
 
         public CopyActivity()
         {
