@@ -38,7 +38,7 @@ namespace RecoveryServices.Tests
                 {
                     ProtectedItemCreateOrUpdateRequest input = new ProtectedItemCreateOrUpdateRequest();
                     AzureIaaSVMProtectedItem iaasVmProtectedItem = new AzureIaaSVMProtectedItem();
-                    iaasVmProtectedItem.PolicyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
+                    //iaasVmProtectedItem.PolicyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
                     ProtectedItemResource protectedItemResource = new ProtectedItemResource();
                     protectedItemResource.Properties = iaasVmProtectedItem;
                     input.Item = protectedItemResource;

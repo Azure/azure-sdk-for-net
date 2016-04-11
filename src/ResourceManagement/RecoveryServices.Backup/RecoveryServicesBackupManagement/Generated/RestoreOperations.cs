@@ -235,11 +235,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["recoveryType"] = derived.RecoveryType;
                             }
                             
-                            if (derived.StorageAccountName != null)
-                            {
-                                propertiesValue["storageAccountName"] = derived.StorageAccountName;
-                            }
-                            
                             if (derived.StorageAccountId != null)
                             {
                                 propertiesValue["storageAccountId"] = derived.StorageAccountId;
@@ -262,11 +257,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                 propertiesValue["cloudServiceOrResourceGroupId"] = derived.CloudServiceOrResourceGroupId;
                             }
                             
-                            if (derived.VirtualNetworkName != null)
-                            {
-                                propertiesValue["virtualNetworkName"] = derived.VirtualNetworkName;
-                            }
-                            
                             if (derived.VirtualNetworkId != null)
                             {
                                 propertiesValue["virtualNetworkId"] = derived.VirtualNetworkId;
@@ -280,11 +270,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             if (derived.AffinityGroup != null)
                             {
                                 propertiesValue["affinityGroup"] = derived.AffinityGroup;
-                            }
-                            
-                            if (derived.SubnetName != null)
-                            {
-                                propertiesValue["subnetName"] = derived.SubnetName;
                             }
                             
                             if (derived.SubnetId != null)

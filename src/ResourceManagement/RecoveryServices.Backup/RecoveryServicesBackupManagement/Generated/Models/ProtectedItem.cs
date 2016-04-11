@@ -41,17 +41,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._backupManagementType = value; }
         }
         
-        private string _containerName;
-        
-        /// <summary>
-        /// Optional. Container Name for the protected item
-        /// </summary>
-        public string ContainerName
-        {
-            get { return this._containerName; }
-            set { this._containerName = value; }
-        }
-        
         private System.DateTime? _lastRecoveryPoint;
         
         /// <summary>
@@ -72,17 +61,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._policyId; }
             set { this._policyId = value; }
-        }
-        
-        private string _policyName;
-        
-        /// <summary>
-        /// Optional. Policy name with which Object is protected
-        /// </summary>
-        public string PolicyName
-        {
-            get { return this._policyName; }
-            set { this._policyName = value; }
         }
         
         private string _workloadType;

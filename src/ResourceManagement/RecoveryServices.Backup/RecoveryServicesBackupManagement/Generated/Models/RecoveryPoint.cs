@@ -63,6 +63,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._recoveryPointType = value; }
         }
         
+        private string _sourceVMStorageType;
+        
+        /// <summary>
+        /// Optional. Recovery Point Source VM Storage Type
+        /// </summary>
+        public string SourceVMStorageType
+        {
+            get { return this._sourceVMStorageType; }
+            set { this._sourceVMStorageType = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the RecoveryPoint class.
         /// </summary>

@@ -30,17 +30,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class AzureIaaSVMProtectableItem : ProtectableItem
     {
-        private string _resourceGroup;
-        
-        /// <summary>
-        /// Optional. Resource Group
-        /// </summary>
-        public string ResourceGroup
-        {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
-        }
-        
         private string _virtualMachineId;
         
         /// <summary>
@@ -50,17 +39,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._virtualMachineId; }
             set { this._virtualMachineId = value; }
-        }
-        
-        private string _virtualMachineVersion;
-        
-        /// <summary>
-        /// Optional. Classic or Classic VM
-        /// </summary>
-        public string VirtualMachineVersion
-        {
-            get { return this._virtualMachineVersion; }
-            set { this._virtualMachineVersion = value; }
         }
         
         /// <summary>

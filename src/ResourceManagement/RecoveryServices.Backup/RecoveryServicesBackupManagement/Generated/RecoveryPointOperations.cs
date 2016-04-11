@@ -262,6 +262,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
                                         recoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
                                     }
+                                    
+                                    JToken sourceVMStorageTypeValue = propertiesValue["sourceVMStorageType"];
+                                    if (sourceVMStorageTypeValue != null && sourceVMStorageTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string sourceVMStorageTypeInstance = ((string)sourceVMStorageTypeValue);
+                                        recoveryPointInstance.SourceVMStorageType = sourceVMStorageTypeInstance;
+                                    }
                                     recPointInstance.Properties = recoveryPointInstance;
                                 }
                                 if (typeName == "GenericRecoveryPoint")
@@ -604,6 +611,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                             {
                                                 string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
                                                 recoveryPointInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
+                                            }
+                                            
+                                            JToken sourceVMStorageTypeValue = propertiesValue["sourceVMStorageType"];
+                                            if (sourceVMStorageTypeValue != null && sourceVMStorageTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string sourceVMStorageTypeInstance = ((string)sourceVMStorageTypeValue);
+                                                recoveryPointInstance.SourceVMStorageType = sourceVMStorageTypeInstance;
                                             }
                                             recoveryPointResourceInstance.Properties = recoveryPointInstance;
                                         }
