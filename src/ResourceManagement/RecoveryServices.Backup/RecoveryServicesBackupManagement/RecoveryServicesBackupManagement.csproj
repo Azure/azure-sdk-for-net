@@ -16,6 +16,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
     <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Net45-Release'">
     <DocumentationFile>bin\Net45-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
@@ -47,7 +48,6 @@
     <Reference Include="Microsoft.Azure.Common">
       <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated\BackupEngineOperations.cs" />
