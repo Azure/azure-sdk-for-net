@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\BackupEngineHelpers.cs" />
     <Compile Include="Helpers\ContainerTestHelpers.cs" />
     <Compile Include="Helpers\CommonTestHelpers.cs" />
     <Compile Include="Helpers\JobTestHelper.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Helpers\TestConstants.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\PolicyTests.cs" />
+    <Compile Include="ScenarioTests\DpmTests\BackupEngineTest.cs" />
     <Compile Include="ScenarioTests\JobTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectableObjectTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectedItemTests.cs" />

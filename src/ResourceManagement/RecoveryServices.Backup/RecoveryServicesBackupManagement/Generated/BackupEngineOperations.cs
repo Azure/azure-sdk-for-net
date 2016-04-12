@@ -249,20 +249,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                         {
                                             DpmBackupEngine dpmBackupEngineInstance = new DpmBackupEngine();
                                             
-                                            JToken canReRegisterValue = propertiesValue["canReRegister"];
-                                            if (canReRegisterValue != null && canReRegisterValue.Type != JTokenType.Null)
-                                            {
-                                                bool canReRegisterInstance = ((bool)canReRegisterValue);
-                                                dpmBackupEngineInstance.CanReRegister = canReRegisterInstance;
-                                            }
-                                            
-                                            JToken backupEngineIdValue = propertiesValue["backupEngineId"];
-                                            if (backupEngineIdValue != null && backupEngineIdValue.Type != JTokenType.Null)
-                                            {
-                                                string backupEngineIdInstance = ((string)backupEngineIdValue);
-                                                dpmBackupEngineInstance.BackupEngineId = backupEngineIdInstance;
-                                            }
-                                            
                                             JToken friendlyNameValue = propertiesValue["friendlyName"];
                                             if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
                                             {
@@ -297,7 +283,75 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                                                 string backupEngineTypeInstance = ((string)backupEngineTypeValue);
                                                 dpmBackupEngineInstance.BackupEngineType = backupEngineTypeInstance;
                                             }
+                                            
+                                            JToken canReRegisterValue = propertiesValue["canReRegister"];
+                                            if (canReRegisterValue != null && canReRegisterValue.Type != JTokenType.Null)
+                                            {
+                                                bool canReRegisterInstance = ((bool)canReRegisterValue);
+                                                dpmBackupEngineInstance.CanReRegister = canReRegisterInstance;
+                                            }
+                                            
+                                            JToken backupEngineIdValue = propertiesValue["backupEngineId"];
+                                            if (backupEngineIdValue != null && backupEngineIdValue.Type != JTokenType.Null)
+                                            {
+                                                string backupEngineIdInstance = ((string)backupEngineIdValue);
+                                                dpmBackupEngineInstance.BackupEngineId = backupEngineIdInstance;
+                                            }
                                             backupEngineResourceInstance.Properties = dpmBackupEngineInstance;
+                                        }
+                                        if (typeName == "AzureBackupServerEngine")
+                                        {
+                                            AzureBackupServerEngine azureBackupServerEngineInstance = new AzureBackupServerEngine();
+                                            
+                                            JToken friendlyNameValue2 = propertiesValue["friendlyName"];
+                                            if (friendlyNameValue2 != null && friendlyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string friendlyNameInstance2 = ((string)friendlyNameValue2);
+                                                azureBackupServerEngineInstance.FriendlyName = friendlyNameInstance2;
+                                            }
+                                            
+                                            JToken backupManagementTypeValue2 = propertiesValue["backupManagementType"];
+                                            if (backupManagementTypeValue2 != null && backupManagementTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string backupManagementTypeInstance2 = ((string)backupManagementTypeValue2);
+                                                azureBackupServerEngineInstance.BackupManagementType = backupManagementTypeInstance2;
+                                            }
+                                            
+                                            JToken registrationStatusValue2 = propertiesValue["registrationStatus"];
+                                            if (registrationStatusValue2 != null && registrationStatusValue2.Type != JTokenType.Null)
+                                            {
+                                                string registrationStatusInstance2 = ((string)registrationStatusValue2);
+                                                azureBackupServerEngineInstance.RegistrationStatus = registrationStatusInstance2;
+                                            }
+                                            
+                                            JToken healthStatusValue2 = propertiesValue["healthStatus"];
+                                            if (healthStatusValue2 != null && healthStatusValue2.Type != JTokenType.Null)
+                                            {
+                                                string healthStatusInstance2 = ((string)healthStatusValue2);
+                                                azureBackupServerEngineInstance.HealthStatus = healthStatusInstance2;
+                                            }
+                                            
+                                            JToken backupEngineTypeValue2 = propertiesValue["backupEngineType"];
+                                            if (backupEngineTypeValue2 != null && backupEngineTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string backupEngineTypeInstance2 = ((string)backupEngineTypeValue2);
+                                                azureBackupServerEngineInstance.BackupEngineType = backupEngineTypeInstance2;
+                                            }
+                                            
+                                            JToken canReRegisterValue2 = propertiesValue["canReRegister"];
+                                            if (canReRegisterValue2 != null && canReRegisterValue2.Type != JTokenType.Null)
+                                            {
+                                                bool canReRegisterInstance2 = ((bool)canReRegisterValue2);
+                                                azureBackupServerEngineInstance.CanReRegister = canReRegisterInstance2;
+                                            }
+                                            
+                                            JToken backupEngineIdValue2 = propertiesValue["backupEngineId"];
+                                            if (backupEngineIdValue2 != null && backupEngineIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string backupEngineIdInstance2 = ((string)backupEngineIdValue2);
+                                                azureBackupServerEngineInstance.BackupEngineId = backupEngineIdInstance2;
+                                            }
+                                            backupEngineResourceInstance.Properties = azureBackupServerEngineInstance;
                                         }
                                     }
                                     
