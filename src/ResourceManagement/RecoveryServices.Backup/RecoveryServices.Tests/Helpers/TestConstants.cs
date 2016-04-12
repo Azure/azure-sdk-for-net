@@ -10,6 +10,7 @@ namespace RecoveryServices.Tests.Helpers
     {
         public static string ProviderTypeAzureIaasVM = "ProviderTypeAzureIaasVM";
         public static string WorkloadTypeVM = "WorkloadTypeVM";
+        public static string AzureBackupFabricName = "AzureBackupFabricName";
         public static string RsVaultRgName = "RsVaultRgName";
         public static string RsVaultName = "RsVaultName";
         public static string RsVaultIaasV1ContainerUniqueName = "RsVaultIaasV1ContainerUniqueName";

@@ -55,11 +55,13 @@
     <Compile Include="Helpers\CommonTestHelpers.cs" />
     <Compile Include="Helpers\JobTestHelper.cs" />
     <Compile Include="Helpers\PolicyTesthelper.cs" />
+    <Compile Include="Helpers\BackupTestHelper.cs" />
     <Compile Include="Helpers\ProtectableObjectTestHelper.cs" />
     <Compile Include="Helpers\ProtectedItemTestHelper.cs" />
     <Compile Include="Helpers\TestConstants.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\PolicyTests.cs" />
+    <Compile Include="ScenarioTests\AzureIaasVMTests\BackupTests.cs" />
     <Compile Include="ScenarioTests\DpmTests\BackupEngineTest.cs" />
     <Compile Include="ScenarioTests\JobTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectableObjectTests.cs" />
@@ -72,6 +74,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupTests\BackupProtectedItemTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\ListContainersTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
