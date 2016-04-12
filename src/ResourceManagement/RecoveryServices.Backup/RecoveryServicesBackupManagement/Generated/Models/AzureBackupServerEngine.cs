@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a DpmBackupEngine object.
+    /// The definition of a AzureBackupServerEngine object.
     /// </summary>
-    public partial class DpmBackupEngine : BackupEngineBase
+    public partial class AzureBackupServerEngine : BackupEngineBase
     {
         /// <summary>
-        /// Initializes a new instance of the DpmBackupEngine class.
+        /// Initializes a new instance of the AzureBackupServerEngine class.
         /// </summary>
-        public DpmBackupEngine()
+        public AzureBackupServerEngine()
         {
         }
     }

@@ -71,6 +71,7 @@
     <Compile Include="Generated\IRestoreOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AzureBackupServerEngine.cs" />
     <Compile Include="Generated\Models\AzureIaaSClassicComputeVMProtectableItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSClassicComputeVMProtectedItem.cs" />
     <Compile Include="Generated\Models\AzureIaaSClassicComputeVMProtectionContainer.cs" />
@@ -218,4 +219,5 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

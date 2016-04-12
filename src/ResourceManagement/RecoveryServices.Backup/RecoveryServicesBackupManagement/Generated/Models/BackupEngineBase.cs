@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// </summary>
     public partial class BackupEngineBase : BackupEngine
     {
+        private string _backupEngineId;
+        
+        /// <summary>
+        /// Optional. BackupEngineId of the managed item.
+        /// </summary>
+        public string BackupEngineId
+        {
+            get { return this._backupEngineId; }
+            set { this._backupEngineId = value; }
+        }
+        
         private string _backupEngineType;
         
         /// <summary>
@@ -50,6 +61,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         {
             get { return this._backupManagementType; }
             set { this._backupManagementType = value; }
+        }
+        
+        private bool _canReRegister;
+        
+        /// <summary>
+        /// Optional. CanReRegister the managed item.
+        /// </summary>
+        public bool CanReRegister
+        {
+            get { return this._canReRegister; }
+            set { this._canReRegister = value; }
         }
         
         private string _friendlyName;
