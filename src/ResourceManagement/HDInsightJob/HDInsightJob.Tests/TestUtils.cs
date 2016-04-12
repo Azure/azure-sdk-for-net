@@ -37,6 +37,17 @@ namespace HDInsightJob.Tests
         public static string WinUserName = "admin";
         public static string WinPassword = "";
 
+        public static HDInsightJobManagementClient GetHDInsightJobManagementClient(bool isWindowsCluster = false)
+        {
+            var credentials = new BasicAuthenticationCloudCredentials
+            {
+                Username = isWindowsCluster ? WinUserName : UserName,
+                Password = isWindowsCluster ? WinPassword : Password
+            };
+
+            return TestUtils.GetHDInsightJobManagementClient(isWindowsCluster ? WinClusterName : ClusterName, credentials);
+        }
+
         public static HDInsightJobManagementClient GetHDInsightJobManagementClient(string dnsName, BasicAuthenticationCloudCredentials creds)
         {
             var client = new HDInsightJobManagementClient(dnsName, creds);

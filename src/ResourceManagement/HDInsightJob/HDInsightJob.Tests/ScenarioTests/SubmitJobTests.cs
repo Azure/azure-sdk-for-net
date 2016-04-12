@@ -36,17 +36,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 var defines = new Dictionary<string, string>
                 {
@@ -73,6 +63,42 @@ namespace HDInsightJob.Tests
                 var job = client.JobManagement.KillJob(jobid);
                 Assert.NotNull(job);
                 Assert.Equal(job.JobDetail.Status.State, "KILLED");
+            }
+        }
+
+        [Fact]
+        public void KillEmptyNameJob()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = TestUtils.GetHDInsightJobManagementClient();
+                var exceptionMessage = string.Empty;
+
+                try
+                {
+                    var job = client.JobManagement.KillJob(string.Empty);
+                }
+                catch (ArgumentException ex)
+                {
+                    exceptionMessage = ex.Message;
+                }
+
+                Assert.Equal(exceptionMessage, "jobId cannot be empty.");
+            }
+        }
+
+        [Fact]
+        public void ValidateJobHttpTimeOut()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = TestUtils.GetHDInsightJobManagementClient();
+
+                Assert.True(TimeSpan.Compare(client.HttpClient.Timeout, TimeSpan.FromMinutes(8)) == 0);
             }
         }
 
@@ -113,17 +139,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 var response = client.JobManagement.SubmitHiveJob(parameters);
                 Assert.NotNull(response);
@@ -167,17 +183,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 var defines = new Dictionary<string, string>
                 {
@@ -237,17 +243,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 var parameters = new MapReduceStreamingJobSubmissionParameters
                 {
@@ -300,17 +296,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.WinUserName;
-                var password = TestUtils.WinPassword;
-                var clustername = TestUtils.WinClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient(true);
 
                 var parameters = new MapReduceStreamingJobSubmissionParameters
                 {
@@ -363,17 +349,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials()
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 var parameters = new PigJobSubmissionParameters()
                 {
@@ -428,17 +404,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 // Before we run this test in Record mode, we should run following commands on cluster
                 // hdfs dfs -mkdir /user/hcat/lib
@@ -502,17 +468,7 @@ namespace HDInsightJob.Tests
             {
                 context.Start();
 
-                var username = TestUtils.UserName;
-                var password = TestUtils.Password;
-                var clustername = TestUtils.ClusterName;
-
-                var credentials = new BasicAuthenticationCloudCredentials
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                var client = TestUtils.GetHDInsightJobManagementClient(clustername, credentials);
+                var client = TestUtils.GetHDInsightJobManagementClient();
 
                 var parameters = new HiveJobSubmissionParameters
                 {
