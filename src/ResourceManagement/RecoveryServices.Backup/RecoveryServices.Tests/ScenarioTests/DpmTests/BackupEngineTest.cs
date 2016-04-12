@@ -55,7 +55,7 @@ namespace RecoveryServices.Tests
                 {
                     BackupEngineHelpers backupEngineTestHelper = new BackupEngineHelpers(client);
                     string dpmBackupEngineName = ConfigurationManager.AppSettings["DpmBackupEngineName"];
-                    AzureOperationResponse response = backupEngineTestHelper.UnregisterContainer(dpmBackupEngineName);
+                    AzureOperationResponse response = backupEngineTestHelper.UnregisterBackupEngine(dpmBackupEngineName);
                 });
         }
     }
