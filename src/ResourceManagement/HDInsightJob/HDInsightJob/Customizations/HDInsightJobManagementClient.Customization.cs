@@ -69,6 +69,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             {
                 // If No retry policy is provided then use default retry policy
                 retryPolicy = HDInsightJobManagementClient.HDInsightRetryPolicy;
+                this.HttpClient.Timeout = MaxBackOff;
             }
 
             this.SetRetryPolicy(retryPolicy);

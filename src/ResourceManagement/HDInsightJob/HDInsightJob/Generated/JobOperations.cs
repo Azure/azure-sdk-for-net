@@ -651,6 +651,10 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             {
                 throw new ArgumentNullException("jobId");
             }
+            if (jobId.Length <= 0)
+            {
+                throw new ArgumentException("jobId cannot be empty.");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
