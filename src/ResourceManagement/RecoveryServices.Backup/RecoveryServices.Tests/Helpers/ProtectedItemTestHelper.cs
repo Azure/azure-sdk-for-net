@@ -74,5 +74,19 @@ namespace RecoveryServices.Tests.Helpers
             Assert.NotNull(operationJobResponse.JobId);
             return response;
         }
+
+        public ProtectedItemListResponse ListProtectedItems(ProtectedItemListQueryParam queryParams, PaginationRequest paginationRequest = null)
+        {
+            string rsVaultRgName = "pstestrg";
+            string rsVaultName = "pstestrsvault";
+
+            var response = Client.ProtectedItem.List(rsVaultRgName, rsVaultName, queryParams, paginationRequest, CommonTestHelper.GetCustomRequestHeaders());
+
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.ItemList);
+
+            return response;
+        }
     }
 }

@@ -29,37 +29,37 @@ using Xunit;
 
 namespace RecoveryServices.Tests
 {
-    class ProtectedItemTest : RecoveryServicesTestsBase
+    public class ProtectedItemTest : RecoveryServicesTestsBase
     {
         public void EnableAzureBackupProtectionTest()
         {
-             ExecuteTest(
-                client =>
-                {
-                    ProtectedItemCreateOrUpdateRequest input = new ProtectedItemCreateOrUpdateRequest();
-                    AzureIaaSVMProtectedItem iaasVmProtectedItem = new AzureIaaSVMProtectedItem();
-                    //iaasVmProtectedItem.PolicyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
-                    ProtectedItemResource protectedItemResource = new ProtectedItemResource();
-                    protectedItemResource.Properties = iaasVmProtectedItem;
-                    input.Item = protectedItemResource;
+            ExecuteTest(
+               client =>
+               {
+                   ProtectedItemCreateOrUpdateRequest input = new ProtectedItemCreateOrUpdateRequest();
+                   AzureIaaSVMProtectedItem iaasVmProtectedItem = new AzureIaaSVMProtectedItem();
+                   //iaasVmProtectedItem.PolicyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
+                   ProtectedItemResource protectedItemResource = new ProtectedItemResource();
+                   protectedItemResource.Properties = iaasVmProtectedItem;
+                   input.Item = protectedItemResource;
 
-                    string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
-                    string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
-                    string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
-                    string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
-                    string containerName = containeType + ";" + containerUniqueName;
-                    string itemName = itemType + ";" + itemUniqueName;
-                    string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+                   string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                   string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                   string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
+                   string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                   string containerName = containeType + ";" + containerUniqueName;
+                   string itemName = itemType + ";" + itemUniqueName;
+                   string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
-                    string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-                    string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+                   string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+                   string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-                    ProtectedItemTestHelper protectedItemTestHelper = new ProtectedItemTestHelper(client);
-                    
-                    var response = protectedItemTestHelper.AddOrUpdateProtectedItem(fabricName,
-                        containerName, itemName, input);
-                    
-                });
+                   ProtectedItemTestHelper protectedItemTestHelper = new ProtectedItemTestHelper(client);
+
+                   var response = protectedItemTestHelper.AddOrUpdateProtectedItem(fabricName,
+                       containerName, itemName, input);
+
+               });
         }
 
         public void RemoveAzureBackupProtectionTest()
@@ -81,8 +81,36 @@ namespace RecoveryServices.Tests
                    ProtectedItemTestHelper protectedItemTestHelper = new ProtectedItemTestHelper(client);
 
                    var response = protectedItemTestHelper.DeleteProtectedItem(fabricName,
-                       containerName, itemName);                   
+                       containerName, itemName);
                });
-        }        
+        }
+
+        [Fact]
+        public void ListProtectedItemsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+
+                ProtectedItemListQueryParam queryParams = new ProtectedItemListQueryParam();
+                queryParams.ProviderType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
+                queryParams.DatasourceType = CommonTestHelper.GetSetting(TestConstants.WorkloadTypeVM);
+
+                ProtectedItemTestHelper itemTestHelper = new ProtectedItemTestHelper(client);
+                var response = itemTestHelper.ListProtectedItems(queryParams);
+
+                string itemName = "pstestv2vm1";
+                Assert.True(response.ItemList.Value.Any(item => 
+                    {
+                        return item.Properties.GetType().IsSubclassOf(typeof(AzureIaaSVMProtectedItem)) &&
+                               item.Name.Contains(itemName);
+                    }),
+                    "Retrieved list of items doesn't contain AzureIaaSVMProtectedItem test item");
+            }
+        }
     }
 }

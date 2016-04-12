@@ -67,7 +67,9 @@
     <Compile Include="ScenarioTests\RecoveryServicesTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\ListContainersTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -76,6 +78,7 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
