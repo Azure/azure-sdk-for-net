@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Insights
                 results.AddRange(resultSegment.Results);
                 continuationToken = resultSegment.ContinuationToken;
             }
-            while (continuationToken != null);
+            while (continuationToken != null && results.Count < Util.MaxMetricEntities);
 
             return results;
         }

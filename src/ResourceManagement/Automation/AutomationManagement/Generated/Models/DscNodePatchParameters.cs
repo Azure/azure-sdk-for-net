@@ -30,17 +30,6 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class DscNodePatchParameters
     {
-        private Guid _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the id of the dsc node.
-        /// </summary>
-        public Guid Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
         private DscNodeConfigurationAssociationProperty _nodeConfiguration;
         
         /// <summary>
@@ -50,6 +39,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._nodeConfiguration; }
             set { this._nodeConfiguration = value; }
+        }
+        
+        private Guid _nodeId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the dsc node.
+        /// </summary>
+        public Guid NodeId
+        {
+            get { return this._nodeId; }
+            set { this._nodeId = value; }
         }
         
         /// <summary>

@@ -1,864 +1,119 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg1380\",\r\n      \"name\": \"csmrg1380\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg2002\",\r\n      \"name\": \"csmrg2002\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg2018\",\r\n      \"name\": \"csmrg2018\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg2503\",\r\n      \"name\": \"csmrg2503\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"department\": \"finance\",\r\n        \"tagname\": \"tagvalue\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg4408\",\r\n      \"name\": \"csmrg4408\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg4976\",\r\n      \"name\": \"csmrg4976\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg4992\",\r\n      \"name\": \"csmrg4992\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5006\",\r\n      \"name\": \"csmrg5006\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5042\",\r\n      \"name\": \"csmrg5042\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn2525\": \"\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg505\",\r\n      \"name\": \"csmrg505\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5234\",\r\n      \"name\": \"csmrg5234\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn342\": \"\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5253\",\r\n      \"name\": \"csmrg5253\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5354\",\r\n      \"name\": \"csmrg5354\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5834\",\r\n      \"name\": \"csmrg5834\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5971\",\r\n      \"name\": \"csmrg5971\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg6056\",\r\n      \"name\": \"csmrg6056\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg629\",\r\n      \"name\": \"csmrg629\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg6661\",\r\n      \"name\": \"csmrg6661\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg6821\",\r\n      \"name\": \"csmrg6821\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7097\",\r\n      \"name\": \"csmrg7097\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7129\",\r\n      \"name\": \"csmrg7129\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7183\",\r\n      \"name\": \"csmrg7183\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"department\": \"finance\",\r\n        \"tagname\": \"tagvalue\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7321\",\r\n      \"name\": \"csmrg7321\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7792\",\r\n      \"name\": \"csmrg7792\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"department\": \"finance\",\r\n        \"tagname\": \"tagvalue\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8137\",\r\n      \"name\": \"csmrg8137\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8162\",\r\n      \"name\": \"csmrg8162\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8569\",\r\n      \"name\": \"csmrg8569\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg880\",\r\n      \"name\": \"csmrg880\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8814\",\r\n      \"name\": \"csmrg8814\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8903\",\r\n      \"name\": \"csmrg8903\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9043\",\r\n      \"name\": \"csmrg9043\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9165\",\r\n      \"name\": \"csmrg9165\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9288\",\r\n      \"name\": \"csmrg9288\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9292\",\r\n      \"name\": \"csmrg9292\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg954\",\r\n      \"name\": \"csmrg954\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn1073\": \"csmtv2725\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9699\",\r\n      \"name\": \"csmrg9699\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9972\",\r\n      \"name\": \"csmrg9972\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/VS-provisioned-Group\",\r\n      \"name\": \"VS-provisioned-Group\",\r\n      \"location\": \"northcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg2942\",\r\n      \"name\": \"csmrg2942\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/Scheduler\",\r\n      \"name\": \"Scheduler\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/testSDK\",\r\n      \"name\": \"testSDK\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/vtest\",\r\n      \"name\": \"vtest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "686"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31982"
+          "14999"
         ],
         "x-ms-request-id": [
-          "59ad4696-1e1f-4627-adc8-7f3bfa507393"
+          "57215a7d-e90f-4ff9-a0a2-a0d8b2d3f461"
         ],
         "x-ms-correlation-request-id": [
-          "59ad4696-1e1f-4627-adc8-7f3bfa507393"
+          "57215a7d-e90f-4ff9-a0a2-a0d8b2d3f461"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220334Z:59ad4696-1e1f-4627-adc8-7f3bfa507393"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:34 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg1380/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31981"
-        ],
-        "x-ms-request-id": [
-          "ea4caa55-400f-4836-a299-ca6965dfd5d8"
-        ],
-        "x-ms-correlation-request-id": [
-          "ea4caa55-400f-4836-a299-ca6965dfd5d8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220334Z:ea4caa55-400f-4836-a299-ca6965dfd5d8"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:34 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg1380?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1186"
-        ],
-        "x-ms-request-id": [
-          "7908e005-dbe7-45fd-b7f4-9778e785c32b"
-        ],
-        "x-ms-correlation-request-id": [
-          "7908e005-dbe7-45fd-b7f4-9778e785c32b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220335Z:7908e005-dbe7-45fd-b7f4-9778e785c32b"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:34 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzEzODAtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg2002/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31980"
-        ],
-        "x-ms-request-id": [
-          "75dcb539-827d-41a4-9c31-115a6c946146"
-        ],
-        "x-ms-correlation-request-id": [
-          "75dcb539-827d-41a4-9c31-115a6c946146"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220335Z:75dcb539-827d-41a4-9c31-115a6c946146"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:34 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg2002?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
-        ],
-        "x-ms-request-id": [
-          "586a577f-4a9a-4ce1-a699-9f0be76450a6"
-        ],
-        "x-ms-correlation-request-id": [
-          "586a577f-4a9a-4ce1-a699-9f0be76450a6"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220335Z:586a577f-4a9a-4ce1-a699-9f0be76450a6"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:34 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzIwMDItU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg2018/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31979"
-        ],
-        "x-ms-request-id": [
-          "22d5a9c7-8f3b-4f8c-94bf-3c3c32539eb5"
-        ],
-        "x-ms-correlation-request-id": [
-          "22d5a9c7-8f3b-4f8c-94bf-3c3c32539eb5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220335Z:22d5a9c7-8f3b-4f8c-94bf-3c3c32539eb5"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:34 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg2018?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1184"
-        ],
-        "x-ms-request-id": [
-          "5ffdb9d1-5f97-4d05-9454-51fad48372bb"
-        ],
-        "x-ms-correlation-request-id": [
-          "5ffdb9d1-5f97-4d05-9454-51fad48372bb"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220337Z:5ffdb9d1-5f97-4d05-9454-51fad48372bb"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:37 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzIwMTgtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg2503/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31978"
-        ],
-        "x-ms-request-id": [
-          "bc631032-9821-4d17-a047-7f5fa89e54d6"
-        ],
-        "x-ms-correlation-request-id": [
-          "bc631032-9821-4d17-a047-7f5fa89e54d6"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220338Z:bc631032-9821-4d17-a047-7f5fa89e54d6"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:38 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg2503?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1183"
-        ],
-        "x-ms-request-id": [
-          "fbd278c2-9797-45de-9d09-cf6cf2991782"
-        ],
-        "x-ms-correlation-request-id": [
-          "fbd278c2-9797-45de-9d09-cf6cf2991782"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220338Z:fbd278c2-9797-45de-9d09-cf6cf2991782"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:38 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzI1MDMtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg4408/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31977"
-        ],
-        "x-ms-request-id": [
-          "afb747e2-2494-4d98-8bb2-f8d58f1999c8"
-        ],
-        "x-ms-correlation-request-id": [
-          "afb747e2-2494-4d98-8bb2-f8d58f1999c8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220338Z:afb747e2-2494-4d98-8bb2-f8d58f1999c8"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:38 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg4408?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1182"
-        ],
-        "x-ms-request-id": [
-          "6829e368-f4cd-4440-bfe5-9266f0b23fba"
-        ],
-        "x-ms-correlation-request-id": [
-          "6829e368-f4cd-4440-bfe5-9266f0b23fba"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220338Z:6829e368-f4cd-4440-bfe5-9266f0b23fba"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:38 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzQ0MDgtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg4976/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg4976/providers/Microsoft.Web/sites/csmr4127\",\r\n      \"name\": \"csmr4127\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"department\": \"finance\",\r\n        \"tagname\": \"tagvalue\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31976"
-        ],
-        "x-ms-request-id": [
-          "d67bb3de-f64a-4241-bd95-39bdc7f644cb"
-        ],
-        "x-ms-correlation-request-id": [
-          "d67bb3de-f64a-4241-bd95-39bdc7f644cb"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220338Z:d67bb3de-f64a-4241-bd95-39bdc7f644cb"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:38 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg4976/providers/Microsoft.Web//sites/csmr4127?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+          "WESTUS:20160308T031528Z:57215a7d-e90f-4ff9-a0a2-a0d8b2d3f461"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "b2150770-c359-4df6-996e-2bb86f06494d"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1181"
-        ],
-        "x-ms-correlation-request-id": [
-          "7325e109-bbb8-43e2-93ed-f9f333fc3849"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220341Z:7325e109-bbb8-43e2-93ed-f9f333fc3849"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:03:40 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "Tue, 08 Mar 2016 03:15:27 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg4976?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1180"
-        ],
-        "x-ms-request-id": [
-          "5e059ae9-928c-417a-9473-68dcd9c7cef6"
-        ],
-        "x-ms-correlation-request-id": [
-          "5e059ae9-928c-417a-9473-68dcd9c7cef6"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220341Z:5e059ae9-928c-417a-9473-68dcd9c7cef6"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:40 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzQ5NzYtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg4992/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/csmrg2942/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlR3JvdXBzL2NzbXJnMjk0Mi9yZXNvdXJjZXM/JGZpbHRlcj1yZXNvdXJjZVR5cGUlMjBlcSUyMCdNaWNyb3NvZnQuV2ViJTJGc2l0ZXMnJmFwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31975"
+          "14998"
         ],
         "x-ms-request-id": [
-          "057944a5-5145-441f-acf2-7ccb525bae55"
+          "6e636c77-e7c5-4314-af72-aa387b27b97f"
         ],
         "x-ms-correlation-request-id": [
-          "057944a5-5145-441f-acf2-7ccb525bae55"
+          "6e636c77-e7c5-4314-af72-aa387b27b97f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220341Z:057944a5-5145-441f-acf2-7ccb525bae55"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:40 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg4992?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1179"
-        ],
-        "x-ms-request-id": [
-          "b2237052-517b-4b1b-bc96-05f92506bc12"
-        ],
-        "x-ms-correlation-request-id": [
-          "b2237052-517b-4b1b-bc96-05f92506bc12"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220341Z:b2237052-517b-4b1b-bc96-05f92506bc12"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:40 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzQ5OTItU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5006/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31974"
-        ],
-        "x-ms-request-id": [
-          "ef456a69-6a85-48b3-996f-014de932f0cc"
-        ],
-        "x-ms-correlation-request-id": [
-          "ef456a69-6a85-48b3-996f-014de932f0cc"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220341Z:ef456a69-6a85-48b3-996f-014de932f0cc"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:40 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5006?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1178"
-        ],
-        "x-ms-request-id": [
-          "20fe84b3-3086-4cc3-9ea7-d46d8a6eef81"
-        ],
-        "x-ms-correlation-request-id": [
-          "20fe84b3-3086-4cc3-9ea7-d46d8a6eef81"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220341Z:20fe84b3-3086-4cc3-9ea7-d46d8a6eef81"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:41 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzUwMDYtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5042/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31973"
-        ],
-        "x-ms-request-id": [
-          "1baaa6c3-b6b2-4b20-a8d9-751c3e5c1644"
-        ],
-        "x-ms-correlation-request-id": [
-          "1baaa6c3-b6b2-4b20-a8d9-751c3e5c1644"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220342Z:1baaa6c3-b6b2-4b20-a8d9-751c3e5c1644"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:41 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5042?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1177"
-        ],
-        "x-ms-request-id": [
-          "58fc7f58-49d2-437d-9ed0-c015f0a167ee"
-        ],
-        "x-ms-correlation-request-id": [
-          "58fc7f58-49d2-437d-9ed0-c015f0a167ee"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220342Z:58fc7f58-49d2-437d-9ed0-c015f0a167ee"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:41 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzUwNDItU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg505/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg505/providers/Microsoft.Web/sites/csmr5503\",\r\n      \"name\": \"csmr5503\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn7886\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31972"
-        ],
-        "x-ms-request-id": [
-          "d8ee057b-9fc9-4c91-839e-70088f88465d"
-        ],
-        "x-ms-correlation-request-id": [
-          "d8ee057b-9fc9-4c91-839e-70088f88465d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220342Z:d8ee057b-9fc9-4c91-839e-70088f88465d"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:41 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg505/providers/Microsoft.Web//sites/csmr5503?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+          "WESTUS:20160308T031528Z:6e636c77-e7c5-4314-af72-aa387b27b97f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "fe69d60d-78d0-4e4c-aea0-e4d2ef979ff4"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1176"
-        ],
-        "x-ms-correlation-request-id": [
-          "94e0c10a-ebd3-4ecc-a1aa-3f7272d4e8d9"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220343Z:94e0c10a-ebd3-4ecc-a1aa-3f7272d4e8d9"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:03:43 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "Tue, 08 Mar 2016 03:15:27 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg505?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups/csmrg2942?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzL2NzbXJnMjk0Mj9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
       "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
@@ -866,1450 +121,197 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1175"
+          "1199"
         ],
         "x-ms-request-id": [
-          "6a68fdf9-3b75-4626-aa63-dd373fe2a4fb"
+          "ce92a8a9-42cf-4702-abf1-4b7f09c8ad11"
         ],
         "x-ms-correlation-request-id": [
-          "6a68fdf9-3b75-4626-aa63-dd373fe2a4fb"
+          "ce92a8a9-42cf-4702-abf1-4b7f09c8ad11"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220344Z:6a68fdf9-3b75-4626-aa63-dd373fe2a4fb"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:43 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzUwNS1TT1VUSENFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoic291dGhjZW50cmFsdXMifQ==?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5234/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31971"
-        ],
-        "x-ms-request-id": [
-          "40a51921-b82b-4cda-a7ad-54a9f682c12e"
-        ],
-        "x-ms-correlation-request-id": [
-          "40a51921-b82b-4cda-a7ad-54a9f682c12e"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220344Z:40a51921-b82b-4cda-a7ad-54a9f682c12e"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:43 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5234?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1174"
-        ],
-        "x-ms-request-id": [
-          "0a012466-ff77-467c-a18b-641b3daf17db"
-        ],
-        "x-ms-correlation-request-id": [
-          "0a012466-ff77-467c-a18b-641b3daf17db"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220344Z:0a012466-ff77-467c-a18b-641b3daf17db"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:43 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzUyMzQtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5253/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31970"
-        ],
-        "x-ms-request-id": [
-          "199f8189-9684-47a3-9415-889c1240b91d"
-        ],
-        "x-ms-correlation-request-id": [
-          "199f8189-9684-47a3-9415-889c1240b91d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220344Z:199f8189-9684-47a3-9415-889c1240b91d"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:43 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5253?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1173"
-        ],
-        "x-ms-request-id": [
-          "61857a92-b206-468e-8598-359f99fc93e0"
-        ],
-        "x-ms-correlation-request-id": [
-          "61857a92-b206-468e-8598-359f99fc93e0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220346Z:61857a92-b206-468e-8598-359f99fc93e0"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:46 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzUyNTMtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5354/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5354/providers/Microsoft.Web/sites/csmr2881\",\r\n      \"name\": \"csmr2881\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn9047\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31969"
-        ],
-        "x-ms-request-id": [
-          "c2ab0f5e-e75c-42f4-a359-ff8cbf323531"
-        ],
-        "x-ms-correlation-request-id": [
-          "c2ab0f5e-e75c-42f4-a359-ff8cbf323531"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220346Z:c2ab0f5e-e75c-42f4-a359-ff8cbf323531"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:46 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5354/providers/Microsoft.Web//sites/csmr2881?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+          "WESTUS:20160308T031528Z:ce92a8a9-42cf-4702-abf1-4b7f09c8ad11"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "516e0daa-2bc1-4b28-82a4-2f53350ecd3f"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1172"
-        ],
-        "x-ms-correlation-request-id": [
-          "44280564-4c4a-4a0d-8daa-739822661f3f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220347Z:44280564-4c4a-4a0d-8daa-739822661f3f"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:03:47 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5354?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1171"
-        ],
-        "x-ms-request-id": [
-          "0850d537-7ad7-4e79-8a3b-d6ff96cbb27a"
-        ],
-        "x-ms-correlation-request-id": [
-          "0850d537-7ad7-4e79-8a3b-d6ff96cbb27a"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220347Z:0850d537-7ad7-4e79-8a3b-d6ff96cbb27a"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:47 GMT"
+          "Tue, 08 Mar 2016 03:15:28 GMT"
         ],
         "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzUzNTQtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
+          "https://management.azure.com/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzI5NDItV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5834/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/Scheduler/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlR3JvdXBzL1NjaGVkdWxlci9yZXNvdXJjZXM/JGZpbHRlcj1yZXNvdXJjZVR5cGUlMjBlcSUyMCdNaWNyb3NvZnQuV2ViJTJGc2l0ZXMnJmFwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31968"
+          "14997"
         ],
         "x-ms-request-id": [
-          "ecb29485-e620-4e4a-a808-582ea4337239"
+          "a2e2d982-4590-4179-813c-9623df403935"
         ],
         "x-ms-correlation-request-id": [
-          "ecb29485-e620-4e4a-a808-582ea4337239"
+          "a2e2d982-4590-4179-813c-9623df403935"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220347Z:ecb29485-e620-4e4a-a808-582ea4337239"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:47 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5834?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1170"
-        ],
-        "x-ms-request-id": [
-          "333fb287-bee1-4841-95b6-94333f5bec27"
-        ],
-        "x-ms-correlation-request-id": [
-          "333fb287-bee1-4841-95b6-94333f5bec27"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220348Z:333fb287-bee1-4841-95b6-94333f5bec27"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:47 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzU4MzQtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5971/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5971/providers/Microsoft.Web/sites/csmr4313\",\r\n      \"name\": \"csmr4313\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg5971/providers/Microsoft.Web/sites/csmr7663\",\r\n      \"name\": \"csmr7663\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn9874\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31967"
-        ],
-        "x-ms-request-id": [
-          "75df2b00-f2a2-4f65-9d08-949312678675"
-        ],
-        "x-ms-correlation-request-id": [
-          "75df2b00-f2a2-4f65-9d08-949312678675"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220348Z:75df2b00-f2a2-4f65-9d08-949312678675"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:47 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5971/providers/Microsoft.Web//sites/csmr4313?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+          "WESTUS:20160308T031528Z:a2e2d982-4590-4179-813c-9623df403935"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "a295e325-8008-4f77-b472-925c3ab56278"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1169"
-        ],
-        "x-ms-correlation-request-id": [
-          "8d46e102-493c-41c6-9266-581327a972a6"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220349Z:8d46e102-493c-41c6-9266-581327a972a6"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:03:49 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "Tue, 08 Mar 2016 03:15:28 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5971/providers/Microsoft.Web//sites/csmr7663?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups/Scheduler?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzL1NjaGVkdWxlcj9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
       "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "1e1e6a31-d566-49ba-b169-d142576632c9"
+        ],
+        "x-ms-correlation-request-id": [
+          "1e1e6a31-d566-49ba-b169-d142576632c9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160308T031528Z:1e1e6a31-d566-49ba-b169-d142576632c9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "7254f851-dd48-4446-896e-202b7ae20d2f"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1168"
-        ],
-        "x-ms-correlation-request-id": [
-          "2897b516-0623-40b1-a3ac-a57a21b66b49"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220351Z:2897b516-0623-40b1-a3ac-a57a21b66b49"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:03:50 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg5971?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1167"
-        ],
-        "x-ms-request-id": [
-          "58eb27ff-2133-4353-8544-1ea05cf496c8"
-        ],
-        "x-ms-correlation-request-id": [
-          "58eb27ff-2133-4353-8544-1ea05cf496c8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220351Z:58eb27ff-2133-4353-8544-1ea05cf496c8"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:50 GMT"
+          "Tue, 08 Mar 2016 03:15:28 GMT"
         ],
         "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzU5NzEtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
+          "https://management.azure.com/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TQ0hFRFVMRVItV0VTVFVTIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg6056/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/testSDK/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlR3JvdXBzL3Rlc3RTREsvcmVzb3VyY2VzPyRmaWx0ZXI9cmVzb3VyY2VUeXBlJTIwZXElMjAnTWljcm9zb2Z0LldlYiUyRnNpdGVzJyZhcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31966"
+          "14996"
         ],
         "x-ms-request-id": [
-          "175effcd-e9e0-41c0-a17f-b0dfe8258bb4"
+          "762e0cb2-8824-443e-b9f2-2c3ea2b99277"
         ],
         "x-ms-correlation-request-id": [
-          "175effcd-e9e0-41c0-a17f-b0dfe8258bb4"
+          "762e0cb2-8824-443e-b9f2-2c3ea2b99277"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220351Z:175effcd-e9e0-41c0-a17f-b0dfe8258bb4"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:50 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg6056?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1166"
-        ],
-        "x-ms-request-id": [
-          "b0187b23-17cc-48aa-a220-8735f2d02447"
-        ],
-        "x-ms-correlation-request-id": [
-          "b0187b23-17cc-48aa-a220-8735f2d02447"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220353Z:b0187b23-17cc-48aa-a220-8735f2d02447"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:53 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzYwNTYtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg629/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31965"
-        ],
-        "x-ms-request-id": [
-          "d808734d-c240-4aeb-a64b-3ca0e4beae3d"
-        ],
-        "x-ms-correlation-request-id": [
-          "d808734d-c240-4aeb-a64b-3ca0e4beae3d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220353Z:d808734d-c240-4aeb-a64b-3ca0e4beae3d"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:53 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg629?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1165"
-        ],
-        "x-ms-request-id": [
-          "6c578109-9fbe-4b31-bdeb-f22bd3e463a1"
-        ],
-        "x-ms-correlation-request-id": [
-          "6c578109-9fbe-4b31-bdeb-f22bd3e463a1"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220355Z:6c578109-9fbe-4b31-bdeb-f22bd3e463a1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:55 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzYyOS1XRVNURVVST1BFIiwiam9iTG9jYXRpb24iOiJ3ZXN0ZXVyb3BlIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg6661/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31964"
-        ],
-        "x-ms-request-id": [
-          "d347e8de-696a-461f-87bb-30a4cdc938a1"
-        ],
-        "x-ms-correlation-request-id": [
-          "d347e8de-696a-461f-87bb-30a4cdc938a1"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220355Z:d347e8de-696a-461f-87bb-30a4cdc938a1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:55 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg6661?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1164"
-        ],
-        "x-ms-request-id": [
-          "cf191175-c15c-4674-a890-369558fc6a0d"
-        ],
-        "x-ms-correlation-request-id": [
-          "cf191175-c15c-4674-a890-369558fc6a0d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220357Z:cf191175-c15c-4674-a890-369558fc6a0d"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:57 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzY2NjEtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg6821/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31963"
-        ],
-        "x-ms-request-id": [
-          "d7a218a8-554c-406f-9cfe-047a74b72203"
-        ],
-        "x-ms-correlation-request-id": [
-          "d7a218a8-554c-406f-9cfe-047a74b72203"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220357Z:d7a218a8-554c-406f-9cfe-047a74b72203"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:57 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg6821?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1163"
-        ],
-        "x-ms-request-id": [
-          "4e849688-cab8-4910-a179-04fa9a664a36"
-        ],
-        "x-ms-correlation-request-id": [
-          "4e849688-cab8-4910-a179-04fa9a664a36"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220357Z:4e849688-cab8-4910-a179-04fa9a664a36"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:57 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzY4MjEtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7097/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31962"
-        ],
-        "x-ms-request-id": [
-          "0b1adaae-cfd3-468b-9d3d-b4f34c540df9"
-        ],
-        "x-ms-correlation-request-id": [
-          "0b1adaae-cfd3-468b-9d3d-b4f34c540df9"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220357Z:0b1adaae-cfd3-468b-9d3d-b4f34c540df9"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:57 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg7097?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1162"
-        ],
-        "x-ms-request-id": [
-          "cfaae5f7-5905-4cad-b1bd-3711159783c0"
-        ],
-        "x-ms-correlation-request-id": [
-          "cfaae5f7-5905-4cad-b1bd-3711159783c0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220359Z:cfaae5f7-5905-4cad-b1bd-3711159783c0"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzcwOTctV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7129/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31961"
-        ],
-        "x-ms-request-id": [
-          "f56340cc-6b2b-475f-959b-098933df760e"
-        ],
-        "x-ms-correlation-request-id": [
-          "f56340cc-6b2b-475f-959b-098933df760e"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220359Z:f56340cc-6b2b-475f-959b-098933df760e"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg7129?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1161"
-        ],
-        "x-ms-request-id": [
-          "53291fc6-c0d6-4b89-8757-a4474be7a9ed"
-        ],
-        "x-ms-correlation-request-id": [
-          "53291fc6-c0d6-4b89-8757-a4474be7a9ed"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220359Z:53291fc6-c0d6-4b89-8757-a4474be7a9ed"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzcxMjktU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7183/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31960"
-        ],
-        "x-ms-request-id": [
-          "38749db6-e78f-45ed-a517-5be3f27e9e8b"
-        ],
-        "x-ms-correlation-request-id": [
-          "38749db6-e78f-45ed-a517-5be3f27e9e8b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220359Z:38749db6-e78f-45ed-a517-5be3f27e9e8b"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg7183?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1160"
-        ],
-        "x-ms-request-id": [
-          "932d6954-c21f-4086-8376-1cfb093bfe5a"
-        ],
-        "x-ms-correlation-request-id": [
-          "932d6954-c21f-4086-8376-1cfb093bfe5a"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220359Z:932d6954-c21f-4086-8376-1cfb093bfe5a"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzcxODMtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7321/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31959"
-        ],
-        "x-ms-request-id": [
-          "db604e4f-c695-484c-86f5-9c3bfc5f8203"
-        ],
-        "x-ms-correlation-request-id": [
-          "db604e4f-c695-484c-86f5-9c3bfc5f8203"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220359Z:db604e4f-c695-484c-86f5-9c3bfc5f8203"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg7321?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1159"
-        ],
-        "x-ms-request-id": [
-          "c8f825a3-5b79-41c5-9fa2-1e7114356928"
-        ],
-        "x-ms-correlation-request-id": [
-          "c8f825a3-5b79-41c5-9fa2-1e7114356928"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220400Z:c8f825a3-5b79-41c5-9fa2-1e7114356928"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzczMjEtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg7792/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31958"
-        ],
-        "x-ms-request-id": [
-          "1a2e9337-dc1d-48f5-9faa-5d1dc4faa4a1"
-        ],
-        "x-ms-correlation-request-id": [
-          "1a2e9337-dc1d-48f5-9faa-5d1dc4faa4a1"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220400Z:1a2e9337-dc1d-48f5-9faa-5d1dc4faa4a1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:03:59 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg7792?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1158"
-        ],
-        "x-ms-request-id": [
-          "5a0a698a-df34-44a7-9aee-8105936d091d"
-        ],
-        "x-ms-correlation-request-id": [
-          "5a0a698a-df34-44a7-9aee-8105936d091d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220400Z:5a0a698a-df34-44a7-9aee-8105936d091d"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:00 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzc3OTItU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8137/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31957"
-        ],
-        "x-ms-request-id": [
-          "721d055d-e229-4d2d-8c60-4085807e809d"
-        ],
-        "x-ms-correlation-request-id": [
-          "721d055d-e229-4d2d-8c60-4085807e809d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220400Z:721d055d-e229-4d2d-8c60-4085807e809d"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:00 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8137?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1157"
-        ],
-        "x-ms-request-id": [
-          "a644d183-a4ae-47a3-947d-c3a7f5fd7d73"
-        ],
-        "x-ms-correlation-request-id": [
-          "a644d183-a4ae-47a3-947d-c3a7f5fd7d73"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220401Z:a644d183-a4ae-47a3-947d-c3a7f5fd7d73"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:01 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzgxMzctV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8162/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8162/providers/Microsoft.Web/sites/csmr1166\",\r\n      \"name\": \"csmr1166\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8162/providers/Microsoft.Web/sites/csmr9450\",\r\n      \"name\": \"csmr9450\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn1595\": \"csmtv7961\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31956"
-        ],
-        "x-ms-request-id": [
-          "4265f6a9-96f0-4d5b-a712-e9fe0ba151fa"
-        ],
-        "x-ms-correlation-request-id": [
-          "4265f6a9-96f0-4d5b-a712-e9fe0ba151fa"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220402Z:4265f6a9-96f0-4d5b-a712-e9fe0ba151fa"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:01 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8162/providers/Microsoft.Web//sites/csmr1166?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+          "WESTUS:20160308T031528Z:762e0cb2-8824-443e-b9f2-2c3ea2b99277"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "bc4f7838-5a54-4e29-b825-7c0f953d79af"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1156"
-        ],
-        "x-ms-correlation-request-id": [
-          "feb462ca-c8b7-4e2c-9ff1-6a2b427b2f18"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220403Z:feb462ca-c8b7-4e2c-9ff1-6a2b427b2f18"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:04:03 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "Tue, 08 Mar 2016 03:15:28 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8162/providers/Microsoft.Web//sites/csmr9450?api-version=2014-04-01",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups/testSDK?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzL3Rlc3RTREs/YXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
       "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+        "Content-Length": [
+          "0"
         ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
+        "Expires": [
+          "-1"
         ],
-        "x-ms-request-id": [
-          "8fdbff35-b415-4150-8966-8728990be6f4"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1155"
-        ],
-        "x-ms-correlation-request-id": [
-          "1d080abb-802e-4f1c-ac6d-913b4228bed1"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220405Z:1d080abb-802e-4f1c-ac6d-913b4228bed1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:05 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8162?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
         "Pragma": [
           "no-cache"
         ],
@@ -2317,596 +319,98 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1154"
+          "1197"
         ],
         "x-ms-request-id": [
-          "6b9389c3-9bda-4b3e-b4b8-3dc3e9929db9"
+          "49646449-a7e6-4295-9fc8-fe765fac91ed"
         ],
         "x-ms-correlation-request-id": [
-          "6b9389c3-9bda-4b3e-b4b8-3dc3e9929db9"
+          "49646449-a7e6-4295-9fc8-fe765fac91ed"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220405Z:6b9389c3-9bda-4b3e-b4b8-3dc3e9929db9"
+          "WESTUS:20160308T031528Z:49646449-a7e6-4295-9fc8-fe765fac91ed"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:04:05 GMT"
+          "Tue, 08 Mar 2016 03:15:28 GMT"
         ],
         "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzgxNjItU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
+          "https://management.azure.com/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1URVNUU0RLLVdFU1RVUyIsImpvYkxvY2F0aW9uIjoid2VzdHVzIn0?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8569/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourceGroups/vtest/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlR3JvdXBzL3Z0ZXN0L3Jlc291cmNlcz8kZmlsdGVyPXJlc291cmNlVHlwZSUyMGVxJTIwJ01pY3Jvc29mdC5XZWIlMkZzaXRlcycmYXBpLXZlcnNpb249MjAxNi0wMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8569/providers/Microsoft.Web/sites/csmr5645\",\r\n      \"name\": \"csmr5645\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8569/providers/Microsoft.Web/sites/csmr7949\",\r\n      \"name\": \"csmr7949\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn8756\": \"csmtv8639\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31955"
-        ],
-        "x-ms-request-id": [
-          "58f4dcde-4fa0-43ac-8475-7ee5f7245e80"
-        ],
-        "x-ms-correlation-request-id": [
-          "58f4dcde-4fa0-43ac-8475-7ee5f7245e80"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220405Z:58f4dcde-4fa0-43ac-8475-7ee5f7245e80"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:05 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8569/providers/Microsoft.Web//sites/csmr5645?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "91b5e7d8-c18a-4800-aea5-fbef28716fc8"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1153"
-        ],
-        "x-ms-correlation-request-id": [
-          "9985bebe-f12c-4af5-9713-000774be15a1"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220406Z:9985bebe-f12c-4af5-9713-000774be15a1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:06 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8569/providers/Microsoft.Web//sites/csmr7949?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "5da95846-04ad-4ecc-bc1f-e070975b7a61"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1152"
-        ],
-        "x-ms-correlation-request-id": [
-          "72810392-6eed-4eeb-8c6d-30c8c1990834"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220408Z:72810392-6eed-4eeb-8c6d-30c8c1990834"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:08 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8569?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1151"
-        ],
-        "x-ms-request-id": [
-          "0982ecaa-e5fd-4c34-b42a-79d4761c14e5"
-        ],
-        "x-ms-correlation-request-id": [
-          "0982ecaa-e5fd-4c34-b42a-79d4761c14e5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220408Z:0982ecaa-e5fd-4c34-b42a-79d4761c14e5"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:08 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzg1NjktU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg880/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31954"
+          "14995"
         ],
         "x-ms-request-id": [
-          "191a317d-635e-4313-a74b-72f95a850fda"
+          "1829d02d-cb09-4c2e-8075-c171a2fa09ea"
         ],
         "x-ms-correlation-request-id": [
-          "191a317d-635e-4313-a74b-72f95a850fda"
+          "1829d02d-cb09-4c2e-8075-c171a2fa09ea"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220408Z:191a317d-635e-4313-a74b-72f95a850fda"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:08 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg880?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1150"
-        ],
-        "x-ms-request-id": [
-          "2ef3820e-b808-4634-958e-b848c9ed0d77"
-        ],
-        "x-ms-correlation-request-id": [
-          "2ef3820e-b808-4634-958e-b848c9ed0d77"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220410Z:2ef3820e-b808-4634-958e-b848c9ed0d77"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:10 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzg4MC1XRVNURVVST1BFIiwiam9iTG9jYXRpb24iOiJ3ZXN0ZXVyb3BlIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8814/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31953"
-        ],
-        "x-ms-request-id": [
-          "00953d45-da71-472f-a29f-88a6c37fbbd4"
-        ],
-        "x-ms-correlation-request-id": [
-          "00953d45-da71-472f-a29f-88a6c37fbbd4"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220410Z:00953d45-da71-472f-a29f-88a6c37fbbd4"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:10 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8814?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1149"
-        ],
-        "x-ms-request-id": [
-          "37a3b81e-48ba-4d88-8284-a4b7dfd79e77"
-        ],
-        "x-ms-correlation-request-id": [
-          "37a3b81e-48ba-4d88-8284-a4b7dfd79e77"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220411Z:37a3b81e-48ba-4d88-8284-a4b7dfd79e77"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:11 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzg4MTQtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg8903/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31952"
-        ],
-        "x-ms-request-id": [
-          "a28cdf34-70db-438a-b60c-7c99aec417f5"
-        ],
-        "x-ms-correlation-request-id": [
-          "a28cdf34-70db-438a-b60c-7c99aec417f5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220412Z:a28cdf34-70db-438a-b60c-7c99aec417f5"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:11 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg8903?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1148"
-        ],
-        "x-ms-request-id": [
-          "f0a00d7e-90e3-481b-87d6-0bfb08824f36"
-        ],
-        "x-ms-correlation-request-id": [
-          "f0a00d7e-90e3-481b-87d6-0bfb08824f36"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220413Z:f0a00d7e-90e3-481b-87d6-0bfb08824f36"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:13 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzg5MDMtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9043/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31951"
-        ],
-        "x-ms-request-id": [
-          "6eead94c-aa8d-4b93-b2bd-aa0e33cd3778"
-        ],
-        "x-ms-correlation-request-id": [
-          "6eead94c-aa8d-4b93-b2bd-aa0e33cd3778"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220413Z:6eead94c-aa8d-4b93-b2bd-aa0e33cd3778"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:13 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9043?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1147"
-        ],
-        "x-ms-request-id": [
-          "a815bf5a-d75e-4c23-ab50-7a2c25ad0b9c"
-        ],
-        "x-ms-correlation-request-id": [
-          "a815bf5a-d75e-4c23-ab50-7a2c25ad0b9c"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220415Z:a815bf5a-d75e-4c23-ab50-7a2c25ad0b9c"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:14 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzkwNDMtV0VTVEVVUk9QRSIsImpvYkxvY2F0aW9uIjoid2VzdGV1cm9wZSJ9?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9165/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9165/providers/Microsoft.Web/sites/csmr6087\",\r\n      \"name\": \"csmr6087\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn7344\": \"csmtv2865\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31950"
-        ],
-        "x-ms-request-id": [
-          "cc2e83c1-a978-4f89-8be3-a8fa42d62401"
-        ],
-        "x-ms-correlation-request-id": [
-          "cc2e83c1-a978-4f89-8be3-a8fa42d62401"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220415Z:cc2e83c1-a978-4f89-8be3-a8fa42d62401"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:14 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9165/providers/Microsoft.Web//sites/csmr6087?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+          "WESTUS:20160308T031528Z:1829d02d-cb09-4c2e-8075-c171a2fa09ea"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "ae45ad6f-b836-48a5-b4eb-246aa1331ebe"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1146"
-        ],
-        "x-ms-correlation-request-id": [
-          "a861160c-6f8e-4740-9c8d-12d338e2f57d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220417Z:a861160c-6f8e-4740-9c8d-12d338e2f57d"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:04:17 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "Tue, 08 Mar 2016 03:15:28 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9165?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/resourcegroups/vtest?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3Jlc291cmNlZ3JvdXBzL3Z0ZXN0P2FwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "",
       "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
@@ -2914,669 +418,28 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1145"
+          "1196"
         ],
         "x-ms-request-id": [
-          "b10d9b0d-611e-4dc0-83c7-14ce6c075429"
+          "5ddaddce-a81e-4ff7-8cfd-4e8b8856e5a1"
         ],
         "x-ms-correlation-request-id": [
-          "b10d9b0d-611e-4dc0-83c7-14ce6c075429"
+          "5ddaddce-a81e-4ff7-8cfd-4e8b8856e5a1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220417Z:b10d9b0d-611e-4dc0-83c7-14ce6c075429"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:17 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzkxNjUtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9288/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9288/providers/Microsoft.Web/sites/csmr9773\",\r\n      \"name\": \"csmr9773\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn3044\": \"csmtv2291\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31949"
-        ],
-        "x-ms-request-id": [
-          "980f1b92-87a2-4db4-b44f-8aa332abbd25"
-        ],
-        "x-ms-correlation-request-id": [
-          "980f1b92-87a2-4db4-b44f-8aa332abbd25"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220417Z:980f1b92-87a2-4db4-b44f-8aa332abbd25"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:17 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9288/providers/Microsoft.Web//sites/csmr9773?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
+          "WESTUS:20160308T031529Z:5ddaddce-a81e-4ff7-8cfd-4e8b8856e5a1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "4aec94ab-a149-48f7-ae73-f08af6a39bf1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1144"
-        ],
-        "x-ms-correlation-request-id": [
-          "fa041ce8-fc38-470d-b874-cfb933b58428"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220419Z:fa041ce8-fc38-470d-b874-cfb933b58428"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Jun 2014 22:04:19 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9288?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1143"
-        ],
-        "x-ms-request-id": [
-          "1569bc1d-2a9f-4d3c-b91b-432db8c2851d"
-        ],
-        "x-ms-correlation-request-id": [
-          "1569bc1d-2a9f-4d3c-b91b-432db8c2851d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220419Z:1569bc1d-2a9f-4d3c-b91b-432db8c2851d"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:19 GMT"
+          "Tue, 08 Mar 2016 03:15:28 GMT"
         ],
         "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzkyODgtU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9292/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9292/providers/Microsoft.Web/sites/csmr759\",\r\n      \"name\": \"csmr759\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31948"
-        ],
-        "x-ms-request-id": [
-          "49fcf21b-4c3b-46d2-aad9-c7cc144aa7e5"
-        ],
-        "x-ms-correlation-request-id": [
-          "49fcf21b-4c3b-46d2-aad9-c7cc144aa7e5"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220419Z:49fcf21b-4c3b-46d2-aad9-c7cc144aa7e5"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:19 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9292/providers/Microsoft.Web//sites/csmr759?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "912725c8-6bf3-4df9-a8ed-94095b8e4f09"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1142"
-        ],
-        "x-ms-correlation-request-id": [
-          "e950e1e9-8a87-445a-a27c-ef123b84928f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220420Z:e950e1e9-8a87-445a-a27c-ef123b84928f"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:20 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9292?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1141"
-        ],
-        "x-ms-request-id": [
-          "6d8831d2-c726-4b54-8659-5fb701b094d0"
-        ],
-        "x-ms-correlation-request-id": [
-          "6d8831d2-c726-4b54-8659-5fb701b094d0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220420Z:6d8831d2-c726-4b54-8659-5fb701b094d0"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:20 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzkyOTItU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg954/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31947"
-        ],
-        "x-ms-request-id": [
-          "da969a50-6315-488f-9a3d-28a2b49a0813"
-        ],
-        "x-ms-correlation-request-id": [
-          "da969a50-6315-488f-9a3d-28a2b49a0813"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220420Z:da969a50-6315-488f-9a3d-28a2b49a0813"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:20 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg954?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1140"
-        ],
-        "x-ms-request-id": [
-          "99057a61-6369-475a-bb07-82f936f9a66e"
-        ],
-        "x-ms-correlation-request-id": [
-          "99057a61-6369-475a-bb07-82f936f9a66e"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220421Z:99057a61-6369-475a-bb07-82f936f9a66e"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:20 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzk1NC1TT1VUSENFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoic291dGhjZW50cmFsdXMifQ==?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9699/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9699/providers/Microsoft.Web/sites/csmr6979\",\r\n      \"name\": \"csmr6979\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {}\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31946"
-        ],
-        "x-ms-request-id": [
-          "1cabe0e7-83a5-4787-bee1-35dda02b9931"
-        ],
-        "x-ms-correlation-request-id": [
-          "1cabe0e7-83a5-4787-bee1-35dda02b9931"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220421Z:1cabe0e7-83a5-4787-bee1-35dda02b9931"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:20 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9699/providers/Microsoft.Web//sites/csmr6979?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "64345005-6a6d-45be-8e7f-790070ab420c"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1139"
-        ],
-        "x-ms-correlation-request-id": [
-          "d6c8a38c-4642-4b7f-bddf-132bee7074b9"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220423Z:d6c8a38c-4642-4b7f-bddf-132bee7074b9"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:22 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9699?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1138"
-        ],
-        "x-ms-request-id": [
-          "63ba9efc-c412-4d8b-9d6c-8b24adbe5dd8"
-        ],
-        "x-ms-correlation-request-id": [
-          "63ba9efc-c412-4d8b-9d6c-8b24adbe5dd8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220423Z:63ba9efc-c412-4d8b-9d6c-8b24adbe5dd8"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:22 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzk2OTktU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9972/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/csmrg9972/providers/Microsoft.Web/sites/csmr3810\",\r\n      \"name\": \"csmr3810\",\r\n      \"type\": \"Microsoft.Web/sites\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"csmtn8129\": \"\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31945"
-        ],
-        "x-ms-request-id": [
-          "786a9aec-b70e-4b95-b4e7-29ee7caa7fea"
-        ],
-        "x-ms-correlation-request-id": [
-          "786a9aec-b70e-4b95-b4e7-29ee7caa7fea"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220423Z:786a9aec-b70e-4b95-b4e7-29ee7caa7fea"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:22 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9972/providers/Microsoft.Web//sites/csmr3810?api-version=2014-04-01",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "61e0542a-4f43-4bc7-8c92-f04358cac876"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1137"
-        ],
-        "x-ms-correlation-request-id": [
-          "e13c5503-fe3c-44dc-9b6b-0435d87b0acd"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220425Z:e13c5503-fe3c-44dc-9b6b-0435d87b0acd"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:25 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/csmrg9972?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1136"
-        ],
-        "x-ms-request-id": [
-          "f2e190ca-13f4-4c66-8c8a-aa71a0c21c2c"
-        ],
-        "x-ms-correlation-request-id": [
-          "f2e190ca-13f4-4c66-8c8a-aa71a0c21c2c"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220425Z:f2e190ca-13f4-4c66-8c8a-aa71a0c21c2c"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:25 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DU01SRzk5NzItU09VVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6InNvdXRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourceGroups/VS-provisioned-Group/resources?$filter=resourceType%20eq%20'Microsoft.Web%2Fsites'&api-version=2014-04-01-preview",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31944"
-        ],
-        "x-ms-request-id": [
-          "716d9c3c-9513-48ae-a516-1c4a0bab0cb0"
-        ],
-        "x-ms-correlation-request-id": [
-          "716d9c3c-9513-48ae-a516-1c4a0bab0cb0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220425Z:716d9c3c-9513-48ae-a516-1c4a0bab0cb0"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:25 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/resourcegroups/VS-provisioned-Group?api-version=2014-04-01-preview",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Pragma": [
-          "no-cache"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1135"
-        ],
-        "x-ms-request-id": [
-          "1f44f4ca-7cd0-4829-aebd-ba061b7bb66b"
-        ],
-        "x-ms-correlation-request-id": [
-          "1f44f4ca-7cd0-4829-aebd-ba061b7bb66b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20140624T220425Z:1f44f4ca-7cd0-4829-aebd-ba061b7bb66b"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 24 Jun 2014 22:04:25 GMT"
-        ],
-        "Location": [
-          "https://api-next.resources.windows-int.net/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1WUzoyRFBST1ZJU0lPTkVEOjJER1JPVVAtTk9SVEhDRU5UUkFMVVMiLCJqb2JMb2NhdGlvbiI6Im5vcnRoY2VudHJhbHVzIn0=?api-version=2014-04-01-preview"
+          "https://management.azure.com/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1WVEVTVC1XRVNUVVMiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
@@ -3584,6 +447,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e"
+    "SubscriptionId": "38b598fc-e57a-423f-b2e7-dc0ddb631f1f"
   }
 }

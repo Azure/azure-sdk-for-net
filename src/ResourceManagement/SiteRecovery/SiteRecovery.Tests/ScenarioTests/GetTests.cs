@@ -19,6 +19,7 @@ using Microsoft.Azure.Test;
 using System.Net;
 using System.Linq;
 using Xunit;
+using System;
 
 
 namespace SiteRecovery.Tests
@@ -72,7 +73,32 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        public void GetStorageClassification()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                FabricListResponse responseServers = client.Fabrics.List(RequestHeaders);
+
+                FabricResponse response = client.Fabrics.Get(responseServers.Fabrics[0].Name, RequestHeaders);
+
+                foreach (Fabric fabric in responseServers.Fabrics)
+                {
+                    if (fabric.Properties.CustomDetails.InstanceType == "VMM")
+                    {
+                        var storageClassifications = client.StorageClassification.List(fabric.Name, RequestHeaders);
+
+                        var storageClassification = client.StorageClassification.Get(
+                            fabric.Name, 
+                            storageClassifications.StorageClassifications[0].Name, 
+                            RequestHeaders);
+                    }
+                }
+            }
+        }
+
         public void GetProtectedContainerTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -104,7 +130,18 @@ namespace SiteRecovery.Tests
             }
         }
 
-        public void GetReplicationProtectedItems()
+        public void GetAllProtectedContainerTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var protectionContainerList = client.ProtectionContainer.ListAll(RequestHeaders);
+            }
+        }
+
+	public void GetReplicationProtectedItems()
         {
             using (UndoContext context = UndoContext.Current)
             {
@@ -118,7 +155,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void GetVMwareAzureV2ReplicationProtectableItems()
         {
             using (UndoContext context = UndoContext.Current)
@@ -148,6 +184,8 @@ namespace SiteRecovery.Tests
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
                     "Unprotected",
+                    "",
+                    "1000",
                     RequestHeaders);
                 Assert.NotNull(protectableItemsResponse);
                 Assert.NotEmpty(protectableItemsResponse.ProtectableItems);
@@ -165,7 +203,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void GetVMwareAzureV2ReplicationProtectedItem()
         {
             using (UndoContext context = UndoContext.Current)
@@ -174,9 +211,9 @@ namespace SiteRecovery.Tests
                 var client = this.GetSiteRecoveryClient(CustomHttpHandler);
 
                 var response = client.ReplicationProtectedItem.Get(
-                    "Vmm;74d11999-cc51-4b39-80e5-0102bd53668e",
-                    "cloud_74d11999-cc51-4b39-80e5-0102bd53668e",
-                    "6dc1754b-76f1-11e5-b057-0050569e3855-Protected",
+                    "52fcbc3c29d2b391598f1e98737138e54ae3597b04bef2a71df5143c16cf9a14",
+                    "cloud_2e908a93-f69f-49fe-bdf8-8687a9f1db35",
+                    "dee537e5-a9a0-11e5-af2b-0050569e66ab-Protected",
                     RequestHeaders);
 
                 Assert.NotNull(response);
@@ -184,7 +221,51 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
+        public void GetVMwareAzureV2ReplicationProtectedItems()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = this.GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count can't be less than 1");
+
+                var vmWareFabric = responseServers.Fabrics[1];
+                //var vmWareFabric = responseServers.Fabrics.First(
+                //    fabric => fabric.Properties.CustomDetails.InstanceType == "VMware");
+                //Assert.NotNull(vmWareFabric);
+
+                var containersResponse = client.ProtectionContainer.List(
+                    vmWareFabric.Name,
+                    RequestHeaders);
+                Assert.NotNull(containersResponse);
+                Assert.True(
+                    containersResponse.ProtectionContainers.Count > 0,
+                    "Containers count can't be less than 1.");
+
+                var response = client.ReplicationProtectedItem.List(
+                    vmWareFabric.Name,
+                    containersResponse.ProtectionContainers[0].Name,
+                    RequestHeaders);
+                Assert.NotNull(response);
+
+                foreach(ReplicationProtectedItem replicatedItem in response.ReplicationProtectedItems)
+                {
+                    var response1 = client.ReplicationProtectedItem.Get(
+                        vmWareFabric.Name,
+                        containersResponse.ProtectionContainers[0].Name,
+                        replicatedItem.Name,
+                        RequestHeaders);
+
+                    Assert.NotNull(response1);
+                }
+            }
+        }
+
         public void GetNetworkTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -198,7 +279,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void GetNetworkMappingTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -217,7 +297,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void GetContainerMappings()
         {
             using (UndoContext context = UndoContext.Current)
@@ -232,7 +311,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        
         public void GetVMwareAzureV2ContainerMapping()
         {
             using (UndoContext context = UndoContext.Current)
@@ -258,11 +336,152 @@ namespace SiteRecovery.Tests
                     containersResponse.ProtectionContainers.Count > 0,
                     "Containers count can't be less than 1.");
 
-                var containersMappingResponse = client.ProtectionContainerMapping.List(
+                var containersMappingResponse = client.ProtectionContainerMapping.Get(
                     vmWareFabric.Name,
                     containersResponse.ProtectionContainers[0].Name,
+                    "Hitesh-VMwareAzureV2-Mapping",
                     RequestHeaders);
                 Assert.NotNull(containersMappingResponse);
+            }
+        }
+
+        public void GetEvents()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.Events.List(
+                    new EventQueryParameter
+                    {
+                        StartTime = DateTime.Parse("01112015 000000").ToString(),
+                        EndTime = DateTime.Now.AddDays(-1).ToString(),
+                        AffectedObjectFriendlyName = "sadko-1102-1",
+                    },
+                    RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Events);
+            }
+        }
+
+        public void GetEvent()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.Events.List(
+                    new EventQueryParameter
+                    {
+                        StartTime = DateTime.Parse("2015-11-01 00:00").ToString(),
+                        EndTime = DateTime.Now.AddDays(-1).ToString(),
+                        AffectedObjectFriendlyName = "sadko-1102-1",
+                    },
+                    RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Events);
+
+                var eventResponse = client.Events.Get(
+                    response.Events[0].Name,
+                    RequestHeaders);
+                Assert.NotNull(eventResponse);
+                Assert.NotNull(eventResponse.Event);
+            }
+        }
+
+        public void GetEventNegativeTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                EventResponse eventResponse = null;
+
+                try
+                {
+                    client.Events.Get(
+                        "UnrealisticEventName42", // Because 42 is the answer to life, the universe and everything.
+                        RequestHeaders);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.ToUpper().Contains("NOTFOUND"))
+                    {
+                        eventResponse = new EventResponse();
+                        eventResponse.Event = null;
+                        eventResponse.StatusCode = HttpStatusCode.NotFound;
+                    }
+                }
+
+                Assert.NotNull(eventResponse);
+                Assert.Null(eventResponse.Event);
+                Assert.Equal(HttpStatusCode.NotFound, eventResponse.StatusCode);
+            }
+        }
+
+        public void GetAlertSettingsTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var response = client.AlertSettings.List(RequestHeaders);
+                Assert.NotNull(response);
+                Assert.NotEmpty(response.Alerts);
+
+                var alertResponse = client.AlertSettings.Get(
+                    response.Alerts[0].Name,
+                    RequestHeaders);
+
+                Assert.NotNull(alertResponse);
+                Assert.NotNull(alertResponse.Alert);
+            }
+        }
+
+        public void GetAlertSettingsNegativeTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                AlertSettingsResponse alertResponse = null;
+
+                try
+                {
+                    alertResponse = client.AlertSettings.Get(
+                        "dummyName",
+                        RequestHeaders);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.ToUpper().Contains("NOTFOUND"))
+                    {
+                        alertResponse = new AlertSettingsResponse();
+                        alertResponse.Alert = null;
+                        alertResponse.StatusCode = HttpStatusCode.NotFound;
+                    }
+                }
+
+                Assert.NotNull(alertResponse);
+                Assert.Equal(alertResponse.StatusCode, HttpStatusCode.NotFound);
+            }
+        }
+
+        [Fact]
+        public void GetStorageClassificationAndPairingsUnderVault()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                client.StorageClassification.ListAll(RequestHeaders);
+                client.StorageClassificationMapping.ListAll(RequestHeaders);
             }
         }
     }

@@ -21,9 +21,9 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices.Models
+namespace Microsoft.Azure.Management.SiteRecoveryVault.Models
 {
     /// <summary>
     /// The definition of a cloud service object.

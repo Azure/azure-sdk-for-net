@@ -30,6 +30,17 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
     /// </summary>
     public partial class CollectionUpdateDetails
     {
+        private CollectionAclLevel _aclLevel;
+        
+        /// <summary>
+        /// Optional. Application ACL level (Collection or Application)
+        /// </summary>
+        public CollectionAclLevel AclLevel
+        {
+            get { return this._aclLevel; }
+            set { this._aclLevel = value; }
+        }
+        
         private ActiveDirectoryConfig _adInfo;
         
         /// <summary>
@@ -73,6 +84,17 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
         {
             get { return this._planName; }
             set { this._planName = value; }
+        }
+        
+        private string _subnetName;
+        
+        /// <summary>
+        /// Optional. The name of the subnet to be used to patch the collection.
+        /// </summary>
+        public string SubnetName
+        {
+            get { return this._subnetName; }
+            set { this._subnetName = value; }
         }
         
         private string _templateImageName;

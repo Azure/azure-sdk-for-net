@@ -23,12 +23,19 @@ namespace HDInsightJob.Tests
 {
     public static class TestUtils
     {
-        public static string ClusterName = "shvohralinuxtest2.azurehdinsight.net";
+        public static string ClusterName = "pattipakalinux32.azurehdinsight.net";
         public static string UserName = "admin";
         public static string Password = "";
-        public static string StorageAccountName = "giyerwestus1";
+        public static string StorageAccountName = "pattipakalinux";
         public static string StorageAccountKey = "";
-        public static string DefaultContainer = "defaultcontainer";
+        public static string DefaultContainer = "pattipakalinux32";
+
+        public static string WinClusterName = "pattipakawin33.azurehdinsight.net";
+        public static string WinStorageAccountName = "pattipakastorageaccount";
+        public static string WinStorageAccountKey = "";
+        public static string WinDefaultContainer = "pattipakawin33";
+        public static string WinUserName = "admin";
+        public static string WinPassword = "";
 
         public static HDInsightJobManagementClient GetHDInsightJobManagementClient(string dnsName, BasicAuthenticationCloudCredentials creds)
         {

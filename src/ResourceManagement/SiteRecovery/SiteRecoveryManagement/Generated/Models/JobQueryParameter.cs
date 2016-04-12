@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
@@ -32,12 +31,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class JobQueryParameter
     {
-        private IList<AffectedObjectType> _affectedObjectTypes;
+        private IList<string> _affectedObjectTypes;
         
         /// <summary>
         /// Optional. List of type of objects to fetch jobs for.
         /// </summary>
-        public IList<AffectedObjectType> AffectedObjectTypes
+        public IList<string> AffectedObjectTypes
         {
             get { return this._affectedObjectTypes; }
             set { this._affectedObjectTypes = value; }
@@ -92,7 +91,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public JobQueryParameter()
         {
-            this.AffectedObjectTypes = new LazyList<AffectedObjectType>();
+            this.AffectedObjectTypes = new LazyList<string>();
             this.JobStatus = new LazyList<string>();
         }
     }

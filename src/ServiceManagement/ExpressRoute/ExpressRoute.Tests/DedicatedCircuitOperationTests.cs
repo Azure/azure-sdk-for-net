@@ -20,7 +20,10 @@
             {
                 undoContext.Start();
                 var expressRouteClient = GetCustomerExpressRouteManagementClient();
-                var provider = expressRouteClient.DedicatedCircuitServiceProviders.List().Single(p => p.Name.Equals(GetProviderName(), StringComparison.CurrentCultureIgnoreCase));
+
+                var providers = expressRouteClient.DedicatedCircuitServiceProviders.List();
+                var providerName = GetProviderName();
+                var provider = providers.Single(p => p.Name.Equals(providerName, StringComparison.CurrentCultureIgnoreCase));
                 var location = provider.DedicatedCircuitLocations.Split(',').First();
                 var bandwidth = provider.DedicatedCircuitBandwidths.First().Bandwidth;
                 var circuitName = TestUtilities.GenerateName("circuit");
@@ -30,7 +33,7 @@
                         CircuitName = circuitName,
                         Location = location,
                         ServiceProviderName = provider.Name,
-                       BillingType = BillingType.ServiceProviderType
+                        BillingType = BillingType.UnlimitedData
                     };
                 var newResponse = expressRouteClient.DedicatedCircuits.New(newParams);
                 TestUtilities.ValidateOperationResponse(newResponse);
@@ -43,7 +46,7 @@
                 Assert.Equal(createdCircuit.DedicatedCircuit.Location, location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(createdCircuit.DedicatedCircuit.Status, DedicatedCircuitState.Enabled);
                 Assert.Equal(createdCircuit.DedicatedCircuit.ServiceProviderProvisioningState, ProviderProvisioningState.NotProvisioned);
-                Assert.Equal(createdCircuit.DedicatedCircuit.BillingType, BillingType.ServiceProviderType);
+                Assert.Equal(createdCircuit.DedicatedCircuit.BillingType, BillingType.UnlimitedData.ToString());
 
                 DedicatedCircuitListResponse circuits = expressRouteClient.DedicatedCircuits.List();
                 TestUtilities.ValidateOperationResponse(circuits);

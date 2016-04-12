@@ -28,6 +28,7 @@
     <Compile Include="ScenarioTests\SmapiTestsFixture.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiOperations.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiProducts.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.TenantAccessInformationGetUpdate.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Apis.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.AuthorizationServers.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Certificates.cs" />
@@ -249,6 +250,9 @@
     <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\TenantAccessInformationGetUpdate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\UserGroupsListAddRemove.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -288,4 +292,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
 </Project>

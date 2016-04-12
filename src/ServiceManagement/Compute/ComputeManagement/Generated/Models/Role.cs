@@ -67,6 +67,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._dataVirtualHardDisks = value; }
         }
         
+        private DebugSettings _debugSettings;
+        
+        /// <summary>
+        /// Optional. When a VM Image is used to create a new PersistantVMRole,
+        /// the DiskConfigurations in the VM Image are used to create new
+        /// Disks for the new VM. This parameter can be used to resize the
+        /// newly created Disks to a larger size than the underlying
+        /// DiskConfigurations in the VM Image.This property is only returned
+        /// with a version header of 2014-10-01 or newer.
+        /// </summary>
+        public DebugSettings DebugSettings
+        {
+            get { return this._debugSettings; }
+            set { this._debugSettings = value; }
+        }
+        
         private string _defaultWinRmCertificateThumbprint;
         
         /// <summary>

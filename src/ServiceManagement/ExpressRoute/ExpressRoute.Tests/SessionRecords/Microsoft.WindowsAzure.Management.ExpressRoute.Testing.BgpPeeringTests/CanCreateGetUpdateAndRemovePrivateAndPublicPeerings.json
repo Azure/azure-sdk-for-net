@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,54 +10,57 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider1</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider2</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>128</Bandwidth>\r\n        <Label>256</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Azure,USWest,Boydton 1 DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>GNS</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>10Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1024</Bandwidth>\r\n        <Label>1024Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,USWest,Azure</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>IXP-01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
+      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Aryaka Networks</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>AT&amp;T</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Dallas,London,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>AT&amp;T Netbond</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London,Hong Kong,Silicon Valley,Singapore,Tokyo,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>British Telecom</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Hong Kong</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>China Telecom Global</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Colt Ethernet</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Colt IPVPN</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Comcast</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Los Angeles</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Coresite</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Atlanta,Chicago,Dallas,Hong Kong,London,Los Angeles,Melbourne,New York,Osaka,Sao Paulo,Seattle,Silicon Valley,Singapore,Sydney,Tokyo,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Equinix</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>EuNetworks</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Osaka,Tokyo</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>IIJ</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London,Singapore,Washington DC,Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>InterCloud</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London,Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Internet Solutions – Cloud Connect</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Interxion</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Chicago,Dallas,London,Seattle,Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Level 3 Communications - Exchange</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Chicago,Dallas,London,Seattle,Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Level 3 Communications - IPVPN</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Melbourne,Sydney</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Megaport</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>MTN</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Melbourne,Sydney</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>NEXTDC</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Tokyo</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>NTT Communications</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Hong Kong,London,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Orange</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Hong Kong</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>PCCW Global Limited</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Singapore</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>SingTel Domestic</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Singapore</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>SingTel International</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Chennai,Hong Kong,London,Mumbai,Silicon Valley,Singapore,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Tata Communications</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>TeleCity Group</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Melbourne,Sydney</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Telstra Corporation</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Amsterdam,Hong Kong,London,Silicon Valley,Sydney,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Verizon</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>London</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Vodafone</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>2000</Bandwidth>\r\n        <Label>2Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>5000</Bandwidth>\r\n        <Label>5Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Chicago,Los Angeles,New York,Silicon Valley,Washington DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>Zayo Group</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
       "ResponseHeaders": {
         "Content-Length": [
-          "5820"
+          "34520"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "6ea31a075ba80279a576603767e388b0"
+          "8411c1ad57c953f686256bbb2cf2e7cc"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:54:54 GMT"
+          "Wed, 23 Dec 2015 22:11:11 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "POST",
-      "RequestBody": "<CreateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>1</Bandwidth>\r\n  <CircuitName>circuit9643</CircuitName>\r\n  <Location>Location1</Location>\r\n  <ServiceProviderName>BVTTestServiceProvider2</ServiceProviderName>\r\n</CreateDedicatedCircuit>",
+      "RequestBody": "<CreateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>50</Bandwidth>\r\n  <BillingType>MeteredData</BillingType>\r\n  <CircuitName>circuit6019</CircuitName>\r\n  <Location>Amsterdam</Location>\r\n  <ServiceProviderName>Equinix</ServiceProviderName>\r\n  <Sku>Standard</Sku>\r\n</CreateDedicatedCircuit>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "275"
+          "325"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>ae24f26e-9fbd-01b4-a828-d51e8b52c5fe</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>bcd0411d-3e42-4169-b3c3-89453bcf6192</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -65,26 +68,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "ae24f26e9fbd01b4a828d51e8b52c5fe"
+          "0a944a4b67a75f3e8b7f6e8041e5f3e8"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:54:58 GMT"
+          "Wed, 23 Dec 2015 22:11:13 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/ae24f26e-9fbd-01b4-a828-d51e8b52c5fe",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9hZTI0ZjI2ZS05ZmJkLTAxYjQtYTgyOC1kNTFlOGI1MmM1ZmU=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/bcd0411d-3e42-4169-b3c3-89453bcf6192",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9iY2QwNDExZC0zZTQyLTQxNjktYjNjMy04OTQ1M2JjZjYxOTI=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -92,37 +98,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>ae24f26e-9fbd-01b4-a828-d51e8b52c5fe</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:54:58.9964097</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>bcd0411d-3e42-4169-b3c3-89453bcf6192</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:11:13.3989121</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "336"
+          "343"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "2681e6df6ec10b12afd16db7c389e3f9"
+          "f448c80ff7775965b6660131d1260bc5"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:54:59 GMT"
+          "Wed, 23 Dec 2015 22:11:13 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/ae24f26e-9fbd-01b4-a828-d51e8b52c5fe",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9hZTI0ZjI2ZS05ZmJkLTAxYjQtYTgyOC1kNTFlOGI1MmM1ZmU=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/bcd0411d-3e42-4169-b3c3-89453bcf6192",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9iY2QwNDExZC0zZTQyLTQxNjktYjNjMy04OTQ1M2JjZjYxOTI=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -130,10 +139,10 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data>b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98</Data>\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>ae24f26e-9fbd-01b4-a828-d51e8b52c5fe</ID>\r\n  <OperationCompletedTime>2015-02-24T20:55:03.9632063</OperationCompletedTime>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:54:58.9964097</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data>26194c0f-628f-4ff9-8fad-a2931b3f955d</Data>\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>bcd0411d-3e42-4169-b3c3-89453bcf6192</ID>\r\n  <OperationCompletedTime>2015-12-23T22:11:31.6860686</OperationCompletedTime>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:11:13.3989121</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
           "496"
@@ -141,43 +150,46 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "72abe2324bd10dbcb03ed98cec39a2b1"
+          "561fec25b85655e8b63977c13a80e3a4"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:55:31 GMT"
+          "Wed, 23 Dec 2015 22:11:44 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/private?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/private?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "POST",
-      "RequestBody": "<CreateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <PeerAsn>64495</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.6.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.9.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey8273</SharedKey>\r\n  <VlanId>1349</VlanId>\r\n</CreateBgpPeering>",
+      "RequestBody": "<CreateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <CustomerAsn>0</CustomerAsn>\r\n  <PeerAsn>64495</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.6.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.9.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey5823</SharedKey>\r\n  <VlanId>1349</VlanId>\r\n</CreateBgpPeering>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "304"
+          "336"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>69cec230-dd21-0598-aebf-a9db40d0ddd9</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>2c252f24-4d66-4f57-8716-5391d3b5215d</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -185,26 +197,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "69cec230dd210598aebfa9db40d0ddd9"
+          "f82b15a7d1875fda858805ff4a7b4f96"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:55:34 GMT"
+          "Wed, 23 Dec 2015 22:12:00 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/69cec230-dd21-0598-aebf-a9db40d0ddd9",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi82OWNlYzIzMC1kZDIxLTA1OTgtYWViZi1hOWRiNDBkMGRkZDk=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/2c252f24-4d66-4f57-8716-5391d3b5215d",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8yYzI1MmYyNC00ZDY2LTRmNTctODcxNi01MzkxZDNiNTIxNWQ=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -212,37 +227,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>69cec230-dd21-0598-aebf-a9db40d0ddd9</ID>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:55:34.2474298</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>2c252f24-4d66-4f57-8716-5391d3b5215d</ID>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:12:01.4114254</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "330"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "244acef65dfa04148339e4446dddb144"
+          "a091f14309955f32b04c6ed7080cf0fe"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:55:34 GMT"
+          "Wed, 23 Dec 2015 22:12:02 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/69cec230-dd21-0598-aebf-a9db40d0ddd9",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi82OWNlYzIzMC1kZDIxLTA1OTgtYWViZi1hOWRiNDBkMGRkZDk=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/2c252f24-4d66-4f57-8716-5391d3b5215d",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8yYzI1MmYyNC00ZDY2LTRmNTctODcxNi01MzkxZDNiNTIxNWQ=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -250,37 +268,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>69cec230-dd21-0598-aebf-a9db40d0ddd9</ID>\r\n  <OperationCompletedTime>2015-02-24T20:55:41.2907217</OperationCompletedTime>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:55:34.2474298</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>2c252f24-4d66-4f57-8716-5391d3b5215d</ID>\r\n  <OperationCompletedTime>2015-12-23T22:12:30.9486514</OperationCompletedTime>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:12:01.4114254</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "441"
+          "448"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "806525f3a9560070bf383df432eb788a"
+          "0ccd3475dbeb5d84b70034fdaee5bb2b"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:05 GMT"
+          "Wed, 23 Dec 2015 22:12:32 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/private?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/private?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -288,37 +309,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>64495</PeerAsn>\r\n  <PrimaryAzurePort>BVTTestServiceProvider2Device1Port11</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.6.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>BVTTestServiceProvider2Device2Port11</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.9.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1349</VlanId>\r\n</BgpPeering>",
+      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>64495</PeerAsn>\r\n  <PrimaryAzurePort>EQIX-AMB-06GMR-CIS-1-PRI-A</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.6.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>EQIX-AMB-06GMR-CIS-2-SEC-A</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.9.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1349</VlanId>\r\n</BgpPeering>",
       "ResponseHeaders": {
         "Content-Length": [
-          "484"
+          "464"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "89f89db089d30ae9a9d130a034315077"
+          "a0af12cd430b59a1b870b6c90bc50675"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:07 GMT"
+          "Wed, 23 Dec 2015 22:12:38 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/private?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/private?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -326,54 +350,57 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryAzurePort>BVTTestServiceProvider2Device1Port11</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.1.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>BVTTestServiceProvider2Device2Port11</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.2.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1370</VlanId>\r\n</BgpPeering>",
+      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryAzurePort>EQIX-AMB-06GMR-CIS-1-PRI-A</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.1.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>EQIX-AMB-06GMR-CIS-2-SEC-A</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.2.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1370</VlanId>\r\n</BgpPeering>",
       "ResponseHeaders": {
         "Content-Length": [
-          "484"
+          "464"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "1522d43c47780e2498bb72188e7b30ce"
+          "4418fa45b71b5300bdf0356d4a227ab2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:57:24 GMT"
+          "Wed, 23 Dec 2015 22:14:57 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/public?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/public?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "POST",
-      "RequestBody": "<CreateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <PeerAsn>64494</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.7.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.10.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey488</SharedKey>\r\n  <VlanId>1350</VlanId>\r\n</CreateBgpPeering>",
+      "RequestBody": "<CreateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <CustomerAsn>0</CustomerAsn>\r\n  <PeerAsn>64494</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.7.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.10.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey7611</SharedKey>\r\n  <VlanId>1350</VlanId>\r\n</CreateBgpPeering>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "304"
+          "337"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f2da6b6d-b97c-08a9-b8e2-2ea572108474</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>393d99b8-56c1-4045-882c-3e73764427e9</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -381,26 +408,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "f2da6b6db97c08a9b8e22ea572108474"
+          "51609fb600de57b88ea6d1b852994ebb"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:15 GMT"
+          "Wed, 23 Dec 2015 22:12:51 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/f2da6b6d-b97c-08a9-b8e2-2ea572108474",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMmRhNmI2ZC1iOTdjLTA4YTktYjhlMi0yZWE1NzIxMDg0NzQ=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/393d99b8-56c1-4045-882c-3e73764427e9",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8zOTNkOTliOC01NmMxLTQwNDUtODgyYy0zZTczNzY0NDI3ZTk=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -408,37 +438,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f2da6b6d-b97c-08a9-b8e2-2ea572108474</ID>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:56:15.4644379</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>393d99b8-56c1-4045-882c-3e73764427e9</ID>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:12:51.3226533</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "330"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "81d9dc22c548089aa4aca6a33baa722d"
+          "0f12115f41095f1f87c2d6edb9e2a1cf"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:16 GMT"
+          "Wed, 23 Dec 2015 22:12:51 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/f2da6b6d-b97c-08a9-b8e2-2ea572108474",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMmRhNmI2ZC1iOTdjLTA4YTktYjhlMi0yZWE1NzIxMDg0NzQ=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/393d99b8-56c1-4045-882c-3e73764427e9",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8zOTNkOTliOC01NmMxLTQwNDUtODgyYy0zZTczNzY0NDI3ZTk=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -446,37 +479,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>f2da6b6d-b97c-08a9-b8e2-2ea572108474</ID>\r\n  <OperationCompletedTime>2015-02-24T20:56:27.2845661</OperationCompletedTime>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:56:15.4644379</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>393d99b8-56c1-4045-882c-3e73764427e9</ID>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:12:51.3226533</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "441"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "5f6f044b469a0a21a4e17406d6364d31"
+          "a68df50ffaa95fdc8ff8032b5a1642ae"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:46 GMT"
+          "Wed, 23 Dec 2015 22:13:21 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/public?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/393d99b8-56c1-4045-882c-3e73764427e9",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8zOTNkOTliOC01NmMxLTQwNDUtODgyYy0zZTczNzY0NDI3ZTk=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -484,37 +520,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>64494</PeerAsn>\r\n  <PrimaryAzurePort>BVTTestServiceProvider2Device1Port11</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.7.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>BVTTestServiceProvider2Device2Port11</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.10.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1350</VlanId>\r\n</BgpPeering>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>393d99b8-56c1-4045-882c-3e73764427e9</ID>\r\n  <OperationCompletedTime>2015-12-23T22:13:34.4892043</OperationCompletedTime>\r\n  <OperationName>CreateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:12:51.3226533</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "485"
+          "448"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "6427d6dd095b0454a495ec7ac3f79541"
+          "b0551a2c451a5f8b95a586a43558cd17"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:48 GMT"
+          "Wed, 23 Dec 2015 22:13:51 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/public?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/public?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -522,54 +561,98 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryAzurePort>BVTTestServiceProvider2Device1Port11</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.3.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>BVTTestServiceProvider2Device2Port11</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.4.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1371</VlanId>\r\n</BgpPeering>",
+      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>64494</PeerAsn>\r\n  <PrimaryAzurePort>EQIX-AMB-06GMR-CIS-1-PRI-A</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.7.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>EQIX-AMB-06GMR-CIS-2-SEC-A</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.10.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1350</VlanId>\r\n</BgpPeering>",
       "ResponseHeaders": {
         "Content-Length": [
-          "484"
+          "465"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "df308acb27c80178af813e34e80512ca"
+          "a19019f564a95d66bc56eec70c5cccc9"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:58:00 GMT"
+          "Wed, 23 Dec 2015 22:13:53 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/private?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/public?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<BgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <AzureAsn>12076</AzureAsn>\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryAzurePort>EQIX-AMB-06GMR-CIS-1-PRI-A</PrimaryAzurePort>\r\n  <PrimaryPeerSubnet>192.168.3.252/30</PrimaryPeerSubnet>\r\n  <SecondaryAzurePort>EQIX-AMB-06GMR-CIS-2-SEC-A</SecondaryAzurePort>\r\n  <SecondaryPeerSubnet>192.168.4.252/30</SecondaryPeerSubnet>\r\n  <State>Enabled</State>\r\n  <VlanId>1371</VlanId>\r\n</BgpPeering>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "464"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "x-ms-request-id": [
+          "9c432f93d0a453378b89426fa1e87d6c"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Dec 2015 22:16:01 GMT"
+        ],
+        "Server": [
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/private?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "<UpdateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.1.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.2.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey3441</SharedKey>\r\n  <VlanId>1370</VlanId>\r\n</UpdateBgpPeering>",
+      "RequestBody": "<UpdateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <CustomerAsn>0</CustomerAsn>\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.1.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.2.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey7064</SharedKey>\r\n  <VlanId>1370</VlanId>\r\n</UpdateBgpPeering>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "304"
+          "336"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>15f526ee-36ea-05fd-98b6-f2b080c28bf1</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f1d31937-ee70-40b2-93e2-410d6becd11e</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -577,26 +660,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "15f526ee36ea05fd98b6f2b080c28bf1"
+          "04c0e8e746015cbb98bec06193dc3dd0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:51 GMT"
+          "Wed, 23 Dec 2015 22:13:54 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/15f526ee-36ea-05fd-98b6-f2b080c28bf1",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8xNWY1MjZlZS0zNmVhLTA1ZmQtOThiNi1mMmIwODBjMjhiZjE=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/f1d31937-ee70-40b2-93e2-410d6becd11e",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMWQzMTkzNy1lZTcwLTQwYjItOTNlMi00MTBkNmJlY2QxMWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -604,37 +690,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>15f526ee-36ea-05fd-98b6-f2b080c28bf1</ID>\r\n  <OperationStartedTime>2015-02-24T20:56:51.6473967</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>f1d31937-ee70-40b2-93e2-410d6becd11e</ID>\r\n  <OperationName>UpdateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:13:54.7097694</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "283"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "13b62631a7100e30898834e3bbf8b9a7"
+          "1e9abb5fe37354c2b7a8df727c233a92"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:56:52 GMT"
+          "Wed, 23 Dec 2015 22:13:54 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/15f526ee-36ea-05fd-98b6-f2b080c28bf1",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8xNWY1MjZlZS0zNmVhLTA1ZmQtOThiNi1mMmIwODBjMjhiZjE=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/f1d31937-ee70-40b2-93e2-410d6becd11e",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMWQzMTkzNy1lZTcwLTQwYjItOTNlMi00MTBkNmJlY2QxMWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -642,54 +731,98 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>15f526ee-36ea-05fd-98b6-f2b080c28bf1</ID>\r\n  <OperationCompletedTime>2015-02-24T20:56:58.2932855</OperationCompletedTime>\r\n  <OperationStartedTime>2015-02-24T20:56:51.6473967</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>f1d31937-ee70-40b2-93e2-410d6becd11e</ID>\r\n  <OperationName>UpdateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:13:54.7097694</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "394"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "2ef5602598510d7db22e108ee2f511aa"
+          "c570e6663a70525599bacd8c1a4bd121"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:57:22 GMT"
+          "Wed, 23 Dec 2015 22:14:25 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/public?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/f1d31937-ee70-40b2-93e2-410d6becd11e",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMWQzMTkzNy1lZTcwLTQwYjItOTNlMi00MTBkNmJlY2QxMWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>f1d31937-ee70-40b2-93e2-410d6becd11e</ID>\r\n  <OperationCompletedTime>2015-12-23T22:14:34.1278836</OperationCompletedTime>\r\n  <OperationName>UpdateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:13:54.7097694</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "448"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "x-ms-request-id": [
+          "82a6cac4e25a5e3286492df21eb6be09"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Dec 2015 22:14:55 GMT"
+        ],
+        "Server": [
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/public?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "PUT",
-      "RequestBody": "<UpdateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.3.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.4.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey6088</SharedKey>\r\n  <VlanId>1371</VlanId>\r\n</UpdateBgpPeering>",
+      "RequestBody": "<UpdateBgpPeering xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <CustomerAsn>0</CustomerAsn>\r\n  <PeerAsn>14495</PeerAsn>\r\n  <PrimaryPeerSubnet>192.168.3.252/30</PrimaryPeerSubnet>\r\n  <SecondaryPeerSubnet>192.168.4.252/30</SecondaryPeerSubnet>\r\n  <SharedKey>SharedKey9526</SharedKey>\r\n  <VlanId>1371</VlanId>\r\n</UpdateBgpPeering>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "304"
+          "336"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c52204ae-c726-0875-b3fd-b8a801e899c4</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>e02d5ae8-a386-4554-abc6-a9ab77ecf4a8</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -697,26 +830,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "c52204aec7260875b3fdb8a801e899c4"
+          "3b02c78900c95edb9440842cfb4f6dd4"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:57:26 GMT"
+          "Wed, 23 Dec 2015 22:14:59 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/c52204ae-c726-0875-b3fd-b8a801e899c4",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jNTIyMDRhZS1jNzI2LTA4NzUtYjNmZC1iOGE4MDFlODk5YzQ=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/e02d5ae8-a386-4554-abc6-a9ab77ecf4a8",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9lMDJkNWFlOC1hMzg2LTQ1NTQtYWJjNi1hOWFiNzdlY2Y0YTg=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -724,37 +860,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c52204ae-c726-0875-b3fd-b8a801e899c4</ID>\r\n  <OperationStartedTime>2015-02-24T20:57:27.3192423</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>e02d5ae8-a386-4554-abc6-a9ab77ecf4a8</ID>\r\n  <OperationName>UpdateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:15:00.3788984</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "283"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "44b1f369142506e3b98ab0345e92d417"
+          "732504581b4d5d92869fea95008aaab9"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:57:27 GMT"
+          "Wed, 23 Dec 2015 22:15:00 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/c52204ae-c726-0875-b3fd-b8a801e899c4",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jNTIyMDRhZS1jNzI2LTA4NzUtYjNmZC1iOGE4MDFlODk5YzQ=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/e02d5ae8-a386-4554-abc6-a9ab77ecf4a8",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9lMDJkNWFlOC1hMzg2LTQ1NTQtYWJjNi1hOWFiNzdlY2Y0YTg=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -762,37 +901,81 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>c52204ae-c726-0875-b3fd-b8a801e899c4</ID>\r\n  <OperationCompletedTime>2015-02-24T20:57:33.8938801</OperationCompletedTime>\r\n  <OperationStartedTime>2015-02-24T20:57:27.3192423</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>e02d5ae8-a386-4554-abc6-a9ab77ecf4a8</ID>\r\n  <OperationName>UpdateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:15:00.3788984</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "394"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "b14ceaf4926004f9aacf28bc7c5865d5"
+          "b9410ea785b55d7ba657614464c73da3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:57:58 GMT"
+          "Wed, 23 Dec 2015 22:15:31 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/private?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/e02d5ae8-a386-4554-abc6-a9ab77ecf4a8",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9lMDJkNWFlOC1hMzg2LTQ1NTQtYWJjNi1hOWFiNzdlY2Y0YTg=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>e02d5ae8-a386-4554-abc6-a9ab77ecf4a8</ID>\r\n  <OperationCompletedTime>2015-12-23T22:15:34.8050042</OperationCompletedTime>\r\n  <OperationName>UpdateBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:15:00.3788984</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "448"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "x-ms-request-id": [
+          "1917ceab85d154c182ed630df3cf9fcd"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Dec 2015 22:16:01 GMT"
+        ],
+        "Server": [
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/private?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -800,10 +983,10 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c0a29b45-8445-00a7-a5a3-0b25ffedf0a1</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>f34a2f39-fe40-4759-8083-d3642847715e</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -811,26 +994,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "c0a29b45844500a7a5a30b25ffedf0a1"
+          "c03016c281815ffa87ee79060c7a19d9"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:58:03 GMT"
+          "Wed, 23 Dec 2015 22:16:08 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/c0a29b45-8445-00a7-a5a3-0b25ffedf0a1",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jMGEyOWI0NS04NDQ1LTAwYTctYTVhMy0wYjI1ZmZlZGYwYTE=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/f34a2f39-fe40-4759-8083-d3642847715e",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMzRhMmYzOS1mZTQwLTQ3NTktODA4My1kMzY0Mjg0NzcxNWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -838,37 +1024,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c0a29b45-8445-00a7-a5a3-0b25ffedf0a1</ID>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:58:04.0295186</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>f34a2f39-fe40-4759-8083-d3642847715e</ID>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:16:07.9639116</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "330"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "a53ef7ff36fa0d2ba9b51308a3b56689"
+          "cfb894237d615333bc439ea637065d58"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:58:04 GMT"
+          "Wed, 23 Dec 2015 22:16:08 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/c0a29b45-8445-00a7-a5a3-0b25ffedf0a1",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jMGEyOWI0NS04NDQ1LTAwYTctYTVhMy0wYjI1ZmZlZGYwYTE=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/f34a2f39-fe40-4759-8083-d3642847715e",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMzRhMmYzOS1mZTQwLTQ3NTktODA4My1kMzY0Mjg0NzcxNWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -876,37 +1065,81 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>c0a29b45-8445-00a7-a5a3-0b25ffedf0a1</ID>\r\n  <OperationCompletedTime>2015-02-24T20:58:11.8040486</OperationCompletedTime>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:58:04.0295186</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>f34a2f39-fe40-4759-8083-d3642847715e</ID>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:16:07.9639116</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "441"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "b940c1924d880316be835a35c25b810f"
+          "8818757c84d35751b775025df2c56d74"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:58:35 GMT"
+          "Wed, 23 Dec 2015 22:16:38 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/b3adc0f2-ea81-4d5d-a02f-e8b3f08d3c98/bgppeerings/public?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2IzYWRjMGYyLWVhODEtNGQ1ZC1hMDJmLWU4YjNmMDhkM2M5OC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/f34a2f39-fe40-4759-8083-d3642847715e",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9mMzRhMmYzOS1mZTQwLTQ3NTktODA4My1kMzY0Mjg0NzcxNWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>f34a2f39-fe40-4759-8083-d3642847715e</ID>\r\n  <OperationCompletedTime>2015-12-23T22:16:43.9184099</OperationCompletedTime>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:16:07.9639116</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "448"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "x-ms-request-id": [
+          "85ba4abc7e4d582cb79a3d2a1433e244"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Dec 2015 22:17:08 GMT"
+        ],
+        "Server": [
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/public?api-version=1.0",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -914,10 +1147,10 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>d489c43b-6787-048c-b972-ed721c552690</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>21d21726-142b-4a3b-8763-baf78875e7be</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -925,26 +1158,29 @@
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "d489c43b6787048cb972ed721c552690"
+          "ee205bb2faaa56679793240de29c7e60"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:58:37 GMT"
+          "Wed, 23 Dec 2015 22:17:09 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/d489c43b-6787-048c-b972-ed721c552690",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9kNDg5YzQzYi02Nzg3LTA0OGMtYjk3Mi1lZDcyMWM1NTI2OTA=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/21d21726-142b-4a3b-8763-baf78875e7be",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8yMWQyMTcyNi0xNDJiLTRhM2ItODc2My1iYWY3ODg3NWU3YmU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -952,37 +1188,40 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>d489c43b-6787-048c-b972-ed721c552690</ID>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:58:37.4993648</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>21d21726-142b-4a3b-8763-baf78875e7be</ID>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:17:10.1930481</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "330"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "56ef4c236ac70bbf85bcbf6c0a6df806"
+          "9a6da043373855f29ac5035c072962d1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:58:38 GMT"
+          "Wed, 23 Dec 2015 22:17:10 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/d489c43b-6787-048c-b972-ed721c552690",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9kNDg5YzQzYi02Nzg3LTA0OGMtYjk3Mi1lZDcyMWM1NTI2OTA=",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/21d21726-142b-4a3b-8763-baf78875e7be",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8yMWQyMTcyNi0xNDJiLTRhM2ItODc2My1iYWY3ODg3NWU3YmU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -990,29 +1229,73 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>d489c43b-6787-048c-b972-ed721c552690</ID>\r\n  <OperationCompletedTime>2015-02-24T20:58:49.0027788</OperationCompletedTime>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-02-24T20:58:37.4993648</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <ID>21d21726-142b-4a3b-8763-baf78875e7be</ID>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:17:10.1930481</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "441"
+          "337"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
         "x-ms-request-id": [
-          "4add40a4fa9500afbec6d72eedb932ea"
+          "46f300def52f5e6ebba46ccb503ef0eb"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 20:59:08 GMT"
+          "Wed, 23 Dec 2015 22:17:40 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/operation/21d21726-142b-4a3b-8763-baf78875e7be",
+      "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8yMWQyMTcyNi0xNDJiLTRhM2ItODc2My1iYWY3ODg3NWU3YmU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>21d21726-142b-4a3b-8763-baf78875e7be</ID>\r\n  <OperationCompletedTime>2015-12-23T22:18:09.6107022</OperationCompletedTime>\r\n  <OperationName>DeleteBgpPeering</OperationName>\r\n  <OperationStartedTime>2015-12-23T22:17:10.1930481</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "448"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "x-ms-request-id": [
+          "d945e895121253a69a822dac56bfc5f1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 23 Dec 2015 22:18:10 GMT"
+        ],
+        "Server": [
+          "1.0.6198.300",
+          "(rd_rdfe_stable.151216-1008)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -1021,15 +1304,15 @@
   ],
   "Names": {
     "CanCreateGetUpdateAndRemovePrivateAndPublicPeerings": [
-      "circuit9643",
-      "SharedKey8273",
-      "SharedKey488",
-      "SharedKey3441",
-      "SharedKey6088"
+      "circuit6019",
+      "SharedKey5823",
+      "SharedKey7611",
+      "SharedKey7064",
+      "SharedKey9526"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4",
-    "TEST_PROVIDER_NAME": "bvttestserviceprovider2"
+    "SubscriptionId": "04bc22f5-6269-4309-acc6-fbe9284595cd",
+    "TEST_PROVIDER_NAME": "Equinix"
   }
 }

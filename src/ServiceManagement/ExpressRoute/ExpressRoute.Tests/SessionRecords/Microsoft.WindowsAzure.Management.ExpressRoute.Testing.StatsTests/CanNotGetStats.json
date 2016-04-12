@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider1</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider2</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>128</Bandwidth>\r\n        <Label>256</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>\"Columbia1 DC\"</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>MSIT</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4608"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "30d3dd1cd859792db52884b09969eae3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 Dec 2015 20:17:41 GMT"
+        ],
+        "Server": [
+          "1.0.6198.280",
+          "(rd_rdfe_stable.151023-1048)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanNotGetPeeringStatsIfPeeringNotExist": [
+      "circuit5612"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "6418ec2a-e390-424d-a490-1fee167c5a7a",
+    "TEST_PROVIDER_NAME": "BVTAzureIXP01"
+  }
+}

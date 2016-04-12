@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
 
@@ -550,6 +551,58 @@ namespace Microsoft.Azure.Management.Batch
         public static Task<BatchAccountRegenerateKeyResponse> RegenerateKeyAsync(this IAccountOperations operations, string resourceGroupName, string accountName, BatchAccountRegenerateKeyParameters parameters)
         {
             return operations.RegenerateKeyAsync(resourceGroupName, accountName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The SyncAutoStorageKeys operation synchronizes access keys for the
+        /// auto storage account configured for the specified Batch account.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Batch.IAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group that contains the Batch
+        /// account.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the Batch account.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse SyncAutoStorageKeys(this IAccountOperations operations, string resourceGroupName, string accountName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAccountOperations)s).SyncAutoStorageKeysAsync(resourceGroupName, accountName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The SyncAutoStorageKeys operation synchronizes access keys for the
+        /// auto storage account configured for the specified Batch account.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Batch.IAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group that contains the Batch
+        /// account.
+        /// </param>
+        /// <param name='accountName'>
+        /// Required. The name of the Batch account.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> SyncAutoStorageKeysAsync(this IAccountOperations operations, string resourceGroupName, string accountName)
+        {
+            return operations.SyncAutoStorageKeysAsync(resourceGroupName, accountName, CancellationToken.None);
         }
         
         /// <summary>

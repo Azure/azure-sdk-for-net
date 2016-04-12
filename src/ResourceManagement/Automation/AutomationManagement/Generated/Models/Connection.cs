@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class Connection
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _name;
         
         /// <summary>

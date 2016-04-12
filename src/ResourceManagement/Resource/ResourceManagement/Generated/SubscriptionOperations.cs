@@ -200,6 +200,27 @@ namespace Microsoft.Azure.Subscriptions
                                 string stateInstance = ((string)stateValue);
                                 subscriptionInstance.State = stateInstance;
                             }
+                            
+                            JToken subscriptionPoliciesValue = responseDoc["subscriptionPolicies"];
+                            if (subscriptionPoliciesValue != null && subscriptionPoliciesValue.Type != JTokenType.Null)
+                            {
+                                SubscriptionPolicies subscriptionPoliciesInstance = new SubscriptionPolicies();
+                                subscriptionInstance.SubscriptionPolicies = subscriptionPoliciesInstance;
+                                
+                                JToken locationPlacementIdValue = subscriptionPoliciesValue["locationPlacementId"];
+                                if (locationPlacementIdValue != null && locationPlacementIdValue.Type != JTokenType.Null)
+                                {
+                                    string locationPlacementIdInstance = ((string)locationPlacementIdValue);
+                                    subscriptionPoliciesInstance.LocationPlacementId = locationPlacementIdInstance;
+                                }
+                                
+                                JToken quotaIdValue = subscriptionPoliciesValue["quotaId"];
+                                if (quotaIdValue != null && quotaIdValue.Type != JTokenType.Null)
+                                {
+                                    string quotaIdInstance = ((string)quotaIdValue);
+                                    subscriptionPoliciesInstance.QuotaId = quotaIdInstance;
+                                }
+                            }
                         }
                         
                     }
@@ -368,7 +389,35 @@ namespace Microsoft.Azure.Subscriptions
                                         string stateInstance = ((string)stateValue);
                                         subscriptionInstance.State = stateInstance;
                                     }
+                                    
+                                    JToken subscriptionPoliciesValue = valueValue["subscriptionPolicies"];
+                                    if (subscriptionPoliciesValue != null && subscriptionPoliciesValue.Type != JTokenType.Null)
+                                    {
+                                        SubscriptionPolicies subscriptionPoliciesInstance = new SubscriptionPolicies();
+                                        subscriptionInstance.SubscriptionPolicies = subscriptionPoliciesInstance;
+                                        
+                                        JToken locationPlacementIdValue = subscriptionPoliciesValue["locationPlacementId"];
+                                        if (locationPlacementIdValue != null && locationPlacementIdValue.Type != JTokenType.Null)
+                                        {
+                                            string locationPlacementIdInstance = ((string)locationPlacementIdValue);
+                                            subscriptionPoliciesInstance.LocationPlacementId = locationPlacementIdInstance;
+                                        }
+                                        
+                                        JToken quotaIdValue = subscriptionPoliciesValue["quotaId"];
+                                        if (quotaIdValue != null && quotaIdValue.Type != JTokenType.Null)
+                                        {
+                                            string quotaIdInstance = ((string)quotaIdValue);
+                                            subscriptionPoliciesInstance.QuotaId = quotaIdInstance;
+                                        }
+                                    }
                                 }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -563,6 +612,196 @@ namespace Microsoft.Azure.Subscriptions
                                         locationInstance.Longitude = longitudeInstance;
                                     }
                                 }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a list of the subscriptionIds.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Subscription list operation response.
+        /// </returns>
+        public async Task<SubscriptionListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SubscriptionListResult result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SubscriptionListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    Subscription subscriptionInstance = new Subscription();
+                                    result.Subscriptions.Add(subscriptionInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        subscriptionInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
+                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                    {
+                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                        subscriptionInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken displayNameValue = valueValue["displayName"];
+                                    if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                    {
+                                        string displayNameInstance = ((string)displayNameValue);
+                                        subscriptionInstance.DisplayName = displayNameInstance;
+                                    }
+                                    
+                                    JToken stateValue = valueValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                    {
+                                        string stateInstance = ((string)stateValue);
+                                        subscriptionInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken subscriptionPoliciesValue = valueValue["subscriptionPolicies"];
+                                    if (subscriptionPoliciesValue != null && subscriptionPoliciesValue.Type != JTokenType.Null)
+                                    {
+                                        SubscriptionPolicies subscriptionPoliciesInstance = new SubscriptionPolicies();
+                                        subscriptionInstance.SubscriptionPolicies = subscriptionPoliciesInstance;
+                                        
+                                        JToken locationPlacementIdValue = subscriptionPoliciesValue["locationPlacementId"];
+                                        if (locationPlacementIdValue != null && locationPlacementIdValue.Type != JTokenType.Null)
+                                        {
+                                            string locationPlacementIdInstance = ((string)locationPlacementIdValue);
+                                            subscriptionPoliciesInstance.LocationPlacementId = locationPlacementIdInstance;
+                                        }
+                                        
+                                        JToken quotaIdValue = subscriptionPoliciesValue["quotaId"];
+                                        if (quotaIdValue != null && quotaIdValue.Type != JTokenType.Null)
+                                        {
+                                            string quotaIdInstance = ((string)quotaIdValue);
+                                            subscriptionPoliciesInstance.QuotaId = quotaIdInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         

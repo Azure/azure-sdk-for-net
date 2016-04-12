@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> CreateOrUpdateDatebasePolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseAuditingPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateDatabasePolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseAuditingPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates or updates an Azure SQL Database Server auditing policy.

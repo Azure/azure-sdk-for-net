@@ -82,6 +82,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._addressSpace = value; }
             }
             
+            private BgpSettings _bgpSettings;
+            
+            /// <summary>
+            /// Optional. Local network gateway's BGP settings
+            /// </summary>
+            public BgpSettings BgpSettings
+            {
+                get { return this._bgpSettings; }
+                set { this._bgpSettings = value; }
+            }
+            
             private string _gatewayName;
             
             /// <summary>

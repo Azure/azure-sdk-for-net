@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<ProtectableItemResponse> GetAsync(string fabricName, string protectionContainerName, string protectableItemName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the replication protectable object by Id.
+        /// Enumerate all replication protectable items in a container.
         /// </summary>
         /// <param name='fabricName'>
         /// Fabric unique name.
@@ -70,6 +70,12 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Unprotected to fetch unprotected only, All to fetch both
         /// unprotected and protected.
         /// </param>
+        /// <param name='skipToken'>
+        /// Continuation Token.
+        /// </param>
+        /// <param name='take'>
+        /// Maximum number of items to be fetched in a request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -79,6 +85,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list replicated protected items.
         /// </returns>
-        Task<ProtectableItemListResponse> ListAsync(string fabricName, string protectionContainerName, string typeOfEntities, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<ProtectableItemListResponse> ListAsync(string fabricName, string protectionContainerName, string typeOfEntities, string skipToken, string take, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Enumerate all replication protectable items in a container.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The url to the next protected items page.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list replicated protected items.
+        /// </returns>
+        Task<ProtectableItemListResponse> ListNextAsync(string nextLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

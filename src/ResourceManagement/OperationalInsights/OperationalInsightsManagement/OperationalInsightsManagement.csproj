@@ -13,7 +13,7 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Generated\**\*.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+	<Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.OperationalInsights.nuget.proj" />

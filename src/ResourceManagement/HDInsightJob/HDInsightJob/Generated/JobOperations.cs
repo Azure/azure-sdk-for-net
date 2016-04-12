@@ -2389,7 +2389,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public async Task<JobSubmissionResponse> SubmitHiveJobAsync(HiveJobSubmissionParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobSubmissionResponse> SubmitHiveJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -2442,7 +2442,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = "user.name=" + parameters.UserName + "&execute=" + parameters.Query + "&file=" + parameters.File + "&arg=" + parameters.Arguments + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog + parameters.Defines;
+                string requestContent = parameters.Content;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 
@@ -2537,7 +2537,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public async Task<JobSubmissionResponse> SubmitMapReduceJobAsync(MapReduceJobSubmissionParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobSubmissionResponse> SubmitMapReduceJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -2590,7 +2590,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = "user.name=" + parameters.UserName + "&jar=" + parameters.JarFile + "&class=" + parameters.JarClass + "&define=" + parameters.Defines + "&arg=" + parameters.Arguments + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog + "&LibJars=" + parameters.LibJars + "&Files=" + parameters.Files;
+                string requestContent = parameters.Content;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 
@@ -2685,7 +2685,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public async Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(MapReduceStreamingJobSubmissionParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobSubmissionResponse> SubmitMapReduceStreamingJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -2738,7 +2738,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = "user.name=" + parameters.UserName + "&input=" + parameters.Input + "&output=" + parameters.Output + "&mapper=" + parameters.Mapper + "&reducer=" + parameters.Reducer + "&File=" + parameters.File + "&define=" + parameters.Defines + "&cmdenv=" + parameters.CmdEnv + "&arg=" + parameters.Arguments + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog;
+                string requestContent = parameters.Content;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 
@@ -2833,7 +2833,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public async Task<JobSubmissionResponse> SubmitPigJobAsync(PigJobSubmissionParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobSubmissionResponse> SubmitPigJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -2886,7 +2886,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = "user.name=" + parameters.UserName + "&execute=" + parameters.Query + "&file=" + parameters.File + "&arg=" + parameters.Arguments + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog;
+                string requestContent = parameters.Content;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 
@@ -2981,7 +2981,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public async Task<JobSubmissionResponse> SubmitSqoopJobAsync(SqoopJobSubmissionParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobSubmissionResponse> SubmitSqoopJobAsync(JobSubmissionParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -3034,7 +3034,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = "user.name=" + parameters.UserName + "&command=" + parameters.Command + "&file=" + parameters.File + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir;
+                string requestContent = parameters.Content;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 

@@ -45,12 +45,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// Required. The input name of the stream analytics job.
+        /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static DataSourceTestConnectionResponse BeginTestConnection(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
+        public static ResourceTestConnectionResponse BeginTestConnection(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -74,12 +74,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// Required. The input name of the stream analytics job.
+        /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
+        public static Task<ResourceTestConnectionResponse> BeginTestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return operations.BeginTestConnectionAsync(resourceGroupName, jobName, inputName, CancellationToken.None);
         }
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the get stream analytics intput operation.
+        /// The response of the get stream analytics input operation.
         /// </returns>
         public static InputGetResponse Get(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the get stream analytics intput operation.
+        /// The response of the get stream analytics input operation.
         /// </returns>
         public static Task<InputGetResponse> GetAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
@@ -432,12 +432,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// Required. The input name of the stream analytics job.
+        /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static DataSourceTestConnectionResponse TestConnection(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
+        public static ResourceTestConnectionResponse TestConnection(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -460,12 +460,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='inputName'>
-        /// Required. The input name of the stream analytics job.
+        /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        public static Task<DataSourceTestConnectionResponse> TestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
+        public static Task<ResourceTestConnectionResponse> TestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return operations.TestConnectionAsync(resourceGroupName, jobName, inputName, CancellationToken.None);
         }

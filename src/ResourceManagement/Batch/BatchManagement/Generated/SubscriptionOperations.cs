@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + Uri.EscapeDataString(locationName);
             url = url + "/quotas";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-09-01");
+            queryParameters.Add("api-version=2015-12-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-12-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

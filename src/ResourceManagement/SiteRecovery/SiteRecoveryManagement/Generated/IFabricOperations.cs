@@ -58,8 +58,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric Name.
         /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginDeletingAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deploy a Process Server.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric Name.
+        /// </param>
         /// <param name='input'>
-        /// Fabric deletion input.
+        /// Input to deploy a Process Server.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -70,7 +87,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginDeletingAsync(string fabricName, FabricDeletionInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> BeginDeployProcessServerAsync(string fabricName, DeployProcessServerRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Purges a Fabric
@@ -152,8 +169,25 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric Name.
         /// </param>
-        /// <param name='fabricDeletionInput'>
-        /// Fabric deletion input.
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> DeleteAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deploy a Process Server.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric Name.
+        /// </param>
+        /// <param name='input'>
+        /// Input to deploy a Process Server.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -164,7 +198,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> DeleteAsync(string fabricName, FabricDeletionInput fabricDeletionInput, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> DeployProcessServerAsync(string fabricName, DeployProcessServerRequest input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the server object by Id.
@@ -232,6 +266,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
+        Task<DeployProcessServerOperationResponse> GetDeployProcessServerStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
         Task<LongRunningOperationResponse> GetPurgeStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
@@ -269,7 +320,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<FabricOperationResponse> GetRenewCertificateStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the list of all servers under the vault.
+        /// Get the list of all fabrics under the vault.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.

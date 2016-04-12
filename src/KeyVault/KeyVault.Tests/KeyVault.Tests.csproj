@@ -110,13 +110,15 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Azure.Management.KeyVault">
+    <Reference Include="Microsoft.Azure.Management.KeyVault, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.KeyVault.1.0.0\lib\net40\Microsoft.Azure.Management.KeyVault.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.Azure.Graph.RBAC">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Graph.RBAC.1.7.0-preview\lib\net40\Microsoft.Azure.Graph.RBAC.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\TestDependencies\TestDependencies.csproj">

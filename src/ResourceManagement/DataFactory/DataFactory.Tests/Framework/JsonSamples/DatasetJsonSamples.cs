@@ -143,6 +143,53 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }";
 
         [JsonSample]
+        public const string BlobJsonFormatTable = @"
+{
+    name: ""MyDemoBlob"",
+    properties:
+    {
+        type: ""AzureBlob"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        structure:
+        [
+            { name: ""PartitionKey"", type: ""Guid"" },
+            { name: ""RowKey"", type: ""String"" }, 
+            { name: ""Timestamp"", type: ""String"" },
+            { name: ""game_id "", type: ""String"" },
+        ],
+        typeProperties:
+        {        
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time\\{PartitionKey}"",
+            fileName: ""TestBlobName"",   
+            format:
+            {
+                type: ""JsonFormat"",
+                nestingSeparator: "","",
+                filePattern: ""setOfObjects"",
+                encodingName: ""utf-8""
+            },
+            partitionedBy:
+            [
+                { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
+            ]
+        },
+        availability:
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+            style: ""StartOfInterval""     
+        },
+        policy:
+        {
+            validation:
+            {   
+                minimumSizeMB: 200.0
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureSqlDataWarehouseTable = @"
 {
     name: ""Test"",
@@ -421,6 +468,55 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 type: ""Deflate"",
                 level: ""Fastest""
             }
+        },
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour""
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string ODataResourceDataset = @"
+{
+    name: ""ODataResourceDataset"",
+    properties:
+    {
+        type: ""ODataResource"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties:
+        {            
+            path: ""path""
+        },
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string WebTableDataset = @"
+{
+    name: ""WebTable"",
+    properties:
+    {
+        type: ""WebTable"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties:
+        {
+            index: 4,            
+            path: ""data/{Year}/{Month}/{Day}/{Hour}"",
+            partitionedBy: 
+            [
+                { name: ""Year"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy"" } },
+                { name: ""Month"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""MM"" } }, 
+                { name: ""Day"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""dd"" } }, 
+                { name: ""Hour"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""hh"" } } 
+            ]            
         },
         availability:
         {

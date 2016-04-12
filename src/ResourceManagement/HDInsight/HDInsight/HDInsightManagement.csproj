@@ -26,11 +26,13 @@
     <Compile Include="CustomizationModels\ClusterNodeType.cs" />
     <Compile Include="CustomizationModels\HDInsightRetryPolicy.cs" />
     <Compile Include="CustomizationModels\ServicePrincipal.cs" />
+    <Compile Include="Customizations\ClusterOperations.ExecuteScriptActions.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperations.Resize.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperations.Rdp.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperations.Http.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperations.Create.Customizations.cs" />
     <Compile Include="CustomizationModels\Metastore.cs" />
+    <Compile Include="Customizations\ClusterOperationsExtensions.ExecuteScriptActions.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperationsExtensions.Resize.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperationsExtensions.Rdp.Customizations.cs" />
     <Compile Include="Customizations\ClusterOperationsExtensions.Http.Customizations.cs" />

@@ -21,6 +21,10 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Dns;
+using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns
 {
@@ -29,5 +33,50 @@ namespace Microsoft.Azure.Management.Dns
     /// </summary>
     public static partial class DnsManagementClientExtensions
     {
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Dns.IDnsManagementClient.
+        /// </param>
+        /// <param name='azureAsyncOperation'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// The response to a Zone Delete operation.
+        /// </returns>
+        public static ZoneDeleteResponse GetLongRunningOperationStatus(this IDnsManagementClient operations, string azureAsyncOperation)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDnsManagementClient)s).GetLongRunningOperationStatusAsync(azureAsyncOperation);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Dns.IDnsManagementClient.
+        /// </param>
+        /// <param name='azureAsyncOperation'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// The response to a Zone Delete operation.
+        /// </returns>
+        public static Task<ZoneDeleteResponse> GetLongRunningOperationStatusAsync(this IDnsManagementClient operations, string azureAsyncOperation)
+        {
+            return operations.GetLongRunningOperationStatusAsync(azureAsyncOperation, CancellationToken.None);
+        }
     }
 }

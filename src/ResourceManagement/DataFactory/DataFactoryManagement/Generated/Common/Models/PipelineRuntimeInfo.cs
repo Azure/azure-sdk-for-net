@@ -40,6 +40,19 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
             set { this._deploymentTime = value; }
         }
         
+        private string _pipelineState;
+        
+        /// <summary>
+        /// Optional. Indicates the current state of the pipeline. Must be one
+        /// of <see
+        /// cref="Microsoft.Azure.Management.DataFactories.Models.PipelineState"/>.
+        /// </summary>
+        public string PipelineState
+        {
+            get { return this._pipelineState; }
+            set { this._pipelineState = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the PipelineRuntimeInfo class.
         /// </summary>

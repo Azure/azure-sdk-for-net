@@ -138,14 +138,17 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition Id
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <returns>
         /// Role definition get operation result.
         /// </returns>
-        public static RoleDefinitionGetResult Get(this IRoleDefinitionOperations operations, Guid roleDefinitionId)
+        public static RoleDefinitionGetResult Get(this IRoleDefinitionOperations operations, Guid roleDefinitionId, string scope)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRoleDefinitionOperations)s).GetAsync(roleDefinitionId);
+                return ((IRoleDefinitionOperations)s).GetAsync(roleDefinitionId, scope);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -160,12 +163,15 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='roleDefinitionId'>
         /// Required. Role definition Id
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
         /// <returns>
         /// Role definition get operation result.
         /// </returns>
-        public static Task<RoleDefinitionGetResult> GetAsync(this IRoleDefinitionOperations operations, Guid roleDefinitionId)
+        public static Task<RoleDefinitionGetResult> GetAsync(this IRoleDefinitionOperations operations, Guid roleDefinitionId, string scope)
         {
-            return operations.GetAsync(roleDefinitionId, CancellationToken.None);
+            return operations.GetAsync(roleDefinitionId, scope, CancellationToken.None);
         }
         
         /// <summary>
@@ -209,77 +215,51 @@ namespace Microsoft.Azure.Management.Authorization
         }
         
         /// <summary>
-        /// Get all role definitions.
+        /// Get all role definitions that are applicable at scope and above.
+        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
         /// </param>
+        /// <param name='scope'>
+        /// Required. Scope
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. List role definitions filters.
+        /// </param>
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        public static RoleDefinitionListResult List(this IRoleDefinitionOperations operations)
+        public static RoleDefinitionListResult List(this IRoleDefinitionOperations operations, string scope, ListDefinitionFilterParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRoleDefinitionOperations)s).ListAsync();
+                return ((IRoleDefinitionOperations)s).ListAsync(scope, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Get all role definitions.
+        /// Get all role definitions that are applicable at scope and above.
+        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
         /// </param>
-        /// <returns>
-        /// Role definition list operation result.
-        /// </returns>
-        public static Task<RoleDefinitionListResult> ListAsync(this IRoleDefinitionOperations operations)
-        {
-            return operations.ListAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get role definitions.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
+        /// <param name='scope'>
+        /// Required. Scope
         /// </param>
         /// <param name='parameters'>
-        /// Required. List role definitions filters.
+        /// Optional. List role definitions filters.
         /// </param>
         /// <returns>
         /// Role definition list operation result.
         /// </returns>
-        public static RoleDefinitionListResult ListWithFilters(this IRoleDefinitionOperations operations, ListDefinitionFilterParameters parameters)
+        public static Task<RoleDefinitionListResult> ListAsync(this IRoleDefinitionOperations operations, string scope, ListDefinitionFilterParameters parameters)
         {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IRoleDefinitionOperations)s).ListWithFiltersAsync(parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Get role definitions.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Authorization.IRoleDefinitionOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. List role definitions filters.
-        /// </param>
-        /// <returns>
-        /// Role definition list operation result.
-        /// </returns>
-        public static Task<RoleDefinitionListResult> ListWithFiltersAsync(this IRoleDefinitionOperations operations, ListDefinitionFilterParameters parameters)
-        {
-            return operations.ListWithFiltersAsync(parameters, CancellationToken.None);
+            return operations.ListAsync(scope, parameters, CancellationToken.None);
         }
     }
 }
