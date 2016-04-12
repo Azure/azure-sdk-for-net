@@ -9,47 +9,6 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
-    <Reference Include="Hyak.Common">
-      <HintPath>..\..\..\..\packages\Hyak.Common.1.0.2\lib\net40\Hyak.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Common">
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.2.1.0\lib\net40\Microsoft.Azure.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Test.Framework">
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.Framework.1.0.5568.26003-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Test.HttpRecorder">
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.1.0.5568.26003-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
-      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.12.111071459\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
-      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.12.111071459\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\..\..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="xunit">
-      <HintPath>..\..\..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Helpers\ContainerTestHelpers.cs" />
     <Compile Include="Helpers\CommonTestHelpers.cs" />
     <Compile Include="Helpers\JobTestHelper.cs" />
@@ -90,15 +49,4 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
