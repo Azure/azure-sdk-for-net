@@ -12,37 +12,38 @@ namespace Microsoft.Azure.Management.Batch.Models
     using Microsoft.Rest.Serialization;
 
     /// <summary>
-    /// Parameters supplied to the RegenerateKey operation.
+    /// The properties of a Batch account.
     /// </summary>
-    public partial class BatchAccountRegenerateKeyParameters
+    public partial class AccountBaseProperties
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// BatchAccountRegenerateKeyParameters class.
+        /// Initializes a new instance of the AccountBaseProperties class.
         /// </summary>
-        public BatchAccountRegenerateKeyParameters() { }
+        public AccountBaseProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// BatchAccountRegenerateKeyParameters class.
+        /// Initializes a new instance of the AccountBaseProperties class.
         /// </summary>
-        public BatchAccountRegenerateKeyParameters(AccountKeyType keyName)
+        public AccountBaseProperties(AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties))
         {
-            KeyName = keyName;
+            AutoStorage = autoStorage;
         }
 
         /// <summary>
-        /// The type of account key to regenerate. Possible values include:
-        /// 'Primary', 'Secondary'
+        /// The properties related to auto storage.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public AccountKeyType KeyName { get; set; }
+        [JsonProperty(PropertyName = "autoStorage")]
+        public AutoStorageBaseProperties AutoStorage { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
+            if (this.AutoStorage != null)
+            {
+                this.AutoStorage.Validate();
+            }
         }
     }
 }

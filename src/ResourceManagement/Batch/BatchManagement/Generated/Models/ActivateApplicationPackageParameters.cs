@@ -12,37 +12,41 @@ namespace Microsoft.Azure.Management.Batch.Models
     using Microsoft.Rest.Serialization;
 
     /// <summary>
-    /// Parameters supplied to the RegenerateKey operation.
+    /// Parameters for an ApplicationOperations.ActivateApplicationPackage
+    /// request.
     /// </summary>
-    public partial class BatchAccountRegenerateKeyParameters
+    public partial class ActivateApplicationPackageParameters
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// BatchAccountRegenerateKeyParameters class.
+        /// ActivateApplicationPackageParameters class.
         /// </summary>
-        public BatchAccountRegenerateKeyParameters() { }
+        public ActivateApplicationPackageParameters() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// BatchAccountRegenerateKeyParameters class.
+        /// ActivateApplicationPackageParameters class.
         /// </summary>
-        public BatchAccountRegenerateKeyParameters(AccountKeyType keyName)
+        public ActivateApplicationPackageParameters(string format)
         {
-            KeyName = keyName;
+            Format = format;
         }
 
         /// <summary>
-        /// The type of account key to regenerate. Possible values include:
-        /// 'Primary', 'Secondary'
+        /// The format of the application package binary file.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public AccountKeyType KeyName { get; set; }
+        [JsonProperty(PropertyName = "format")]
+        public string Format { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
+            if (Format == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Format");
+            }
         }
     }
 }
