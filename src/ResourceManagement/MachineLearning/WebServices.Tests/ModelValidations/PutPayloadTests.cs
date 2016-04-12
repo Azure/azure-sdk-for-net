@@ -15,14 +15,13 @@ using Xunit;
 
 namespace WebServices.Tests
 {
-
     public class WebServiceTests : TestBase
     {
-        private readonly MachineLearningWebServicesManagementClientAPIs client;
+        private readonly AzureMLWebServicesManagementClient client;
 
         public WebServiceTests()
         {
-            this.client = new MachineLearningWebServicesManagementClientAPIs(new TokenCredentials("foo"));
+            this.client = new AzureMLWebServicesManagementClient(new TokenCredentials("foo"));
         }
 
         [Fact]

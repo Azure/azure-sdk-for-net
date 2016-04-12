@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -26,299 +25,30 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     using Models;
 
     /// <summary>
-    /// [TODO] These APIs allows end users to operate on Web Services in Azure
-    /// ML. They support the following operations:&lt;ul&gt;&lt;li&gt;Create
-    /// a web service&lt;/li&gt;&lt;li&gt;Get a web
-    /// service&lt;/li&gt;&lt;li&gt;Patch a web
-    /// service&lt;/li&gt;&lt;li&gt;Delete a web
-    /// service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
-    /// &lt;/li&gt;&lt;li&gt;Get All Web Services in a
-    /// Subscription&lt;/li&gt;&lt;li&gt;Get Web Services
-    /// Keys&lt;/li&gt;&lt;li&gt;Check Name
-    /// Availability&lt;/li&gt;&lt;li&gt;Get All Available
-    /// Operations&lt;/li&gt;&lt;/ul&gt;
+    /// WebServicesOperations operations.
     /// </summary>
-    public partial class MachineLearningWebServicesManagementClientAPIs : ServiceClient<MachineLearningWebServicesManagementClientAPIs>, IMachineLearningWebServicesManagementClientAPIs, IAzureClient
+    internal partial class WebServicesOperations : IServiceOperations<AzureMLWebServicesManagementClient>, IWebServicesOperations
     {
         /// <summary>
-        /// The base URI of the service.
+        /// Initializes a new instance of the WebServicesOperations class.
         /// </summary>
-        public Uri BaseUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets json serialization settings.
-        /// </summary>
-        public JsonSerializerSettings SerializationSettings { get; private set; }
-
-        /// <summary>
-        /// Gets or sets json deserialization settings.
-        /// </summary>
-        public JsonSerializerSettings DeserializationSettings { get; private set; }        
-
-        /// <summary>
-        /// Gets Azure subscription credentials.
-        /// </summary>
-        public ServiceClientCredentials Credentials { get; private set; }
-
-        /// <summary>
-        /// Id of the Microsoft Azure subscription on which to perform ARM operations.
-        /// The subscription ID forms part of the URI for every service call.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The name of the resource group within the user's subscription.
-        /// </summary>
-        public string ResourceGroupName { get; set; }
-
-        /// <summary>
-        /// The Azure ML web service name which you want to reach.
-        /// </summary>
-        public string WebServiceName { get; set; }
-
-        /// <summary>
-        /// The versiong of the Microsoft.MachineLearning resource provider API to be
-        /// used.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
-        /// Continuation token for pagination.
-        /// </summary>
-        public string Skiptoken { get; set; }
-
-        /// <summary>
-        /// Gets or sets the preferred language for the response.
-        /// </summary>
-        public string AcceptLanguage { get; set; }
-
-        /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
-        /// </summary>
-        public int? LongRunningOperationRetryTimeout { get; set; }
-
-        /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
-        /// </summary>
-        public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
-        /// </summary>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// <param name='client'>
+        /// Reference to the service client.
         /// </param>
-        protected MachineLearningWebServicesManagementClientAPIs(params DelegatingHandler[] handlers) : base(handlers)
+        internal WebServicesOperations(AzureMLWebServicesManagementClient client)
         {
-            this.Initialize();
+            if (client == null) 
+            {
+                throw new ArgumentNullException("client");
+            }
+            this.Client = client;
         }
 
         /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
+        /// Gets a reference to the AzureMLWebServicesManagementClient
         /// </summary>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        protected MachineLearningWebServicesManagementClientAPIs(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
-        {
-            this.Initialize();
-        }
+        public AzureMLWebServicesManagementClient Client { get; private set; }
 
-        /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        protected MachineLearningWebServicesManagementClientAPIs(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new ArgumentNullException("baseUri");
-            }
-            this.BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        protected MachineLearningWebServicesManagementClientAPIs(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new ArgumentNullException("baseUri");
-            }
-            this.BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
-        /// </summary>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public MachineLearningWebServicesManagementClientAPIs(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            this.Credentials = credentials;
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
-        /// </summary>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public MachineLearningWebServicesManagementClientAPIs(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            this.Credentials = credentials;
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public MachineLearningWebServicesManagementClientAPIs(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            this.BaseUri = baseUri;
-            this.Credentials = credentials;
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the MachineLearningWebServicesManagementClientAPIs class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        public MachineLearningWebServicesManagementClientAPIs(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            this.BaseUri = baseUri;
-            this.Credentials = credentials;
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes client properties.
-        /// </summary>
-        private void Initialize()
-        {
-            this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-04-01-privatepreview";
-            this.AcceptLanguage = "en-US";
-            this.LongRunningOperationRetryTimeout = 30;
-            this.GenerateClientRequestId = true;
-            SerializationSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented,
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
-            };
-            SerializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings = new JsonSerializerSettings
-            {
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
-                    {
-                        new Iso8601TimeSpanConverter()
-                    }
-            };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebServiceProperties>("packageType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebServiceProperties>("packageType"));
-            DeserializationSettings.Converters.Add(new ResourceJsonConverter()); 
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
-        }    
         /// <summary>
         /// Create a new Azure ML web service or update an existing one.
         /// </summary>
@@ -336,7 +66,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             // Send Request
             AzureOperationResponse<WebService> _response = await BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(
                 createOrUpdatePayload, customHeaders, cancellationToken);
-            return await this.GetPutOrPatchOperationResultAsync(_response,
+            return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
         }
@@ -358,17 +88,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </return>
         public async Task<AzureOperationResponse<WebService>> BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.SubscriptionId == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.ResourceGroupName == null)
+            if (this.Client.ResourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
             }
-            if (this.WebServiceName == null)
+            if (this.Client.WebServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
             }
             if (createOrUpdatePayload == null)
             {
@@ -378,9 +108,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 createOrUpdatePayload.Validate();
             }
-            if (this.ApiVersion == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -394,15 +124,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdateWebService", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.WebServiceName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
             List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -414,17 +144,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.AcceptLanguage != null)
+            if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
@@ -440,14 +170,14 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(createOrUpdatePayload, this.SerializationSettings);
+            _requestContent = SafeJsonConvert.SerializeObject(createOrUpdatePayload, this.Client.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
-            if (this.Credentials != null)
+            if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -455,7 +185,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -469,7 +199,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -511,7 +241,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -529,7 +259,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -563,21 +293,21 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </return>
         public async Task<AzureOperationResponse<WebService>> GetWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.SubscriptionId == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.ResourceGroupName == null)
+            if (this.Client.ResourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
             }
-            if (this.WebServiceName == null)
+            if (this.Client.WebServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
             }
-            if (this.ApiVersion == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -590,15 +320,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebService", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.WebServiceName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
             List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -610,17 +340,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.AcceptLanguage != null)
+            if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
@@ -637,10 +367,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Credentials != null)
+            if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -648,7 +378,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -662,7 +392,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -704,7 +434,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -740,7 +470,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             // Send Request
             AzureOperationResponse<WebService> _response = await BeginPatchWebServiceWithHttpMessagesAsync(
                 patchPayload, customHeaders, cancellationToken);
-            return await this.GetPutOrPatchOperationResultAsync(_response,
+            return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
         }
@@ -762,25 +492,25 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </return>
         public async Task<AzureOperationResponse<WebService>> BeginPatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.SubscriptionId == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.ResourceGroupName == null)
+            if (this.Client.ResourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
             }
-            if (this.WebServiceName == null)
+            if (this.Client.WebServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
             }
             if (patchPayload == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "patchPayload");
             }
-            if (this.ApiVersion == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -794,15 +524,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPatchWebService", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.WebServiceName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
             List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -814,17 +544,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.AcceptLanguage != null)
+            if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
@@ -840,14 +570,14 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(patchPayload, this.SerializationSettings);
+            _requestContent = SafeJsonConvert.SerializeObject(patchPayload, this.Client.SerializationSettings);
             _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
             _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
-            if (this.Credentials != null)
+            if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -855,7 +585,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -869,7 +599,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -911,7 +641,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<WebService>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -939,12 +669,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RemoveWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWebServiceWithHttpMessagesAsync(
+            AzureOperationResponse _response = await BeginRemoveWebServiceWithHttpMessagesAsync(
                 customHeaders, cancellationToken);
-            return await this.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
@@ -959,23 +689,23 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginRemoveWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.SubscriptionId == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.ResourceGroupName == null)
+            if (this.Client.ResourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
             }
-            if (this.WebServiceName == null)
+            if (this.Client.WebServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
             }
-            if (this.ApiVersion == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -985,18 +715,18 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginDeleteWebService", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginRemoveWebService", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.WebServiceName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
             List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1008,17 +738,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.AcceptLanguage != null)
+            if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
@@ -1035,10 +765,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Credentials != null)
+            if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1046,7 +776,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -1104,21 +834,21 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </return>
         public async Task<AzureOperationResponse<WebServiceKeys>> GetWebServiceKeysWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.SubscriptionId == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.ResourceGroupName == null)
+            if (this.Client.ResourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
             }
-            if (this.WebServiceName == null)
+            if (this.Client.WebServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
             }
-            if (this.ApiVersion == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1131,15 +861,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebServiceKeys", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/keys").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.WebServiceName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
             List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1151,17 +881,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.AcceptLanguage != null)
+            if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
@@ -1178,10 +908,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Credentials != null)
+            if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1189,7 +919,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -1203,7 +933,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -1245,7 +975,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<WebServiceKeys>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<WebServiceKeys>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1278,17 +1008,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </return>
         public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInResourceGroupWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.SubscriptionId == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.ResourceGroupName == null)
+            if (this.Client.ResourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
             }
-            if (this.ApiVersion == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1301,18 +1031,18 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebServicesInResourceGroup", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.ResourceGroupName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
             List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (this.Skiptoken != null)
+            if (this.Client.Skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Skiptoken)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Client.Skiptoken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1324,17 +1054,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.AcceptLanguage != null)
+            if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
@@ -1351,10 +1081,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Credentials != null)
+            if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1362,7 +1092,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -1376,7 +1106,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -1418,7 +1148,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<PaginatedWebServicesList>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<PaginatedWebServicesList>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1451,13 +1181,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </return>
         public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.SubscriptionId == null)
+            if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.ApiVersion == null)
+            if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1470,17 +1200,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebServicesInSubscription", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.MachineLearning/webServices").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (this.Skiptoken != null)
+            if (this.Client.Skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Skiptoken)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Client.Skiptoken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1492,17 +1222,17 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
             }
-            if (this.AcceptLanguage != null)
+            if (this.Client.AcceptLanguage != null)
             {
                 if (_httpRequest.Headers.Contains("accept-language"))
                 {
                     _httpRequest.Headers.Remove("accept-language");
                 }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
             }
             if (customHeaders != null)
             {
@@ -1519,10 +1249,10 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             // Serialize Request
             string _requestContent = null;
             // Set Credentials
-            if (this.Credentials != null)
+            if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1530,7 +1260,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -1544,7 +1274,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -1586,166 +1316,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<PaginatedWebServicesList>(_responseContent, this.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Get all available operations for the Microsoft.MachineLearning provider.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<GetOperationsOKResponse>> GetOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (this.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetOperations", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.MachineLearning/operations").ToString();
-            List<string> _queryParameters = new List<string>();
-            if (this.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.GenerateClientRequestId != null && this.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<GetOperationsOKResponse>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<GetOperationsOKResponse>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<PaginatedWebServicesList>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
