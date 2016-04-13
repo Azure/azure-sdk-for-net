@@ -98,6 +98,17 @@ namespace Microsoft.Azure.Management.Batch
         /// </param>
         Task<HttpOperationResponse<AccountResource>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The ListActions operation gets information about non-standard
+        /// actions for the provider.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<AccountActions>>> ListActionsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The List operation gets information about the Batch accounts
         /// associated with the subscription.
         /// </summary>

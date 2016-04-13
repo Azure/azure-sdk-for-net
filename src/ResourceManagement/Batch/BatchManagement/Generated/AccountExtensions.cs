@@ -207,6 +207,36 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
+            /// The ListActions operation gets information about non-standard actions for
+            /// the provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IList<AccountActions> ListActions(this IAccount operations)
+            {
+                return Task.Factory.StartNew(s => ((IAccount)s).ListActionsAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The ListActions operation gets information about non-standard actions for
+            /// the provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<AccountActions>> ListActionsAsync(this IAccount operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListActionsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The List operation gets information about the Batch accounts associated
             /// with the subscription.
             /// </summary>
