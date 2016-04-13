@@ -150,6 +150,7 @@
     <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
     <Compile Include="Generated\Models\ProtectableObjectResource.cs" />
     <Compile Include="Generated\Models\ProtectableObjectResourceList.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectType.cs" />
     <Compile Include="Generated\Models\ProtectedItem.cs" />
     <Compile Include="Generated\Models\ProtectedItemBase.cs" />
     <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateRequest.cs" />

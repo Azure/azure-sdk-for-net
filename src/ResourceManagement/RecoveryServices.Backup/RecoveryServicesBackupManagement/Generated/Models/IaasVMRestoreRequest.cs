@@ -55,7 +55,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _cloudServiceOrResourceGroupId;
         
         /// <summary>
-        /// Optional. CloudServiceOrResourceGroupId of IaasVMRestoreRequest
+        /// Optional. If CreateNewCloudService is false, only then populate
+        /// CloudServiceOrResourceGroupId with DomainNameId for ClassicVM's
+        /// and ResourceGroupId for ComputeVM's
         /// </summary>
         public string CloudServiceOrResourceGroupId
         {

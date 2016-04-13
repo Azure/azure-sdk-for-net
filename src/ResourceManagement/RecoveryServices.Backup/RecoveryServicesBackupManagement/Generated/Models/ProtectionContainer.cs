@@ -74,6 +74,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             set { this._healthStatus = value; }
         }
         
+        private string _protectableObjectType;
+        
+        /// <summary>
+        /// Optional. Protectable object Type
+        /// </summary>
+        public string ProtectableObjectType
+        {
+            get { return this._protectableObjectType; }
+            set { this._protectableObjectType = value; }
+        }
+        
         private string _registrationStatus;
         
         /// <summary>
