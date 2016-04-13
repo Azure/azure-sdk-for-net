@@ -13,96 +13,43 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
-using Xunit;
-
 namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
 {
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.TrafficManager.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public static class TrafficManagerHelper
     {
-        public static TrafficManagerManagementClient GetTrafficManagerClient()
-        {
-            return TestBase.GetServiceClient<TrafficManagerManagementClient>(new CSMTestEnvironmentFactory());
-        }
-
-        public static ResourceManagementClient GetResourcesClient()
-        {
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory());
-        }
-
         /// <summary>
-        /// Get a default resource location for a given resource type
+        /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
-        /// <param name="client">The resource management client</param>
-        /// <param name="resourceType">The type of resource to create</param>
-        /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static string GetResourceLocation(ResourceManagementClient client, string resourceType)
+        /// <param name="testBase">the test class</param>
+        /// <param name="context"></param>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        public static TrafficManagerManagementClient GetTrafficManagerManagementClient(this TestBase testBase, MockContext context)
         {
-            string location = null;
-            string[] parts = resourceType.Split('/');
-            string providerName = parts[0];
-            var provider = client.Providers.Get(providerName);
-            foreach (var resource in provider.Provider.ResourceTypes)
-            {
-                if (string.Equals(resource.Name, parts[1], StringComparison.OrdinalIgnoreCase))
-                {
-                    location = resource.Locations.FirstOrDefault(loca => !string.IsNullOrEmpty(loca));
-                }
-            }
-
-            return location;
-        }
-
-        public static ResourceGroupExtended CreateResourceGroup()
-        {
-            string resourceGroupName = TestUtilities.GenerateName("hydratestdnsrg");
-            ResourceManagementClient resourcesClient = GetResourcesClient();
-
-            // DNS resources are in location "global" but resource groups can't be in that same location
-            string location = "Central US"; //ResourceGroupHelper.GetResourceLocation(resourcesClient, "microsoft.compute/locations");
-
-            Assert.False(string.IsNullOrEmpty(location), "CSM did not return any valid locations for DNS resources");
-
-            var response = resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
-                new ResourceGroup
-                {
-                    Location = location
-                });
-
-            return response.ResourceGroup;
+            return context.GetServiceClient<TrafficManagerManagementClient>();
         }
 
         public static Profile BuildProfile(string id, string name, string type, string location, Dictionary<string, string> tags, string profileStatus, string trafficRoutingMethod, DnsConfig dnsConfig, MonitorConfig monitorConfig, Endpoint[] endpoints)
         {
-            return new Microsoft.Azure.Management.TrafficManager.Models.Profile
-            {
-                Id = id,
-                Name = name,
-                Type = type,
-                Location = location,
-                Tags = tags,
-                Properties = new Microsoft.Azure.Management.TrafficManager.Models.ProfileProperties
-                {
-                    ProfileStatus = profileStatus,
-                    TrafficRoutingMethod = trafficRoutingMethod,
-                    DnsConfig = dnsConfig,
-                    MonitorConfig = monitorConfig,
-                    Endpoints = endpoints
-                }
-            };
+            return new Profile(
+                id: id,
+                name: name,
+                type: type,
+                location: location,
+                tags: tags,
+                profileStatus: profileStatus,
+                trafficRoutingMethod: trafficRoutingMethod,
+                dnsConfig: dnsConfig,
+                monitorConfig: monitorConfig,
+                endpoints: endpoints);
         }
 
         public static Profile GenerateDefaultProfile(string profileName)
         {
-            string relativeName = TestUtilities.GenerateName("foohydratestrelativeName");
-
             return TrafficManagerHelper.BuildProfile(
                 id: null,
                 name: profileName,
@@ -113,7 +60,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 trafficRoutingMethod: "Performance",
                 dnsConfig: new DnsConfig
                 {
-                    RelativeName = relativeName,
+                    RelativeName = profileName,
                     Ttl = 35
                 }, 
                 monitorConfig: new MonitorConfig
@@ -129,13 +76,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                         Id = null,
                         Name = "My external endpoint",
                         Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                        Properties = new EndpointProperties
-                        {
-                            TargetResourceId = null,
-                            Target = "foobar.contoso.com",
-                            EndpointLocation = "North Europe",
-                            EndpointStatus = "Enabled"
-                        }
+                        TargetResourceId = null,
+                        Target = "foobar.contoso.com",
+                        EndpointLocation = "North Europe",
+                        EndpointStatus = "Enabled"
                     } 
                 });
         }
