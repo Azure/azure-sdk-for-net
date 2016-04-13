@@ -32,5 +32,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         Shared = 0,
         
         Dedicated = 1,
+        
+        Dynamic = 2,
     }
 }
