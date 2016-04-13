@@ -21,6 +21,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "Shared")]
         Shared,
         [EnumMember(Value = "Dedicated")]
-        Dedicated
+        Dedicated,
+        [EnumMember(Value = "Dynamic")]
+        Dynamic
     }
 }

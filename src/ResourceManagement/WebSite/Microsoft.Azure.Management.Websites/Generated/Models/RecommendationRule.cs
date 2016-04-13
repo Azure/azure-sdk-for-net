@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the RecommendationRule class.
         /// </summary>
-        public RecommendationRule(NotificationLevel? level, Channels? channels, Category? category, string name = default(string), string displayName = default(string), string message = default(string), string recommendationId = default(string), string description = default(string), string actionName = default(string), int? enabled = default(int?))
+        public RecommendationRule(NotificationLevel? level, Channels? channels, string name = default(string), string displayName = default(string), string message = default(string), string recommendationId = default(string), string description = default(string), string actionName = default(string), int? enabled = default(int?), IList<string> tags = default(IList<string>))
         {
             Name = name;
             DisplayName = displayName;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             Enabled = enabled;
             Level = level;
             Channels = channels;
-            Category = category;
+            Tags = tags;
         }
 
         /// <summary>
@@ -104,12 +104,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public Channels? Channels { get; set; }
 
         /// <summary>
-        /// The category that the rule belongs to. Possible values for this
-        /// property include: 'Uncategorized', 'Test', 'UpSell', 'CrossSell',
-        /// 'LiveSite'.
+        /// An array of category tags that the rule contains.
         /// </summary>
-        [JsonProperty(PropertyName = "category")]
-        public Category? Category { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IList<string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
@@ -123,10 +121,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             if (Channels == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Channels");
-            }
-            if (Category == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Category");
             }
         }
     }

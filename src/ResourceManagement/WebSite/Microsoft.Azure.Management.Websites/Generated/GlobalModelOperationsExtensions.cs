@@ -87,9 +87,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static GeoRegionCollection GetSubscriptionGeoRegions(this IGlobalModelOperations operations)
+            /// <param name='sku'>
+            /// Filter only to regions that support this sku
+            /// </param>
+            public static GeoRegionCollection GetSubscriptionGeoRegions(this IGlobalModelOperations operations, string sku = default(string))
             {
-                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetSubscriptionGeoRegionsAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetSubscriptionGeoRegionsAsync(sku), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,12 +101,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='sku'>
+            /// Filter only to regions that support this sku
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GeoRegionCollection> GetSubscriptionGeoRegionsAsync( this IGlobalModelOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GeoRegionCollection> GetSubscriptionGeoRegionsAsync( this IGlobalModelOperations operations, string sku = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSubscriptionGeoRegionsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSubscriptionGeoRegionsWithHttpMessagesAsync(sku, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -324,40 +330,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Hosting environment name
             /// </param>
-            public static object IsHostingEnvironmentWithLegacyNameAvailable(this IGlobalModelOperations operations, string name)
-            {
-                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).IsHostingEnvironmentWithLegacyNameAvailableAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Whether hosting environment name is available
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Hosting environment name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> IsHostingEnvironmentWithLegacyNameAvailableAsync( this IGlobalModelOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Whether hosting environment name is available
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Hosting environment name
-            /// </param>
             public static object IsHostingEnvironmentNameAvailable(this IGlobalModelOperations operations, string name)
             {
                 return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).IsHostingEnvironmentNameAvailableAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -378,6 +350,40 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<object> IsHostingEnvironmentNameAvailableAsync( this IGlobalModelOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.IsHostingEnvironmentNameAvailableWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Whether hosting environment name is available
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Hosting environment name
+            /// </param>
+            public static object IsHostingEnvironmentWithLegacyNameAvailable(this IGlobalModelOperations operations, string name)
+            {
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).IsHostingEnvironmentWithLegacyNameAvailableAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Whether hosting environment name is available
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Hosting environment name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> IsHostingEnvironmentWithLegacyNameAvailableAsync( this IGlobalModelOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
