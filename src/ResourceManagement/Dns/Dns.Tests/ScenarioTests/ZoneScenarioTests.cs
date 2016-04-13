@@ -76,6 +76,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
                 assertZoneInvariants(getresponse.Zone);
                 Assert.Equal(1, getresponse.Zone.Tags.Count);
+                
                 Assert.True(getresponse.Zone.Properties.NameServers != null && getresponse.Zone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
 
                 // Call Update on the object returned by Create (important distinction from Get below)
