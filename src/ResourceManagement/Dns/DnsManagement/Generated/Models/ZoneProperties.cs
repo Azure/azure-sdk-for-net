@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Dns.Models
 {
@@ -41,6 +43,19 @@ namespace Microsoft.Azure.Management.Dns.Models
             set { this._maxNumberOfRecordSets = value; }
         }
         
+        private IList<string> _nameServers;
+        
+        /// <summary>
+        /// Optional. Gets the name servers populated for this zone. This is a
+        /// read-only property and any attempt to set this value will be
+        /// ignored.
+        /// </summary>
+        public IList<string> NameServers
+        {
+            get { return this._nameServers; }
+            set { this._nameServers = value; }
+        }
+        
         private long? _numberOfRecordSets;
         
         /// <summary>
@@ -58,6 +73,7 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         public ZoneProperties()
         {
+            this.NameServers = new LazyList<string>();
         }
     }
 }

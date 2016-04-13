@@ -386,6 +386,11 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         propertiesValue["numberOfRecordSets"] = parameters.Zone.Properties.NumberOfRecordSets.Value;
                     }
+                    
+                    if (parameters.Zone.Properties.NameServers != null)
+                    {
+                        propertiesValue["nameServers"] = parameters.Zone.Properties.NameServers;
+                    }
                 }
                 
                 if (parameters.Zone.Id != null)
@@ -491,6 +496,13 @@ namespace Microsoft.Azure.Management.Dns
                                 {
                                     long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
+                                }
+                                
+                                JToken nameServersValue = propertiesValue2["nameServers"];
+                                if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                {
+                                    String[]<string> nameServersInstance = ((string)nameServersValue);
+                                    propertiesInstance.NameServers = nameServersInstance;
                                 }
                             }
                             
@@ -792,6 +804,13 @@ namespace Microsoft.Azure.Management.Dns
                                     long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                 }
+                                
+                                JToken nameServersValue = propertiesValue["nameServers"];
+                                if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                {
+                                    String[]<string> nameServersInstance = ((string)nameServersValue);
+                                    propertiesInstance.NameServers = nameServersInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -990,6 +1009,13 @@ namespace Microsoft.Azure.Management.Dns
                                         {
                                             long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
+                                        }
+                                        
+                                        JToken nameServersValue = propertiesValue["nameServers"];
+                                        if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                        {
+                                            String[]<string> nameServersInstance = ((string)nameServersValue);
+                                            propertiesInstance.NameServers = nameServersInstance;
                                         }
                                     }
                                     
@@ -1242,6 +1268,13 @@ namespace Microsoft.Azure.Management.Dns
                                             long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                         }
+                                        
+                                        JToken nameServersValue = propertiesValue["nameServers"];
+                                        if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                        {
+                                            String[]<string> nameServersInstance = ((string)nameServersValue);
+                                            propertiesInstance.NameServers = nameServersInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1483,6 +1516,13 @@ namespace Microsoft.Azure.Management.Dns
                                             long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                         }
+                                        
+                                        JToken nameServersValue = propertiesValue["nameServers"];
+                                        if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                        {
+                                            String[]<string> nameServersInstance = ((string)nameServersValue);
+                                            propertiesInstance.NameServers = nameServersInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1702,6 +1742,11 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         propertiesValue["numberOfRecordSets"] = parameters.Zone.Properties.NumberOfRecordSets.Value;
                     }
+                    
+                    if (parameters.Zone.Properties.NameServers != null)
+                    {
+                        propertiesValue["nameServers"] = parameters.Zone.Properties.NameServers;
+                    }
                 }
                 
                 if (parameters.Zone.Id != null)
@@ -1807,6 +1852,13 @@ namespace Microsoft.Azure.Management.Dns
                                 {
                                     long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
+                                }
+                                
+                                JToken nameServersValue = propertiesValue2["nameServers"];
+                                if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                {
+                                    String[]<string> nameServersInstance = ((string)nameServersValue);
+                                    propertiesInstance.NameServers = nameServersInstance;
                                 }
                             }
                             
