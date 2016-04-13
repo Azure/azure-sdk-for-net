@@ -35,8 +35,6 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.RecoveryServices.Backup.nuget.proj" />
-    <None Include="Microsoft.Azure.Management.RecoveryServices.Backup.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
