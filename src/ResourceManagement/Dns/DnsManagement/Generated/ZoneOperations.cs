@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns;
 using Microsoft.Azure.Management.Dns.Models;
@@ -389,7 +390,15 @@ namespace Microsoft.Azure.Management.Dns
                     
                     if (parameters.Zone.Properties.NameServers != null)
                     {
-                        propertiesValue["nameServers"] = parameters.Zone.Properties.NameServers;
+                        if (parameters.Zone.Properties.NameServers is ILazyCollection == false || ((ILazyCollection)parameters.Zone.Properties.NameServers).IsInitialized)
+                        {
+                            JArray nameServersArray = new JArray();
+                            foreach (string nameServersItem in parameters.Zone.Properties.NameServers)
+                            {
+                                nameServersArray.Add(nameServersItem);
+                            }
+                            propertiesValue["nameServers"] = nameServersArray;
+                        }
                     }
                 }
                 
@@ -498,11 +507,13 @@ namespace Microsoft.Azure.Management.Dns
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                 }
                                 
-                                JToken nameServersValue = propertiesValue2["nameServers"];
-                                if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                JToken nameServersArray2 = propertiesValue2["nameServers"];
+                                if (nameServersArray2 != null && nameServersArray2.Type != JTokenType.Null)
                                 {
-                                    String[]<string> nameServersInstance = ((string)nameServersValue);
-                                    propertiesInstance.NameServers = nameServersInstance;
+                                    foreach (JToken nameServersValue in ((JArray)nameServersArray2))
+                                    {
+                                        propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                    }
                                 }
                             }
                             
@@ -805,11 +816,13 @@ namespace Microsoft.Azure.Management.Dns
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                 }
                                 
-                                JToken nameServersValue = propertiesValue["nameServers"];
-                                if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                JToken nameServersArray = propertiesValue["nameServers"];
+                                if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
                                 {
-                                    String[]<string> nameServersInstance = ((string)nameServersValue);
-                                    propertiesInstance.NameServers = nameServersInstance;
+                                    foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                    {
+                                        propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                    }
                                 }
                             }
                             
@@ -1011,11 +1024,13 @@ namespace Microsoft.Azure.Management.Dns
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                         }
                                         
-                                        JToken nameServersValue = propertiesValue["nameServers"];
-                                        if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                        JToken nameServersArray = propertiesValue["nameServers"];
+                                        if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
                                         {
-                                            String[]<string> nameServersInstance = ((string)nameServersValue);
-                                            propertiesInstance.NameServers = nameServersInstance;
+                                            foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                            {
+                                                propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                            }
                                         }
                                     }
                                     
@@ -1269,11 +1284,13 @@ namespace Microsoft.Azure.Management.Dns
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                         }
                                         
-                                        JToken nameServersValue = propertiesValue["nameServers"];
-                                        if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                        JToken nameServersArray = propertiesValue["nameServers"];
+                                        if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
                                         {
-                                            String[]<string> nameServersInstance = ((string)nameServersValue);
-                                            propertiesInstance.NameServers = nameServersInstance;
+                                            foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                            {
+                                                propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                            }
                                         }
                                     }
                                     
@@ -1517,11 +1534,13 @@ namespace Microsoft.Azure.Management.Dns
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                         }
                                         
-                                        JToken nameServersValue = propertiesValue["nameServers"];
-                                        if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                        JToken nameServersArray = propertiesValue["nameServers"];
+                                        if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
                                         {
-                                            String[]<string> nameServersInstance = ((string)nameServersValue);
-                                            propertiesInstance.NameServers = nameServersInstance;
+                                            foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                            {
+                                                propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                            }
                                         }
                                     }
                                     
@@ -1745,7 +1764,15 @@ namespace Microsoft.Azure.Management.Dns
                     
                     if (parameters.Zone.Properties.NameServers != null)
                     {
-                        propertiesValue["nameServers"] = parameters.Zone.Properties.NameServers;
+                        if (parameters.Zone.Properties.NameServers is ILazyCollection == false || ((ILazyCollection)parameters.Zone.Properties.NameServers).IsInitialized)
+                        {
+                            JArray nameServersArray = new JArray();
+                            foreach (string nameServersItem in parameters.Zone.Properties.NameServers)
+                            {
+                                nameServersArray.Add(nameServersItem);
+                            }
+                            propertiesValue["nameServers"] = nameServersArray;
+                        }
                     }
                 }
                 
@@ -1854,11 +1881,13 @@ namespace Microsoft.Azure.Management.Dns
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                 }
                                 
-                                JToken nameServersValue = propertiesValue2["nameServers"];
-                                if (nameServersValue != null && nameServersValue.Type != JTokenType.Null)
+                                JToken nameServersArray2 = propertiesValue2["nameServers"];
+                                if (nameServersArray2 != null && nameServersArray2.Type != JTokenType.Null)
                                 {
-                                    String[]<string> nameServersInstance = ((string)nameServersValue);
-                                    propertiesInstance.NameServers = nameServersInstance;
+                                    foreach (JToken nameServersValue in ((JArray)nameServersArray2))
+                                    {
+                                        propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                    }
                                 }
                             }
                             

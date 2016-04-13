@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     Assert.Equal(zoneName, zone.Name);
                     Assert.False(string.IsNullOrEmpty(zone.ETag));
                 };
-
+                
                 // Create the zone clean, verify response
                 ZoneCreateOrUpdateResponse createResponse = dnsClient.Zones.CreateOrUpdate(
                     resourceGroup.Name, 
@@ -68,6 +68,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
                 assertZoneInvariants(createResponse.Zone);
                 Assert.Equal(1, createResponse.Zone.Tags.Count);
+                Assert.True(createResponse.Zone.Properties.NameServers != null && createResponse.Zone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
 
                 // Retrieve the zone after create, verify response
                 var getresponse = dnsClient.Zones.Get(resourceGroup.Name, zoneName);
@@ -75,6 +76,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
                 assertZoneInvariants(getresponse.Zone);
                 Assert.Equal(1, getresponse.Zone.Tags.Count);
+                Assert.True(getresponse.Zone.Properties.NameServers != null && getresponse.Zone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
 
                 // Call Update on the object returned by Create (important distinction from Get below)
                 Zone createdZone = createResponse.Zone;
