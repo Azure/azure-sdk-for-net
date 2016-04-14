@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 {
                     Assert.Equal(zoneName, zone.Name);
                     Assert.False(string.IsNullOrEmpty(zone.ETag));
+                    Assert.False(string.IsNullOrEmpty(zone.Properties.ResourceGroupName));
                 };
                 
                 // Create the zone clean, verify response
@@ -69,6 +70,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 assertZoneInvariants(createResponse.Zone);
                 Assert.Equal(1, createResponse.Zone.Tags.Count);
                 Assert.True(createResponse.Zone.Properties.NameServers != null && createResponse.Zone.Properties.NameServers.Any(nameServer => !string.IsNullOrWhiteSpace(nameServer)));
+                Assert.True(createResponse.Zone.Properties.ResourceGroupName == resourceGroup.Name);
 
                 // Retrieve the zone after create, verify response
                 var getresponse = dnsClient.Zones.Get(resourceGroup.Name, zoneName);
@@ -130,7 +132,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 Assert.Equal(2, listresponse.Zones.Count);
                 Assert.True(
                     listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name))
-                    && listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[1], zoneReturned.Name)),
+                    && listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[1], zoneReturned.Name))
+                    && listresponse.Zones.All(zoneReturned => string.Equals(resourceGroup.Name, zoneReturned.Properties.ResourceGroupName)),
                     "The response of the List request does not meet expectations.");
 
                 ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
@@ -153,7 +156,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 Assert.NotNull(listresponse);
                 Assert.Equal(1, listresponse.Zones.Count);
-                Assert.True(listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name)),
+                Assert.True(listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name))
+                    && listresponse.Zones.All(zoneReturned => string.Equals(resourceGroup.Name, zoneReturned.Properties.ResourceGroupName)),
                     "The response of the List request does not meet expectations.");
 
                 ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);

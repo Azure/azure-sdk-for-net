@@ -400,6 +400,11 @@ namespace Microsoft.Azure.Management.Dns
                             propertiesValue["nameServers"] = nameServersArray;
                         }
                     }
+                    
+                    if (parameters.Zone.Properties.ResourceGroupName != null)
+                    {
+                        propertiesValue["resourceGroupName"] = parameters.Zone.Properties.ResourceGroupName;
+                    }
                 }
                 
                 if (parameters.Zone.Id != null)
@@ -514,6 +519,13 @@ namespace Microsoft.Azure.Management.Dns
                                     {
                                         propertiesInstance.NameServers.Add(((string)nameServersValue));
                                     }
+                                }
+                                
+                                JToken resourceGroupNameValue = propertiesValue2["resourceGroupName"];
+                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                    propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
                                 }
                             }
                             
@@ -824,6 +836,13 @@ namespace Microsoft.Azure.Management.Dns
                                         propertiesInstance.NameServers.Add(((string)nameServersValue));
                                     }
                                 }
+                                
+                                JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
+                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                    propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -1031,6 +1050,13 @@ namespace Microsoft.Azure.Management.Dns
                                             {
                                                 propertiesInstance.NameServers.Add(((string)nameServersValue));
                                             }
+                                        }
+                                        
+                                        JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
+                                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                            propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
                                         }
                                     }
                                     
@@ -1292,6 +1318,13 @@ namespace Microsoft.Azure.Management.Dns
                                                 propertiesInstance.NameServers.Add(((string)nameServersValue));
                                             }
                                         }
+                                        
+                                        JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
+                                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                            propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1542,6 +1575,13 @@ namespace Microsoft.Azure.Management.Dns
                                                 propertiesInstance.NameServers.Add(((string)nameServersValue));
                                             }
                                         }
+                                        
+                                        JToken resourceGroupNameValue = propertiesValue["resourceGroupName"];
+                                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                        {
+                                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                            propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1774,6 +1814,11 @@ namespace Microsoft.Azure.Management.Dns
                             propertiesValue["nameServers"] = nameServersArray;
                         }
                     }
+                    
+                    if (parameters.Zone.Properties.ResourceGroupName != null)
+                    {
+                        propertiesValue["resourceGroupName"] = parameters.Zone.Properties.ResourceGroupName;
+                    }
                 }
                 
                 if (parameters.Zone.Id != null)
@@ -1888,6 +1933,13 @@ namespace Microsoft.Azure.Management.Dns
                                     {
                                         propertiesInstance.NameServers.Add(((string)nameServersValue));
                                     }
+                                }
+                                
+                                JToken resourceGroupNameValue = propertiesValue2["resourceGroupName"];
+                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                    propertiesInstance.ResourceGroupName = resourceGroupNameInstance;
                                 }
                             }
                             

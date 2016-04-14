@@ -68,6 +68,19 @@ namespace Microsoft.Azure.Management.Dns.Models
             set { this._numberOfRecordSets = value; }
         }
         
+        private string _resourceGroupName;
+        
+        /// <summary>
+        /// Optional. Gets the resource group name for this zone. THis is a
+        /// read-only property and any attempt to set this value will be
+        /// ignored.
+        /// </summary>
+        public string ResourceGroupName
+        {
+            get { return this._resourceGroupName; }
+            set { this._resourceGroupName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ZoneProperties class.
         /// </summary>
