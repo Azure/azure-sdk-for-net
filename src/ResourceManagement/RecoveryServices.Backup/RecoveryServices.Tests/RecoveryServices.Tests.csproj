@@ -66,7 +66,6 @@
     <Compile Include="ScenarioTests\JobTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectableObjectTests.cs" />
     <Compile Include="ScenarioTests\AzureIaasVMTests\ProtectedItemTests.cs" />
-    <Compile Include="ScenarioTests\DpmTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\MabTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\RecoveryServicesTestBase.cs" />
   </ItemGroup>
@@ -74,6 +73,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\UnregisterDPMBackupEngineTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.BackupTests\BackupProtectedItemTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\ListContainersTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -83,7 +83,10 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\ListContainersTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\UnregisterContainersTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
