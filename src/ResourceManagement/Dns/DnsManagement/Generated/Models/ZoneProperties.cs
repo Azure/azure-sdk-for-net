@@ -68,17 +68,17 @@ namespace Microsoft.Azure.Management.Dns.Models
             set { this._numberOfRecordSets = value; }
         }
         
-        private string _resourceGroupName;
+        private string _parentResourceGroupName;
         
         /// <summary>
         /// Optional. Gets the resource group name for this zone. THis is a
         /// read-only property and any attempt to set this value will be
         /// ignored.
         /// </summary>
-        public string ResourceGroupName
+        public string ParentResourceGroupName
         {
-            get { return this._resourceGroupName; }
-            set { this._resourceGroupName = value; }
+            get { return this._parentResourceGroupName; }
+            set { this._parentResourceGroupName = value; }
         }
         
         /// <summary>
