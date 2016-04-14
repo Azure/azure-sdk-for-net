@@ -12,6 +12,7 @@
 // limitations under the License.
 //
 
+using System.Linq;
 using Microsoft.Azure;
 using Microsoft.Azure.Test;
 using Microsoft.Data.Edm.Csdl;
@@ -38,6 +39,9 @@ namespace Network.Tests.Networks
                 osResp = networkTestClient.PrepareVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
 
+                NetworkListResponse response = networkTestClient.ListNetworkConfigurations();
+                Assert.Equal(response.VirtualNetworkSites.First().MigrationState, IaasClassicToArmMigrationState.Prepared.ToString());
+
                 osResp = networkTestClient.CommitVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
             }
@@ -54,6 +58,9 @@ namespace Network.Tests.Networks
 
                 osResp = networkTestClient.PrepareVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
+
+                NetworkListResponse response = networkTestClient.ListNetworkConfigurations();
+                Assert.Equal(IaasClassicToArmMigrationState.Prepared.ToString(), response.VirtualNetworkSites.First().MigrationState);
 
                 osResp = networkTestClient.AbortVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);

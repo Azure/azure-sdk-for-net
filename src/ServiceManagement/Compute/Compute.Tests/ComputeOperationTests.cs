@@ -497,6 +497,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 opResp = fixture.ComputeClient.Deployments.PrepareMigration(serviceName, parameters.Name, prepareParameters);
                 Assert.Equal(opResp.Status, OperationStatus.Succeeded);
 
+                var deploymentResponse = fixture.ComputeClient.Deployments.GetByName(serviceName, parameters.Name);
+                Assert.NotNull(deploymentResponse);
+                Assert.Equal(IaaSClassicToArmMigrationState.Prepared.ToString(), deploymentResponse.Roles.First().MigrationState);
+
                 opResp = fixture.ComputeClient.Deployments.CommitMigration(serviceName, parameters.Name);
                 Assert.Equal(opResp.Status, OperationStatus.Succeeded);
             }
@@ -557,6 +561,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
 
                 opResp = fixture.ComputeClient.Deployments.PrepareMigration(serviceName, parameters.Name, prepareParameters);
                 Assert.Equal(opResp.Status, OperationStatus.Succeeded);
+
+                var deploymentResponse = fixture.ComputeClient.Deployments.GetByName(serviceName, parameters.Name);
+                Assert.NotNull(deploymentResponse);
+                Assert.Equal(IaaSClassicToArmMigrationState.Prepared.ToString(), deploymentResponse.Roles.First().MigrationState);
 
                 opResp = fixture.ComputeClient.Deployments.AbortMigration(serviceName, parameters.Name);
                 Assert.Equal(opResp.Status, OperationStatus.Succeeded);

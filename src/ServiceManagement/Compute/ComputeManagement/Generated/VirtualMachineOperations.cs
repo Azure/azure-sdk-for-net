@@ -3714,6 +3714,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 debugSettingsElement.Add(serialOutputBlobUriElement);
                             }
                         }
+                        
+                        if (roleListItem.MigrationState != null)
+                        {
+                            XElement migrationStateElement = new XElement(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                            migrationStateElement.Value = roleListItem.MigrationState;
+                            roleElement.Add(migrationStateElement);
+                        }
                     }
                     deploymentElement.Add(roleListSequenceElement);
                 }

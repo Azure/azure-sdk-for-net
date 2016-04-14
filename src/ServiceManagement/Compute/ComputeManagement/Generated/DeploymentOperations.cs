@@ -7913,6 +7913,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
                                         }
                                     }
+                                    
+                                    XElement migrationStateElement = roleListElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                                    if (migrationStateElement != null)
+                                    {
+                                        string migrationStateInstance = migrationStateElement.Value;
+                                        roleInstance.MigrationState = migrationStateInstance;
+                                    }
                                 }
                             }
                             
@@ -9993,6 +10000,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             Uri serialOutputBlobUriInstance = TypeConversion.TryParseUri(serialOutputBlobUriElement.Value);
                                             debugSettingsInstance.SerialOutputBlobUri = serialOutputBlobUriInstance;
                                         }
+                                    }
+                                    
+                                    XElement migrationStateElement = roleListElement.Element(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                                    if (migrationStateElement != null)
+                                    {
+                                        string migrationStateInstance = migrationStateElement.Value;
+                                        roleInstance.MigrationState = migrationStateInstance;
                                     }
                                 }
                             }
