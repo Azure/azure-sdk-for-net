@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/RsvTestRG/providers/Microsoft.RecoveryServices/vaults/RsvTestRN/backupContainers/NILAY-PC-01.FAREAST.CORP.MICROSOFT.COM/unregisterContainer?api-version=2016-05-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDRjZjY4NGEtZDQxZi00NTUwLTlmNzAtNzcwOGEzYTIyODNiL3Jlc291cmNlR3JvdXBzL1JzdlRlc3RSRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1JzdlRlc3RSTi9iYWNrdXBDb250YWluZXJzL05JTEFZLVBDLTAxLkZBUkVBU1QuQ09SUC5NSUNST1NPRlQuQ09NL3VucmVnaXN0ZXJDb250YWluZXI/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a656c9a7-a66a-4af8-bcb5-2bca682e2dcf"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e8be45fd-6387-4974-98fa-9dc3ed8d2aec"
+        ],
+        "x-ms-client-request-id": [
+          "a656c9a7-a66a-4af8-bcb5-2bca682e2dcf",
+          "a656c9a7-a66a-4af8-bcb5-2bca682e2dcf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1173"
+        ],
+        "x-ms-correlation-request-id": [
+          "e8be45fd-6387-4974-98fa-9dc3ed8d2aec"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160414T105403Z:e8be45fd-6387-4974-98fa-9dc3ed8d2aec"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 14 Apr 2016 10:54:03 GMT"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "04cf684a-d41f-4550-9f70-7708a3a2283b"
+  }
+}

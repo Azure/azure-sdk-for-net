@@ -32,33 +32,43 @@ namespace RecoveryServices.Tests
 {
     public class MabContainerTests : RecoveryServicesTestsBase
     {
+        [Fact]
         public void ListContainersTest()
         {
-            ExecuteTest(
-                client =>
-                {
-                    ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
-                    queryParams.ProviderType = ProviderType.MAB.ToString();
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
 
-                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
 
-                    string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultMabContainerUniqueName);
-                    MabProtectionContainer container = response.ItemList.ProtectionContainers.FirstOrDefault().Properties as MabProtectionContainer;
-                    Assert.NotNull(container);
-                    Assert.Equal(containerUniqueName, container.FriendlyName);
-                });
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+                ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
+                queryParams.ProviderType = ProviderType.MAB.ToString();
+
+                ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                ProtectionContainerListResponse response = containerTestHelper.ListMABContainers(queryParams);
+
+                string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultMabContainerUniqueName);
+                MabProtectionContainer container = response.ItemList.ProtectionContainers[1].Properties as MabProtectionContainer;
+                Assert.NotNull(container);
+                Assert.Equal(containerUniqueName, container.FriendlyName);
+            }
         }
 
+        [Fact]
         public void UnregisterContainersTest()
         {
-            ExecuteTest(
-                client =>
-                {
-                    ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                    string mabContainerName = ConfigurationManager.AppSettings["MabContainerName"];
-                    AzureOperationResponse response = containerTestHelper.UnregisterContainer(mabContainerName);
-                });
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+                ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
+                string mabContainerName = ConfigurationManager.AppSettings["MabContainerName"];
+                AzureOperationResponse response = containerTestHelper.UnregisterMABContainer(mabContainerName);
+            }               
         }
     }
 }

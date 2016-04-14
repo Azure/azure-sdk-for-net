@@ -65,5 +65,32 @@ namespace RecoveryServices.Tests.Helpers
             return response;
 
         }
+
+        public ProtectionContainerListResponse ListMABContainers(ProtectionContainerListQueryParams queryParams)
+        {
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+
+            ProtectionContainerListResponse response = Client.Container.List(rsVaultRgName, rsVaultName, queryParams, CommonTestHelper.GetCustomRequestHeaders());
+
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.ItemList);
+            return response;
+        }
+
+        public AzureOperationResponse UnregisterMABContainer(string containerName)
+        {
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+
+            AzureOperationResponse response = Client.Container.Unregister(rsVaultRgName, rsVaultName, containerName, CommonTestHelper.GetCustomRequestHeaders());
+
+            Assert.NotNull(response);
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            return response;
+
+        }
+
     }
 }

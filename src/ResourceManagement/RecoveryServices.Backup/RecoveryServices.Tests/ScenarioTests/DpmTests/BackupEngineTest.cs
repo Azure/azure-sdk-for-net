@@ -35,28 +35,40 @@ namespace RecoveryServices.Tests
         [Fact]
         public void ListDPMBakcupEngineTest()
         {
-            ExecuteTest(
-                client =>
-                {
-                    BackupEngineHelpers backupEngineTestHelper = new BackupEngineHelpers(client);
-                    BackupEngineListQueryParams queryParam = new BackupEngineListQueryParams();
-                    queryParam.ProviderType = "DPM";
-                    PaginationRequest paginationParam = new PaginationRequest();
-                    paginationParam.Top = "200";
-                    AzureOperationResponse response = backupEngineTestHelper.ListBackupEngine(queryParam, paginationParam);
-                });
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+                BackupEngineHelpers backupEngineTestHelper = new BackupEngineHelpers(client);
+                BackupEngineListQueryParams queryParam = new BackupEngineListQueryParams();
+                queryParam.ProviderType = "DPM";
+                PaginationRequest paginationParam = new PaginationRequest();
+                paginationParam.Top = "200";
+                AzureOperationResponse response = backupEngineTestHelper.ListBackupEngine(queryParam, paginationParam);
+                BackupEngineListResponse  backupEngineResponse = response as BackupEngineListResponse;
+                string backupEngineUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultDpmContainerUniqueName);
+                Assert.NotNull(backupEngineResponse.ItemList.BackupEngines[0].Properties as BackupEngineBase);
+                Assert.Equal(backupEngineUniqueName, backupEngineResponse.ItemList.BackupEngines[0].Name); 
+            }
         }
 
         [Fact]
         public void UnregisterDPMBackupEngineTest()
         {
-            ExecuteTest(
-                client =>
-                {
-                    BackupEngineHelpers backupEngineTestHelper = new BackupEngineHelpers(client);
-                    string dpmBackupEngineName = ConfigurationManager.AppSettings["DpmBackupEngineName"];
-                    AzureOperationResponse response = backupEngineTestHelper.UnregisterBackupEngine(dpmBackupEngineName);
-                });
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+                BackupEngineHelpers backupEngineTestHelper = new BackupEngineHelpers(client);
+                string dpmBackupEngineName = ConfigurationManager.AppSettings["DpmBackupEngineName"];
+                AzureOperationResponse response = backupEngineTestHelper.UnregisterBackupEngine(dpmBackupEngineName);
+            }
         }
     }
 }
