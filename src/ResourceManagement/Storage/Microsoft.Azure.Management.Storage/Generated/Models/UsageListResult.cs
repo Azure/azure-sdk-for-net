@@ -17,35 +17,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Usage Names.
+    /// The List Usages operation response.
     /// </summary>
-    public partial class UsageName
+    public partial class UsageListResult
     {
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the UsageListResult class.
         /// </summary>
-        public UsageName() { }
+        public UsageListResult() { }
 
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the UsageListResult class.
         /// </summary>
-        public UsageName(string value = default(string), string localizedValue = default(string))
+        public UsageListResult(IList<Usage> value = default(IList<Usage>))
         {
             Value = value;
-            LocalizedValue = localizedValue;
         }
 
         /// <summary>
-        /// Gets a string describing the resource name.
+        /// Gets or sets the list Storage Resource Usages.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
-
-        /// <summary>
-        /// Gets a localized string describing the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "localizedValue")]
-        public string LocalizedValue { get; private set; }
+        public IList<Usage> Value { get; set; }
 
     }
 }

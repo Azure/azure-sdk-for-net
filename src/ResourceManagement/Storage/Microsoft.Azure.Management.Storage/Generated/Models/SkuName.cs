@@ -13,16 +13,20 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for SkuName.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProvisioningState
+    public enum SkuName
     {
-        [EnumMember(Value = "Creating")]
-        Creating,
-        [EnumMember(Value = "ResolvingDNS")]
-        ResolvingDNS,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded
+        [EnumMember(Value = "Standard_LRS")]
+        StandardLRS,
+        [EnumMember(Value = "Standard_GRS")]
+        StandardGRS,
+        [EnumMember(Value = "Standard_RAGRS")]
+        StandardRAGRS,
+        [EnumMember(Value = "Standard_ZRS")]
+        StandardZRS,
+        [EnumMember(Value = "Premium_LRS")]
+        PremiumLRS
     }
 }
