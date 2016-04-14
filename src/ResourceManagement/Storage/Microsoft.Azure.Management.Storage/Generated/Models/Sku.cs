@@ -16,50 +16,46 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
-    public partial class StorageAccountCheckNameAvailabilityParameters
+    /// <summary>
+    /// The SKU of the storage account.
+    /// </summary>
+    public partial class Sku
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountCheckNameAvailabilityParameters class.
+        /// Initializes a new instance of the Sku class.
         /// </summary>
-        public StorageAccountCheckNameAvailabilityParameters() { }
+        public Sku() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountCheckNameAvailabilityParameters class.
+        /// Initializes a new instance of the Sku class.
         /// </summary>
-        public StorageAccountCheckNameAvailabilityParameters(string name)
+        public Sku(SkuName name, SkuTier? tier = default(SkuTier?))
         {
             Name = name;
-        }
-        /// <summary>
-        /// Static constructor for
-        /// StorageAccountCheckNameAvailabilityParameters class.
-        /// </summary>
-        static StorageAccountCheckNameAvailabilityParameters()
-        {
-            Type = "Microsoft.Storage/storageAccounts";
+            Tier = tier;
         }
 
         /// <summary>
+        /// Gets or sets the sku name. Required for account creation, optional
+        /// for update. Note that in older versions, sku name was called
+        /// accountType. Possible values include: 'Standard_LRS',
+        /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public SkuName Name { get; set; }
 
         /// <summary>
+        /// Gets the sku tier. This is based on the SKU name. Possible values
+        /// include: 'Standard', 'Premium'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        [JsonProperty(PropertyName = "tier")]
+        public SkuTier? Tier { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
         }
     }
 }

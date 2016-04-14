@@ -17,35 +17,28 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Usage Names.
+    /// The encrypted services.
     /// </summary>
-    public partial class UsageName
+    public partial class EncryptionServices
     {
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the EncryptionServices class.
         /// </summary>
-        public UsageName() { }
+        public EncryptionServices() { }
 
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the EncryptionServices class.
         /// </summary>
-        public UsageName(string value = default(string), string localizedValue = default(string))
+        public EncryptionServices(EncryptionService blob = default(EncryptionService))
         {
-            Value = value;
-            LocalizedValue = localizedValue;
+            Blob = blob;
         }
 
         /// <summary>
-        /// Gets a string describing the resource name.
+        /// The blob service.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
-
-        /// <summary>
-        /// Gets a localized string describing the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "localizedValue")]
-        public string LocalizedValue { get; private set; }
+        [JsonProperty(PropertyName = "blob")]
+        public EncryptionService Blob { get; set; }
 
     }
 }
