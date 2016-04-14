@@ -74,7 +74,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
-        public void TestSwarmPreviewOperations()
+        public void TestSwarmOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -95,7 +95,7 @@ namespace Compute.Tests
                         masterDnsPrefixName,
                         agentPoolDnsPrefixName,
                         out inputContainerService,
-                        cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOchestratorTypes.SwarmPreview);
+                        cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOchestratorTypes.Swarm);
                     m_CrpClient.ContainerService.Delete(rgName, containerService.Name);
                 }
                 finally
