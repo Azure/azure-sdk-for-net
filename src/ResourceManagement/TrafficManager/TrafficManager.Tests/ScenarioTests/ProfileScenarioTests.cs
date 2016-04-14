@@ -13,162 +13,146 @@
 // limitations under the License.
 //
 
-using System.Net;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.TrafficManager.Models;
-using Microsoft.Azure.Management.TrafficManager.Testing.Helpers;
-using Microsoft.Azure.Test;
-using Xunit;
-
 namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 {
-    public class ProfileScenarioTests
+    using System.Collections.Generic;
+    using System.Linq;
+    using global::TrafficManager.Tests.Helpers;
+    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.TrafficManager.Models;
+    using Microsoft.Azure.Management.TrafficManager.Testing.Helpers;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Xunit;
+
+    public class ProfileScenarioTests : TestBase
     {
         [Fact]
         public void CrudProfileFullCycle()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
-                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
-                string profileName = TestUtilities.GenerateName("hydratestwatmv2profile");
-                ResourceGroupExtended resourceGroup = TrafficManagerHelper.CreateResourceGroup();
+                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
+                string profileName = TestUtilities.GenerateName("atmprofile");
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
                 // Create the profile
-                ProfileCreateOrUpdateResponse createResponse = trafficManagerClient.Profiles.CreateOrUpdate(
+                trafficManagerClient.Profiles.CreateOrUpdate(
                     resourceGroup.Name, 
-                    profileName, 
-                    new ProfileCreateOrUpdateParameters
-                    {
-                        Profile = TrafficManagerHelper.GenerateDefaultProfile(profileName)
-                    });
-
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                    profileName,
+                    TrafficManagerHelper.GenerateDefaultProfile(profileName));
 
                 // Get the profile
-                ProfileGetResponse getResponse = trafficManagerClient.Profiles.Get(
+                trafficManagerClient.Profiles.Get(
                     resourceGroup.Name,
                     profileName);
 
-                Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
-
                 // Delete the profile
-                AzureOperationResponse deleteResponse = trafficManagerClient.Profiles.Delete(resourceGroup.Name, profileName);
-                Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
+                trafficManagerClient.Profiles.Delete(resourceGroup.Name, profileName);
+
+                this.DeleteResourceGroup(context, resourceGroupName);
             }
         }
-
+        
         [Fact]
         public void CrudProfileWithoutEndpoints_ThenUpdate()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
-                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
-                string profileName = TestUtilities.GenerateName("hydratestwatmv2profile");
-                ResourceGroupExtended resourceGroup = TrafficManagerHelper.CreateResourceGroup();
+                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
+                string profileName = TestUtilities.GenerateName("atmprofile");
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
                 Profile profile = TrafficManagerHelper.GenerateDefaultProfile(profileName);
-                profile.Properties.Endpoints = null;
+                profile.Endpoints = null;
 
                 // Create the profile
-                ProfileCreateOrUpdateResponse createResponse = trafficManagerClient.Profiles.CreateOrUpdate(
+                trafficManagerClient.Profiles.CreateOrUpdate(
                     resourceGroup.Name,
                     profileName,
-                    new ProfileCreateOrUpdateParameters
-                    {
-                        Profile = profile
-                    });
+                    profile);
 
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-
-                profile.Properties.Endpoints = new[]
+                profile.Endpoints = new[]
                 {
                     new Endpoint
                     {
                         Id = null,
                         Name = "My external endpoint",
                         Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                        Properties = new EndpointProperties
-                        {
-                            TargetResourceId = null,
-                            Target = "foobar.contoso.com",
-                            EndpointLocation = "North Europe",
-                            EndpointStatus = "Enabled"
-                        }
+                        TargetResourceId = null,
+                        Target = "foobar.contoso.com",
+                        EndpointLocation = "North Europe",
+                        EndpointStatus = "Enabled"
                     } 
                 };
 
                 // Create the profile
-                ProfileCreateOrUpdateResponse updateResponse = trafficManagerClient.Profiles.CreateOrUpdate(
+                trafficManagerClient.Profiles.CreateOrUpdate(
                     resourceGroup.Name,
                     profileName,
-                    new ProfileCreateOrUpdateParameters
-                    {
-                        Profile = profile
-                    });
+                    profile);
 
-                Assert.Equal(HttpStatusCode.Created, updateResponse.StatusCode);
+                this.DeleteResourceGroup(context, resourceGroupName);
+            }
+        }
+        
+        [Fact]
+        public void ListProfilesByResourceGroup()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
+
+                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
+
+                for (int i = 0; i < 5; ++i)
+                {
+                    string profileName = TestUtilities.GenerateName("atmprofile");
+
+                    trafficManagerClient.Profiles.CreateOrUpdate(
+                        resourceGroup.Name,
+                        profileName,
+                        TrafficManagerHelper.GenerateDefaultProfile(profileName));
+                }
+
+                List<Profile> listResponse = trafficManagerClient.Profiles.ListAllInResourceGroup(resourceGroup.Name).ToList();
+
+                Assert.Equal(5, listResponse.Count);
+
+                this.DeleteResourceGroup(context, resourceGroupName);
             }
         }
 
         [Fact]
-        public void ListProfilesByResourceGroup()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
-                
-                ResourceGroupExtended resourceGroup = TrafficManagerHelper.CreateResourceGroup();
-
-                for (int i = 0; i < 5; ++i)
-                {
-                    string profileName = TestUtilities.GenerateName("watmv2profilehydratest");
-
-                    trafficManagerClient.Profiles.CreateOrUpdate(
-                        resourceGroup.Name,
-                        profileName,
-                        new ProfileCreateOrUpdateParameters
-                        {
-                            Profile = TrafficManagerHelper.GenerateDefaultProfile(profileName)
-                        });
-                }
-
-                ProfileListResponse listResponse = trafficManagerClient.Profiles.ListAllInResourceGroup(resourceGroup.Name);
-
-                Assert.Equal(5, listResponse.Profiles.Count);
-            }
-        }
-
-        [Fact(Skip = "Garbage on the storage")]
         public void ListAllProfiles()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                context.Start();
-                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
-                ResourceGroupExtended resourceGroup = TrafficManagerHelper.CreateResourceGroup();
+                string resourceGroupName = TestUtilities.GenerateName("resourcegroup");
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
                 for (int i = 0; i < 5; ++i)
                 {
-                    string profileName = TestUtilities.GenerateName("hydratestwatmv2profile");
+                    string profileName = TestUtilities.GenerateName("atmprofile");
 
                     trafficManagerClient.Profiles.CreateOrUpdate(
                         resourceGroup.Name,
                         profileName,
-                        new ProfileCreateOrUpdateParameters
-                        {
-                            Profile = TrafficManagerHelper.GenerateDefaultProfile(profileName)
-                        });
+                        TrafficManagerHelper.GenerateDefaultProfile(profileName));
                 }
 
-                ProfileListResponse listResponse = trafficManagerClient.Profiles.ListAll();
+                IEnumerable<Profile> listResponse = trafficManagerClient.Profiles.ListAll();
 
-                Assert.Equal(5, listResponse.Profiles.Count);
+                // Just in case the subscription had some other profiles
+                Assert.True(5 <= listResponse.Count());
+
+                this.DeleteResourceGroup(context, resourceGroupName);
             }
         }
     }
