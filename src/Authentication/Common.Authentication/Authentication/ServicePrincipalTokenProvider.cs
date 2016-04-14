@@ -46,6 +46,11 @@ namespace Microsoft.Azure.Common.Authentication
                 (adalConfig, appId) => this.RenewWithCertificate(adalConfig, appId, certificateThumbprint), clientId);
         }
 
+        public IAccessToken GetAccessTokenWithRefreshToken(AdalConfiguration configuration, AzureAccount account)
+        {
+            throw new NotImplementedException();
+        }
+
         private AuthenticationContext GetContext(AdalConfiguration config)
         {
             string authority = config.AdEndpoint + config.AdDomain;

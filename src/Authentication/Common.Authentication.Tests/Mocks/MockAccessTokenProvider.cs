@@ -50,5 +50,11 @@ namespace Microsoft.WindowsAzure.Commands.Test.Utilities.Common
             AdalConfiguration = config;
             return this.accessToken;
         }
+
+        public IAccessToken GetAccessTokenWithRefreshToken(AdalConfiguration configuration, AzureAccount account)
+        {
+            AdalConfiguration = configuration;
+            return accessToken;
+        }
     }
 }

@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
             Certificate,
             User,
             ServicePrincipal,
-            AccessToken
+            AccessToken,
+            RefreshToken
         }
 
         public enum Property
@@ -54,7 +55,17 @@ namespace Microsoft.Azure.Common.Authentication.Models
             /// <summary>
             /// Thumbprint for associated certificate
             /// </summary>
-            CertificateThumbprint
+            CertificateThumbprint,
+
+            /// <summary>
+            /// Refresh token for the account
+            /// </summary>
+            RefreshToken,
+
+            /// <summary>
+            /// The client id for the application that acquired the refresh token
+            /// </summary>
+            RefreshClientId
         }
     }
 }

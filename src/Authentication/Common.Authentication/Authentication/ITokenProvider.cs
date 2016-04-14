@@ -46,5 +46,14 @@ namespace Microsoft.Azure.Common.Authentication
         /// <returns>An access token, which can be renewed</returns>
         IAccessToken GetAccessTokenWithCertificate(AdalConfiguration config, string principalId, string certificateThumbprint, 
             AzureAccount.AccountType credentialType);
+
+        /// <summary>
+        /// Get a new access token using the refresh token contained in an account
+        /// </summary>
+        /// <param name="configuration">The adal configuration</param>
+        /// <param name="account">The account to authenticate</param>
+        /// <returns>An access token, which can be renewed.</returns>
+        IAccessToken GetAccessTokenWithRefreshToken(AdalConfiguration configuration, AzureAccount account);
+
     }
 }
