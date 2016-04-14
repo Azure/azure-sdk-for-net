@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ContainerServiceOchestratorTypes
     {
-        [EnumMember(Value = "SwarmPreview")]
-        SwarmPreview,
+        [EnumMember(Value = "Swarm")]
+        Swarm,
         [EnumMember(Value = "DCOS")]
         DCOS
     }
