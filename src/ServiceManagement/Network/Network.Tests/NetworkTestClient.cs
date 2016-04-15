@@ -215,5 +215,20 @@ namespace Network.Tests
             testOperation.Invoke();
             testOperations.Add(testOperation);
         }
+
+        public OperationStatusResponse PrepareVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.PrepareMigration(virtualNetworkName);
+        }
+
+        public OperationStatusResponse CommitVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.CommitMigration(virtualNetworkName);
+        }
+
+        public OperationStatusResponse AbortVnetMigration(string virtualNetworkName)
+        {
+            return this.networkClient.Networks.AbortMigration(virtualNetworkName);
+        }
     }
 }
