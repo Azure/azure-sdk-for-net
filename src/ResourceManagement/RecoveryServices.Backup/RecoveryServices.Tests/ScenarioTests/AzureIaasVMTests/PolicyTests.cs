@@ -30,7 +30,7 @@ using Microsoft.Azure;
 
 namespace RecoveryServices.Tests
 {
-    class IaaSVMPolicyTests : RecoveryServicesTestsBase
+    public class IaaSVMPolicyTests : RecoveryServicesTestsBase
     {
         [Fact]
         public void ListRecoveryServicesProtectionPolicyTest()
@@ -53,7 +53,7 @@ namespace RecoveryServices.Tests
                 IList<ProtectionPolicyResource> policyList = response.ItemList.Value;
 
                 // atleast one default policy should be there
-                Assert.Empty(policyList);
+                Assert.NotEmpty(policyList);
 
                 foreach (ProtectionPolicyResource resource in policyList)
                 {
