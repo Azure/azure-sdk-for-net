@@ -72,7 +72,7 @@ namespace ResourceGroups.Tests
                             Uri = DummyTemplateUri
                         },
                         Parameters = dictionary,
-                        Mode = DeploymentMode.Incremental,
+                        Mode = DeploymentMode.Incremental
                     }
                 };
 
@@ -109,6 +109,7 @@ namespace ResourceGroups.Tests
                         JObject.Parse(
                             @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
                         Mode = DeploymentMode.Incremental,
+                        DebugSetting = new DebugSetting("RequestContent")
                     }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeAnalytics/register?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeAnalytics/register?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3MvcmVnaXN0ZXI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
@@ -55,7 +55,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeAnalytics?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeAnalytics?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VBbmFseXRpY3M/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -109,7 +109,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.Storage/register?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.Storage/register?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9yZWdpc3Rlcj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
@@ -163,7 +163,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.Storage?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.Storage?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -217,7 +217,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeStore/register?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeStore/register?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9yZWdpc3Rlcj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
@@ -271,7 +271,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeStore?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/providers/Microsoft.DataLakeStore?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZT9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -325,7 +325,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourcegroups/rgaba18416?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourcegroups/rgaba18416?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Jlc291cmNlZ3JvdXBzL3JnYWJhMTg0MTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -382,7 +382,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourcegroups/rgaba18416?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourcegroups/rgaba18416?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Jlc291cmNlZ3JvdXBzL3JnYWJhMTg0MTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -436,7 +436,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourcegroups/rgaba18416?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/53d9063d-87ae-4ea8-be90-3686c3b8669f/resourcegroups/rgaba18416?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNkOTA2M2QtODdhZS00ZWE4LWJlOTAtMzY4NmMzYjg2NjlmL3Jlc291cmNlZ3JvdXBzL3JnYWJhMTg0MTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
@@ -1462,7 +1462,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/3dcd7b25-5e27-4e2f-b0ac-999fb0a4b646?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/3dcd7b25-5e27-4e2f-b0ac-999fb0a4b646?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvM2RjZDdiMjUtNWUyNy00ZTJmLWIwYWMtOTk5ZmIwYTRiNjQ2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
@@ -1519,7 +1519,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/3dcd7b25-5e27-4e2f-b0ac-999fb0a4b646/CancelJob?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/3dcd7b25-5e27-4e2f-b0ac-999fb0a4b646/CancelJob?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvM2RjZDdiMjUtNWUyNy00ZTJmLWIwYWMtOTk5ZmIwYTRiNjQ2L0NhbmNlbEpvYj9hcGktdmVyc2lvbj0yMDE1LTExLTAxLXByZXZpZXc=",
       "RequestMethod": "POST",
       "RequestBody": "",
@@ -1567,7 +1567,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/3dcd7b25-5e27-4e2f-b0ac-999fb0a4b646?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/3dcd7b25-5e27-4e2f-b0ac-999fb0a4b646?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvM2RjZDdiMjUtNWUyNy00ZTJmLWIwYWMtOTk5ZmIwYTRiNjQ2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1618,7 +1618,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",
@@ -1675,7 +1675,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1726,7 +1726,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1777,7 +1777,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1828,7 +1828,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1879,7 +1879,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1930,7 +1930,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1981,7 +1981,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2032,7 +2032,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2083,7 +2083,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2134,7 +2134,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs/40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnMvNDA1OTdjNDctN2E1YS00NmZjLThhNWUtYTdlYmNhZjFjZDM1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2185,7 +2185,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Jobs?api-version=2015-11-01-preview",
+      "RequestUri": "/Jobs?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0pvYnM/YXBpLXZlcnNpb249MjAxNS0xMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2236,7 +2236,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/BuildJob?api-version=2015-11-01-preview",
+      "RequestUri": "/BuildJob?api-version=2016-02-01-preview",
       "EncodedRequestUri": "L0J1aWxkSm9iP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"jobId\": \"40597c47-7a5a-46fc-8a5e-a7ebcaf1cd35\",\r\n  \"name\": \"azure sdk data lake analytics job\",\r\n  \"type\": \"USql\",\r\n  \"degreeOfParallelism\": 2,\r\n  \"properties\": {\r\n    \"type\": \"USql\",\r\n    \"script\": \"DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;\"\r\n  }\r\n}",

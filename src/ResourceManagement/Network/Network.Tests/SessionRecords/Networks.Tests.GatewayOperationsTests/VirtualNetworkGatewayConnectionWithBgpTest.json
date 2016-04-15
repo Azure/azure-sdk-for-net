@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f98da156-d5e6-44a1-99d8-1b6fd3f764ff/providers/Microsoft.Network?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/f98da156-d5e6-44a1-99d8-1b6fd3f764ff/providers/Microsoft.Network?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjk4ZGExNTYtZDVlNi00NGExLTk5ZDgtMWI2ZmQzZjc2NGZmL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yaz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -55,7 +55,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f98da156-d5e6-44a1-99d8-1b6fd3f764ff/resourcegroups/csmrg5498?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/f98da156-d5e6-44a1-99d8-1b6fd3f764ff/resourcegroups/csmrg5498?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjk4ZGExNTYtZDVlNi00NGExLTk5ZDgtMWI2ZmQzZjc2NGZmL3Jlc291cmNlZ3JvdXBzL2NzbXJnNTQ5OD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",

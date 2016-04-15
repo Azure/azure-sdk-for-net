@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/resourcegroups/crptestar18061?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/resourcegroups/crptestar18061?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL3Jlc291cmNlZ3JvdXBzL2NycHRlc3RhcjE4MDYxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"australiasoutheast\"\r\n}",
@@ -1246,7 +1246,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/resourcegroups/crptestar18061?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/resourcegroups/crptestar18061?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL3Jlc291cmNlZ3JvdXBzL2NycHRlc3RhcjE4MDYxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -1297,13 +1297,13 @@
           "Thu, 07 Apr 2016 19:23:56 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1348,13 +1348,13 @@
           "Thu, 07 Apr 2016 19:24:26 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1399,13 +1399,13 @@
           "Thu, 07 Apr 2016 19:24:57 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1450,13 +1450,13 @@
           "Thu, 07 Apr 2016 19:25:28 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1501,13 +1501,13 @@
           "Thu, 07 Apr 2016 19:25:58 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1552,13 +1552,13 @@
           "Thu, 07 Apr 2016 19:26:28 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1603,13 +1603,13 @@
           "Thu, 07 Apr 2016 19:26:59 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1654,13 +1654,13 @@
           "Thu, 07 Apr 2016 19:27:30 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1705,13 +1705,13 @@
           "Thu, 07 Apr 2016 19:28:00 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1756,13 +1756,13 @@
           "Thu, 07 Apr 2016 19:28:31 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1807,13 +1807,13 @@
           "Thu, 07 Apr 2016 19:29:01 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1858,13 +1858,13 @@
           "Thu, 07 Apr 2016 19:29:32 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1909,13 +1909,13 @@
           "Thu, 07 Apr 2016 19:30:02 GMT"
         ],
         "Location": [
-          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01"
+          "https://brazilus.management.azure.com/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIxODA2MS1BVVNUUkFMSUFTT1VUSEVBU1QiLCJqb2JMb2NhdGlvbiI6ImF1c3RyYWxpYXNvdXRoZWFzdCJ9?api-version=2016-02-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFEVWxCVVJWTlVRVkl4T0RBMk1TMUJWVk5VVWtGTVNVRlRUMVZVU0VWQlUxUWlMQ0pxYjJKTWIyTmhkR2x2YmlJNkltRjFjM1J5WVd4cFlYTnZkWFJvWldGemRDSjk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
