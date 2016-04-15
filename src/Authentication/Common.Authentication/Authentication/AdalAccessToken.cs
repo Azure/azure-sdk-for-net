@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Common.Authentication
             {
                 get
                 {
-                    if (AuthResult.UserInfo.IdentityProvider != null)
+                    if (AuthResult.UserInfo != null && AuthResult.UserInfo.IdentityProvider != null)
                     {
                         return LoginType.LiveId;
                     }
