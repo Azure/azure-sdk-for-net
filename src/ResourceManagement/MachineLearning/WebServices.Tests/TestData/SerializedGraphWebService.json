@@ -61,7 +61,8 @@
         }
       }
     },
-    "description": "test data",
+    "title": "test title",
+    "description": "test description",
     "keys": {
       "primary": "primary key here",
       "secondary": "secondary key here"
@@ -75,7 +76,8 @@
       "expiry": "2017-02-04T10:20:15Z"
     },
     "storageAccount": {
-      "name": "storage account id"
+      "name": "storage account id",
+      "key": "account key"
     },
     "machineLearningWorkspace": {
       "id": "workspace ID"

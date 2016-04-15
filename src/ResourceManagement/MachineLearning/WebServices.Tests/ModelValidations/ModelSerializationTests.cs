@@ -28,16 +28,16 @@ namespace WebServices.Tests
         [Fact]
         public void GraphBasedWebServiceSerializationTest()
         {
-            this.RunSerializationTest(@".\TestData\SerializedGraphWebService.json", ModelSerializationTests.CreateWebServiceGraph);
+            ModelSerializationTests.RunSerializationTest(@".\TestData\SerializedGraphWebService.json", ModelSerializationTests.CreateWebServiceGraph);
         }
 
         [Fact]
         public void CodeBasedWebServiceSerializationTest()
         {
-            this.RunSerializationTest(@".\TestData\SerializedCodeWebService.json", ModelSerializationTests.CreateWebServiceCode);
+            ModelSerializationTests.RunSerializationTest(@".\TestData\SerializedCodeWebService.json", ModelSerializationTests.CreateWebServiceCode);
         }
 
-        private void RunSerializationTest(string testDataFile, Func<WebService> createWebserviceCall)
+        private static void RunSerializationTest(string testDataFile, Func<WebService> createWebserviceCall)
         {
             // Validate correct serialization
             var payload = createWebserviceCall();
@@ -130,13 +130,14 @@ namespace WebServices.Tests
 
         private static void UpdateWebServiceCommonProperties(WebServiceProperties payloadProperties)
         {
-            payloadProperties.Description = "test data";
+            payloadProperties.Title = "test title";
+            payloadProperties.Description = "test description";
             payloadProperties.Keys = new WebServiceKeys("primary key here", "secondary key here");
             payloadProperties.RealtimeConfiguration = new RealtimeConfiguration(100);
             payloadProperties.ReadOnlyProperty = true;
             var dateTime = new DateTime(2017, 2, 4, 2, 20, 15, DateTimeKind.Local);
             payloadProperties.Diagnostics = new DiagnosticsConfiguration(DiagnosticsLevel.Error, dateTime);
-            payloadProperties.StorageAccount = new StorageAccount("storage account id");
+            payloadProperties.StorageAccount = new StorageAccount("storage account id", "account key");
             payloadProperties.MachineLearningWorkspace = new MachineLearningWorkspace("workspace ID");
             payloadProperties.CommitmentPlan = new CommitmentPlan("commitmentPlanId");
 
