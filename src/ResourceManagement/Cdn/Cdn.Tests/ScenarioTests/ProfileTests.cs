@@ -47,7 +47,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -63,7 +63,7 @@ namespace Cdn.Tests.ScenarioTests
                 createParameters = new ProfileCreateParameters
                 {
                     Location = "EastUs",
-                    Sku = new Sku { Name = SkuName.Premium },
+                    Sku = new Sku { Name = SkuName.PremiumVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -78,7 +78,7 @@ namespace Cdn.Tests.ScenarioTests
                 createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>()
                 };
 
@@ -110,7 +110,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -135,7 +135,7 @@ namespace Cdn.Tests.ScenarioTests
                 createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -186,7 +186,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -212,7 +212,7 @@ namespace Cdn.Tests.ScenarioTests
                 createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -265,7 +265,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -289,7 +289,7 @@ namespace Cdn.Tests.ScenarioTests
                 createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -360,7 +360,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -387,7 +387,7 @@ namespace Cdn.Tests.ScenarioTests
                 createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -442,7 +442,7 @@ namespace Cdn.Tests.ScenarioTests
                 ProfileCreateParameters createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -463,7 +463,7 @@ namespace Cdn.Tests.ScenarioTests
                 createParameters = new ProfileCreateParameters
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.Standard },
+                    Sku = new Sku { Name = SkuName.StandardVerizon },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
