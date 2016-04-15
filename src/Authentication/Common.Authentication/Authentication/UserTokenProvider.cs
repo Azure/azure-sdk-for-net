@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Common.Authentication
             return timeUntilExpiration < expirationThreshold;
         }
 
-        private void Renew(AdalAccessToken token)
+        internal void Renew(AdalAccessToken token)
         {
             TracingAdapter.Information(Resources.UPNRenewTokenTrace, token.AuthResult.AccessTokenType, token.AuthResult.ExpiresOn,
                 token.AuthResult.IsMultipleResourceRefreshToken, token.AuthResult.TenantId, token.UserId);
@@ -237,46 +237,6 @@ namespace Microsoft.Azure.Common.Authentication
             }
             return message;
         }
-        /// <summary>
-        /// Implementation of <see cref="IAccessToken"/> using data from ADAL
-        /// </summary>
-        private class AdalAccessToken : IAccessToken
-        {
-            internal readonly AdalConfiguration Configuration;
-            internal AuthenticationResult AuthResult;
-            private readonly UserTokenProvider tokenProvider;
-
-            public AdalAccessToken(AuthenticationResult authResult, UserTokenProvider tokenProvider, AdalConfiguration configuration)
-            {
-                AuthResult = authResult;
-                this.tokenProvider = tokenProvider;
-                Configuration = configuration;
-            }
-
-            public void AuthorizeRequest(Action<string, string> authTokenSetter)
-            {
-                tokenProvider.Renew(this);
-                authTokenSetter(AuthResult.AccessTokenType, AuthResult.AccessToken);
-            }
-
-            public string AccessToken { get { return AuthResult.AccessToken; } }
-            public string UserId { get { return AuthResult.UserInfo.DisplayableId; } }
-
-            public string TenantId { get { return AuthResult.TenantId; } }
-
-            public LoginType LoginType
-            {
-                get
-                {
-                    if (AuthResult.UserInfo.IdentityProvider != null)
-                    {
-                        return LoginType.LiveId;
-                    }
-                    return LoginType.OrgId;
-                }
-            }
-        }
-
 
         private void ClearCookies()
         {
@@ -293,6 +253,11 @@ namespace Microsoft.Azure.Common.Authentication
         }
 
         public IAccessToken GetAccessTokenWithCertificate(AdalConfiguration config, string clientId, string certificate, AzureAccount.AccountType credentialType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IAccessToken GetAccessTokenWithRefreshToken(AdalConfiguration configuration, AzureAccount account)
         {
             throw new NotImplementedException();
         }

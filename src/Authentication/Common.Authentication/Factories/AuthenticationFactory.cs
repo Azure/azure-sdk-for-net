@@ -18,6 +18,7 @@ using System;
 using System.Linq;
 using System.Security;
 using Hyak.Common;
+using Microsoft.Azure.Common.Authentication.Authentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
@@ -44,19 +45,38 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             TokenCache tokenCache,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
+            if (account == null)
+            {
+                throw new ArgumentNullException("account");
+            }
+
             var configuration = GetAdalConfiguration(environment, tenant, resourceId, tokenCache);
 
             TracingAdapter.Information(Resources.AdalAuthConfigurationTrace, configuration.AdDomain, configuration.AdEndpoint,
                 configuration.ClientId, configuration.ClientRedirectUri, configuration.ResourceClientUri, configuration.ValidateAuthority);
             IAccessToken token;
-            if (account.IsPropertySet(AzureAccount.Property.CertificateThumbprint))
+
+            if (account.Type == AzureAccount.AccountType.RefreshToken)
+            {
+                if (!account.IsPropertySet(AzureAccount.Property.RefreshToken))
+                {
+                    throw new InvalidOperationException(string.Format(Resources.MissingRefreshToken, account.Id));
+                }
+
+                if (!account.IsPropertySet(AzureAccount.Property.RefreshClientId))
+                {
+                    throw new InvalidOperationException(string.Format(Resources.MissingRefreshClientId, account.Id));
+                }
+
+                token = TokenProvider.GetAccessTokenWithRefreshToken(configuration, account);
+            }
+            else if (account.IsPropertySet(AzureAccount.Property.CertificateThumbprint))
             {
                 var thumbprint = account.GetProperty(AzureAccount.Property.CertificateThumbprint);
                 token = TokenProvider.GetAccessTokenWithCertificate(configuration, account.Id, thumbprint, account.Type);
             }
             else
             {
-
                 token = TokenProvider.GetAccessToken(configuration, promptBehavior, account.Id, password, account.Type);
             }
 
@@ -260,6 +280,24 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                             env,
                             tokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
                     }
+                }
+                else if (context.Account.Type == AzureAccount.AccountType.RefreshToken)
+                {
+                    if (!context.Account.IsPropertySet(AzureAccount.Property.RefreshToken))
+                    {
+                        throw new InvalidOperationException(string.Format(Resources.MissingRefreshToken, context.Account.Id));
+                    }
+
+                    if (!context.Account.IsPropertySet(AzureAccount.Property.RefreshClientId))
+                    {
+                        throw new InvalidOperationException(string.Format(Resources.MissingRefreshClientId, context.Account.Id));
+                    }
+
+                    var adapter = new RefreshTokenAdapter(new RefreshTokenProvider(context.Account.GetProperty(AzureAccount.Property.RefreshToken),
+                        context.Account.GetProperty(AzureAccount.Property.RefreshClientId)),
+                        context.Account,
+                        GetAdalConfiguration(context.Environment, tenant, context.Environment.GetTokenAudience(targetEndpoint), tokenCache));
+                    result = new TokenCredentials(adapter);
                 }
                 else
                 {

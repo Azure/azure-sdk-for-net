@@ -15,6 +15,7 @@
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
 using System;
+using System.Diagnostics.PerformanceData;
 using System.Security;
 using System.Windows.Forms;
 
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Common.Authentication
     {
         private readonly ITokenProvider userTokenProvider;
         private readonly ITokenProvider servicePrincipalTokenProvider;
+        private ITokenProvider refreshTokenProvider = null;
 
         public AdalTokenProvider()
             : this(new ConsoleParentWindow())
@@ -63,6 +65,22 @@ namespace Microsoft.Azure.Common.Authentication
                 default:
                     throw new ArgumentException(string.Format(Resources.UnsupportedCredentialType, credentialType), "credentialType");
             }
+        }
+
+        public IAccessToken GetAccessTokenWithRefreshToken(AdalConfiguration configuration, AzureAccount account)
+        {
+            if (account == null || account.Type != AzureAccount.AccountType.RefreshToken ||
+                !account.IsPropertySet(AzureAccount.Property.RefreshToken))
+            {
+                throw new InvalidOperationException("Insufficient information to authenticate using a refresh token");
+            }
+            if (refreshTokenProvider == null)
+            {
+                refreshTokenProvider = new RefreshTokenProvider(account.GetProperty(AzureAccount.Property.RefreshToken), 
+                    account.GetProperty(AzureAccount.Property.RefreshClientId) );
+            }
+
+            return refreshTokenProvider.GetAccessTokenWithRefreshToken(configuration, account);
         }
     }
 }

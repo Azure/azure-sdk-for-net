@@ -322,6 +322,24 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authentication for user {0} failed. A valid application ID for the application that acquired the refresh token is required for authentication using RefreshToken..
+        /// </summary>
+        public static string MissingRefreshClientId {
+            get {
+                return ResourceManager.GetString("MissingRefreshClientId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication for user {0} failed. A valid RefreshToken is required for authentication using RefreshToken..
+        /// </summary>
+        public static string MissingRefreshToken {
+            get {
+                return ResourceManager.GetString("MissingRefreshToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Common.Authentication]: No matching account record for account {0} in subscription {1}.
         /// </summary>
         public static string NoAccountInContext {
@@ -390,6 +408,24 @@ namespace Microsoft.Azure.Common.Authentication.Properties {
         public static string PublishSettingsFileRealmFormat {
             get {
                 return ResourceManager.GetString("PublishSettingsFileRealmFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: Acquiring token using Refresh Token with Domain: &apos;{0}&apos;, AdEndpoint: &apos;{1}&apos;, ClientId: &apos;{2}&apos;, ClientRedirectUri: {3}.
+        /// </summary>
+        public static string RefreshAuthenticateTrace {
+            get {
+                return ResourceManager.GetString("RefreshAuthenticateTrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Common.Authentication]: Renewing Token with Type: &apos;{0}&apos;, Expiry: &apos;{1}&apos;, MultipleResource? &apos;{2}&apos;, Tenant: &apos;{3}&apos;, ApplicationId: &apos;{4}&apos;.
+        /// </summary>
+        public static string RefreshRenewTrace {
+            get {
+                return ResourceManager.GetString("RefreshRenewTrace", resourceCulture);
             }
         }
         

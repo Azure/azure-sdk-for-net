@@ -300,4 +300,16 @@
   <data name="UnsupportedCredentialType" xml:space="preserve">
     <value>Certificate authentication is not supported for account type {0}.</value>
   </data>
+  <data name="RefreshAuthenticateTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Acquiring token using Refresh Token with Domain: '{0}', AdEndpoint: '{1}', ClientId: '{2}', ClientRedirectUri: {3}</value>
+  </data>
+  <data name="RefreshRenewTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Renewing Token with Type: '{0}', Expiry: '{1}', MultipleResource? '{2}', Tenant: '{3}', ApplicationId: '{4}'</value>
+  </data>
+  <data name="MissingRefreshClientId" xml:space="preserve">
+    <value>Authentication for user {0} failed. A valid application ID for the application that acquired the refresh token is required for authentication using RefreshToken.</value>
+  </data>
+  <data name="MissingRefreshToken" xml:space="preserve">
+    <value>Authentication for user {0} failed. A valid RefreshToken is required for authentication using RefreshToken.</value>
+  </data>
 </root>
