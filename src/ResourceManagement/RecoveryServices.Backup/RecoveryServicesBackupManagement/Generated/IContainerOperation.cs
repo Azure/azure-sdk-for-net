@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='containerName'>
+        /// <param name='identityName'>
         /// Container Name of protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -194,6 +194,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string identityName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/cancel";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -165,7 +165,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2015-03-15");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -342,7 +341,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobsExport";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
             if (queryFilter != null && queryFilter.Status != null)
             {
@@ -400,7 +399,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2015-03-15");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -577,7 +575,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/backupJobs/";
             url = url + Uri.EscapeDataString(jobName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1080,7 +1078,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/backupJobs/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1322,7 +1320,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1824,7 +1822,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupJobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
             if (queryFilter != null && queryFilter.Status != null)
             {

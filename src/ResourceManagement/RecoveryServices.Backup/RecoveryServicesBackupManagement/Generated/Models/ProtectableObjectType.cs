@@ -21,20 +21,19 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    /// <summary>
-    /// The definition of a DpmProtectionContainer object.
-    /// </summary>
-    public partial class DpmVenusProtectionContainer : DpmProtectionContainer
+    public enum ProtectableObjectType
     {
         /// <summary>
-        /// Initializes a new instance of the DpmVenusProtectionContainer class.
+        /// The Azure IaasVM container type.
         /// </summary>
-        public DpmVenusProtectionContainer()
-        {
-        }
+        IaasVMContainer = 0,
+        
+        /// <summary>
+        /// The Microsoft AzureBackup file folder container type.
+        /// </summary>
+        MABWindowsContainer = 1,
     }
 }

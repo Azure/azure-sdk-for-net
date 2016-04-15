@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='containerName'>
+        /// <param name='identityName'>
         /// Required. Container Name of protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -402,11 +402,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Unregister(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static AzureOperationResponse Unregister(this IContainerOperation operations, string resourceGroupName, string resourceName, string identityName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).UnregisterAsync(resourceGroupName, resourceName, containerName, customRequestHeaders);
+                return ((IContainerOperation)s).UnregisterAsync(resourceGroupName, resourceName, identityName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='containerName'>
+        /// <param name='identityName'>
         /// Required. Container Name of protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -434,9 +434,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> UnregisterAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureOperationResponse> UnregisterAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string identityName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.UnregisterAsync(resourceGroupName, resourceName, containerName, customRequestHeaders, CancellationToken.None);
+            return operations.UnregisterAsync(resourceGroupName, resourceName, identityName, customRequestHeaders, CancellationToken.None);
         }
     }
 }

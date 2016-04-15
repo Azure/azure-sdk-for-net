@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/protectedItems/";
             url = url + Uri.EscapeDataString(protectedItemName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -786,7 +786,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/protectedItems/";
             url = url + Uri.EscapeDataString(protectedItemName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1015,7 +1015,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/protectedItems/";
             url = url + Uri.EscapeDataString(protectedItemName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
             if (queryFilter != null && queryFilter.Expand != null)
             {
@@ -1787,7 +1787,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2562,7 +2562,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "/operationsStatus/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3760,7 +3760,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupProtectedItems";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2016-05-01");
             List<string> odataFilter = new List<string>();
             if (queryFilter != null && queryFilter.ProviderType != null)
             {
