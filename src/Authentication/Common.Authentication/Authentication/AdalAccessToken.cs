@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Common.Authentication
             public string AccessToken { get { return AuthResult.AccessToken; } }
             public string UserId { get { return _userId; } }
 
-            public string TenantId { get { return AuthResult.TenantId; } }
+            public string TenantId { get { return AuthResult.TenantId?? Configuration.AdDomain; } }
 
             public LoginType LoginType
             {

@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
                     var adapter = new RefreshTokenAdapter(new RefreshTokenProvider(context.Account.GetProperty(AzureAccount.Property.RefreshToken),
                         context.Account.GetProperty(AzureAccount.Property.RefreshClientId)),
-                        context.Account.Id,
+                        context.Account,
                         GetAdalConfiguration(context.Environment, tenant, context.Environment.GetTokenAudience(targetEndpoint), tokenCache));
                     result = new TokenCredentials(adapter);
                 }
