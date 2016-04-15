@@ -1,3 +1,0 @@
-{
-  "projects": [ "../../TestFramework", "Microsoft.Azure.Management.RemoteApp", "RemoteApp.Tests", "../Resource" ]
-}
