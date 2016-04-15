@@ -76,6 +76,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._lastModifiedTime = value; }
         }
         
+        private IList<string> _outputTypes;
+        
+        /// <summary>
+        /// Optional. Gets or sets the runbook output types.
+        /// </summary>
+        public IList<string> OutputTypes
+        {
+            get { return this._outputTypes; }
+            set { this._outputTypes = value; }
+        }
+        
         private IDictionary<string, RunbookParameter> _parameters;
         
         /// <summary>
@@ -92,6 +103,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookDraft()
         {
+            this.OutputTypes = new LazyList<string>();
             this.Parameters = new LazyDictionary<string, RunbookParameter>();
         }
     }

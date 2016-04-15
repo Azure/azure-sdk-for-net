@@ -1048,6 +1048,15 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                             }
+                            
+                            JToken outputTypesArray = responseDoc["outputTypes"];
+                            if (outputTypesArray != null && outputTypesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken outputTypesValue in ((JArray)outputTypesArray))
+                                {
+                                    runbookDraftInstance.OutputTypes.Add(((string)outputTypesValue));
+                                }
+                            }
                         }
                         
                     }
