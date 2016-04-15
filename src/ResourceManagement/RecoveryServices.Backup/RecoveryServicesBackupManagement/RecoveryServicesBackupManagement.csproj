@@ -330,6 +330,13 @@
     <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateRequest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\ProtectableObjectListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResource.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectResourceList.cs" />
+    <Compile Include="Generated\Models\ProtectableObjectType.cs" />
+    <Compile Include="Generated\Models\ProtectedItem.cs" />
+    <Compile Include="Generated\Models\ProtectedItemBase.cs" />
+    <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateRequest.cs" />
     <Compile Include="Generated\Models\ProtectedItemCreateOrUpdateResponse.cs" />
     <Compile Include="Generated\Models\ProtectedItemExtendedInfo.cs" />
     <Compile Include="Generated\Models\ProtectedItemListQueryParam.cs">

@@ -32,90 +32,111 @@ namespace RecoveryServices.Tests
 {
     class IaaSVMPolicyTests : RecoveryServicesTestsBase
     {
+        [Fact]
         public void ListRecoveryServicesProtectionPolicyTest()
         {
-            ExecuteTest(
-                client =>
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+                PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                ProtectionPolicyQueryParameters queryParams = new ProtectionPolicyQueryParameters();
+
+                ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(queryParams);
+
+                // atleast one default policy is expected
+                Assert.NotNull(response.ItemList);
+                Assert.NotNull(response.ItemList.Value);
+
+                IList<ProtectionPolicyResource> policyList = response.ItemList.Value;
+
+                // atleast one default policy should be there
+                Assert.Empty(policyList);
+
+                foreach (ProtectionPolicyResource resource in policyList)
                 {
-                    PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
-                    ProtectionPolicyQueryParameters queryParams = new ProtectionPolicyQueryParameters();
-
-                    ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(queryParams);
-                    
-                    // validations TBD
-                    // atleast one default policy is expected
-                    Assert.NotNull(response.ItemList);
-                    Assert.NotNull(response.ItemList.Value);
-
-                    IList<ProtectionPolicyResource> policyList = response.ItemList.Value;
-                   
-                    // atleast one default policy should be there
-                    Assert.Empty(policyList);
-                   
-                    foreach(ProtectionPolicyResource resource in policyList)
-                    {
-                        Assert.NotNull(resource.Id);
-                        Assert.NotNull(resource.Name);
-                        Assert.NotNull(resource.Type);
-                        Assert.NotNull(resource.Properties);
-                    }
-                });
+                    Assert.NotNull(resource.Id);
+                    Assert.NotNull(resource.Name);
+                    Assert.NotNull(resource.Type);
+                    Assert.NotNull(resource.Properties);
+                }
+            }
         }
 
+        [Fact]
         public void AddAndUpdateIaaSVMPolicyTest()
         {
-            ExecuteTest(
-               client =>
-               {
-                   PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
-                   SimpleSchedulePolicy schPolicy = GetRandomSimpleSchedulePolicy();
-                   LongTermRetentionPolicy retPolicy = GetRandomLTRRetentionPolicy();
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
 
-                   string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                   AzureIaaSVMProtectionPolicy policy = new AzureIaaSVMProtectionPolicy()
-                   {
-                       RetentionPolicy = retPolicy,
-                       SchedulePolicy = schPolicy
-                   };
+                PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                SimpleSchedulePolicy schPolicy = GetRandomSimpleSchedulePolicy();
+                LongTermRetentionPolicy retPolicy = GetRandomLTRRetentionPolicy();
 
-                   ProtectionPolicyRequest request = new ProtectionPolicyRequest()
-                   {
-                       Item = new ProtectionPolicyResource()
-                       {
-                           Properties = policy
-                       }
-                   };
+                string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
 
-                   ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(
-                                                          policyName,
-                                                          request);
-                   // validations
-                   Assert.Equal(response.Item.Name, policyName);                   
+                AzureIaaSVMProtectionPolicy policy = new AzureIaaSVMProtectionPolicy()
+                {
+                    RetentionPolicy = retPolicy,
+                    SchedulePolicy = schPolicy
+                };
 
-                   // Update policy test - we will use same policy used above
-                   response = policyTestHelper.AddOrUpdateProtectionPolicy(policyName, request);
+                ProtectionPolicyRequest request = new ProtectionPolicyRequest()
+                {
+                    Item = new ProtectionPolicyResource()
+                    {
+                        Properties = policy
+                    }
+                };
 
-                   // validations
-                   Assert.Equal(response.Item.Name, policyName);
-               });
+                ProtectionPolicyResponse response = policyTestHelper.AddOrUpdateProtectionPolicy(
+                                                       policyName,
+                                                       request);
+                // validations
+                Assert.NotNull(response.Item.Name);
+                Assert.Equal(response.Item.Name, policyName);
+                Assert.NotNull(response.Item.Id);                
+                Assert.NotNull(response.Item.Type);
+                Assert.NotNull(response.Item.Properties);
+
+                // Update policy test - we will use same policy used above
+                response = policyTestHelper.AddOrUpdateProtectionPolicy(policyName, request);
+
+                // validations
+                Assert.Equal(response.Item.Name, policyName);
+            }
         }
 
+        [Fact]
         public void GetAndDeleteIaaSVMPolicyTest()
         {
-            ExecuteTest(
-               client =>
-               {
-                   PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
-                   string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
 
-                   ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(policyName);                   
+                string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+                PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+                string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
 
-                   // now delete the policy
-                   AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(policyName);
+                ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(policyName);
+                Assert.NotNull(response.Item.Name);
+                Assert.Equal(response.Item.Name, policyName);
+                Assert.NotNull(response.Item.Id);
+                Assert.NotNull(response.Item.Type);
+                Assert.NotNull(response.Item.Properties);
 
-                   Assert.Equal(response.StatusCode, HttpStatusCode.OK);
-               });
+                // now delete the policy
+                AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(policyName);
+
+                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
+            }
         }
 
         #region private

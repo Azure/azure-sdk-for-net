@@ -32,6 +32,7 @@ namespace RecoveryServices.Tests
 {
     public class JobTests : RecoveryServicesTestsBase
     {
+        [Fact]
         public void ListJobsAndGetJobTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -49,8 +50,8 @@ namespace RecoveryServices.Tests
 
                 CommonJobQueryFilters commonFilters = new CommonJobQueryFilters();
                 commonFilters.BackupManagementType = ProviderType.AzureIaasVM.ToString();
-                commonFilters.StartTime = (new DateTime(2016, 3, 30, 12, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
-                commonFilters.EndTime = (new DateTime(2016, 3, 31, 12, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
+                commonFilters.StartTime = (new DateTime(2016, 4, 12, 20, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
+                commonFilters.EndTime = (new DateTime(2016, 4, 13, 20, 0, 0)).ToUniversalTime().ToString("yyyy-MM-dd hh:mm:ss tt");
 
                 JobTestHelper helper = new JobTestHelper(client);
                 var jobList = helper.ListJobs(commonFilters, null);
@@ -70,6 +71,7 @@ namespace RecoveryServices.Tests
             }
         }
 
+        [Fact]
         public void CancelJobTest()
         {
             using (UndoContext context = UndoContext.Current)
