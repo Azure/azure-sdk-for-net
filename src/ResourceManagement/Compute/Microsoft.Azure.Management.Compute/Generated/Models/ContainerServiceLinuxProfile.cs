@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Profile for Linux VM
+    /// Profile for Linux VMs
     /// </summary>
     public partial class ContainerServiceLinuxProfile
     {
