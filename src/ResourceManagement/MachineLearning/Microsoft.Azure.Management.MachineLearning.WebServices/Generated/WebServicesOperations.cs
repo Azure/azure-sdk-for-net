@@ -55,17 +55,23 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='createOrUpdatePayload'>
         /// The payload to create or update the Azure ML web service.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebService>> CreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<WebService> _response = await BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(
-                createOrUpdatePayload, customHeaders, cancellationToken);
+                createOrUpdatePayload, resourceGroupName, webServiceName, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -77,6 +83,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='createOrUpdatePayload'>
         /// The payload to create or update the Azure ML web service.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -86,20 +98,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WebService>> BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebService>> BeginCreateOrUpdateWebServiceWithHttpMessagesAsync(WebService createOrUpdatePayload, string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ResourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
-            }
-            if (this.Client.WebServiceName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
-            }
             if (createOrUpdatePayload == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "createOrUpdatePayload");
@@ -107,6 +107,18 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             if (createOrUpdatePayload != null)
             {
                 createOrUpdatePayload.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (webServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "webServiceName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -120,6 +132,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("createOrUpdatePayload", createOrUpdatePayload);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webServiceName", webServiceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdateWebService", tracingParameters);
             }
@@ -127,8 +141,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(webServiceName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -282,6 +296,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// Retrieve an Azure ML web service definition by its subscription, resource
         /// group and name.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -291,19 +311,19 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WebService>> GetWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebService>> GetWebServiceWithHttpMessagesAsync(string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (this.Client.WebServiceName == null)
+            if (webServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "webServiceName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -316,6 +336,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webServiceName", webServiceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebService", tracingParameters);
             }
@@ -323,8 +345,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(webServiceName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -459,17 +481,23 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='patchPayload'>
         /// The payload to patch the Azure ML with.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebService>> PatchWebServiceWithHttpMessagesAsync(WebService patchPayload, string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<WebService> _response = await BeginPatchWebServiceWithHttpMessagesAsync(
-                patchPayload, customHeaders, cancellationToken);
+                patchPayload, resourceGroupName, webServiceName, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -481,6 +509,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='patchPayload'>
         /// The payload to patch the Azure ML with.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -490,23 +524,23 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WebService>> BeginPatchWebServiceWithHttpMessagesAsync(WebService patchPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebService>> BeginPatchWebServiceWithHttpMessagesAsync(WebService patchPayload, string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (patchPayload == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "patchPayload");
+            }
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (this.Client.WebServiceName == null)
+            if (webServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
-            }
-            if (patchPayload == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "patchPayload");
+                throw new ValidationException(ValidationRules.CannotBeNull, "webServiceName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -520,6 +554,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("patchPayload", patchPayload);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webServiceName", webServiceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPatchWebService", tracingParameters);
             }
@@ -527,8 +563,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(webServiceName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -663,23 +699,35 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <summary>
         /// Remove an existing Azure ML web service.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> RemoveWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RemoveWebServiceWithHttpMessagesAsync(string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse _response = await BeginRemoveWebServiceWithHttpMessagesAsync(
-                customHeaders, cancellationToken);
+                resourceGroupName, webServiceName, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
         /// Remove an existing Azure ML web service.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -689,19 +737,19 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginRemoveWebServiceWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginRemoveWebServiceWithHttpMessagesAsync(string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (this.Client.WebServiceName == null)
+            if (webServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "webServiceName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -714,6 +762,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webServiceName", webServiceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginRemoveWebService", tracingParameters);
             }
@@ -721,8 +771,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(webServiceName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -784,7 +834,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
@@ -823,6 +873,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// Get the primary and secondary access keys of a particular Azure ML web
         /// service
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -832,19 +888,19 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WebServiceKeys>> GetWebServiceKeysWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebServiceKeys>> GetWebServiceKeysWithHttpMessagesAsync(string resourceGroupName, string webServiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (this.Client.WebServiceName == null)
+            if (webServiceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.WebServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "webServiceName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -857,6 +913,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webServiceName", webServiceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebServiceKeys", tracingParameters);
             }
@@ -864,8 +922,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/keys").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
-            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(this.Client.WebServiceName));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{webServiceName}", Uri.EscapeDataString(webServiceName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -997,6 +1055,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <summary>
         /// Retrieve all Azure ML web services in a given resource group.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Continuation token for pagination.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1006,15 +1070,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInResourceGroupWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInResourceGroupWithHttpMessagesAsync(string resourceGroupName, string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (this.Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1027,6 +1091,8 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("skiptoken", skiptoken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebServicesInResourceGroup", tracingParameters);
             }
@@ -1034,15 +1100,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices").ToString();
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(this.Client.ResourceGroupName));
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (this.Client.Skiptoken != null)
+            if (skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Client.Skiptoken)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(skiptoken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1170,6 +1236,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <summary>
         /// Retrieve all Azure ML web services in the current Azure subscription.
         /// </summary>
+        /// <param name='skiptoken'>
+        /// Continuation token for pagination.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1179,7 +1248,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInSubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PaginatedWebServicesList>> GetWebServicesInSubscriptionWithHttpMessagesAsync(string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -1196,6 +1265,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("skiptoken", skiptoken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetWebServicesInSubscription", tracingParameters);
             }
@@ -1208,9 +1278,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             }
-            if (this.Client.Skiptoken != null)
+            if (skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(this.Client.Skiptoken)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", Uri.EscapeDataString(skiptoken)));
             }
             if (_queryParameters.Count > 0)
             {

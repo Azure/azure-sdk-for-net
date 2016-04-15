@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     /// service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
     /// &lt;/li&gt;&lt;li&gt;Get All Web Services in a
     /// Subscription&lt;/li&gt;&lt;li&gt;Get Web Services
-    /// Keys&lt;/li&gt;&lt;li&gt;Check Name
-    /// Availability&lt;/li&gt;&lt;li&gt;Get All Available
+    /// Keys&lt;/li&gt;&lt;li&gt;Get All Available
     /// Operations&lt;/li&gt;&lt;/ul&gt;
     /// </summary>
     public partial class AzureMLWebServicesManagementClient : ServiceClient<AzureMLWebServicesManagementClient>, IAzureMLWebServicesManagementClient, IAzureClient
@@ -61,31 +60,15 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Id of the Microsoft Azure subscription on which to perform ARM operations.
-        /// The subscription ID forms part of the URI for every service call.
+        /// Azure subscription id.
         /// </summary>
         public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The name of the resource group within the user's subscription.
-        /// </summary>
-        public string ResourceGroupName { get; set; }
-
-        /// <summary>
-        /// The Azure ML web service name which you want to reach.
-        /// </summary>
-        public string WebServiceName { get; set; }
 
         /// <summary>
         /// The versiong of the Microsoft.MachineLearning resource provider API to be
         /// used.
         /// </summary>
         public string ApiVersion { get; private set; }
-
-        /// <summary>
-        /// Continuation token for pagination.
-        /// </summary>
-        public string Skiptoken { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.

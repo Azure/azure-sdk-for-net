@@ -1,82 +1,66 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// 
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-
-using Microsoft.Azure.Management.MachineLearning.WebServices;
 using Microsoft.Azure.Management.MachineLearning.WebServices.Models;
-using Microsoft.Rest;
+using Microsoft.Azure.Management.MachineLearning.WebServices.Util;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace WebServices.Tests
 {
-    public class WebServiceTests : TestBase
+    public class ModelSerializationTests : TestBase
     {
-        private readonly AzureMLWebServicesManagementClient client;
-
-        public WebServiceTests()
+        [Fact]
+        public void GraphBasedWebServiceSerializationTest()
         {
-            this.client = new AzureMLWebServicesManagementClient(new TokenCredentials("foo"));
+            this.RunSerializationTest(@".\TestData\SerializedGraphWebService.json", ModelSerializationTests.CreateWebServiceGraph);
         }
 
         [Fact]
-        public void WebServiceSerializationGraph()
+        public void CodeBasedWebServiceSerializationTest()
         {
-            var payload = WebServiceTests.CreateWebServiceGraph();
-
-            string output = JsonConvert.SerializeObject(payload, client.SerializationSettings);
-            ValidateJson(output, "TestData\\WebServiceGraph.json");
+            this.RunSerializationTest(@".\TestData\SerializedCodeWebService.json", ModelSerializationTests.CreateWebServiceCode);
         }
 
-        [Fact]
-        public void WebServiceSerializationCode()
+        private void RunSerializationTest(string testDataFile, Func<WebService> createWebserviceCall)
         {
-            var payload = WebServiceTests.CreateWebServiceCode();
-
-            string output = JsonConvert.SerializeObject(payload, client.SerializationSettings);
-            ValidateJson(output, "TestData\\WebServiceCode.json");
-        }
-
-        [Fact]
-        public void WebServiceDeserializationGraph()
-        {
-            string input = File.ReadAllText("TestData\\WebServiceGraph.json");
-            var inputObj = JsonConvert.DeserializeObject<WebService>(input, client.DeserializationSettings);
-
-            var expectedPayload = CreateWebServiceGraph();
-
-            //TODO: Validate two objects are the same.
-        }
-
-        [Fact]
-        public void WebServiceDeserializationCode()
-        {
-            string input = File.ReadAllText("TestData\\WebServiceCode.json");
-            var inputObj = JsonConvert.DeserializeObject<WebService>(input, client.DeserializationSettings);
-
-            var expectedPayload = CreateWebServiceCode();
-
-            //TODO: Validate two objects are the same.
+            // Validate correct serialization
+            var payload = createWebserviceCall();
+            string output = ModelsSerializationUtil.GetAzureMLWebServiceDefinitionJsonFromObject(payload);
+            ModelSerializationTests.ValidateJson(output, testDataFile);
         }
 
         private static WebService CreateWebServiceGraph()
         {
             var payload = new WebService
             {
-                Location = "foo_Web_US",
+                Location = "South Central US",
                 Tags = new Dictionary<string, string>()
                 {
                     { "tag1", "https://foo-graph.com" }
-                }
+                },
+                Name = "graphWebService",
+                Id = "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/rg/providers/Microsoft.MachineLearning/webServices/graphWebService",
+                Type = "Microsoft.MachineLearning/webservices"
             };
 
             var payloadProperties = new WebServicePropertiesForGraph();
-            UpdateWebServiceCommonProperties(payloadProperties);
+            ModelSerializationTests.UpdateWebServiceCommonProperties(payloadProperties);
 
             var graphPackage = new WebServicePropertiesForGraphPackage();
             {
@@ -126,11 +110,14 @@ namespace WebServices.Tests
         {
             var payload = new WebService
             {
-                Location = "foo_Web_US",
+                Location = "South Central US",
                 Tags = new Dictionary<string, string>
                 {
                     { "tag1", "https://foo-code.com" }
-                }
+                },
+                Name = "codeWebService",
+                Id = "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/rg/providers/Microsoft.MachineLearning/webServices/codehWebService",
+                Type = "Microsoft.MachineLearning/webservices"
             };
 
             var payloadProperties = new WebServicePropertiesForCode();
@@ -147,7 +134,7 @@ namespace WebServices.Tests
             payloadProperties.Keys = new WebServiceKeys("primary key here", "secondary key here");
             payloadProperties.RealtimeConfiguration = new RealtimeConfiguration(100);
             payloadProperties.ReadOnlyProperty = true;
-            var dateTime = new DateTime(2007, 2, 4, 2, 20, 15, DateTimeKind.Local);
+            var dateTime = new DateTime(2017, 2, 4, 2, 20, 15, DateTimeKind.Local);
             payloadProperties.Diagnostics = new DiagnosticsConfiguration(DiagnosticsLevel.Error, dateTime);
             payloadProperties.StorageAccount = new StorageAccount("storage account id");
             payloadProperties.MachineLearningWorkspace = new MachineLearningWorkspace("workspace ID");

@@ -1,65 +1,10 @@
 {
   "properties": {
-    "packageType": "Graph",
+    "packageType": "Code",
     "package": {
-      "nodes": {
-        "node1": {
-          "assetId": "assetA",
-          "parameters": {
-            "key1": "value1",
-            "key2": "value2"
-          }
-        },
-        "node2": {
-          "assetId": "assetB",
-          "parameters": {
-            "key3": "value3",
-            "key4": "value4"
-          }
-        }
-      },
-      "edges": [
-        {
-          "sourceNodeId": "E3",
-          "targetNodeId": "1",
-          "targetPortId": "p1"
-        },
-        {
-          "sourceNodeId": "E1",
-          "sourcePortId": "p7",
-          "targetNodeId": "1"
-        }
-      ],
-      "graphParameters": {
-        "id1": {
-          "description": "Param1 description",
-          "type": "Int",
-          "links": [
-            {
-              "nodeId": "2",
-              "parameterKey": "paramId1"
-            },
-            {
-              "nodeId": "4",
-              "parameterKey": "paramId3"
-            }
-          ]
-        },
-        "id2": {
-          "description": "Param2 description",
-          "type": "Script",
-          "links": [
-            {
-              "nodeId": "7",
-              "parameterKey": "paramId5"
-            },
-            {
-              "nodeId": "9",
-              "parameterKey": "paramId11"
-            }
-          ]
-        }
-      }
+      "language": "R-3.1",
+      "sourceCode": "fake code here",
+      "zipFileAssetId": "2"
     },
     "description": "test data",
     "keys": {
@@ -72,7 +17,7 @@
     },
     "diagnostics": {
       "level": "Error",
-      "expiry": "2007-02-04T10:20:15Z"
+      "expiry": "2017-02-04T10:20:15Z"
     },
     "storageAccount": {
       "name": "storage account id"
@@ -200,8 +145,11 @@
       "param2": "value2"
     }
   },
-  "location": "foo_Web_US",
+  "id": "/subscriptions/7b373400-c82e-453b-a97b-c53e14325b8b/resourceGroups/rg/providers/Microsoft.MachineLearning/webServices/codehWebService",
+  "name": "codeWebService",
+  "location": "South Central US",
+  "type": "Microsoft.MachineLearning/webservices",
   "tags": {
-    "tag1": "https://foo-graph.com"
+    "tag1": "https://foo-code.com"
   }
 }
