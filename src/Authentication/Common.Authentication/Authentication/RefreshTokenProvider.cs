@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Common.Authentication
                 context.ValidateAuthority);
             TracingAdapter.Information(Resources.UPNAcquireTokenConfigTrace, config.AdDomain, config.AdEndpoint,
                 config.ClientId, config.ClientRedirectUri);
-            var result = context.AcquireTokenByRefreshToken(_refreshToken, _applicationId);
+            var result = context.AcquireTokenByRefreshToken(_refreshToken, _applicationId, config.ResourceClientUri);
             return result;
         }
 
