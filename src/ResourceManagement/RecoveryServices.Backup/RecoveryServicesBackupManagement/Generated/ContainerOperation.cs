@@ -2312,7 +2312,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='identityName'>
+        /// <param name='containerName'>
         /// Required. Container Name of protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -2325,7 +2325,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string identityName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2336,9 +2336,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ArgumentNullException("resourceName");
             }
-            if (identityName == null)
+            if (containerName == null)
             {
-                throw new ArgumentNullException("identityName");
+                throw new ArgumentNullException("containerName");
             }
             
             // Tracing
@@ -2350,7 +2350,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
-                tracingParameters.Add("identityName", identityName);
+                tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "UnregisterAsync", tracingParameters);
             }
@@ -2370,8 +2370,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             url = url + "vaults";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
-            url = url + "/registeredIdentities/";
-            url = url + Uri.EscapeDataString(identityName);
+            url = url + "/backupContainers/";
+            url = url + Uri.EscapeDataString(containerName);
+            url = url + "/unregisterContainer";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
