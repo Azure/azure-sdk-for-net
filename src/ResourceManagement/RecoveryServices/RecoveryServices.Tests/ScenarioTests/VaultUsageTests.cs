@@ -23,8 +23,8 @@ namespace RecoveryServices.Tests
 {
     public class VaultUsageTests : RecoveryServicesTestsBase
     {
-        string resourceGroupName = "testsitegroup";
-        string resourceName = "rsv5";
+        string resourceGroupName = "RsvTestRG";
+        string resourceName = "rsv6";
 
         [Fact]
         public void RetrieveVaultUsage()

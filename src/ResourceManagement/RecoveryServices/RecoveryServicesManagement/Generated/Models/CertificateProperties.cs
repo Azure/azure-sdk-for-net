@@ -29,6 +29,61 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// </summary>
     public partial class CertificateProperties
     {
+        private string _friendlyName;
+        
+        /// <summary>
+        /// Optional. Friendly name of the certificate.
+        /// </summary>
+        public string FriendlyName
+        {
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
+        }
+        
+        private string _globalAcsHostName;
+        
+        /// <summary>
+        /// Optional. Global ACS Host name.
+        /// </summary>
+        public string GlobalAcsHostName
+        {
+            get { return this._globalAcsHostName; }
+            set { this._globalAcsHostName = value; }
+        }
+        
+        private string _globalAcsNamespace;
+        
+        /// <summary>
+        /// Optional. Global ACS Namespace.
+        /// </summary>
+        public string GlobalAcsNamespace
+        {
+            get { return this._globalAcsNamespace; }
+            set { this._globalAcsNamespace = value; }
+        }
+        
+        private string _globalAcsRPRealm;
+        
+        /// <summary>
+        /// Optional. Global ACS RP realm.
+        /// </summary>
+        public string GlobalAcsRPRealm
+        {
+            get { return this._globalAcsRPRealm; }
+            set { this._globalAcsRPRealm = value; }
+        }
+        
+        private long _resourceId;
+        
+        /// <summary>
+        /// Optional. ASR vault id: resource id
+        /// </summary>
+        public long ResourceId
+        {
+            get { return this._resourceId; }
+            set { this._resourceId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the CertificateProperties class.
         /// </summary>

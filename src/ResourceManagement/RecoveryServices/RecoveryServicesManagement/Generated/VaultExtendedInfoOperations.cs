@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/extendedInformation/vaultExtendedInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/extendedInformation/vaultExtendedInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -585,7 +585,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/extendedInformation/vaultExtendedInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -886,7 +886,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/certificates/";
             url = url + Uri.EscapeDataString(certFriendlyName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -991,93 +991,42 @@ namespace Microsoft.Azure.Management.RecoveryServices
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                string typeName = ((string)propertiesValue2["authType"]);
-                                if (typeName == "ACS")
+                                CertificateProperties propertiesInstance = new CertificateProperties();
+                                result.Properties = propertiesInstance;
+                                
+                                JToken friendlyNameValue = propertiesValue2["friendlyName"];
+                                if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
                                 {
-                                    ACSCertificateProperties aCSCertificatePropertiesInstance = new ACSCertificateProperties();
-                                    
-                                    JToken friendlyNameValue = propertiesValue2["friendlyName"];
-                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string friendlyNameInstance = ((string)friendlyNameValue);
-                                        aCSCertificatePropertiesInstance.FriendlyName = friendlyNameInstance;
-                                    }
-                                    
-                                    JToken globalAcsHostNameValue = propertiesValue2["globalAcsHostName"];
-                                    if (globalAcsHostNameValue != null && globalAcsHostNameValue.Type != JTokenType.Null)
-                                    {
-                                        string globalAcsHostNameInstance = ((string)globalAcsHostNameValue);
-                                        aCSCertificatePropertiesInstance.GlobalAcsHostName = globalAcsHostNameInstance;
-                                    }
-                                    
-                                    JToken globalAcsNamespaceValue = propertiesValue2["globalAcsNamespace"];
-                                    if (globalAcsNamespaceValue != null && globalAcsNamespaceValue.Type != JTokenType.Null)
-                                    {
-                                        string globalAcsNamespaceInstance = ((string)globalAcsNamespaceValue);
-                                        aCSCertificatePropertiesInstance.GlobalAcsNamespace = globalAcsNamespaceInstance;
-                                    }
-                                    
-                                    JToken globalAcsRPRealmValue = propertiesValue2["globalAcsRPRealm"];
-                                    if (globalAcsRPRealmValue != null && globalAcsRPRealmValue.Type != JTokenType.Null)
-                                    {
-                                        string globalAcsRPRealmInstance = ((string)globalAcsRPRealmValue);
-                                        aCSCertificatePropertiesInstance.GlobalAcsRPRealm = globalAcsRPRealmInstance;
-                                    }
-                                    
-                                    JToken resourceIdValue = propertiesValue2["resourceId"];
-                                    if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
-                                    {
-                                        long resourceIdInstance = ((long)resourceIdValue);
-                                        aCSCertificatePropertiesInstance.ResourceId = resourceIdInstance;
-                                    }
-                                    result.Properties = aCSCertificatePropertiesInstance;
+                                    string friendlyNameInstance = ((string)friendlyNameValue);
+                                    propertiesInstance.FriendlyName = friendlyNameInstance;
                                 }
-                                if (typeName == "AAD")
+                                
+                                JToken globalAcsHostNameValue = propertiesValue2["globalAcsHostName"];
+                                if (globalAcsHostNameValue != null && globalAcsHostNameValue.Type != JTokenType.Null)
                                 {
-                                    AADCertificateProperties aADCertificatePropertiesInstance = new AADCertificateProperties();
-                                    
-                                    JToken resourceIdValue2 = propertiesValue2["resourceId"];
-                                    if (resourceIdValue2 != null && resourceIdValue2.Type != JTokenType.Null)
-                                    {
-                                        long resourceIdInstance2 = ((long)resourceIdValue2);
-                                        aADCertificatePropertiesInstance.ResourceId = resourceIdInstance2;
-                                    }
-                                    
-                                    JToken aadAuthorityValue = propertiesValue2["aadAuthority"];
-                                    if (aadAuthorityValue != null && aadAuthorityValue.Type != JTokenType.Null)
-                                    {
-                                        string aadAuthorityInstance = ((string)aadAuthorityValue);
-                                        aADCertificatePropertiesInstance.AadAuthority = aadAuthorityInstance;
-                                    }
-                                    
-                                    JToken aadTenantIdValue = propertiesValue2["aadTenantId"];
-                                    if (aadTenantIdValue != null && aadTenantIdValue.Type != JTokenType.Null)
-                                    {
-                                        string aadTenantIdInstance = ((string)aadTenantIdValue);
-                                        aADCertificatePropertiesInstance.AadTenantId = aadTenantIdInstance;
-                                    }
-                                    
-                                    JToken servicePrincipalClientIdValue = propertiesValue2["servicePrincipalClientId"];
-                                    if (servicePrincipalClientIdValue != null && servicePrincipalClientIdValue.Type != JTokenType.Null)
-                                    {
-                                        string servicePrincipalClientIdInstance = ((string)servicePrincipalClientIdValue);
-                                        aADCertificatePropertiesInstance.ServicePrincipalClientId = servicePrincipalClientIdInstance;
-                                    }
-                                    
-                                    JToken servicePrincipalObjectIdValue = propertiesValue2["servicePrincipalObjectId"];
-                                    if (servicePrincipalObjectIdValue != null && servicePrincipalObjectIdValue.Type != JTokenType.Null)
-                                    {
-                                        string servicePrincipalObjectIdInstance = ((string)servicePrincipalObjectIdValue);
-                                        aADCertificatePropertiesInstance.ServicePrincipalObjectId = servicePrincipalObjectIdInstance;
-                                    }
-                                    
-                                    JToken azureManagementEndpointAudienceValue = propertiesValue2["azureManagementEndpointAudience"];
-                                    if (azureManagementEndpointAudienceValue != null && azureManagementEndpointAudienceValue.Type != JTokenType.Null)
-                                    {
-                                        string azureManagementEndpointAudienceInstance = ((string)azureManagementEndpointAudienceValue);
-                                        aADCertificatePropertiesInstance.AzureManagementEndpointAudience = azureManagementEndpointAudienceInstance;
-                                    }
-                                    result.Properties = aADCertificatePropertiesInstance;
+                                    string globalAcsHostNameInstance = ((string)globalAcsHostNameValue);
+                                    propertiesInstance.GlobalAcsHostName = globalAcsHostNameInstance;
+                                }
+                                
+                                JToken globalAcsNamespaceValue = propertiesValue2["globalAcsNamespace"];
+                                if (globalAcsNamespaceValue != null && globalAcsNamespaceValue.Type != JTokenType.Null)
+                                {
+                                    string globalAcsNamespaceInstance = ((string)globalAcsNamespaceValue);
+                                    propertiesInstance.GlobalAcsNamespace = globalAcsNamespaceInstance;
+                                }
+                                
+                                JToken globalAcsRPRealmValue = propertiesValue2["globalAcsRPRealm"];
+                                if (globalAcsRPRealmValue != null && globalAcsRPRealmValue.Type != JTokenType.Null)
+                                {
+                                    string globalAcsRPRealmInstance = ((string)globalAcsRPRealmValue);
+                                    propertiesInstance.GlobalAcsRPRealm = globalAcsRPRealmInstance;
+                                }
+                                
+                                JToken resourceIdValue = propertiesValue2["resourceId"];
+                                if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                {
+                                    long resourceIdInstance = ((long)resourceIdValue);
+                                    propertiesInstance.ResourceId = resourceIdInstance;
                                 }
                             }
                         }

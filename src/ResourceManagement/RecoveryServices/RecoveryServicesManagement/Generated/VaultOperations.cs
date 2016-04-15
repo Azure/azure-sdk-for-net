@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/";
             url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/";
             url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -748,7 +748,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -975,7 +975,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupstorageconfig/vaultstorageconfig";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1170,7 +1170,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/";
             url = url + "vaults";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1417,7 +1417,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupstorageconfig/vaultstorageconfig";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-11-10");
+            queryParameters.Add("api-version=2016-05-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
