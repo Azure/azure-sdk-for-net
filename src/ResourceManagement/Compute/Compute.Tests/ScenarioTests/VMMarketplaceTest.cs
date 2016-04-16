@@ -105,7 +105,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip ="TODO by Vivek")]
         public void TestVMBYOL()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
