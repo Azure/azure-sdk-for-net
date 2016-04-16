@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobIdentity'>
-            /// JobInfo ID.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
-            public static JobStatistics GetStatistics(this IJobOperations operations, Guid jobIdentity, string accountName)
+            /// <param name='jobIdentity'>
+            /// JobInfo ID.
+            /// </param>
+            public static JobStatistics GetStatistics(this IJobOperations operations, string accountName, Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetStatisticsAsync(jobIdentity, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobOperations)s).GetStatisticsAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,18 +46,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobIdentity'>
-            /// JobInfo ID.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
+            /// </param>
+            /// <param name='jobIdentity'>
+            /// JobInfo ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobStatistics> GetStatisticsAsync(this IJobOperations operations, Guid jobIdentity, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobStatistics> GetStatisticsAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetStatisticsWithHttpMessagesAsync(jobIdentity, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetStatisticsWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -69,15 +69,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobIdentity'>
-            /// JobInfo ID.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
-            public static JobDataPath GetDebugDataPath(this IJobOperations operations, Guid jobIdentity, string accountName)
+            /// <param name='jobIdentity'>
+            /// JobInfo ID.
+            /// </param>
+            public static JobDataPath GetDebugDataPath(this IJobOperations operations, string accountName, Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetDebugDataPathAsync(jobIdentity, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobOperations)s).GetDebugDataPathAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -86,18 +86,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobIdentity'>
-            /// JobInfo ID.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
+            /// </param>
+            /// <param name='jobIdentity'>
+            /// JobInfo ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDataPath> GetDebugDataPathAsync(this IJobOperations operations, Guid jobIdentity, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobDataPath> GetDebugDataPathAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetDebugDataPathWithHttpMessagesAsync(jobIdentity, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetDebugDataPathWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -110,15 +110,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters to build a job.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
-            public static JobInformation Build(this IJobOperations operations, JobInformation parameters, string accountName)
+            /// <param name='parameters'>
+            /// The parameters to build a job.
+            /// </param>
+            public static JobInformation Build(this IJobOperations operations, string accountName, JobInformation parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).BuildAsync(parameters, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobOperations)s).BuildAsync(accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,18 +128,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute job operations on.
+            /// </param>
             /// <param name='parameters'>
             /// The parameters to build a job.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> BuildAsync(this IJobOperations operations, JobInformation parameters, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> BuildAsync(this IJobOperations operations, string accountName, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BuildWithHttpMessagesAsync(parameters, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BuildWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -151,15 +151,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobIdentity'>
-            /// JobInfo ID to cancel.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
-            public static void Cancel(this IJobOperations operations, Guid jobIdentity, string accountName)
+            /// <param name='jobIdentity'>
+            /// JobInfo ID to cancel.
+            /// </param>
+            public static void Cancel(this IJobOperations operations, string accountName, Guid jobIdentity)
             {
-                Task.Factory.StartNew(s => ((IJobOperations)s).CancelAsync(jobIdentity, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IJobOperations)s).CancelAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -168,18 +168,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute job operations on.
+            /// </param>
             /// <param name='jobIdentity'>
             /// JobInfo ID to cancel.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync(this IJobOperations operations, Guid jobIdentity, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CancelWithHttpMessagesAsync(jobIdentity, accountName, null, cancellationToken).ConfigureAwait(false);
+                await operations.CancelWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -188,15 +188,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobIdentity'>
-            /// JobInfo ID.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
-            public static JobInformation Get(this IJobOperations operations, Guid jobIdentity, string accountName)
+            /// <param name='jobIdentity'>
+            /// JobInfo ID.
+            /// </param>
+            public static JobInformation Get(this IJobOperations operations, string accountName, Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetAsync(jobIdentity, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobOperations)s).GetAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -205,18 +205,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='jobIdentity'>
-            /// JobInfo ID.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute job operations on.
+            /// </param>
+            /// <param name='jobIdentity'>
+            /// JobInfo ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> GetAsync(this IJobOperations operations, Guid jobIdentity, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> GetAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(jobIdentity, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -228,18 +228,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute job operations on.
+            /// </param>
             /// <param name='jobIdentity'>
             /// The job ID (a GUID) for the job being submitted.
             /// </param>
             /// <param name='parameters'>
             /// The parameters to submit a job.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
-            public static JobInformation Create(this IJobOperations operations, Guid jobIdentity, JobInformation parameters, string accountName)
+            public static JobInformation Create(this IJobOperations operations, string accountName, Guid jobIdentity, JobInformation parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).CreateAsync(jobIdentity, parameters, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IJobOperations)s).CreateAsync(accountName, jobIdentity, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -248,21 +248,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute job operations on.
+            /// </param>
             /// <param name='jobIdentity'>
             /// The job ID (a GUID) for the job being submitted.
             /// </param>
             /// <param name='parameters'>
             /// The parameters to submit a job.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> CreateAsync(this IJobOperations operations, Guid jobIdentity, JobInformation parameters, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobInformation> CreateAsync(this IJobOperations operations, string accountName, Guid jobIdentity, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(jobIdentity, parameters, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(accountName, jobIdentity, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

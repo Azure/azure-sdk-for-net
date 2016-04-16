@@ -55,15 +55,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// CANNOT be used interchangeably. Once a file has been appended to using
         /// either append option, it can only be appended to using that append option.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='filePath'>
         /// The Data Lake Store path (starting with '/') of the file to which to
         /// append using concurrent append.
         /// </param>
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='appendMode'>
         /// Indicates the concurrent append call should create the file if it doesn't
@@ -79,8 +79,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string filePath, System.IO.Stream streamContents, string accountName, AppendModeType? appendMode = default(AppendModeType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (filePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
@@ -93,14 +101,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "CONCURRENTAPPEND";
             string transferEncoding = "chunked";
             // Tracing
@@ -110,21 +110,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("appendMode", appendMode);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("transferEncoding", transferEncoding);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ConcurrentAppend", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "WebHdfsExt/{filePath}";
-            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
             List<string> _queryParameters = new List<string>();
             if (appendMode != null)
             {
@@ -244,12 +244,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Checks if the specified access is available at the given path.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='path'>
         /// The Data Lake Store path (starting with '/') of the file or directory for
         /// which to check access.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='fsaction'>
         /// File system operation read/write/execute in string form, matching regex
@@ -264,16 +264,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CheckAccessWithHttpMessagesAsync(string path, string accountName, string fsaction = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CheckAccessWithHttpMessagesAsync(string accountName, string path, string fsaction = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (path == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "path");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -281,6 +273,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (path == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "path");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "CHECKACCESS";
             // Tracing
@@ -290,19 +290,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("path", path);
                 tracingParameters.Add("fsaction", fsaction);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckAccess", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{path}";
-            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
             List<string> _queryParameters = new List<string>();
             if (fsaction != null)
             {
@@ -411,11 +411,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Creates a directory.
         /// </summary>
-        /// <param name='path'>
-        /// The Data Lake Store path (starting with '/') of the directory to create.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='path'>
+        /// The Data Lake Store path (starting with '/') of the directory to create.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -426,16 +426,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string path, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string accountName, string path, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (path == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "path");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -443,6 +435,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (path == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "path");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MKDIRS";
             // Tracing
@@ -452,18 +452,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("path", path);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Mkdirs", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{path}";
-            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
             List<string> _queryParameters = new List<string>();
             if (op != null)
             {
@@ -600,6 +600,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Concatenates the list of source files into the destination file, removing
         /// all source files upon success.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='destinationPath'>
         /// The Data Lake Store path (starting with '/') of the destination file
         /// resulting from the concatenation.
@@ -607,9 +610,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='sources'>
         /// A list of comma seperated Data Lake Store paths (starting with '/') of the
         /// files to concatenate, in the order in which they should be concatenated.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -620,8 +620,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string destinationPath, IList<string> sources, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string accountName, string destinationPath, IList<string> sources, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (destinationPath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "destinationPath");
@@ -634,14 +642,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "CONCAT";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -650,19 +650,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("destinationPath", destinationPath);
                 tracingParameters.Add("sources", sources);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Concat", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{destinationPath}";
-            _url = _url.Replace("{destinationPath}", Uri.EscapeDataString(destinationPath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{destinationPath}", Uri.EscapeDataString(destinationPath));
             List<string> _queryParameters = new List<string>();
             if (sources != null)
             {
@@ -774,6 +774,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// than the Concat method. This method and the parameters it accepts are
         /// subject to change for usability in an upcoming version.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='msConcatDestinationPath'>
         /// The Data Lake Store path (starting with '/') of the destination file
         /// resulting from the concatenation.
@@ -781,9 +784,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='streamContents'>
         /// A list of Data Lake Store paths (starting with '/') of the source files.
         /// Must be in the format: sources=&lt;comma separated list&gt;
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='deleteSourceDirectory'>
         /// Indicates that as an optimization instead of deleting each individual
@@ -803,8 +803,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string msConcatDestinationPath, System.IO.Stream streamContents, string accountName, bool? deleteSourceDirectory = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string accountName, string msConcatDestinationPath, System.IO.Stream streamContents, bool? deleteSourceDirectory = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (msConcatDestinationPath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "msConcatDestinationPath");
@@ -817,14 +825,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "MSCONCAT";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -833,20 +833,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("msConcatDestinationPath", msConcatDestinationPath);
                 tracingParameters.Add("deleteSourceDirectory", deleteSourceDirectory);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "MsConcat", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{msConcatDestinationPath}";
-            _url = _url.Replace("{msConcatDestinationPath}", Uri.EscapeDataString(msConcatDestinationPath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{msConcatDestinationPath}", Uri.EscapeDataString(msConcatDestinationPath));
             List<string> _queryParameters = new List<string>();
             if (deleteSourceDirectory != null)
             {
@@ -959,11 +959,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Get the list of file status objects specified by the file path, with
         /// optional pagination parameters
         /// </summary>
-        /// <param name='listFilePath'>
-        /// The Data Lake Store path (starting with '/') of the directory to list.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='listFilePath'>
+        /// The Data Lake Store path (starting with '/') of the directory to list.
         /// </param>
         /// <param name='listSize'>
         /// Gets or sets the number of items to return. Optional.
@@ -989,16 +989,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string listFilePath, string accountName, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string accountName, string listFilePath, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (listFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "listFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1006,6 +998,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (listFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "listFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MSLISTSTATUS";
             // Tracing
@@ -1015,21 +1015,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("listFilePath", listFilePath);
                 tracingParameters.Add("listSize", listSize);
                 tracingParameters.Add("listAfter", listAfter);
                 tracingParameters.Add("listBefore", listBefore);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListFileStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{listFilePath}";
-            _url = _url.Replace("{listFilePath}", Uri.EscapeDataString(listFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{listFilePath}", Uri.EscapeDataString(listFilePath));
             List<string> _queryParameters = new List<string>();
             if (listSize != null)
             {
@@ -1177,12 +1177,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Gets the file content summary object specified by the file path.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='getContentSummaryFilePath'>
         /// The Data Lake Store path (starting with '/') of the file for which to
         /// retrieve the summary.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1193,16 +1193,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ContentSummaryResult>> GetContentSummaryWithHttpMessagesAsync(string getContentSummaryFilePath, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ContentSummaryResult>> GetContentSummaryWithHttpMessagesAsync(string accountName, string getContentSummaryFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (getContentSummaryFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "getContentSummaryFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1210,6 +1202,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (getContentSummaryFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "getContentSummaryFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "GETCONTENTSUMMARY";
             // Tracing
@@ -1219,18 +1219,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("getContentSummaryFilePath", getContentSummaryFilePath);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetContentSummary", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/va/{getContentSummaryFilePath}";
-            _url = _url.Replace("{getContentSummaryFilePath}", Uri.EscapeDataString(getContentSummaryFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{getContentSummaryFilePath}", Uri.EscapeDataString(getContentSummaryFilePath));
             List<string> _queryParameters = new List<string>();
             if (op != null)
             {
@@ -1366,12 +1366,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Get the file status object specified by the file path.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='getFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory for
         /// which to retrieve the status.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1382,16 +1382,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileStatusResult>> GetFileStatusWithHttpMessagesAsync(string getFilePath, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileStatusResult>> GetFileStatusWithHttpMessagesAsync(string accountName, string getFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (getFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "getFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1399,6 +1391,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (getFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "getFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "GETFILESTATUS";
             // Tracing
@@ -1408,18 +1408,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("getFilePath", getFilePath);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetFileStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{getFilePath}";
-            _url = _url.Replace("{getFilePath}", Uri.EscapeDataString(getFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{getFilePath}", Uri.EscapeDataString(getFilePath));
             List<string> _queryParameters = new List<string>();
             if (op != null)
             {
@@ -1560,15 +1560,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// that append option. Use the ConcurrentAppend option if you would like
         /// support for concurrent appends.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='directFilePath'>
         /// The Data Lake Store path (starting with '/') of the file to which to
         /// append.
         /// </param>
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1579,8 +1579,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string directFilePath, System.IO.Stream streamContents, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (directFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
@@ -1593,14 +1601,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "APPEND";
             string append = "true";
             string transferEncoding = "chunked";
@@ -1611,21 +1611,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
                 tracingParameters.Add("transferEncoding", transferEncoding);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Append", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{directFilePath}";
-            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
             List<string> _queryParameters = new List<string>();
             if (op != null)
             {
@@ -1745,11 +1745,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Creates a file with optionally specified content.
         /// </summary>
-        /// <param name='directFilePath'>
-        /// The Data Lake Store path (starting with '/') of the file to create.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='directFilePath'>
+        /// The Data Lake Store path (starting with '/') of the file to create.
         /// </param>
         /// <param name='streamContents'>
         /// The file contents to include when creating the file. This parameter is
@@ -1767,16 +1767,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string directFilePath, string accountName, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (directFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1784,6 +1776,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (directFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "CREATE";
             string write = "true";
@@ -1795,22 +1795,22 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("overwrite", overwrite);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("write", write);
                 tracingParameters.Add("transferEncoding", transferEncoding);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{directFilePath}";
-            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
             List<string> _queryParameters = new List<string>();
             if (overwrite != null)
             {
@@ -1934,11 +1934,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Opens and reads from the specified file.
         /// </summary>
-        /// <param name='directFilePath'>
-        /// The Data Lake Store path (starting with '/') of the file to open.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='directFilePath'>
+        /// The Data Lake Store path (starting with '/') of the file to open.
         /// </param>
         /// <param name='length'>
         /// </param>
@@ -1953,16 +1953,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string directFilePath, string accountName, long? length = default(long?), long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string accountName, string directFilePath, long? length = default(long?), long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (directFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -1970,6 +1962,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (directFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "OPEN";
             string read = "true";
@@ -1980,21 +1980,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("length", length);
                 tracingParameters.Add("offset", offset);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("read", read);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Open", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{directFilePath}";
-            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
             List<string> _queryParameters = new List<string>();
             if (length != null)
             {
@@ -2129,6 +2129,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Sets the Access Control List (ACL) for a file or folder.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='setAclFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory on
         /// which to set the ACL.
@@ -2136,9 +2139,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='aclspec'>
         /// The ACL spec included in ACL creation operations in the format
         /// '[default:]user|group|other::r|-w|-x|-'
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2149,8 +2149,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetAclWithHttpMessagesAsync(string setAclFilePath, string aclspec, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetAclWithHttpMessagesAsync(string accountName, string setAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (setAclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "setAclFilePath");
@@ -2163,14 +2171,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "SETACL";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2179,19 +2179,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("setAclFilePath", setAclFilePath);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "SetAcl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{setAclFilePath}";
-            _url = _url.Replace("{setAclFilePath}", Uri.EscapeDataString(setAclFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{setAclFilePath}", Uri.EscapeDataString(setAclFilePath));
             List<string> _queryParameters = new List<string>();
             if (aclspec != null)
             {
@@ -2300,6 +2300,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Modifies existing Access Control List (ACL) entries on a file or folder.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='modifyAclFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory with
         /// the ACL being modified.
@@ -2307,9 +2310,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='aclspec'>
         /// The ACL specification included in ACL modification operations in the
         /// format '[default:]user|group|other::r|-w|-x|-'
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2320,8 +2320,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ModifyAclEntriesWithHttpMessagesAsync(string modifyAclFilePath, string aclspec, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ModifyAclEntriesWithHttpMessagesAsync(string accountName, string modifyAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (modifyAclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "modifyAclFilePath");
@@ -2334,14 +2342,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "MODIFYACLENTRIES";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2350,19 +2350,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("modifyAclFilePath", modifyAclFilePath);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ModifyAclEntries", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{modifyAclFilePath}";
-            _url = _url.Replace("{modifyAclFilePath}", Uri.EscapeDataString(modifyAclFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{modifyAclFilePath}", Uri.EscapeDataString(modifyAclFilePath));
             List<string> _queryParameters = new List<string>();
             if (aclspec != null)
             {
@@ -2471,6 +2471,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Removes existing Access Control List (ACL) entries for a file or folder.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='removeAclFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory with
         /// the ACL being removed.
@@ -2478,9 +2481,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='aclspec'>
         /// The ACL spec included in ACL removal operations in the format
         /// '[default:]user|group|other'
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2491,8 +2491,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string removeAclFilePath, string aclspec, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string accountName, string removeAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (removeAclFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "removeAclFilePath");
@@ -2505,14 +2513,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "REMOVEACLENTRIES";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2521,19 +2521,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("removeAclFilePath", removeAclFilePath);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RemoveAclEntries", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{removeAclFilePath}";
-            _url = _url.Replace("{removeAclFilePath}", Uri.EscapeDataString(removeAclFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{removeAclFilePath}", Uri.EscapeDataString(removeAclFilePath));
             List<string> _queryParameters = new List<string>();
             if (aclspec != null)
             {
@@ -2643,12 +2643,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Removes the existing Access Control List (ACL) of the specified file or
         /// directory.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='aclFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory with
         /// the ACL being removed.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2659,16 +2659,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string aclFilePath, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string accountName, string aclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (aclFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -2676,6 +2668,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (aclFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "REMOVEACL";
             // Tracing
@@ -2685,18 +2685,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("aclFilePath", aclFilePath);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RemoveAcl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{aclFilePath}";
-            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
             List<string> _queryParameters = new List<string>();
             if (op != null)
             {
@@ -2801,12 +2801,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Gets Access Control List (ACL) entries for the specified file or directory.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='aclFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory for
         /// which to get the ACL.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2817,16 +2817,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AclStatusResult>> GetAclStatusWithHttpMessagesAsync(string aclFilePath, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AclStatusResult>> GetAclStatusWithHttpMessagesAsync(string accountName, string aclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (aclFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -2834,6 +2826,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (aclFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "GETACLSTATUS";
             // Tracing
@@ -2843,18 +2843,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("aclFilePath", aclFilePath);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAclStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{aclFilePath}";
-            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
             List<string> _queryParameters = new List<string>();
             if (op != null)
             {
@@ -2990,12 +2990,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Deletes the requested file or directory, optionally recursively.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='filePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory to
         /// delete.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='recursive'>
         /// The optional switch indicating if the delete should be recursive
@@ -3009,16 +3009,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileOperationResult>> DeleteWithHttpMessagesAsync(string filePath, string accountName, bool? recursive = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> DeleteWithHttpMessagesAsync(string accountName, string filePath, bool? recursive = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (filePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -3026,6 +3018,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (filePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "DELETE";
             // Tracing
@@ -3035,19 +3035,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("recursive", recursive);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{filePath}";
-            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
             List<string> _queryParameters = new List<string>();
             if (recursive != null)
             {
@@ -3187,15 +3187,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Rename a file or directory.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='renameFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory to
         /// move/rename.
         /// </param>
         /// <param name='destination'>
         /// The path to move/rename the file or folder to
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3206,8 +3206,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileOperationResult>> RenameWithHttpMessagesAsync(string renameFilePath, string destination, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileOperationResult>> RenameWithHttpMessagesAsync(string accountName, string renameFilePath, string destination, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
             if (renameFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "renameFilePath");
@@ -3220,14 +3228,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (this.Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
             string op = "RENAME";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3236,19 +3236,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("renameFilePath", renameFilePath);
                 tracingParameters.Add("destination", destination);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Rename", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{renameFilePath}";
-            _url = _url.Replace("{renameFilePath}", Uri.EscapeDataString(renameFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{renameFilePath}", Uri.EscapeDataString(renameFilePath));
             List<string> _queryParameters = new List<string>();
             if (destination != null)
             {
@@ -3388,12 +3388,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Sets the owner of a file or directory.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='setOwnerFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory for
         /// which to set the owner.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='owner'>
         /// The AAD Object ID of the user owner of the file or directory. If empty,
@@ -3412,16 +3412,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetOwnerWithHttpMessagesAsync(string setOwnerFilePath, string accountName, string owner = default(string), string group = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetOwnerWithHttpMessagesAsync(string accountName, string setOwnerFilePath, string owner = default(string), string group = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (setOwnerFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "setOwnerFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -3429,6 +3421,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (setOwnerFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "setOwnerFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "SETOWNER";
             // Tracing
@@ -3438,20 +3438,20 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("setOwnerFilePath", setOwnerFilePath);
                 tracingParameters.Add("owner", owner);
                 tracingParameters.Add("group", group);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "SetOwner", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{setOwnerFilePath}";
-            _url = _url.Replace("{setOwnerFilePath}", Uri.EscapeDataString(setOwnerFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{setOwnerFilePath}", Uri.EscapeDataString(setOwnerFilePath));
             List<string> _queryParameters = new List<string>();
             if (owner != null)
             {
@@ -3564,12 +3564,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Sets the permission of the file or folder.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
         /// <param name='setPermissionFilePath'>
         /// The Data Lake Store path (starting with '/') of the file or directory for
         /// which to set the permission.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
         /// </param>
         /// <param name='permission'>
         /// A string representation of the permission (i.e 'rwx'). If empty, this
@@ -3584,16 +3584,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetPermissionWithHttpMessagesAsync(string setPermissionFilePath, string accountName, string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SetPermissionWithHttpMessagesAsync(string accountName, string setPermissionFilePath, string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (setPermissionFilePath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "setPermissionFilePath");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -3601,6 +3593,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (setPermissionFilePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "setPermissionFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "SETPERMISSION";
             // Tracing
@@ -3610,19 +3610,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("setPermissionFilePath", setPermissionFilePath);
                 tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
-                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "SetPermission", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{setPermissionFilePath}";
-            _url = _url.Replace("{setPermissionFilePath}", Uri.EscapeDataString(setPermissionFilePath));
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{setPermissionFilePath}", Uri.EscapeDataString(setPermissionFilePath));
             List<string> _queryParameters = new List<string>();
             if (permission != null)
             {
