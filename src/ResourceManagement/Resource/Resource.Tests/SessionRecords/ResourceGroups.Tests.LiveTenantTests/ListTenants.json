@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/tenants?api-version=2016-02-01",
+      "RequestUri": "/tenants?api-version=2015-11-01",
       "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
