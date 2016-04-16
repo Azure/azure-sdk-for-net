@@ -47,7 +47,7 @@ namespace Compute.Tests
             return vmExtension;
         }
 
-        [Fact]
+        [Fact(Skip = "TODO by Vivek")]
         public void TestVMExtensionOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

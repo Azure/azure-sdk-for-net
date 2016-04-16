@@ -47,7 +47,7 @@ namespace Compute.Tests
         /// Deallocate VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "TODO by Vivek")]
         public void TestVMScaleSetOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
