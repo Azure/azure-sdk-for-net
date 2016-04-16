@@ -207,7 +207,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "TODO by Vivek")]
         public void TestVMWithLinuxOSProfile()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

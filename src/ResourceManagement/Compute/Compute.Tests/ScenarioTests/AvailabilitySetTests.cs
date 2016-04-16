@@ -55,7 +55,7 @@ namespace Compute.Tests
         const int UDTooLow = 0;
         const int UDTooHi = 21;
 
-        [Fact]
+        [Fact(Skip = "TODO by Vivek")]
         public void TestOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
