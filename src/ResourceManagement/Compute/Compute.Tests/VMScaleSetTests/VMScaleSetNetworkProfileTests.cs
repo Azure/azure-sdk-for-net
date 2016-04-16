@@ -38,7 +38,7 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet to an Application gateway
         /// </summary>
-        [Fact(Skip = "TODO by Vivek")]
+        [Fact]
         public void TestVMScaleSetWithApplciationGateway()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

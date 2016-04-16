@@ -77,7 +77,7 @@ namespace Compute.Tests
         /// Capture VM
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "TODO by Vivek")]
+        [Fact]
         public void TestVMOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -159,7 +159,7 @@ namespace Compute.Tests
         /// Redeploy VM
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "TODO by Vivek")]
+        [Fact]
         public void TestVMOperations_Redeploy()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
