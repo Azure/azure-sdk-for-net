@@ -31,13 +31,16 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Initializes a new instance of the DeploymentOperationProperties
         /// class.
         /// </summary>
-        public DeploymentOperationProperties(string provisioningState = default(string), DateTime? timestamp = default(DateTime?), string statusCode = default(string), object statusMessage = default(object), TargetResource targetResource = default(TargetResource))
+        public DeploymentOperationProperties(string provisioningState = default(string), DateTime? timestamp = default(DateTime?), string serviceRequestId = default(string), string statusCode = default(string), object statusMessage = default(object), TargetResource targetResource = default(TargetResource), HttpMessage request = default(HttpMessage), HttpMessage response = default(HttpMessage))
         {
             ProvisioningState = provisioningState;
             Timestamp = timestamp;
+            ServiceRequestId = serviceRequestId;
             StatusCode = statusCode;
             StatusMessage = statusMessage;
             TargetResource = targetResource;
+            Request = request;
+            Response = response;
         }
 
         /// <summary>
@@ -51,6 +54,12 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
         public DateTime? Timestamp { get; set; }
+
+        /// <summary>
+        /// Gets or sets deployment operation service request id.
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceRequestId")]
+        public string ServiceRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets operation status code.
@@ -69,6 +78,18 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetResource")]
         public TargetResource TargetResource { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP request message.
+        /// </summary>
+        [JsonProperty(PropertyName = "request")]
+        public HttpMessage Request { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP response message.
+        /// </summary>
+        [JsonProperty(PropertyName = "response")]
+        public HttpMessage Response { get; set; }
 
     }
 }

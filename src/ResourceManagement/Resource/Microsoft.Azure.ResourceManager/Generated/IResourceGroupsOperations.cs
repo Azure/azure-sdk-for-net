@@ -71,9 +71,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse<ResourceGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Begin deleting resource group.To determine whether the operation
-        /// has finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Delete resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case
@@ -87,9 +85,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Begin deleting resource group.To determine whether the operation
-        /// has finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Delete resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case

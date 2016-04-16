@@ -604,8 +604,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Begin deleting resource group.To determine whether the operation has
-        /// finished processing the request, call GetLongRunningOperationStatus.
+        /// Delete resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case insensitive.
@@ -625,8 +624,7 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Begin deleting resource group.To determine whether the operation has
-        /// finished processing the request, call GetLongRunningOperationStatus.
+        /// Delete resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case insensitive.

@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Resources
         public ResourceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Begin moving resources.To determine whether the operation has finished
-        /// processing the request, call GetLongRunningOperationStatus.
+        /// Move resources from one resource group to another. The resources being
+        /// moved should all be in the same resource group.
         /// </summary>
         /// <param name='sourceResourceGroupName'>
         /// Source resource group name.
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Begin moving resources.To determine whether the operation has finished
-        /// processing the request, call GetLongRunningOperationStatus.
+        /// Move resources from one resource group to another. The resources being
+        /// moved should all be in the same resource group.
         /// </summary>
         /// <param name='sourceResourceGroupName'>
         /// Source resource group name.
@@ -1185,7 +1185,7 @@ namespace Microsoft.Azure.Management.Resources
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1229,24 +1229,6 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Deserialize Response
             if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<GenericResource>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 204)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try

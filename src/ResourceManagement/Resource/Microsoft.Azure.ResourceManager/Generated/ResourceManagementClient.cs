@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Resources
             this.PolicyDefinitions = new PolicyDefinitionsOperations(this);
             this.PolicyAssignments = new PolicyAssignmentsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-11-01";
+            this.ApiVersion = "2016-02-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
