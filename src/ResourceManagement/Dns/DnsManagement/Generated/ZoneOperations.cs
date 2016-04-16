@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Dns;
 using Microsoft.Azure.Management.Dns.Models;
@@ -386,6 +387,24 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         propertiesValue["numberOfRecordSets"] = parameters.Zone.Properties.NumberOfRecordSets.Value;
                     }
+                    
+                    if (parameters.Zone.Properties.NameServers != null)
+                    {
+                        if (parameters.Zone.Properties.NameServers is ILazyCollection == false || ((ILazyCollection)parameters.Zone.Properties.NameServers).IsInitialized)
+                        {
+                            JArray nameServersArray = new JArray();
+                            foreach (string nameServersItem in parameters.Zone.Properties.NameServers)
+                            {
+                                nameServersArray.Add(nameServersItem);
+                            }
+                            propertiesValue["nameServers"] = nameServersArray;
+                        }
+                    }
+                    
+                    if (parameters.Zone.Properties.ParentResourceGroupName != null)
+                    {
+                        propertiesValue["parentResourceGroupName"] = parameters.Zone.Properties.ParentResourceGroupName;
+                    }
                 }
                 
                 if (parameters.Zone.Id != null)
@@ -491,6 +510,22 @@ namespace Microsoft.Azure.Management.Dns
                                 {
                                     long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
+                                }
+                                
+                                JToken nameServersArray2 = propertiesValue2["nameServers"];
+                                if (nameServersArray2 != null && nameServersArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken nameServersValue in ((JArray)nameServersArray2))
+                                    {
+                                        propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                    }
+                                }
+                                
+                                JToken parentResourceGroupNameValue = propertiesValue2["parentResourceGroupName"];
+                                if (parentResourceGroupNameValue != null && parentResourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string parentResourceGroupNameInstance = ((string)parentResourceGroupNameValue);
+                                    propertiesInstance.ParentResourceGroupName = parentResourceGroupNameInstance;
                                 }
                             }
                             
@@ -792,6 +827,22 @@ namespace Microsoft.Azure.Management.Dns
                                     long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                 }
+                                
+                                JToken nameServersArray = propertiesValue["nameServers"];
+                                if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                    {
+                                        propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                    }
+                                }
+                                
+                                JToken parentResourceGroupNameValue = propertiesValue["parentResourceGroupName"];
+                                if (parentResourceGroupNameValue != null && parentResourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string parentResourceGroupNameInstance = ((string)parentResourceGroupNameValue);
+                                    propertiesInstance.ParentResourceGroupName = parentResourceGroupNameInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -990,6 +1041,22 @@ namespace Microsoft.Azure.Management.Dns
                                         {
                                             long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
+                                        }
+                                        
+                                        JToken nameServersArray = propertiesValue["nameServers"];
+                                        if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                            {
+                                                propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                            }
+                                        }
+                                        
+                                        JToken parentResourceGroupNameValue = propertiesValue["parentResourceGroupName"];
+                                        if (parentResourceGroupNameValue != null && parentResourceGroupNameValue.Type != JTokenType.Null)
+                                        {
+                                            string parentResourceGroupNameInstance = ((string)parentResourceGroupNameValue);
+                                            propertiesInstance.ParentResourceGroupName = parentResourceGroupNameInstance;
                                         }
                                     }
                                     
@@ -1242,6 +1309,22 @@ namespace Microsoft.Azure.Management.Dns
                                             long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                         }
+                                        
+                                        JToken nameServersArray = propertiesValue["nameServers"];
+                                        if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                            {
+                                                propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                            }
+                                        }
+                                        
+                                        JToken parentResourceGroupNameValue = propertiesValue["parentResourceGroupName"];
+                                        if (parentResourceGroupNameValue != null && parentResourceGroupNameValue.Type != JTokenType.Null)
+                                        {
+                                            string parentResourceGroupNameInstance = ((string)parentResourceGroupNameValue);
+                                            propertiesInstance.ParentResourceGroupName = parentResourceGroupNameInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1483,6 +1566,22 @@ namespace Microsoft.Azure.Management.Dns
                                             long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                             propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
                                         }
+                                        
+                                        JToken nameServersArray = propertiesValue["nameServers"];
+                                        if (nameServersArray != null && nameServersArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken nameServersValue in ((JArray)nameServersArray))
+                                            {
+                                                propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                            }
+                                        }
+                                        
+                                        JToken parentResourceGroupNameValue = propertiesValue["parentResourceGroupName"];
+                                        if (parentResourceGroupNameValue != null && parentResourceGroupNameValue.Type != JTokenType.Null)
+                                        {
+                                            string parentResourceGroupNameInstance = ((string)parentResourceGroupNameValue);
+                                            propertiesInstance.ParentResourceGroupName = parentResourceGroupNameInstance;
+                                        }
                                     }
                                     
                                     JToken idValue = valueValue["id"];
@@ -1702,6 +1801,24 @@ namespace Microsoft.Azure.Management.Dns
                     {
                         propertiesValue["numberOfRecordSets"] = parameters.Zone.Properties.NumberOfRecordSets.Value;
                     }
+                    
+                    if (parameters.Zone.Properties.NameServers != null)
+                    {
+                        if (parameters.Zone.Properties.NameServers is ILazyCollection == false || ((ILazyCollection)parameters.Zone.Properties.NameServers).IsInitialized)
+                        {
+                            JArray nameServersArray = new JArray();
+                            foreach (string nameServersItem in parameters.Zone.Properties.NameServers)
+                            {
+                                nameServersArray.Add(nameServersItem);
+                            }
+                            propertiesValue["nameServers"] = nameServersArray;
+                        }
+                    }
+                    
+                    if (parameters.Zone.Properties.ParentResourceGroupName != null)
+                    {
+                        propertiesValue["parentResourceGroupName"] = parameters.Zone.Properties.ParentResourceGroupName;
+                    }
                 }
                 
                 if (parameters.Zone.Id != null)
@@ -1807,6 +1924,22 @@ namespace Microsoft.Azure.Management.Dns
                                 {
                                     long numberOfRecordSetsInstance = ((long)numberOfRecordSetsValue);
                                     propertiesInstance.NumberOfRecordSets = numberOfRecordSetsInstance;
+                                }
+                                
+                                JToken nameServersArray2 = propertiesValue2["nameServers"];
+                                if (nameServersArray2 != null && nameServersArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken nameServersValue in ((JArray)nameServersArray2))
+                                    {
+                                        propertiesInstance.NameServers.Add(((string)nameServersValue));
+                                    }
+                                }
+                                
+                                JToken parentResourceGroupNameValue = propertiesValue2["parentResourceGroupName"];
+                                if (parentResourceGroupNameValue != null && parentResourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string parentResourceGroupNameInstance = ((string)parentResourceGroupNameValue);
+                                    propertiesInstance.ParentResourceGroupName = parentResourceGroupNameInstance;
                                 }
                             }
                             
