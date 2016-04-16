@@ -34,7 +34,7 @@ namespace Compute.Tests
         /// Delete Container Service
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "TODO by Vivek")]
+        [Fact]
         public void TestContainerServiceUpdateOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

@@ -31,7 +31,7 @@ namespace Compute.Tests
         /// Delete Container Service
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "TODO by Vivek")]
+        [Fact]
         public void TestDCOSOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -73,7 +73,7 @@ namespace Compute.Tests
         /// Delete Container Service
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "TODO by Vivek")]
+        [Fact]
         public void TestSwarmOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
