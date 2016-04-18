@@ -75,21 +75,38 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\UnregisterDPMBackupEngineTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.BackupTests\BackupProtectedItemTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\UnregisterDPMBackupEngineTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupTests\BackupProtectedItemTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\ListContainersTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\RefreshContainerTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\RecoveryServices.Tests.IaaSVMPolicyTests\ListRecoveryServicesProtectionPolicyTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.IaaSVMPolicyTests\GetAddUpdateDeleteIaaSVMPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.IaaSVMPolicyTests\ListRecoveryServicesProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\ListContainersTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\UnregisterContainersTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
@@ -104,15 +121,4 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

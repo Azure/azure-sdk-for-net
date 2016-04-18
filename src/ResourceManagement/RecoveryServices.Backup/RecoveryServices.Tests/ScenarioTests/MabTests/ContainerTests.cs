@@ -31,8 +31,7 @@ using Xunit;
 namespace RecoveryServices.Tests
 {
     public class MabContainerTests : RecoveryServicesTestsBase
-    {
-        [Fact]
+    {        
         public void ListContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -49,13 +48,13 @@ namespace RecoveryServices.Tests
                 ProtectionContainerListResponse response = containerTestHelper.ListMABContainers(queryParams);
 
                 string containerUniqueName = CommonTestHelper.GetSetting(TestConstants.RsVaultMabContainerUniqueName);
-                MabProtectionContainer container = response.ItemList.ProtectionContainers[1].Properties as MabProtectionContainer;
+                MabProtectionContainer container = response.ItemList.ProtectionContainers[0].Properties as MabProtectionContainer;
                 Assert.NotNull(container);
                 Assert.Equal(containerUniqueName, container.FriendlyName);
             }
         }
 
-        [Fact]
+        
         public void UnregisterContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
