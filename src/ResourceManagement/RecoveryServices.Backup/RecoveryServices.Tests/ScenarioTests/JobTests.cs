@@ -31,8 +31,7 @@ using System.Threading;
 namespace RecoveryServices.Tests
 {
     public class JobTests : RecoveryServicesTestsBase
-    {
-        [Fact]
+    {       
         public void ListJobsAndGetJobTest()
         {
             using (UndoContext context = UndoContext.Current)
