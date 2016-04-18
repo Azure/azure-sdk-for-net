@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the list fields operation.
         /// </returns>
-        public async Task<TypeFieldListResponse> ListFieldsTypeAsync(string resourceGroupName, string automationAccount, string typeName, CancellationToken cancellationToken)
+        public async Task<TypeFieldListResponse> ListFieldsByTypeAsync(string resourceGroupName, string automationAccount, string typeName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("typeName", typeName);
-                TracingAdapter.Enter(invocationId, this, "ListFieldsTypeAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListFieldsByTypeAsync", tracingParameters);
             }
             
             // Construct URL

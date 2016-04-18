@@ -116,11 +116,11 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the list fields operation.
         /// </returns>
-        public static TypeFieldListResponse ListFieldsType(this IObjectDataTypeOperations operations, string resourceGroupName, string automationAccount, string typeName)
+        public static TypeFieldListResponse ListFieldsByType(this IObjectDataTypeOperations operations, string resourceGroupName, string automationAccount, string typeName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IObjectDataTypeOperations)s).ListFieldsTypeAsync(resourceGroupName, automationAccount, typeName);
+                return ((IObjectDataTypeOperations)s).ListFieldsByTypeAsync(resourceGroupName, automationAccount, typeName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -147,9 +147,9 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the list fields operation.
         /// </returns>
-        public static Task<TypeFieldListResponse> ListFieldsTypeAsync(this IObjectDataTypeOperations operations, string resourceGroupName, string automationAccount, string typeName)
+        public static Task<TypeFieldListResponse> ListFieldsByTypeAsync(this IObjectDataTypeOperations operations, string resourceGroupName, string automationAccount, string typeName)
         {
-            return operations.ListFieldsTypeAsync(resourceGroupName, automationAccount, typeName, CancellationToken.None);
+            return operations.ListFieldsByTypeAsync(resourceGroupName, automationAccount, typeName, CancellationToken.None);
         }
     }
 }
