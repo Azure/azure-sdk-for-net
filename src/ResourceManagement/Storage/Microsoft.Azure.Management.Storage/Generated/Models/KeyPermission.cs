@@ -13,16 +13,14 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for KeyPermission.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProvisioningState
+    public enum KeyPermission
     {
-        [EnumMember(Value = "Creating")]
-        Creating,
-        [EnumMember(Value = "ResolvingDNS")]
-        ResolvingDNS,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded
+        [EnumMember(Value = "READ")]
+        READ,
+        [EnumMember(Value = "FULL")]
+        FULL
     }
 }

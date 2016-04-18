@@ -17,35 +17,42 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Usage Names.
+    /// An access key for the storage account.
     /// </summary>
-    public partial class UsageName
+    public partial class StorageAccountKey
     {
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the StorageAccountKey class.
         /// </summary>
-        public UsageName() { }
+        public StorageAccountKey() { }
 
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the StorageAccountKey class.
         /// </summary>
-        public UsageName(string value = default(string), string localizedValue = default(string))
+        public StorageAccountKey(string keyName = default(string), string value = default(string), KeyPermission? permissions = default(KeyPermission?))
         {
+            KeyName = keyName;
             Value = value;
-            LocalizedValue = localizedValue;
+            Permissions = permissions;
         }
 
         /// <summary>
-        /// Gets a string describing the resource name.
+        /// Name of the key.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyName")]
+        public string KeyName { get; private set; }
+
+        /// <summary>
+        /// Base 64 encoded value of the key.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; private set; }
 
         /// <summary>
-        /// Gets a localized string describing the resource name.
+        /// Permissions for the key. Possible values include: 'READ', 'FULL'
         /// </summary>
-        [JsonProperty(PropertyName = "localizedValue")]
-        public string LocalizedValue { get; private set; }
+        [JsonProperty(PropertyName = "permissions")]
+        public KeyPermission? Permissions { get; private set; }
 
     }
 }

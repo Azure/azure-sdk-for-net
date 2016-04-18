@@ -17,35 +17,30 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The Usage Names.
+    /// The ListKeys operation response.
     /// </summary>
-    public partial class UsageName
+    public partial class StorageAccountListKeysResult
     {
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the StorageAccountListKeysResult
+        /// class.
         /// </summary>
-        public UsageName() { }
+        public StorageAccountListKeysResult() { }
 
         /// <summary>
-        /// Initializes a new instance of the UsageName class.
+        /// Initializes a new instance of the StorageAccountListKeysResult
+        /// class.
         /// </summary>
-        public UsageName(string value = default(string), string localizedValue = default(string))
+        public StorageAccountListKeysResult(IList<StorageAccountKey> keys = default(IList<StorageAccountKey>))
         {
-            Value = value;
-            LocalizedValue = localizedValue;
+            Keys = keys;
         }
 
         /// <summary>
-        /// Gets a string describing the resource name.
+        /// Gets the list of account keys and their properties.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
-
-        /// <summary>
-        /// Gets a localized string describing the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "localizedValue")]
-        public string LocalizedValue { get; private set; }
+        [JsonProperty(PropertyName = "keys")]
+        public IList<StorageAccountKey> Keys { get; private set; }
 
     }
 }
