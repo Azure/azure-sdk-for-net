@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.RecoveryServicesBackupManagement</RootNamespace>
-    <AssemblyName>Microsoft.Azure.Management.RecoveryServicesBackupManagement</AssemblyName>
+    <AssemblyName>Microsoft.Azure.Management.RecoveryServices.Backup</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>9704225f</NuGetPackageImportStamp>
@@ -15,7 +15,7 @@
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
-    <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+    <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.Management.RecoveryServices.Backup.xml</DocumentationFile>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Net45-Release'">
@@ -28,7 +28,7 @@
     <DocumentationFile>bin\Net40-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Portable-Debug'">
-    <DocumentationFile>bin\Portable-Debug\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
+    <DocumentationFile>bin\Portable-Debug\Microsoft.Azure.Management.RecoveryServices.Backup.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Portable-Release'">
     <DocumentationFile>bin\Portable-Release\Microsoft.Azure.Management.RecoveryServicesBackupManagement.xml</DocumentationFile>
