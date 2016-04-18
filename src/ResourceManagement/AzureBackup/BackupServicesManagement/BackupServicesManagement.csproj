@@ -22,9 +22,7 @@
     <None Include="Microsoft.Azure.Management.BackupServices.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
