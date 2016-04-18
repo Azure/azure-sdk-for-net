@@ -120,6 +120,9 @@
     <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.RecoveryPointTests\GetRecoveryPointDetailTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.RecoveryPointTests\ListRecoveryPointTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.RestoreDiskTests\RestoreDiskTest.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">

@@ -51,8 +51,8 @@ namespace RecoveryServices.Tests
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-                string resourceName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
                 string containerUri = containeType + ";" + containerUniqueName;
                 string itemUri = itemType + ";" + itemUniqueName;
 
