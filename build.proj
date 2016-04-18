@@ -134,7 +134,7 @@
     -->
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
     <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
-    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="dnu restore $(_TemporaryDnxFeeds)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(Configuration)' != 'Release' "/>
 
     <CallTarget Targets="BuildDnxLibraries" Condition=" @(Dnx_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
@@ -142,7 +142,7 @@
 
   <Target Name="BuildDnxLibraries">
     <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)"/>
-    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)"/>
+    <Exec Command="dnu build --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' "/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
