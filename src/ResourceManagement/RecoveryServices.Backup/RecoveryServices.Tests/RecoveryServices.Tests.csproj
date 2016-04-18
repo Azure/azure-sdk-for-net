@@ -73,22 +73,38 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\UnregisterDPMBackupEngineTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.BackupTests\BackupProtectedItemTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\UnregisterDPMBackupEngineTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupTests\BackupProtectedItemTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\ListContainersTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.ContainerTests\RefreshContainerTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\RecoveryServices.Tests.IaaSVMPolicyTests\GetAddUpdateDeleteIaaSVMPolicyTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.IaaSVMPolicyTests\ListRecoveryServicesProtectionPolicyTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.IaaSVMPolicyTests\GetAddUpdateDeleteIaaSVMPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.IaaSVMPolicyTests\ListRecoveryServicesProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\CancelJobTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\ListContainersTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\UnregisterContainersTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json" />
-    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">

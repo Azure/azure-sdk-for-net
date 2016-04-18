@@ -31,8 +31,7 @@ using Xunit;
 namespace RecoveryServices.Tests
 {
     public class MabContainerTests : RecoveryServicesTestsBase
-    {
-        [Fact]
+    {        
         public void ListContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -55,7 +54,7 @@ namespace RecoveryServices.Tests
             }
         }
 
-        [Fact]
+        
         public void UnregisterContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
