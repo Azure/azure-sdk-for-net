@@ -24,6 +24,104 @@ namespace Network.Tests.Gateways
 
     public class VirtualNetworkGatewayConnectionTests
     {
+        private string addressSpace = "200.168.0.0/16";
+        private string localNetworkGatewayIpAddress = "204.95.99.237";
+
+        [Fact]
+        [Trait("Feature", "Gateways")]
+        [Trait("Operation", "VirtualNetworkGatewayConnection")]
+        public void VirtualNetworkGatewayConnectionWithBgpTest()
+        {
+            using (NetworkTestClient networkTestClient = new NetworkTestClient())
+            {
+                string virtualNetworkSiteName = "gatewayVirtualNetworkSiteName";
+                string vnetGatewayName = "bgpTestVirtualNetworkGateway";
+
+                networkTestClient.SetNetworkConfiguration(NetworkTestConstants.GatewayNetworkConfigurationParameters);
+
+                // Put a virtual network gateway with a feature set that allows BGP (dynamic routing, >= standard)
+                GatewayGetOperationStatusResponse response = networkTestClient.Gateways.CreateVirtualNetworkGateway(
+                    virtualNetworkSiteName,
+                    new VirtualNetworkGatewayCreateParameters()
+                    {
+                        GatewayName = vnetGatewayName,
+                        GatewayType = GatewayType.DynamicRouting,
+                        GatewaySKU = GatewaySKU.Standard
+                    });
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.HttpStatusCode);
+
+                // Call list, make sure the virtual network gateway exists, then check for BgpSettings
+                ListVirtualNetworkGatewaysResponse listVirtualNetworkGatewaysResponse = networkTestClient.Gateways.ListVirtualNetworkGateways();
+                Assert.True(listVirtualNetworkGatewaysResponse.VirtualNetworkGateways.Count >= 1);
+                ListVirtualNetworkGatewaysResponse.VirtualNetworkGateway vnetGateway = 
+                    listVirtualNetworkGatewaysResponse.VirtualNetworkGateways.First(gw => gw.GatewayName.Equals(vnetGatewayName));
+                Assert.NotNull(vnetGateway.BgpSettings);
+                string virtualNetworkGatewayId = vnetGateway.GatewayId.ToString();
+
+                // Create a local network gateway with BGP settings
+                string localNetworkGatewayName = "bgpTestLocalNetworkGateway";
+                var param = new LocalNetworkGatewayCreateParameters()
+                {
+                    AddressSpace = new LazyList<string>() { addressSpace },
+                    GatewayName = localNetworkGatewayName,
+                    IpAddress = localNetworkGatewayIpAddress,
+                    BgpSettings = new BgpSettings()
+                    {
+                        Asn = 1234,
+                        BgpPeeringAddress = "200.168.1.1",
+                        PeerWeight = 5
+                    }
+                };
+
+                LocalNetworkGatewayCreateResponse localNetworkGatewayCreateResponse = networkTestClient.Gateways.CreateLocalNetworkGateway(param);
+                Assert.NotNull(localNetworkGatewayCreateResponse);
+                Assert.Equal(HttpStatusCode.OK, localNetworkGatewayCreateResponse.StatusCode);
+
+                ListLocalNetworkGatewaysResponse listLocalNetworkGatewaysResponse = networkTestClient.Gateways.ListLocalNetworkGateways();
+                Assert.NotNull(listLocalNetworkGatewaysResponse);
+                Assert.Equal(HttpStatusCode.OK, listLocalNetworkGatewaysResponse.StatusCode);
+                ListLocalNetworkGatewaysResponse.LocalNetworkGateway localNetworkGateway = 
+                    listLocalNetworkGatewaysResponse.LocalNetworkGateways.First(gw => gw.GatewayName.Equals(localNetworkGatewayName));
+                string localNetworkGatewayId = localNetworkGateway.Id.ToString();
+
+                // Create a connection from the virtual network gateway to the local network gateway
+                // with BGP enabled
+                string gatewayConnectionName = "bgpTestConnection";
+
+                GatewayGetOperationStatusResponse gatewayGetOperationStatusResponse =
+                   networkTestClient.Gateways.CreateGatewayConnection(
+                    new GatewayConnectionCreateParameters()
+                    {
+                        ConnectedEntityId = localNetworkGatewayId,
+                        GatewayConnectionName = gatewayConnectionName,
+                        GatewayConnectionType = GatewayConnectionType.IPsec,
+                        VirtualNetworkGatewayId = vnetGateway.GatewayId,
+                        RoutingWeight = 3,
+                        SharedKey = "abc",
+                        EnableBgp = true
+                    }
+                    );
+                Assert.NotNull(gatewayGetOperationStatusResponse);
+                Assert.Equal(HttpStatusCode.OK, gatewayGetOperationStatusResponse.HttpStatusCode);
+
+                GatewayConnectionGetResponse gatewayConnectionGetResponse = networkTestClient.Gateways.GetGatewayConnection(virtualNetworkGatewayId, localNetworkGatewayId);
+                Assert.True(gatewayConnectionGetResponse.EnableBgp, "Connection should have BGP enabled");
+
+                gatewayGetOperationStatusResponse = networkTestClient.Gateways.DeleteGatewayConnection(virtualNetworkGatewayId, localNetworkGatewayId);
+                Assert.NotNull(gatewayGetOperationStatusResponse);
+                Assert.Equal(HttpStatusCode.OK, gatewayGetOperationStatusResponse.HttpStatusCode);
+
+                response = networkTestClient.Gateways.DeleteVirtualNetworkGateway(virtualNetworkGatewayId);
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.HttpStatusCode);
+
+                AzureOperationResponse deleteLocalNetworkGatewayResponse = networkTestClient.Gateways.DeleteLocalNetworkGateway(localNetworkGatewayId);
+                Assert.NotNull(deleteLocalNetworkGatewayResponse);
+                Assert.Equal(HttpStatusCode.OK, deleteLocalNetworkGatewayResponse.StatusCode);
+            }
+        }
+
         [Fact]
         [Trait("Feature", "Gateways")]
         [Trait("Operation", "VirtualNetworkGatewayConnection")]
@@ -63,13 +161,12 @@ namespace Network.Tests.Gateways
 
                 // b.CreateLocalNetworkGateway API
                 string localnetGatewayName = "coexistenceLocalnetGateway";
-                string addressSpace = "200.168.0.0/16";
 
                 var param = new LocalNetworkGatewayCreateParameters()
                 {
                     AddressSpace = new LazyList<string>() { addressSpace },
                     GatewayName = localnetGatewayName,
-                    IpAddress = "204.95.99.237",
+                    IpAddress = localNetworkGatewayIpAddress,
                 };
 
                 LocalNetworkGatewayCreateResponse localNetworkGatewayCreateResponse = networkTestClient.Gateways.CreateLocalNetworkGateway(param);

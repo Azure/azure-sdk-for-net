@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> EnableHttpAsync(string resourceGroupName, string clusterName,
+        public async Task<OperationResource> EnableHttpAsync(string resourceGroupName, string clusterName,
             string username, string password, CancellationToken cancellationToken)
         {
             try
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
-        public async Task<HDInsightLongRunningOperationResponse> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        public async Task<OperationResource> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             try
             {

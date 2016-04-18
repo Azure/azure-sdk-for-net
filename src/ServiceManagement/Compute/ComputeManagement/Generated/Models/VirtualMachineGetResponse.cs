@@ -72,6 +72,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._dataVirtualHardDisks = value; }
         }
         
+        private DebugSettings _debugSettings;
+        
+        /// <summary>
+        /// Optional. Debug settings for console output.
+        /// </summary>
+        public DebugSettings DebugSettings
+        {
+            get { return this._debugSettings; }
+            set { this._debugSettings = value; }
+        }
+        
         private string _defaultWinRmCertificateThumbprint;
         
         /// <summary>
@@ -82,6 +93,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._defaultWinRmCertificateThumbprint; }
             set { this._defaultWinRmCertificateThumbprint = value; }
+        }
+        
+        private string _migrationState;
+        
+        /// <summary>
+        /// Optional. Specifies the IaaS Classic to ARM migration state of the
+        /// virtual machine.Possible values are: None, Preparing, Prepared,
+        /// PrepareFailed, Committing, Committed, CommitFailed, Aborting,
+        /// AbortFailed.None is treated as null value and it is not be visible.
+        /// </summary>
+        public string MigrationState
+        {
+            get { return this._migrationState; }
+            set { this._migrationState = value; }
         }
         
         private string _osVersion;

@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Known sku name values.
+    /// Sku name values.
     /// </summary>
     public static partial class SkuName
     {
@@ -38,5 +38,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Standard (two node) sku.
         /// </summary>
         public const string Standard = "Standard";
+        
+        /// <summary>
+        /// Premium sku.
+        /// </summary>
+        public const string Premium = "Premium";
     }
 }

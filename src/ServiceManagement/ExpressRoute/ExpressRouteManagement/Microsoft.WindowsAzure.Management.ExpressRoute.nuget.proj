@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.ExpressRoute
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.ExpressRoute">
-      <PackageVersion>0.18.3-preview</PackageVersion>
+      <PackageVersion>0.19.0-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

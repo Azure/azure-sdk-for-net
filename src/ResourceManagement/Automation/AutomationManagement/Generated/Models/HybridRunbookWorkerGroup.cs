@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class HybridRunbookWorkerGroup
     {
-        private CredentialNavigation _credential;
+        private RunAsCredentialAssociationProperty _credential;
         
         /// <summary>
         /// Optional. Sets the credential of a worker group.
         /// </summary>
-        public CredentialNavigation Credential
+        public RunAsCredentialAssociationProperty Credential
         {
             get { return this._credential; }
             set { this._credential = value; }
@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._hybridRunbookWorkers; }
             set { this._hybridRunbookWorkers = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private string _name;

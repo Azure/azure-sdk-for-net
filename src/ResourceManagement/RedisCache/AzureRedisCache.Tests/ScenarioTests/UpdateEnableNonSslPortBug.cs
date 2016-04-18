@@ -33,7 +33,6 @@ namespace AzureRedisCache.Tests
                                         Location = "Central US",
                                         Properties = new RedisProperties
                                         {
-                                            RedisVersion = "2.8",
                                             Sku = new Sku()
                                             {
                                                 Name = SkuName.Standard,

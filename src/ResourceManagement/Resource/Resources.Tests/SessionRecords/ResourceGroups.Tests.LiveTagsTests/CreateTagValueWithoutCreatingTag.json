@@ -1,30 +1,43 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e/tagNames/csmtg3576/tagValues/csmtgv5284?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f/tagNames/csmtg4291/tagValues/csmtgv1192?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzhiNTk4ZmMtZTU3YS00MjNmLWIyZTctZGMwZGRiNjMxZjFmL3RhZ05hbWVzL2NzbXRnNDI5MS90YWdWYWx1ZXMvY3NtdGd2MTE5Mj9hcGktdmVyc2lvbj0yMDE2LTAyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"SubscriptionTagNameNotFound\",\r\n    \"message\": \"Subscription tag name 'csmtg3576' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"SubscriptionTagNameNotFound\",\r\n    \"message\": \"Subscription tag name 'csmtg4291' could not be found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "114"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-request-id": [
-          "cdafb85d-2ee6-44ac-bce9-13222cbfea29"
+          "f4d83c24-c93b-4d36-a636-4a52f37b4dc6"
         ],
         "x-ms-correlation-request-id": [
-          "cdafb85d-2ee6-44ac-bce9-13222cbfea29"
+          "f4d83c24-c93b-4d36-a636-4a52f37b4dc6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20140627T235527Z:cdafb85d-2ee6-44ac-bce9-13222cbfea29"
+          "CENTRALUS:20160308T032041Z:f4d83c24-c93b-4d36-a636-4a52f37b4dc6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -33,7 +46,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 27 Jun 2014 23:55:27 GMT"
+          "Tue, 08 Mar 2016 03:20:40 GMT"
         ]
       },
       "StatusCode": 404
@@ -41,11 +54,11 @@
   ],
   "Names": {
     "CreateTagValueWithoutCreatingTag": [
-      "csmtg3576",
-      "csmtgv5284"
+      "csmtg4291",
+      "csmtgv1192"
     ]
   },
   "Variables": {
-    "SubscriptionId": "5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e"
+    "SubscriptionId": "38b598fc-e57a-423f-b2e7-dc0ddb631f1f"
   }
 }

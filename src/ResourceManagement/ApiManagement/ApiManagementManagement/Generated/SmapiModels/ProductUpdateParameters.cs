@@ -71,18 +71,6 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
             set { this._name = value; }
         }
         
-        private PeriodContract _notificationPeriod;
-        
-        /// <summary>
-        /// Optional. Gets or sets Specified upcoming subscription expiration
-        /// notification period.
-        /// </summary>
-        public PeriodContract NotificationPeriod
-        {
-            get { return this._notificationPeriod; }
-            set { this._notificationPeriod = value; }
-        }
-        
         private Microsoft.Azure.Management.ApiManagement.SmapiModels.ProductStateContract? _state;
         
         /// <summary>
@@ -94,18 +82,6 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
         {
             get { return this._state; }
             set { this._state = value; }
-        }
-        
-        private PeriodContract _subscriptionPeriod;
-        
-        /// <summary>
-        /// Optional. Gets or sets The period user subscriptions stays active
-        /// once approved.
-        /// </summary>
-        public PeriodContract SubscriptionPeriod
-        {
-            get { return this._subscriptionPeriod; }
-            set { this._subscriptionPeriod = value; }
         }
         
         private bool? _subscriptionRequired;

@@ -729,7 +729,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -743,7 +743,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     WebSiteOperationStatusResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -3670,7 +3670,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             JToken remoteDebuggingVersionValue = responseDoc["RemoteDebuggingVersion"];
                             if (remoteDebuggingVersionValue != null && remoteDebuggingVersionValue.Type != JTokenType.Null)
                             {
-                                RemoteDebuggingVersion remoteDebuggingVersionInstance = ((RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), ((string)remoteDebuggingVersionValue), true));
+                                string remoteDebuggingVersionInstance = ((string)remoteDebuggingVersionValue);
                                 result.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
                             }
                             
@@ -6622,7 +6622,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != WebSiteOperationStatus.InProgress) == false)
+            while (result.Status == WebSiteOperationStatus.InProgress)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7786,7 +7786,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     webSiteUpdateConfigurationParametersValue["RemoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled.Value;
                 }
                 
-                webSiteUpdateConfigurationParametersValue["RemoteDebuggingVersion"] = parameters.RemoteDebuggingVersion.ToString();
+                if (parameters.RemoteDebuggingVersion != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["RemoteDebuggingVersion"] = parameters.RemoteDebuggingVersion;
+                }
                 
                 if (parameters.RequestTracingEnabled != null)
                 {

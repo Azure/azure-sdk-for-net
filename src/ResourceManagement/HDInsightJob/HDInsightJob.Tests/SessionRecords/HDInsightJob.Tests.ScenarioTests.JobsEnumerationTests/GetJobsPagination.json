@@ -1,0 +1,85 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/jobs?user.name=admin&showall=true&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzP3VzZXIubmFtZT1hZG1pbiZzaG93YWxsPXRydWUmZmllbGRzPSo=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight xplat "
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "xplat"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"job_1456270408754_0003\",\r\n    \"detail\": {\r\n      \"status\": null,\r\n      \"profile\": null,\r\n      \"id\": \"job_1456270408754_0003\",\r\n      \"parentId\": null,\r\n      \"percentComplete\": null,\r\n      \"exitValue\": null,\r\n      \"user\": null,\r\n      \"callback\": null,\r\n      \"completed\": null,\r\n      \"userargs\": null,\r\n      \"msg\": \"Failed to retrieve status; see WebHCat logs\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": \"job_1456270408754_0002\",\r\n    \"detail\": {\r\n      \"status\": null,\r\n      \"profile\": null,\r\n      \"id\": \"job_1456270408754_0002\",\r\n      \"parentId\": null,\r\n      \"percentComplete\": null,\r\n      \"exitValue\": null,\r\n      \"user\": null,\r\n      \"callback\": null,\r\n      \"completed\": null,\r\n      \"userargs\": null,\r\n      \"msg\": \"Failed to retrieve status; see WebHCat logs\"\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "543"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1457156910898&s=ct+65O9F2efgS1595Jlol7xsLE0=\"; Path=/; Expires=Sat, 05-Mar-2016 05:48:30 GMT; HttpOnly; path=/; secure"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Fri, 04 Mar 2016 19:48:40 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs?user.name=admin&showall=true&fields=*&jobid=&numrecords=3",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzP3VzZXIubmFtZT1hZG1pbiZzaG93YWxsPXRydWUmZmllbGRzPSomam9iaWQ9Jm51bXJlY29yZHM9Mw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight xplat "
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "xplat"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"job_1456270408754_0003\",\r\n    \"detail\": {\r\n      \"status\": null,\r\n      \"profile\": null,\r\n      \"id\": \"job_1456270408754_0003\",\r\n      \"parentId\": null,\r\n      \"percentComplete\": null,\r\n      \"exitValue\": null,\r\n      \"user\": null,\r\n      \"callback\": null,\r\n      \"completed\": null,\r\n      \"userargs\": null,\r\n      \"msg\": \"Failed to retrieve status; see WebHCat logs\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": \"job_1456270408754_0002\",\r\n    \"detail\": {\r\n      \"status\": null,\r\n      \"profile\": null,\r\n      \"id\": \"job_1456270408754_0002\",\r\n      \"parentId\": null,\r\n      \"percentComplete\": null,\r\n      \"exitValue\": null,\r\n      \"user\": null,\r\n      \"callback\": null,\r\n      \"completed\": null,\r\n      \"userargs\": null,\r\n      \"msg\": \"Failed to retrieve status; see WebHCat logs\"\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "543"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Fri, 04 Mar 2016 19:48:51 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

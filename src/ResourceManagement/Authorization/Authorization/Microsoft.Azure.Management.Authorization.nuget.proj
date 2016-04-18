@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.Authorization
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.Authorization">
-      <PackageVersion>1.0.0</PackageVersion>
+      <PackageVersion>2.0.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

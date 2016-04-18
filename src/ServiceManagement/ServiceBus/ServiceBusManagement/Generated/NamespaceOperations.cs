@@ -414,7 +414,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdAtElement = namespaceDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdAtElement != null)
                                     {
-                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         namespaceDescriptionInstance.CreatedAt = createdAtInstance;
                                     }
                                     
@@ -645,6 +645,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     sharedAccessAuthorizationRuleElement.Add(primaryKeyElement);
                 }
                 
+                if (rule.SecondaryKey != null)
+                {
+                    XElement secondaryKeyElement = new XElement(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                    secondaryKeyElement.Value = rule.SecondaryKey;
+                    sharedAccessAuthorizationRuleElement.Add(secondaryKeyElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/atom+xml");
@@ -723,14 +730,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdTimeElement2 = sharedAccessAuthorizationRuleElement2.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdTimeElement2 != null)
                                     {
-                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         sharedAccessAuthorizationRuleInstance.CreatedTime = createdTimeInstance;
                                     }
                                     
                                     XElement modifiedTimeElement2 = sharedAccessAuthorizationRuleElement2.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (modifiedTimeElement2 != null)
                                     {
-                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         sharedAccessAuthorizationRuleInstance.ModifiedTime = modifiedTimeInstance;
                                     }
                                     
@@ -748,10 +755,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         sharedAccessAuthorizationRuleInstance.PrimaryKey = primaryKeyInstance;
                                     }
                                     
-                                    XElement secondaryKeyElement = sharedAccessAuthorizationRuleElement2.Element(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                    if (secondaryKeyElement != null)
+                                    XElement secondaryKeyElement2 = sharedAccessAuthorizationRuleElement2.Element(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                    if (secondaryKeyElement2 != null)
                                     {
-                                        string secondaryKeyInstance = secondaryKeyElement.Value;
+                                        string secondaryKeyInstance = secondaryKeyElement2.Value;
                                         sharedAccessAuthorizationRuleInstance.SecondaryKey = secondaryKeyInstance;
                                     }
                                     
@@ -988,7 +995,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdAtElement = namespaceDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdAtElement != null)
                                     {
-                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         namespaceDescriptionInstance.CreatedAt = createdAtInstance;
                                     }
                                     
@@ -1482,7 +1489,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdAtElement = namespaceDescriptionElement.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdAtElement != null)
                                     {
-                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         namespaceDescriptionInstance.CreatedAt = createdAtInstance;
                                     }
                                     
@@ -1715,14 +1722,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdTimeElement = sharedAccessAuthorizationRuleElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdTimeElement != null)
                                     {
-                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         sharedAccessAuthorizationRuleInstance.CreatedTime = createdTimeInstance;
                                     }
                                     
                                     XElement modifiedTimeElement = sharedAccessAuthorizationRuleElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (modifiedTimeElement != null)
                                     {
-                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         sharedAccessAuthorizationRuleInstance.ModifiedTime = modifiedTimeInstance;
                                     }
                                     
@@ -2123,7 +2130,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement createdAtElement = namespaceDescriptionElement.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (createdAtElement != null)
                                             {
-                                                DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 entryInstance.CreatedAt = createdAtInstance;
                                             }
                                             
@@ -2353,14 +2360,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement createdTimeElement = sharedAccessAuthorizationRuleElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (createdTimeElement != null)
                                             {
-                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 entryInstance.CreatedTime = createdTimeInstance;
                                             }
                                             
                                             XElement modifiedTimeElement = sharedAccessAuthorizationRuleElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (modifiedTimeElement != null)
                                             {
-                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 entryInstance.ModifiedTime = modifiedTimeInstance;
                                             }
                                             
@@ -2581,6 +2588,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         primaryKeyElement.Value = rule.PrimaryKey;
                         sharedAccessAuthorizationRuleElement.Add(primaryKeyElement);
                     }
+                    
+                    if (rule.SecondaryKey != null)
+                    {
+                        XElement secondaryKeyElement = new XElement(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                        secondaryKeyElement.Value = rule.SecondaryKey;
+                        sharedAccessAuthorizationRuleElement.Add(secondaryKeyElement);
+                    }
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -2661,14 +2675,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdTimeElement2 = sharedAccessAuthorizationRuleElement2.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdTimeElement2 != null)
                                     {
-                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         sharedAccessAuthorizationRuleInstance.CreatedTime = createdTimeInstance;
                                     }
                                     
                                     XElement modifiedTimeElement2 = sharedAccessAuthorizationRuleElement2.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (modifiedTimeElement2 != null)
                                     {
-                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         sharedAccessAuthorizationRuleInstance.ModifiedTime = modifiedTimeInstance;
                                     }
                                     
@@ -2686,10 +2700,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         sharedAccessAuthorizationRuleInstance.PrimaryKey = primaryKeyInstance;
                                     }
                                     
-                                    XElement secondaryKeyElement = sharedAccessAuthorizationRuleElement2.Element(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                    if (secondaryKeyElement != null)
+                                    XElement secondaryKeyElement2 = sharedAccessAuthorizationRuleElement2.Element(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                    if (secondaryKeyElement2 != null)
                                     {
-                                        string secondaryKeyInstance = secondaryKeyElement.Value;
+                                        string secondaryKeyInstance = secondaryKeyElement2.Value;
                                         sharedAccessAuthorizationRuleInstance.SecondaryKey = secondaryKeyInstance;
                                     }
                                     

@@ -61,5 +61,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Basic and Standard editions.
         /// </summary>
         public const string Premium = "Premium";
+        
+        /// <summary>
+        /// The Free Edition Database is available for certain offers and
+        /// product bundles.
+        /// </summary>
+        public const string Free = "Free";
     }
 }

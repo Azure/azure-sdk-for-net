@@ -500,7 +500,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement createdTimeElement2 = authorizationRulesElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (createdTimeElement2 != null)
                                             {
-                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture);
+                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 authorizationRuleInstance.CreatedTime = createdTimeInstance;
                                             }
                                             
@@ -514,7 +514,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement modifiedTimeElement2 = authorizationRulesElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (modifiedTimeElement2 != null)
                                             {
-                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture);
+                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 authorizationRuleInstance.ModifiedTime = modifiedTimeInstance;
                                             }
                                             
@@ -544,21 +544,21 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdAtElement2 = topicDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdAtElement2 != null)
                                     {
-                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.CreatedAt = createdAtInstance;
                                     }
                                     
                                     XElement updatedAtElement2 = topicDescriptionElement2.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (updatedAtElement2 != null)
                                     {
-                                        DateTime updatedAtInstance = DateTime.Parse(updatedAtElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime updatedAtInstance = DateTime.Parse(updatedAtElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.UpdatedAt = updatedAtInstance;
                                     }
                                     
                                     XElement accessedAtElement2 = topicDescriptionElement2.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (accessedAtElement2 != null)
                                     {
-                                        DateTime accessedAtInstance = DateTime.Parse(accessedAtElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime accessedAtInstance = DateTime.Parse(accessedAtElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.AccessedAt = accessedAtInstance;
                                     }
                                     
@@ -997,7 +997,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement createdTimeElement = authorizationRulesElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (createdTimeElement != null)
                                             {
-                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 authorizationRuleInstance.CreatedTime = createdTimeInstance;
                                             }
                                             
@@ -1011,7 +1011,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement modifiedTimeElement = authorizationRulesElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (modifiedTimeElement != null)
                                             {
-                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 authorizationRuleInstance.ModifiedTime = modifiedTimeInstance;
                                             }
                                             
@@ -1041,21 +1041,21 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdAtElement = topicDescriptionElement.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdAtElement != null)
                                     {
-                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.CreatedAt = createdAtInstance;
                                     }
                                     
                                     XElement updatedAtElement = topicDescriptionElement.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (updatedAtElement != null)
                                     {
-                                        DateTime updatedAtInstance = DateTime.Parse(updatedAtElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime updatedAtInstance = DateTime.Parse(updatedAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.UpdatedAt = updatedAtInstance;
                                     }
                                     
                                     XElement accessedAtElement = topicDescriptionElement.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (accessedAtElement != null)
                                     {
-                                        DateTime accessedAtInstance = DateTime.Parse(accessedAtElement.Value, CultureInfo.InvariantCulture);
+                                        DateTime accessedAtInstance = DateTime.Parse(accessedAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.AccessedAt = accessedAtInstance;
                                     }
                                     
@@ -1544,7 +1544,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                                     XElement createdTimeElement = authorizationRulesElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                                     if (createdTimeElement != null)
                                                     {
-                                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                                        DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                         authorizationRuleInstance.CreatedTime = createdTimeInstance;
                                                     }
                                                     
@@ -1558,7 +1558,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                                     XElement modifiedTimeElement = authorizationRulesElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                                     if (modifiedTimeElement != null)
                                                     {
-                                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                                        DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                         authorizationRuleInstance.ModifiedTime = modifiedTimeInstance;
                                                     }
                                                     
@@ -1588,21 +1588,21 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement createdAtElement = topicDescriptionElement.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (createdAtElement != null)
                                             {
-                                                DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 entryInstance.CreatedAt = createdAtInstance;
                                             }
                                             
                                             XElement updatedAtElement = topicDescriptionElement.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (updatedAtElement != null)
                                             {
-                                                DateTime updatedAtInstance = DateTime.Parse(updatedAtElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime updatedAtInstance = DateTime.Parse(updatedAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 entryInstance.UpdatedAt = updatedAtInstance;
                                             }
                                             
                                             XElement accessedAtElement = topicDescriptionElement.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (accessedAtElement != null)
                                             {
-                                                DateTime accessedAtInstance = DateTime.Parse(accessedAtElement.Value, CultureInfo.InvariantCulture);
+                                                DateTime accessedAtInstance = DateTime.Parse(accessedAtElement.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 entryInstance.AccessedAt = accessedAtInstance;
                                             }
                                             
@@ -2108,7 +2108,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement createdTimeElement2 = authorizationRulesElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (createdTimeElement2 != null)
                                             {
-                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture);
+                                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 authorizationRuleInstance.CreatedTime = createdTimeInstance;
                                             }
                                             
@@ -2122,7 +2122,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             XElement modifiedTimeElement2 = authorizationRulesElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                             if (modifiedTimeElement2 != null)
                                             {
-                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture);
+                                                DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                                 authorizationRuleInstance.ModifiedTime = modifiedTimeInstance;
                                             }
                                             
@@ -2152,21 +2152,21 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     XElement createdAtElement2 = topicDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (createdAtElement2 != null)
                                     {
-                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime createdAtInstance = DateTime.Parse(createdAtElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.CreatedAt = createdAtInstance;
                                     }
                                     
                                     XElement updatedAtElement2 = topicDescriptionElement2.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (updatedAtElement2 != null)
                                     {
-                                        DateTime updatedAtInstance = DateTime.Parse(updatedAtElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime updatedAtInstance = DateTime.Parse(updatedAtElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.UpdatedAt = updatedAtInstance;
                                     }
                                     
                                     XElement accessedAtElement2 = topicDescriptionElement2.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                     if (accessedAtElement2 != null)
                                     {
-                                        DateTime accessedAtInstance = DateTime.Parse(accessedAtElement2.Value, CultureInfo.InvariantCulture);
+                                        DateTime accessedAtInstance = DateTime.Parse(accessedAtElement2.Value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                         topicDescriptionInstance.AccessedAt = accessedAtInstance;
                                     }
                                     

@@ -1,5 +1,97 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.6.0
+_Release date: 2016.04.14_ 
+
+### Feature Additions
+
+* The following properties have been added to PipelineProperties: 
+    * PipelineMode
+    * ExpirationTime
+    * Datasets
+* The following properties have been added to PipelineRuntimeInfo: 
+    * PipelineState
+* Added new StorageFormat type JsonFormat type to define datasets whose data is in JSON format. 
+
+### Bug Fixes
+
+* Fixes a bug where parameters for listing activity windows were not being sent in HTTP requests.
+
+## Version 4.5.0
+_Release date: 2016.02.24_
+
+### Feature Additions
+* Added list operations for activity window.
+    * Added methods to retrieve activity windows with filters based on the entity types (i.e. data factories, datasets, pipelines and activities).
+* The following linked service types have been added: 
+    * ODataLinkedService, WebLinkedService
+* The following dataset types have been added: 
+    * ODataResourceDataset, WebTableDataset
+* The following copy source types have been added: 	
+    * WebSource
+
+## Version 4.4.0
+_Release date: 2016.01.28_
+
+### Feature Additions
+
+* The following linked service type has been added as data sources and sinks for copy activities: 
+    * AzureStorageSasLinkedService
+
+## Version 4.3.0
+_Release date: 2016.01.20_
+
+### Feature Additions
+
+* The following linked service types haven been added as data sources for copy activities: 
+    * HdfsLinkedService
+    * OnPremisesOdbcLinkedService 
+
+## Version 4.2.0
+_Release date: 2015.11.10_
+
+### Feature Additions
+
+* New Activity type: AzureMLUpdateResource, along with a new optional property in the Azure ML Linked Service, "updateResourceEndpoint". 
+    * This Activity takes as input a blob Dataset for an .iLearner file (e.g. produced as output of a retraining batch execution) and uploads it to the indicated management endpoint.
+* Add LongRunningOperationInitialTimeout and LongRunningOperationRetryTimeout properties to DataFactoryManagementClient. 
+    * Allow configuration of the timeouts for client calls to the Data Factory service. 
+
+### Bug Fixes
+* Properly initialize the internal client object wrapped by 
+  Microsoft.Azure.Management.DataFactories.DataFactoryManagementClient in all constructors. 
+
+## Version 4.1.0 
+_Release date: 2015.10.28_
+
+### Feature Additions
+* The following linked service types have been added: 
+    * AzureDataLakeStoreLinkedService
+    * AzureDataLakeAnalyticsLinkedService
+* The following activity types have been added: 
+    * DataLakeAnalyticsUSQLActivity
+* The following dataset types have been added: 
+    * AzureDataLakeStoreDataset
+* The following source and sink types for Copy Activity have been added:
+    * AzureDataLakeStoreSource
+    * AzureDataLakeStoreSink
+
+## Bug Fixes
+* Successful gateway creation response has status Succeeded and includes the gateway key.
+ 
+## Version 4.0.1
+_Release date: 2015.10.13_
+
+## Bug Fixes
+* Fix Dataset class names which had "Table" removed from them. 
+    * AzureSqlDataWarehouseDataset → AzureSqlDataWarehouseTableDataset
+    * AzureSqlDataset → AzureSqlTableDataset
+    * AzureDataset → AzureTableDataset
+    * OracleDatabaseDataset → OracleTableDataset
+    * RelationalDataset → RelationalTableDataset
+    * SqlServerDataset → SqlServerTableDataset
+    * For types such as AzureSqlTable, "AzureSqlTableDataset" is the correct naming, not "AzureSqlDataset". These were the names prior to 4.0.0 and this restores those names. 
+
 ## Version 4.0.0
 _Release date: 2015.10.02_
 

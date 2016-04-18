@@ -19,8 +19,8 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure Web Sites Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Web Sites.")]
-[assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.4.2.0")]
+[assembly: AssemblyVersion("5.0.0.0")]
+[assembly: AssemblyFileVersion("5.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]

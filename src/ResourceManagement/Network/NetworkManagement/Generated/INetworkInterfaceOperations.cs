@@ -207,5 +207,27 @@ namespace Microsoft.Azure.Management.Network
         /// Response for ListNetworkInterface Api service call
         /// </returns>
         Task<NetworkInterfaceListResponse> ListVirtualMachineScaleSetNetworkInterfacesAsync(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The list network interface operation retrieves information about
+        /// all network interfaces in a virtual machine from a virtual machine
+        /// scale set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualMachineScaleSetName'>
+        /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='virtualmachineIndex'>
+        /// The virtual machine index.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for ListNetworkInterface Api service call
+        /// </returns>
+        Task<NetworkInterfaceListResponse> ListVirtualMachineScaleSetVMNetworkInterfacesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken);
     }
 }

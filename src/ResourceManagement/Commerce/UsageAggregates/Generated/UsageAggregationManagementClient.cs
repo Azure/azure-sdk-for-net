@@ -210,13 +210,13 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
             set { this._meterCategory = value; }
         }
         
-        private Guid _meterId;
+        private string _meterId;
         
         /// <summary>
         /// Optional. Unique ID for the resource that was consumed (aka
         /// ResourceID).
         /// </summary>
-        public Guid MeterId
+        public string MeterId
         {
             get { return this._meterId; }
             set { this._meterId = value; }
@@ -839,8 +839,8 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
             url = url + "/providers/Microsoft.Commerce/UsageAggregates";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-06-01-preview");
-            queryParameters.Add("reportedstartTime=" + Uri.EscapeDataString(reportedStartTime.ToString()));
-            queryParameters.Add("reportedEndTime=" + Uri.EscapeDataString(reportedEndTime.ToString()) + ",");
+            queryParameters.Add("reportedstartTime=" + Uri.EscapeDataString(reportedStartTime.ToString("O")));
+            queryParameters.Add("reportedEndTime=" + Uri.EscapeDataString(reportedEndTime.ToString("O")));
             queryParameters.Add("showDetails=" + Uri.EscapeDataString(showDetails.ToString().ToLower()));
             queryParameters.Add("aggregationGranularity=" + Uri.EscapeDataString(UsageAggregationManagementClient.AggregationGranularityToString(aggregationGranularity)));
             if (continuationToken != null)
@@ -958,7 +958,7 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                                         JToken meterIdValue = propertiesValue["meterId"];
                                         if (meterIdValue != null && meterIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid meterIdInstance = Guid.Parse(((string)meterIdValue));
+                                            string meterIdInstance = (string)meterIdValue;
                                             propertiesInstance.MeterId = meterIdInstance;
                                         }
                                         

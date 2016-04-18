@@ -918,6 +918,52 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The List Available Extensions operation lists the extensions that
+        /// are available to add to your cloud service. In Windows Azure, a
+        /// process can run as an extension of a cloud service. For example,
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169559.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
+        /// </param>
+        /// <returns>
+        /// The List Available Extensions operation response.
+        /// </returns>
+        public static HostedServiceListAvailableExtensionsResponse ListPublisherExtensions(this IHostedServiceOperations operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IHostedServiceOperations)s).ListPublisherExtensionsAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Available Extensions operation lists the extensions that
+        /// are available to add to your cloud service. In Windows Azure, a
+        /// process can run as an extension of a cloud service. For example,
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169559.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
+        /// </param>
+        /// <returns>
+        /// The List Available Extensions operation response.
+        /// </returns>
+        public static Task<HostedServiceListAvailableExtensionsResponse> ListPublisherExtensionsAsync(this IHostedServiceOperations operations)
+        {
+            return operations.ListPublisherExtensionsAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Update Hosted Service operation can update the label or
         /// description of a cloud service in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441303.aspx

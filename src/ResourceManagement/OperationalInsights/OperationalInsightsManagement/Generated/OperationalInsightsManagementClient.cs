@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private ISearchOperations _search;
+        
+        /// <summary>
+        /// Operations for using Operational Insights search.
+        /// </summary>
+        public virtual ISearchOperations Search
+        {
+            get { return this._search; }
+        }
+        
         private IStorageInsightOperations _storageInsights;
         
         /// <summary>
@@ -114,6 +124,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public OperationalInsightsManagementClient()
             : base()
         {
+            this._search = new SearchOperations(this);
             this._storageInsights = new StorageInsightOperations(this);
             this._workspaces = new WorkspaceOperations(this);
             this._apiVersion = "2015-03-20";
@@ -184,6 +195,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public OperationalInsightsManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._search = new SearchOperations(this);
             this._storageInsights = new StorageInsightOperations(this);
             this._workspaces = new WorkspaceOperations(this);
             this._apiVersion = "2015-03-20";

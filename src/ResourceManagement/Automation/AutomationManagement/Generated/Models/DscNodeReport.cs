@@ -20,7 +20,10 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Automation.Specification.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
@@ -51,15 +54,62 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._endTime = value; }
         }
         
-        private Guid _id;
+        private IList<DscReportError> _errors;
         
         /// <summary>
-        /// Optional. Gets or sets the id of the node report.
+        /// Optional. Gets or sets the errors for the node report.
         /// </summary>
-        public Guid Id
+        public IList<DscReportError> Errors
+        {
+            get { return this._errors; }
+            set { this._errors = value; }
+        }
+        
+        private string _hostName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the hostname of the node that sent the
+        /// report.
+        /// </summary>
+        public string HostName
+        {
+            get { return this._hostName; }
+            set { this._hostName = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id.
+        /// </summary>
+        public string Id
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private IList<string> _iPV4Addresses;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IPv4 address of the node that sent the
+        /// report.
+        /// </summary>
+        public IList<string> IPV4Addresses
+        {
+            get { return this._iPV4Addresses; }
+            set { this._iPV4Addresses = value; }
+        }
+        
+        private IList<string> _iPV6Addresses;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IPv6 address of the node that sent the
+        /// report.
+        /// </summary>
+        public IList<string> IPV6Addresses
+        {
+            get { return this._iPV6Addresses; }
+            set { this._iPV6Addresses = value; }
         }
         
         private DateTimeOffset _lastModifiedTime;
@@ -71,6 +121,40 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._lastModifiedTime; }
             set { this._lastModifiedTime = value; }
+        }
+        
+        private DscMetaConfiguration _metaConfiguration;
+        
+        /// <summary>
+        /// Optional. Gets or sets the metaConfiguration of the node at the
+        /// time of the report.
+        /// </summary>
+        public DscMetaConfiguration MetaConfiguration
+        {
+            get { return this._metaConfiguration; }
+            set { this._metaConfiguration = value; }
+        }
+        
+        private int _numberOfResources;
+        
+        /// <summary>
+        /// Optional. Gets or sets the number of resource in the node report.
+        /// </summary>
+        public int NumberOfResources
+        {
+            get { return this._numberOfResources; }
+            set { this._numberOfResources = value; }
+        }
+        
+        private string _rawErrors;
+        
+        /// <summary>
+        /// Optional. Gets or sets the unparsed errors for the node report.
+        /// </summary>
+        public string RawErrors
+        {
+            get { return this._rawErrors; }
+            set { this._rawErrors = value; }
         }
         
         private string _rebootRequested;
@@ -104,6 +188,28 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._reportFormatVersion; }
             set { this._reportFormatVersion = value; }
+        }
+        
+        private Guid _reportId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the node report.
+        /// </summary>
+        public Guid ReportId
+        {
+            get { return this._reportId; }
+            set { this._reportId = value; }
+        }
+        
+        private IList<DscReportResource> _resources;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource for the node report.
+        /// </summary>
+        public IList<DscReportResource> Resources
+        {
+            get { return this._resources; }
+            set { this._resources = value; }
         }
         
         private DateTimeOffset _startTime;
@@ -144,6 +250,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public DscNodeReport()
         {
+            this.Errors = new LazyList<DscReportError>();
+            this.IPV4Addresses = new LazyList<string>();
+            this.IPV6Addresses = new LazyList<string>();
+            this.Resources = new LazyList<DscReportResource>();
         }
     }
 }

@@ -90,6 +90,7 @@
     <Compile Include="Generated\IReportsOperations.cs" />
     <Compile Include="Generated\IResourceProviderOperations.cs" />
     <Compile Include="Generated\ISubscriptionsOperations.cs" />
+    <Compile Include="Generated\ITenantAccessInformationOperations.cs" />
     <Compile Include="Generated\ITenantPolicyOperations.cs" />
     <Compile Include="Generated\IUserApplicationsOperations.cs" />
     <Compile Include="Generated\IUserGroupsOperations.cs" />
@@ -141,6 +142,9 @@
     <Compile Include="Generated\ReportsOperationsExtensions.cs" />
     <Compile Include="Generated\ResourceProviderOperations.cs" />
     <Compile Include="Generated\ResourceProviderOperationsExtensions.cs" />
+    <Compile Include="Generated\SmapiModels\AccessInformationContract.cs" />
+    <Compile Include="Generated\SmapiModels\AccessInformationGetResponse.cs" />
+    <Compile Include="Generated\SmapiModels\AccessInformationUpdateParameters.cs" />
     <Compile Include="Generated\SmapiModels\ApiContract.cs" />
     <Compile Include="Generated\SmapiModels\ApiCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\SmapiModels\ApiExportResponse.cs" />
@@ -180,8 +184,6 @@
     <Compile Include="Generated\SmapiModels\Paged.cs" />
     <Compile Include="Generated\SmapiModels\ParameterContract.cs" />
     <Compile Include="Generated\SmapiModels\PatchParameters.cs" />
-    <Compile Include="Generated\SmapiModels\PeriodContract.cs" />
-    <Compile Include="Generated\SmapiModels\PeriodIntervalContract.cs" />
     <Compile Include="Generated\SmapiModels\PolicyGetResponse.cs" />
     <Compile Include="Generated\SmapiModels\PolicyScopeContract.cs" />
     <Compile Include="Generated\SmapiModels\PolicySnippetContract.cs" />
@@ -223,6 +225,8 @@
     <Compile Include="Generated\SmapiModels\UserUpdateParameters.cs" />
     <Compile Include="Generated\SubscriptionsOperations.cs" />
     <Compile Include="Generated\SubscriptionsOperationsExtensions.cs" />
+    <Compile Include="Generated\TenantAccessInformationOperations.cs" />
+    <Compile Include="Generated\TenantAccessInformationOperationsExtensions.cs" />
     <Compile Include="Generated\TenantPolicyOperations.cs" />
     <Compile Include="Generated\TenantPolicyOperationsExtensions.cs" />
     <Compile Include="Generated\UserApplicationsOperations.cs" />

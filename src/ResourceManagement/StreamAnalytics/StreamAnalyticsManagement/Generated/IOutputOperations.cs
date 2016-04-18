@@ -28,7 +28,7 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
     /// <summary>
-    /// Operations for managing the output of the stream analytics job.
+    /// Operations for managing the output(s) of the stream analytics job.
     /// </summary>
     public partial interface IOutputOperations
     {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// The output Name of the stream analytics job.
+        /// The name of the output for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
+        Task<ResourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create or update an output for a stream analytics job.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// The name of the stream analytics job.
         /// </param>
         /// <param name='outputName'>
-        /// The output Name of the stream analytics job.
+        /// The name of the output for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -201,6 +201,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The test result of the input or output data source.
         /// </returns>
-        Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
+        Task<ResourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
     }
 }

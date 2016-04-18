@@ -97,8 +97,8 @@ namespace Microsoft.Azure.Management.HDInsight
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The cluster long running operation response.
+        /// The azure async operation response.
         /// </returns>
-        Task<HDInsightLongRunningOperationResponse> GetLongRunningOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        Task<OperationResource> GetLongRunningOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
     }
 }

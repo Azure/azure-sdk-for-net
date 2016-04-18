@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.Dns.Models
@@ -29,12 +30,12 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// </summary>
     public partial class TxtRecord
     {
-        private string _value;
+        private IList<string> _value;
         
         /// <summary>
         /// Required. Gets or sets the text value of this record.
         /// </summary>
-        public string Value
+        public IList<string> Value
         {
             get { return this._value; }
             set { this._value = value; }
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// Initializes a new instance of the TxtRecord class with required
         /// arguments.
         /// </summary>
-        public TxtRecord(string value)
+        public TxtRecord(IList<string> value)
             : this()
         {
             if (value == null)

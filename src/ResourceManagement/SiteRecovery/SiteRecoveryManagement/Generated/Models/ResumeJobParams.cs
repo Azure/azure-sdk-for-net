@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
@@ -29,15 +30,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class ResumeJobParams
     {
-        private string _comments;
+        private ResumeJobParamsProperties _properties;
         
         /// <summary>
-        /// Optional. Comments for resume job.
+        /// Optional. Resume job properties.
         /// </summary>
-        public string Comments
+        public ResumeJobParamsProperties Properties
         {
-            get { return this._comments; }
-            set { this._comments = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

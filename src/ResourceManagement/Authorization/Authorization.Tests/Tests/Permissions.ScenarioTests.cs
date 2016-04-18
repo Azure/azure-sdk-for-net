@@ -29,7 +29,7 @@ namespace Authorization.Tests
         const string RESOURCE_TEST_LOCATION = "westus"; 
         const string WEBSITE_RP_VERSION = "2014-04-01";
 
-        public ResourceManagementClient GetResourceManagementClient()
+        public static ResourceManagementClient GetResourceManagementClient()
         {
             var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()); 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)

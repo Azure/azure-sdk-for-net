@@ -64,11 +64,11 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse CreateOrUpdateDatebasePolicy(this IAuditingPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseAuditingPolicyCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateDatabasePolicy(this IAuditingPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseAuditingPolicyCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAuditingPolicyOperations)s).CreateOrUpdateDatebasePolicyAsync(resourceGroupName, serverName, databaseName, parameters);
+                return ((IAuditingPolicyOperations)s).CreateOrUpdateDatabasePolicyAsync(resourceGroupName, serverName, databaseName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> CreateOrUpdateDatebasePolicyAsync(this IAuditingPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseAuditingPolicyCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateDatabasePolicyAsync(this IAuditingPolicyOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseAuditingPolicyCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateDatebasePolicyAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateDatabasePolicyAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }
         
         /// <summary>
