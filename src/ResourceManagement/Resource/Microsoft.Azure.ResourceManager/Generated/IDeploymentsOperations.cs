@@ -24,9 +24,7 @@ namespace Microsoft.Azure.Management.Resources
     public partial interface IDeploymentsOperations
     {
         /// <summary>
-        /// Begin deleting deployment.To determine whether the operation has
-        /// finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Delete deployment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -42,9 +40,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string deploymentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Begin deleting deployment.To determine whether the operation has
-        /// finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Delete deployment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -166,6 +162,22 @@ namespace Microsoft.Azure.Management.Resources
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<DeploymentValidateResult>> ValidateWithHttpMessagesAsync(string resourceGroupName, string deploymentName, Deployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Exports a deployment template.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<DeploymentExportResult>> ExportTemplateWithHttpMessagesAsync(string resourceGroupName, string deploymentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of deployments.
         /// </summary>

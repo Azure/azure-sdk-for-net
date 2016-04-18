@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Resources
     /// <summary>
     /// ManagementLocksOperations operations.
     /// </summary>
-    internal partial class ManagementLocksOperations : IServiceOperations<AuthorizationClient>, IManagementLocksOperations
+    internal partial class ManagementLocksOperations : IServiceOperations<ManagementLockClient>, IManagementLocksOperations
     {
         /// <summary>
         /// Initializes a new instance of the ManagementLocksOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ManagementLocksOperations(AuthorizationClient client)
+        internal ManagementLocksOperations(ManagementLockClient client)
         {
             if (client == null) 
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Resources
         }
 
         /// <summary>
-        /// Gets a reference to the AuthorizationClient
+        /// Gets a reference to the ManagementLockClient
         /// </summary>
-        public AuthorizationClient Client { get; private set; }
+        public ManagementLockClient Client { get; private set; }
 
         /// <summary>
         /// Create or update a management lock at the resource group level.

@@ -24,9 +24,8 @@ namespace Microsoft.Azure.Management.Resources
     public partial interface IResourcesOperations
     {
         /// <summary>
-        /// Begin moving resources.To determine whether the operation has
-        /// finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Move resources from one resource group to another. The resources
+        /// being moved should all be in the same resource group.
         /// </summary>
         /// <param name='sourceResourceGroupName'>
         /// Source resource group name.
@@ -42,9 +41,8 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>
         Task<AzureOperationResponse> MoveResourcesWithHttpMessagesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Begin moving resources.To determine whether the operation has
-        /// finished processing the request, call
-        /// GetLongRunningOperationStatus.
+        /// Move resources from one resource group to another. The resources
+        /// being moved should all be in the same resource group.
         /// </summary>
         /// <param name='sourceResourceGroupName'>
         /// Source resource group name.

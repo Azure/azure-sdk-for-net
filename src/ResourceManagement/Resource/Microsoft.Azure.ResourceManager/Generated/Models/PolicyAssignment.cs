@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Policy assignment.
+    /// The policy definition.
     /// </summary>
-    public partial class PolicyAssignment
+    public partial class PolicyAssignment : IResource
     {
         /// <summary>
         /// Initializes a new instance of the PolicyAssignment class.
@@ -29,23 +29,51 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// <summary>
         /// Initializes a new instance of the PolicyAssignment class.
         /// </summary>
-        public PolicyAssignment(PolicyAssignmentProperties properties = default(PolicyAssignmentProperties), string name = default(string))
+        public PolicyAssignment(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string))
         {
-            Properties = properties;
+            Id = id;
+            Type = type;
             Name = name;
+            DisplayName = displayName;
+            PolicyDefinitionId = policyDefinitionId;
+            Scope = scope;
         }
 
         /// <summary>
-        /// Gets or sets the policy assignment properties.
+        /// Gets or sets the Id of the policy assignment.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public PolicyAssignmentProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy assignment name.
+        /// Gets or sets the type of the policy assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the policy assignment.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy assignment display name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.displayName")]
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy definition Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.policyDefinitionId")]
+        public string PolicyDefinitionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scope at which the policy assignment exists.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scope")]
+        public string Scope { get; set; }
 
     }
 }

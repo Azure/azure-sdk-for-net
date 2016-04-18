@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Resources
     using Microsoft.Rest.Azure;
     using Models;
 
-    public static partial class AuthorizationClientExtensions
+    public static partial class PolicyClientExtensions
     {
     }
 }
