@@ -79,7 +79,7 @@ namespace RecoveryServices.Tests
                     fabricName, containerUri, itemUri, recoveryPointId, triggerRestoreRequest);
 
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
-                Asser.True(!string.IsNullOrEmpty(response.Location), "Location cant be null");
+                Assert.True(!string.IsNullOrEmpty(response.Location), "Location cant be null");
             }
         }
     }

@@ -54,8 +54,8 @@ namespace RecoveryServices.Tests
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string itemUri = itemType + ";" + itemUniqueName;
 
-                DateTime startTime = new DateTime(2016, 3, 24, 15, 25, 9, DateTimeKind.Utc);
-                DateTime endTime = new DateTime(2016, 4, 15, 15, 25, 9, DateTimeKind.Utc);
+                DateTime startTime = new DateTime(2016, 4, 17, 15, 25, 9, DateTimeKind.Utc);
+                DateTime endTime = new DateTime(2016, 4, 18, 19, 25, 9, DateTimeKind.Utc);
 
                 RecoveryPointQueryParameters queryFilter = new RecoveryPointQueryParameters();
                 queryFilter.StartDate = startTime.ToString("yyyy-MM-dd hh:mm:ss tt");
