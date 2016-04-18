@@ -9,6 +9,8 @@
   * Task cancellation exception can come if http request doesn’t get finished before couple of minutes.
 
   * If empty job id is passed for Kill job operation then ArgumentException is raised instead of making a kill job request call.
+  
+  * Added missing Async APIs for submitting Jobs.
 
 2.0.0-preview:
 
