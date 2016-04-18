@@ -121,8 +121,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -694,8 +694,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1255,8 +1255,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1850,8 +1850,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2438,8 +2438,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2586,8 +2586,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2734,8 +2734,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2882,8 +2882,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3030,8 +3030,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("useragent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
-                httpRequest.Headers.Add("User-Agent", "HDInsight SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("useragent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
+                httpRequest.Headers.Add("User-Agent", "HDInsight Job SDK " + this.Client.SdkUserAgent + this.Client.UserAgentSuffix);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
