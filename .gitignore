@@ -130,3 +130,5 @@ build.out
 
 # Azure Project
 csx/
+
+.vs/
