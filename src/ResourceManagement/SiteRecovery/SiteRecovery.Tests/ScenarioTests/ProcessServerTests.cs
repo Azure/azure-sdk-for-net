@@ -50,7 +50,7 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(protectedItem.Properties.ProviderSpecificDetails);
 
                 var vmWareAzureV2Details = protectedItem.Properties.ProviderSpecificDetails
-                    as VMwareAzureV2ProviderSpecificSettings;
+                    as InMageAzureV2ProviderSpecificSettings;
                 Assert.NotNull(vmWareAzureV2Details);                        
 
                 var response =
@@ -109,6 +109,7 @@ namespace SiteRecovery.Tests
                                 FailoverType = "SystemLevel",
                                 SourceProcessServerId = "568CF408-19CE-334D-844C76D9F6C0CEB6",
                                 TargetProcessServerId = "90E6D52D-FAAF-E447-A3ED88CABB6D4F5A",
+                                VmsToMigrate = null
                             }
                         },
                         RequestHeaders);
@@ -192,7 +193,7 @@ namespace SiteRecovery.Tests
                 Assert.NotNull(protectedItem.Properties.ProviderSpecificDetails);
 
                 var vmWareAzureV2Details = protectedItem.Properties.ProviderSpecificDetails
-                    as VMwareAzureV2ProviderSpecificSettings;
+                    as InMageAzureV2ProviderSpecificSettings;
                 Assert.NotNull(vmWareAzureV2Details);
 
                 var response =

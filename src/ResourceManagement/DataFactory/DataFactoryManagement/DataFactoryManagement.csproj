@@ -30,6 +30,8 @@
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\WebTableDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormat.cs" />
+    <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormatFilePattern.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AuthenticationType\ODataAuthenticationType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />

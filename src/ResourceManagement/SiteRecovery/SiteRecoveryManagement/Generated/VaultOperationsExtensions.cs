@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Models;
 using Microsoft.Azure.Management.SiteRecovery.Models;
+using Microsoft.Azure.Management.SiteRecoveryVault;
+using Microsoft.Azure.Management.SiteRecoveryVault.Models;
 
-namespace Microsoft.Azure.Management.RecoveryServices
+namespace Microsoft.Azure.Management.SiteRecoveryVault
 {
     public static partial class VaultOperationsExtensions
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (resource group?) cloud service
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (resource group?) cloud service
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (Resource Group) cloud service containing
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (Resource Group) cloud service containing
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (resource group) cloud service containing
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (resource group) cloud service containing
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (Resource Group) cloud service containing
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (Resource Group) cloud service containing
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (resource group?) cloud service
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.IVaultOperations.
+        /// Microsoft.Azure.Management.SiteRecoveryVault.IVaultOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the (resource group?) cloud service
