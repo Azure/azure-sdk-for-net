@@ -30,7 +30,7 @@ using Microsoft.Azure;
 
 namespace RecoveryServices.Tests
 {
-    class RestoreDiskTests : RecoveryServicesTestsBase
+    public class RestoreDiskTests : RecoveryServicesTestsBase
     {
         [Fact]
         public void RestoreDiskTest()
