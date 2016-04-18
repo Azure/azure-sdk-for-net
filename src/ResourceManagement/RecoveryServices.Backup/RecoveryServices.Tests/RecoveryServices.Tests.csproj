@@ -101,6 +101,11 @@
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\ListContainersTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\UnregisterContainersTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ProtectableObjectTests\ListProtectableObjectTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\EnableAzureBackupProtectionTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.BackupEngineTest\ListDPMBakcupEngineTest.json" />
+    <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\RemoveAzureBackupProtectionTest.json" />
     <None Include="SessionRecords\RecoveryServices.Tests.ProtectedItemTest\ListProtectedItemsTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

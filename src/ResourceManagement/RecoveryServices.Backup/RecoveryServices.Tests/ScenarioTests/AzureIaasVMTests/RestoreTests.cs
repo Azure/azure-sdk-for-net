@@ -42,9 +42,9 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 string vaultLocation = ConfigurationManager.AppSettings["vaultLocation"];
                 string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
-                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRestore"];
                 string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
-                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRestore"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string recoveryPointId = ConfigurationManager.AppSettings["RecoveryPointName"];
                 string storageAccountId = ConfigurationManager.AppSettings["StorageAccountId"];

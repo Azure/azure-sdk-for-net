@@ -42,15 +42,15 @@ namespace RecoveryServices.Tests
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
-                string resourceGroupName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
-                string resourceName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRestore"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRestore"];
                 string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
-                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRestore"];
                 string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
                 string containerUri = containeType + ";" + containerUniqueName;
 
-                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRestore"];
                 string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
                 string itemUri = itemType + ";" + itemUniqueName;
 
