@@ -99,10 +99,10 @@
     <None Include="SessionRecords\RecoveryServices.Tests.JobTests\ListJobsAndGetJobTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\ListContainersTest.json">
+    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTests\ListContainersTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTest\UnregisterContainersTest.json">
+    <None Include="SessionRecords\RecoveryServices.Tests.MABContainerTests\UnregisterContainersTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\RecoveryServices.Tests.ProtectableObjectTests\ListProtectableObjectTest.json">
