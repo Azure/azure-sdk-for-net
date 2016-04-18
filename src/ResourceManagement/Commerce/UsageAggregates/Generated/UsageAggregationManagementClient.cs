@@ -210,13 +210,13 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
             set { this._meterCategory = value; }
         }
         
-        private Guid _meterId;
+        private string _meterId;
         
         /// <summary>
         /// Optional. Unique ID for the resource that was consumed (aka
         /// ResourceID).
         /// </summary>
-        public Guid MeterId
+        public string MeterId
         {
             get { return this._meterId; }
             set { this._meterId = value; }
@@ -958,7 +958,7 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                                         JToken meterIdValue = propertiesValue["meterId"];
                                         if (meterIdValue != null && meterIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid meterIdInstance = Guid.Parse(((string)meterIdValue));
+                                            string meterIdInstance = (string)meterIdValue;
                                             propertiesInstance.MeterId = meterIdInstance;
                                         }
                                         

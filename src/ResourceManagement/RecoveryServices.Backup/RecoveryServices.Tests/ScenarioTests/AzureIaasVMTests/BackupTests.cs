@@ -31,7 +31,7 @@ namespace RecoveryServices.Tests
 {
     public class BackupTests : RecoveryServicesTestsBase
     {
-        [Fact]
+        
         public void BackupProtectedItemTest()
         {
             using (UndoContext context = UndoContext.Current)

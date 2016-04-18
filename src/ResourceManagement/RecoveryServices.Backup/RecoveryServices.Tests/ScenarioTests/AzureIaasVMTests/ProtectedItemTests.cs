@@ -95,7 +95,7 @@ namespace RecoveryServices.Tests
             }
         }
 
-        [Fact]
+        
         public void ListProtectedItemsTest()
         {
             using (UndoContext context = UndoContext.Current)

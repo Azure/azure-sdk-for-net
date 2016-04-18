@@ -30,8 +30,7 @@ using Xunit;
 namespace RecoveryServices.Tests
 {
     public class ContainerTests : RecoveryServicesTestsBase
-    {
-        [Fact]
+    {        
         public void ListContainersTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -59,8 +58,7 @@ namespace RecoveryServices.Tests
                         "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
             }
         }
-
-        [Fact]
+        
         public void RefreshContainerTest()
         {
             using (UndoContext context = UndoContext.Current)
