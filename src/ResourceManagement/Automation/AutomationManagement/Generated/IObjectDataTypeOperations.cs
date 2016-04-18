@@ -81,6 +81,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the list fields operation.
         /// </returns>
-        Task<TypeFieldListResponse> ListFieldsTypeAsync(string resourceGroupName, string automationAccount, string typeName, CancellationToken cancellationToken);
+        Task<TypeFieldListResponse> ListFieldsByTypeAsync(string resourceGroupName, string automationAccount, string typeName, CancellationToken cancellationToken);
     }
 }
