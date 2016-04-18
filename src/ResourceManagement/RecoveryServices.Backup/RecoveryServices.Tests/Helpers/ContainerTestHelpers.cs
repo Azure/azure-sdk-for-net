@@ -35,8 +35,8 @@ namespace RecoveryServices.Tests.Helpers
 
         public BaseRecoveryServicesJobResponse RefreshContainer(string fabricName)
         {
-            string rsVaultRgName = "pstestrg";
-            string rsVaultName = "pstestrsvault";
+            string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
+            string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
             BaseRecoveryServicesJobResponse response = Client.Container.Refresh(rsVaultRgName, rsVaultName, CommonTestHelper.GetCustomRequestHeaders(), fabricName);
 
