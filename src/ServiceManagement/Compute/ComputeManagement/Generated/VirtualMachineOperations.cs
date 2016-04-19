@@ -1459,6 +1459,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 roleTypeElement.Value = "PersistentVMRole";
                 persistentVMRoleElement.Add(roleTypeElement);
                 
+                if (parameters.LicenseType != null)
+                {
+                    XElement licenseTypeElement = new XElement(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                    licenseTypeElement.Value = parameters.LicenseType;
+                    persistentVMRoleElement.Add(licenseTypeElement);
+                }
+                
                 if (parameters.ConfigurationSets != null)
                 {
                     if (parameters.ConfigurationSets is ILazyCollection == false || ((ILazyCollection)parameters.ConfigurationSets).IsInitialized)
@@ -2731,6 +2738,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             roleElement.Add(roleTypeElement);
                         }
                         
+                        if (roleListItem.LicenseType != null)
+                        {
+                            XElement licenseTypeElement = new XElement(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                            licenseTypeElement.Value = roleListItem.LicenseType;
+                            roleElement.Add(licenseTypeElement);
+                        }
+                        
                         if (roleListItem.ConfigurationSets != null)
                         {
                             if (roleListItem.ConfigurationSets is ILazyCollection == false || ((ILazyCollection)roleListItem.ConfigurationSets).IsInitialized)
@@ -3713,6 +3727,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 serialOutputBlobUriElement.Value = roleListItem.DebugSettings.SerialOutputBlobUri.AbsoluteUri;
                                 debugSettingsElement.Add(serialOutputBlobUriElement);
                             }
+                        }
+                        
+                        if (roleListItem.MigrationState != null)
+                        {
+                            XElement migrationStateElement = new XElement(XName.Get("MigrationState", "http://schemas.microsoft.com/windowsazure"));
+                            migrationStateElement.Value = roleListItem.MigrationState;
+                            roleElement.Add(migrationStateElement);
                         }
                     }
                     deploymentElement.Add(roleListSequenceElement);
@@ -7148,6 +7169,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 result.RoleType = roleTypeInstance;
                             }
                             
+                            XElement licenseTypeElement = persistentVMRoleElement.Element(XName.Get("LicenseType", "http://schemas.microsoft.com/windowsazure"));
+                            if (licenseTypeElement != null)
+                            {
+                                string licenseTypeInstance = licenseTypeElement.Value;
+                                result.LicenseType = licenseTypeInstance;
+                            }
+                            
                             XElement availabilitySetNameElement = persistentVMRoleElement.Element(XName.Get("AvailabilitySetName", "http://schemas.microsoft.com/windowsazure"));
                             if (availabilitySetNameElement != null)
                             {
@@ -7930,6 +7958,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     int resizedSizeInGBInstance = int.Parse(resizedSizeInGBElement.Value, CultureInfo.InvariantCulture);
                                     oSVirtualHardDiskInstance.ResizedSizeInGB = resizedSizeInGBInstance;
                                 }
+                            }
+                            
+                            XElement provisionGuestAgentElement = persistentVMRoleElement.Element(XName.Get("ProvisionGuestAgent", "http://schemas.microsoft.com/windowsazure"));
+                            if (provisionGuestAgentElement != null && !string.IsNullOrEmpty(provisionGuestAgentElement.Value))
+                            {
+                                bool provisionGuestAgentInstance = bool.Parse(provisionGuestAgentElement.Value);
+                                result.ProvisionGuestAgent = provisionGuestAgentInstance;
                             }
                             
                             XElement debugSettingsElement = persistentVMRoleElement.Element(XName.Get("DebugSettings", "http://schemas.microsoft.com/windowsazure"));
