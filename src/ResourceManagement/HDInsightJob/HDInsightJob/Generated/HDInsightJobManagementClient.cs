@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using Hyak.Common;
@@ -55,6 +56,17 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             set { this._credentials = value; }
         }
         
+        private string _sdkUserAgent;
+        
+        /// <summary>
+        /// Gets or sets the SDK UserAgent text to be added to the user agent
+        /// header. This is used to further differentiate various SDK versions.
+        /// </summary>
+        public string SdkUserAgent
+        {
+            get { return this._sdkUserAgent; }
+        }
+        
         private string _userAgentSuffix;
         
         /// <summary>
@@ -66,6 +78,17 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         {
             get { return this._userAgentSuffix; }
             set { this._userAgentSuffix = value; }
+        }
+        
+        private string _userName;
+        
+        /// <summary>
+        /// The user name from Username of BasicAuthenticationCloudCredentials
+        /// in lower case used for running job.
+        /// </summary>
+        public string UserName
+        {
+            get { return this._userName; }
         }
         
         private IJobOperations _jobManagement;
@@ -87,6 +110,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         {
             this._jobManagement = new JobOperations(this);
             this._userAgentSuffix = "";
+            this._sdkUserAgent = SdkVersion;
+            this._userName = "";
         }
         
         /// <summary>
@@ -115,6 +140,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             this._credentials = credentials;
             
             this.Credentials.InitializeServiceClient(this);
+            this._userName = credentials.Username.ToLower(CultureInfo.CurrentCulture);
         }
         
         /// <summary>
@@ -129,6 +155,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         {
             this._jobManagement = new JobOperations(this);
             this._userAgentSuffix = "";
+            this._sdkUserAgent = SdkVersion;
+            this._userName = "";
         }
         
         /// <summary>
@@ -160,6 +188,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             this._credentials = credentials;
             
             this.Credentials.InitializeServiceClient(this);
+            this._userName = credentials.Username.ToLower(CultureInfo.CurrentCulture);
         }
         
         /// <summary>
@@ -180,6 +209,8 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 clonedClient._clusterDnsName = this._clusterDnsName;
                 clonedClient._credentials = this._credentials;
                 clonedClient._userAgentSuffix = this._userAgentSuffix;
+                clonedClient._sdkUserAgent = this._sdkUserAgent;
+                clonedClient._userName = this._userName;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
