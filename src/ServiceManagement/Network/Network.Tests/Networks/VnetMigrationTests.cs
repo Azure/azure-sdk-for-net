@@ -39,6 +39,9 @@ namespace Network.Tests.Networks
                 osResp = networkTestClient.PrepareVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
 
+                NetworkListResponse response = networkTestClient.ListNetworkConfigurations();
+                Assert.Equal(IaasClassicToArmMigrationState.Prepared.ToString(), response.VirtualNetworkSites.First().MigrationState.ToString());
+
                 osResp = networkTestClient.CommitVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
             }
@@ -55,6 +58,9 @@ namespace Network.Tests.Networks
 
                 osResp = networkTestClient.PrepareVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
+
+                NetworkListResponse response = networkTestClient.ListNetworkConfigurations();
+                Assert.Equal(IaasClassicToArmMigrationState.Prepared.ToString(), response.VirtualNetworkSites.First().MigrationState.ToString());
 
                 osResp = networkTestClient.AbortVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
