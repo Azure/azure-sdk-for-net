@@ -21,10 +21,59 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.RecoveryServices.Backup;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     public static partial class RecoveryServicesBackupManagementClientExtensions
     {
+        /// <summary>
+        /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IRecoveryServicesBackupManagementClient.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static BackUpOperationStatusResponse GetOperationStatusByURL(this IRecoveryServicesBackupManagementClient operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryServicesBackupManagementClient)s).GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IRecoveryServicesBackupManagementClient.
+        /// </param>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public static Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(this IRecoveryServicesBackupManagementClient operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.GetOperationStatusByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
+        }
     }
 }

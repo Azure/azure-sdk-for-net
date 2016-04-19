@@ -59,6 +59,7 @@ namespace RecoveryServices.Tests
             }
         }
         
+       [Fact]
         public void RefreshContainerTest()
         {
             using (UndoContext context = UndoContext.Current)

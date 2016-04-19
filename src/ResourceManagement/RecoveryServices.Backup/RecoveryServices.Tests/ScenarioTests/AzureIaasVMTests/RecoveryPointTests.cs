@@ -61,7 +61,7 @@ namespace RecoveryServices.Tests
                 queryFilter.StartDate = startTime.ToString("yyyy-MM-dd hh:mm:ss tt");
                 queryFilter.EndDate = endTime.ToString("yyyy-MM-dd hh:mm:ss tt");
 
-                var response = client.RecoveryPoint.List(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
+                var response = client.RecoveryPoints.List(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, queryFilter);
                 
                 Assert.NotNull(response.RecoveryPointList);
@@ -99,7 +99,7 @@ namespace RecoveryServices.Tests
                 string itemUri = itemType + ";" + itemUniqueName;
                 string rpId = ConfigurationManager.AppSettings["RecoveryPointName"];
                 
-                var response = client.RecoveryPoint.Get(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
+                var response = client.RecoveryPoints.Get(resourceGroupName, resourceName, CommonTestHelper.GetCustomRequestHeaders(),
                     fabricName, containerUri, itemUri, rpId);
 
                 var rpo = response.RecPoint;

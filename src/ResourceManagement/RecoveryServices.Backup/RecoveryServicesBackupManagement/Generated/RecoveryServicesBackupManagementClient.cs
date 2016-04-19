@@ -20,11 +20,17 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
@@ -92,15 +98,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             set { this._resourceNamespace = value; }
         }
         
-        private IBackupEngineOperations _backupEngine;
+        private IBackupEngineOperations _backupEngines;
         
         /// <summary>
         /// Definition of BackupEningOperations for the Azure Backup extension
         /// with RecoveryService Vault.
         /// </summary>
-        public virtual IBackupEngineOperations BackupEngine
+        public virtual IBackupEngineOperations BackupEngines
         {
-            get { return this._backupEngine; }
+            get { return this._backupEngines; }
         }
         
         private IBackupOperationResults _backupOperationResults;
@@ -114,88 +120,88 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             get { return this._backupOperationResults; }
         }
         
-        private IBackupOperations _backup;
+        private IBackupOperations _backups;
         
         /// <summary>
         /// Definition of Backup operations for the Azure Backup extension.
         /// </summary>
-        public virtual IBackupOperations Backup
+        public virtual IBackupOperations Backups
         {
-            get { return this._backup; }
+            get { return this._backups; }
         }
         
-        private IContainerOperation _container;
+        private IContainerOperations _containers;
         
         /// <summary>
         /// Definition of Container operations for the Azure Backup extension
         /// with RecoveryService Vault.
         /// </summary>
-        public virtual IContainerOperation Container
+        public virtual IContainerOperations Containers
         {
-            get { return this._container; }
+            get { return this._containers; }
         }
         
-        private IJobOperations _job;
+        private IJobOperations _jobs;
         
         /// <summary>
         /// Definition of Job operations for the Azure Backup extension.
         /// </summary>
-        public virtual IJobOperations Job
+        public virtual IJobOperations Jobs
         {
-            get { return this._job; }
+            get { return this._jobs; }
         }
         
-        private IProtectableObjectOperations _protectableObject;
+        private IProtectableObjectOperations _protectableObjects;
         
         /// <summary>
         /// Definition of Protectable Object operations for the Azure Backup
         /// extension.
         /// </summary>
-        public virtual IProtectableObjectOperations ProtectableObject
+        public virtual IProtectableObjectOperations ProtectableObjects
         {
-            get { return this._protectableObject; }
+            get { return this._protectableObjects; }
         }
         
-        private IProtectedItemOperations _protectedItem;
+        private IProtectedItemOperations _protectedItems;
         
         /// <summary>
         /// Definition of ProtectedItem operations for the Azure Backup
         /// extension.
         /// </summary>
-        public virtual IProtectedItemOperations ProtectedItem
+        public virtual IProtectedItemOperations ProtectedItems
         {
-            get { return this._protectedItem; }
+            get { return this._protectedItems; }
         }
         
-        private IProtectionPolicyOperations _protectionPolicy;
+        private IProtectionPolicyOperations _protectionPolicies;
         
         /// <summary>
         /// Definition of Protection Policy operations for the Azure Backup
         /// extension.
         /// </summary>
-        public virtual IProtectionPolicyOperations ProtectionPolicy
+        public virtual IProtectionPolicyOperations ProtectionPolicies
         {
-            get { return this._protectionPolicy; }
+            get { return this._protectionPolicies; }
         }
         
-        private IRecoveryPointOperations _recoveryPoint;
+        private IRecoveryPointOperations _recoveryPoints;
         
         /// <summary>
         /// Definition of Backup operations for the Azure Backup extension.
         /// </summary>
-        public virtual IRecoveryPointOperations RecoveryPoint
+        public virtual IRecoveryPointOperations RecoveryPoints
         {
-            get { return this._recoveryPoint; }
+            get { return this._recoveryPoints; }
         }
         
-        private IRestoreOperations _restore;
+        private IRestoreOperations _restores;
         
         /// <summary>
         /// Definition of Restore operations for the Azure Backup extension.
         /// </summary>
-        public virtual IRestoreOperations Restore
+        public virtual IRestoreOperations Restores
         {
-            get { return this._restore; }
+            get { return this._restores; }
         }
         
         /// <summary>
@@ -205,16 +211,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient()
             : base()
         {
-            this._backupEngine = new BackupEngineOperations(this);
+            this._backupEngines = new BackupEngineOperations(this);
             this._backupOperationResults = new BackupOperationResults(this);
-            this._backup = new BackupOperations(this);
-            this._container = new ContainerOperation(this);
-            this._job = new JobOperations(this);
-            this._protectableObject = new ProtectableObjectOperations(this);
-            this._protectedItem = new ProtectedItemOperations(this);
-            this._protectionPolicy = new ProtectionPolicyOperations(this);
-            this._recoveryPoint = new RecoveryPointOperations(this);
-            this._restore = new RestoreOperations(this);
+            this._backups = new BackupOperations(this);
+            this._containers = new ContainerOperations(this);
+            this._jobs = new JobOperations(this);
+            this._protectableObjects = new ProtectableObjectOperations(this);
+            this._protectedItems = new ProtectedItemOperations(this);
+            this._protectionPolicies = new ProtectionPolicyOperations(this);
+            this._recoveryPoints = new RecoveryPointOperations(this);
+            this._restores = new RestoreOperations(this);
             this._apiVersion = "2015-03-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -299,16 +305,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public RecoveryServicesBackupManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._backupEngine = new BackupEngineOperations(this);
+            this._backupEngines = new BackupEngineOperations(this);
             this._backupOperationResults = new BackupOperationResults(this);
-            this._backup = new BackupOperations(this);
-            this._container = new ContainerOperation(this);
-            this._job = new JobOperations(this);
-            this._protectableObject = new ProtectableObjectOperations(this);
-            this._protectedItem = new ProtectedItemOperations(this);
-            this._protectionPolicy = new ProtectionPolicyOperations(this);
-            this._recoveryPoint = new RecoveryPointOperations(this);
-            this._restore = new RestoreOperations(this);
+            this._backups = new BackupOperations(this);
+            this._containers = new ContainerOperations(this);
+            this._jobs = new JobOperations(this);
+            this._protectableObjects = new ProtectableObjectOperations(this);
+            this._protectedItems = new ProtectedItemOperations(this);
+            this._protectionPolicies = new ProtectionPolicyOperations(this);
+            this._recoveryPoints = new RecoveryPointOperations(this);
+            this._restores = new RestoreOperations(this);
             this._apiVersion = "2015-03-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -412,6 +418,233 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+        
+        /// <summary>
+        /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Required. Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        public async Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationResultLink == null)
+            {
+                throw new ArgumentNullException("operationResultLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationResultLink", operationResultLink);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusByURLAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationResultLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Culture);
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    BackUpOperationStatusResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new BackUpOperationStatusResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            BackUpOperationStatus operationStatusInstance = new BackUpOperationStatus();
+                            result.OperationStatus = operationStatusInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                operationStatusInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                operationStatusInstance.Name = nameInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                operationStatusInstance.Status = statusInstance;
+                            }
+                            
+                            JToken startTimeValue = responseDoc["startTime"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                string startTimeInstance = ((string)startTimeValue);
+                                operationStatusInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = responseDoc["endTime"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                string endTimeInstance = ((string)endTimeValue);
+                                operationStatusInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                            {
+                                OperationStatusError errorInstance = new OperationStatusError();
+                                operationStatusInstance.OperationStatusError = errorInstance;
+                                
+                                JToken codeValue = errorValue["code"];
+                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                {
+                                    string codeInstance = ((string)codeValue);
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                JToken messageValue = errorValue["message"];
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                {
+                                    string messageInstance = ((string)messageValue);
+                                    errorInstance.Message = messageInstance;
+                                }
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                string typeName = ((string)propertiesValue["objectType"]);
+                                if (typeName == "OperationStatusJobExtendedInfo")
+                                {
+                                    OperationStatusJobExtendedInfo operationStatusJobExtendedInfoInstance = new OperationStatusJobExtendedInfo();
+                                    
+                                    JToken jobIdValue = propertiesValue["jobId"];
+                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                    {
+                                        string jobIdInstance = ((string)jobIdValue);
+                                        operationStatusJobExtendedInfoInstance.JobId = jobIdInstance;
+                                    }
+                                    operationStatusInstance.Properties = operationStatusJobExtendedInfoInstance;
+                                }
+                                if (typeName == "OperationStatusJobsExtendedInfo")
+                                {
+                                    OperationStatusJobsExtendedInfo operationStatusJobsExtendedInfoInstance = new OperationStatusJobsExtendedInfo();
+                                    
+                                    JToken jobIdsArray = propertiesValue["jobIds"];
+                                    if (jobIdsArray != null && jobIdsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken jobIdsValue in ((JArray)jobIdsArray))
+                                        {
+                                            operationStatusJobsExtendedInfoInstance.JobIds.Add(((string)jobIdsValue));
+                                        }
+                                    }
+                                    
+                                    JToken failedJobsErrorSequenceElement = ((JToken)propertiesValue["failedJobsError"]);
+                                    if (failedJobsErrorSequenceElement != null && failedJobsErrorSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in failedJobsErrorSequenceElement)
+                                        {
+                                            string failedJobsErrorKey = ((string)property.Name);
+                                            string failedJobsErrorValue = ((string)property.Value);
+                                            operationStatusJobsExtendedInfoInstance.FailedJobsError.Add(failedJobsErrorKey, failedJobsErrorValue);
+                                        }
+                                    }
+                                    operationStatusInstance.Properties = operationStatusJobsExtendedInfoInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
             }
         }
     }

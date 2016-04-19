@@ -55,7 +55,6 @@ namespace RecoveryServices.Tests
             }
         }
 
-        [Fact]
         public void UnregisterDPMBackupEngineTest()
         {
             using (UndoContext context = UndoContext.Current)

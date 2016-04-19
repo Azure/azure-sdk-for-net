@@ -133,43 +133,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<ProtectedItemResponse> GetOperationResultAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the operation stauts of specific operationId.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// ResourceGroupName for recoveryServices Vault.
-        /// </param>
-        /// <param name='resourceName'>
-        /// ResourceName for recoveryServices Vault.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        Task<BackUpOperationStatusResponse> GetOperationStatusAsync(string resourceGroupName, string resourceName, string fabricName, string containerName, string protectedItemName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the operation stauts of specific URL
-        /// </summary>
-        /// <param name='operationResultLink'>
-        /// Location value returned by operation.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a OperationStatusResponse.
-        /// </returns>
-        Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Get ProtectedObject Operation result by URL.
         /// </summary>
         /// <param name='operationResultLink'>

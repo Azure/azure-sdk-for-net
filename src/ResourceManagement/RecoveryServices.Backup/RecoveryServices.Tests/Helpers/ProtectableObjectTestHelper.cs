@@ -25,7 +25,7 @@ namespace RecoveryServices.Tests.Helpers
             string rsVaultRgName = CommonTestHelper.GetSetting(TestConstants.RsVaultRgName);
             string rsVaultName = CommonTestHelper.GetSetting(TestConstants.RsVaultName);
 
-            ProtectableObjectListResponse response = Client.ProtectableObject.List(rsVaultRgName, rsVaultName, queryParams,
+            ProtectableObjectListResponse response = Client.ProtectableObjects.List(rsVaultRgName, rsVaultName, queryParams,
                 paginationParams, CommonTestHelper.GetCustomRequestHeaders());
 
             Assert.NotNull(response);

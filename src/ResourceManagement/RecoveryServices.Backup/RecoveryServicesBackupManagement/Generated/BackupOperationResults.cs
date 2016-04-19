@@ -27,6 +27,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Newtonsoft.Json.Linq;
@@ -179,7 +180,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent && statusCode != HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -193,7 +194,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     // Create Result
                     GetOperationResultResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent || statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted || statusCode == HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -264,6 +265,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
                             }
                         }
                         
@@ -461,6 +469,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                             {
                                 string retryAfterInstance = ((string)retryAfterValue);
                                 result.RetryAfter = retryAfterInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["Status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)statusValue), true));
+                                result.Status = statusInstance;
                             }
                         }
                         

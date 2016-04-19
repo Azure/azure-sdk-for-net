@@ -28,7 +28,7 @@ namespace RecoveryServices.Tests.Helpers
 
         public JobListResponse ListJobs(CommonJobQueryFilters queryFilters, PaginationRequest paginationReq)
         {
-            var response = Client.Job.ListAsync(rgName, rName, queryFilters, paginationReq, CommonTestHelper.GetCustomRequestHeaders()).Result;
+            var response = Client.Jobs.ListAsync(rgName, rName, queryFilters, paginationReq, CommonTestHelper.GetCustomRequestHeaders()).Result;
 
             Assert.NotNull(response);
             Assert.NotNull(response.ItemList);
@@ -39,7 +39,7 @@ namespace RecoveryServices.Tests.Helpers
 
         public JobResponse GetJob(string jobId)
         {
-            var result = Client.Job.GetAsync(rgName, rName, jobId, CommonTestHelper.GetCustomRequestHeaders()).Result;
+            var result = Client.Jobs.GetAsync(rgName, rName, jobId, CommonTestHelper.GetCustomRequestHeaders()).Result;
             Assert.NotNull(result);
             Assert.Equal(result.StatusCode, HttpStatusCode.OK);
             return result;
@@ -47,7 +47,7 @@ namespace RecoveryServices.Tests.Helpers
 
         public BaseRecoveryServicesJobResponse CancelJob(string jobId)
         {
-            var result = Client.Job.CancelJobAsync(rgName, rName, jobId, CommonTestHelper.GetCustomRequestHeaders()).Result;
+            var result = Client.Jobs.BeginCancelJobAsync(rgName, rName, jobId, CommonTestHelper.GetCustomRequestHeaders()).Result;
             Assert.NotNull(result);
             Assert.Equal(result.StatusCode, HttpStatusCode.Accepted);
             return result;
@@ -55,7 +55,7 @@ namespace RecoveryServices.Tests.Helpers
 
         public JobResponse GetJobOperationStatus(string jobId, string opId)
         {
-            var result = Client.Job.GetOperationResultAsync(rgName, rName, jobId, opId, CommonTestHelper.GetCustomRequestHeaders()).Result;
+            var result = Client.Jobs.GetOperationResultAsync(rgName, rName, jobId, opId, CommonTestHelper.GetCustomRequestHeaders()).Result;
             return result;
         }
 
