@@ -32,6 +32,7 @@ namespace RecoveryServices.Tests
 {
     public class MabContainerTests : RecoveryServicesTestsBase
     {        
+        [Fact]
         public void ListContainersTest()
         {
             using (UndoContext context = UndoContext.Current)

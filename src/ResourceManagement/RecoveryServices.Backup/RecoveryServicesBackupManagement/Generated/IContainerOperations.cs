@@ -32,8 +32,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     /// Definition of Container operations for the Azure Backup extension with
     /// RecoveryService Vault.
     /// </summary>
-    public partial interface IContainerOperation
+    public partial interface IContainerOperations
     {
+        /// <summary>
+        /// Trigger the Discovery.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Backup Fabric name for the backup item
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        Task<BaseRecoveryServicesJobResponse> BeginRefreshAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Get the status of container operation
         /// </summary>
@@ -113,9 +137,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='operationResultLink'>
         /// Location value returned by operation.
         /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -123,7 +144,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(string operationResultLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// List all protection containers.
@@ -181,7 +202,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='containerName'>
+        /// <param name='identityName'>
         /// Container Name of protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -194,6 +215,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string identityName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

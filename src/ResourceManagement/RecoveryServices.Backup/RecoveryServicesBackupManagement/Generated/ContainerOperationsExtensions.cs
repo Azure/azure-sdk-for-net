@@ -29,14 +29,74 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
-    public static partial class ContainerOperationExtensions
+    public static partial class ContainerOperationsExtensions
     {
+        /// <summary>
+        /// Trigger the Discovery.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. Request header parameters.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Optional. Backup Fabric name for the backup item
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static BaseRecoveryServicesJobResponse BeginRefresh(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperations)s).BeginRefreshAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Trigger the Discovery.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. ResourceGroupName for recoveryServices Vault.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required. ResourceName for recoveryServices Vault.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Required. Request header parameters.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Optional. Backup Fabric name for the backup item
+        /// </param>
+        /// <returns>
+        /// The definition of a BaseRecoveryServicesJobResponse for Async
+        /// operations.
+        /// </returns>
+        public static Task<BaseRecoveryServicesJobResponse> BeginRefreshAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
+        {
+            return operations.BeginRefreshAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, CancellationToken.None);
+        }
+        
         /// <summary>
         /// Get the status of container operation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -59,11 +119,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerResponse.
         /// </returns>
-        public static ProtectionContainerResponse GetContainerOperationResult(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static ProtectionContainerResponse GetContainerOperationResult(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).GetContainerOperationResultAsync(resourceGroupName, resourceName, fabricName, containerName, operationId, customRequestHeaders);
+                return ((IContainerOperations)s).GetContainerOperationResultAsync(resourceGroupName, resourceName, fabricName, containerName, operationId, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -73,7 +133,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -96,7 +156,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerResponse.
         /// </returns>
-        public static Task<ProtectionContainerResponse> GetContainerOperationResultAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectionContainerResponse> GetContainerOperationResultAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string containerName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetContainerOperationResultAsync(resourceGroupName, resourceName, fabricName, containerName, operationId, customRequestHeaders, CancellationToken.None);
         }
@@ -106,7 +166,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='operationResultLink'>
         /// Required. Location value returned by operation.
@@ -117,11 +177,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerResponse.
         /// </returns>
-        public static ProtectionContainerResponse GetContainerOperationResultByURL(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        public static ProtectionContainerResponse GetContainerOperationResultByURL(this IContainerOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).GetContainerOperationResultByURLAsync(operationResultLink, customRequestHeaders);
+                return ((IContainerOperations)s).GetContainerOperationResultByURLAsync(operationResultLink, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -131,7 +191,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='operationResultLink'>
         /// Required. Location value returned by operation.
@@ -142,7 +202,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerResponse.
         /// </returns>
-        public static Task<ProtectionContainerResponse> GetContainerOperationResultByURLAsync(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectionContainerResponse> GetContainerOperationResultByURLAsync(this IContainerOperations operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetContainerOperationResultByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
         }
@@ -152,7 +212,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -173,11 +233,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static BaseRecoveryServicesJobResponse GetRefreshOperationResult(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static BaseRecoveryServicesJobResponse GetRefreshOperationResult(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).GetRefreshOperationResultAsync(resourceGroupName, resourceName, fabricName, operationId, customRequestHeaders);
+                return ((IContainerOperations)s).GetRefreshOperationResultAsync(resourceGroupName, resourceName, fabricName, operationId, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -187,7 +247,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -208,7 +268,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, string fabricName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetRefreshOperationResultAsync(resourceGroupName, resourceName, fabricName, operationId, customRequestHeaders, CancellationToken.None);
         }
@@ -218,23 +278,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='operationResultLink'>
         /// Required. Location value returned by operation.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static BaseRecoveryServicesJobResponse GetRefreshOperationResultByURL(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        public static BaseRecoveryServicesJobResponse GetRefreshOperationResultByURL(this IContainerOperations operations, string operationResultLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).GetRefreshOperationResultByURLAsync(operationResultLink, customRequestHeaders);
+                return ((IContainerOperations)s).GetRefreshOperationResultByURLAsync(operationResultLink);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -244,21 +301,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='operationResultLink'>
         /// Required. Location value returned by operation.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(this IContainerOperation operations, string operationResultLink, CustomRequestHeaders customRequestHeaders)
+        public static Task<BaseRecoveryServicesJobResponse> GetRefreshOperationResultByURLAsync(this IContainerOperations operations, string operationResultLink)
         {
-            return operations.GetRefreshOperationResultByURLAsync(operationResultLink, customRequestHeaders, CancellationToken.None);
+            return operations.GetRefreshOperationResultByURLAsync(operationResultLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -266,7 +320,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -283,11 +337,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerListResponse.
         /// </returns>
-        public static ProtectionContainerListResponse List(this IContainerOperation operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
+        public static ProtectionContainerListResponse List(this IContainerOperations operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).ListAsync(resourceGroupName, resourceName, queryParams, customRequestHeaders);
+                return ((IContainerOperations)s).ListAsync(resourceGroupName, resourceName, queryParams, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -297,7 +351,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -314,7 +368,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <returns>
         /// The definition of a ProtectionContainerListResponse.
         /// </returns>
-        public static Task<ProtectionContainerListResponse> ListAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
+        public static Task<ProtectionContainerListResponse> ListAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, ProtectionContainerListQueryParams queryParams, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(resourceGroupName, resourceName, queryParams, customRequestHeaders, CancellationToken.None);
         }
@@ -324,7 +378,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -342,11 +396,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static BaseRecoveryServicesJobResponse Refresh(this IContainerOperation operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
+        public static BaseRecoveryServicesJobResponse Refresh(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).RefreshAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName);
+                return ((IContainerOperations)s).RefreshAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -356,7 +410,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -374,7 +428,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// The definition of a BaseRecoveryServicesJobResponse for Async
         /// operations.
         /// </returns>
-        public static Task<BaseRecoveryServicesJobResponse> RefreshAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
+        public static Task<BaseRecoveryServicesJobResponse> RefreshAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName)
         {
             return operations.RefreshAsync(resourceGroupName, resourceName, customRequestHeaders, fabricName, CancellationToken.None);
         }
@@ -384,7 +438,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -392,7 +446,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='containerName'>
+        /// <param name='identityName'>
         /// Required. Container Name of protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -402,11 +456,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Unregister(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static AzureOperationResponse Unregister(this IContainerOperations operations, string resourceGroupName, string resourceName, string identityName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).UnregisterAsync(resourceGroupName, resourceName, containerName, customRequestHeaders);
+                return ((IContainerOperations)s).UnregisterAsync(resourceGroupName, resourceName, identityName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -416,7 +470,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperation.
+        /// Microsoft.Azure.Management.RecoveryServices.Backup.IContainerOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -424,7 +478,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='resourceName'>
         /// Required. ResourceName for recoveryServices Vault.
         /// </param>
-        /// <param name='containerName'>
+        /// <param name='identityName'>
         /// Required. Container Name of protectionContainers
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -434,9 +488,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> UnregisterAsync(this IContainerOperation operations, string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureOperationResponse> UnregisterAsync(this IContainerOperations operations, string resourceGroupName, string resourceName, string identityName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.UnregisterAsync(resourceGroupName, resourceName, containerName, customRequestHeaders, CancellationToken.None);
+            return operations.UnregisterAsync(resourceGroupName, resourceName, identityName, customRequestHeaders, CancellationToken.None);
         }
     }
 }

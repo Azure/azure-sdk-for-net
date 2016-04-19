@@ -21,8 +21,11 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
@@ -79,7 +82,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Definition of BackupEningOperations for the Azure Backup extension
         /// with RecoveryService Vault.
         /// </summary>
-        IBackupEngineOperations BackupEngine
+        IBackupEngineOperations BackupEngines
         {
             get; 
         }
@@ -96,7 +99,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Definition of Backup operations for the Azure Backup extension.
         /// </summary>
-        IBackupOperations Backup
+        IBackupOperations Backups
         {
             get; 
         }
@@ -105,7 +108,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Definition of Container operations for the Azure Backup extension
         /// with RecoveryService Vault.
         /// </summary>
-        IContainerOperation Container
+        IContainerOperations Containers
         {
             get; 
         }
@@ -113,7 +116,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Definition of Job operations for the Azure Backup extension.
         /// </summary>
-        IJobOperations Job
+        IJobOperations Jobs
         {
             get; 
         }
@@ -122,7 +125,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Definition of Protectable Object operations for the Azure Backup
         /// extension.
         /// </summary>
-        IProtectableObjectOperations ProtectableObject
+        IProtectableObjectOperations ProtectableObjects
         {
             get; 
         }
@@ -131,7 +134,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Definition of ProtectedItem operations for the Azure Backup
         /// extension.
         /// </summary>
-        IProtectedItemOperations ProtectedItem
+        IProtectedItemOperations ProtectedItems
         {
             get; 
         }
@@ -140,7 +143,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Definition of Protection Policy operations for the Azure Backup
         /// extension.
         /// </summary>
-        IProtectionPolicyOperations ProtectionPolicy
+        IProtectionPolicyOperations ProtectionPolicies
         {
             get; 
         }
@@ -148,7 +151,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Definition of Backup operations for the Azure Backup extension.
         /// </summary>
-        IRecoveryPointOperations RecoveryPoint
+        IRecoveryPointOperations RecoveryPoints
         {
             get; 
         }
@@ -156,9 +159,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <summary>
         /// Definition of Restore operations for the Azure Backup extension.
         /// </summary>
-        IRestoreOperations Restore
+        IRestoreOperations Restores
         {
             get; 
         }
+        
+        /// <summary>
+        /// Get the status of Protection policy operation by URL.
+        /// </summary>
+        /// <param name='operationResultLink'>
+        /// Location value returned by operation.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a OperationStatusResponse.
+        /// </returns>
+        Task<BackUpOperationStatusResponse> GetOperationStatusByURLAsync(string operationResultLink, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
