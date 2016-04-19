@@ -35,7 +35,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
         /// <param name="maxSegmentLength">Maximum length of each segment. The default is 256mb, which gives optimal performance. Modify at your own risk.</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null)
+        /// <param name="fileEncoding">(Optional) Indicates the type of encoding the file was saved in and should be interpreted as having. The default is UTF-8.</param>
+        /// <param name="delimiter">(Optional) Indicates the character delimter for record boundaries within the file, if any.This must be a single character. The default is new lines (\r, \n or \r\n).</param>
+        public UploadParameters(string inputFilePath, string targetStreamPath, string accountName, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null, System.Text.Encoding fileEncoding = null, string delimiter = null)
         {
             this.InputFilePath = inputFilePath;
             this.TargetStreamPath = targetStreamPath;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.LocalMetadataLocation = localMetadataLocation;
 
             this.UseSegmentBlockBackOffRetryStrategy = true;
+            this.FileEncoding = fileEncoding ?? System.Text.Encoding.UTF8;
         }
 
         /// <summary>
@@ -67,8 +70,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
         /// <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
         /// <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
-        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null) :
-            this(inputFilePath, targetStreamPath, accountName, threadCount, isOverwrite, isResume, isBinary, maxSegmentLength, localMetadataLocation)
+        /// <param name="fileEncoding">(Optional) Indicates the type of encoding the file was saved in and should be interpreted as having. The default is UTF-8.</param>
+        /// <param name="delimiter">(Optional) Indicates the character delimter for record boundaries within the file, if any.This must be a single character. The default is new lines (\r, \n or \r\n).</param>
+        internal UploadParameters(string inputFilePath, string targetStreamPath, string accountName, bool useSegmentBlockBackOffRetryStrategy, int threadCount = 1, bool isOverwrite = false, bool isResume = false, bool isBinary = true, long maxSegmentLength = 256*1024*1024, string localMetadataLocation = null, System.Text.Encoding fileEncoding = null, string delimiter = null) :
+            this(inputFilePath, targetStreamPath, accountName, threadCount, isOverwrite, isResume, isBinary, maxSegmentLength, localMetadataLocation, fileEncoding, delimiter)
         {
             this.UseSegmentBlockBackOffRetryStrategy = useSegmentBlockBackOffRetryStrategy;
         }
@@ -152,5 +157,21 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// The local metadata location.
         /// </value>
         public string LocalMetadataLocation { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating the encoding of the file being uploaded.
+        /// </summary>
+        /// <value>
+        /// The file encoding.
+        /// </value>
+        public System.Text.Encoding FileEncoding { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating the record boundary delimiter for the file, if any.
+        /// </summary>
+        /// <value>
+        /// The record boundary delimiter
+        /// </value>
+        public string Delimiter { get; private set; }
     }
 }

@@ -298,8 +298,8 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         public void DataLakeUploader_UploadSingleSegment()
         {
             var frontEnd = new InMemoryFrontEnd();
-            var mockFrontEnd = new MockableFrontEnd(frontEnd);
-            mockFrontEnd.ConcatenateImplementation = (target, inputs) => { Assert.True(false, "Concatenate should not be called when using 1 segment"); };
+            // var mockFrontEnd = new MockableFrontEnd(frontEnd);
+            // mockFrontEnd.ConcatenateImplementation = (target, inputs) => { Assert.True(false, "Concatenate should not be called when using 1 segment"); };
 
             var up = new UploadParameters(
                 inputFilePath: _smallFilePath,

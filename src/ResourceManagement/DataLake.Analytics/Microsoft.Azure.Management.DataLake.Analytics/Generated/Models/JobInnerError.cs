@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobInnerError class.
         /// </summary>
-        public JobInnerError(int? diagnosticCode = default(int?), string severity = default(string), string details = default(string), string component = default(string), string errorId = default(string), string helpLink = default(string), string internalDiagnostics = default(string), string message = default(string), string resolution = default(string), string source = default(string), string description = default(string))
+        public JobInnerError(int? diagnosticCode = default(int?), SeverityTypes? severity = default(SeverityTypes?), string details = default(string), string component = default(string), string errorId = default(string), string helpLink = default(string), string internalDiagnostics = default(string), string message = default(string), string resolution = default(string), string source = default(string), string description = default(string))
         {
             DiagnosticCode = diagnosticCode;
             Severity = severity;
@@ -52,10 +52,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets the severity level of the failure. Possible values include:
-        /// 'Warning', 'Error'
+        /// 'Warning', 'Error', 'Info'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
-        public string Severity { get; private set; }
+        public SeverityTypes? Severity { get; private set; }
 
         /// <summary>
         /// Gets the details of the error message.

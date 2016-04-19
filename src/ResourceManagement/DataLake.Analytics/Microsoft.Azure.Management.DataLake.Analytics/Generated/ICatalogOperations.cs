@@ -27,6 +27,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Creates the specified secret for use with external data sources in
         /// the specified database.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database in which to create the secret.
         /// </param>
@@ -36,21 +40,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='parameters'>
         /// The parameters required to create the secret (name and password)
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlSecret>> CreateSecretWithHttpMessagesAsync(string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlSecret>> CreateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Modifies the specified secret for use with external data sources
         /// in the specified database
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
         /// </param>
@@ -60,88 +64,84 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='parameters'>
         /// The parameters required to modify the secret (name and password)
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlSecret>> UpdateSecretWithHttpMessagesAsync(string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlSecret>> UpdateSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the specified secret in the specified database
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
         /// </param>
         /// <param name='secretName'>
         /// The name of the secret to get
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlSecret>> GetSecretWithHttpMessagesAsync(string databaseName, string secretName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlSecret>> GetSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified secret in the specified database
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the secret.
         /// </param>
         /// <param name='secretName'>
         /// The name of the secret to delete
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse> DeleteSecretWithHttpMessagesAsync(string databaseName, string secretName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteSecretWithHttpMessagesAsync(string accountName, string databaseName, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified external data source from the Data Lake
         /// Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the external data source.
         /// </param>
         /// <param name='externalDataSourceName'>
         /// The name of the external data source.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string databaseName, string externalDataSourceName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlExternalDataSource>> GetExternalDataSourceWithHttpMessagesAsync(string accountName, string databaseName, string externalDataSourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of external data sources from the Data Lake
         /// Analytics catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the external data sources.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
         /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the external data sources.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -180,38 +180,38 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlExternalDataSource>>> ListExternalDataSourcesWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified credential from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
         /// </param>
         /// <param name='credentialName'>
         /// The name of the credential.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlCredential>> GetCredentialWithHttpMessagesAsync(string databaseName, string credentialName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlCredential>> GetCredentialWithHttpMessagesAsync(string accountName, string databaseName, string credentialName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of credentials from the Data Lake Analytics
         /// catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the schema.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
         /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the schema.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -250,11 +250,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlCredential>>> ListCredentialsWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified procedure from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedure.
         /// </param>
@@ -264,30 +268,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='procedureName'>
         /// The name of the procedure.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlProcedure>> GetProcedureWithHttpMessagesAsync(string databaseName, string schemaName, string procedureName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlProcedure>> GetProcedureWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string procedureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of procedures from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the procedures.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the procedures.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -326,10 +326,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified table from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table.
         /// </param>
@@ -339,29 +343,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='tableName'>
         /// The name of the table.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlTable>> GetTableWithHttpMessagesAsync(string databaseName, string schemaName, string tableName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlTable>> GetTableWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the tables.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the tables.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -400,10 +400,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlTable>>> ListTablesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified view from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the view.
         /// </param>
@@ -413,29 +417,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='viewName'>
         /// The name of the view.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlView>> GetViewWithHttpMessagesAsync(string databaseName, string schemaName, string viewName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlView>> GetViewWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string viewName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of views from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the views.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the views.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -460,7 +460,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -474,10 +474,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlView>>> ListViewsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified table from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
         /// </param>
@@ -490,20 +494,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='statisticsName'>
         /// The name of the table statistics.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlTableStatistics>> GetTableStatisticWithHttpMessagesAsync(string databaseName, string schemaName, string tableName, string statisticsName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlTableStatistics>> GetTableStatisticWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string statisticsName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the statistics.
         /// </param>
@@ -512,10 +516,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </param>
         /// <param name='tableName'>
         /// The name of the table containing the statistics.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -554,20 +554,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string databaseName, string schemaName, string tableName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of types within the specified database and
         /// schema from the Data Lake Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the types.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the types.
-        /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -588,11 +588,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlType>>> ListTypesWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified table valued function from the Data Lake
         /// Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued function.
         /// </param>
@@ -602,31 +606,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='tableValuedFunctionName'>
         /// The name of the tableValuedFunction.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlTableValuedFunction>> GetTableValuedFunctionWithHttpMessagesAsync(string databaseName, string schemaName, string tableValuedFunctionName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlTableValuedFunction>> GetTableValuedFunctionWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableValuedFunctionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of table valued functions from the Data Lake
         /// Analytics catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the table valued functions.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema containing the table valued functions.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
         /// </param>
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -664,38 +664,38 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlTableValuedFunction>>> ListTableValuedFunctionsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified assembly from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the assembly.
         /// </param>
         /// <param name='assemblyName'>
         /// The name of the assembly.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlAssembly>> GetAssemblyWithHttpMessagesAsync(string databaseName, string assemblyName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlAssembly>> GetAssemblyWithHttpMessagesAsync(string accountName, string databaseName, string assemblyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of assemblies from the Data Lake Analytics
         /// catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the assembly.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
         /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the assembly.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -720,7 +720,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -734,37 +734,37 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlAssemblyClr>>> ListAssembliesWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified schema from the Data Lake Analytics
         /// catalog.
         /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute catalog
+        /// operations on.
+        /// </param>
         /// <param name='databaseName'>
         /// The name of the database containing the schema.
         /// </param>
         /// <param name='schemaName'>
         /// The name of the schema.
         /// </param>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute catalog
-        /// operations on.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlSchema>> GetSchemaWithHttpMessagesAsync(string databaseName, string schemaName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlSchema>> GetSchemaWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of schemas from the Data Lake Analytics catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database containing the schema.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
         /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the schema.
         /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
@@ -789,7 +789,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>
@@ -803,17 +803,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<USqlSchema>>> ListSchemasWithHttpMessagesAsync(string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the specified database from the Data Lake Analytics
         /// catalog.
         /// </summary>
-        /// <param name='databaseName'>
-        /// The name of the database.
-        /// </param>
         /// <param name='accountName'>
         /// The Azure Data Lake Analytics account to execute catalog
         /// operations on.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -821,7 +821,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<USqlDatabase>> GetDatabaseWithHttpMessagesAsync(string databaseName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<USqlDatabase>> GetDatabaseWithHttpMessagesAsync(string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of databases from the Data Lake Analytics
         /// catalog.
@@ -853,7 +853,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <param name='orderby'>
         /// OrderBy clause. One or more comma-separated expressions with an
         /// optional "asc" (the default) or "desc" depending on the order
-        /// youâ€™d like the values sorted, e.g.
+        /// you'd like the values sorted, e.g.
         /// Categories?$orderby=CategoryName desc. Optional.
         /// </param>
         /// <param name='count'>

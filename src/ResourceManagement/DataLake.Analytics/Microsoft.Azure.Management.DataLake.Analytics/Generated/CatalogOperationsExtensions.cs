@@ -30,6 +30,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database in which to create the secret.
             /// </param>
@@ -39,12 +42,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to create the secret (name and password)
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlSecret CreateSecret(this ICatalogOperations operations, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName)
+            public static USqlSecret CreateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).CreateSecretAsync(databaseName, secretName, parameters, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).CreateSecretAsync(accountName, databaseName, secretName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,6 +54,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database in which to create the secret.
             /// </param>
@@ -63,15 +66,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to create the secret (name and password)
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> CreateSecretAsync(this ICatalogOperations operations, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSecret> CreateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateSecretWithHttpMessagesAsync(databaseName, secretName, parameters, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,6 +84,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the secret.
             /// </param>
@@ -93,12 +96,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to modify the secret (name and password)
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlSecret UpdateSecret(this ICatalogOperations operations, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName)
+            public static USqlSecret UpdateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).UpdateSecretAsync(databaseName, secretName, parameters, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).UpdateSecretAsync(accountName, databaseName, secretName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -108,6 +108,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the secret.
             /// </param>
@@ -117,15 +120,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to modify the secret (name and password)
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> UpdateSecretAsync(this ICatalogOperations operations, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSecret> UpdateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(databaseName, secretName, parameters, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -137,18 +137,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the secret.
             /// </param>
             /// <param name='secretName'>
             /// The name of the secret to get
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlSecret GetSecret(this ICatalogOperations operations, string databaseName, string secretName, string accountName)
+            public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSecretAsync(databaseName, secretName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSecretAsync(accountName, databaseName, secretName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -157,21 +157,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the secret.
             /// </param>
             /// <param name='secretName'>
             /// The name of the secret to get
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string databaseName, string secretName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSecretWithHttpMessagesAsync(databaseName, secretName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -183,18 +183,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the secret.
             /// </param>
             /// <param name='secretName'>
             /// The name of the secret to delete
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static void DeleteSecret(this ICatalogOperations operations, string databaseName, string secretName, string accountName)
+            public static void DeleteSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteSecretAsync(databaseName, secretName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteSecretAsync(accountName, databaseName, secretName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,21 +203,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the secret.
             /// </param>
             /// <param name='secretName'>
             /// The name of the secret to delete
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSecretAsync(this ICatalogOperations operations, string databaseName, string secretName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteSecretWithHttpMessagesAsync(databaseName, secretName, accountName, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -227,18 +227,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the external data source.
             /// </param>
             /// <param name='externalDataSourceName'>
             /// The name of the external data source.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlExternalDataSource GetExternalDataSource(this ICatalogOperations operations, string databaseName, string externalDataSourceName, string accountName)
+            public static USqlExternalDataSource GetExternalDataSource(this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetExternalDataSourceAsync(databaseName, externalDataSourceName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetExternalDataSourceAsync(accountName, databaseName, externalDataSourceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -248,21 +248,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the external data source.
             /// </param>
             /// <param name='externalDataSourceName'>
             /// The name of the external data source.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlExternalDataSource> GetExternalDataSourceAsync(this ICatalogOperations operations, string databaseName, string externalDataSourceName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlExternalDataSource> GetExternalDataSourceAsync(this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetExternalDataSourceWithHttpMessagesAsync(databaseName, externalDataSourceName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetExternalDataSourceWithHttpMessagesAsync(accountName, databaseName, externalDataSourceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -275,11 +275,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the external data sources.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the external data sources.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -309,9 +309,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,12 +321,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the external data sources.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -358,9 +358,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -372,18 +372,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
             /// <param name='credentialName'>
             /// The name of the credential.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlCredential GetCredential(this ICatalogOperations operations, string databaseName, string credentialName, string accountName)
+            public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetCredentialAsync(databaseName, credentialName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetCredentialAsync(accountName, databaseName, credentialName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -392,21 +392,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
             /// <param name='credentialName'>
             /// The name of the credential.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string databaseName, string credentialName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCredentialWithHttpMessagesAsync(databaseName, credentialName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -418,11 +418,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the schema.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the schema.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -452,9 +452,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -463,12 +463,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
@@ -489,7 +489,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -500,9 +500,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlCredential>> ListCredentialsAsync(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlCredential>> ListCredentialsAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -514,6 +514,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the procedure.
             /// </param>
@@ -523,12 +526,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='procedureName'>
             /// The name of the procedure.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlProcedure GetProcedure(this ICatalogOperations operations, string databaseName, string schemaName, string procedureName, string accountName)
+            public static USqlProcedure GetProcedure(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetProcedureAsync(databaseName, schemaName, procedureName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetProcedureAsync(accountName, databaseName, schemaName, procedureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -537,6 +537,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the procedure.
             /// </param>
@@ -546,15 +549,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='procedureName'>
             /// The name of the procedure.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlProcedure> GetProcedureAsync(this ICatalogOperations operations, string databaseName, string schemaName, string procedureName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlProcedure> GetProcedureAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetProcedureWithHttpMessagesAsync(databaseName, schemaName, procedureName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetProcedureWithHttpMessagesAsync(accountName, databaseName, schemaName, procedureName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -566,14 +566,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the procedures.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the procedures.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -595,7 +595,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -603,9 +603,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -614,15 +614,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the procedures.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the procedures.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
@@ -643,7 +643,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -654,9 +654,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlProcedure>> ListProceduresAsync(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlProcedure>> ListProceduresAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListProceduresWithHttpMessagesAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListProceduresWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -668,6 +668,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the table.
             /// </param>
@@ -677,12 +680,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='tableName'>
             /// The name of the table.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlTable GetTable(this ICatalogOperations operations, string databaseName, string schemaName, string tableName, string accountName)
+            public static USqlTable GetTable(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableAsync(databaseName, schemaName, tableName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableAsync(accountName, databaseName, schemaName, tableName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -691,6 +691,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the table.
             /// </param>
@@ -700,15 +703,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='tableName'>
             /// The name of the table.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTable> GetTableAsync(this ICatalogOperations operations, string databaseName, string schemaName, string tableName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlTable> GetTableAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTableWithHttpMessagesAsync(databaseName, schemaName, tableName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetTableWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -720,14 +720,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the tables.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the tables.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -749,7 +749,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -757,9 +757,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTable> ListTables(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlTable> ListTables(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -768,15 +768,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the tables.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the tables.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
@@ -797,7 +797,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -808,9 +808,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTable>> ListTablesAsync(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTable>> ListTablesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTablesWithHttpMessagesAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListTablesWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -822,6 +822,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the view.
             /// </param>
@@ -831,12 +834,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='viewName'>
             /// The name of the view.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlView GetView(this ICatalogOperations operations, string databaseName, string schemaName, string viewName, string accountName)
+            public static USqlView GetView(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetViewAsync(databaseName, schemaName, viewName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetViewAsync(accountName, databaseName, schemaName, viewName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -845,6 +845,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the view.
             /// </param>
@@ -854,15 +857,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='viewName'>
             /// The name of the view.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlView> GetViewAsync(this ICatalogOperations operations, string databaseName, string schemaName, string viewName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlView> GetViewAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetViewWithHttpMessagesAsync(databaseName, schemaName, viewName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetViewWithHttpMessagesAsync(accountName, databaseName, schemaName, viewName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -874,14 +874,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the views.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the views.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -903,7 +903,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -911,9 +911,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlView> ListViews(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlView> ListViews(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -922,14 +922,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the views.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the views.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -951,7 +951,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -962,9 +962,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlView>> ListViewsAsync(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlView>> ListViewsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListViewsWithHttpMessagesAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListViewsWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -975,6 +975,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the statistics.
@@ -988,12 +991,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='statisticsName'>
             /// The name of the table statistics.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlTableStatistics GetTableStatistic(this ICatalogOperations operations, string databaseName, string schemaName, string tableName, string statisticsName, string accountName)
+            public static USqlTableStatistics GetTableStatistic(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableStatisticAsync(databaseName, schemaName, tableName, statisticsName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableStatisticAsync(accountName, databaseName, schemaName, tableName, statisticsName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1001,6 +1001,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the statistics.
@@ -1014,15 +1017,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='statisticsName'>
             /// The name of the table statistics.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTableStatistics> GetTableStatisticAsync(this ICatalogOperations operations, string databaseName, string schemaName, string tableName, string statisticsName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlTableStatistics> GetTableStatisticAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTableStatisticWithHttpMessagesAsync(databaseName, schemaName, tableName, statisticsName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetTableStatisticWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, statisticsName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1034,6 +1034,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the statistics.
             /// </param>
@@ -1042,9 +1045,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='tableName'>
             /// The name of the table containing the statistics.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -1066,7 +1066,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1074,9 +1074,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string databaseName, string schemaName, string tableName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(databaseName, schemaName, tableName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1085,6 +1085,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the statistics.
             /// </param>
@@ -1093,9 +1096,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='tableName'>
             /// The name of the table containing the statistics.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -1117,7 +1117,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1128,9 +1128,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync(this ICatalogOperations operations, string databaseName, string schemaName, string tableName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTableStatisticsWithHttpMessagesAsync(databaseName, schemaName, tableName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1143,14 +1143,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the types.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the types.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -1164,9 +1164,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlType> ListTypes(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?))
+            public static IPage<USqlType> ListTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesAsync(databaseName, schemaName, accountName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1176,14 +1176,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the types.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the types.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -1200,9 +1200,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlType>> ListTypesAsync(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlType>> ListTypesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTypesWithHttpMessagesAsync(databaseName, schemaName, accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1215,6 +1215,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the table valued function.
             /// </param>
@@ -1224,12 +1227,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='tableValuedFunctionName'>
             /// The name of the tableValuedFunction.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlTableValuedFunction GetTableValuedFunction(this ICatalogOperations operations, string databaseName, string schemaName, string tableValuedFunctionName, string accountName)
+            public static USqlTableValuedFunction GetTableValuedFunction(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableValuedFunctionAsync(databaseName, schemaName, tableValuedFunctionName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableValuedFunctionAsync(accountName, databaseName, schemaName, tableValuedFunctionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1239,6 +1239,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the table valued function.
             /// </param>
@@ -1248,15 +1251,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='tableValuedFunctionName'>
             /// The name of the tableValuedFunction.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTableValuedFunction> GetTableValuedFunctionAsync(this ICatalogOperations operations, string databaseName, string schemaName, string tableValuedFunctionName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlTableValuedFunction> GetTableValuedFunctionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTableValuedFunctionWithHttpMessagesAsync(databaseName, schemaName, tableValuedFunctionName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetTableValuedFunctionWithHttpMessagesAsync(accountName, databaseName, schemaName, tableValuedFunctionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1269,14 +1269,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the table valued functions.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the table valued functions.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -1298,7 +1298,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1306,9 +1306,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1318,15 +1318,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the table valued functions.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema containing the table valued functions.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
@@ -1347,7 +1347,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1358,9 +1358,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(databaseName, schemaName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountName, databaseName, schemaName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1372,18 +1372,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the assembly.
             /// </param>
             /// <param name='assemblyName'>
             /// The name of the assembly.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlAssembly GetAssembly(this ICatalogOperations operations, string databaseName, string assemblyName, string accountName)
+            public static USqlAssembly GetAssembly(this ICatalogOperations operations, string accountName, string databaseName, string assemblyName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetAssemblyAsync(databaseName, assemblyName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetAssemblyAsync(accountName, databaseName, assemblyName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1392,21 +1392,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the assembly.
             /// </param>
             /// <param name='assemblyName'>
             /// The name of the assembly.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlAssembly> GetAssemblyAsync(this ICatalogOperations operations, string databaseName, string assemblyName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlAssembly> GetAssemblyAsync(this ICatalogOperations operations, string accountName, string databaseName, string assemblyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAssemblyWithHttpMessagesAsync(databaseName, assemblyName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAssemblyWithHttpMessagesAsync(accountName, databaseName, assemblyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1418,11 +1418,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the assembly.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the assembly.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -1444,7 +1444,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1452,9 +1452,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1463,12 +1463,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the assembly.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
@@ -1489,7 +1489,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1500,9 +1500,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAssembliesWithHttpMessagesAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAssembliesWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1514,18 +1514,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
-            public static USqlSchema GetSchema(this ICatalogOperations operations, string databaseName, string schemaName, string accountName)
+            public static USqlSchema GetSchema(this ICatalogOperations operations, string accountName, string databaseName, string schemaName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSchemaAsync(databaseName, schemaName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSchemaAsync(accountName, databaseName, schemaName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1534,21 +1534,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
             /// <param name='databaseName'>
             /// The name of the database containing the schema.
             /// </param>
             /// <param name='schemaName'>
             /// The name of the schema.
             /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute catalog operations on.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSchema> GetSchemaAsync(this ICatalogOperations operations, string databaseName, string schemaName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlSchema> GetSchemaAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSchemaWithHttpMessagesAsync(databaseName, schemaName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSchemaWithHttpMessagesAsync(accountName, databaseName, schemaName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1560,11 +1560,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the schema.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the schema.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -1586,7 +1586,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1594,9 +1594,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
+            public static IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1605,11 +1605,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the schema.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the schema.
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
@@ -1631,7 +1631,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1642,9 +1642,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlSchema>> ListSchemasAsync(this ICatalogOperations operations, string databaseName, string accountName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<USqlSchema>> ListSchemasAsync(this ICatalogOperations operations, string accountName, string databaseName, string filter = default(string), int? top = default(int?), int? skip = default(int?), string expand = default(string), string select = default(string), string orderby = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSchemasWithHttpMessagesAsync(databaseName, accountName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSchemasWithHttpMessagesAsync(accountName, databaseName, filter, top, skip, expand, select, orderby, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1656,15 +1656,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
             /// </param>
-            public static USqlDatabase GetDatabase(this ICatalogOperations operations, string databaseName, string accountName)
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static USqlDatabase GetDatabase(this ICatalogOperations operations, string accountName, string databaseName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetDatabaseAsync(databaseName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetDatabaseAsync(accountName, databaseName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1673,18 +1673,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
             /// <param name='accountName'>
             /// The Azure Data Lake Analytics account to execute catalog operations on.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlDatabase> GetDatabaseAsync(this ICatalogOperations operations, string databaseName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<USqlDatabase> GetDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetDatabaseWithHttpMessagesAsync(databaseName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetDatabaseWithHttpMessagesAsync(accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1719,7 +1719,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
@@ -1761,7 +1761,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             /// <param name='orderby'>
             /// OrderBy clause. One or more comma-separated expressions with an optional
-            /// "asc" (the default) or "desc" depending on the order youâ€™d like the
+            /// "asc" (the default) or "desc" depending on the order you'd like the
             /// values sorted, e.g. Categories?$orderby=CategoryName desc. Optional.
             /// </param>
             /// <param name='count'>
