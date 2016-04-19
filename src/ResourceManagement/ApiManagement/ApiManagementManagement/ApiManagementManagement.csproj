@@ -95,7 +95,6 @@
     <Compile Include="Generated\ISubscriptionsOperations.cs" />
     <Compile Include="Generated\ITenantAccessGitOperations.cs" />
     <Compile Include="Generated\ITenantAccessInformationOperations.cs" />
-    <Compile Include="Generated\ITenantConfigurationOperationResults.cs" />
     <Compile Include="Generated\ITenantConfigurationOperations.cs" />
     <Compile Include="Generated\ITenantConfigurationSyncStateOperation.cs" />
     <Compile Include="Generated\ITenantPolicyOperations.cs" />
@@ -212,8 +211,6 @@
     <Compile Include="Generated\SmapiModels\OperationListResponse.cs" />
     <Compile Include="Generated\SmapiModels\OperationPaged.cs" />
     <Compile Include="Generated\SmapiModels\OperationResultContract.cs" />
-    <Compile Include="Generated\SmapiModels\OperationResultGetResponse.cs" />
-    <Compile Include="Generated\SmapiModels\OperationResultListResponse.cs" />
     <Compile Include="Generated\SmapiModels\OperationResultPaged.cs" />
     <Compile Include="Generated\SmapiModels\Paged.cs" />
     <Compile Include="Generated\SmapiModels\ParameterContract.cs" />
@@ -274,8 +271,6 @@
     <Compile Include="Generated\TenantAccessGitOperationsExtensions.cs" />
     <Compile Include="Generated\TenantAccessInformationOperations.cs" />
     <Compile Include="Generated\TenantAccessInformationOperationsExtensions.cs" />
-    <Compile Include="Generated\TenantConfigurationOperationResults.cs" />
-    <Compile Include="Generated\TenantConfigurationOperationResultsExtensions.cs" />
     <Compile Include="Generated\TenantConfigurationOperations.cs" />
     <Compile Include="Generated\TenantConfigurationOperationsExtensions.cs" />
     <Compile Include="Generated\TenantConfigurationSyncStateOperation.cs" />
