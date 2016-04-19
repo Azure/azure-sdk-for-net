@@ -1,5 +1,5 @@
 {
-  "version": "0.10.1-preview",
+  "version": "0.11.0-preview",
   "description": "Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
   "tags": [ "Microsoft Azure Data Lake Store management", "DataLakeStore", "Data Lake Store management", "REST HTTP client", "windowsazureofficial" ],
