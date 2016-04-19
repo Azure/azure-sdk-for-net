@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             using (var toAppend = data != null ? new MemoryStream(data, 0, byteCount) : new MemoryStream())
             {
-                var task = _client.FileSystem.CreateAsync(streamPath, _accountName, toAppend, overwrite: overwrite, cancellationToken: _token);
+                var task = _client.FileSystem.CreateAsync(_accountName, streamPath, toAppend, overwrite: overwrite, cancellationToken: _token);
 
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="recurse">if set to <c>true</c> [recurse]. This is used for folder streams only.</param>
         public void DeleteStream(string streamPath, bool recurse = false)
         {
-            var task = _client.FileSystem.DeleteAsync(streamPath, _accountName, recurse, cancellationToken: _token);
+            var task = _client.FileSystem.DeleteAsync(_accountName, streamPath, recurse, cancellationToken: _token);
             if (!task.Wait(PerRequestTimeoutMs))
             {
                 throw new TaskCanceledException(string.Format("Delete stream operation did not complete after {0} milliseconds.", PerRequestTimeoutMs));
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             using (var stream = new MemoryStream(data, 0, byteCount))
             {
-                var task = _client.FileSystem.AppendAsync(streamPath, stream, _accountName, cancellationToken: _token);
+                var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, cancellationToken: _token);
                 
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             try
             {
-                var task = _client.FileSystem.GetFileStatusAsync(streamPath, _accountName, cancellationToken: _token);
+                var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
                     throw new TaskCanceledException(
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </returns>
         public long GetStreamLength(string streamPath)
         {
-            var task = _client.FileSystem.GetFileStatusAsync(streamPath, _accountName, cancellationToken: _token);
+            var task = _client.FileSystem.GetFileStatusAsync(_accountName, streamPath, cancellationToken: _token);
 
             if (!task.Wait(PerRequestTimeoutMs))
             {
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // For the current implementation, we require UTF8 encoding.
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(paths)))
             {
-                var task = _client.FileSystem.MsConcatAsync(targetStreamPath, stream, _accountName, true, cancellationToken: _token);
+                var task = _client.FileSystem.MsConcatAsync(_accountName, targetStreamPath, stream, true, cancellationToken: _token);
 
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
