@@ -56,6 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.Equal(openIdProviderName, getResponse.Value.Name);
                 Assert.Equal(metadataEndpoint, getResponse.Value.MetadataEndpoint);
                 Assert.Equal(clientId, getResponse.Value.ClientId);
+                Assert.Equal(openIdNoSecret, getResponse.Value.Id);
                 Assert.Null(getResponse.Value.ClientSecret);
                 Assert.Null(getResponse.Value.Description);
 
@@ -91,6 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.NotNull(getResponse2.Value.ClientSecret);
                 Assert.Equal(clientSecret, getResponse2.Value.ClientSecret);
                 Assert.NotNull(getResponse2.Value.Description);
+                Assert.Equal(openId2, getResponse2.Value.Id);
 
                 // list the openId Connect Providers
                 var listResponse = ApiManagementClient.OpenIdConnectProviders.List(ResourceGroupName, ApiManagementServiceName, null);

@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
 
                 Assert.NotNull(getResponse);
                 Assert.NotNull(getResponse.Value);
-                Assert.Equal(string.Format("/loggers/{0}", newloggerId), getResponse.Value.IdPath);
+                Assert.Equal(newloggerId, getResponse.Value.Id);
                 Assert.NotNull(getResponse.Value.Description);
                 Assert.Equal(LoggerTypeContract.AzureEventHub, getResponse.Value.Type);
 
@@ -94,12 +94,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
 
                 Assert.NotNull(getResponse);
                 Assert.NotNull(getResponse.Value);
-
-                Assert.Equal(string.Format("/loggers/{0}", newloggerId), getResponse.Value.IdPath);
+                Assert.Equal(newloggerId, getResponse.Value.Id);
                 Assert.Equal(patchedDescription, getResponse.Value.Description);
                 Assert.Equal(LoggerTypeContract.AzureEventHub, getResponse.Value.Type);
 
-                // delete the group 
+                // delete the logger 
                 var deleteResponse = ApiManagementClient.Loggers.Delete(
                     ResourceGroupName,
                     ApiManagementServiceName,
@@ -109,7 +108,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.NotNull(deleteResponse);
                 Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
 
-                // get the deleted group to make sure it was deleted
+                // get the deleted logger to make sure it was deleted
                 try
                 {
                     ApiManagementClient.Loggers.Get(ResourceGroupName, ApiManagementServiceName, newloggerId);

@@ -55,6 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.Equal(propertyName, getResponse.Value.Name);
                 Assert.Equal(propertyValue, getResponse.Value.Value);
                 Assert.NotNull(getResponse.Value.Tags);
+                Assert.Equal(propertyId, getResponse.Value.Id);
                 Assert.Equal(false, getResponse.Value.Secret);
 
                 // create a Secret property
@@ -81,7 +82,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
 
                 Assert.Equal(secretPropertyName, getSecretResponse.Value.Name);
                 Assert.Equal(secretPropertyValue, getSecretResponse.Value.Value);
-                Assert.NotNull(getResponse.Value.Tags);
+                Assert.NotNull(getSecretResponse.Value.Tags);
+                Assert.Equal(secretPropertyId, getSecretResponse.Value.Id);
                 Assert.Equal(true, getSecretResponse.Value.Secret);
 
                 // list the properties
