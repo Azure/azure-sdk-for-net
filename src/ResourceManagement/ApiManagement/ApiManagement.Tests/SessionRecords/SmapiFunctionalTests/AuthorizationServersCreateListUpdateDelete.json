@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -25,16 +25,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "34388b8f-e666-4e1c-837c-e29b90aa2681"
+          "8cd63d10-0b84-4f5b-92e9-2e2f6e65ec0b"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14986"
         ],
         "x-ms-correlation-request-id": [
-          "f424feba-1ade-477e-a2ef-b1dc5136f7f2"
+          "9de233b1-e3d3-4c17-9676-b03ec50330e3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194755Z:f424feba-1ade-477e-a2ef-b1dc5136f7f2"
+          "WESTUS:20160419T020004Z:9de233b1-e3d3-4c17-9676-b03ec50330e3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,7 +43,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:55 GMT"
+          "Tue, 19 Apr 2016 02:00:04 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -52,8 +52,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycz9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -61,10 +61,10 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/authorizationServers/authsid8555\",\r\n      \"name\": \"authName1019\",\r\n      \"description\": \"authdescription4948\",\r\n      \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg\",\r\n      \"authorizationEndpoint\": \"https://contoso.com/auth\",\r\n      \"authorizationMethods\": [\r\n        \"POST\",\r\n        \"GET\"\r\n      ],\r\n      \"clientAuthenticationMethod\": [\r\n        \"Basic\"\r\n      ],\r\n      \"tokenBodyParameters\": [\r\n        {\r\n          \"name\": \"tokenname9010\",\r\n          \"value\": \"tokenvalue6809\"\r\n        }\r\n      ],\r\n      \"tokenEndpoint\": \"https://contoso.com/token\",\r\n      \"supportState\": true,\r\n      \"defaultScope\": \"oauth2scope2508\",\r\n      \"grantTypes\": [\r\n        \"authorizationCode\",\r\n        \"implicit\",\r\n        \"resourceOwnerPassword\"\r\n      ],\r\n      \"bearerTokenSendingMethods\": [\r\n        \"authorizationHeader\",\r\n        \"query\"\r\n      ],\r\n      \"clientId\": \"clientid248\",\r\n      \"clientSecret\": \"authclientsecret8137\",\r\n      \"resourceOwnerUsername\": \"authresourceownerusername3906\",\r\n      \"resourceOwnerPassword\": \"authresourceownerpwd5999\"\r\n    }\r\n  ],\r\n  \"count\": 1,\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/authorizationServers/authsid4998\",\r\n      \"name\": \"authName817\",\r\n      \"description\": \"authdescription4505\",\r\n      \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg\",\r\n      \"authorizationEndpoint\": \"https://contoso.com/auth\",\r\n      \"authorizationMethods\": [\r\n        \"POST\",\r\n        \"GET\"\r\n      ],\r\n      \"clientAuthenticationMethod\": [\r\n        \"Basic\"\r\n      ],\r\n      \"tokenBodyParameters\": [\r\n        {\r\n          \"name\": \"tokenname7907\",\r\n          \"value\": \"tokenvalue8775\"\r\n        }\r\n      ],\r\n      \"tokenEndpoint\": \"https://contoso.com/token\",\r\n      \"supportState\": true,\r\n      \"defaultScope\": \"oauth2scope2895\",\r\n      \"grantTypes\": [\r\n        \"authorizationCode\",\r\n        \"implicit\",\r\n        \"resourceOwnerPassword\"\r\n      ],\r\n      \"bearerTokenSendingMethods\": [\r\n        \"authorizationHeader\",\r\n        \"query\"\r\n      ],\r\n      \"clientId\": \"clientid7806\",\r\n      \"clientSecret\": \"authclientsecret535\",\r\n      \"resourceOwnerUsername\": \"authresourceownerusername9067\",\r\n      \"resourceOwnerPassword\": \"authresourceownerpwd1384\"\r\n    }\r\n  ],\r\n  \"count\": 1,\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "800"
+          "799"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -76,16 +76,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b154e85b-ce5f-4993-9616-bbf4459e6f1f"
+          "ce08607c-4e31-456c-96e7-3c0072c3a76c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14984"
         ],
         "x-ms-correlation-request-id": [
-          "4a1f1778-1c9d-4621-a43b-3d5e35a2793e"
+          "aa35ecbc-9d5d-4ca4-8459-c32bf300056c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194756Z:4a1f1778-1c9d-4621-a43b-3d5e35a2793e"
+          "WESTUS:20160419T020005Z:aa35ecbc-9d5d-4ca4-8459-c32bf300056c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -94,7 +94,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:56 GMT"
+          "Tue, 19 Apr 2016 02:00:04 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -103,16 +103,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers/authsid8555?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkODU1NT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers/authsid4998?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkNDk5OD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"authName1019\",\r\n  \"description\": \"authdescription4948\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth\",\r\n  \"authorizationMethods\": [\r\n    \"POST\",\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname9010\",\r\n      \"value\": \"tokenvalue6809\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope2508\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"implicit\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\",\r\n    \"query\"\r\n  ],\r\n  \"clientId\": \"clientid248\",\r\n  \"clientSecret\": \"authclientsecret8137\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername3906\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd5999\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"authName817\",\r\n  \"description\": \"authdescription4505\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth\",\r\n  \"authorizationMethods\": [\r\n    \"POST\",\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname7907\",\r\n      \"value\": \"tokenvalue8775\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope2895\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"implicit\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\",\r\n    \"query\"\r\n  ],\r\n  \"clientId\": \"clientid7806\",\r\n  \"clientSecret\": \"authclientsecret535\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername9067\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd1384\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "901"
+          "900"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
@@ -130,16 +130,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "969d6e85-cbe5-4520-b2c6-9f13fa941966"
+          "e1dcc86c-256f-4c0e-928e-3e54d8f4f07e"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "ce09a086-48b5-4d68-a1ab-7b751ff48d76"
+          "f1b605e0-3fa5-442a-a77a-f99bb34f46f1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194756Z:ce09a086-48b5-4d68-a1ab-7b751ff48d76"
+          "WESTUS:20160419T020005Z:f1b605e0-3fa5-442a-a77a-f99bb34f46f1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -148,7 +148,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:55 GMT"
+          "Tue, 19 Apr 2016 02:00:04 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -157,8 +157,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers/authsid8555?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkODU1NT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers/authsid4998?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkNDk5OD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -166,10 +166,10 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/authorizationServers/authsid8555\",\r\n  \"name\": \"authName1019\",\r\n  \"description\": \"authdescription4948\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth\",\r\n  \"authorizationMethods\": [\r\n    \"POST\",\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname9010\",\r\n      \"value\": \"tokenvalue6809\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope2508\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"implicit\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\",\r\n    \"query\"\r\n  ],\r\n  \"clientId\": \"clientid248\",\r\n  \"clientSecret\": \"authclientsecret8137\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername3906\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd5999\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/authorizationServers/authsid4998\",\r\n  \"name\": \"authName817\",\r\n  \"description\": \"authdescription4505\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth\",\r\n  \"authorizationMethods\": [\r\n    \"POST\",\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname7907\",\r\n      \"value\": \"tokenvalue8775\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope2895\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"implicit\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\",\r\n    \"query\"\r\n  ],\r\n  \"clientId\": \"clientid7806\",\r\n  \"clientSecret\": \"authclientsecret535\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername9067\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd1384\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "762"
+          "761"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -181,16 +181,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "80c226a1-3f9b-4f43-af31-cdeabf981d32"
+          "3253a0ec-f46a-46a9-9e51-58ad1f3cc3fe"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14985"
         ],
         "x-ms-correlation-request-id": [
-          "26ef947d-830a-43b8-9dae-cfcc0aaa042d"
+          "b93e2bf6-6708-4c30-9dff-49bdf30d9784"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194756Z:26ef947d-830a-43b8-9dae-cfcc0aaa042d"
+          "WESTUS:20160419T020005Z:b93e2bf6-6708-4c30-9dff-49bdf30d9784"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -199,10 +199,10 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:56 GMT"
+          "Tue, 19 Apr 2016 02:00:04 GMT"
         ],
         "ETag": [
-          "\"AAAAAAAACE8=\""
+          "\"AAAAAAAACIo=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -211,8 +211,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers/authsid8555?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkODU1NT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers/authsid4998?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkNDk5OD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -220,10 +220,10 @@
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/authorizationServers/authsid8555\",\r\n  \"name\": \"authName6094\",\r\n  \"description\": \"authdescription5816\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg1\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth1\",\r\n  \"authorizationMethods\": [\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname6732\",\r\n      \"value\": \"tokenvalue6153\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token1\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope1320\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\"\r\n  ],\r\n  \"clientId\": \"clientid7421\",\r\n  \"clientSecret\": \"authclientsecret7331\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername1450\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd8392\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/authorizationServers/authsid4998\",\r\n  \"name\": \"authName1978\",\r\n  \"description\": \"authdescription9305\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg1\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth1\",\r\n  \"authorizationMethods\": [\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname3088\",\r\n      \"value\": \"tokenvalue5842\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token1\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope6201\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\"\r\n  ],\r\n  \"clientId\": \"clientid9001\",\r\n  \"clientSecret\": \"authclientsecret9880\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername2872\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd160\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "740"
+          "739"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -235,16 +235,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "99400acf-03d3-4ddf-9673-0dac8a5460cf"
+          "bb23d534-3fdd-4f65-a7bf-f22286da9405"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14983"
         ],
         "x-ms-correlation-request-id": [
-          "a5320a7a-22cd-4f6d-b0ca-c7c96d1cb9d8"
+          "a576340c-957c-4f62-b00d-539219feceba"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194757Z:a5320a7a-22cd-4f6d-b0ca-c7c96d1cb9d8"
+          "WESTUS:20160419T020006Z:a576340c-957c-4f62-b00d-539219feceba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -253,10 +253,10 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:56 GMT"
+          "Tue, 19 Apr 2016 02:00:05 GMT"
         ],
         "ETag": [
-          "\"AAAAAAAACFA=\""
+          "\"AAAAAAAACIs=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -265,8 +265,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers/authsid8555?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkODU1NT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers/authsid4998?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkNDk5OD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -289,16 +289,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7220acf3-f5df-444a-a430-a426a9c6a9fb"
+          "28faea02-dc80-404d-b0cc-dc1768f7af02"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14982"
         ],
         "x-ms-correlation-request-id": [
-          "43352712-5e77-4e35-b1bc-d77f8a5b4238"
+          "8bc99b08-0694-4b0a-b7e6-ae8e2d7b5bb9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194757Z:43352712-5e77-4e35-b1bc-d77f8a5b4238"
+          "WESTUS:20160419T020007Z:8bc99b08-0694-4b0a-b7e6-ae8e2d7b5bb9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -307,7 +307,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:57 GMT"
+          "Tue, 19 Apr 2016 02:00:06 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -316,19 +316,19 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers/authsid8555?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkODU1NT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers/authsid4998?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkNDk5OD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"name\": \"authName6094\",\r\n  \"description\": \"authdescription5816\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg1\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth1\",\r\n  \"authorizationMethods\": [\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname6732\",\r\n      \"value\": \"tokenvalue6153\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token1\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope1320\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\"\r\n  ],\r\n  \"clientId\": \"clientid7421\",\r\n  \"clientSecret\": \"authclientsecret7331\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername1450\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd8392\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"authName1978\",\r\n  \"description\": \"authdescription9305\",\r\n  \"clientRegistrationEndpoint\": \"https://contoso.com/clients/reg1\",\r\n  \"authorizationEndpoint\": \"https://contoso.com/auth1\",\r\n  \"authorizationMethods\": [\r\n    \"GET\"\r\n  ],\r\n  \"clientAuthenticationMethod\": [\r\n    \"Basic\"\r\n  ],\r\n  \"tokenBodyParameters\": [\r\n    {\r\n      \"name\": \"tokenname3088\",\r\n      \"value\": \"tokenvalue5842\"\r\n    }\r\n  ],\r\n  \"tokenEndpoint\": \"https://contoso.com/token1\",\r\n  \"supportState\": true,\r\n  \"defaultScope\": \"oauth2scope6201\",\r\n  \"grantTypes\": [\r\n    \"authorizationCode\",\r\n    \"resourceOwnerPassword\"\r\n  ],\r\n  \"bearerTokenSendingMethods\": [\r\n    \"authorizationHeader\"\r\n  ],\r\n  \"clientId\": \"clientid9001\",\r\n  \"clientSecret\": \"authclientsecret9880\",\r\n  \"resourceOwnerUsername\": \"authresourceownerusername2872\",\r\n  \"resourceOwnerPassword\": \"authresourceownerpwd160\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "861"
+          "860"
         ],
         "If-Match": [
-          "\"AAAAAAAACE8=\""
+          "\"AAAAAAAACIo=\""
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/2.0.0.0"
@@ -346,16 +346,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "45ba703f-f34d-4549-9666-e12ea548a7c9"
+          "48fc7453-b82d-4955-9951-51be863261d3"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "5e2dc288-bf49-400c-bf9a-d207ae677c12"
+          "4aaacae6-371a-4c22-9cee-f9632f9ceac7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194757Z:5e2dc288-bf49-400c-bf9a-d207ae677c12"
+          "WESTUS:20160419T020006Z:4aaacae6-371a-4c22-9cee-f9632f9ceac7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -364,7 +364,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:56 GMT"
+          "Tue, 19 Apr 2016 02:00:05 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -373,8 +373,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/0baef07a-330c-42f7-92a0-e80993f45d1d/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice3368/authorizationServers/authsid8555?api-version=2014-02-14",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGJhZWYwN2EtMzMwYy00MmY3LTkyYTAtZTgwOTkzZjQ1ZDFkL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlMzM2OC9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkODU1NT9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
+      "RequestUri": "/subscriptions/3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f/resourceGroups/Api-Default1194/providers/Microsoft.ApiManagement/service/hydraapimservice7157/authorizationServers/authsid4998?api-version=2014-02-14",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2RkYzkzMWUtM2ZlZC00MGZkLThlYTctOGU1NmZiZmFhMjdmL3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0MTE5NC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9oeWRyYWFwaW1zZXJ2aWNlNzE1Ny9hdXRob3JpemF0aW9uU2VydmVycy9hdXRoc2lkNDk5OD9hcGktdmVyc2lvbj0yMDE0LTAyLTE0",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -397,16 +397,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cd5a0892-b11f-41be-b166-9732a9a4f418"
+          "9e452512-bbd1-48bc-9e1c-e1860b5eaf89"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "c9c19a65-82af-4b6e-827d-1020e5f09247"
+          "780049a3-651a-435b-80e9-5c6dfd7cdd8e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20151218T194757Z:c9c19a65-82af-4b6e-827d-1020e5f09247"
+          "WESTUS:20160419T020007Z:780049a3-651a-435b-80e9-5c6dfd7cdd8e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -415,7 +415,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 18 Dec 2015 19:47:57 GMT"
+          "Tue, 19 Apr 2016 02:00:06 GMT"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -426,28 +426,28 @@
   ],
   "Names": {
     "AuthorizationServersCreateListUpdateDelete": [
-      "authsid8555",
-      "authName1019",
-      "oauth2scope2508",
-      "clientid248",
-      "authdescription4948",
-      "authclientsecret8137",
-      "authresourceownerpwd5999",
-      "authresourceownerusername3906",
-      "tokenname9010",
-      "tokenvalue6809",
-      "authName6094",
-      "oauth2scope1320",
-      "clientid7421",
-      "authdescription5816",
-      "authclientsecret7331",
-      "authresourceownerpwd8392",
-      "authresourceownerusername1450",
-      "tokenname6732",
-      "tokenvalue6153"
+      "authsid4998",
+      "authName817",
+      "oauth2scope2895",
+      "clientid7806",
+      "authdescription4505",
+      "authclientsecret535",
+      "authresourceownerpwd1384",
+      "authresourceownerusername9067",
+      "tokenname7907",
+      "tokenvalue8775",
+      "authName1978",
+      "oauth2scope6201",
+      "clientid9001",
+      "authdescription9305",
+      "authclientsecret9880",
+      "authresourceownerpwd160",
+      "authresourceownerusername2872",
+      "tokenname3088",
+      "tokenvalue5842"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0baef07a-330c-42f7-92a0-e80993f45d1d"
+    "SubscriptionId": "3ddc931e-3fed-40fd-8ea7-8e56fbfaa27f"
   }
 }

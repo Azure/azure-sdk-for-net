@@ -59,6 +59,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
                 }
 
                 ApiManagementServiceName = TestUtilities.GenerateName("hydraapimservice");
+                //ResourceGroupName = "Api-Default1194";
+                //ApiManagementServiceName = "hydraapimservice8158";
                 this.ApiManagementClient.TryCreateApiService(ResourceGroupName, ApiManagementServiceName, Location);
             }
             catch (Exception)
