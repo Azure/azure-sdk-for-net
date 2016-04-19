@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a BackupEngineListQueryParams object.
+    /// Query parameters to fetch list of backup engines.
     /// </summary>
     public partial class BackupEngineListQueryParams
     {
         private string _providerType;
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// Optional. Type of provider for the backup engine. Possible values:
+        /// AzureIaasVM, MAB, DPM.
         /// </summary>
         public string ProviderType
         {

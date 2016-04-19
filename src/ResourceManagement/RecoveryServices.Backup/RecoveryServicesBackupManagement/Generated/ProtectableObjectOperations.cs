@@ -34,8 +34,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Protectable Object operations for the Azure Backup
-    /// extension.
+    /// The Resource Manager API includes operations for managing the
+    /// protectable objects registered to your Recovery Services Vault.
     /// </summary>
     internal partial class ProtectableObjectOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IProtectableObjectOperations
     {
@@ -62,7 +62,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Lists all the protectable objects within your subscription
+        /// according to the query filter and the pagination parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -83,7 +84,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectableObjectListResponse.
+        /// List of protectable object resonses as returned by the list
+        /// protectable objects API.
         /// </returns>
         public async Task<ProtectableObjectListResponse> ListAsync(string resourceGroupName, string resourceName, ProtectableObjectListQueryParameters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {

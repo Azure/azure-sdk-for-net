@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a CommonJobQueryFilter object.
+    /// Some workload-independent job query filters.
     /// </summary>
     public partial class CommonJobQueryFilters : JobQueryFilters
     {
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. Type query parameter
+        /// Optional. Type of backup managmenent for the job. Possible value:
+        /// AzureIaasVM.
         /// </summary>
         public string BackupManagementType
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _endTime;
         
         /// <summary>
-        /// Optional. EndTime query parameter
+        /// Optional. Job should have ended before this time. Values are in UTC.
         /// </summary>
         public string EndTime
         {
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _jobId;
         
         /// <summary>
-        /// Optional. JobId query parameter
+        /// Optional. ID that represents this job uniquely.
         /// </summary>
         public string JobId
         {
@@ -66,7 +67,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _operation;
         
         /// <summary>
-        /// Optional. Operation query parameter
+        /// Optional. Type of operation this job represents. Possible values:
+        /// ConfigureBackup, Backup, Restore, Unprotect, DeleteBackupData.
         /// </summary>
         public string Operation
         {
@@ -77,7 +79,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _startTime;
         
         /// <summary>
-        /// Optional. StartTime query parameter
+        /// Optional. Job should have started after this time. Values are in
+        /// UTC.
         /// </summary>
         public string StartTime
         {
@@ -88,7 +91,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Status query parameter
+        /// Optional. Status of the job. Possible values: InProgress,
+        /// Completed, Failed, CompletedWithWarnings, Cancelling, Cancelled.
         /// </summary>
         public string Status
         {

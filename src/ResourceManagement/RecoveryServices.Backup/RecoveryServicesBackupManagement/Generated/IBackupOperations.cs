@@ -28,12 +28,19 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Backup operations for the Azure Backup extension.
+    /// The Resource Manager API includes operations for triggering and
+    /// managing the backups of items protected by your Recovery Services
+    /// Vault.
     /// </summary>
     public partial interface IBackupOperations
     {
         /// <summary>
-        /// Trigger Backup for the AzureBackupItem
+        /// The Trigger Backup Operation starts an operation in the service
+        /// which triggers the backup of the specified item in the specified
+        /// container in your Recovery Services Vault. This is an asynchronous
+        /// operation. To determine whether the backend service has finished
+        /// processing the request, call Get Protected Item Operation Result
+        /// API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.

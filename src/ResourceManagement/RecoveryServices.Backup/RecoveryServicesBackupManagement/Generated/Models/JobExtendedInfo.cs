@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of JobExtendedInfo object.
+    /// Base class for the extended info to be used with jobs.
     /// </summary>
     public partial class JobExtendedInfo
     {

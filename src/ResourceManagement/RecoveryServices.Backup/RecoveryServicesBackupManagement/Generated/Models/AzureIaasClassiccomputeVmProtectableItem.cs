@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a classic compute vm object.
+    /// Represents a classic compute vm item.
     /// </summary>
     public partial class AzureIaaSClassicComputeVMProtectableItem : AzureIaaSVMProtectableItem
     {

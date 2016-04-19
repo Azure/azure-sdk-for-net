@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a BackupEngineRepsonse.
+    /// Represents a single instance of the backup engine
     /// </summary>
     public partial class BackupEngineRepsonse : BaseRecoveryServicesJobResponse
     {
         private BackupEngineResource _item;
         
         /// <summary>
-        /// Optional. Item
+        /// Optional. Represents a backup engine resource
         /// </summary>
         public BackupEngineResource Item
         {

@@ -31,7 +31,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class BackupOperationsExtensions
     {
         /// <summary>
-        /// Trigger Backup for the AzureBackupItem
+        /// The Trigger Backup Operation starts an operation in the service
+        /// which triggers the backup of the specified item in the specified
+        /// container in your Recovery Services Vault. This is an asynchronous
+        /// operation. To determine whether the backend service has finished
+        /// processing the request, call Get Protected Item Operation Result
+        /// API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -69,7 +74,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Trigger Backup for the AzureBackupItem
+        /// The Trigger Backup Operation starts an operation in the service
+        /// which triggers the backup of the specified item in the specified
+        /// container in your Recovery Services Vault. This is an asynchronous
+        /// operation. To determine whether the backend service has finished
+        /// processing the request, call Get Protected Item Operation Result
+        /// API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
