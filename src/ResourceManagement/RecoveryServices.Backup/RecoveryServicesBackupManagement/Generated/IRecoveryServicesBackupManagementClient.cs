@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of BackupEningOperations for the Azure Backup extension
-        /// with RecoveryService Vault.
+        /// The Resource Manager API includes operations for managing the
+        /// backup engines registered to your Recovery Services Vault.
         /// </summary>
         IBackupEngineOperations BackupEngines
         {
@@ -97,7 +97,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Backup operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for triggering and
+        /// managing the backups of items protected by your Recovery Services
+        /// Vault.
         /// </summary>
         IBackupOperations Backups
         {
@@ -105,8 +107,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Container operations for the Azure Backup extension
-        /// with RecoveryService Vault.
+        /// The Resource Manager API includes operations for managing the
+        /// containers registered to your Recovery Services Vault.
         /// </summary>
         IContainerOperations Containers
         {
@@ -114,7 +116,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Job operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for managing the jobs
+        /// created by various operations on a given item protected by your
+        /// Recovery Services Vault.
         /// </summary>
         IJobOperations Jobs
         {
@@ -122,8 +126,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Protectable Object operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing the
+        /// protectable objects registered to your Recovery Services Vault.
         /// </summary>
         IProtectableObjectOperations ProtectableObjects
         {
@@ -131,8 +135,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of ProtectedItem operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing the items
+        /// protected by your Recovery Services Vault.
         /// </summary>
         IProtectedItemOperations ProtectedItems
         {
@@ -140,8 +144,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Protection Policy operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing
+        /// protection policies defined for your Recovery Services Vault
         /// </summary>
         IProtectionPolicyOperations ProtectionPolicies
         {
@@ -149,7 +153,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Backup operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for managing recovery
+        /// points created by backup operations on the items protected by your
+        /// Recovery Services Vault.
         /// </summary>
         IRecoveryPointOperations RecoveryPoints
         {
@@ -157,7 +163,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Definition of Restore operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for triggering and
+        /// managing restore actions of the items protected by your Recovery
+        /// Services Vault.
         /// </summary>
         IRestoreOperations Restores
         {

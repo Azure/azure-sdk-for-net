@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ProtectableItem object.
+    /// Base class for protectable item. Workload-specific protectable items
+    /// are derived from this class.
     /// </summary>
     public partial class ProtectableItem : ProtectableObjectBase
     {
         private string _backupManagementType;
         
         /// <summary>
-        /// Optional. Backup Management Type
+        /// Optional. Type of backup managmenent for the protectable item.
         /// </summary>
         public string BackupManagementType
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. Friendly Name
+        /// Optional. Friendly name of the protectable item.
         /// </summary>
         public string FriendlyName
         {
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _protectableItemType;
         
         /// <summary>
-        /// Optional. protectableItem Type
+        /// Optional. Type of the protectable item.
         /// </summary>
         public string ProtectableItemType
         {
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _protectionState;
         
         /// <summary>
-        /// Optional. Protection State
+        /// Optional. Protection state of the protectable item.
         /// </summary>
         public string ProtectionState
         {

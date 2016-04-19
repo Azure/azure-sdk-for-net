@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a AzureIaaSVMJobTaskDetails object.
+    /// Azure IaaS VM workload-specific job task details.
     /// </summary>
     public partial class AzureIaaSVMJobTaskDetails : JobTaskDetails
     {
         private TimeSpan _duration;
         
         /// <summary>
-        /// Optional. Job Duration
+        /// Optional. Time elapsed while the task completed its execution.
         /// </summary>
         public TimeSpan Duration
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private System.DateTime? _endTime;
         
         /// <summary>
-        /// Optional. Job EndTime
+        /// Optional. Timestamp when the task ended its execution.
         /// </summary>
         public System.DateTime? EndTime
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private double? _progressPercentage;
         
         /// <summary>
-        /// Optional. Job ProgressPercentage
+        /// Optional. Percentage of progress of this task.
         /// </summary>
         public double? ProgressPercentage
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private System.DateTime? _startTime;
         
         /// <summary>
-        /// Optional. Job StartTime
+        /// Optional. Timestamp when the task started its execution.
         /// </summary>
         public System.DateTime? StartTime
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Job Status
+        /// Optional. Status of the task.
         /// </summary>
         public string Status
         {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _taskId;
         
         /// <summary>
-        /// Optional. Job TaskId
+        /// Optional. ID of this task.
         /// </summary>
         public string TaskId
         {

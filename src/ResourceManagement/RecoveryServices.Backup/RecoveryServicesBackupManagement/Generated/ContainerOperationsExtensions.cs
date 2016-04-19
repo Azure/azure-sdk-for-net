@@ -32,7 +32,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class ContainerOperationsExtensions
     {
         /// <summary>
-        /// Trigger the Discovery.
+        /// The Begin Refresh Operation triggers an operation in the service
+        /// which would discover all the containers in the subscription that
+        /// are ready to be protected by your Recovery Services Vault. This is
+        /// an asynchronous operation. To determine whether the backend
+        /// service has finished processing the request, call Get Refresh
+        /// Operation Result APIs.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -64,7 +69,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// The Begin Refresh Operation triggers an operation in the service
+        /// which would discover all the containers in the subscription that
+        /// are ready to be protected by your Recovery Services Vault. This is
+        /// an asynchronous operation. To determine whether the backend
+        /// service has finished processing the request, call Get Refresh
+        /// Operation Result APIs.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -92,7 +102,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of container operation
+        /// Fetches the result of any operation on the container given the ID
+        /// of operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -129,7 +140,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of container operation
+        /// Fetches the result of any operation on the container given the ID
+        /// of operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -162,7 +174,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of container operation by URL
+        /// Fetches the result of any operation on the container given the URL
+        /// for tracking the operation as returned by APIs such as Unregister
+        /// etc.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -187,7 +201,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of container operation by URL
+        /// Fetches the result of any operation on the container given the URL
+        /// for tracking the operation as returned by APIs such as Unregister
+        /// etc.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -208,7 +224,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of refresh container operation by OperationId
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Refresh API given the ID of the operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -243,7 +260,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of refresh container operation by OperationId
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Refresh API given the ID of the operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -274,7 +292,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of refresh container operation by URL
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Refresh operation given the URL for tracking the operation as
+        /// returned by the Begin Refresh operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -297,7 +317,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of refresh container operation by URL
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Refresh operation given the URL for tracking the operation as
+        /// returned by the Begin Refresh operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -316,7 +338,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// List all protection containers.
+        /// Lists all the containers registered to your Recovery Services Vault
+        /// according to the query parameters supplied in the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -347,7 +370,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// List all protection containers.
+        /// Lists all the containers registered to your Recovery Services Vault
+        /// according to the query parameters supplied in the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -374,7 +398,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// The Refresh Operation triggers an operation in the service which
+        /// would discover all the containers in the subscription that are
+        /// ready to be protected by your Recovery Services Vault.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -406,7 +432,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Trigger the Discovery.
+        /// The Refresh Operation triggers an operation in the service which
+        /// would discover all the containers in the subscription that are
+        /// ready to be protected by your Recovery Services Vault.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -434,7 +462,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Unregister protection container
+        /// The Begin Unregister Operation unregisters the given container from
+        /// your Recovery Services Vault. This is an asynchronous operation.
+        /// To determine whether the backend service has finished processing
+        /// the request, call Get Container Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -466,7 +497,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Unregister protection container
+        /// The Begin Unregister Operation unregisters the given container from
+        /// your Recovery Services Vault. This is an asynchronous operation.
+        /// To determine whether the backend service has finished processing
+        /// the request, call Get Container Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

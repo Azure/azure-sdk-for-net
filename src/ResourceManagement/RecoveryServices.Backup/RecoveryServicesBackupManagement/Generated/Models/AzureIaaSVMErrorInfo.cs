@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a AzureIaaSVMErrorInfo object.
+    /// Azure IaaS VM workload-specific ErrorInfo object.
     /// </summary>
     public partial class AzureIaaSVMErrorInfo : ErrorInfo
     {
         private int _errorCode;
         
         /// <summary>
-        /// Optional. Job ErrorCode
+        /// Optional. Error code for this job.
         /// </summary>
         public int ErrorCode
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _errorString;
         
         /// <summary>
-        /// Optional. Job ErrorString
+        /// Optional. Localized error message string.
         /// </summary>
         public string ErrorString
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _errorTitle;
         
         /// <summary>
-        /// Optional. Job ErrorTitle
+        /// Optional. Title of the error.
         /// </summary>
         public string ErrorTitle
         {
@@ -68,7 +68,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private IList<string> _recommendations;
         
         /// <summary>
-        /// Optional. Job Recommendations
+        /// Optional. List of recommendations from the service for the incurred
+        /// error.
         /// </summary>
         public IList<string> Recommendations
         {

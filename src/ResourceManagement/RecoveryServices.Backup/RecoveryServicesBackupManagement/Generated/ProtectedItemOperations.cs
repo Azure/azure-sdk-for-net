@@ -37,7 +37,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of ProtectedItem operations for the Azure Backup extension.
+    /// The Resource Manager API includes operations for managing the items
+    /// protected by your Recovery Services Vault.
     /// </summary>
     internal partial class ProtectedItemOperations : IServiceOperations<RecoveryServicesBackupManagementClient>, IProtectedItemOperations
     {
@@ -64,7 +65,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Create Or Update ProtectedItem.
+        /// The Create Or Update Protected Item Operation is used to enable
+        /// protection of an item within a container or to modify the
+        /// protection of an already protected item. In the case of enable
+        /// protection, this operation creates a new protected item entity in
+        /// the backend service. In the case of modify protection, this
+        /// operation updates the already created entity in the backend
+        /// service. This is an asynchronous operation. To determine whether
+        /// the backend service has finished processing the request, call the
+        /// Get Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -701,7 +710,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Delete the specified protected item.
+        /// The Delete Protected Item Operation is used to disable protection
+        /// of an item within a container. This operation marks the already
+        /// existing protected item entity as not protected in the backend
+        /// service. This is an asynchronous operation. To determine whether
+        /// the backend service has finished processing the request, call the
+        /// Get Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -938,7 +952,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific protected Objects.
+        /// Gets Info for the given item present in the given container
+        /// specified by the names passed in the arguments. When the query
+        /// parameter is used to pass the expand flag, this operation would
+        /// return the extended info as well for the given item.This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call the Get Item Operation
+        /// Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -1711,7 +1731,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get ProtectedObject Operation result by OperationId.
+        /// Fetches the result of any operation on the protected item given the
+        /// ID of operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.
@@ -2493,7 +2514,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get ProtectedObject Operation result by URL.
+        /// Fetches the result of any operation on the protected item given the
+        /// URL for tracking the operation as returned by APIs such as Create
+        /// Or Update, Delete etc.
         /// </summary>
         /// <param name='operationResultLink'>
         /// Required. Location value returned by operation.
@@ -3198,7 +3221,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list of all protected Objects.
+        /// Lists all the items protected by your Recovery Services Vault
+        /// according to the query and pagination parameters supplied in the
+        /// arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. ResourceGroupName for recoveryServices Vault.

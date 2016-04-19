@@ -28,12 +28,18 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     /// <summary>
-    /// Definition of Backup operations for the Azure Backup extension.
+    /// The Resource Manager API includes operations for managing recovery
+    /// points created by backup operations on the items protected by your
+    /// Recovery Services Vault.
     /// </summary>
     public partial interface IRecoveryPointOperations
     {
         /// <summary>
-        /// Get recovery point for a given recovery point id
+        /// Gets Info for the given recovery point of the given item protected
+        /// by your Recovery Services Vault as specified by the recovery point
+        /// ID passed in the arguments.This is an asynchronous operation. To
+        /// determine whether the backend service has finished processing the
+        /// request, call the Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.
@@ -65,7 +71,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         Task<RecoveryPointResponse> GetAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, string recoveryPointId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get recovery point list for a given protected item
+        /// Lists all the recovery points of the given item protected by your
+        /// Recovery Services Vault according to the query filter supplied in
+        /// the arguments.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// ResourceGroupName for recoveryServices Vault.

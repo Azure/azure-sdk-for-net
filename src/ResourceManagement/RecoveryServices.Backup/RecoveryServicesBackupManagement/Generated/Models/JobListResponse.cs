@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a JobListResponse.
+    /// List of job responses as returned by the list jobs API.
     /// </summary>
     public partial class JobListResponse : AzureOperationResponse
     {
         private JobResourceList _itemList;
         
         /// <summary>
-        /// Optional. Job List Response.
+        /// Optional. List of job resources.
         /// </summary>
         public JobResourceList ItemList
         {

@@ -26,14 +26,17 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a BackupEnginResource.
+    /// Represents a single instance of the backup engines as returned by the
+    /// list backup engines operation.
     /// </summary>
     public partial class BackupEngineResource : Resource
     {
         private BackupEngineBase _properties;
         
         /// <summary>
-        /// Optional. Properties
+        /// Optional. Overloaded property representing the backup engine. Based
+        /// on the type of workload, this property will be overloaded by the
+        /// corresponding derived objects.
         /// </summary>
         public BackupEngineBase Properties
         {

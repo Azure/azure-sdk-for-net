@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a ErrorInfo object.
+    /// The base ErrorInfo class.
     /// </summary>
     public partial class ErrorInfo
     {

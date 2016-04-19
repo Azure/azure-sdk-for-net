@@ -101,8 +101,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IBackupEngineOperations _backupEngines;
         
         /// <summary>
-        /// Definition of BackupEningOperations for the Azure Backup extension
-        /// with RecoveryService Vault.
+        /// The Resource Manager API includes operations for managing the
+        /// backup engines registered to your Recovery Services Vault.
         /// </summary>
         public virtual IBackupEngineOperations BackupEngines
         {
@@ -123,7 +123,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IBackupOperations _backups;
         
         /// <summary>
-        /// Definition of Backup operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for triggering and
+        /// managing the backups of items protected by your Recovery Services
+        /// Vault.
         /// </summary>
         public virtual IBackupOperations Backups
         {
@@ -133,8 +135,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IContainerOperations _containers;
         
         /// <summary>
-        /// Definition of Container operations for the Azure Backup extension
-        /// with RecoveryService Vault.
+        /// The Resource Manager API includes operations for managing the
+        /// containers registered to your Recovery Services Vault.
         /// </summary>
         public virtual IContainerOperations Containers
         {
@@ -144,7 +146,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IJobOperations _jobs;
         
         /// <summary>
-        /// Definition of Job operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for managing the jobs
+        /// created by various operations on a given item protected by your
+        /// Recovery Services Vault.
         /// </summary>
         public virtual IJobOperations Jobs
         {
@@ -154,8 +158,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IProtectableObjectOperations _protectableObjects;
         
         /// <summary>
-        /// Definition of Protectable Object operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing the
+        /// protectable objects registered to your Recovery Services Vault.
         /// </summary>
         public virtual IProtectableObjectOperations ProtectableObjects
         {
@@ -165,8 +169,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IProtectedItemOperations _protectedItems;
         
         /// <summary>
-        /// Definition of ProtectedItem operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing the items
+        /// protected by your Recovery Services Vault.
         /// </summary>
         public virtual IProtectedItemOperations ProtectedItems
         {
@@ -176,8 +180,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IProtectionPolicyOperations _protectionPolicies;
         
         /// <summary>
-        /// Definition of Protection Policy operations for the Azure Backup
-        /// extension.
+        /// The Resource Manager API includes operations for managing
+        /// protection policies defined for your Recovery Services Vault
         /// </summary>
         public virtual IProtectionPolicyOperations ProtectionPolicies
         {
@@ -187,7 +191,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IRecoveryPointOperations _recoveryPoints;
         
         /// <summary>
-        /// Definition of Backup operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for managing recovery
+        /// points created by backup operations on the items protected by your
+        /// Recovery Services Vault.
         /// </summary>
         public virtual IRecoveryPointOperations RecoveryPoints
         {
@@ -197,7 +203,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         private IRestoreOperations _restores;
         
         /// <summary>
-        /// Definition of Restore operations for the Azure Backup extension.
+        /// The Resource Manager API includes operations for triggering and
+        /// managing restore actions of the items protected by your Recovery
+        /// Services Vault.
         /// </summary>
         public virtual IRestoreOperations Restores
         {

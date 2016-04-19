@@ -31,7 +31,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class JobOperationsExtensions
     {
         /// <summary>
-        /// Cancel the job.
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments. This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call Get Cancel Operation
+        /// Result by URL API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -63,7 +67,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Cancel the job.
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments. This is an
+        /// asynchronous operation. To determine whether the backend service
+        /// has finished processing the request, call Get Cancel Operation
+        /// Result by URL API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -91,7 +99,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Cancel the job.
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -123,7 +132,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Cancel the job.
+        /// The Begin Cancel Job Operation sends a request to cancel the job
+        /// specified by the name passed in the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -211,7 +221,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific job Objects.
+        /// Gets Exteded Info for the job specified by the name passed in the
+        /// arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -230,7 +241,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         public static JobResponse Get(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
         {
@@ -242,7 +253,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the details of specific job Objects.
+        /// Gets Exteded Info for the job specified by the name passed in the
+        /// arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -261,7 +273,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         public static Task<JobResponse> GetAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, CustomRequestHeaders customRequestHeaders)
         {
@@ -269,7 +281,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of cancel job operation by URL
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Cancel Job operation given the URL for tracking the operation as
+        /// returned by the Begin Cancel Job operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -292,7 +306,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the status of cancel job operation by URL
+        /// Fetches the result of the refresh operation triggered by the Begin
+        /// Cancel Job operation given the URL for tracking the operation as
+        /// returned by the Begin Cancel Job operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -311,7 +327,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of the operation triggered by the Export Job API
+        /// given the ID of the operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -342,7 +359,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of the operation triggered by the Export Job API
+        /// given the ID of the operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -369,7 +387,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of any operation on the job given the ID of the
+        /// operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -391,7 +410,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         public static JobResponse GetOperationResult(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -403,7 +422,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the operation result of specific job.
+        /// Fetches the result of any operation on the job given the ID of the
+        /// operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -425,7 +445,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ProtectedItemResponse.
+        /// Job response as returned by the operation result APIs.
         /// </returns>
         public static Task<JobResponse> GetOperationResultAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string jobName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
@@ -433,7 +453,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list  of jobs.
+        /// Lists all the jobs in your Recovery Services Vault according to the
+        /// query filters and the pagination parameters.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -455,7 +476,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a JobListResponse.
+        /// List of job responses as returned by the list jobs API.
         /// </returns>
         public static JobListResponse List(this IJobOperations operations, string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {
@@ -467,7 +488,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get the list  of jobs.
+        /// Lists all the jobs in your Recovery Services Vault according to the
+        /// query filters and the pagination parameters.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -489,7 +511,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a JobListResponse.
+        /// List of job responses as returned by the list jobs API.
         /// </returns>
         public static Task<JobListResponse> ListAsync(this IJobOperations operations, string resourceGroupName, string resourceName, CommonJobQueryFilters queryFilter, PaginationRequest paginationParams, CustomRequestHeaders customRequestHeaders)
         {

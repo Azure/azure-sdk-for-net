@@ -31,7 +31,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class RecoveryPointOperationsExtensions
     {
         /// <summary>
-        /// Get recovery point for a given recovery point id
+        /// Gets Info for the given recovery point of the given item protected
+        /// by your Recovery Services Vault as specified by the recovery point
+        /// ID passed in the arguments.This is an asynchronous operation. To
+        /// determine whether the backend service has finished processing the
+        /// request, call the Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -71,7 +75,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get recovery point for a given recovery point id
+        /// Gets Info for the given recovery point of the given item protected
+        /// by your Recovery Services Vault as specified by the recovery point
+        /// ID passed in the arguments.This is an asynchronous operation. To
+        /// determine whether the backend service has finished processing the
+        /// request, call the Get Protected Item Operation Result API.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -107,7 +115,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get recovery point list for a given protected item
+        /// Lists all the recovery points of the given item protected by your
+        /// Recovery Services Vault according to the query filter supplied in
+        /// the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -147,7 +157,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
         
         /// <summary>
-        /// Get recovery point list for a given protected item
+        /// Lists all the recovery points of the given item protected by your
+        /// Recovery Services Vault according to the query filter supplied in
+        /// the arguments.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

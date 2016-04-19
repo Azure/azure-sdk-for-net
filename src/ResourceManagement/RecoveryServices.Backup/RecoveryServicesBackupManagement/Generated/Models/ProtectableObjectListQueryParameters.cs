@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional. friendly name query parameter
+        /// Optional. Friendly name query parameter.
         /// </summary>
         public string FriendlyName
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _providerType;
         
         /// <summary>
-        /// Optional. provider type query parameter
+        /// Optional. Provider type query parameter.
         /// </summary>
         public string ProviderType
         {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         private string _status;
         
         /// <summary>
-        /// Optional. status query parameter
+        /// Optional. Protection status query parameter.
         /// </summary>
         public string Status
         {

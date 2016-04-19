@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     /// <summary>
-    /// The definition of a IaasVM ProtectableItem object.
+    /// IaaS VM workload-specific protectable item.
     /// </summary>
     public partial class AzureIaaSVMProtectableItem : ProtectableItem
     {
         private string _virtualMachineId;
         
         /// <summary>
-        /// Optional. VirtualMachine Id
+        /// Optional. Fully qualified ARM ID of the virtual machine represented
+        /// by this item.
         /// </summary>
         public string VirtualMachineId
         {
